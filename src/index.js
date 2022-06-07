@@ -2,15 +2,13 @@ const fs = require('fs');
 const gm = require('gm');
 const path = require('path');
 
-const main = () => {
+const main = (index) => {
     const getFilesInDirectory = (dir) => {
 
         const directoryPath = path.join(__dirname, dir);
         const list = [];
 
-        //passsing directoryPath and callback function
         fs.readdirSync(directoryPath).forEach(file => {
-            console.log(file);
             list.push(file);
         });
 
@@ -23,68 +21,56 @@ const main = () => {
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
 
+    const recolorImage = (file, outfile) => {
+        gm(file).negative().modulate(getRandomInt(50, 100), getRandomInt(40, 100), getRandomInt(0, 200)).write(outfile, function (err) {
+            if (err) console.log(err);
+        });
+    }
+
+
     const summonsList = getFilesInDirectory('/img/png/summons/png')
     const focusList = getFilesInDirectory('/img/png/focus/png')
 
-/*    gm(2000, 2000, "#000000")
-        .composite(path.join(__dirname, '/img/png/summons/png/' + summonsList[getRandomInt(0, focusList.length - 1)]))
-        .composite(path.join(__dirname, 'img/png/backgrounds/Untitled-1.png'))
-        .write(path.join(__dirname, '/img/tmp/stage-1.png'), function (err) {
-            if (err) console.log(err);
-            console.log("Done!")
-        });
+    const summonsName = summonsList[getRandomInt(0, summonsList.length - 1)];
+    const focusName = focusList[getRandomInt(0, focusList.length - 1)];
 
-    gm(2000, 2000, "#000000")
-        .composite(path.join(__dirname, '/img/png/focus/png/' + focusList[getRandomInt(0, focusList.length - 1)]))
-        .composite(path.join(__dirname, '/img/tmp/stage-1.png'))
-        .write(path.join(__dirname, '/img/output/' + Date.now().toString() + '.png'), function (err) {
-            if (err) console.log(err);
-            console.log("Done!")
-        });*/
+    const summons = path.join(__dirname, '/img/png/summons/png/' +summonsName)
+    const focus = path.join(__dirname, '/img/png/focus/png/' +focusName)
+
+    const summonsOut = path.join(__dirname, '/img/png/summons/miff/' + summonsName)
+    const focusOut = path.join(__dirname, '/img/png/focus/miff/' + focusName)
+
+    recolorImage(summons, summonsOut)
+    recolorImage(focus, focusOut)
+
+    setTimeout(() => {
+        gm()
+            .command('convert')
+            .in('xc:transparent')
+            .in('-compose')
+            .in('Over')
+            .in(path.join(__dirname, '/img/png/backgrounds/Untitled-1.png'))
+            .in(summonsOut)
+            .in(focusOut)
+            .in('-mosaic')
+            .write(path.join(__dirname, '/img/output/' + Date.now().toString() + '.png'), function (err) {
+                if (err) console.log(err);
+            });
+
+        console.log('DONE' + index)
+
+        if(index <= 1000)
+        {
+            index = index + 1;
+            main(index);
+        }
+
+    }, 30000)
 
 
-/*    gm(path.join(__dirname, '/img/png/backgrounds/Untitled-1.png'))
-        .command("composite")
-        .in(path.join(__dirname, '/img/png/focus/png/' + focusList[getRandomInt(0, focusList.length - 1)]))
-        .in(path.join(__dirname, '/img/png/summons/png/' + summonsList[getRandomInt(0, summonsList.length - 1)]))
-        .write(path.join(__dirname, '/img/output/' + Date.now().toString() + '.png'), function (err) {
-            if (!err)
-                console.log(' hooray! ');
-            else
-                console.log(err);
-        });*/
-
-/*
-    gm(2000,2000)
-        .in(path.join(__dirname, '/img/png/backgrounds/Untitled-1.png'))
-        .in(path.join(__dirname, '/img/png/summons/png/' + summonsList[getRandomInt(0, summonsList.length - 1)]))
-        .in(path.join(__dirname, '/img/png/focus/png/' + focusList[getRandomInt(0, focusList.length - 1)]))
-        .compose()
-        .write(path.join(__dirname, '/img/output/' + Date.now().toString() + '.png'), function (err) {
-            if (err) console.log(err);
-        });
-*/
-
-    const cmd = 'gm convert xc:transparent -compose Over '+
-    path.join(__dirname, '/img/png/backgrounds/Untitled-1.png')
-    + ' ' + path.join(__dirname, '/img/png/summons/png/' + summonsList[getRandomInt(0, summonsList.length - 1)])
-    + ' '+ path.join(__dirname, '/img/png/focus/png/' + focusList[getRandomInt(0, focusList.length - 1)])
-    + ' -mosaic ' + path.join(__dirname, '/img/output/' + Date.now().toString() + '.png')
-
-    console.log(cmd);
-
-    gm()
-        .command('convert')
-        .in('xc:transparent')
-        .in('-compose')
-        .in('Over')
-        .in(path.join(__dirname, '/img/png/backgrounds/Untitled-1.png'))
-        .in(path.join(__dirname, '/img/png/summons/png/' + summonsList[getRandomInt(0, summonsList.length - 1)]))
-        .in(path.join(__dirname, '/img/png/focus/png/' + focusList[getRandomInt(0, focusList.length - 1)]))
-        .in('-mosaic')
-        .write(path.join(__dirname, '/img/output/' + Date.now().toString() + '.png'), function (err) {
-        if (err) console.log(err);
-    });
 }
 
-main();
+let index = 1
+main(index);
+
+
