@@ -1,8 +1,11 @@
 const fs = require('fs');
 const gm = require('gm');
 const path = require('path');
+const Jimp = require('jimp');
 
-const main = (index) => {
+
+
+const main = async (index) => {
     const getFilesInDirectory = (dir) => {
 
         const directoryPath = path.join(__dirname, dir);
@@ -21,12 +24,42 @@ const main = (index) => {
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
 
-    const recolorImage = (file, outfile) => {
-        gm(file).negative().modulate(getRandomInt(50, 100), getRandomInt(40, 100), getRandomInt(0, 200)).write(outfile, function (err) {
-            if (err) console.log(err);
-        });
-    }
+    const imageOverlay = async (focusFile, summonsFile, bgFile, outputFile) => {
 
+        let focus = await Jimp.read(focusFile);
+        let summons = await Jimp.read(summonsFile);
+        let bg = await Jimp.read(bgFile);
+
+        focus.color([
+            { apply: 'saturate', params: [getRandomInt(0,100)] },
+            { apply: 'hue', params: [getRandomInt(-360,360)] },
+            { apply: 'lighten', params: [getRandomInt(-20,20)] },
+            { apply: 'red', params: [getRandomInt(0,100)] },
+            { apply: 'green', params: [getRandomInt(0,100)] },
+            { apply: 'blue', params: [getRandomInt(0,100)] },
+        ]);
+
+        summons.color([
+            { apply: 'saturate', params: [getRandomInt(0,100)] },
+            { apply: 'hue', params: [getRandomInt(-360,360)] },
+            { apply: 'lighten', params: [getRandomInt(-20,20)] },
+            { apply: 'red', params: [getRandomInt(0,100)] },
+            { apply: 'green', params: [getRandomInt(0,100)] },
+            { apply: 'blue', params: [getRandomInt(0,100)] },
+        ]);
+
+        await summons.composite(focus, 0, 0, {
+            mode: Jimp.BLEND_SOURCE_OVER,
+        })
+
+        await bg.composite(summons, 0, 0, {
+            mode: Jimp.BLEND_SOURCE_OVER,
+            opacityDest: 1,
+            opacitySource: 0.5
+        })
+
+        await bg.writeAsync(outputFile);
+    }
 
     const summonsList = getFilesInDirectory('/img/png/summons/png')
     const focusList = getFilesInDirectory('/img/png/focus/png')
@@ -34,40 +67,19 @@ const main = (index) => {
     const summonsName = summonsList[getRandomInt(0, summonsList.length - 1)];
     const focusName = focusList[getRandomInt(0, focusList.length - 1)];
 
-    const summons = path.join(__dirname, '/img/png/summons/png/' +summonsName)
-    const focus = path.join(__dirname, '/img/png/focus/png/' +focusName)
+    const summons = path.join(__dirname, '/img/png/summons/png/' + summonsName)
+    const focus = path.join(__dirname, '/img/png/focus/png/' + focusName)
+    const bg = path.join(__dirname, '/img/png/backgrounds/Untitled-1.png')
+    const fileOut = path.join(__dirname, '/img/output/' + Date.now().toString() + '.png')
 
-    const summonsOut = path.join(__dirname, '/img/png/summons/miff/' + summonsName)
-    const focusOut = path.join(__dirname, '/img/png/focus/miff/' + focusName)
+    await imageOverlay(focus, summons, bg, fileOut)
 
-    recolorImage(summons, summonsOut)
-    recolorImage(focus, focusOut)
+    console.log('DONE' + index)
 
-    setTimeout(() => {
-        gm()
-            .command('convert')
-            .in('xc:transparent')
-            .in('-compose')
-            .in('Over')
-            .in(path.join(__dirname, '/img/png/backgrounds/Untitled-1.png'))
-            .in(summonsOut)
-            .in(focusOut)
-            .in('-mosaic')
-            .write(path.join(__dirname, '/img/output/' + Date.now().toString() + '.png'), function (err) {
-                if (err) console.log(err);
-            });
-
-        console.log('DONE' + index)
-
-        if(index <= 1000)
-        {
-            index = index + 1;
-            main(index);
-        }
-
-    }, 30000)
-
-
+    if (index <= 100) {
+        index = index + 1;
+        main(index);
+    }
 }
 
 let index = 1
