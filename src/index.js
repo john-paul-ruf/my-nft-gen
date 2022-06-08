@@ -1,8 +1,7 @@
 const fs = require('fs');
-const gm = require('gm');
 const path = require('path');
 const Jimp = require('jimp');
-
+const { GifFrame, GifUtil, GifCodec, BitmapImage } = require('gifwrap');
 
 
 const main = async (index) => {
@@ -28,37 +27,64 @@ const main = async (index) => {
 
         let focus = await Jimp.read(focusFile);
         let summons = await Jimp.read(summonsFile);
-        let bg = await Jimp.read(bgFile);
 
-        focus.color([
+
+        const frames = [];
+
+        const summonsProps = [
             { apply: 'saturate', params: [getRandomInt(0,100)] },
             { apply: 'hue', params: [getRandomInt(-360,360)] },
             { apply: 'lighten', params: [getRandomInt(-20,20)] },
             { apply: 'red', params: [getRandomInt(0,100)] },
             { apply: 'green', params: [getRandomInt(0,100)] },
             { apply: 'blue', params: [getRandomInt(0,100)] },
-        ]);
+        ]
 
-        summons.color([
+        const focusProps = [
             { apply: 'saturate', params: [getRandomInt(0,100)] },
             { apply: 'hue', params: [getRandomInt(-360,360)] },
             { apply: 'lighten', params: [getRandomInt(-20,20)] },
             { apply: 'red', params: [getRandomInt(0,100)] },
             { apply: 'green', params: [getRandomInt(0,100)] },
             { apply: 'blue', params: [getRandomInt(0,100)] },
-        ]);
+        ]
 
-        await summons.composite(focus, 0, 0, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-        })
+        const rotateSummons = async (degree) => {
 
-        await bg.composite(summons, 0, 0, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-            opacityDest: 1,
-            opacitySource: 0.5
-        })
+            let bg = await Jimp.read(bgFile);
 
-        await bg.writeAsync(outputFile);
+            await summons.rotate(degree, false);
+
+            await bg.composite(summons, 0, 0, {
+                mode: Jimp.BLEND_SOURCE_OVER,
+            })
+
+            await bg.composite(focus, 0, 0, {
+                mode: Jimp.BLEND_SOURCE_OVER,
+            });
+
+            console.log("started " + degree.toString() + " quantize");
+            GifUtil.quantizeDekker(bg, 128)
+            console.log("completed " + degree.toString() + " quantize");
+
+            let frame = new GifFrame(new BitmapImage(bg.bitmap));
+            frames.push(frame);
+        }
+
+        await focus.color(focusProps);
+        await summons.color(summonsProps);
+
+        for(let degree = 1; degree < 359; degree = degree + 2){
+            console.log("started " + degree.toString() + " degree");
+            await rotateSummons(degree);
+            console.log("completed " + degree.toString() + " degree");
+        }
+
+        console.log("gif " + index.toString() + " write start");
+        GifUtil.write(outputFile, frames).then(gif => {
+            console.log("gif " + index.toString() + " written");
+        });
+
     }
 
     const summonsList = getFilesInDirectory('/img/png/summons/png')
@@ -70,15 +96,16 @@ const main = async (index) => {
     const summons = path.join(__dirname, '/img/png/summons/png/' + summonsName)
     const focus = path.join(__dirname, '/img/png/focus/png/' + focusName)
     const bg = path.join(__dirname, '/img/png/backgrounds/Untitled-1.png')
-    const fileOut = path.join(__dirname, '/img/output/' + Date.now().toString() + '.png')
+    const fileOut = path.join(__dirname, '/img/output/' + Date.now().toString() + '.gif')
 
     await imageOverlay(focus, summons, bg, fileOut)
 
-    console.log('DONE' + index)
 
-    if (index <= 100) {
+    if (index <= 9) {
         index = index + 1;
+        console.log("started " + index.toString() + " process");
         main(index);
+        console.log("completed " + index.toString() + " process");
     }
 }
 
