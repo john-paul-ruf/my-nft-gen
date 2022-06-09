@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Jimp = require('jimp');
+const Jimp = require(' ');
 const { GifFrame, GifUtil, GifCodec, BitmapImage } = require('gifwrap');
 
 
@@ -26,8 +26,6 @@ const main = async (index) => {
     const imageOverlay = async (focusFile, summonsFile, bgFile, outputFile) => {
 
         let focus = await Jimp.read(focusFile);
-        let summons = await Jimp.read(summonsFile);
-
 
         const frames = [];
 
@@ -52,7 +50,9 @@ const main = async (index) => {
         const rotateSummons = async (degree) => {
 
             let bg = await Jimp.read(bgFile);
+            let summons = await Jimp.read(summonsFile);
 
+            await summons.color(summonsProps);
             await summons.rotate(degree, false);
 
             await bg.composite(summons, 0, 0, {
@@ -72,9 +72,9 @@ const main = async (index) => {
         }
 
         await focus.color(focusProps);
-        await summons.color(summonsProps);
 
-        for(let degree = 1; degree < 359; degree = degree + 2){
+        const degreeInc = 1;
+        for(let degree = 1; degree < 359; degree = degree + degreeInc){
             console.log("started " + degree.toString() + " degree");
             await rotateSummons(degree);
             console.log("completed " + degree.toString() + " degree");
