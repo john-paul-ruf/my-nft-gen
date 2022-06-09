@@ -60,7 +60,7 @@ const main = async (index) => {
                 }
             }
 
-            let bg = await Jimp.read(bgFile);
+            let bg = new Jimp(3000,3000, 'black');
             let summons = await Jimp.read(summonsFile);
 
             await summons.color(summonsProps);
@@ -68,11 +68,11 @@ const main = async (index) => {
 
             await popGLow(summons, degree);
 
-            await bg.composite(summons, 0, 0, {
+            await bg.composite(summons, 500, 500, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             })
 
-            await bg.composite(focus, 0, 0, {
+            await bg.composite(focus, 500, 500, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             });
 
