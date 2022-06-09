@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Jimp = require(' ');
+const Jimp = require('jimp');
 const { GifFrame, GifUtil, GifCodec, BitmapImage } = require('gifwrap');
 
 
@@ -32,7 +32,6 @@ const main = async (index) => {
         const summonsProps = [
             { apply: 'saturate', params: [getRandomInt(0,100)] },
             { apply: 'hue', params: [getRandomInt(-360,360)] },
-            { apply: 'lighten', params: [getRandomInt(-20,20)] },
             { apply: 'red', params: [getRandomInt(0,100)] },
             { apply: 'green', params: [getRandomInt(0,100)] },
             { apply: 'blue', params: [getRandomInt(0,100)] },
@@ -41,19 +40,33 @@ const main = async (index) => {
         const focusProps = [
             { apply: 'saturate', params: [getRandomInt(0,100)] },
             { apply: 'hue', params: [getRandomInt(-360,360)] },
-            { apply: 'lighten', params: [getRandomInt(-20,20)] },
             { apply: 'red', params: [getRandomInt(0,100)] },
             { apply: 'green', params: [getRandomInt(0,100)] },
             { apply: 'blue', params: [getRandomInt(0,100)] },
         ]
 
+
+
         const rotateSummons = async (degree) => {
+
+            const popGLow = async (summons, degree) => {
+
+                const glowMovePercent = 0.09
+
+                if(degree <= 180){
+                    await summons.color([{ apply: 'brighten', params: [100 - (degree * glowMovePercent)]}]);
+                } else {
+                    await summons.color([{ apply: 'brighten', params: [100 - (180 * glowMovePercent) + (degree - 180 * glowMovePercent)]}]);
+                }
+            }
 
             let bg = await Jimp.read(bgFile);
             let summons = await Jimp.read(summonsFile);
 
             await summons.color(summonsProps);
             await summons.rotate(degree, false);
+
+            await popGLow(summons, degree);
 
             await bg.composite(summons, 0, 0, {
                 mode: Jimp.BLEND_SOURCE_OVER,
@@ -74,7 +87,7 @@ const main = async (index) => {
         await focus.color(focusProps);
 
         const degreeInc = 1;
-        for(let degree = 1; degree < 359; degree = degree + degreeInc){
+        for(let degree = 1; degree <= 360; degree = degree + degreeInc){
             console.log("started " + degree.toString() + " degree");
             await rotateSummons(degree);
             console.log("completed " + degree.toString() + " degree");
