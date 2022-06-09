@@ -22,6 +22,9 @@ const main = async (index) => {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
+    const getRandomArbitrary = (min, max) =>  {
+        return Math.random() * (max - min) + min;
+    }
 
     const imageOverlay = async (focusFile, summonsFile, bgFile, outputFile) => {
 
@@ -45,19 +48,42 @@ const main = async (index) => {
             { apply: 'blue', params: [getRandomInt(0,100)] },
         ]
 
+        const popGlowProps = {
+            glowLowerRange: getRandomArbitrary(0, 30),
+            glowUpperRange: getRandomArbitrary(70, 100),
 
+            blurLowerRange: getRandomInt(1, 5),
+            blurUpperRange: getRandomInt(15, 25),
+
+            fadeLowerRange: getRandomArbitrary(0, 0.2),
+            fadeUpperRange: getRandomArbitrary(0.3, 0.4),
+        }
 
         const rotateSummons = async (degree) => {
 
             const popGLow = async (summons, degree) => {
 
-                const glowMovePercent = 0.3
+                const findValue = (min, max, currentFrame) => {
 
-                if(degree <= 180){
-                    await summons.color([{ apply: 'brighten', params: [20 + (degree * glowMovePercent)]}]);
-                } else {
-                    await summons.color([{ apply: 'brighten', params: [20 + (180 * glowMovePercent) - ((degree - 180) * glowMovePercent)]}]);
+                    const range = max-min;
+                    const step = range / (180);
+
+                    if(currentFrame <= 180)
+                    {
+                        return min + (step * currentFrame);
+                    }
+
+                    return  max - (step * (currentFrame - 180));
                 }
+
+                const blur = findValue(popGlowProps.blurLowerRange, popGlowProps.blurUpperRange, degree)
+                await summons.blur(blur);
+
+                const opacity = findValue(popGlowProps.fadeLowerRange, popGlowProps.fadeUpperRange, degree)
+                await summons.opacity(opacity);
+
+                const saturate = findValue(popGlowProps.glowLowerRange, popGlowProps.glowUpperRange, degree)
+                await summons.color([{ apply: 'saturate', params: [saturate]}]);
             }
 
             let bg = new Jimp(3000,3000, 'black');
