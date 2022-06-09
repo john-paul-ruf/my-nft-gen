@@ -51,12 +51,12 @@ const main = async (index) => {
 
             const popGLow = async (summons, degree) => {
 
-                const glowMovePercent = 0.09
+                const glowMovePercent = 0.3
 
                 if(degree <= 180){
-                    await summons.color([{ apply: 'brighten', params: [100 - (degree * glowMovePercent)]}]);
+                    await summons.color([{ apply: 'brighten', params: [20 + (degree * glowMovePercent)]}]);
                 } else {
-                    await summons.color([{ apply: 'brighten', params: [100 - (180 * glowMovePercent) + (degree - 180 * glowMovePercent)]}]);
+                    await summons.color([{ apply: 'brighten', params: [20 + (180 * glowMovePercent) - ((degree - 180) * glowMovePercent)]}]);
                 }
             }
 
@@ -114,7 +114,7 @@ const main = async (index) => {
     await imageOverlay(focus, summons, bg, fileOut)
 
 
-    if (index <= 9) {
+    if (index <= 50) {
         index = index + 1;
         console.log("started " + index.toString() + " process");
         main(index);
