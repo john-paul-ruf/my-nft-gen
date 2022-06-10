@@ -55,8 +55,8 @@ const main = async (index) => {
             blurLowerRange: getRandomInt(0, 1),
             blurUpperRange: getRandomInt(2, 3),
 
-            fadeLowerRange: getRandomArbitrary(0, 0.05),
-            fadeUpperRange: getRandomArbitrary(0.06, 0.1),
+/*            fadeLowerRange: getRandomArbitrary(0, 0.05),
+            fadeUpperRange: getRandomArbitrary(0.06, 0.1),*/
         }
 
         const rotateSummons = async (degree) => {
@@ -79,8 +79,8 @@ const main = async (index) => {
                 const blur = findValue(popGlowProps.blurLowerRange, popGlowProps.blurUpperRange, degree)
                 await summons.blur(blur);
 
-                const opacity = findValue(popGlowProps.fadeLowerRange, popGlowProps.fadeUpperRange, degree)
-                await summons.opacity(opacity);
+             /*   const opacity = findValue(popGlowProps.fadeLowerRange, popGlowProps.fadeUpperRange, degree)
+                await summons.opacity(opacity);*/
 
                 const saturate = findValue(popGlowProps.glowLowerRange, popGlowProps.glowUpperRange, degree)
                 await summons.color([{ apply: 'saturate', params: [saturate]}]);
