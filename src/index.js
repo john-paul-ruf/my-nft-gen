@@ -49,14 +49,14 @@ const main = async (index) => {
         ]
 
         const popGlowProps = {
-            glowLowerRange: getRandomArbitrary(0, 30),
-            glowUpperRange: getRandomArbitrary(70, 100),
+            glowLowerRange: getRandomArbitrary(0, 5),
+            glowUpperRange: getRandomArbitrary(6, 10),
 
-            blurLowerRange: getRandomInt(1, 5),
-            blurUpperRange: getRandomInt(15, 25),
+            blurLowerRange: getRandomInt(0, 1),
+            blurUpperRange: getRandomInt(2, 3),
 
-            fadeLowerRange: getRandomArbitrary(0, 0.2),
-            fadeUpperRange: getRandomArbitrary(0.3, 0.4),
+            fadeLowerRange: getRandomArbitrary(0, 0.05),
+            fadeUpperRange: getRandomArbitrary(0.06, 0.1),
         }
 
         const rotateSummons = async (degree) => {
@@ -70,10 +70,10 @@ const main = async (index) => {
 
                     if(currentFrame <= 180)
                     {
-                        return min + (step * currentFrame);
+                        return Math.floor(min + (step * currentFrame));
                     }
 
-                    return  max - (step * (currentFrame - 180));
+                    return  Math.floor(max - (step * (currentFrame - 180)));
                 }
 
                 const blur = findValue(popGlowProps.blurLowerRange, popGlowProps.blurUpperRange, degree)
