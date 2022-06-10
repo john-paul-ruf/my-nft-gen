@@ -55,11 +55,11 @@ const main = async (index) => {
         const summonEffectProps = {
             glowLowerRange: getRandomInt(0, 90),
             glowUpperRange: getRandomInt(280, 360),
-            doGlow:getRandomInt(0,2),
+            doGlow:getRandomInt(0,5),
 
             fadeLowerRange: getRandomArbitrary(0.7, 0.8),
             fadeUpperRange: getRandomArbitrary(0.85, 1),
-            doFade:getRandomInt(0, 2),
+            doFade:getRandomInt(0, 5),
         }
         console.log('summonEffectProps:');
         console.log(summonEffectProps);
@@ -67,11 +67,11 @@ const main = async (index) => {
         const focusEffectProps = {
             glowLowerRange: getRandomInt(0, 90),
             glowUpperRange: getRandomInt(280, 360),
-            doGlow:getRandomInt(0, 2),
+            doGlow:getRandomInt(0, 5),
 
             fadeLowerRange: getRandomArbitrary(0.7, 0.8),
             fadeUpperRange: getRandomArbitrary(0.85, 1),
-            doFade:getRandomInt(0, 2),
+            doFade:getRandomInt(0, 5),
         }
         console.log('focusEffectProps:');
         console.log(focusEffectProps);
@@ -92,7 +92,7 @@ const main = async (index) => {
             }
 
             const glow = async (img, degree, effectProps) => {
-                if(effectProps.doGlow === 1) {
+                if(effectProps.doGlow > 0) {
                     const hue = findValue(effectProps.glowLowerRange, effectProps.glowUpperRange, degree)
                     await img.color([{apply: 'hue', params: [hue]}]);
                     console.log('hue: ' + hue);
@@ -102,7 +102,7 @@ const main = async (index) => {
             }
 
             const fade = async (img, degree, effectProps) => {
-                if(effectProps.doFade === 1) {
+                if(effectProps.doFade > 0) {
                     const opacity = findValue(effectProps.fadeLowerRange, effectProps.fadeUpperRange, degree)
                     await img.opacity(opacity);
                     console.log('opacity: ' + opacity);
@@ -150,6 +150,15 @@ const main = async (index) => {
         }
 
         console.log("gif " + index.toString() + " write start");
+
+        console.log(summonsName)
+        console.log(summonsProps)
+        console.log(summonEffectProps)
+
+        console.log(focusName)
+        console.log(focusProps)
+        console.log(focusEffectProps)
+
         GifUtil.write(outputFile, frames).then(gif => {
             console.log("gif " + index.toString() + " written");
         });
