@@ -28,69 +28,103 @@ const main = async (index) => {
 
     const imageOverlay = async (focusFile, summonsFile, bgFile, outputFile) => {
 
-        let focus = await Jimp.read(focusFile);
-
         const frames = [];
 
         const summonsProps = [
             { apply: 'hue', params: [getRandomInt(-360,360)] },
-            { apply: 'red', params: [getRandomInt(0,100)] },
-            { apply: 'green', params: [getRandomInt(0,100)] },
-            { apply: 'blue', params: [getRandomInt(0,100)] },
+            { apply: 'saturate', params: [getRandomInt(0,25)] },
+            { apply: 'desaturate', params: [getRandomInt(0,25)] },
+            { apply: 'red', params: [getRandomInt(0,25)] },
+            { apply: 'green', params: [getRandomInt(0,25)] },
+            { apply: 'blue', params: [getRandomInt(0,25)] },
         ]
+        console.log('summonsProps: ');
+        console.log(summonsProps);
 
         const focusProps = [
             { apply: 'hue', params: [getRandomInt(-360,360)] },
-            { apply: 'red', params: [getRandomInt(0,100)] },
-            { apply: 'green', params: [getRandomInt(0,100)] },
-            { apply: 'blue', params: [getRandomInt(0,100)] },
+            { apply: 'saturate', params: [getRandomInt(0,25)] },
+            { apply: 'desaturate', params: [getRandomInt(0,25)] },
+            { apply: 'red', params: [getRandomInt(0,25)] },
+            { apply: 'green', params: [getRandomInt(0,25)] },
+            { apply: 'blue', params: [getRandomInt(0,25)] },
         ]
+        console.log('focusProps: ');
+        console.log(focusProps);
 
-        const popGlowProps = {
-            glowLowerRange: getRandomArbitrary(1, 5),
-            glowUpperRange: getRandomArbitrary(6, 10),
+        const summonEffectProps = {
+            glowLowerRange: getRandomInt(0, 90),
+            glowUpperRange: getRandomInt(280, 360),
+            doGlow:getRandomInt(0,2),
 
-            blurLowerRange: getRandomInt(1, 2),
-            blurUpperRange: getRandomInt(3, 4),
-
-            fadeLowerRange: getRandomArbitrary(0, 0.05),
-            fadeUpperRange: getRandomArbitrary(0.06, 0.1),
+            fadeLowerRange: getRandomArbitrary(0.7, 0.8),
+            fadeUpperRange: getRandomArbitrary(0.85, 1),
+            doFade:getRandomInt(0, 2),
         }
+        console.log('summonEffectProps:');
+        console.log(summonEffectProps);
+
+        const focusEffectProps = {
+            glowLowerRange: getRandomInt(0, 90),
+            glowUpperRange: getRandomInt(280, 360),
+            doGlow:getRandomInt(0, 2),
+
+            fadeLowerRange: getRandomArbitrary(0.7, 0.8),
+            fadeUpperRange: getRandomArbitrary(0.85, 1),
+            doFade:getRandomInt(0, 2),
+        }
+        console.log('focusEffectProps:');
+        console.log(focusEffectProps);
+
 
         const rotateSummons = async (degree) => {
 
-            const popGLow = async (summons, degree) => {
+            const findValue = (min, max, currentFrame) => {
+                const range = max-min;
+                const step = range / (180);
 
-                const findValue = (min, max, currentFrame) => {
-
-                    const range = max-min;
-                    const step = range / (180);
-
-                    if(currentFrame <= 180)
-                    {
-                        return min + (step * currentFrame);
-                    }
-
-                    return  max - (step * (currentFrame - 180));
+                if(currentFrame <= 180)
+                {
+                    return min + (step * currentFrame);
                 }
 
-                const blur = findValue(popGlowProps.blurLowerRange, popGlowProps.blurUpperRange, degree)
-                await summons.blur(blur);
+                return  max - (step * (currentFrame - 180));
+            }
 
-                const opacity = findValue(popGlowProps.fadeLowerRange, popGlowProps.fadeUpperRange, degree)
-                await summons.opacity(opacity);
+            const glow = async (img, degree, effectProps) => {
+                if(effectProps.doGlow === 1) {
+                    const hue = findValue(effectProps.glowLowerRange, effectProps.glowUpperRange, degree)
+                    await img.color([{apply: 'hue', params: [hue]}]);
+                    console.log('hue: ' + hue);
+                }
 
-                const saturate = findValue(popGlowProps.glowLowerRange, popGlowProps.glowUpperRange, degree)
-                await summons.color([{ apply: 'saturate', params: [saturate]}]);
+                return img;
+            }
+
+            const fade = async (img, degree, effectProps) => {
+                if(effectProps.doFade === 1) {
+                    const opacity = findValue(effectProps.fadeLowerRange, effectProps.fadeUpperRange, degree)
+                    await img.opacity(opacity);
+                    console.log('opacity: ' + opacity);
+                }
+
+                return img;
             }
 
             let bg = new Jimp(3000,3000, 'black');
             let summons = await Jimp.read(summonsFile);
+            let focus = await Jimp.read(focusFile);
 
             await summons.color(summonsProps);
             await summons.rotate(degree, false);
 
-            await popGLow(summons, degree);
+            await focus.color(focusProps);
+
+            summons = await glow(summons, degree, summonEffectProps);
+            summons = await fade(summons, degree, summonEffectProps);
+
+            focus = await glow(focus, degree, focusEffectProps);
+            focus = await fade(focus, degree, focusEffectProps);
 
             await bg.composite(summons, 500, 500, {
                 mode: Jimp.BLEND_SOURCE_OVER,
@@ -101,16 +135,14 @@ const main = async (index) => {
             });
 
             console.log("started " + degree.toString() + " quantize");
-            GifUtil.quantizeDekker(bg, 128)
+            GifUtil.quantizeDekker(bg, 255)
             console.log("completed " + degree.toString() + " quantize");
 
             let frame = new GifFrame(new BitmapImage(bg.bitmap));
             frames.push(frame);
         }
 
-        await focus.color(focusProps);
-
-        const degreeInc = 1;
+        const degreeInc = 2;
         for(let degree = 0; degree < 360; degree = degree + degreeInc){
             console.log("started " + degree.toString() + " degree");
             await rotateSummons(degree);
@@ -136,7 +168,6 @@ const main = async (index) => {
     const fileOut = path.join(__dirname, '/img/output/' + Date.now().toString() + '.gif')
 
     await imageOverlay(focus, summons, bg, fileOut)
-
 
     if (index <= 50) {
         index = index + 1;
