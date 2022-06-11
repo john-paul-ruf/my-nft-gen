@@ -7,7 +7,35 @@ const {contrast} = require("jimp");
 
 const main = async (index) => {
 
-    const controlPlane = {};
+    const controlPlane = {
+        hueRange: {
+            lower: -360,
+            upper: 360
+        },
+        glowLowerRange: {
+            lower: -360,
+            upper: 0
+        },
+        glowUpperRange: {
+            lower: 0,
+            upper: 360
+        },
+        fadeLowerRange: {
+            lower: 0.5,
+            upper: 0.75
+        },
+        fadeUpperRange: {
+            lower: 0.75,
+            upper: 1
+        },
+        verticalScanLine: {
+            numberOfLineLower: 3,
+            numberOfLinesUpper: 7,
+            trailsLengthLower: 10,
+            trailsLengthUpper: 25
+        },
+        effectChance: 90
+    };
 
     const getFilesInDirectory = (dir) => {
 
@@ -30,6 +58,11 @@ const main = async (index) => {
         return Math.random() * (max - min) + min;
     }
 
+    const doEffect = (chance) => {
+        const result = getRandomInt(0, 100)
+        return result <= chance;
+    }
+
     const imageOverlay = async (focusFile, summonsFile) => {
         console.log(controlPlane);
 
@@ -40,17 +73,17 @@ const main = async (index) => {
         const rotateSummons = async (degree) => {
             const findValue = (min, max, currentFrame) => {
                 const range = max - min;
-                const step = range / (180);
+                const step = range / (controlPlane.halfWayNumberOfDegrees);
 
-                if (currentFrame <= 180) {
+                if (currentFrame <= controlPlane.halfWayNumberOfDegrees) {
                     return min + (step * currentFrame);
                 }
 
-                return max - (step * (currentFrame - 180));
+                return max - (step * (currentFrame - controlPlane.halfWayNumberOfDegrees));
             }
 
             const glow = async (img, degree, effectProps) => {
-                if (effectProps.doGlow > 0) {
+                if (effectProps.doGlow) {
                     const hue = findValue(effectProps.glowLowerRange, effectProps.glowUpperRange, degree)
                     await img.color([{apply: 'hue', params: [hue]}]);
                 }
@@ -59,7 +92,7 @@ const main = async (index) => {
             }
 
             const fade = async (img, degree, effectProps) => {
-                if (effectProps.doFade > 0) {
+                if (effectProps.doFade) {
                     const opacity = findValue(effectProps.fadeLowerRange, effectProps.fadeUpperRange, degree)
                     await img.opacity(opacity);
                 }
@@ -73,7 +106,7 @@ const main = async (index) => {
                 const darkGreen = Jimp.cssColorToHex('#1f1f1f')
                 const green = Jimp.cssColorToHex('#016236')
 
-                let img = new Jimp(3000, 3000, gray);
+                let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize, gray);
 
                 for (let x = 0; x < 3000; x++) {
                     for (let y = 0; y < 3000; y++) {
@@ -94,7 +127,40 @@ const main = async (index) => {
 
             }
 
-            let bg = await animateBackground();
+            const verticalScanLines = async () => {
+
+                let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize);
+
+                controlPlane.verticalScanEffectProps.lineInfo.forEach((element) => {
+
+                    const drawLine = (y) => {
+                        for (let x = 0; x < 3000; x++) {
+                            const rando = getRandomInt(1, controlPlane.verticalScanEffectProps.maxTrailLength)
+                            for (let curY = y; curY < y + rando; curY++) {
+                                let hex = '#bdf379' + getRandomInt(7,11).toString()+ getRandomInt(7,11).toString()
+                                const color = Jimp.cssColorToHex(hex)
+                                img.setPixelColor(color, x, y)
+                            }
+
+                        }
+
+                    }
+
+                    const displacement = (controlPlane.finalImageSize / controlPlane.numberOfFrame) * degree;
+                    let y = element.lineStart + displacement;
+
+                    if (y > controlPlane.finalImageSize) {
+                        y = y - controlPlane.finalImageSize
+                    }
+
+                    drawLine(y)
+
+                });
+
+                return img;
+
+            }
+
             let summons = await Jimp.read(summonsFile);
             let focus = await Jimp.read(focusFile);
 
@@ -109,11 +175,19 @@ const main = async (index) => {
             focus = await glow(focus, degree, controlPlane.focusEffectProps);
             focus = await fade(focus, degree, controlPlane.focusEffectProps);
 
-            await bg.composite(summons, 500, 500, {
+            let bg = await animateBackground();
+
+            let scan = await verticalScanLines();
+
+            await bg.composite(scan, 0,0, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             })
 
-            await bg.composite(focus, 500, 500, {
+            await bg.composite(summons, (controlPlane.finalImageSize - 2000) / 2, (controlPlane.finalImageSize - 2000) / 2, {
+                mode: Jimp.BLEND_SOURCE_OVER,
+            })
+
+            await bg.composite(focus, (controlPlane.finalImageSize - 2000) / 2, (controlPlane.finalImageSize - 2000) / 2, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             });
 
@@ -176,43 +250,61 @@ const main = async (index) => {
     controlPlane.fileOut = path.join(__dirname, '/img/output/' + Date.now().toString() + '.gif')
 
     controlPlane.summonsProps = [
-        {apply: 'hue', params: [getRandomInt(-90, 90)]},
+        {apply: 'hue', params: [getRandomInt(controlPlane.hueRange.lower, controlPlane.hueRange.upper)]},
         {apply: 'red', params: [getRandomInt(0, 5)]},
         {apply: 'green', params: [getRandomInt(0, 5)]},
         {apply: 'blue', params: [getRandomInt(0, 5)]},
     ]
 
     controlPlane.focusProps = [
-        {apply: 'hue', params: [getRandomInt(-90, 90)]},
+        {apply: 'hue', params: [getRandomInt(controlPlane.hueRange.lower, controlPlane.hueRange.upper)]},
         {apply: 'red', params: [getRandomInt(0, 5)]},
         {apply: 'green', params: [getRandomInt(0, 5)]},
         {apply: 'blue', params: [getRandomInt(0, 5)]},
     ]
 
     controlPlane.summonEffectProps = {
-        glowLowerRange: getRandomInt(0, 30),
-        glowUpperRange: getRandomInt(60, 90),
-        doGlow: getRandomInt(0, 5),
+        glowLowerRange: getRandomInt(controlPlane.glowLowerRange.lower, controlPlane.glowLowerRange.upper),
+        glowUpperRange: getRandomInt(controlPlane.glowUpperRange.lower, controlPlane.glowUpperRange.upper),
+        doGlow: doEffect(controlPlane.effectChance),
 
-        fadeLowerRange: getRandomArbitrary(0.7, 0.8),
-        fadeUpperRange: getRandomArbitrary(0.85, 1),
-        doFade: getRandomInt(0, 5),
+        fadeLowerRange: getRandomArbitrary(controlPlane.fadeLowerRange.lower, controlPlane.fadeLowerRange.upper),
+        fadeUpperRange: getRandomArbitrary(controlPlane.fadeUpperRange.lower, controlPlane.fadeUpperRange.upper),
+        doFade: doEffect(controlPlane.effectChance),
     }
 
     controlPlane.focusEffectProps = {
-        glowLowerRange: getRandomInt(0, 30),
-        glowUpperRange: getRandomInt(60, 90),
-        doGlow: getRandomInt(0, 5),
+        glowLowerRange: getRandomInt(controlPlane.glowLowerRange.lower, controlPlane.glowLowerRange.upper),
+        glowUpperRange: getRandomInt(controlPlane.glowUpperRange.lower, controlPlane.glowUpperRange.upper),
+        doGlow: doEffect(controlPlane.effectChance),
 
-        fadeLowerRange: getRandomArbitrary(0.7, 0.8),
-        fadeUpperRange: getRandomArbitrary(0.85, 1),
-        doFade: getRandomInt(0, 5),
+        fadeLowerRange: getRandomArbitrary(controlPlane.fadeLowerRange.lower, controlPlane.fadeLowerRange.upper),
+        fadeUpperRange: getRandomArbitrary(controlPlane.fadeUpperRange.lower, controlPlane.fadeUpperRange.upper),
+        doFade: doEffect(controlPlane.effectChance),
     }
 
+    controlPlane.verticalScanEffectProps = {
+        numberOfLines: getRandomInt(controlPlane.verticalScanLine.numberOfLineLower, controlPlane.verticalScanLine.numberOfLinesUpper),
+        maxTrailLength: getRandomInt(controlPlane.verticalScanLine.trailsLengthLower, controlPlane.verticalScanLine.trailsLengthUpper),
+        computeInitialLineInfo: (numberOfLines) => {
+
+            const lineInfo = [];
+
+            for (let i = 0; i <= numberOfLines; i++) {
+                lineInfo.push({lineStart: getRandomInt(0, controlPlane.finalImageSize)});
+            }
+
+            return lineInfo;
+        }
+    }
+
+    controlPlane.finalImageSize = 3000;
     controlPlane.colorDepth = 255;
-    controlPlane.degreeInc = 2;
+    controlPlane.degreeInc = 72;
     controlPlane.numberOfDegrees = 360;
+    controlPlane.halfWayNumberOfDegrees = controlPlane.numberOfDegrees / 2;
     controlPlane.numberOfFrame = controlPlane.numberOfDegrees / controlPlane.degreeInc;
+    controlPlane.verticalScanEffectProps.lineInfo = controlPlane.verticalScanEffectProps.computeInitialLineInfo(controlPlane.verticalScanEffectProps.numberOfLines);
 
     await imageOverlay(focus, summons)
 
