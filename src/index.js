@@ -77,15 +77,18 @@ const main = async (index) => {
 
                 for(let x = 0; x < 3000; x++){
                     for(let y = 0; y < 3000; y++){
-                        switch(getRandomInt(0,3))
+                        switch(getRandomInt(0,7))
                         {
                             case 0:
+                            case 1:
+                            case 2:
                                 img.setPixelColor(gray, x, y)
                                 break;
-                            case 1:
+                            case 3:
+                            case 4:
                                 img.setPixelColor(darkGreen, x, y)
                                 break;
-                            case 2:
+                            case 6:
                                 img.setPixelColor(green, x, y)
                                 break;
                         }
