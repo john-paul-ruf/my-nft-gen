@@ -32,12 +32,12 @@ const main = async (index) => {
 
     const imageOverlay = async (focusFile, summonsFile) => {
         console.log(controlPlane);
+
+        controlPlane.startTime = new Date();
+
         const frames = [];
 
         const rotateSummons = async (degree) => {
-
-            controlPlane.startTime = Date.now();
-
             const findValue = (min, max, currentFrame) => {
                 const range = max - min;
                 const step = range / (180);
@@ -68,12 +68,29 @@ const main = async (index) => {
             }
 
             const animateBackground = async () => {
-                let img = new Jimp(3000, 3000, '#228B22');
 
-                img.pixelate(controlPlane.animateBackGroundProps.pixilate)
-                    .contrast(controlPlane.animateBackGroundProps.contrast)
-                    .posterize(controlPlane.animateBackGroundProps.posterize)
-                    .sepia();
+                const gray = Jimp.cssColorToHex('#050505')
+                const darkGreen = Jimp.cssColorToHex('#085c12')
+                const green = Jimp.cssColorToHex('#34e718')
+
+                let img = new Jimp(3000, 3000, gray);
+
+                for(let x = 0; x < 3000; x++){
+                    for(let y = 0; y < 3000; y++){
+                        switch(getRandomInt(0,3))
+                        {
+                            case 0:
+                                img.setPixelColor(gray, x, y)
+                                break;
+                            case 1:
+                                img.setPixelColor(darkGreen, x, y)
+                                break;
+                            case 2:
+                                img.setPixelColor(green, x, y)
+                                break;
+                        }
+                    }
+                }
 
                 return img;
 
@@ -109,14 +126,30 @@ const main = async (index) => {
         }
 
         for (let degree = 0; degree < controlPlane.numberOfDegrees; degree = degree + controlPlane.degreeInc) {
+
+            const timeLeft = () => {
+                let currentTime = new Date();
+                let rez = currentTime.getTime() - controlPlane.startTime.getTime();
+                let currentFrameCount = (degree/controlPlane.degreeInc)
+                let timePerFrame = rez/currentFrameCount;
+                let timeLeft = (controlPlane.numberOfFrame - currentFrameCount) * timePerFrame;
+
+                let h = Math.trunc(timeLeft / 3600000 % 100).toString().padStart(2, '0');
+                let m = Math.trunc(timeLeft / 60000 % 60).toString().padStart(2, '0');
+                let s = Math.trunc(timeLeft / 1000 % 60).toString().padStart(2, '0');
+                let ms = Math.trunc(timeLeft % 1000).toString().padStart(3, '0');
+                console.log(h + ':' + m + ':' + s + '.' + ms);
+            }
+
             console.log("started " + degree.toString() + " degree");
             await rotateSummons(degree);
+            timeLeft();
             console.log("completed " + degree.toString() + " degree");
         }
 
-        controlPlane.endTime = Date.now();
+        controlPlane.endTime = new Date();
 
-        let rez = controlPlane.endTime - controlPlane.startTime;
+        let rez = controlPlane.endTime.getTime() - controlPlane.startTime.getTime();
         let h = Math.trunc(rez / 3600000 % 100).toString().padStart(2, '0');
         let m = Math.trunc(rez / 60000 % 60).toString().padStart(2, '0');
         let s = Math.trunc(rez / 1000 % 60).toString().padStart(2, '0');
@@ -145,26 +178,22 @@ const main = async (index) => {
     controlPlane.fileOut = path.join(__dirname, '/img/output/' + Date.now().toString() + '.gif')
 
     controlPlane.summonsProps = [
-        {apply: 'hue', params: [getRandomInt(-360, 360)]},
-        {apply: 'saturate', params: [getRandomInt(0, 25)]},
-        {apply: 'desaturate', params: [getRandomInt(0, 25)]},
-        {apply: 'red', params: [getRandomInt(0, 25)]},
-        {apply: 'green', params: [getRandomInt(0, 25)]},
-        {apply: 'blue', params: [getRandomInt(0, 25)]},
+        {apply: 'hue', params: [getRandomInt(-90, 90)]},
+        {apply: 'red', params: [getRandomInt(0, 5)]},
+        {apply: 'green', params: [getRandomInt(0, 5)]},
+        {apply: 'blue', params: [getRandomInt(0, 5)]},
     ]
 
     controlPlane.focusProps = [
-        {apply: 'hue', params: [getRandomInt(-360, 360)]},
-        {apply: 'saturate', params: [getRandomInt(0, 25)]},
-        {apply: 'desaturate', params: [getRandomInt(0, 25)]},
-        {apply: 'red', params: [getRandomInt(0, 25)]},
-        {apply: 'green', params: [getRandomInt(0, 25)]},
-        {apply: 'blue', params: [getRandomInt(0, 25)]},
+        {apply: 'hue', params: [getRandomInt(-90, 90)]},
+        {apply: 'red', params: [getRandomInt(0, 5)]},
+        {apply: 'green', params: [getRandomInt(0, 5)]},
+        {apply: 'blue', params: [getRandomInt(0, 5)]},
     ]
 
     controlPlane.summonEffectProps = {
-        glowLowerRange: getRandomInt(0, 90),
-        glowUpperRange: getRandomInt(280, 360),
+        glowLowerRange: getRandomInt(0, 30),
+        glowUpperRange: getRandomInt(60, 90),
         doGlow: getRandomInt(0, 5),
 
         fadeLowerRange: getRandomArbitrary(0.7, 0.8),
@@ -173,8 +202,8 @@ const main = async (index) => {
     }
 
     controlPlane.focusEffectProps = {
-        glowLowerRange: getRandomInt(0, 90),
-        glowUpperRange: getRandomInt(280, 360),
+        glowLowerRange: getRandomInt(0, 30),
+        glowUpperRange: getRandomInt(60, 90),
         doGlow: getRandomInt(0, 5),
 
         fadeLowerRange: getRandomArbitrary(0.7, 0.8),
@@ -182,14 +211,8 @@ const main = async (index) => {
         doFade: getRandomInt(0, 5),
     }
 
-    controlPlane.animateBackGroundProps = {
-        pixilate: getRandomInt(1, 5),
-        posterize: getRandomInt(6, 10),
-        contrast: getRandomArbitrary(0.85, 1),
-    }
-
     controlPlane.colorDepth = 255;
-    controlPlane.degreeInc = 36;
+    controlPlane.degreeInc = 72;
     controlPlane.numberOfDegrees = 360;
     controlPlane.numberOfFrame = controlPlane.numberOfDegrees / controlPlane.degreeInc;
 
