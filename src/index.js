@@ -53,7 +53,6 @@ const main = async (index) => {
                 if (effectProps.doGlow > 0) {
                     const hue = findValue(effectProps.glowLowerRange, effectProps.glowUpperRange, degree)
                     await img.color([{apply: 'hue', params: [hue]}]);
-                    console.log('hue: ' + hue);
                 }
 
                 return img;
@@ -63,7 +62,6 @@ const main = async (index) => {
                 if (effectProps.doFade > 0) {
                     const opacity = findValue(effectProps.fadeLowerRange, effectProps.fadeUpperRange, degree)
                     await img.opacity(opacity);
-                    console.log('opacity: ' + opacity);
                 }
 
                 return img;
@@ -104,9 +102,7 @@ const main = async (index) => {
                 mode: Jimp.BLEND_SOURCE_OVER,
             });
 
-            console.log("started " + degree.toString() + " quantize");
             GifUtil.quantizeDekker(bg, controlPlane.colorDepth)
-            console.log("completed " + degree.toString() + " quantize");
 
             let frame = new GifFrame(new BitmapImage(bg.bitmap));
             frames.push(frame);
