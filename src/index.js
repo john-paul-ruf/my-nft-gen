@@ -77,26 +77,29 @@ const main = async (index) => {
 
                 for(let x = 0; x < 3000; x++){
                     for(let y = 0; y < 3000; y++){
-                        switch(getRandomInt(0,7))
+                        switch(getRandomInt(0,10))
                         {
                             case 0:
                             case 1:
                             case 2:
-                                img.setPixelColor(gray, x, y)
-                                break;
                             case 3:
                             case 4:
+                            case 5:
+                            case 6:
+                                img.setPixelColor(gray, x, y)
+                                break;
+                            case 7:
+                            case 2:
                                 img.setPixelColor(darkGreen, x, y)
                                 break;
-                            case 6:
+                            case 9:
                                 img.setPixelColor(green, x, y)
                                 break;
                         }
                     }
                 }
 
-                img.blur(1)
-                img.sepia()
+                img.blur(2)
 
                 return img;
 
@@ -218,7 +221,7 @@ const main = async (index) => {
     }
 
     controlPlane.colorDepth = 255;
-    controlPlane.degreeInc = 72;
+    controlPlane.degreeInc = 2;
     controlPlane.numberOfDegrees = 360;
     controlPlane.numberOfFrame = controlPlane.numberOfDegrees / controlPlane.degreeInc;
 
