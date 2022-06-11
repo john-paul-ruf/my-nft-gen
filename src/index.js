@@ -95,6 +95,9 @@ const main = async (index) => {
                     }
                 }
 
+                img.blur(1)
+                img.sepia()
+
                 return img;
 
             }
