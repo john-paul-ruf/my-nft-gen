@@ -69,37 +69,26 @@ const main = async (index) => {
 
             const animateBackground = async () => {
 
-                const gray = Jimp.cssColorToHex('#050505')
-                const darkGreen = Jimp.cssColorToHex('#085c12')
-                const green = Jimp.cssColorToHex('#34e718')
+                const gray = Jimp.cssColorToHex('#06040A')
+                const darkGreen = Jimp.cssColorToHex('#1f1f1f')
+                const green = Jimp.cssColorToHex('#016236')
 
                 let img = new Jimp(3000, 3000, gray);
 
-                for(let x = 0; x < 3000; x++){
-                    for(let y = 0; y < 3000; y++){
-                        switch(getRandomInt(0,10))
-                        {
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                            case 5:
-                            case 6:
-                                img.setPixelColor(gray, x, y)
-                                break;
-                            case 7:
-                            case 2:
-                                img.setPixelColor(darkGreen, x, y)
-                                break;
-                            case 9:
-                                img.setPixelColor(green, x, y)
-                                break;
+                for (let x = 0; x < 3000; x++) {
+                    for (let y = 0; y < 3000; y++) {
+                        const rando = getRandomInt(0, 20)
+                        if (rando < 15) {
+                            img.setPixelColor(gray, x, y)
+                        } else if (rando < 18) {
+                            img.setPixelColor(darkGreen, x, y)
+                        } else {
+                            img.setPixelColor(green, x, y)
                         }
                     }
                 }
 
-                img.blur(2)
+                img.blur(1)
 
                 return img;
 
@@ -139,8 +128,8 @@ const main = async (index) => {
             const timeLeft = () => {
                 let currentTime = new Date();
                 let rez = currentTime.getTime() - controlPlane.startTime.getTime();
-                let currentFrameCount = (degree/controlPlane.degreeInc)
-                let timePerFrame = rez/currentFrameCount;
+                let currentFrameCount = (degree / controlPlane.degreeInc)
+                let timePerFrame = rez / currentFrameCount;
                 let timeLeft = (controlPlane.numberOfFrame - currentFrameCount) * timePerFrame;
 
                 let h = Math.trunc(timeLeft / 3600000 % 100).toString().padStart(2, '0');
