@@ -27,7 +27,7 @@ export class ControlPlane {
             finalImageSize: 3000,
             colorDepth: 128,
             frameInc: 1,
-            numberOfFrame: 60,
+            numberOfFrame: 120,
 
             summonsFile: path.join(this.directory, '/img/png/summons/png/' + this.summonsName),
             focusFile: path.join(this.directory, '/img/png/focus/png/' + this.focusName),
