@@ -29,10 +29,10 @@ const main = async (index) => {
             upper: 1
         },
         verticalScanLine: {
-            numberOfLineLower: 5,
-            numberOfLinesUpper: 15,
+            numberOfLineLower: 4,
+            numberOfLinesUpper: 8,
             trailsLengthLower: 5,
-            trailsLengthUpper: 30
+            trailsLengthUpper: 50
         },
         effectChance: 50
     };
@@ -132,16 +132,20 @@ const main = async (index) => {
             }
 
             const verticalScanLines = async () => {
-
                 if(controlPlane.verticalScanEffectProps.doVerticalScanLines) {
 
                     let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize);
-
                     const drawLine = async (y) => {
                         for (let x = 0; x < 3000; x++) {
                             let rando = getRandomInt(y, y - controlPlane.verticalScanEffectProps.maxTrailLength)
                             for (let curY = y; curY >= rando; curY--) {
-                                let hex = '#bdf379' + getRandomInt(0, 6).toString() + getRandomInt(0, 6).toString()
+
+                                let hex = '#bdf379';
+                                let upperRange = 3;
+                                let gradientGroup = curY / controlPlane.verticalScanEffectProps.pixelsPerGradient;
+                                hex = hex + getRandomInt(gradientGroup < 10 ? gradientGroup : 10, gradientGroup+upperRange < 10 ? gradientGroup+upperRange: 10).toString()
+                                    + getRandomInt(gradientGroup < 10 ? gradientGroup : 10, gradientGroup+upperRange < 10 ? gradientGroup+upperRange: 10).toString()
+
                                 let color = Jimp.cssColorToHex(hex)
                                 await img.setPixelColor(color, x, curY)
                             }
@@ -289,6 +293,7 @@ const main = async (index) => {
     }
 
     controlPlane.verticalScanEffectProps = {
+        pixelsPerGradient: 3,
         numberOfLines: getRandomInt(controlPlane.verticalScanLine.numberOfLineLower, controlPlane.verticalScanLine.numberOfLinesUpper),
         maxTrailLength: getRandomInt(controlPlane.verticalScanLine.trailsLengthLower, controlPlane.verticalScanLine.trailsLengthUpper),
         doVerticalScanLines: doEffect(controlPlane.effectChance),
