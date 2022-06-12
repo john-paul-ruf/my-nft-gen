@@ -25,9 +25,9 @@ export class ControlPlane {
 
         this.config = {
             finalImageSize: 3000,
-            colorDepth: 255,
-            frameInc: 5,
-            numberOfFrame: 50,
+            colorDepth: 128,
+            frameInc: 1,
+            numberOfFrame: 60,
 
             summonsFile: path.join(this.directory, '/img/png/summons/png/' + this.summonsName),
             focusFile: path.join(this.directory, '/img/png/focus/png/' + this.focusName),
@@ -247,10 +247,10 @@ export class ControlPlane {
                 timeToString(timeLeft);
             }
 
-            console.log("started " + f.toString() + " degree");
+            console.log("started " + f.toString() + " frame");
             await createAnimation(f);
             timeLeft();
-            console.log("completed " + f.toString() + " degree");
+            console.log("completed " + f.toString() + " frame");
         }
 
 
