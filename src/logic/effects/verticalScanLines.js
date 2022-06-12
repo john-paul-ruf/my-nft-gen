@@ -16,7 +16,7 @@ export const verticalScanLines = async (width, height, lineInfo, maxTrailLength,
 
                 let hex = '#bdf379';
                 let upperRange = 3;
-                let gradientGroup = curY / pixelsPerGradient;
+                let gradientGroup = (curY-rando) / pixelsPerGradient;
                 hex = hex + getRandomInt(gradientGroup < 9 ? gradientGroup : 9, gradientGroup + upperRange < 9 ? gradientGroup + upperRange : 9).toString()
                     + getRandomInt(gradientGroup < 9 ? gradientGroup : 9, gradientGroup + upperRange < 9 ? gradientGroup + upperRange : 9).toString()
 

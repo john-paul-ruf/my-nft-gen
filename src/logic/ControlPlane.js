@@ -31,7 +31,7 @@ export class ControlPlane {
 
             summonsFile: path.join(this.directory, '/img/png/summons/png/' + this.summonsName),
             focusFile: path.join(this.directory, '/img/png/focus/png/' + this.focusName),
-            fileOut:path.join(this.directory, '/img/output/' + Date.now().toString() + '.gif'),
+            fileOut: path.join(this.directory, '/img/output/' + Date.now().toString() + '.gif'),
 
             hueRange: {lower: -360, upper: 360},
             glowLowerRange: {lower: -360, upper: 0},
@@ -46,19 +46,13 @@ export class ControlPlane {
             effectChance: 60,
         }
 
-        this.summonsProps = [{
-            apply: 'hue', params: [this.getRandomInt(this.config.hueRange.lower, this.config.hueRange.upper)]
-        }, {apply: 'red', params: [this.getRandomInt(0, 5)]}, {
-            apply: 'green', params: [this.getRandomInt(0, 5)]
-        }, {apply: 'blue', params: [this.getRandomInt(0, 5)]},]
+        this.summonConfig = {
+            initialAdjustments: [{
+                apply: 'hue', params: [this.getRandomInt(this.config.hueRange.lower, this.config.hueRange.upper)]
+            }, {apply: 'red', params: [this.getRandomInt(0, 5)]}, {
+                apply: 'green', params: [this.getRandomInt(0, 5)]
+            }, {apply: 'blue', params: [this.getRandomInt(0, 5)]},],
 
-        this.focusProps = [{
-            apply: 'hue', params: [this.getRandomInt(this.config.hueRange.lower, this.config.hueRange.upper)]
-        }, {apply: 'red', params: [this.getRandomInt(0, 5)]}, {
-            apply: 'green', params: [this.getRandomInt(0, 5)]
-        }, {apply: 'blue', params: [this.getRandomInt(0, 5)]},]
-
-        this.summonEffectProps = {
             glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
             glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
             doGlow: this.doEffect(this.config.effectChance),
@@ -68,7 +62,13 @@ export class ControlPlane {
             doFade: this.doEffect(this.config.effectChance),
         }
 
-        this.focusEffectProps = {
+        this.focusConfig = {
+            initialAdjustments: [{
+                apply: 'hue', params: [this.getRandomInt(this.config.hueRange.lower, this.config.hueRange.upper)]
+            }, {apply: 'red', params: [this.getRandomInt(0, 5)]}, {
+                apply: 'green', params: [this.getRandomInt(0, 5)]
+            }, {apply: 'blue', params: [this.getRandomInt(0, 5)]},],
+
             glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
             glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
             doGlow: this.doEffect(this.config.effectChance),
@@ -83,8 +83,9 @@ export class ControlPlane {
         this.verticalScanEffectProps = {
             numberOfLines: this.getRandomInt(this.config.verticalScanLine.numberOfLineLower, this.config.verticalScanLine.numberOfLinesUpper),
             maxTrailLength: mtl,
-            pixelsPerGradient: mtl/10,
+            pixelsPerGradient: mtl / 10,
             doVerticalScanLines: this.doEffect(this.config.effectChance),
+            lineInfo: this.verticalScanEffectProps.computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines),
             computeInitialLineInfo: (numberOfLines) => {
 
                 const lineInfo = [];
@@ -96,18 +97,15 @@ export class ControlPlane {
                 return lineInfo;
             }
         }
-        this.verticalScanEffectProps.lineInfo = this.verticalScanEffectProps.computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines);
 
         this.animateBackground = {
             doAnimateBackground: this.doEffect(this.config.effectChance),
         }
 
         this.rotateEffectProps = {
-            numberOfRotations: this.getRandomInt(1,4),
+            numberOfRotations: this.getRandomInt(1, 4),
             doRotate: this.doEffect(this.config.effectChance)
         }
-
-        console.log(this);
     }
 
     getRandomInt(min, max) {
@@ -162,8 +160,8 @@ export class ControlPlane {
             let scanLines = null;
 
             //Rando the colors
-            await summons.color(this.summonsProps);
-            await focus.color(this.focusProps);
+            await summons.color(this.summonConfig.initialAdjustments);
+            await focus.color(this.focusConfig.initialAdjustments);
 
             ////////////////////////
             //EFFECTS
@@ -172,20 +170,20 @@ export class ControlPlane {
                 await rotate(summons, this.rotateEffectProps.numberOfRotations, frame, this.config.numberOfFrame)
             }
 
-            if (this.summonEffectProps.doGlow) {
-                await glowAnimated(summons, this.summonEffectProps.glowLowerRange, this.summonEffectProps.glowUpperRange, frame, this.config.numberOfFrame);
+            if (this.summonConfig.doGlow) {
+                await glowAnimated(summons, this.summonConfig.glowLowerRange, this.summonConfig.glowUpperRange, frame, this.config.numberOfFrame);
             }
 
-            if (this.summonEffectProps.doFade) {
-                await fadeAnimated(summons, this.summonEffectProps.fadeLowerRange, this.summonEffectProps.fadeUpperRange, frame, this.config.numberOfFrame);
+            if (this.summonConfig.doFade) {
+                await fadeAnimated(summons, this.summonConfig.fadeLowerRange, this.summonConfig.fadeUpperRange, frame, this.config.numberOfFrame);
             }
 
-            if (this.focusEffectProps.doGlow) {
-                await glowAnimated(focus, this.focusEffectProps.glowLowerRange, this.focusEffectProps.glowUpperRange, frame, this.config.numberOfFrame);
+            if (this.focusConfig.doGlow) {
+                await glowAnimated(focus, this.focusConfig.glowLowerRange, this.focusConfig.glowUpperRange, frame, this.config.numberOfFrame);
             }
 
-            if (this.focusEffectProps.doFade) {
-                await fadeAnimated(focus, this.focusEffectProps.fadeLowerRange, this.focusEffectProps.fadeLowerRange, frame, this.config.numberOfFrame);
+            if (this.focusConfig.doFade) {
+                await fadeAnimated(focus, this.focusConfig.fadeLowerRange, this.focusConfig.fadeLowerRange, frame, this.config.numberOfFrame);
             }
 
             if (this.animateBackground) {
@@ -193,27 +191,20 @@ export class ControlPlane {
             }
 
             if (this.animateBackground) {
-                scanLines = await verticalScanLines(
-                    this.config.finalImageSize,
-                    this.config.finalImageSize,
-                    this.verticalScanEffectProps.lineInfo,
-                    this.verticalScanEffectProps.maxTrailLength,
-                    this.verticalScanEffectProps.pixelsPerGradient,
-                    frame,
-                    this.config.numberOfFrame);
+                scanLines = await verticalScanLines(this.config.finalImageSize, this.config.finalImageSize, this.verticalScanEffectProps.lineInfo, this.verticalScanEffectProps.maxTrailLength, this.verticalScanEffectProps.pixelsPerGradient, frame, this.config.numberOfFrame);
             }
 
             ////////////////////////
             //COMPOSE
             ////////////////////////
             if (animatedBackground) {
-                await background.composite(animatedBackground, 0,0, {
+                await background.composite(animatedBackground, 0, 0, {
                     mode: Jimp.BLEND_SOURCE_OVER,
                 })
             }
 
             if (scanLines) {
-                await background.composite(scanLines, 0,0, {
+                await background.composite(scanLines, 0, 0, {
                     mode: Jimp.BLEND_SOURCE_OVER,
                 })
             }
