@@ -14,11 +14,6 @@ export class ControlPlane {
     constructor() {
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
 
-        this.finalImageSize = 3000;
-        this.colorDepth = 255;
-        this.frameInc = 5;
-        this.numberOfFrame = 50;
-
         const fileURLToPath1 = fileURLToPath(import.meta.url);
         this.directory = dirname(fileURLToPath1).replace('/logic', '');
 
@@ -28,67 +23,74 @@ export class ControlPlane {
         this.summonsName = summonsList[this.getRandomInt(0, summonsList.length - 1)];
         this.focusName = focusList[this.getRandomInt(0, focusList.length - 1)];
 
-        this.summonsFile = path.join(this.directory, '/img/png/summons/png/' + this.summonsName)
-        this.focusFile = path.join(this.directory, '/img/png/focus/png/' + this.focusName)
-        this.fileOut = path.join(this.directory, '/img/output/' + Date.now().toString() + '.gif')
+        this.config = {
+            finalImageSize: 3000,
+            colorDepth: 255,
+            frameInc: 5,
+            numberOfFrame: 50,
 
-        this.hueRange = {lower: -360, upper: 360};
-        this.glowLowerRange = {lower: -360, upper: 0};
-        this.glowUpperRange = {lower: 0, upper: 360};
-        this.fadeLowerRange = {lower: 0.5, upper: 0.75};
-        this.fadeUpperRange = {lower: 0.75, upper: 1};
+            summonsFile: path.join(this.directory, '/img/png/summons/png/' + this.summonsName),
+            focusFile: path.join(this.directory, '/img/png/focus/png/' + this.focusName),
+            fileOut:path.join(this.directory, '/img/output/' + Date.now().toString() + '.gif'),
 
-        this.verticalScanLine = {
-            numberOfLineLower: 4, numberOfLinesUpper: 8, trailsLengthLower: 5, trailsLengthUpper: 50
-        };
+            hueRange: {lower: -360, upper: 360},
+            glowLowerRange: {lower: -360, upper: 0},
+            glowUpperRange: {lower: 0, upper: 360},
+            fadeLowerRange: {lower: 0.5, upper: 0.75},
+            fadeUpperRange: {lower: 0.75, upper: 1},
 
-        this.effectChance = 50;
+            verticalScanLine: {
+                numberOfLineLower: 4, numberOfLinesUpper: 8, trailsLengthLower: 5, trailsLengthUpper: 50
+            },
+
+            effectChance: 60,
+        }
 
         this.summonsProps = [{
-            apply: 'hue', params: [this.getRandomInt(this.hueRange.lower, this.hueRange.upper)]
+            apply: 'hue', params: [this.getRandomInt(this.config.hueRange.lower, this.config.hueRange.upper)]
         }, {apply: 'red', params: [this.getRandomInt(0, 5)]}, {
             apply: 'green', params: [this.getRandomInt(0, 5)]
         }, {apply: 'blue', params: [this.getRandomInt(0, 5)]},]
 
         this.focusProps = [{
-            apply: 'hue', params: [this.getRandomInt(this.hueRange.lower, this.hueRange.upper)]
+            apply: 'hue', params: [this.getRandomInt(this.config.hueRange.lower, this.config.hueRange.upper)]
         }, {apply: 'red', params: [this.getRandomInt(0, 5)]}, {
             apply: 'green', params: [this.getRandomInt(0, 5)]
         }, {apply: 'blue', params: [this.getRandomInt(0, 5)]},]
 
         this.summonEffectProps = {
-            glowLowerRange: this.getRandomInt(this.glowLowerRange.lower, this.glowLowerRange.upper),
-            glowUpperRange: this.getRandomInt(this.glowUpperRange.lower, this.glowUpperRange.upper),
-            doGlow: this.doEffect(this.effectChance),
+            glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
+            glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
+            doGlow: this.doEffect(this.config.effectChance),
 
-            fadeLowerRange: this.getRandomArbitrary(this.fadeLowerRange.lower, this.fadeLowerRange.upper),
-            fadeUpperRange: this.getRandomArbitrary(this.fadeUpperRange.lower, this.fadeUpperRange.upper),
-            doFade: this.doEffect(this.effectChance),
+            fadeLowerRange: this.getRandomArbitrary(this.config.fadeLowerRange.lower, this.config.fadeLowerRange.upper),
+            fadeUpperRange: this.getRandomArbitrary(this.config.fadeUpperRange.lower, this.config.fadeUpperRange.upper),
+            doFade: this.doEffect(this.config.effectChance),
         }
 
         this.focusEffectProps = {
-            glowLowerRange: this.getRandomInt(this.glowLowerRange.lower, this.glowLowerRange.upper),
-            glowUpperRange: this.getRandomInt(this.glowUpperRange.lower, this.glowUpperRange.upper),
-            doGlow: this.doEffect(this.effectChance),
+            glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
+            glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
+            doGlow: this.doEffect(this.config.effectChance),
 
-            fadeLowerRange: this.getRandomArbitrary(this.fadeLowerRange.lower, this.fadeLowerRange.upper),
-            fadeUpperRange: this.getRandomArbitrary(this.fadeUpperRange.lower, this.fadeUpperRange.upper),
-            doFade: this.doEffect(this.effectChance),
+            fadeLowerRange: this.getRandomArbitrary(this.config.fadeLowerRange.lower, this.config.fadeLowerRange.upper),
+            fadeUpperRange: this.getRandomArbitrary(this.config.fadeUpperRange.lower, this.config.fadeUpperRange.upper),
+            doFade: this.doEffect(this.config.effectChance),
         }
 
-        const mtl = this.getRandomInt(this.verticalScanLine.trailsLengthLower, this.verticalScanLine.trailsLengthUpper)
+        const mtl = this.getRandomInt(this.config.verticalScanLine.trailsLengthLower, this.config.verticalScanLine.trailsLengthUpper)
 
         this.verticalScanEffectProps = {
-            numberOfLines: this.getRandomInt(this.verticalScanLine.numberOfLineLower, this.verticalScanLine.numberOfLinesUpper),
+            numberOfLines: this.getRandomInt(this.config.verticalScanLine.numberOfLineLower, this.config.verticalScanLine.numberOfLinesUpper),
             maxTrailLength: mtl,
             pixelsPerGradient: mtl/10,
-            doVerticalScanLines: this.doEffect(this.effectChance),
+            doVerticalScanLines: this.doEffect(this.config.effectChance),
             computeInitialLineInfo: (numberOfLines) => {
 
                 const lineInfo = [];
 
                 for (let i = 0; i <= numberOfLines; i++) {
-                    lineInfo.push({lineStart: this.getRandomInt(0, this.finalImageSize)});
+                    lineInfo.push({lineStart: this.getRandomInt(0, this.config.finalImageSize)});
                 }
 
                 return lineInfo;
@@ -97,12 +99,12 @@ export class ControlPlane {
         this.verticalScanEffectProps.lineInfo = this.verticalScanEffectProps.computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines);
 
         this.animateBackground = {
-            doAnimateBackground: this.doEffect(this.effectChance),
+            doAnimateBackground: this.doEffect(this.config.effectChance),
         }
 
         this.rotateEffectProps = {
             numberOfRotations: this.getRandomInt(1,4),
-            doRotate: this.doEffect(this.effectChance)
+            doRotate: this.doEffect(this.config.effectChance)
         }
 
         console.log(this);
@@ -153,9 +155,9 @@ export class ControlPlane {
         const createAnimation = async (frame) => {
 
             //get fresh files
-            let summons = await Jimp.read(this.summonsFile);
-            let focus = await Jimp.read(this.focusFile);
-            let background = new Jimp(this.finalImageSize, this.finalImageSize, Jimp.cssColorToHex('#0D0D0D'));
+            let summons = await Jimp.read(this.config.summonsFile);
+            let focus = await Jimp.read(this.config.focusFile);
+            let background = new Jimp(this.config.finalImageSize, this.config.finalImageSize, Jimp.cssColorToHex('#0D0D0D'));
             let animatedBackground = null
             let scanLines = null;
 
@@ -167,64 +169,64 @@ export class ControlPlane {
             //EFFECTS
             ////////////////////////
             if (this.rotateEffectProps.doRotate) {
-                await rotate(summons, this.rotateEffectProps.numberOfRotations, frame, this.numberOfFrame)
+                await rotate(summons, this.rotateEffectProps.numberOfRotations, frame, this.config.numberOfFrame)
             }
 
             if (this.summonEffectProps.doGlow) {
-                await glowAnimated(summons, this.summonEffectProps.glowLowerRange, this.summonEffectProps.glowUpperRange, frame, this.numberOfFrame);
+                await glowAnimated(summons, this.summonEffectProps.glowLowerRange, this.summonEffectProps.glowUpperRange, frame, this.config.numberOfFrame);
             }
 
             if (this.summonEffectProps.doFade) {
-                await fadeAnimated(summons, this.summonEffectProps.fadeLowerRange, this.summonEffectProps.fadeUpperRange, frame, this.numberOfFrame);
+                await fadeAnimated(summons, this.summonEffectProps.fadeLowerRange, this.summonEffectProps.fadeUpperRange, frame, this.config.numberOfFrame);
             }
 
             if (this.focusEffectProps.doGlow) {
-                await glowAnimated(focus, this.focusEffectProps.glowLowerRange, this.focusEffectProps.glowUpperRange, frame, this.numberOfFrame);
+                await glowAnimated(focus, this.focusEffectProps.glowLowerRange, this.focusEffectProps.glowUpperRange, frame, this.config.numberOfFrame);
             }
 
             if (this.focusEffectProps.doFade) {
-                await fadeAnimated(focus, this.focusEffectProps.fadeLowerRange, this.focusEffectProps.fadeLowerRange, frame, this.numberOfFrame);
+                await fadeAnimated(focus, this.focusEffectProps.fadeLowerRange, this.focusEffectProps.fadeLowerRange, frame, this.config.numberOfFrame);
             }
 
             if (this.animateBackground) {
-                animatedBackground = await animateBackground(this.finalImageSize, this.finalImageSize);
+                animatedBackground = await animateBackground(this.config.finalImageSize, this.config.finalImageSize);
             }
 
             if (this.animateBackground) {
                 scanLines = await verticalScanLines(
-                    this.finalImageSize,
-                    this.finalImageSize,
+                    this.config.finalImageSize,
+                    this.config.finalImageSize,
                     this.verticalScanEffectProps.lineInfo,
                     this.verticalScanEffectProps.maxTrailLength,
                     this.verticalScanEffectProps.pixelsPerGradient,
                     frame,
-                    this.numberOfFrame);
+                    this.config.numberOfFrame);
             }
 
             ////////////////////////
             //COMPOSE
             ////////////////////////
             if (animatedBackground) {
-                await background.composite(animatedBackground, (this.finalImageSize - 2000) / 2, (this.finalImageSize - 2000) / 2, {
+                await background.composite(animatedBackground, 0,0, {
                     mode: Jimp.BLEND_SOURCE_OVER,
                 })
             }
 
             if (scanLines) {
-                await background.composite(scanLines, (this.finalImageSize - 2000) / 2, (this.finalImageSize - 2000) / 2, {
+                await background.composite(scanLines, 0,0, {
                     mode: Jimp.BLEND_SOURCE_OVER,
                 })
             }
 
-            await background.composite(summons, (this.finalImageSize - 2000) / 2, (this.finalImageSize - 2000) / 2, {
+            await background.composite(summons, (this.config.finalImageSize - 2000) / 2, (this.config.finalImageSize - 2000) / 2, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             })
 
-            await background.composite(focus, (this.finalImageSize - 2000) / 2, (this.finalImageSize - 2000) / 2, {
+            await background.composite(focus, (this.config.finalImageSize - 2000) / 2, (this.config.finalImageSize - 2000) / 2, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             });
 
-            GifUtil.quantizeDekker(background, this.colorDepth)
+            GifUtil.quantizeDekker(background, this.config.colorDepth)
 
             let gifFrame = new GifFrame(new BitmapImage(background.bitmap));
             frames.push(gifFrame);
@@ -234,14 +236,14 @@ export class ControlPlane {
         ////////////////////////
         //ANIMATE
         ////////////////////////
-        for (let f = 0; f < this.numberOfFrame; f = f + this.frameInc) {
+        for (let f = 0; f < this.config.numberOfFrame; f = f + this.config.frameInc) {
 
             const timeLeft = () => {
                 let currentTime = new Date();
                 let rez = currentTime.getTime() - this.startTime.getTime();
-                let currentFrameCount = (f / this.frameInc)
+                let currentFrameCount = (f / this.config.frameInc)
                 let timePerFrame = rez / currentFrameCount;
-                let timeLeft = (this.numberOfFrame - currentFrameCount) * timePerFrame;
+                let timeLeft = (this.config.numberOfFrame - currentFrameCount) * timePerFrame;
                 timeToString(timeLeft);
             }
 
@@ -264,9 +266,9 @@ export class ControlPlane {
         console.log(this);
 
         const fileProps = JSON.stringify(this, null, 2)
-        fs.writeFileSync(this.fileOut + '.txt', fileProps, 'utf-8');
+        fs.writeFileSync(this.config.fileOut + '.txt', fileProps, 'utf-8');
 
-        GifUtil.write(this.fileOut, frames).then(gif => {
+        GifUtil.write(this.config.fileOut, frames).then(gif => {
             console.log("gif written");
         });
 

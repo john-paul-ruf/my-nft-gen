@@ -17,8 +17,8 @@ export const verticalScanLines = async (width, height, lineInfo, maxTrailLength,
                 let hex = '#bdf379';
                 let upperRange = 3;
                 let gradientGroup = curY / pixelsPerGradient;
-                hex = hex + getRandomInt(gradientGroup < 10 ? gradientGroup : 10, gradientGroup + upperRange < 10 ? gradientGroup + upperRange : 10).toString()
-                    + getRandomInt(gradientGroup < 10 ? gradientGroup : 10, gradientGroup + upperRange < 10 ? gradientGroup + upperRange : 10).toString()
+                hex = hex + getRandomInt(gradientGroup < 9 ? gradientGroup : 9, gradientGroup + upperRange < 9 ? gradientGroup + upperRange : 9).toString()
+                    + getRandomInt(gradientGroup < 9 ? gradientGroup : 9, gradientGroup + upperRange < 9 ? gradientGroup + upperRange : 9).toString()
 
                 let color = Jimp.cssColorToHex(hex)
                 await img.setPixelColor(color, x, curY)
