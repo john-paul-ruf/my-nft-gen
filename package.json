@@ -18,9 +18,11 @@
   "homepage": "https://github.com/john-paul-ruf/my-nft-gen#readme",
   "dependencies": {
     "@jimp/plugin-fisheye": "^0.16.1",
+    "fs-xattr": "^0.4.0",
     "gifwrap": "^0.10.1",
     "gm": "^1.23.1",
     "imagemagick": "^0.1.3",
-    "jimp": "^0.16.1"
+    "jimp": "^0.16.1",
+    "properties-reader": "^2.2.0"
   }
 }

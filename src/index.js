@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const Jimp = require('jimp');
 const {GifFrame, GifUtil, GifCodec, BitmapImage} = require('gifwrap');
-const {contrast} = require("jimp");
 
 
 const main = async (index) => {
 
     const controlPlane = {
+        _INVOKED_: 'John Ruf - Bookstore Illuminati',
         hueRange: {
             lower: -360,
             upper: 360
@@ -29,12 +29,12 @@ const main = async (index) => {
             upper: 1
         },
         verticalScanLine: {
-            numberOfLineLower: 3,
-            numberOfLinesUpper: 7,
-            trailsLengthLower: 10,
-            trailsLengthUpper: 25
+            numberOfLineLower: 5,
+            numberOfLinesUpper: 15,
+            trailsLengthLower: 5,
+            trailsLengthUpper: 30
         },
-        effectChance: 90
+        effectChance: 50
     };
 
     const getFilesInDirectory = (dir) => {
@@ -102,62 +102,68 @@ const main = async (index) => {
 
             const animateBackground = async () => {
 
-                const gray = Jimp.cssColorToHex('#06040A')
-                const darkGreen = Jimp.cssColorToHex('#1f1f1f')
-                const green = Jimp.cssColorToHex('#016236')
+                if(controlPlane.animateBackground.doAnimateBackground) {
+                    const gray = Jimp.cssColorToHex('#06040A')
+                    const darkGreen = Jimp.cssColorToHex('#1f1f1f')
+                    const green = Jimp.cssColorToHex('#016236')
 
-                let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize, gray);
+                    let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize, gray);
 
-                for (let x = 0; x < 3000; x++) {
-                    for (let y = 0; y < 3000; y++) {
-                        const rando = getRandomInt(0, 20)
-                        if (rando < 15) {
-                            img.setPixelColor(gray, x, y)
-                        } else if (rando < 18) {
-                            img.setPixelColor(darkGreen, x, y)
-                        } else {
-                            img.setPixelColor(green, x, y)
+                    for (let x = 0; x < 3000; x++) {
+                        for (let y = 0; y < 3000; y++) {
+                            const rando = getRandomInt(0, 20)
+                            if (rando < 15) {
+                                await img.setPixelColor(gray, x, y)
+                            } else if (rando < 18) {
+                                await img.setPixelColor(darkGreen, x, y)
+                            } else {
+                                await img.setPixelColor(green, x, y)
+                            }
                         }
                     }
+
+                    await img.blur(1)
+
+                    return img;
                 }
 
-                img.blur(1)
-
-                return img;
+                return new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize, Jimp.cssColorToHex('#0D0D0D'));
 
             }
 
             const verticalScanLines = async () => {
 
-                let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize);
+                if(controlPlane.verticalScanEffectProps.doVerticalScanLines) {
 
-                controlPlane.verticalScanEffectProps.lineInfo.forEach((element) => {
+                    let img = new Jimp(controlPlane.finalImageSize, controlPlane.finalImageSize);
 
-                    const drawLine = (y) => {
+                    const drawLine = async (y) => {
                         for (let x = 0; x < 3000; x++) {
-                            const rando = getRandomInt(1, controlPlane.verticalScanEffectProps.maxTrailLength)
-                            for (let curY = y; curY < y + rando; curY++) {
-                                let hex = '#bdf379' + getRandomInt(7,11).toString()+ getRandomInt(7,11).toString()
-                                const color = Jimp.cssColorToHex(hex)
-                                img.setPixelColor(color, x, y)
+                            let rando = getRandomInt(y, y - controlPlane.verticalScanEffectProps.maxTrailLength)
+                            for (let curY = y; curY >= rando; curY--) {
+                                let hex = '#bdf379' + getRandomInt(0, 6).toString() + getRandomInt(0, 6).toString()
+                                let color = Jimp.cssColorToHex(hex)
+                                await img.setPixelColor(color, x, curY)
                             }
+                        }
+                    }
 
+                    for (let i = 0; i < controlPlane.verticalScanEffectProps.lineInfo.length; i++) {
+                        const displacement = (controlPlane.finalImageSize / controlPlane.numberOfDegrees) * degree;
+                        let y = controlPlane.verticalScanEffectProps.lineInfo[i].lineStart + displacement;
+
+                        if (y > controlPlane.finalImageSize) {
+                            y = y - controlPlane.finalImageSize
                         }
 
+                        await drawLine(y)
                     }
 
-                    const displacement = (controlPlane.finalImageSize / controlPlane.numberOfFrame) * degree;
-                    let y = element.lineStart + displacement;
+                    await bg.composite(img, 0, 0, {
+                        mode: Jimp.BLEND_SOURCE_OVER,
+                    })
 
-                    if (y > controlPlane.finalImageSize) {
-                        y = y - controlPlane.finalImageSize
-                    }
-
-                    drawLine(y)
-
-                });
-
-                return img;
+                }
 
             }
 
@@ -177,11 +183,7 @@ const main = async (index) => {
 
             let bg = await animateBackground();
 
-            let scan = await verticalScanLines();
-
-            await bg.composite(scan, 0,0, {
-                mode: Jimp.BLEND_SOURCE_OVER,
-            })
+            await verticalScanLines();
 
             await bg.composite(summons, (controlPlane.finalImageSize - 2000) / 2, (controlPlane.finalImageSize - 2000) / 2, {
                 mode: Jimp.BLEND_SOURCE_OVER,
@@ -228,10 +230,13 @@ const main = async (index) => {
         let ms = Math.trunc(rez % 1000).toString().padStart(3, '0');
         controlPlane.processingTime = (h + ':' + m + ':' + s + '.' + ms);
 
+        controlPlane._bornOn = controlPlane.endTime;
+
         console.log("gif " + index.toString() + " write start");
         console.log(controlPlane);
 
-        fs.writeFileSync(controlPlane.fileOut + '.txt', JSON.stringify(controlPlane, null, 2), 'utf-8');
+        const fileProps = JSON.stringify(controlPlane, null, 2)
+        fs.writeFileSync(controlPlane.fileOut + '.txt', fileProps, 'utf-8');
 
         GifUtil.write(controlPlane.fileOut, frames).then(gif => {
             console.log("gif " + index.toString() + " written");
@@ -286,6 +291,7 @@ const main = async (index) => {
     controlPlane.verticalScanEffectProps = {
         numberOfLines: getRandomInt(controlPlane.verticalScanLine.numberOfLineLower, controlPlane.verticalScanLine.numberOfLinesUpper),
         maxTrailLength: getRandomInt(controlPlane.verticalScanLine.trailsLengthLower, controlPlane.verticalScanLine.trailsLengthUpper),
+        doVerticalScanLines: doEffect(controlPlane.effectChance),
         computeInitialLineInfo: (numberOfLines) => {
 
             const lineInfo = [];
@@ -298,9 +304,13 @@ const main = async (index) => {
         }
     }
 
+    controlPlane.animateBackground = {
+        doAnimateBackground: doEffect(controlPlane.effectChance),
+    }
+
     controlPlane.finalImageSize = 3000;
     controlPlane.colorDepth = 255;
-    controlPlane.degreeInc = 72;
+    controlPlane.degreeInc = 4;
     controlPlane.numberOfDegrees = 360;
     controlPlane.halfWayNumberOfDegrees = controlPlane.numberOfDegrees / 2;
     controlPlane.numberOfFrame = controlPlane.numberOfDegrees / controlPlane.degreeInc;
