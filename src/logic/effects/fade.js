@@ -1,9 +1,12 @@
-export const fadeAnimated = async (img, fadeLowerRange, fadeUpperRange, currentFrame, totalFrame) => {
+export const fadeAnimated = async (img, fadeTimes, fadeLowerRange, fadeUpperRange, currentFrame, totalFrame) => {
     const findValue = (min, max) => {
         const range = max - min;
-        const step = range / (totalFrame / 2);
+        const segment = totalFrame / fadeTimes;
+        const halfSegment = segment / 2;
+        const frameSegment = currentFrame % segment;
+        const step = range / (segment / 2);
 
-        if (currentFrame <= (totalFrame / 2)) {
+        if (frameSegment <= halfSegment) {
             return min + (step * currentFrame);
         }
 

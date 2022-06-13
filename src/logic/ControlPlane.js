@@ -34,10 +34,21 @@ export class ControlPlane {
             fileOut: path.join(this.directory, '/img/output/' + Date.now().toString() + '.gif'),
 
             hueRange: {lower: -360, upper: 360},
+
             glowLowerRange: {lower: -360, upper: 0},
             glowUpperRange: {lower: 0, upper: 360},
+
             fadeLowerRange: {lower: 0.5, upper: 0.75},
             fadeUpperRange: {lower: 0.75, upper: 1},
+
+            fadeTimeLower: 1,
+            fadeTimesUpper: 6,
+
+            glowTimeLower: 1,
+            glowTimesUpper: 3,
+
+            rotateNumberLower: 1,
+            rotateNumberUpper: 3,
 
             verticalScanLine: {
                 numberOfLineLower: 4, numberOfLinesUpper: 12, trailsLengthLower: 25, trailsLengthUpper: 150
@@ -55,10 +66,12 @@ export class ControlPlane {
 
             glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
             glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
+            glowTimes: this.getRandomInt(this.config.glowTimeLower, this.config.glowTimesUpper),
             doGlow: this.doEffect(this.config.effectChance),
 
             fadeLowerRange: this.getRandomArbitrary(this.config.fadeLowerRange.lower, this.config.fadeLowerRange.upper),
             fadeUpperRange: this.getRandomArbitrary(this.config.fadeUpperRange.lower, this.config.fadeUpperRange.upper),
+            fadeTimes: this.getRandomInt(this.config.fadeTimeLower, this.config.fadeTimesUpper),
             doFade: this.doEffect(this.config.effectChance),
         }
 
@@ -71,10 +84,12 @@ export class ControlPlane {
 
             glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
             glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
+            glowTimes: this.getRandomInt(this.config.glowTimeLower, this.config.glowTimesUpper),
             doGlow: this.doEffect(this.config.effectChance),
 
             fadeLowerRange: this.getRandomArbitrary(this.config.fadeLowerRange.lower, this.config.fadeLowerRange.upper),
             fadeUpperRange: this.getRandomArbitrary(this.config.fadeUpperRange.lower, this.config.fadeUpperRange.upper),
+            fadeTimes: this.getRandomInt(this.config.fadeTimeLower, this.config.fadeTimesUpper),
             doFade: this.doEffect(this.config.effectChance),
         }
 
@@ -95,16 +110,31 @@ export class ControlPlane {
             maxTrailLength: mtl,
             pixelsPerGradient: mtl / 10,
             doVerticalScanLines: this.doEffect(this.config.effectChance),
+
+            glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
+            glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
+            glowTimes: this.getRandomInt(this.config.glowTimeLower, this.config.glowTimesUpper),
+            doGlow: this.doEffect(this.config.effectChance),
+
+            fadeLowerRange: this.getRandomArbitrary(this.config.fadeLowerRange.lower, this.config.fadeLowerRange.upper),
+            fadeUpperRange: this.getRandomArbitrary(this.config.fadeUpperRange.lower, this.config.fadeUpperRange.upper),
+            fadeTimes: this.getRandomInt(this.config.fadeTimeLower, this.config.fadeTimesUpper),
+            doFade: this.doEffect(this.config.effectChance),
         }
 
         this.verticalScanEffectProps.lineInfo = computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines)
 
         this.animateBackground = {
+            glowLowerRange: this.getRandomInt(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
+            glowUpperRange: this.getRandomInt(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
+            glowTimes: this.getRandomInt(this.config.glowTimeLower, this.config.glowTimesUpper),
+            doGlow: this.doEffect(this.config.effectChance),
+
             doAnimateBackground: this.doEffect(this.config.effectChance),
         }
 
         this.rotateEffectProps = {
-            numberOfRotations: this.getRandomInt(1, 4),
+            numberOfRotations: this.getRandomInt(this.config.rotateNumberLower, this.config.rotateNumberUpper),
             doRotate: this.doEffect(this.config.effectChance)
         }
     }
@@ -172,27 +202,41 @@ export class ControlPlane {
             }
 
             if (this.summonConfig.doGlow) {
-                await glowAnimated(summons, this.summonConfig.glowLowerRange, this.summonConfig.glowUpperRange, frame, this.config.numberOfFrame);
+                await glowAnimated(summons, this.summonConfig.glowTimes, this.summonConfig.glowLowerRange, this.summonConfig.glowUpperRange, frame, this.config.numberOfFrame);
             }
 
             if (this.summonConfig.doFade) {
-                await fadeAnimated(summons, this.summonConfig.fadeLowerRange, this.summonConfig.fadeUpperRange, frame, this.config.numberOfFrame);
+                await fadeAnimated(summons, this.summonConfig.fadeTimes, this.summonConfig.fadeLowerRange, this.summonConfig.fadeUpperRange, frame, this.config.numberOfFrame);
             }
 
             if (this.focusConfig.doGlow) {
-                await glowAnimated(focus, this.focusConfig.glowLowerRange, this.focusConfig.glowUpperRange, frame, this.config.numberOfFrame);
+                await glowAnimated(focus, this.summonConfig.glowTimes, this.focusConfig.glowLowerRange, this.focusConfig.glowUpperRange, frame, this.config.numberOfFrame);
             }
 
             if (this.focusConfig.doFade) {
-                await fadeAnimated(focus, this.focusConfig.fadeLowerRange, this.focusConfig.fadeLowerRange, frame, this.config.numberOfFrame);
+                await fadeAnimated(focus, this.summonConfig.fadeTimes, this.focusConfig.fadeLowerRange, this.focusConfig.fadeLowerRange, frame, this.config.numberOfFrame);
             }
 
             if (this.animateBackground) {
                 animatedBackground = await animateBackground(this.config.finalImageSize, this.config.finalImageSize);
+
+                if(this.animateBackground.doGlow){
+                    await glowAnimated(animatedBackground, this.animateBackground.glowTimes, this.animateBackground.glowLowerRange, this.animateBackground.glowUpperRange, frame, this.config.numberOfFrame);
+                }
+
             }
 
-            if (this.animateBackground) {
+            if (this.verticalScanEffectProps.doVerticalScanLines) {
+
                 scanLines = await verticalScanLines(this.config.finalImageSize, this.config.finalImageSize, this.verticalScanEffectProps.lineInfo, this.verticalScanEffectProps.maxTrailLength, this.verticalScanEffectProps.pixelsPerGradient, frame, this.config.numberOfFrame);
+
+                if(this.verticalScanEffectProps.doGlow){
+                    await glowAnimated(scanLines, this.verticalScanEffectProps.glowTimes, this.verticalScanEffectProps.glowLowerRange, this.verticalScanEffectProps.glowUpperRange, frame, this.config.numberOfFrame);
+                }
+
+                if(this.verticalScanEffectProps.doFade){
+                    await glowAnimated(scanLines, this.verticalScanEffectProps.fadeTimes, this.verticalScanEffectProps.glowLowerRange, this.verticalScanEffectProps.glowUpperRange, frame, this.config.numberOfFrame);
+                }
             }
 
             ////////////////////////
@@ -223,7 +267,6 @@ export class ControlPlane {
             let gifFrame = new GifFrame(new BitmapImage(background.bitmap));
             frames.push(gifFrame);
         }
-
 
         ////////////////////////
         //ANIMATE
