@@ -95,9 +95,9 @@ export class ControlPlane {
             maxTrailLength: mtl,
             pixelsPerGradient: mtl / 10,
             doVerticalScanLines: this.doEffect(this.config.effectChance),
-            lineInfo: computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines),
-
         }
+
+        this.verticalScanEffectProps.lineInfo = computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines)
 
         this.animateBackground = {
             doAnimateBackground: this.doEffect(this.config.effectChance),
