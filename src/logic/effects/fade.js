@@ -10,7 +10,7 @@ export const fadeAnimated = async (img, fadeTimes, fadeLowerRange, fadeUpperRang
             return min + (step * currentFrame);
         }
 
-        return max - (step * (currentFrame - (totalFrame / 2)));
+        return max - (step * (frameSegment - halfSegment));
     }
 
     const opacity = findValue(fadeLowerRange, fadeUpperRange)
