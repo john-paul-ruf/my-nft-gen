@@ -79,23 +79,24 @@ export class ControlPlane {
         }
 
         const mtl = this.getRandomInt(this.config.verticalScanLine.trailsLengthLower, this.config.verticalScanLine.trailsLengthUpper)
+        const computeInitialLineInfo = (numberOfLines) => {
+
+            const lineInfo = [];
+
+            for (let i = 0; i <= numberOfLines; i++) {
+                lineInfo.push({lineStart: this.getRandomInt(0, this.config.finalImageSize)});
+            }
+
+            return lineInfo;
+        }
 
         this.verticalScanEffectProps = {
             numberOfLines: this.getRandomInt(this.config.verticalScanLine.numberOfLineLower, this.config.verticalScanLine.numberOfLinesUpper),
             maxTrailLength: mtl,
             pixelsPerGradient: mtl / 10,
             doVerticalScanLines: this.doEffect(this.config.effectChance),
-            lineInfo: this.verticalScanEffectProps.computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines),
-            computeInitialLineInfo: (numberOfLines) => {
+            lineInfo: computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines),
 
-                const lineInfo = [];
-
-                for (let i = 0; i <= numberOfLines; i++) {
-                    lineInfo.push({lineStart: this.getRandomInt(0, this.config.finalImageSize)});
-                }
-
-                return lineInfo;
-            }
         }
 
         this.animateBackground = {
