@@ -25,7 +25,7 @@ export class ControlPlane {
 
         this.config = {
             finalImageSize: 3000,
-            colorDepth: 128,
+            colorDepth: 32,
             frameInc: 1,
             numberOfFrame: 120,
 
@@ -40,7 +40,7 @@ export class ControlPlane {
             fadeUpperRange: {lower: 0.75, upper: 1},
 
             verticalScanLine: {
-                numberOfLineLower: 4, numberOfLinesUpper: 8, trailsLengthLower: 5, trailsLengthUpper: 50
+                numberOfLineLower: 4, numberOfLinesUpper: 12, trailsLengthLower: 25, trailsLengthUpper: 150
             },
 
             effectChance: 60,
