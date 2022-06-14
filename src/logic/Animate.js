@@ -39,7 +39,7 @@ export const animate = async (controlPlane) => {
         ////////////////////////
         //EFFECTS
         ////////////////////////
-        if (controlPlane.rotateEffectProps.doRotate) {
+        if (controlPlane.rotateSummons.doRotate) {
             await rotate(summons, controlPlane.rotateEffectProps.numberOfRotations, frame, controlPlane.config.fileInfo.numberOfFrame)
         }
 
@@ -68,16 +68,16 @@ export const animate = async (controlPlane) => {
 
         }
 
-        if (controlPlane.verticalScanEffectProps.doVerticalScanLines) {
+        if (controlPlane.verticalScanlines.doVerticalScanLines) {
 
-            scanLines = await verticalScanLines(controlPlane.config.fileInfo.finalImageSize, controlPlane.config.fileInfo.finalImageSize, controlPlane.verticalScanEffectProps.lineInfo, frame, controlPlane.config.fileInfo.numberOfFrame);
+            scanLines = await verticalScanLines(controlPlane.config.fileInfo.finalImageSize, controlPlane.config.fileInfo.finalImageSize, controlPlane.verticalScanlines.lineInfo, frame, controlPlane.config.fileInfo.numberOfFrame);
 
-            if(controlPlane.verticalScanEffectProps.glow.doGlow){
-                await glowAnimated(scanLines, controlPlane.verticalScanEffectProps.glow.times, controlPlane.verticalScanEffectProps.glow.lower, controlPlane.verticalScanEffectProps.glow.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
+            if(controlPlane.verticalScanlines.glow.doGlow){
+                await glowAnimated(scanLines, controlPlane.verticalScanlines.glow.times, controlPlane.verticalScanlines.glow.lower, controlPlane.verticalScanlines.glow.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
             }
 
-            if(controlPlane.verticalScanEffectProps.fade.doFade){
-                await glowAnimated(scanLines, controlPlane.verticalScanEffectProps.fade.times, controlPlane.verticalScanEffectProps.fade.lower, controlPlane.verticalScanEffectProps.fade.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
+            if(controlPlane.verticalScanlines.fade.doFade){
+                await glowAnimated(scanLines, controlPlane.verticalScanlines.fade.times, controlPlane.verticalScanlines.fade.lower, controlPlane.verticalScanlines.fade.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
             }
         }
 
