@@ -8,7 +8,7 @@ import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
 import fs from "fs";
 
 export const animate = async (controlPlane) => {
-    console.log(this);
+    console.log(controlPlane);
 
     controlPlane.startTime = new Date();
 
@@ -20,7 +20,7 @@ export const animate = async (controlPlane) => {
         let s = Math.trunc(rez / 1000 % 60).toString().padStart(2, '0');
         let ms = Math.trunc(rez % 1000).toString().padStart(3, '0');
         console.log(h + ':' + m + ':' + s + '.' + ms);
-        return (h + ':' + m + ':' + s + '.' + ms);
+        return h + ':' + m + ':' + s + '.' + ms;
     }
 
     const createAnimation = async (frame) => {
@@ -60,7 +60,7 @@ export const animate = async (controlPlane) => {
         }
 
         if (controlPlane.animateBackground) {
-            animatedBackground = await animateBackground(controlPlane.config.finalImageSize, controlPlane.config.finalImageSize);
+            animatedBackground = await animateBackground(controlPlane.config.fileInfo.finalImageSize, controlPlane.config.fileInfo.finalImageSize);
 
             if(controlPlane.animateBackground.glow.doGlow){
                 await glowAnimated(animatedBackground, controlPlane.animateBackground.glow.times, controlPlane.animateBackground.glow.lower, controlPlane.animateBackground.glow.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
@@ -70,7 +70,7 @@ export const animate = async (controlPlane) => {
 
         if (controlPlane.verticalScanEffectProps.doVerticalScanLines) {
 
-            scanLines = await verticalScanLines(controlPlane.config.finalImageSize, controlPlane.config.finalImageSize, controlPlane.verticalScanEffectProps.lineInfo, frame, controlPlane.config.fileInfo.numberOfFrame);
+            scanLines = await verticalScanLines(controlPlane.config.fileInfo.finalImageSize, controlPlane.config.fileInfo.finalImageSize, controlPlane.verticalScanEffectProps.lineInfo, frame, controlPlane.config.fileInfo.numberOfFrame);
 
             if(controlPlane.verticalScanEffectProps.glow.doGlow){
                 await glowAnimated(scanLines, controlPlane.verticalScanEffectProps.glow.times, controlPlane.verticalScanEffectProps.glow.lower, controlPlane.verticalScanEffectProps.glow.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
@@ -113,14 +113,14 @@ export const animate = async (controlPlane) => {
     ////////////////////////
     //ANIMATE
     ////////////////////////
-    for (let f = 0; f < controlPlane.config.numberOfFrame; f = f + controlPlane.config.frameInc) {
+    for (let f = 1; f < controlPlane.config.fileInfo.numberOfFrame; f = f + controlPlane.config.fileInfo.frameInc) {
 
         const timeLeft = () => {
             let currentTime = new Date();
             let rez = currentTime.getTime() - controlPlane.startTime.getTime();
-            let currentFrameCount = (f / controlPlane.config.frameInc)
+            let currentFrameCount = (f / controlPlane.config.fileInfo.frameInc)
             let timePerFrame = rez / currentFrameCount;
-            let timeLeft = (controlPlane.config.numberOfFrame - currentFrameCount) * timePerFrame;
+            let timeLeft = (controlPlane.config.fileInfo.numberOfFrame - currentFrameCount) * timePerFrame;
             timeToString(timeLeft);
         }
 
@@ -135,15 +135,16 @@ export const animate = async (controlPlane) => {
     //WRITE TO FILE
     ////////////////////////
     controlPlane.endTime = new Date();
-    controlPlane.processingTime = timeToString.call(controlPlane.endTime.getTime() - controlPlane.startTime.getTime());
+    const rez = controlPlane.endTime.getTime() - controlPlane.startTime.getTime();
+    controlPlane.processingTime = timeToString(rez);
 
     console.log("gif write start");
-    console.log(this);
+    console.log(controlPlane);
 
-    const fileProps = JSON.stringify(this, null, 2)
-    fs.writeFileSync(controlPlane.config.fileOut + '.txt', fileProps, 'utf-8');
+    const fileProps = JSON.stringify(controlPlane, null, 2)
+    fs.writeFileSync(controlPlane.config.fileInfo.fileOut + '.txt', fileProps, 'utf-8');
 
-    GifUtil.write(controlPlane.config.fileOut, frames).then(gif => {
+    GifUtil.write(controlPlane.config.fileInfo.fileOut, frames).then(gif => {
         console.log("gif written");
     });
 

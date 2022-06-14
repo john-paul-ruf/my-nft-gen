@@ -52,9 +52,9 @@ export class ControlPlane {
             },
 
             fade: {
-                lowerRange: {lower: 0.5, upper: 0.75},
-                upperRange: {lower: 0.75, upper: 1},
-                timeLower: 1,
+                lowerRange: {lower: 0, upper: 0.2},
+                upperRange: {lower: 0.2, upper: 0.4},
+                timesLower: 1,
                 timesUpper: 4,
                 effectChance: 50,
             },
@@ -72,6 +72,10 @@ export class ControlPlane {
                 trailsLengthUpper: 25,
                 effectChance: 80,
             },
+
+            animateBackground: {
+                effectChance:70
+            }
         }
 
         const generateGlowEffectConfig = () => {
@@ -121,7 +125,7 @@ export class ControlPlane {
 
         this.focusConfig = generateBaseConfig();
 
-        this.verticalScanEffectProps = {
+        this.verticalScanlines = {
             numberOfLines: this.getRandomInt(this.config.verticalScanLine.numberOfLineLower, this.config.verticalScanLine.numberOfLinesUpper),
             doVerticalScanLines: this.doEffect(this.config.effectChance),
             glow: generateGlowEffectConfig(),
@@ -142,15 +146,15 @@ export class ControlPlane {
             return lineInfo;
         }
 
-        this.verticalScanEffectProps.lineInfo = computeInitialLineInfo(this.verticalScanEffectProps.numberOfLines)
+        this.verticalScanlines.lineInfo = computeInitialLineInfo(this.verticalScanlines.numberOfLines)
 
         this.animateBackground = {
             glow: generateGlowEffectConfig(),
             fade: generateFadeEffectConfig(),
-            doAnimateBackground: this.doEffect(this.config.effectChance),
+            doAnimateBackground: this.doEffect(this.config.animateBackground.effectChance),
         }
 
-        this.rotateEffectProps = {
+        this.rotateSummons = {
             numberOfRotations: this.getRandomInt(this.config.rotate.lower, this.config.rotate.upper),
             doRotate: this.doEffect(this.config.effectChance)
         }
@@ -173,7 +177,9 @@ export class ControlPlane {
         const list = [];
 
         fs.readdirSync(directoryPath).forEach(file => {
-            list.push(file);
+            if(!file.startsWith('.')) {
+                list.push(file);
+            }
         });
 
         return list;
