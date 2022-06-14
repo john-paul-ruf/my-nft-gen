@@ -7,7 +7,7 @@ export const fadeAnimated = async (img, fadeTimes, fadeLowerRange, fadeUpperRang
         const step = range / (segment / 2);
 
         if (frameSegment <= halfSegment) {
-            return min + (step * currentFrame);
+            return min + (step * frameSegment);
         }
 
         return max - (step * (frameSegment - halfSegment));

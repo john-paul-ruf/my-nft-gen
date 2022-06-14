@@ -1,5 +1,5 @@
 import Jimp from "jimp";
-export const verticalScanLines = async (width, height, lineInfo, maxTrailLength, pixelsPerGradient, currentFrame, numberOfFrames) => {
+export const verticalScanLines = async (width, height, lineInfo, currentFrame, numberOfFrames) => {
 
     const getRandomInt = (min, max) => {
         min = Math.ceil(min);
@@ -9,7 +9,7 @@ export const verticalScanLines = async (width, height, lineInfo, maxTrailLength,
 
     let img = new Jimp(width,height);
 
-    const drawLine = async (y) => {
+    const drawLine = async (y, maxTrailLength, pixelsPerGradient) => {
         for (let x = 0; x < 3000; x++) {
             let rando = getRandomInt(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
@@ -17,8 +17,8 @@ export const verticalScanLines = async (width, height, lineInfo, maxTrailLength,
                 let hex = '#bdf379';
                 let upperRange = 3;
                 let gradientGroup = (curY-rando) / pixelsPerGradient;
-                hex = hex + getRandomInt(gradientGroup < 9 ? gradientGroup : 9, gradientGroup + upperRange < 9 ? gradientGroup + upperRange : 9).toString()
-                    + getRandomInt(gradientGroup < 9 ? gradientGroup : 9, gradientGroup + upperRange < 9 ? gradientGroup + upperRange : 9).toString()
+                hex = hex + getRandomInt(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
+                    + getRandomInt(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
 
                 let color = Jimp.cssColorToHex(hex)
                 await img.setPixelColor(color, x, curY)
@@ -34,7 +34,7 @@ export const verticalScanLines = async (width, height, lineInfo, maxTrailLength,
             y = y - height
         }
 
-        await drawLine(y)
+        await drawLine(y, lineInfo[i].maxTrailLength, lineInfo[i].pixelsPerGradient)
     }
 
     return img;

@@ -7,10 +7,10 @@ export const glowAnimated = async (img, fadeTimes, glowLowerRange, glowUpperRang
         const step = range / (segment / 2);
 
         if (frameSegment <= halfSegment) {
-            return min + (step * currentFrame);
+            return min + (step * frameSegment);
         }
 
-        return max - (step * (currentFrame - (totalFrame / 2)));
+        return max - (step * (frameSegment - halfSegment));
     }
 
     const hue = findValue(glowLowerRange, glowUpperRange)
