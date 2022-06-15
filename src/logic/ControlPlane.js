@@ -27,7 +27,7 @@ export class ControlPlane {
 
             fileInfo:{
                 finalImageSize: 3000,
-                colorDepth: 32,
+                colorDepth: 256,
                 frameInc: 1,
                 numberOfFrame: 30,
 
