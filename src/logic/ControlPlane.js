@@ -29,7 +29,7 @@ export class ControlPlane {
                 finalImageSize: 3000,
                 colorDepth: 32,
                 frameInc: 1,
-                numberOfFrame: 2,
+                numberOfFrame: 30,
 
                 summonsFile: path.join(this.directory, '/img/png/summons/png/' + this.summonsName),
                 focusFile: path.join(this.directory, '/img/png/focus/png/' + this.focusName),
@@ -79,7 +79,7 @@ export class ControlPlane {
 
             radiate: {
                 lower: 1,
-                upper: 3,
+                upper: 1,
                 effectChance: 100,
             }
 

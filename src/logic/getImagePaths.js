@@ -1,6 +1,6 @@
 import Jimp from "jimp";
 
-export const getImagePaths = (sourceImg) => {
+export const getImagePaths = async (sourceImg) => {
 
     const paths = [];
 
@@ -15,48 +15,61 @@ export const getImagePaths = (sourceImg) => {
 
     const isEdge = (x, y) => {
 
+        const checkAround = (pixel, x, y) => {
+            const pixelNext = getPixel(x, y);
+
+            if (isTransparent(pixel) && !isTransparent(pixelNext) || !isTransparent(pixel) && isTransparent(pixelNext)) {
+                return true;
+            }
+
+            return false;
+        }
+
         if (x < 0 || y < 0 || x > sourceImg.bitmap.width || y > sourceImg.bitmap.height) {
             return false;
         }
 
         const pixel = getPixel(x, y);
-        const pixelNext = getPixel(x + 1, y);
 
-        if (isTransparent(pixel) && !isTransparent(pixelNext) || !isTransparent(pixel) && isTransparent(pixelNext)) {
-            return true;
-        }
+        return checkAround(pixel, x, y + 1)
+            || checkAround(pixel, x + 1, y + 1)
+            || checkAround(pixel, x + 1, y)
+            || checkAround(pixel, x + 1, y - 1)
+            || checkAround(pixel, x, y - 1)
+            || checkAround(pixel, x - 1, y - 1)
+            || checkAround(pixel, x - 1, y)
+            || checkAround(pixel, x - 1, y + 1)
 
-        return false;
     }
 
-    const findPath = (x, y) => {
+    const findPath = async (x, y) => {
         const path = [];
 
         const isNext = (x, y) => {
             return isEdge(x, y) && !pointInPaths(x, y) && !pointInPath(path, x, y);
         }
 
-        const processPixel = (x, y) => {
+        const processPixel = async (x, y) => {
             if (isNext(x, y)) {
                 path.push({x: x, y: y});
                 search(x, y);
             }
         }
 
-        const search = (x, y) => {
-            processPixel(x, y + 1)
-            processPixel(x + 1, y + 1)
-            processPixel(x + 1, y)
-            processPixel(x + 1, y - 1)
-            processPixel(x, y - 1)
-            processPixel(x - 1, y - 1)
-            processPixel(x - 1, y)
-            processPixel(x - 1, y + 1)
+        const search = async (x, y) => {
+            await processPixel(x, y + 1)
+            await processPixel(x + 1, y + 1)
+            await processPixel(x + 1, y)
+            await processPixel(x + 1, y - 1)
+            await processPixel(x, y - 1)
+            await processPixel(x - 1, y - 1)
+            await processPixel(x - 1, y)
+            await processPixel(x - 1, y + 1)
         }
 
         path.push({x: x, y: y});
 
-        search(x, y);
+        await search(x, y);
 
         if (path.length > 2) {
             paths.push(path);
@@ -90,7 +103,7 @@ export const getImagePaths = (sourceImg) => {
         for (let x = 0; x < sourceImg.bitmap.width; x++) {
             if (isEdge(x, y)) {
                 if (paths.length == 0 || !pointInPaths(x, y)) {
-                    findPath(x, y)
+                    await findPath(x, y)
                 }
             }
         }
