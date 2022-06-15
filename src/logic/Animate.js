@@ -1,11 +1,12 @@
 import Jimp from "jimp";
-import {rotate} from "./effects/rotate.js";
-import {glowAnimated} from "./effects/glow.js";
-import {fadeAnimated} from "./effects/fade.js";
-import {animateBackground} from "./effects/animateBackground.js";
-import {verticalScanLines} from "./effects/verticalScanLines.js";
+import {rotate} from "../effects/rotate.js";
+import {glowAnimated} from "../effects/glow.js";
+import {fadeAnimated} from "../effects/fade.js";
+import {animateBackground} from "../effects/animateBackground.js";
+import {verticalScanLines} from "../effects/verticalScanLines.js";
 import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
 import fs from "fs";
+import {radiate} from "../effects/radiate.js";
 
 export const animate = async (controlPlane) => {
     console.log(controlPlane);
@@ -40,7 +41,7 @@ export const animate = async (controlPlane) => {
         //EFFECTS
         ////////////////////////
         if (controlPlane.rotateSummons.doRotate) {
-            await rotate(summons, controlPlane.rotateEffectProps.numberOfRotations, frame, controlPlane.config.fileInfo.numberOfFrame)
+            await rotate(summons, controlPlane.rotateSummons.numberOfRotations, frame, controlPlane.config.fileInfo.numberOfFrame)
         }
 
         if (controlPlane.summonConfig.glow.doGlow) {
@@ -51,6 +52,10 @@ export const animate = async (controlPlane) => {
             await fadeAnimated(summons, controlPlane.summonConfig.fade.times, controlPlane.summonConfig.fade.lower, controlPlane.summonConfig.fade.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
         }
 
+        if (controlPlane.summonConfig.radiate.doRadiate) {
+            await radiate(summons, controlPlane.summonConfig.radiate.times, frame, controlPlane.config.fileInfo.numberOfFrame);
+        }
+
         if (controlPlane.focusConfig.glow.doGlow) {
             await glowAnimated(focus, controlPlane.focusConfig.glow.times, controlPlane.focusConfig.glow.lower, controlPlane.focusConfig.glow.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
         }
@@ -59,11 +64,19 @@ export const animate = async (controlPlane) => {
             await fadeAnimated(focus, controlPlane.focusConfig.fade.times, controlPlane.focusConfig.fade.lower, controlPlane.focusConfig.fade.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
         }
 
+        if (controlPlane.focusConfig.radiate.doRadiate) {
+            await radiate(focus, controlPlane.focusConfig.radiate.times, frame, controlPlane.config.fileInfo.numberOfFrame);
+        }
+
         if (controlPlane.animateBackground) {
             animatedBackground = await animateBackground(controlPlane.config.fileInfo.finalImageSize, controlPlane.config.fileInfo.finalImageSize);
 
             if(controlPlane.animateBackground.glow.doGlow){
                 await glowAnimated(animatedBackground, controlPlane.animateBackground.glow.times, controlPlane.animateBackground.glow.lower, controlPlane.animateBackground.glow.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
+            }
+
+            if (controlPlane.animateBackground.fade.doFade) {
+                await fadeAnimated(animatedBackground, controlPlane.animateBackground.fade.times, controlPlane.animateBackground.fade.lower, controlPlane.animateBackground.fade.upper, frame, controlPlane.config.fileInfo.numberOfFrame);
             }
 
         }
@@ -113,7 +126,7 @@ export const animate = async (controlPlane) => {
     ////////////////////////
     //ANIMATE
     ////////////////////////
-    for (let f = 1; f < controlPlane.config.fileInfo.numberOfFrame; f = f + controlPlane.config.fileInfo.frameInc) {
+    for (let f = 1; f <= controlPlane.config.fileInfo.numberOfFrame; f = f + controlPlane.config.fileInfo.frameInc) {
 
         const timeLeft = () => {
             let currentTime = new Date();

@@ -4,11 +4,11 @@ import Jimp from "jimp";
 import {fileURLToPath} from 'url';
 import {dirname} from 'path';
 import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
-import {glowAnimated} from "./effects/glow.js";
-import {animateBackground} from "./effects/animateBackground.js";
-import {verticalScanLines} from "./effects/verticalScanLines.js";
-import {fadeAnimated} from "./effects/fade.js";
-import {rotate} from "./effects/rotate.js";
+import {glowAnimated} from "../effects/glow.js";
+import {animateBackground} from "../effects/animateBackground.js";
+import {verticalScanLines} from "../effects/verticalScanLines.js";
+import {fadeAnimated} from "../effects/fade.js";
+import {rotate} from "../effects/rotate.js";
 
 export class ControlPlane {
     constructor() {
@@ -75,7 +75,14 @@ export class ControlPlane {
 
             animateBackground: {
                 effectChance:70
+            },
+
+            radiate: {
+                lower: 1,
+                upper: 8,
+                effectChance: 100,
             }
+
         }
 
         const generateGlowEffectConfig = () => {
@@ -94,6 +101,13 @@ export class ControlPlane {
                 times: this.getRandomInt(this.config.fade.timesLower, this.config.fade.timesUpper),
                 doFade: this.doEffect(this.config.fade.effectChance)
             };
+        }
+
+        const generateRadiateConfig = () => {
+            return {
+                times: this.getRandomInt(this.config.radiate.lower, this.config.radiate.upper),
+                doRadiate: this.doEffect(this.config.radiate.effectChance)
+            }
         }
 
         const generateBaseConfig = () => {
@@ -117,7 +131,8 @@ export class ControlPlane {
                     }
                 ],
                 glow: generateGlowEffectConfig(),
-                fade: generateFadeEffectConfig()
+                fade: generateFadeEffectConfig(),
+                radiate: generateRadiateConfig(),
             }
         }
 
@@ -158,6 +173,13 @@ export class ControlPlane {
             numberOfRotations: this.getRandomInt(this.config.rotate.lower, this.config.rotate.upper),
             doRotate: this.doEffect(this.config.effectChance)
         }
+
+        this.rotateSummons = {
+            numberOfRotations: this.getRandomInt(this.config.rotate.lower, this.config.rotate.upper),
+            doRotate: this.doEffect(this.config.rotate.effectChance)
+        }
+
+
     }
 
     getRandomInt(min, max) {
