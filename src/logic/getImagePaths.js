@@ -6,24 +6,23 @@ export const getImagePaths = async (sourceImg) => {
 
     const getPixel = async (x, y) => {
         const hex = sourceImg.getPixelColor(x, y);
+        return Jimp.intToRGBA(hex);
+    }
 
-        if(hex==0){
-            return '00';
-        }
-
-        return hex.toString(16).slice(-2)
+    const isTransparent = (hex) => {
+        return hex.r == 0 && hex.g == 0 && hex.b == 0 && hex.a == 0;
     }
 
     const isEdge = async (x, y) => {
 
-        if (x > sourceImg.bitmap.width || y > sourceImg.bitmap.height) {
+        if (x < 0 || y < 0 || x > sourceImg.bitmap.width || y > sourceImg.bitmap.height) {
             return false;
         }
 
         const pixel = await getPixel(x, y);
         const pixelNext = await getPixel(x + 1, y);
 
-        if (pixel == '00' && pixelNext != '00' || pixel != '00' && pixelNext == '00') {
+        if (isTransparent(pixel) && !isTransparent(pixelNext) || !isTransparent(pixel) && isTransparent(pixelNext)) {
             return true;
         }
 
@@ -39,59 +38,81 @@ export const getImagePaths = async (sourceImg) => {
         let nextY = y;
         let nextX = x;
 
-        while (path.length == 0 || !path.some(point => point.x == tarX && point.y == tarY)) {
-
-            if (await isEdge(tarX, tarY + 1)) { //up
-                nextY = tarY + 1;
-                nextX = tarX;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX + 1, tarY + 1)) { //up forward
-                nextY = tarY + 1;
-                nextX = tarX + 1;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX + 1, tarY)) { //forward
-                nextY = tarY;
-                nextX = tarX + 1;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX + 1, tarY - 1)) { //down forward
-                nextY = tarY - 1;
-                nextX = tarX + 1;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX, tarY - 1)) { //down
-                nextY = tarY - 1;
-                nextX = tarX;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX - 1, tarY - 1)) {// down back
-                nextY = tarY - 1;
-                nextX = tarX - 1;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX - 1, tarY)) {// back
-                nextY = tarY;
-                nextX = tarX - 1;
-                path.push({x:nextX,y:nextY});
-            } else if (await isEdge(tarX - 1, tarY + 1)) {//up back
-                nextY = tarY + 1;
-                nextX = tarX - 1;
-                path.push({x:nextX,y:nextY});
-            }
-
-            if(tarX == nextX && tarY == nextY){
-                path.push({x:nextX,y:nextY});
-                break;
-            }
+        while (path.length == 0 || !pointInPath(path, tarX, tarY)) {
 
             tarX = nextX;
             tarY = nextY;
+
+            if (await isEdge(tarX, tarY + 1) && !pointInPath(path, tarX, tarY)) { //up
+                nextY = tarY + 1;
+                nextX = tarX;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX + 1, tarY + 1) && !pointInPath(path, tarX, tarY)) { //up forward
+                nextY = tarY + 1;
+                nextX = tarX + 1;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX + 1, tarY) && !pointInPath(path, tarX, tarY)) { //forward
+                nextY = tarY;
+                nextX = tarX + 1;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX + 1, tarY - 1) && !pointInPath(path, tarX, tarY)) { //down forward
+                nextY = tarY - 1;
+                nextX = tarX + 1;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX, tarY - 1) && !pointInPath(path, tarX, tarY)) { //down
+                nextY = tarY - 1;
+                nextX = tarX;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX - 1, tarY - 1) && !pointInPath(path, tarX, tarY)) {// down back
+                nextY = tarY - 1;
+                nextX = tarX - 1;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX - 1, tarY) && !pointInPath(path, tarX, tarY)) {// back
+                nextY = tarY;
+                nextX = tarX - 1;
+                path.push({x: nextX, y: nextY});
+            } else if (await isEdge(tarX - 1, tarY + 1) && !pointInPath(path, tarX, tarY)) {//up back
+                nextY = tarY + 1;
+                nextX = tarX - 1;
+                path.push({x: nextX, y: nextY});
+            }
+
+            if (tarX == nextX && tarY == nextY) {
+                path.push({x: nextX, y: nextY});
+                break;
+            }
         }
 
         paths.push(path);
     }
 
+    const pointInPaths = (x, y) => {
 
-    for (let x = 0; x < sourceImg.bitmap.width; x++) {
-        for (let y = 0; y < sourceImg.bitmap.height; y++) {
+        let inPath = false;
+
+        paths.forEach(path => {
+            if (pointInPath(path, x, y)) {
+                inPath = true;
+            }
+        })
+
+        return inPath;
+    }
+
+    const pointInPath = (path, x, y) => {
+        let inPath = false;
+        path.forEach(pos => {
+            if (pos.x == x && pos.y == y) {
+                inPath = true;
+            }
+        })
+        return inPath;
+    }
+
+    for (let y = 0; y < sourceImg.bitmap.height; y++) {
+        for (let x = 0; x < sourceImg.bitmap.width; x++) {
             if (await isEdge(x, y)) {
-                if (paths.length == 0 || !paths.some(obj => !obj.some(pos => pos.x == x && pos.y == y))) {
+                if (paths.length == 0 || !pointInPaths(x, y)) {
                     await findPath(x, y)
                 }
             }

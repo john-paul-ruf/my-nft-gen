@@ -5,7 +5,7 @@ import {getImagePaths} from "../logic/getImagePaths.js";
 export const radiate = async (img, times, currentFrame, totalFrame) => {
     const alpha = findValue(2, 13, times, totalFrame, currentFrame);
 
-    let hex = '#bdf379';
+    let hex = '#00FF00';
     hex = hex + alpha.toString(16) + + alpha.toString(16);
 
     const paths = await getImagePaths(img);
@@ -13,7 +13,6 @@ export const radiate = async (img, times, currentFrame, totalFrame) => {
     paths.forEach(path => {
         path.forEach(pos => {
             let color = Jimp.cssColorToHex(hex)
-            img.setPixelColor(color, pos.x, pos.y)
             img.setPixelColor(color, pos.x, pos.y)
         })
     })
