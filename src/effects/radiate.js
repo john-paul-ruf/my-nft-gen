@@ -6,9 +6,9 @@ export const radiate = async (img, times, currentFrame, totalFrame) => {
     const alpha = findValue(2, 13, times, totalFrame, currentFrame);
 
     let hex = '#00FF00';
-    hex = hex + alpha.toString(16) + + alpha.toString(16);
+    //hex = hex + alpha.toString(16) + + alpha.toString(16);
 
-    const paths = await getImagePaths(img);
+    const paths = getImagePaths(img);
 
     paths.forEach(path => {
         path.forEach(pos => {

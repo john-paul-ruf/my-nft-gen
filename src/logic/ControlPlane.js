@@ -29,7 +29,7 @@ export class ControlPlane {
                 finalImageSize: 3000,
                 colorDepth: 32,
                 frameInc: 1,
-                numberOfFrame: 30,
+                numberOfFrame: 2,
 
                 summonsFile: path.join(this.directory, '/img/png/summons/png/' + this.summonsName),
                 focusFile: path.join(this.directory, '/img/png/focus/png/' + this.focusName),
@@ -48,7 +48,7 @@ export class ControlPlane {
                 upperRange: {lower: 0, upper: 360},
                 timesLower: 1,
                 timesUpper: 3,
-                effectChance: 80,
+                effectChance: 0,
             },
 
             fade: {
@@ -56,13 +56,13 @@ export class ControlPlane {
                 upperRange: {lower: 0.2, upper: 0.4},
                 timesLower: 1,
                 timesUpper: 4,
-                effectChance: 50,
+                effectChance: 0,
             },
 
             rotate: {
                 lower: 1,
                 upper: 3,
-                effectChance: 80,
+                effectChance: 0,
             },
 
             verticalScanLine: {
@@ -70,16 +70,16 @@ export class ControlPlane {
                 numberOfLinesUpper: 8,
                 trailsLengthLower: 5,
                 trailsLengthUpper: 25,
-                effectChance: 80,
+                effectChance: 0,
             },
 
             animateBackground: {
-                effectChance:70
+                effectChance:0
             },
 
             radiate: {
                 lower: 1,
-                upper: 8,
+                upper: 3,
                 effectChance: 100,
             }
 
