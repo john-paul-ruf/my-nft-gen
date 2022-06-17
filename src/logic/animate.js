@@ -1,6 +1,8 @@
 import Jimp from "jimp";
 import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
 import fs from "fs";
+import {timeToString} from "./timeToString.js";
+import {timeLeft} from "./timeLeft.js";
 
 export const animate = async (config) => {
     console.log(config);
@@ -8,15 +10,6 @@ export const animate = async (config) => {
     config.startTime = new Date();
 
     const frames = [];
-
-    function timeToString(rez) {
-        let h = Math.trunc(rez / 3600000 % 100).toString().padStart(2, '0');
-        let m = Math.trunc(rez / 60000 % 60).toString().padStart(2, '0');
-        let s = Math.trunc(rez / 1000 % 60).toString().padStart(2, '0');
-        let ms = Math.trunc(rez % 1000).toString().padStart(3, '0');
-        console.log(h + ':' + m + ':' + s + '.' + ms);
-        return h + ':' + m + ':' + s + '.' + ms;
-    }
 
     const createAnimation = async (frame) => {
 
@@ -83,22 +76,11 @@ export const animate = async (config) => {
     //ANIMATE
     ////////////////////////
     for (let f = 0; f < config.numberOfFrame; f = f + config.frameInc) {
-
-        const timeLeft = () => {
-            let currentTime = new Date();
-            let rez = currentTime.getTime() - config.startTime.getTime();
-            let currentFrameCount = (f / config.frameInc)
-            let timePerFrame = rez / currentFrameCount;
-            let timeLeft = (config.numberOfFrame - currentFrameCount) * timePerFrame;
-            timeToString(timeLeft);
-        }
-
         console.log("started " + f.toString() + " frame");
         await createAnimation(f);
-        timeLeft();
+        timeLeft(config.startTime, f, config.frameInc, config.numberOfFrame);
         console.log("completed " + f.toString() + " frame");
     }
-
 
     ////////////////////////
     //WRITE TO FILE
