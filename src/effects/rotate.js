@@ -6,7 +6,7 @@ const config = {
 
 const generate = () => {
     return {
-        times: getRandomInt(config.lower, config.upper)
+        times: getRandomInt(config.times.lower, config.times.upper)
     }
 }
 

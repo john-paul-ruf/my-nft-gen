@@ -73,7 +73,7 @@ export const verticalScanLinesEffect = {
     name: 'verticalScanLines',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 70,
     requiresLayer: true,
     baseLayer:false,
 }

@@ -46,7 +46,7 @@ export const radiateEffect = {
     name: 'radiate',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 60,
     requiresLayer: false,
     baseLayer:false,
 }

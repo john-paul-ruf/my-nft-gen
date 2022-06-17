@@ -28,7 +28,7 @@ export const fadeEffect = {
     name: 'fade',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 70,
     requiresLayer: false,
     baseLayer:false,
 }
