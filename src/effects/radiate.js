@@ -18,11 +18,11 @@ const radiate = async (img, currentFrame, totalFrames) => {
 
     const data = generate();
 
-    const alpha = Math.ceil(findValue(2, 15, data.times, totalFrames, currentFrame));
+    const alpha = Math.ceil(findValue(60, 230, data.times, totalFrames, currentFrame));
     let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
 
     let hex = '#00FF00';
-    hex = hex + alpha.toString(16) + alpha.toString(16);
+    hex = hex + alpha.toString(16);
 
     const paths = await getImagePaths(img);
 
