@@ -35,7 +35,7 @@ export class Config {
         this.finalImageSize = 3000;
         this.colorDepth = 256;
         this.frameInc = 1;
-        this.numberOfFrame = 120ss;
+        this.numberOfFrame = 120;
 
         this.summonsFile = path.join(directory, '/img/png/summons/png/' + this.summonsName);
         this.focusFile = path.join(directory, '/img/png/focus/png/' + this.focusName);
