@@ -10,7 +10,7 @@ const config = {
 
 const generate = () => {
     const data = {
-        numberOfLines: this.getRandomInt(config.lines.lower, config.lines.upper),
+        numberOfLines: getRandomInt(config.lines.lower, config.lines.upper),
         height: config.size,
         width: config.size,
         color: config.color
@@ -19,10 +19,10 @@ const generate = () => {
     const computeInitialLineInfo = (numberOfLines) => {
         const lineInfo = [];
         for (let i = 0; i <= numberOfLines; i++) {
-            const mtl = this.getRandomInt(config.length.lower, config.length.upper)
+            const mtl = getRandomInt(config.length.lower, config.length.upper)
 
             lineInfo.push({
-                lineStart: this.getRandomInt(0, config.size),
+                lineStart: getRandomInt(0, config.size),
                 maxTrailLength: mtl,
                 pixelsPerGradient: mtl / 16,
             });
@@ -76,7 +76,7 @@ export const verticalScanLinesStrategy = {
 
 export const verticalScanLinesEffect = {
     name: 'verticalScanLines',
-    effect: verticalScanLines,
+    effect: verticalScanLinesStrategy,
     effectChance: 50,
     requiresLayer: true,
 }

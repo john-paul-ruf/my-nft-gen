@@ -86,9 +86,9 @@ export const animate = async (config) => {
         const timeLeft = () => {
             let currentTime = new Date();
             let rez = currentTime.getTime() - config.startTime.getTime();
-            let currentFrameCount = (f / config.config.frameInc)
+            let currentFrameCount = (f / config.frameInc)
             let timePerFrame = rez / currentFrameCount;
-            let timeLeft = (config.config.numberOfFrame - currentFrameCount) * timePerFrame;
+            let timeLeft = (config.numberOfFrame - currentFrameCount) * timePerFrame;
             timeToString(timeLeft);
         }
 
