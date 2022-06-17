@@ -40,5 +40,6 @@ export const randomizeEffect = {
     effect: randomizeStrategy,
     effectChance: 100,
     requiresLayer: false,
+    baseLayer:false,
 }
 

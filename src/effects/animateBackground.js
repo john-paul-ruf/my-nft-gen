@@ -46,5 +46,6 @@ export const animateBackgroundEffect = {
     effect: animateBackgroundStrategy,
     effectChance: 70,
     requiresLayer: true,
+    baseLayer:true
 }
 

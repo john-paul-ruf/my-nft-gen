@@ -58,6 +58,7 @@ export const animate = async (config) => {
         ////////////////////////
         //COMPOSE
         ////////////////////////
+        extraLayers.sort((x,y) => { return (x.baseLayer === y.baseLayer)? 0 : x? -1 : 1;} )
         for(let i = 0; i < extraLayers.length; i++){
             await background.composite(extraLayers[i], 0, 0, {
                 mode: Jimp.BLEND_SOURCE_OVER,

@@ -30,5 +30,6 @@ export const glowEffect = {
     effect: glowAnimatedStrategy,
     effectChance: 80,
     requiresLayer: false,
+    baseLayer:false,
 }
 

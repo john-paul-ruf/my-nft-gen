@@ -49,6 +49,7 @@ export const radiateEffect = {
     effect: radiateStrategy,
     effectChance: 50,
     requiresLayer: false,
+    baseLayer:false,
 }
 
 

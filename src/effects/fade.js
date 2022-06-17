@@ -30,6 +30,7 @@ export const fadeEffect = {
     effect: fadeAnimatedStrategy,
     effectChance: 70,
     requiresLayer: false,
+    baseLayer:false,
 }
 
 

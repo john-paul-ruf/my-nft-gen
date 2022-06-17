@@ -79,5 +79,6 @@ export const verticalScanLinesEffect = {
     effect: verticalScanLinesStrategy,
     effectChance: 50,
     requiresLayer: true,
+    baseLayer:false,
 }
 

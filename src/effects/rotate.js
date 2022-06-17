@@ -24,5 +24,6 @@ export const rotateEffect = {
     effect: rotateStrategy,
     effectChance: 90,
     requiresLayer: false,
+    baseLayer:false,
 }
 
