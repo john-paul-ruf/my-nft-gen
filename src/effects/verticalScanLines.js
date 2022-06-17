@@ -35,9 +35,7 @@ const generate = () => {
     return data;
 }
 
-const verticalScanLines = async (img, currentFrame, numberOfFrames) => {
-
-    const data = generate();
+const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
     const drawLine = async (y, maxTrailLength, pixelsPerGradient) => {
         for (let x = 0; x < 3000; x++) {
             let rando = getRandomInt(y, y - maxTrailLength)
@@ -67,13 +65,14 @@ const verticalScanLines = async (img, currentFrame, numberOfFrames) => {
     }
 }
 
-export const verticalScanLinesStrategy = {
-    invoke: (img, currentFrame, totalFrames) => verticalScanLines(img, currentFrame, totalFrames)
+export const effect = {
+    invoke: (data, img, currentFrame, totalFrames) => verticalScanLines(data, img, currentFrame, totalFrames)
 }
 
 export const verticalScanLinesEffect = {
     name: 'verticalScanLines',
-    effect: verticalScanLinesStrategy,
+    generateData: generate,
+    effect: effect,
     effectChance: 50,
     requiresLayer: true,
     baseLayer:false,

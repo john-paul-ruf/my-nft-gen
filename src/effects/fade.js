@@ -15,19 +15,19 @@ const generate = () => {
     };
 }
 
-export const fadeAnimated = async (img, currentFrame, totalFrames) => {
-    const data = generate();
+export const fadeAnimated = async (data, img, currentFrame, totalFrames) => {
     const opacity = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
     await img.opacity(opacity);
 }
 
-export const fadeAnimatedStrategy = {
-    invoke: (img, currentFrame, totalFrames) => fadeAnimated(img, currentFrame, totalFrames)
+export const effect = {
+    invoke: (data, img, currentFrame, totalFrames) => fadeAnimated(data, img, currentFrame, totalFrames)
 }
 
 export const fadeEffect = {
     name: 'fade',
-    effect: fadeAnimatedStrategy,
+    generateData: generate,
+    effect: effect,
     effectChance: 0,
     requiresLayer: false,
     baseLayer:false,

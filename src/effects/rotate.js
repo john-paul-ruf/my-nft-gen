@@ -10,18 +10,18 @@ const generate = () => {
     }
 }
 
-const rotate = async (img, currentFrame, totalFrame) => {
-    const data = generate();
+const rotate = async (data, img, currentFrame, totalFrame) => {
     await img.rotate((((360 * data.times)/totalFrame)*currentFrame), false);
 }
 
-export const rotateStrategy = {
-    invoke: (img, currentFrame, totalFrames) => rotate(img, currentFrame, totalFrames)
+export const effect = {
+    invoke: (data, img, currentFrame, totalFrames) => rotate(data, img, currentFrame, totalFrames)
 }
 
 export const rotateEffect = {
     name: 'rotate',
-    effect: rotateStrategy,
+    generateData: generate,
+    effect: effect,
     effectChance: 90,
     requiresLayer: false,
     baseLayer:false,

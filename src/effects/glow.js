@@ -15,19 +15,19 @@ const generate = () => {
     };
 }
 
-const glowAnimated = async (img, currentFrame, totalFrames) => {
-    const data = generate();
+const glowAnimated = async (data, img, currentFrame, totalFrames) => {
     const hue = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
     await img.color([{apply: 'hue', params: [hue]}]);
 }
 
-export const glowAnimatedStrategy = {
-    invoke: (img, currentFrame, totalFrames) => glowAnimated(img, currentFrame, totalFrames)
+export const effect = {
+    invoke: (data, img, currentFrame, totalFrames) => glowAnimated(data, img, currentFrame, totalFrames)
 }
 
 export const glowEffect = {
     name: 'glow',
-    effect: glowAnimatedStrategy,
+    generateData: generate,
+    effect: effect,
     effectChance: 80,
     requiresLayer: false,
     baseLayer:false,

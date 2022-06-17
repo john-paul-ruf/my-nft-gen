@@ -7,37 +7,39 @@ const config = {
     green: {lower: 5, upper: 55}
 }
 
-const generate = () => [
-    {
-        apply: 'hue',
-        params: [getRandomInt(config.spin.lower, config.spin.upper)]
-    },
-    {
-        apply: 'red',
-        params: [getRandomInt(config.red.lower, config.red.upper)]
-    },
-    {
-        apply: 'green',
-        params: [getRandomInt(config.green.lower, config.green.upper)]
-    },
-    {
-        apply: 'blue',
-        params: [getRandomInt(config.blue.lower, config.blue.upper)]
-    }
-];
+const generate = () => {
+    return [
+        {
+            apply: 'hue',
+            params: [getRandomInt(config.spin.lower, config.spin.upper)]
+        },
+        {
+            apply: 'red',
+            params: [getRandomInt(config.red.lower, config.red.upper)]
+        },
+        {
+            apply: 'green',
+            params: [getRandomInt(config.green.lower, config.green.upper)]
+        },
+        {
+            apply: 'blue',
+            params: [getRandomInt(config.blue.lower, config.blue.upper)]
+        }
+    ]
+};
 
-const randomize = async (img) => {
-    const data = generate();
+const randomize = async (data, img) => {
     await img.color(data);
 }
 
-export const randomizeStrategy = {
-    invoke: (img) => randomize(img)
+export const effect = {
+    invoke: (data, img) => randomize(data, img)
 }
 
 export const randomizeEffect = {
     name: 'randomize',
-    effect: randomizeStrategy,
+    generateData: generate,
+    effect: effect,
     effectChance: 100,
     requiresLayer: false,
     baseLayer:false,

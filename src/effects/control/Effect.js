@@ -8,12 +8,11 @@ import {verticalScanLinesEffect} from "../verticalScanLines.js";
 
 export class Effect {
 
-    constructor(invokeStrategy, requiresLayer) {
+    constructor(invokeStrategy, data, requiresLayer) {
         this.invoke = invokeStrategy.invoke;
-
+        this.data = data;
         this.additionalEffects = []
-        if(requiresLayer)
-        {
+        if (requiresLayer) {
             this.additionalEffects = generateEffects([
                 glowEffect,
                 randomizeEffect,
@@ -22,10 +21,10 @@ export class Effect {
         }
     }
 
-    async invokeEffect(img, currentFrame, totalFrames){
-        await this.invoke(img, currentFrame, totalFrames)
-        for(let i = 0; i < this.additionalEffects.length; i++) {
-            await this.additionalEffects[i].invoke(img, currentFrame, totalFrames)
+    async invokeEffect(img, currentFrame, totalFrames) {
+        await this.invoke(this.data, img, currentFrame, totalFrames)
+        for (let i = 0; i < this.additionalEffects.length; i++) {
+            await this.additionalEffects[i].invoke(this.data, img, currentFrame, totalFrames)
         }
     }
 }

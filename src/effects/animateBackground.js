@@ -13,10 +13,7 @@ const generate = () => {
     return config;
 }
 
-const animateBackground = async (img) => {
-
-    const data = generate();
-
+const animateBackground = async (data, img) => {
     for (let x = 0; x < 3000; x++) {
         for (let y = 0; y < 3000; y++) {
             const rando = getRandomInt(0, 20)
@@ -29,17 +26,17 @@ const animateBackground = async (img) => {
             }
         }
     }
-
     await img.blur(1)
 }
 
-export const animateBackgroundStrategy = {
-    invoke: (img, currentFrame, totalFrames) => animateBackground(img, currentFrame, totalFrames)
+const effect = {
+    invoke: (data, img, currentFrame, totalFrames) => animateBackground(data, img, currentFrame, totalFrames)
 }
 
 export const animateBackgroundEffect = {
     name: 'fade',
-    effect: animateBackgroundStrategy,
+    generateData: generate,
+    effect: effect,
     effectChance: 70,
     requiresLayer: true,
     baseLayer:true
