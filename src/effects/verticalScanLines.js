@@ -65,9 +65,6 @@ const verticalScanLines = async (img, currentFrame, numberOfFrames) => {
 
         await drawLine(y, data.lineInfo[i].maxTrailLength, data.lineInfo[i].pixelsPerGradient)
     }
-
-    return img;
-
 }
 
 export const verticalScanLinesStrategy = {

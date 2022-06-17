@@ -1,11 +1,11 @@
-import {ControlPlane} from "./logic/ControlPlane.js";
+import {Config} from "./logic/Config.js";
 import {animate} from "./logic/animate.js";
 
 for(let i = 0; i < 100; i++)
 {
     console.log("started process");
-    const controlPlane = new ControlPlane();
-    await animate(controlPlane);
+    const config = new Config();
+    await animate(config);
     console.log("completed process");
 }
 

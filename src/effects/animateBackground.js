@@ -13,11 +13,9 @@ const generate = () => {
     return config;
 }
 
-const animateBackground = async () => {
+const animateBackground = async (img) => {
 
     const data = generate();
-
-    let img = new Jimp(data.width, data.height);
 
     for (let x = 0; x < 3000; x++) {
         for (let y = 0; y < 3000; y++) {
@@ -33,8 +31,6 @@ const animateBackground = async () => {
     }
 
     await img.blur(1)
-
-    return img;
 }
 
 export const animateBackgroundStrategy = {

@@ -11,7 +11,7 @@ import {randomizeEffect} from "../effects/randomize.js";
 import {generateEffects} from "../effects/control/generateEffect.js";
 import {getRandomInt} from "./random.js";
 
-export class ControlPlane {
+export class Config {
     constructor() {
 
         const getFilesInDirectory = (dir) => {
@@ -27,8 +27,6 @@ export class ControlPlane {
 
             return list;
         }
-
-        this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
 
         const fileURLToPath1 = fileURLToPath(import.meta.url);
         const directory = dirname(fileURLToPath1).replace('/logic', '');
@@ -48,6 +46,8 @@ export class ControlPlane {
             animateBackgroundEffect,
             verticalScanLinesEffect
         ];
+
+        this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
 
         this.summonsName = summonsList[getRandomInt(0, summonsList.length - 1)];
         this.focusName = focusList[getRandomInt(0, focusList.length - 1)];

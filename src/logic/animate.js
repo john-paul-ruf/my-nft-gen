@@ -22,7 +22,7 @@ export const animate = async (config) => {
 
         const applyEffect = async(img, effects) => {
             for(let i = 0; i < effects.length; i++){
-                await effects[i].invoke(img, frame, config.numberOfFrame);
+                await effects[i].invokeEffect(img, frame, config.numberOfFrame);
             }
         }
 

@@ -12,7 +12,7 @@ const generate = () => {
 
 const rotate = async (img, currentFrame, totalFrame) => {
     const data = generate();
-    return await img.rotate((((360 * data.times)/totalFrame)*currentFrame), false);
+    await img.rotate((((360 * data.times)/totalFrame)*currentFrame), false);
 }
 
 export const rotateStrategy = {
