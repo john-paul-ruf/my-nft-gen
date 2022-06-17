@@ -43,7 +43,13 @@ export const animate = async (config) => {
 
         const processExtraLayers = async () => {
             for(let i = 0; i < extraLayers.length; i++){
-                await applyEffect(extraLayers[i], [config.extraEffects[i]]);
+                await applyEffect(extraLayers[i], [extraEffects[i]]);
+
+                if(extraEffects[i].additionalEffects.length > 0){
+                    for(let a = 0; a < extraLayers.length; a++) {
+                        await applyEffect(extraLayers[i], extraEffects[i].additionalEffects);
+                    }
+                }
             }
         }
 
