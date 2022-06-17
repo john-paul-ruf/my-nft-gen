@@ -19,7 +19,7 @@
   "homepage": "https://github.com/john-paul-ruf/my-nft-gen#readme",
   "dependencies": {
     "fs-xattr": "^0.4.0",
-    "gifwrap": "^0.10.1",,
-    "jimp": "^0.16.1",
+    "gifwrap": "^0.10.1",
+    "jimp": "^0.16.1"
   }
 }
