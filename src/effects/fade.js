@@ -28,7 +28,7 @@ export const fadeAnimatedStrategy = {
 export const fadeEffect = {
     name: 'fade',
     effect: fadeAnimatedStrategy,
-    effectChance: 50,
+    effectChance: 0,
     requiresLayer: false,
     baseLayer:false,
 }
