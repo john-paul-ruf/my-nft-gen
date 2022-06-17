@@ -1,23 +1,33 @@
 import Jimp from "jimp";
-export const animateBackground = async (width, height, color1 = '#06040A', color2 = '#1f1f1f', color3 = '#016236') => {
+import {getRandomInt} from "../logic/random.js";
 
-    const getRandomInt = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-    }
+const config = {
+    width: 3000,
+    height: 3000,
+    color1:'#06040A',
+    color2:'#1f1f1f',
+    color3: '#016236'
+}
 
-    let img = new Jimp(width, height);
+const generate = () => {
+    return config;
+}
+
+const animateBackground = async () => {
+
+    const data = generate();
+
+    let img = new Jimp(data.width, data.height);
 
     for (let x = 0; x < 3000; x++) {
         for (let y = 0; y < 3000; y++) {
             const rando = getRandomInt(0, 20)
             if (rando < 15) {
-                await img.setPixelColor(Jimp.cssColorToHex(color1), x, y)
+                await img.setPixelColor(Jimp.cssColorToHex(data.color1), x, y)
             } else if (rando < 18) {
-                await img.setPixelColor(Jimp.cssColorToHex(color2), x, y)
+                await img.setPixelColor(Jimp.cssColorToHex(data.color2), x, y)
             } else {
-                await img.setPixelColor(Jimp.cssColorToHex(color3), x, y)
+                await img.setPixelColor(Jimp.cssColorToHex(data.color3), x, y)
             }
         }
     }
@@ -26,3 +36,15 @@ export const animateBackground = async (width, height, color1 = '#06040A', color
 
     return img;
 }
+
+export const animateBackgroundStrategy = {
+    invoke: (img, currentFrame, totalFrames) => animateBackground(img, currentFrame, totalFrames)
+}
+
+export const animateBackgroundEffect = {
+    name: 'fade',
+    effect: animateBackgroundStrategy,
+    effectChance: 70,
+    requiresLayer: true,
+}
+

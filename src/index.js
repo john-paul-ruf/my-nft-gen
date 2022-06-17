@@ -1,5 +1,5 @@
 import {ControlPlane} from "./logic/ControlPlane.js";
-import {animate} from "./logic/Animate.js";
+import {animate} from "./logic/animate.js";
 
 for(let i = 0; i < 100; i++)
 {

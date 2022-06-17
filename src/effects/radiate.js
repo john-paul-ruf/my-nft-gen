@@ -1,14 +1,28 @@
 import {findValue} from "../logic/findValue.js";
 import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
+import {getRandomInt} from "../logic/random.js";
 
-export const radiate = async (img, times, currentFrame, totalFrame) => {
-    const alpha = findValue(2, 13, times, totalFrame, currentFrame);
+
+const config = {
+    times:  {lower: 2, upper: 5},
+}
+
+const generate = () => {
+    return {
+        times: getRandomInt(config.lower, config.upper)
+    }
+}
+
+const radiate = async (img, currentFrame, totalFrames) => {
+
+    const data = generate();
+
+    const alpha = Math.ceil(findValue(2, 15, data.times, totalFrames, currentFrame));
     let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
 
-
     let hex = '#00FF00';
-    hex = hex + alpha.toString(16) + + alpha.toString(16);
+    hex = hex + alpha.toString(16) + alpha.toString(16);
 
     const paths = await getImagePaths(img);
 
@@ -25,3 +39,17 @@ export const radiate = async (img, times, currentFrame, totalFrame) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     })
 }
+
+export const radiateStrategy = {
+    invoke: (img, currentFrame, totalFrames) => radiate(img, currentFrame, totalFrames)
+}
+
+export const radiateEffect = {
+    name: 'radiate',
+    effect: radiateStrategy,
+    effectChance: 50,
+    requiresLayer: false,
+}
+
+
+

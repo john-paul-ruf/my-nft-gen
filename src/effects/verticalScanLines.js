@@ -1,20 +1,49 @@
 import Jimp from "jimp";
-export const verticalScanLines = async (width, height, lineInfo, currentFrame, numberOfFrames) => {
+import {getRandomInt} from "../logic/random.js";
 
-    const getRandomInt = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+const config = {
+    lines: {lower: 4, upper: 8},
+    length: {lower: 5, upper: 25},
+    size: 3000,
+    color: '#bdf379'
+}
+
+const generate = () => {
+    const data = {
+        numberOfLines: this.getRandomInt(config.lines.lower, config.lines.upper),
+        height: config.size,
+        width: config.size,
+        color: config.color
     }
 
-    let img = new Jimp(width,height);
+    const computeInitialLineInfo = (numberOfLines) => {
+        const lineInfo = [];
+        for (let i = 0; i <= numberOfLines; i++) {
+            const mtl = this.getRandomInt(config.length.lower, config.length.upper)
 
+            lineInfo.push({
+                lineStart: this.getRandomInt(0, config.size),
+                maxTrailLength: mtl,
+                pixelsPerGradient: mtl / 16,
+            });
+        }
+        return lineInfo;
+    }
+
+    data.lineInfo = computeInitialLineInfo(data.numberOfLines);
+
+    return data;
+}
+
+const verticalScanLines = async (img, currentFrame, numberOfFrames) => {
+
+    const data = generate();
     const drawLine = async (y, maxTrailLength, pixelsPerGradient) => {
         for (let x = 0; x < 3000; x++) {
             let rando = getRandomInt(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
 
-                let hex = '#bdf379';
+                let hex = data.color;
                 let upperRange = 3;
                 let gradientGroup = (curY-rando) / pixelsPerGradient;
                 hex = hex + getRandomInt(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
@@ -26,17 +55,29 @@ export const verticalScanLines = async (width, height, lineInfo, currentFrame, n
         }
     }
 
-    for (let i = 0; i < lineInfo.length; i++) {
-        const displacement = (height / numberOfFrames) * currentFrame;
-        let y = lineInfo[i].lineStart + displacement;
+    for (let i = 0; i < data.lineInfo.length; i++) {
+        const displacement = (data.height / numberOfFrames) * currentFrame;
+        let y = data.lineInfo[i].lineStart + displacement;
 
-        if (y > height) {
-            y = y - height
+        if (y > data.height) {
+            y = y - data.height
         }
 
-        await drawLine(y, lineInfo[i].maxTrailLength, lineInfo[i].pixelsPerGradient)
+        await drawLine(y, data.lineInfo[i].maxTrailLength, data.lineInfo[i].pixelsPerGradient)
     }
 
     return img;
 
 }
+
+export const verticalScanLinesStrategy = {
+    invoke: (img, currentFrame, totalFrames) => verticalScanLines(img, currentFrame, totalFrames)
+}
+
+export const verticalScanLinesEffect = {
+    name: 'verticalScanLines',
+    effect: verticalScanLines,
+    effectChance: 50,
+    requiresLayer: true,
+}
+
