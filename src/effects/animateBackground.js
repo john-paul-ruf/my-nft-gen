@@ -29,12 +29,12 @@ const animateBackground = async (data, img) => {
     await img.blur(1)
 }
 
-const effect = {
+export const effect = {
     invoke: (data, img, currentFrame, totalFrames) => animateBackground(data, img, currentFrame, totalFrames)
 }
 
 export const animateBackgroundEffect = {
-    name: 'fade',
+    name: 'static',
     generateData: generate,
     effect: effect,
     effectChance: 70,

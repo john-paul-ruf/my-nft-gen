@@ -6,7 +6,7 @@ export const generateEffects = (possibleEffectList) => {
     possibleEffectList.forEach(obj => {
             const chance = getRandomInt(0, 100)
             if (obj.effectChance > chance) {
-                effectList.push(new Effect(obj.effect, obj.generateData(), obj.requiresLayer))
+                effectList.push(new Effect(obj.name, obj.effect, obj.generateData(), obj.requiresLayer))
             }
         }
     )

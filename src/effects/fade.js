@@ -4,7 +4,7 @@ import {getRandomInt, randomNumber} from "../logic/random.js";
 const config = {
     lowerRange: {lower: 0.6, upper: 0.7},
     upperRange: {lower: 0.9, upper: 1},
-    times:  {lower: 1, upper: 4},
+    times:  {lower: 1, upper: 2},
 }
 
 const generate = () => {
@@ -15,7 +15,7 @@ const generate = () => {
     };
 }
 
-export const fadeAnimated = async (data, img, currentFrame, totalFrames) => {
+const fadeAnimated = async (data, img, currentFrame, totalFrames) => {
     const opacity = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
     await img.opacity(opacity);
 }

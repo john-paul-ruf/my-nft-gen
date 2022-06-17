@@ -70,7 +70,7 @@ export const effect = {
 }
 
 export const verticalScanLinesEffect = {
-    name: 'verticalScanLines',
+    name: 'scan lines',
     generateData: generate,
     effect: effect,
     effectChance: 70,

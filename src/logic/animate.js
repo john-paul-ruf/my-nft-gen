@@ -3,13 +3,27 @@ import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
 import fs from "fs";
 import {timeToString} from "./timeToString.js";
 import {timeLeft} from "./timeLeft.js";
+import {generateEffects} from "../effects/control/generateEffect.js";
+import {
+    possibleExtraEffects,
+    possibleFocusEffects,
+    possibleSummonsEffects
+} from "../effects/control/possibleEffects.js";
+import {composeInfo} from "./composeInfo.js";
 
 export const animate = async (config) => {
-    console.log(config);
 
     config.startTime = new Date();
 
     const frames = [];
+
+    const summonEffects = generateEffects(possibleSummonsEffects);
+    const focusEffects = generateEffects(possibleFocusEffects);
+    const extraEffects = generateEffects(possibleExtraEffects);
+
+    composeInfo(config, summonEffects, focusEffects, extraEffects);
+
+    console.log(config);
 
     const createAnimation = async (frame) => {
 
@@ -39,13 +53,13 @@ export const animate = async (config) => {
         let summons = await Jimp.read(config.summonsFile);
         let focus = await Jimp.read(config.focusFile);
         let background = new Jimp(config.finalImageSize, config.finalImageSize, Jimp.cssColorToHex('#0D0D0D'));
-        let extraLayers = getExtraLayers(config.extraEffects, config.finalImageSize, config.finalImageSize)
+        let extraLayers = getExtraLayers(extraEffects, config.finalImageSize, config.finalImageSize)
 
         ////////////////////////
         //Process Effects
         ////////////////////////
-        await applyEffect(summons, config.summonEffects);
-        await applyEffect(focus, config.focusEffects);
+        await applyEffect(summons, summonEffects);
+        await applyEffect(focus, focusEffects);
         await processExtraLayers();
 
         ////////////////////////

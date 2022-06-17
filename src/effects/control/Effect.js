@@ -8,9 +8,10 @@ import {verticalScanLinesEffect} from "../verticalScanLines.js";
 
 export class Effect {
 
-    constructor(invokeStrategy, data, requiresLayer) {
+    constructor(name, invokeStrategy, data, requiresLayer) {
         this.invoke = invokeStrategy.invoke;
         this.data = data;
+        this.data.name = name;
         this.additionalEffects = []
         if (requiresLayer) {
             this.additionalEffects = generateEffects([
@@ -26,5 +27,9 @@ export class Effect {
         for (let i = 0; i < this.additionalEffects.length; i++) {
             await this.additionalEffects[i].invoke(this.additionalEffects[i].data, img, currentFrame, totalFrames)
         }
+    }
+
+    getInfo(){
+        return this.data;
     }
 }

@@ -3,7 +3,6 @@ import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
 import {getRandomInt} from "../logic/random.js";
 
-
 const config = {
     times:  {lower: 2, upper: 5},
 }
@@ -14,24 +13,25 @@ const generate = () => {
     }
 }
 
-const radiate = async (data, img, currentFrame, totalFrames) => {
+const trace = async (data, img, currentFrame, totalFrames) => {
 
-    const alpha = Math.ceil(findValue(60, 230, data.times, totalFrames, currentFrame));
+    const alpha = Math.ceil();
     let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
 
     let hex = '#00FF00';
     hex = hex + alpha.toString(16);
+    let color = Jimp.cssColorToHex(hex)
 
     const paths = await getImagePaths(img);
 
     paths.forEach(path => {
-        path.forEach(pos => {
-            let color = Jimp.cssColorToHex(hex)
-            overlay.setPixelColor(color, pos.x, pos.y)
-        })
+        const point = Math.floor(findValue(0, path.length-1, data.times, totalFrames, currentFrame));
+        overlay.setPixelColor(color, path[point].x, path[point].y+1)
+        overlay.setPixelColor(color, path[point].x+1, path[point].y+1)
+        overlay.setPixelColor(color, path[point].x-1, path[point].y)
+        overlay.setPixelColor(color, path[point].x-1, path[point].y-1)
+        overlay.setPixelColor(color, path[point].x, path[point].y)
     })
-
-    overlay.blur(2);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -39,11 +39,11 @@ const radiate = async (data, img, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => radiate(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames) => trace(data, img, currentFrame, totalFrames)
 }
 
-export const radiateEffect = {
-    name: 'radiate',
+export const traceEffect = {
+    name: 'trace',
     generateData: generate,
     effect: effect,
     effectChance: 50,
