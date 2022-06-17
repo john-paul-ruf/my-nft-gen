@@ -24,7 +24,7 @@ export class Effect {
     async invokeEffect(img, currentFrame, totalFrames) {
         await this.invoke(this.data, img, currentFrame, totalFrames)
         for (let i = 0; i < this.additionalEffects.length; i++) {
-            await this.additionalEffects[i].invoke(this.data, img, currentFrame, totalFrames)
+            await this.additionalEffects[i].invoke(this.additionalEffects[i].data, img, currentFrame, totalFrames)
         }
     }
 }
