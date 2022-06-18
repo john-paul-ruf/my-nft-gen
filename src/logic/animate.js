@@ -13,6 +13,8 @@ import {composeInfo} from "./composeInfo.js";
 
 export const animate = async (config) => {
 
+    const frames = [];
+
     config.startTime = new Date();
 
     const summonEffects = generateEffects(possibleSummonsEffects);
@@ -25,7 +27,7 @@ export const animate = async (config) => {
 
     const createAnimation = async (frame) => {
 
-        const frames = [];
+
 
         const applyEffect = async (img, effects) => {
             for (let i = 0; i < effects.length; i++) {
