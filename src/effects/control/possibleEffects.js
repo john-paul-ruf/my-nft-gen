@@ -8,23 +8,29 @@ import {animateBackgroundEffect} from "../animateBackground.js";
 import {verticalScanLinesEffect} from "../verticalScanLines.js";
 
 export const possibleSummonsEffects = [
+    randomizeEffect,
     glowEffect,
     fadeEffect,
     rotateEffect,
     radiateEffect,
     traceEffect,
-    randomizeEffect,
 ];
 
 export const possibleFocusEffects = [
+    randomizeEffect,
     glowEffect,
     fadeEffect,
     radiateEffect,
     traceEffect,
-    randomizeEffect,
 ];
 
 export const possibleExtraEffects = [
     animateBackgroundEffect,
     verticalScanLinesEffect
+];
+
+export const possibleAdditionalEffects = [
+    randomizeEffect,
+    glowEffect,
+    fadeEffect,
 ];

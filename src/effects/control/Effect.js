@@ -1,10 +1,5 @@
 import {generateEffects} from "./generateEffect.js";
-import {glowEffect} from "../glow.js";
-import {randomizeEffect} from "../randomize.js";
-import {fadeEffect} from "../fade.js";
-import {rotateEffect} from "../rotate.js";
-import {animateBackgroundEffect} from "../animateBackground.js";
-import {verticalScanLinesEffect} from "../verticalScanLines.js";
+import {possibleAdditionalEffects} from "./possibleEffects.js";
 
 export class Effect {
 
@@ -14,11 +9,7 @@ export class Effect {
         this.data.name = name;
         this.additionalEffects = []
         if (requiresLayer) {
-            this.additionalEffects = generateEffects([
-                randomizeEffect,
-                glowEffect,
-                fadeEffect,
-            ])
+            this.additionalEffects = generateEffects(possibleAdditionalEffects)
         }
     }
 
