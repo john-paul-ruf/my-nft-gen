@@ -15,11 +15,9 @@ const generate = () => {
 
 const trace = async (data, img, currentFrame, totalFrames) => {
 
-    const alpha = Math.ceil();
     let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
 
     let hex = '#00FF00';
-    hex = hex + alpha.toString(16);
     let color = Jimp.cssColorToHex(hex)
 
     const paths = await getImagePaths(img);
@@ -46,7 +44,7 @@ export const traceEffect = {
     name: 'trace',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 20,
     requiresLayer: false,
     baseLayer:false,
 }

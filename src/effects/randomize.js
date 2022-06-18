@@ -8,28 +8,30 @@ const config = {
 }
 
 const generate = () => {
-    return [
-        {
-            apply: 'hue',
-            params: [getRandomInt(config.spin.lower, config.spin.upper)]
-        },
-        {
-            apply: 'red',
-            params: [getRandomInt(config.red.lower, config.red.upper)]
-        },
-        {
-            apply: 'green',
-            params: [getRandomInt(config.green.lower, config.green.upper)]
-        },
-        {
-            apply: 'blue',
-            params: [getRandomInt(config.blue.lower, config.blue.upper)]
-        }
-    ]
+    return {
+        randomize: [
+            {
+                apply: 'hue',
+                params: [getRandomInt(config.spin.lower, config.spin.upper)]
+            },
+            {
+                apply: 'red',
+                params: [getRandomInt(config.red.lower, config.red.upper)]
+            },
+            {
+                apply: 'green',
+                params: [getRandomInt(config.green.lower, config.green.upper)]
+            },
+            {
+                apply: 'blue',
+                params: [getRandomInt(config.blue.lower, config.blue.upper)]
+            }
+        ]
+    }
 };
 
 const randomize = async (data, img) => {
-    await img.color(data);
+    await img.color(data.randomize);
 }
 
 export const effect = {
@@ -42,6 +44,6 @@ export const randomizeEffect = {
     effect: effect,
     effectChance: 100,
     requiresLayer: false,
-    baseLayer:false,
+    baseLayer: false,
 }
 

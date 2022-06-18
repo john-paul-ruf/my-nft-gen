@@ -15,8 +15,8 @@ export class Effect {
         this.additionalEffects = []
         if (requiresLayer) {
             this.additionalEffects = generateEffects([
-                glowEffect,
                 randomizeEffect,
+                glowEffect,
                 fadeEffect,
             ])
         }

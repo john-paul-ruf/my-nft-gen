@@ -15,8 +15,6 @@ export const animate = async (config) => {
 
     config.startTime = new Date();
 
-    const frames = [];
-
     const summonEffects = generateEffects(possibleSummonsEffects);
     const focusEffects = generateEffects(possibleFocusEffects);
     const extraEffects = generateEffects(possibleExtraEffects);
@@ -26,6 +24,8 @@ export const animate = async (config) => {
     console.log(config);
 
     const createAnimation = async (frame) => {
+
+        const frames = [];
 
         const applyEffect = async(img, effects) => {
             for(let i = 0; i < effects.length; i++){

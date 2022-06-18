@@ -18,11 +18,9 @@ export const getImagePaths = async (sourceImg) => {
         const checkAround = (pixel, x, y) => {
             const pixelNext = getPixel(x, y);
 
-            if (isTransparent(pixel) && !isTransparent(pixelNext) || !isTransparent(pixel) && isTransparent(pixelNext)) {
-                return true;
-            }
+            return isTransparent(pixel) && !isTransparent(pixelNext) || !isTransparent(pixel) && isTransparent(pixelNext);
 
-            return false;
+
         }
 
         if (x < 0 || y < 0 || x > sourceImg.bitmap.width || y > sourceImg.bitmap.height) {
@@ -52,7 +50,7 @@ export const getImagePaths = async (sourceImg) => {
         const processPixel = async (x, y) => {
             if (isNext(x, y)) {
                 path.push({x: x, y: y});
-                search(x, y);
+                await search(x, y);
             }
         }
 
@@ -77,26 +75,21 @@ export const getImagePaths = async (sourceImg) => {
     }
 
     const pointInPaths = (x, y) => {
-
-        let inPath = false;
-
-        paths.forEach(path => {
-            if (pointInPath(path, x, y)) {
-                inPath = true;
+        for (let i = 0; i < paths.length; i++) {
+            if (pointInPath(paths[i], x, y)) {
+                return true;
             }
-        })
-
-        return inPath;
+        }
+        return false;
     }
 
     const pointInPath = (path, x, y) => {
-        let inPath = false;
-        path.forEach(pos => {
-            if (pos.x == x && pos.y == y) {
-                inPath = true;
+        for (let i = 0; i < path.length; i++) {
+            if (path[i].x == x && path[i].y == y) {
+                return true;
             }
-        })
-        return inPath;
+        }
+        return false;
     }
 
     for (let y = 0; y < sourceImg.bitmap.height; y++) {
