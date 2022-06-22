@@ -2,9 +2,9 @@ import {findValue} from "../logic/findValue.js";
 import {getRandomInt, randomNumber} from "../logic/random.js";
 
 const config = {
-    lowerRange: {lower: 0.6, upper: 0.7},
-    upperRange: {lower: 0.9, upper: 1},
-    times:  {lower: 1, upper: 2},
+    lowerRange: {lower: 0.3, upper: 0.5},
+    upperRange: {lower: 0.6, upper: 1},
+    times:  {lower: 1, upper: 3},
 }
 
 const generate = () => {

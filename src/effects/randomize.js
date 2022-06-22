@@ -2,9 +2,9 @@ import {getRandomInt} from "../logic/random.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
-    red: {lower: 5, upper: 55},
-    blue: {lower: 5, upper: 55},
-    green: {lower: 5, upper: 55}
+    red: {lower: 5, upper: 25},
+    blue: {lower: 5, upper: 25},
+    green: {lower: 5, upper: 25}
 }
 
 const generate = () => {

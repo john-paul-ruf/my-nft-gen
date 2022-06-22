@@ -13,7 +13,7 @@ export const possibleSummonsEffects = [
     fadeEffect,
     rotateEffect,
     radiateEffect,
-    traceEffect,
+    /*traceEffect,*/
 ];
 
 export const possibleFocusEffects = [
@@ -21,11 +21,11 @@ export const possibleFocusEffects = [
     glowEffect,
     fadeEffect,
     radiateEffect,
-    traceEffect,
+    /*traceEffect*/,
 ];
 
 export const possibleExtraEffects = [
-    animateBackgroundEffect,
+    /*animateBackgroundEffect*/,
     verticalScanLinesEffect
 ];
 

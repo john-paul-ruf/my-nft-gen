@@ -4,7 +4,7 @@ import {getRandomInt} from "../logic/random.js";
 const config = {
     lowerRange: {lower: -360, upper: 0},
     upperRange: {lower: 0, upper: 360},
-    times:  {lower: 1, upper: 2},
+    times:  {lower: 1, upper: 3},
 }
 
 const generate = () => {
