@@ -6,13 +6,14 @@ import {traceEffect} from "../trace.js";
 import {randomizeEffect} from "../randomize.js";
 import {animateBackgroundEffect} from "../animateBackground.js";
 import {verticalScanLinesEffect} from "../verticalScanLines.js";
+import {backdropEffect} from "../backdrop.js";
 
 export const possibleSummonsEffects = [
     randomizeEffect,
     glowEffect,
     fadeEffect,
     rotateEffect,
-    radiateEffect,
+    /*radiateEffect*/,
     /*traceEffect,*/
 ];
 
@@ -20,13 +21,14 @@ export const possibleFocusEffects = [
     randomizeEffect,
     glowEffect,
     fadeEffect,
-    radiateEffect,
+    /*radiateEffect*/,
     /*traceEffect*/,
 ];
 
 export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
-    verticalScanLinesEffect
+    verticalScanLinesEffect,
+    backdropEffect
 ];
 
 export const possibleAdditionalEffects = [

@@ -32,7 +32,7 @@ export class Config {
         this.summonsName = summonsList[getRandomInt(0, summonsList.length - 1)];
         this.focusName = focusList[getRandomInt(0, focusList.length - 1)];
 
-        this.finalImageSize = 1500;
+        this.finalImageSize = 1000;
         this.colorDepth = 256;
         this.frameInc = 1;
         this.numberOfFrame = 120;

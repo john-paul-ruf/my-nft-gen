@@ -4,7 +4,7 @@ import {getRandomInt} from "../logic/random.js";
 const config = {
     lines: {lower: 4, upper: 8},
     length: {lower: 5, upper: 25},
-    size: 3000,
+    size: 1000,
     color: '#bdf379'
 }
 
@@ -37,7 +37,7 @@ const generate = () => {
 
 const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
     const drawLine = async (y, maxTrailLength, pixelsPerGradient) => {
-        for (let x = 0; x < 3000; x++) {
+        for (let x = 0; x < data.width; x++) {
             let rando = getRandomInt(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
 
