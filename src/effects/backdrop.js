@@ -2,9 +2,10 @@ import Jimp from "jimp";
 import {getRandomInt} from "../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
+import fs from "fs";
 
 const config = {
-    folderName: '/img/png/backdrops/png'
+    folderName: '/img/png/backdrops/'
 }
 
 const generate = () => {
@@ -13,7 +14,7 @@ const generate = () => {
 
     const getBackdrop = () => {
         const fileURLToPath1 = fileURLToPath(import.meta.url);
-        const directory = dirname(fileURLToPath1).replace('/effects/control', '');
+        const directory = dirname(fileURLToPath1).replace('/effects', '');
 
         const getFilesInDirectory = (dir) => {
 
@@ -31,7 +32,7 @@ const generate = () => {
 
         const backdrops = getFilesInDirectory(config.folderName);
 
-        return backdrops[getRandomInt(0, backdrops.length - 1)];
+        return path.join(directory, config.folderName + backdrops[getRandomInt(0, backdrops.length - 1)]);
 
     }
 
@@ -42,7 +43,7 @@ const generate = () => {
 
 const addBackdrop = async (data, img, currentFrame, numberOfFrames) => {
 
-    let overlay = new Jimp(data.backdrop);
+    let overlay = await Jimp.read(data.backdrop);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
