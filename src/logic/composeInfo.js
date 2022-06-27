@@ -19,7 +19,7 @@ export const composeInfo = (config, summonEffects, focusEffects, extraEffects) =
     }
 
     const info =
-        `Title: ${config.finalFileName}\nArtist:${config._INVOKER_}\n\nFocus Name: ${config.focusName} \n  Effects:${getEffectInfo(focusEffects)} \n\nSummons Name: ${config.summonsName} \n  Effects: ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
+        `Title: ${config.finalFileName}\nRun:${config.runName}\nArtist:${config._INVOKER_}\n\nFocus Name: ${config.focusName} \n  Effects:${getEffectInfo(focusEffects)} \n\nSummons Name: ${config.summonsName} \n  Effects: ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
 
     return info;
 

@@ -28,6 +28,7 @@ export class Config {
         const focusList = getFilesInDirectory('/img/png/focus/png')
 
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
+        this.runName = 'The Hexes'
 
         this.summonsName = summonsList[getRandomInt(0, summonsList.length - 1)];
         this.focusName = focusList[getRandomInt(0, focusList.length - 1)];
