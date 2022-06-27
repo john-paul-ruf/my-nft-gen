@@ -1,5 +1,6 @@
 import {findValue} from "../logic/findValue.js";
 import {getRandomInt} from "../logic/random.js";
+import {randomizeEffect} from "./randomize.js";
 
 const config = {
     lowerRange: {lower: -360, upper: 0},
@@ -8,11 +9,16 @@ const config = {
 }
 
 const generate = () => {
-    return {
+    const data = {
         lower: getRandomInt(config.lowerRange.lower, config.lowerRange.upper),
         upper: getRandomInt(config.upperRange.lower, config.upperRange.upper),
-        times: getRandomInt(config.times.lower, config.times.upper)
-    };
+        times: getRandomInt(config.times.lower, config.times.upper),
+        getInfo: () => {
+            return `${glowEffect.name}: spin hue between ${data.lower} and ${data.upper} a total number of ${data.times} times`
+        }
+    }
+
+    return data;
 }
 
 const glowAnimated = async (data, img, currentFrame, totalFrames) => {

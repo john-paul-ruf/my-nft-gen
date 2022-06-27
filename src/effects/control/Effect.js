@@ -21,6 +21,9 @@ export class Effect {
     }
 
     getInfo(){
-        return this.data;
+        return this.data.getInfo();
+    }
+
+    getData(){
     }
 }

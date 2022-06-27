@@ -1,13 +1,20 @@
 import {getRandomInt} from "../logic/random.js";
+import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
     times:  {lower: 1, upper: 3},
 }
 
 const generate = () => {
-    return {
-        times: getRandomInt(config.times.lower, config.times.upper)
+
+    const data = {
+        times: getRandomInt(config.times.lower, config.times.upper),
+        getInfo: () => {
+            return `${rotateEffect.name}: ${data.times} times`
+        }
     }
+
+    return data;
 }
 
 const rotate = async (data, img, currentFrame, totalFrame) => {

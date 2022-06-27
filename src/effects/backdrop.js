@@ -3,6 +3,7 @@ import {getRandomInt} from "../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";
+import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
     folderName: '/img/png/backdrops/'
@@ -10,6 +11,9 @@ const config = {
 
 const generate = () => {
     const data = {
+        getInfo: () => {
+            return `${backdropEffect.name}, Filename: ${data.filename}`
+        }
     }
 
     const getBackdrop = () => {
@@ -32,7 +36,9 @@ const generate = () => {
 
         const backdrops = getFilesInDirectory(config.folderName);
 
-        return path.join(directory, config.folderName + backdrops[getRandomInt(0, backdrops.length - 1)]);
+        data.filename = backdrops[getRandomInt(0, backdrops.length - 1)];
+
+        return path.join(directory, config.folderName + data.filename);
 
     }
 

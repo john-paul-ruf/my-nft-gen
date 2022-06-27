@@ -39,7 +39,8 @@ export class Config {
 
         this.summonsFile = path.join(directory, '/img/png/summons/png/' + this.summonsName);
         this.focusFile = path.join(directory, '/img/png/focus/png/' + this.focusName);
-        this.fileOut = path.join(directory, '/img/output/' + Date.now().toString() + '.gif');
+        this.finalFileName = +Date.now().toString() + '.gif'
+        this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
     }
 }
 

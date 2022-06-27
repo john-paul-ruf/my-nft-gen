@@ -1,4 +1,5 @@
 import {getRandomInt} from "../logic/random.js";
+import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
@@ -8,26 +9,40 @@ const config = {
 }
 
 const generate = () => {
-    return {
+
+    const props = {
+        hue: getRandomInt(config.spin.lower, config.spin.upper),
+        red: getRandomInt(config.red.lower, config.red.upper),
+        green: getRandomInt(config.green.lower, config.green.upper),
+        blue: getRandomInt(config.blue.lower, config.blue.upper),
+    }
+
+    const data = {
+
         randomize: [
             {
                 apply: 'hue',
-                params: [getRandomInt(config.spin.lower, config.spin.upper)]
+                params: [props.hue]
             },
             {
                 apply: 'red',
-                params: [getRandomInt(config.red.lower, config.red.upper)]
+                params: [props.red]
             },
             {
                 apply: 'green',
-                params: [getRandomInt(config.green.lower, config.green.upper)]
+                params: [props.green]
             },
             {
                 apply: 'blue',
-                params: [getRandomInt(config.blue.lower, config.blue.upper)]
+                params: [props.blue]
             }
-        ]
+        ],
+        getInfo: () => {
+            return `${randomizeEffect.name}: adjust hue: ${props.hue}, adjust red channel: ${props.red}, adjust green channel: ${props.green}, adjust blue channel: ${props.blue}            `
+        }
     }
+
+    return data;
 };
 
 const randomize = async (data, img) => {

@@ -13,7 +13,10 @@ const generate = () => {
         numberOfLines: getRandomInt(config.lines.lower, config.lines.upper),
         height: config.size,
         width: config.size,
-        color: config.color
+        color: config.color,
+        getInfo: () => {
+            return `${verticalScanLinesEffect.name}: ${data.numberOfLines} total lines with a min length of ${config.length.lower} and a max length of ${config.length.upper}`
+        }
     }
 
     const computeInitialLineInfo = (numberOfLines) => {
