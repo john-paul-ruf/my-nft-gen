@@ -1,7 +1,7 @@
 import {Config} from "./logic/Config.js";
 import {animate} from "./logic/animate.js";
 
-for(let i = 0; i < 100; i++)
+for(let i = 0; i < 25; i++)
 {
     console.log("started process");
     const config = new Config();

@@ -3,9 +3,9 @@ import {getRandomInt, randomNumber} from "../logic/random.js";
 import {glowEffect} from "./glow.js";
 
 const config = {
-    lowerRange: {lower: 0.3, upper: 0.5},
-    upperRange: {lower: 0.6, upper: 1},
-    times: {lower: 1, upper: 3},
+    lowerRange: {lower: 0.6, upper: 0.7},
+    upperRange: {lower: 0.8, upper: 1},
+    times: {lower: 1, upper: 4},
 }
 
 const generate = () => {
