@@ -30,8 +30,8 @@ export class Config {
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
         this.runName = 'The Hexes'
 
-        this.summonsName = summonsList[getRandomInt(0, summonsList.length - 1)];
-        this.focusName = focusList[getRandomInt(0, focusList.length - 1)];
+        this.summonsName = summonsList[getRandomInt(0, summonsList.length)];
+        this.focusName = focusList[getRandomInt(0, focusList.length)];
 
         this.finalImageSize = 1000;
         this.colorDepth = 256;

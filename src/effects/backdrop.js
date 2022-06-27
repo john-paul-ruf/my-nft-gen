@@ -36,7 +36,7 @@ const generate = () => {
 
         const backdrops = getFilesInDirectory(config.folderName);
 
-        data.filename = backdrops[getRandomInt(0, backdrops.length - 1)];
+        data.filename = backdrops[getRandomInt(0, backdrops.length)];
 
         return path.join(directory, config.folderName + data.filename);
 
