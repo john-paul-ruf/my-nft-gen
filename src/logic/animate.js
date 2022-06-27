@@ -21,9 +21,7 @@ export const animate = async (config) => {
     const focusEffects = generateEffects(possibleFocusEffects);
     const extraEffects = generateEffects(possibleExtraEffects);
 
-    composeInfo(config, summonEffects, focusEffects, extraEffects);
-
-    console.log(config);
+    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects));
 
     const createAnimation = async (frame) => {
 
@@ -112,10 +110,9 @@ export const animate = async (config) => {
     config.processingTime = timeToString(rez);
 
     console.log("gif write start");
-    console.log(config);
+    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects));
 
-    const fileProps = JSON.stringify(config, null, 2)
-    fs.writeFileSync(config.fileOut + '.txt', fileProps, 'utf-8');
+    fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, summonEffects, focusEffects, extraEffects), 'utf-8');
 
     GifUtil.write(config.fileOut, frames).then(gif => {
         console.log("gif written");
