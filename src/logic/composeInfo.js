@@ -3,7 +3,7 @@ export const composeInfo = (config, summonEffects, focusEffects, extraEffects) =
     const getEffectInfo = (effect) => {
         let results = '';
         for (let i = 0; i < effect.length; i++) {
-            let data = `\n    ` + effect[i].getInfo()
+            let data = `\n  ` + effect[i].getInfo()
 
             if (effect[i].additionalEffects.length > 0) {
                 data = data + `\n    with additional effects: `
@@ -19,7 +19,7 @@ export const composeInfo = (config, summonEffects, focusEffects, extraEffects) =
     }
 
     const info =
-        `Title: ${config.finalFileName}\nRun:${config.runName}\nArtist:${config._INVOKER_}\n\nFocus Name: ${config.focusName} \n  Effects:${getEffectInfo(focusEffects)} \n\nSummons Name: ${config.summonsName} \n  Effects: ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
+        `Title: ${config.finalFileName}\nRun: ${config.runName}\nArtist: ${config._INVOKER_}\n\nFocus Name: ${config.focusName}  ${getEffectInfo(focusEffects)} \n\nSummons Name: ${config.summonsName}  ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
 
     return info;
 
