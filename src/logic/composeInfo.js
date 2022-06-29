@@ -1,4 +1,4 @@
-export const composeInfo = (config, summonEffects, focusEffects, extraEffects) => {
+export const composeInfo = (config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects) => {
 
     const getEffectInfo = (effect) => {
         let results = '';
@@ -19,7 +19,7 @@ export const composeInfo = (config, summonEffects, focusEffects, extraEffects) =
     }
 
     const info =
-        `Title: ${config.finalFileName}\nRun: ${config.runName}\nArtist: ${config._INVOKER_}\n\nFocus Name: ${config.focusName}  ${getEffectInfo(focusEffects)} \n\nSummons Name: ${config.summonsName}  ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
+        `Title: ${config.finalFileName}\nRun: ${config.runName}\nArtist: ${config._INVOKER_}\n\nSig: ${config.sigName}  ${getEffectInfo(sigEffects)}\n\nGloss: ${config.glossName}  ${getEffectInfo(glossEffects)}\n\nFocus: ${config.focusName}  ${getEffectInfo(focusEffects)} \n\nSummons: ${config.summonsName}  ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
 
     return info;
 

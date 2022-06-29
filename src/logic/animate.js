@@ -6,7 +6,7 @@ import {timeLeft} from "./timeLeft.js";
 import {generateEffects} from "../effects/control/generateEffect.js";
 import {
     possibleExtraEffects,
-    possibleFocusEffects,
+    possibleFocusEffects, possibleGlossEffects, possibleSigEffects,
     possibleSummonsEffects
 } from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
@@ -19,13 +19,15 @@ export const animate = async (config) => {
 
     const summonEffects = generateEffects(possibleSummonsEffects);
     const focusEffects = generateEffects(possibleFocusEffects);
+
+    const glossEffects = generateEffects(possibleGlossEffects);
+    const sigEffects = generateEffects(possibleSigEffects);
+
     const extraEffects = generateEffects(possibleExtraEffects);
 
-    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects));
+    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects));
 
     const createAnimation = async (frame) => {
-
-
 
         const applyEffect = async (img, effects) => {
             for (let i = 0; i < effects.length; i++) {
@@ -56,6 +58,9 @@ export const animate = async (config) => {
         ////////////////////////
         let summons = await Jimp.read(config.summonsFile);
         let focus = await Jimp.read(config.focusFile);
+        let gloss = await Jimp.read(config.glossFile);
+        let sig = await Jimp.read(config.sigFile);
+
         let background = new Jimp(config.finalImageSize, config.finalImageSize, Jimp.cssColorToHex('#0D0D0D'));
         let extraLayers = getExtraLayers(extraEffects, config.finalImageSize, config.finalImageSize)
 
@@ -64,6 +69,8 @@ export const animate = async (config) => {
         ////////////////////////
         await applyEffect(summons, summonEffects);
         await applyEffect(focus, focusEffects);
+        await applyEffect(gloss, glossEffects);
+        await applyEffect(sig, sigEffects);
         await processExtraLayers();
 
         ////////////////////////
@@ -83,6 +90,14 @@ export const animate = async (config) => {
         })
 
         await background.composite(focus, 0, 0, {
+            mode: Jimp.BLEND_SOURCE_OVER,
+        });
+
+        await background.composite(gloss, 0, 0, {
+            mode: Jimp.BLEND_SOURCE_OVER,
+        });
+
+        await background.composite(sig, 0, 0, {
             mode: Jimp.BLEND_SOURCE_OVER,
         });
 
@@ -110,9 +125,9 @@ export const animate = async (config) => {
     config.processingTime = timeToString(rez);
 
     console.log("gif write start");
-    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects));
+    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects));
 
-    fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, summonEffects, focusEffects, extraEffects), 'utf-8');
+    fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects), 'utf-8');
 
     GifUtil.write(config.fileOut, frames).then(gif => {
         console.log("gif written");

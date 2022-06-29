@@ -25,6 +25,22 @@ export const possibleFocusEffects = [
     /*traceEffect*/,
 ];
 
+export const possibleGlossEffects = [
+    randomizeEffect,
+    glowEffect,
+    fadeEffect,
+    /*radiateEffect*/,
+    /*traceEffect*/,
+];
+
+export const possibleSigEffects = [
+    randomizeEffect,
+    glowEffect,
+    fadeEffect,
+    /*radiateEffect*/,
+    /*traceEffect*/,
+];
+
 export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
