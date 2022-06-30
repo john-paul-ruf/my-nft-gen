@@ -16,7 +16,7 @@ const generate = () => {
             upper: randomNumber(config.upperRange.lower, config.upperRange.upper),
             times: getRandomInt(config.times.lower, config.times.upper),
             getInfo: () => {
-                return `${fadeEffect.name}: adjust opacity between ${data.lower} and ${data.upper} a total number of ${data.times} times`
+                return `${fadeEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
             }
         }
     return data;

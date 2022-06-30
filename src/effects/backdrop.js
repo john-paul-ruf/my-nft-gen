@@ -12,7 +12,7 @@ const config = {
 const generate = () => {
     const data = {
         getInfo: () => {
-            return `${backdropEffect.name}, Filename: ${data.filename}`
+            return `${backdropEffect.name}, ${data.filename}`
         }
     }
 

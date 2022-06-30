@@ -3,8 +3,8 @@ import {getRandomInt} from "../logic/random.js";
 import {randomizeEffect} from "./randomize.js";
 
 const config = {
-    lowerRange: {lower: -360, upper: 0},
-    upperRange: {lower: 0, upper: 360},
+    lowerRange: {lower: -180, upper: 0},
+    upperRange: {lower: 0, upper: 180},
     times:  {lower: 1, upper: 4},
 }
 
@@ -14,7 +14,7 @@ const generate = () => {
         upper: getRandomInt(config.upperRange.lower, config.upperRange.upper),
         times: getRandomInt(config.times.lower, config.times.upper),
         getInfo: () => {
-            return `${glowEffect.name}: spin hue between ${data.lower} and ${data.upper} a total number of ${data.times} times`
+            return `${glowEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
         }
     }
 

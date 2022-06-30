@@ -38,7 +38,7 @@ const generate = () => {
             }
         ],
         getInfo: () => {
-            return `${randomizeEffect.name}: adjust hue: ${props.hue}, adjust red channel: ${props.red}, adjust green channel: ${props.green}, adjust blue channel: ${props.blue}            `
+            return `${randomizeEffect.name}: hue: ${props.hue}, red: ${props.red}, green: ${props.green}, blue: ${props.blue}            `
         }
     }
 

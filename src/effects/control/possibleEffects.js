@@ -43,7 +43,7 @@ export const possibleSigEffects = [
 
 export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
-    verticalScanLinesEffect,
+    /*verticalScanLinesEffect,*/
     backdropEffect
 ];
 
