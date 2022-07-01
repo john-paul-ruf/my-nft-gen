@@ -2,10 +2,10 @@ import {getRandomInt} from "../logic/random.js";
 import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
-    spin: {lower: -360, upper: 360},
-    red: {lower: 5, upper: 25},
-    blue: {lower: 5, upper: 25},
-    green: {lower: 5, upper: 25}
+    spin: {lower: -90, upper: 90},
+    red: {lower: 1, upper: 10},
+    blue: {lower: 1, upper: 10},
+    green: {lower: 1, upper: 10}
 }
 
 const generate = () => {
