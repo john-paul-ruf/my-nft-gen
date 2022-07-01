@@ -5,7 +5,7 @@ import {glowEffect} from "./glow.js";
 const config = {
     lowerRange: {lower: 0.6, upper: 0.7},
     upperRange: {lower: 0.8, upper: 1},
-    times: {lower: 1, upper: 5},
+    times: {lower: 1, upper: 3},
 }
 
 const generate = () => {
@@ -16,7 +16,7 @@ const generate = () => {
             upper: randomNumber(config.upperRange.lower, config.upperRange.upper),
             times: getRandomInt(config.times.lower, config.times.upper),
             getInfo: () => {
-                return `${fadeEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
+                return `${fadeEffect.name}: ${data.times} times, ${data.lower.toFixed(3)} to ${data.upper.toFixed(3)}`
             }
         }
     return data;

@@ -3,9 +3,9 @@ import {getRandomInt} from "../logic/random.js";
 import {randomizeEffect} from "./randomize.js";
 
 const config = {
-    lowerRange: {lower: -180, upper: 0},
-    upperRange: {lower: 0, upper: 180},
-    times:  {lower: 1, upper: 4},
+    lowerRange: {lower: -90, upper: 0},
+    upperRange: {lower: 0, upper: 90},
+    times:  {lower: 1, upper: 3},
 }
 
 const generate = () => {
