@@ -4,7 +4,7 @@ import {getRandomInt} from "../logic/random.js";
 const config = {
     lines: {lower: 4, upper: 8},
     length: {lower: 5, upper: 25},
-    size: 1750,
+    size: 1500,
     color: '#bdf379'
 }
 
