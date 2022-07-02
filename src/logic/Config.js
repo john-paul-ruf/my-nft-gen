@@ -30,14 +30,14 @@ export class Config {
         const sigList = getFilesInDirectory('/img/png/sig/png')
 
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'dialing-in'
+        this.runName = 'open-proxy'
 
         this.summonsName = summonsList[getRandomInt(0, summonsList.length)];
         this.focusName = focusList[getRandomInt(0, focusList.length)];
         this.glossName = glossList[getRandomInt(0, glossList.length)];
         this.sigName = sigList[getRandomInt(0, sigList.length)];
 
-        this.finalImageSize = 1000;
+        this.finalImageSize = 3000;
         this.colorDepth = 256;
         this.frameInc = 1;
         this.numberOfFrame = 120;
