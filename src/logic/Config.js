@@ -30,7 +30,7 @@ export class Config {
         const sigList = getFilesInDirectory('/img/png/sig/png')
 
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'open-proxy'
+        this.runName = 'blink on blink on blink, on blink'
 
         this.summonsName = summonsList[getRandomInt(0, summonsList.length)];
         this.focusName = focusList[getRandomInt(0, focusList.length)];
