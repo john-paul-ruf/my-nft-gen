@@ -3,8 +3,8 @@ import {getRandomInt} from "../logic/random.js";
 import {randomizeEffect} from "./randomize.js";
 
 const config = {
-    lowerRange: {lower: -90, upper: 0},
-    upperRange: {lower: 0, upper: 90},
+    lowerRange: {lower: -270, upper: 0},
+    upperRange: {lower: 0, upper: 207},
     times:  {lower: 1, upper: 3},
 }
 
