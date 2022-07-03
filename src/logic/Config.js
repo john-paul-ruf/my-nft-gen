@@ -37,10 +37,10 @@ export class Config {
         this.glossName = glossList[getRandomInt(0, glossList.length)];
         this.sigName = sigList[getRandomInt(0, sigList.length)];
 
-        this.finalImageSize = 1500;
+        this.finalImageSize = 2000;
         this.colorDepth = 256;
         this.frameInc = 1;
-        this.numberOfFrame = 120;
+        this.numberOfFrame = 96;
 
         this.summonsFile = path.join(directory, '/img/png/summons/png/' + this.summonsName);
         this.focusFile = path.join(directory, '/img/png/focus/png/' + this.focusName);
