@@ -38,7 +38,7 @@ export class Config {
         this.sigName = sigList[getRandomInt(0, sigList.length)];
 
         this.finalImageSize = 2000;
-        this.colorDepth = 256;
+        this.colorDepth = 128;
         this.frameInc = 1;
         this.numberOfFrame = 72;
 
