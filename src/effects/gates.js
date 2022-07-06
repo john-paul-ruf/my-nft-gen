@@ -99,6 +99,9 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
                 for (let a = 45; a < 360; a = a + 45) {
                     context.beginPath();
 
+                    context.lineWidth = stroke;
+                    context.strokeStyle = color;
+
                     const start = findPointByAngleAndCircle(a + 5, lineRadius);
                     const end = findPointByAngleAndCircle(a + 40, lineRadius);
 
