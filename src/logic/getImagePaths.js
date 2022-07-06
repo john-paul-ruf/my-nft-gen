@@ -81,7 +81,7 @@ export const getImagePaths = async (sourceImg) => {
             await processPixel(x - 1, y + 1)
         }
 
-        //star here
+        //start if in findPath here
         //store current point
         path.push({x: x, y: y});
 
