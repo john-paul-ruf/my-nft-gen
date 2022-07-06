@@ -1,3 +1,12 @@
+/**
+
+    The Gaston of functions.  This runs almost everything.
+
+    Given a range, and the number of times the sequence is to repeat
+    return the current value for the given frame in a total number of
+    frames.
+
+**/
 export const findValue = (min, max, times, totalFrame, currentFrame) => {
     const range = max - min;
     const segment = totalFrame / times;

@@ -1,3 +1,4 @@
+//worst effect ever
 import {findValue} from "../logic/findValue.js";
 import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";

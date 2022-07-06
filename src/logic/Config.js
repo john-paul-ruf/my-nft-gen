@@ -29,6 +29,7 @@ export class Config {
         const glossList = getFilesInDirectory('/img/png/gloss/png')
         const sigList = getFilesInDirectory('/img/png/sig/png')
 
+        //no worries, just variable names.  It's cute isn't it.
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
         this.runName = 'var x'
 
