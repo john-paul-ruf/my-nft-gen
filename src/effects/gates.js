@@ -25,7 +25,7 @@ const generate = () => {
         times: getRandomInt(config.times.lower, config.times.upper),
         gateWidth: config.gateWidth,
         getInfo: () => {
-            return `${gatesEffect.name}: ${data.numberOfGates} gates, fuzz factor: ${data.fuzzFactor}, ${data.times} times`
+            return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }
     }
 

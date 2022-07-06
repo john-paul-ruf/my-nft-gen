@@ -8,7 +8,7 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 const config = {
     circles: {lower: 10, upper: 25},
     fuzzFactor: {lower: 1, upper: 5},
-    densityFactory: {lower: 0.3, upper: 1},
+    sparsityFactor: {lower: 0.3, upper: 1},
     size: imageSize,
     times: {lower: 1, upper: 3},
     stroke: 1,
@@ -17,7 +17,7 @@ const config = {
 
 const generate = () => {
     const data = {
-        sparsityFactory: randomNumber(config.densityFactory.lower, config.densityFactory.upper),
+        sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         numberOfCircles: getRandomInt(config.circles.lower, config.circles.upper),
         height: config.size,
         width: config.size,
@@ -25,7 +25,7 @@ const generate = () => {
         length: ((config.size / 2)/2)-((config.size / 2)/3),
         lineStart: config.size / 3,
         getInfo: () => {
-            return `${ampEffect.name}: sparsity Factor: ${data.sparsityFactory.toFixed(3)}`
+            return `${ampEffect.name}: sparsity Factor: ${data.sparsityFactor.toFixed(3)}`
         }
     }
 
@@ -111,13 +111,13 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
             drawRing(data.circles[i].radius, stroke, data.color);
         }
 
-        for(let i = 0; i < 360; i = i+ data.sparsityFactory)
+        for(let i = 0; i < 360; i = i+ data.sparsityFactor)
         {
             drawRay(stroke, data.color, i, data.lineStart, data.length)
         }
 
         for (let i = 0; i < data.numberOfCircles; i++) {
-            for (let a = 0; a < 360; a = a + data.sparsityFactory) {
+            for (let a = 0; a < 360; a = a + data.sparsityFactor) {
                 drawCross(data.color, stroke, a, data.circles[i].radius, 3)
             }
         }
