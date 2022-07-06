@@ -41,7 +41,7 @@ export class Config {
 
         this.finalImageSize = 2000;
         this.colorDepth = 128;
-        this.frameInc = 1;
+        this.frameInc = 1; //For testing, render every x frame.
         this.numberOfFrame = 50;
 
         this.summonsFile = path.join(directory, '/img/png/summons/png/' + this.summonsName);
