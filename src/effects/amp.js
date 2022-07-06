@@ -62,6 +62,7 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
             context.lineWidth = stroke;
             context.strokeStyle = color;
             context.stroke();
+            context.closePath();
         }
 
         const drawCross = (color, stroke, angle, radius, size) => {
@@ -81,6 +82,8 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
             context.lineTo(oneEnd.x, oneEnd.y);
             context.stroke();
 
+            context.closePath();
+
             context.beginPath();
 
             context.lineWidth = stroke;
@@ -90,6 +93,7 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
             context.lineTo(twoEnd.x, twoEnd.y);
             context.stroke();
 
+            context.closePath();
         }
 
         const drawRay = (stroke, color, angle, radius, length) => {
@@ -104,6 +108,8 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
             context.moveTo(start.x, start.y);
             context.lineTo(end.x, end.y);
             context.stroke();
+
+            context.closePath();
         }
 
         for (let i = 0; i < data.numberOfCircles; i++) {

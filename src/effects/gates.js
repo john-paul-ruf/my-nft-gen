@@ -92,6 +92,8 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
                     context.moveTo(start.x, start.y);
                     context.lineTo(end.x, end.y);
                     context.stroke();
+
+                    context.closePath();
                 }
 
                 for (let a = 45; a < 360; a = a + 45) {
@@ -118,7 +120,6 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
 
             inscribe(stroke, color, radius+2, radius + data.width-2);
 
-            context.stroke();
         }
 
         for (let i = 0; i < data.numberOfGates; i++) {

@@ -56,6 +56,7 @@ const fuzz = async (data, img, currentFrame, numberOfFrames) => {
             context.lineWidth = stroke;
             context.strokeStyle = color;
             context.stroke();
+            context.closePath();
         }
 
         for (let i = 0; i < data.numberOfCircles; i++) {
