@@ -7,10 +7,10 @@ import fs from "fs";
 
 const config = {
     circles: {lower: 30, upper: 60},
-    fuzzFactor: {lower: 5, upper: 10},
+    fuzzFactor: {lower: 3, upper: 8},
     size: imageSize,
     times:  {lower: 1, upper: 3},
-    ringStroke: 2,
+    ringStroke: 1,
     colorBucket: ['#FF0000','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFF00',]
 }
 
@@ -74,7 +74,6 @@ const fuzz = async (data, img, currentFrame, numberOfFrames) => {
     let fuzzImg = await Jimp.read(fuzz);
 
     await fuzzImg.blur(Math.floor(findValue(1, data.fuzzFactor+config.ringStroke,data.times, numberOfFrames, currentFrame)));
-    await fuzzImg.opacity(0.5);
 
     await img.composite(fuzzImg, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -97,7 +96,7 @@ export const fuzzEffect = {
     name: 'fuzz',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 50,
     requiresLayer: true,
     baseLayer: false,
 }

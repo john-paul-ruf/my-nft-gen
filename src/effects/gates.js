@@ -12,7 +12,7 @@ const config = {
     fuzzFactor: {lower: 1, upper: 5},
     size: imageSize,
     times: {lower: 1, upper: 3},
-    stroke: 1,
+    stroke: 2,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -47,14 +47,14 @@ const generate = () => {
 }
 
 const gates = async (data, img, currentFrame, numberOfFrames) => {
-    const drawing = Date.now().toString() + '-amp.png';
-    const fuzz = Date.now().toString() + '-amp-fuzz.png';
+    const drawing = Date.now().toString() + '-gate.png';
+    const fuzz = Date.now().toString() + '-gate-fuzz.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(imageSize, imageSize)
         const context = canvas.getContext('2d');
 
-        const drawGate = (radius, stroke, color) => {
+        const drawGate = (radius, stroke, gateColor, scribeColor) => {
 
 
             function drawOctagon(r) {
@@ -63,7 +63,7 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
                 const start = findPointByAngleAndCircle(0, r);
 
                 context.lineWidth = stroke;
-                context.strokeStyle = color;
+                context.strokeStyle = gateColor;
 
                 context.moveTo(start.x, start.y);
 
@@ -116,14 +116,14 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
 
 
             drawOctagon(radius);
-            drawOctagon(radius + data.width);
+            drawOctagon(radius + data.gateWidth);
 
-            inscribe(stroke, color, radius+2, radius + data.width-2);
+            inscribe(stroke, scribeColor, radius+2, radius + data.gateWidth-2);
 
         }
 
         for (let i = 0; i < data.numberOfGates; i++) {
-            drawGate(data.gates[i].radius, stroke, data.gates[i].color);
+            drawGate(data.gates[i].radius, stroke, data.gates[i].gateColor, data.gates[i].scribeColor);
         }
 
         const buffer = canvas.toBuffer('image/png');
@@ -131,24 +131,14 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
     }
 
     await draw(config.stroke, drawing);
-    await draw(Math.floor(findValue(0, data.fuzzFactor + config.stroke, data.times, numberOfFrames, currentFrame)), fuzz);
 
     let tmpImg = await Jimp.read(drawing);
-    let fuzzImg = await Jimp.read(fuzz);
-
-    await fuzzImg.blur(Math.floor(findValue(1, data.fuzzFactor + config.ringStroke, data.times, numberOfFrames, currentFrame)));
-    await fuzzImg.opacity(0.7);
-
-    await img.composite(fuzzImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
 
     await img.composite(tmpImg, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
     fs.unlinkSync(drawing);
-    fs.unlinkSync(fuzz);
 
 }
 

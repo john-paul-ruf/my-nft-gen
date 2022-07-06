@@ -1,15 +1,14 @@
-import {getRandomInt} from "../logic/random.js";
+import {getRandomInt, randomNumber} from "../logic/random.js";
 import {imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
-import {findValue} from "../logic/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
     circles: {lower: 10, upper: 25},
     fuzzFactor: {lower: 1, upper: 5},
-    densityFactory: {lower: 1, upper: 5},
+    densityFactory: {lower: 0.3, upper: 1},
     size: imageSize,
     times: {lower: 1, upper: 3},
     stroke: 1,
@@ -18,17 +17,15 @@ const config = {
 
 const generate = () => {
     const data = {
-        sparsityFactory: getRandomInt(config.densityFactory.lower, config.densityFactory.upper),
-        fuzzFactor: getRandomInt(config.fuzzFactor.lower, config.fuzzFactor.upper),
+        sparsityFactory: randomNumber(config.densityFactory.lower, config.densityFactory.upper),
         numberOfCircles: getRandomInt(config.circles.lower, config.circles.upper),
         height: config.size,
         width: config.size,
-        times: getRandomInt(config.times.lower, config.times.upper),
         color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
-        length: (config.size / 2) - (config.size / 3),
+        length: ((config.size / 2)/2)-((config.size / 2)/3),
         lineStart: config.size / 3,
         getInfo: () => {
-            return `${ampEffect.name}: sparsity Factor: ${data.sparsityFactory}, fuzz factor: ${data.fuzzFactor}, ${data.times} times`
+            return `${ampEffect.name}: sparsity Factor: ${data.sparsityFactory.toFixed(3)}`
         }
     }
 
@@ -36,8 +33,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomInt(config.size / 3, config.size / 2),
-                color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+                radius: getRandomInt(((config.size / 2)/3), ((config.size / 2)/2)),
             });
         }
         return info;
@@ -50,7 +46,6 @@ const generate = () => {
 
 const amp = async (data, img, currentFrame, numberOfFrames) => {
     const drawing = Date.now().toString() + '-amp.png';
-    const fuzz = Date.now().toString() + '-amp-fuzz.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(imageSize, imageSize)
@@ -113,7 +108,7 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
         }
 
         for (let i = 0; i < data.numberOfCircles; i++) {
-            drawRing(data.circles[i].radius, stroke, data.circles[i].color);
+            drawRing(data.circles[i].radius, stroke, data.color);
         }
 
         for(let i = 0; i < 360; i = i+ data.sparsityFactory)
@@ -123,7 +118,7 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
 
         for (let i = 0; i < data.numberOfCircles; i++) {
             for (let a = 0; a < 360; a = a + data.sparsityFactory) {
-                drawCross(data.circles[i].color, stroke, a, data.circles[i].radius, 3)
+                drawCross(data.color, stroke, a, data.circles[i].radius, 3)
             }
         }
         const buffer = canvas.toBuffer('image/png');
@@ -131,24 +126,14 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
     }
 
     await draw(config.stroke, drawing);
-    await draw(Math.floor(findValue(0, data.fuzzFactor + config.stroke, data.times, numberOfFrames, currentFrame)), fuzz);
 
     let tmpImg = await Jimp.read(drawing);
-    let fuzzImg = await Jimp.read(fuzz);
-
-    await fuzzImg.blur(Math.floor(findValue(1, data.fuzzFactor + config.ringStroke, data.times, numberOfFrames, currentFrame)));
-    await fuzzImg.opacity(0.7);
-
-    await img.composite(fuzzImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
 
     await img.composite(tmpImg, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
     fs.unlinkSync(drawing);
-    fs.unlinkSync(fuzz);
 
 }
 
