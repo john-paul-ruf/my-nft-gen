@@ -29,7 +29,8 @@ export class Config {
         const glossList = getFilesInDirectory('/img/png/gloss/png')
         const sigList = getFilesInDirectory('/img/png/sig/png')
 
-        //no worries, just variable names.  It's cute isn't it.
+        //No worries, just variable names.  It's cute, isn't it?
+        //It is how I think of layers in my head when working in illustrator
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
         this.runName = 'var x'
 
@@ -49,7 +50,7 @@ export class Config {
         this.glossFile = path.join(directory, '/img/png/gloss/png/' + this.glossName);
         this.sigFile = path.join(directory, '/img/png/sig/png/' + this.sigName);
 
-        this.finalFileName = +Date.now().toString() + '.gif'
+        this.finalFileName = Date.now().toString() + '.gif'
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
     }
 }
