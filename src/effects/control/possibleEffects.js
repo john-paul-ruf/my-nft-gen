@@ -11,6 +11,10 @@ import {fuzzEffect} from "../fuzz.js";
 import {ampEffect} from "../amp.js";
 import {gatesEffect} from "../gates.js";
 
+////////////////////////////////////////////////////////
+// Just buckets of effects that get applied by chance
+////////////////////////////////////////////////////////
+
 export const possibleSummonsEffects = [
     randomizeEffect,
     glowEffect,
