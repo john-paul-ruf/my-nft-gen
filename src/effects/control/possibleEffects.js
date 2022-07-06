@@ -7,6 +7,9 @@ import {randomizeEffect} from "../randomize.js";
 import {animateBackgroundEffect} from "../animateBackground.js";
 import {verticalScanLinesEffect} from "../verticalScanLines.js";
 import {backdropEffect} from "../backdrop.js";
+import {fuzzEffect} from "../fuzz.js";
+import {ampEffect} from "../amp.js";
+import {gatesEffect} from "../gates.js";
 
 export const possibleSummonsEffects = [
     randomizeEffect,
@@ -44,7 +47,10 @@ export const possibleSigEffects = [
 export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
     /*verticalScanLinesEffect,*/
-    backdropEffect
+    backdropEffect,
+    fuzzEffect,
+    ampEffect,
+    gatesEffect
 ];
 
 export const possibleAdditionalEffects = [
