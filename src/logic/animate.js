@@ -108,7 +108,7 @@ export const animate = async (config) => {
     }
 
     ////////////////////////
-    //ANIMATE
+    //ANIMATE - start here
     ////////////////////////
     for (let f = 0; f < config.numberOfFrame; f = f + config.frameInc) {
         console.log("started " + f.toString() + " frame");
