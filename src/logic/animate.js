@@ -10,6 +10,7 @@ import {
     possibleSummonsEffects
 } from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
+import {imageSize} from "./gobals.js";
 
 export const animate = async (config) => {
 
@@ -61,8 +62,8 @@ export const animate = async (config) => {
         let gloss = await Jimp.read(config.glossFile);
         let sig = await Jimp.read(config.sigFile);
 
-        let background = new Jimp(config.finalImageSize, config.finalImageSize, Jimp.cssColorToHex('#0D0D0D'));
-        let extraLayers = getExtraLayers(extraEffects, config.finalImageSize, config.finalImageSize)
+        let background = new Jimp(imageSize, imageSize, Jimp.cssColorToHex('#0D0D0D'));
+        let extraLayers = getExtraLayers(extraEffects, imageSize, imageSize)
 
         ////////////////////////
         //Process Effects

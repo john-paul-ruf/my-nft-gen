@@ -39,7 +39,6 @@ export class Config {
         this.glossName = glossList[getRandomInt(0, glossList.length)];
         this.sigName = sigList[getRandomInt(0, sigList.length)];
 
-        this.finalImageSize = 2000;
         this.colorDepth = 128;
         this.frameInc = 1; //For testing, render every x frame.
         this.numberOfFrame = 50;
