@@ -6,10 +6,10 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    gates: {lower: 4, upper: 9},
+    gates: {lower: 3, upper: 6},
     gateWidth: 12,
     size: imageSize,
-    stroke: 8,
+    stroke: 4,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -28,7 +28,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomInt(0, config.size/2),
+                radius: getRandomInt(0, config.size / 2),
                 color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
             });
         }

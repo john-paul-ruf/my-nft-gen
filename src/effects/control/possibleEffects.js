@@ -50,11 +50,11 @@ export const possibleSigEffects = [
 
 export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
-    /*verticalScanLinesEffect,*/
+    verticalScanLinesEffect,
     backdropEffect,
     fuzzEffect,
+    gatesEffect,
     ampEffect,
-    gatesEffect
 ];
 
 export const possibleAdditionalEffects = [
