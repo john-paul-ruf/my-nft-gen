@@ -6,10 +6,10 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    gates: {lower: 5, upper: 12},
-    gateWidth: 20,
+    gates: {lower: 4, upper: 9},
+    gateWidth: 8,
     size: imageSize,
-    stroke: 3,
+    stroke: 8,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -102,7 +102,7 @@ export const gatesEffect = {
     name: 'gates',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 40,
     requiresLayer: true,
     baseLayer: false,
 }

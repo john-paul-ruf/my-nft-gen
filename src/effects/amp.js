@@ -6,10 +6,9 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    fuzzFactor: {lower: 1, upper: 5},
-    sparsityFactor: {lower: 0.5, upper: 2},
+    sparsityFactor: {lower: 0.5, upper: 1.25},
     size: imageSize,
-    stroke: 3,
+    stroke: 5,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -80,7 +79,7 @@ export const ampEffect = {
     name: 'amp',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 80,
     requiresLayer: true,
     baseLayer: false,
 }

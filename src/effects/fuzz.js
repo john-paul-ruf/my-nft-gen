@@ -5,12 +5,12 @@ import Jimp from "jimp";
 import fs from "fs";
 
 const config = {
-    circles: {lower: 5, upper: 15},
-    fuzzFactor: {lower: 1, upper: 3},
+    circles: {lower: 5, upper: 12},
+    fuzzFactor: {lower: 1, upper: 4},
     size: imageSize,
     times: {lower: 1, upper: 3},
-    ringStroke: 3,
-    blur: 5,
+    ringStroke: 1,
+    blur: 3,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -98,7 +98,7 @@ export const fuzzEffect = {
     name: 'fuzz',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 60,
     requiresLayer: true,
     baseLayer: false,
 }
