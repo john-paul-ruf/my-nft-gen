@@ -2,16 +2,16 @@ import {getRandomInt} from "../logic/random.js";
 import {imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
-import {findValue} from "../logic/findValue.js";
 import fs from "fs";
 
 const config = {
-    circles: {lower: 30, upper: 60},
-    fuzzFactor: {lower: 3, upper: 8},
+    circles: {lower: 5, upper: 15},
+    fuzzFactor: {lower: 1, upper: 3},
     size: imageSize,
-    times:  {lower: 1, upper: 3},
-    ringStroke: 1,
-    colorBucket: ['#FF0000','#00FF00','#0000FF','#00FFFF','#FF00FF','#FFFF00',]
+    times: {lower: 1, upper: 3},
+    ringStroke: 3,
+    blur: 5,
+    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
 const generate = () => {
@@ -43,8 +43,8 @@ const generate = () => {
 }
 
 const fuzz = async (data, img, currentFrame, numberOfFrames) => {
-    const ring = Date.now().toString() +'-ring.png';
-    const fuzz = Date.now().toString() +'-fuzz.png';
+    const ring = Date.now().toString() + '-ring.png';
+    const fuzz = Date.now().toString() + '-fuzz.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(imageSize, imageSize)
@@ -52,9 +52,11 @@ const fuzz = async (data, img, currentFrame, numberOfFrames) => {
 
         const drawRing = (radius, stroke, color) => {
             context.beginPath();
-            context.arc(imageSize/2, imageSize/2, radius, 0, 2 * Math.PI, false);
             context.lineWidth = stroke;
             context.strokeStyle = color;
+
+            context.arc(imageSize / 2, imageSize / 2, radius, 0, 2 * Math.PI, false);
+
             context.stroke();
             context.closePath();
         }
@@ -68,12 +70,12 @@ const fuzz = async (data, img, currentFrame, numberOfFrames) => {
     }
 
     await draw(config.ringStroke, ring);
-    await draw(Math.floor(findValue(0, data.fuzzFactor+config.ringStroke,data.times, numberOfFrames, currentFrame)), fuzz);
+    await draw(data.fuzzFactor + config.ringStroke, fuzz);
 
     let ringImg = await Jimp.read(ring);
     let fuzzImg = await Jimp.read(fuzz);
 
-    await fuzzImg.blur(Math.floor(findValue(1, data.fuzzFactor+config.ringStroke,data.times, numberOfFrames, currentFrame)));
+    await fuzzImg.blur(config.blur);
 
     await img.composite(fuzzImg, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -96,7 +98,7 @@ export const fuzzEffect = {
     name: 'fuzz',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 70,
     requiresLayer: true,
     baseLayer: false,
 }
