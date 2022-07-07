@@ -7,7 +7,7 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
     gates: {lower: 4, upper: 9},
-    gateWidth: 8,
+    gateWidth: 12,
     size: imageSize,
     stroke: 8,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]

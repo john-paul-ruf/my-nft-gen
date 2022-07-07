@@ -2,7 +2,7 @@ import {getRandomInt} from "../logic/random.js";
 import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
-    times:  {lower: 1, upper: 3},
+    times:  {lower: 1, upper: 2},
 }
 
 const generate = () => {

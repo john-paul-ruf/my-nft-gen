@@ -18,6 +18,7 @@ const generate = () => {
         height: config.size,
         width: config.size,
         color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+        innerColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         length: ((config.size / 2)/2)-((config.size / 2)/3),
         lineStart: ((config.size / 2)/3)*2,
         getInfo: () => {
@@ -35,13 +36,18 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
         const canvas = createCanvas(imageSize, imageSize)
         const context = canvas.getContext('2d');
 
-        const drawRay = (stroke, color, angle, radius, length) => {
+        const drawRay = (stroke, color, innerColor, angle, radius, length) => {
             const start = findPointByAngleAndCircle(angle, radius)
             const end = findPointByAngleAndCircle(angle, radius + length);
 
             context.beginPath();
-            context.lineWidth = stroke;
-            context.strokeStyle = color;
+
+            const grad= context.createLinearGradient(start.x,start.y,end.x, end.y);
+            grad.addColorStop(0, color);
+            grad.addColorStop(0.5, innerColor);
+            grad.addColorStop(1, color);
+
+            context.strokeStyle = grad;
 
             context.moveTo(start.x, start.y);
             context.lineTo(end.x, end.y);
@@ -52,7 +58,7 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
 
         for(let i = 0; i < 360; i = i+ data.sparsityFactor)
         {
-            drawRay(stroke, data.color, i, data.lineStart, data.length)
+            drawRay(stroke, data.color, data.innerColor, i, data.lineStart, data.length)
         }
 
         const buffer = canvas.toBuffer('image/png');
