@@ -3,7 +3,7 @@ import {getRandomInt, randomNumber} from "../logic/random.js";
 import {glowEffect} from "./glow.js";
 
 const config = {
-    lowerRange: {lower: 0.4, upper: 0.7},
+    lowerRange: {lower: 0.6, upper: 0.8},
     upperRange: {lower: 0.8, upper: 1},
     times: {lower: 1, upper: 3},
 }
