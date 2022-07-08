@@ -1,16 +1,16 @@
-import {getRandomInt} from "../logic/random.js";
+import {randomNumber} from "../logic/random.js";
 import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
-    times:  {lower: 1, upper: 2},
+    times:  {lower: 0.5, upper: 0.5},
 }
 
 const generate = () => {
 
     const data = {
-        times: getRandomInt(config.times.lower, config.times.upper),
+        times: randomNumber(config.times.lower, config.times.upper),
         getInfo: () => {
-            return `${rotateEffect.name}: ${data.times} times`
+            return `${rotateEffect.name}: ${data.times.toFixed(3)} times`
         }
     }
 

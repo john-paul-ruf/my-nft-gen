@@ -41,7 +41,7 @@ export class Config {
 
         this.colorDepth = 128;
         this.frameInc = 1; //For testing, render every x frame.
-        this.numberOfFrame = 50;
+        this.numberOfFrame = 70;
 
         this.summonsFile = path.join(directory, '/img/png/summons/png/' + this.summonsName);
         this.focusFile = path.join(directory, '/img/png/focus/png/' + this.focusName);
