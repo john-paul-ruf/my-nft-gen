@@ -62,7 +62,7 @@ export const animate = async (config) => {
         let gloss = await Jimp.read(config.glossFile);
         let sig = await Jimp.read(config.sigFile);
 
-        let background = new Jimp(imageSize, imageSize, Jimp.cssColorToHex('#0D0D0D'));
+        let background = new Jimp(imageSize, imageSize, Jimp.cssColorToHex('#000000'));
         let extraLayers = getExtraLayers(extraEffects, imageSize, imageSize)
 
         ////////////////////////
