@@ -10,6 +10,7 @@ import {backdropEffect} from "../backdrop.js";
 import {fuzzEffect} from "../fuzz.js";
 import {ampEffect} from "../amp.js";
 import {gatesEffect} from "../gates.js";
+import {wireframeSpiralEffect} from "../wireframe-spiral.js";
 
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
@@ -51,6 +52,7 @@ export const possibleSigEffects = [
 export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
+    wireframeSpiralEffect,
     backdropEffect,
     fuzzEffect,
     gatesEffect,
