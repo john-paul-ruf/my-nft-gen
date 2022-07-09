@@ -53,7 +53,7 @@ export const possibleExtraEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
     wireframeSpiralEffect,
-    backdropEffect,
+    /*backdropEffect,*/
     fuzzEffect,
     gatesEffect,
     ampEffect,

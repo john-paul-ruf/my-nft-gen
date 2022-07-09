@@ -43,7 +43,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
 
         const drawRay = (stroke, angle, radius, radiusNext, twist) => {
             const start = findPointByAngleAndCircle(angle, radius)
-            const end = findPointByAngleAndCircle(angle+twist, radiusNext);
+            const end = findPointByAngleAndCircle(angle+(twist*data.sparsityFactor), radiusNext);
 
             context.beginPath();
 
