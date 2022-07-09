@@ -65,6 +65,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
                 drawRay(stroke, i, n2, nextTerm, twistCount)
+                drawRay(stroke, i, n2, nextTerm, -twistCount)
             }
 
             //assignment for next loop
