@@ -1,16 +1,17 @@
-import {randomNumber} from "../logic/random.js";
-import {verticalScanLinesEffect} from "./verticalScanLines.js";
+import {getRandomInt, randomNumber} from "../logic/random.js";
 
 const config = {
-    times:  {lower: 0.5, upper: 0.5},
+    times: {lower: 0.5, upper: 0.5},
+    counterClockwise: {lower: 0, upper: 2}
 }
 
 const generate = () => {
 
     const data = {
         times: randomNumber(config.times.lower, config.times.upper),
+        counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
-            return `${rotateEffect.name}: ${data.times.toFixed(3)} times`
+            return `${rotateEffect.name}: ${data.times.toFixed(3)} times, direction: ${data.counterClockwise > 0 ? 'counter' : 'clockwise'}`
         }
     }
 
@@ -18,7 +19,8 @@ const generate = () => {
 }
 
 const rotate = async (data, img, currentFrame, totalFrame) => {
-    await img.rotate((((360 * data.times)/totalFrame)*currentFrame), false);
+    const direction = data.counterClockwise > 0 ? -1 : 1;
+    await img.rotate((((360 * data.times) / totalFrame) * currentFrame * direction), false);
 }
 
 export const effect = {
@@ -31,7 +33,7 @@ export const rotateEffect = {
     effect: effect,
     effectChance: 90,
     requiresLayer: false,
-    rotatesImg:true,
+    rotatesImg: true,
     allowsRotation: false,
 }
 
