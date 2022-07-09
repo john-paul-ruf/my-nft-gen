@@ -9,8 +9,8 @@ const config = {
     size: imageSize,
     stroke: 0.5,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
-    sparsityFactor: {lower: 5, upper: 10},
-    unitLength: {lower: 30, upper: 50},
+    sparsityFactor: {lower: 1, upper: 5},
+    unitLength: {lower: 20, upper: 30},
 }
 
 const generate = () => {
