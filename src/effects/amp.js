@@ -21,6 +21,7 @@ const generate = () => {
         innerColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         length: ((config.size / 2)/2)-((config.size / 2)/3),
         lineStart: ((config.size / 2)/3)*2,
+        center: {x:imageSize/2,y:imageSize/2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }
@@ -37,8 +38,8 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
         const context = canvas.getContext('2d');
 
         const drawRay = (stroke, color, innerColor, angle, radius, length) => {
-            const start = findPointByAngleAndCircle(angle, radius)
-            const end = findPointByAngleAndCircle(angle, radius + length);
+            const start = findPointByAngleAndCircle(data.center, angle, radius)
+            const end = findPointByAngleAndCircle(data.center, angle, radius + length);
 
             context.beginPath();
 

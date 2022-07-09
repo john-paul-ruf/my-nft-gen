@@ -19,6 +19,7 @@ const generate = () => {
         height: config.size,
         width: config.size,
         gateWidth: config.gateWidth,
+        center: {x:imageSize/2,y:imageSize/2},
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }
@@ -51,7 +52,7 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
             function drawOctagon(r) {
                 context.beginPath();
 
-                const start = findPointByAngleAndCircle(0, r);
+                const start = findPointByAngleAndCircle(data.center, 0, r);
 
                 context.lineWidth = stroke;
                 context.strokeStyle = gateColor;
@@ -59,7 +60,7 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
                 context.moveTo(start.x, start.y);
 
                 for (let a = 45; a < 360; a = a + 45) {
-                    const point = findPointByAngleAndCircle(a, r);
+                    const point = findPointByAngleAndCircle(data.center, a, r);
                     context.lineTo(point.x, point.y);
                 }
 

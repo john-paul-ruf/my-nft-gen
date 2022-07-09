@@ -1,8 +1,7 @@
-import {imageSize} from "./gobals.js";
 
-export const findPointByAngleAndCircle = (angle, radius) => {
-    let x = (imageSize/2) + radius * Math.cos(degreesToRadians(angle));
-    let y = (imageSize/2) + radius * Math.sin(degreesToRadians(angle));
+export const findPointByAngleAndCircle = (pos, angle, radius) => {
+    let x = pos.x + radius * Math.cos(degreesToRadians(angle));
+    let y = pos.y + radius * Math.sin(degreesToRadians(angle));
     return {x: x, y: y};
 }
 

@@ -10,7 +10,8 @@ const config = {
     stroke: 0.5,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
     sparsityFactor: {lower: 2, upper: 5},
-    unitLength: {lower: 40, upper: 60},
+    unitLength: {lower: 10, upper: 20},
+    rotate:  {lower: 0.5, upper: 0.5},
 }
 
 const generate = () => {
@@ -23,6 +24,8 @@ const generate = () => {
         color1: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         color2: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         color3: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+        rotate: randomNumber(config.rotate.lower, config.rotate.upper),
+        center: {x:config.size/2,y:config.size/2},
         getInfo: () => {
             return `${wireframeSpiralEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}, unit length: ${data.unitLength}`
         }
@@ -42,8 +45,8 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
         nextTerm = n1 + n2;
 
         const drawRay = (stroke, angle, radius, radiusNext, twist) => {
-            const start = findPointByAngleAndCircle(angle, radius)
-            const end = findPointByAngleAndCircle(angle+(twist*data.sparsityFactor), radiusNext);
+            const start = findPointByAngleAndCircle(data.center, angle, radius)
+            const end = findPointByAngleAndCircle(data.center,angle+(twist*data.sparsityFactor), radiusNext);
 
             context.beginPath();
 
@@ -82,8 +85,9 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     await draw(config.ringStroke, imgName);
 
     let tmpImg = await Jimp.read(imgName);
+    await tmpImg.rotate((((360 * data.times)/numberOfFrames)*currentFrame), false);
 
-    await img.composite(tmpImg, imageSize/2, imageSize/2, {
+    await img.composite(tmpImg, config.size/2, config.size/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
@@ -99,9 +103,9 @@ export const wireframeSpiralEffect = {
     name: 'wireframe-spiral',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 80,
     requiresLayer: true,
     rotatesImg:false,
-    allowsRotation: true,
+    allowsRotation: false,
 }
 
