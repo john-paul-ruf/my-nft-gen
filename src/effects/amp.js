@@ -87,6 +87,7 @@ export const ampEffect = {
     effect: effect,
     effectChance: 80,
     requiresLayer: true,
-    baseLayer: false,
+    rotatesImg:false,
+    allowsRotation: true,
 }
 

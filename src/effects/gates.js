@@ -104,6 +104,7 @@ export const gatesEffect = {
     effect: effect,
     effectChance: 40,
     requiresLayer: true,
-    baseLayer: false,
+    rotatesImg:false,
+    allowsRotation: true,
 }
 

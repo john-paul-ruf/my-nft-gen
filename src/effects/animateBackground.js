@@ -39,6 +39,7 @@ export const animateBackgroundEffect = {
     effect: effect,
     effectChance: 70,
     requiresLayer: true,
-    baseLayer:true
+    rotatesImg:false,
+    allowsRotation: false,
 }
 

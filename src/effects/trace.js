@@ -47,7 +47,8 @@ export const traceEffect = {
     effect: effect,
     effectChance: 20,
     requiresLayer: false,
-    baseLayer:false,
+    rotatesImg:false,
+    allowsRotation: false,
 }
 
 

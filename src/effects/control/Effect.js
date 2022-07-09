@@ -18,13 +18,12 @@ import {possibleAdditionalEffects} from "./possibleEffects.js";
 ///////////////////////////////////////////////////////////////
 export class Effect {
 
-    constructor(name, invokeStrategy, data, requiresLayer) {
-        this.invoke = invokeStrategy.invoke; //the effect to call
-        this.data = data; //the effect, instantiated
-        this.data.name = name;
+    constructor(card) {
+        this.invoke = card.effect.invoke; //the effect to call
+        this.data = card.generateData(); //the effect, instantiated
         this.additionalEffects = []
-        if (requiresLayer) {  //Does this effect qualify for additional effects?
-            this.additionalEffects = generateEffects(possibleAdditionalEffects)  //Then pile them on
+        if (card.requiresLayer) {  //Does this effect qualify for additional effects?
+            this.additionalEffects = generateEffects(possibleAdditionalEffects, card.allowsRotation)  //Then pile them on
         }
     }
 

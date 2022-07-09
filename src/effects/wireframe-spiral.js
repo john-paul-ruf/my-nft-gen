@@ -101,6 +101,7 @@ export const wireframeSpiralEffect = {
     effect: effect,
     effectChance: 100,
     requiresLayer: true,
-    baseLayer: false,
+    rotatesImg:false,
+    allowsRotation: true,
 }
 

@@ -78,6 +78,7 @@ export const verticalScanLinesEffect = {
     effect: effect,
     effectChance: 40,
     requiresLayer: true,
-    baseLayer:false,
+    rotatesImg:false,
+    allowsRotation: false,
 }
 

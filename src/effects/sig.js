@@ -6,17 +6,17 @@ import fs from "fs";
 import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
-    folderName: '/img/png/backdrops/'
+    folderName: '/img/png/sig/png/'
 }
 
 const generate = () => {
     const data = {
         getInfo: () => {
-            return `${backdropEffect.name}, ${data.filename}`
+            return `${sigEffect.name}, ${data.filename}`
         }
     }
 
-    const getBackdrop = () => {
+    const getSig = () => {
         const fileURLToPath1 = fileURLToPath(import.meta.url);
         const directory = dirname(fileURLToPath1).replace('/effects', '');
 
@@ -34,22 +34,22 @@ const generate = () => {
             return list;
         }
 
-        const backdrops = getFilesInDirectory(config.folderName);
+        const sigs = getFilesInDirectory(config.folderName);
 
-        data.filename = backdrops[getRandomInt(0, backdrops.length)];
+        data.filename = sigs[getRandomInt(0, sigs.length)];
 
         return path.join(directory, config.folderName + data.filename);
 
     }
 
-    data.backdrop = getBackdrop();
+    data.sig = getSig();
 
     return data;
 }
 
-const addBackdrop = async (data, img, currentFrame, numberOfFrames) => {
+const addSig = async (data, img, currentFrame, numberOfFrames) => {
 
-    let overlay = await Jimp.read(data.backdrop);
+    let overlay = await Jimp.read(data.sig);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -57,16 +57,16 @@ const addBackdrop = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => addBackdrop(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames) => addSig(data, img, currentFrame, totalFrames)
 }
 
-export const backdropEffect = {
-    name: 'backdrop',
+export const sigEffect = {
+    name: 'sig',
     generateData: generate,
     effect: effect,
     effectChance: 70,
     requiresLayer: true,
     rotatesImg:false,
-    allowsRotation: true,
+    allowsRotation: false,
 }
 

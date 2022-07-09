@@ -5,9 +5,7 @@ import {timeToString} from "./timeToString.js";
 import {timeLeft} from "./timeLeft.js";
 import {generateEffects} from "../effects/control/generateEffect.js";
 import {
-    possibleExtraEffects,
-    possibleFocusEffects, possibleGlossEffects, possibleSigEffects,
-    possibleSummonsEffects
+    possibleEffects
 } from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
 import {imageSize} from "./gobals.js";
@@ -18,15 +16,9 @@ export const animate = async (config) => {
 
     config.startTime = new Date();
 
-    const summonEffects = generateEffects(possibleSummonsEffects);
-    const focusEffects = generateEffects(possibleFocusEffects);
+    const effects = generateEffects(possibleEffects);
 
-    const glossEffects = generateEffects(possibleGlossEffects);
-    const sigEffects = generateEffects(possibleSigEffects);
-
-    const extraEffects = generateEffects(possibleExtraEffects);
-
-    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects));
+    console.log(composeInfo(config, effects));
 
     const createAnimation = async (frame) => {
 
@@ -46,10 +38,10 @@ export const animate = async (config) => {
 
         const processExtraLayers = async () => {
             for (let i = 0; i < extraLayers.length; i++) {
-                await applyEffect(extraLayers[i], [extraEffects[i]]);
+                await applyEffect(extraLayers[i], [effects[i]]);
 
-                if (extraEffects[i].additionalEffects.length > 0) {
-                    await applyEffect(extraLayers[i], extraEffects[i].additionalEffects);
+                if (effects[i].additionalEffects.length > 0) {
+                    await applyEffect(extraLayers[i], effects[i].additionalEffects);
                 }
             }
         }
@@ -57,50 +49,22 @@ export const animate = async (config) => {
         ////////////////////////
         //get fresh files
         ////////////////////////
-        let summons = await Jimp.read(config.summonsFile);
-        let focus = await Jimp.read(config.focusFile);
-        let gloss = await Jimp.read(config.glossFile);
-        let sig = await Jimp.read(config.sigFile);
-
         let background = new Jimp(imageSize, imageSize, Jimp.cssColorToHex('#000000'));
-        let extraLayers = getExtraLayers(extraEffects, imageSize, imageSize)
+        let extraLayers = getExtraLayers(effects, imageSize, imageSize)
 
         ////////////////////////
         //Process Effects
         ////////////////////////
-        await applyEffect(summons, summonEffects);
-        await applyEffect(focus, focusEffects);
-        await applyEffect(gloss, glossEffects);
-        await applyEffect(sig, sigEffects);
         await processExtraLayers();
 
         ////////////////////////
         //COMPOSE
         ////////////////////////
-        /*extraLayers.sort((x, y) => {
-            return (x.baseLayer === y.baseLayer) ? 0 : x ? -1 : 1;
-        })*/
         for (let i = 0; i < extraLayers.length; i++) {
             await background.composite(extraLayers[i], 0, 0, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             })
         }
-
-        await background.composite(summons, 0, 0, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-        })
-
-        await background.composite(focus, 0, 0, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-        });
-
-        await background.composite(gloss, 0, 0, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-        });
-
-        await background.composite(sig, 0, 0, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-        });
 
         GifUtil.quantizeDekker(background, config.colorDepth)
 
@@ -126,9 +90,9 @@ export const animate = async (config) => {
     config.processingTime = timeToString(rez);
 
     console.log("gif write start");
-    console.log(composeInfo(config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects));
+    console.log(composeInfo(config, effects));
 
-    fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects), 'utf-8');
+    fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, effects), 'utf-8');
 
     GifUtil.write(config.fileOut, frames).then(gif => {
         console.log("gif written");

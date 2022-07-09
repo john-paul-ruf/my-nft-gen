@@ -1,6 +1,6 @@
 import {imageSize} from "./gobals.js";
 
-export const composeInfo = (config, summonEffects, focusEffects, extraEffects, glossEffects, sigEffects) => {
+export const composeInfo = (config, effects) => {
 
     const getEffectInfo = (effect) => {
         let results = '';
@@ -14,14 +14,13 @@ export const composeInfo = (config, summonEffects, focusEffects, extraEffects, g
                 }
             }
 
-
             results = results + data;
         }
         return results;
     }
 
     const info =
-        `Title: ${config.finalFileName}\nRun: ${config.runName}\nArtist: ${config._INVOKER_}\nImage Size: ${imageSize}x${imageSize} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nSig: ${config.sigName}  ${getEffectInfo(sigEffects)}\n\nGloss: ${config.glossName}  ${getEffectInfo(glossEffects)}\n\nFocus: ${config.focusName}  ${getEffectInfo(focusEffects)} \n\nSummons: ${config.summonsName}  ${getEffectInfo(summonEffects)} \n\nExtra Effects: ${getEffectInfo(extraEffects)}`
+        `Title: ${config.finalFileName}\nRun: ${config.runName}\nArtist: ${config._INVOKER_}\nImage Size: ${imageSize}x${imageSize} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}`
 
     return info;
 

@@ -36,6 +36,7 @@ export const glowEffect = {
     effect: effect,
     effectChance: 100,
     requiresLayer: false,
-    baseLayer:false,
+    rotatesImg:false,
+    allowsRotation: false,
 }
 

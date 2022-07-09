@@ -11,56 +11,28 @@ import {fuzzEffect} from "../fuzz.js";
 import {ampEffect} from "../amp.js";
 import {gatesEffect} from "../gates.js";
 import {wireframeSpiralEffect} from "../wireframe-spiral.js";
+import {summonEffect} from "../summons.js";
+import {sigEffect} from "../sig.js";
 
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
 ////////////////////////////////////////////////////////
 
-export const possibleSummonsEffects = [
-    randomizeEffect,
-    glowEffect,
-    fadeEffect,
-    rotateEffect,
-    /*radiateEffect*/,
-    /*traceEffect,*/
-];
-
-export const possibleFocusEffects = [
-    randomizeEffect,
-    glowEffect,
-    fadeEffect,
-    /*radiateEffect*/,
-    /*traceEffect*/,
-];
-
-export const possibleGlossEffects = [
-    randomizeEffect,
-    glowEffect,
-    fadeEffect,
-    /*radiateEffect*/,
-    /*traceEffect*/,
-];
-
-export const possibleSigEffects = [
-    randomizeEffect,
-    glowEffect,
-    fadeEffect,
-    /*radiateEffect*/,
-    /*traceEffect*/,
-];
-
-export const possibleExtraEffects = [
+export const possibleEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
     wireframeSpiralEffect,
-    /*backdropEffect,*/
+    backdropEffect,
     fuzzEffect,
     gatesEffect,
     ampEffect,
+    summonEffect,
+    sigEffect
 ];
 
 export const possibleAdditionalEffects = [
     randomizeEffect,
     glowEffect,
     fadeEffect,
+    rotateEffect
 ];

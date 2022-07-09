@@ -37,7 +37,8 @@ export const fadeEffect = {
     effect: effect,
     effectChance: 70,
     requiresLayer: false,
-    baseLayer: false,
+    rotatesImg:false,
+    allowsRotation: false,
 }
 
 
