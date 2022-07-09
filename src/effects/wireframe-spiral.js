@@ -6,7 +6,7 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    size: imageSize,
+    size: imageSize*2,
     stroke: 0.5,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
     sparsityFactor: {lower: 2, upper: 5},
@@ -35,7 +35,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = Date.now().toString() + '-wireframe-spiral.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(imageSize, imageSize)
+        const canvas = createCanvas(imageSize*2, imageSize*2)
         const context = canvas.getContext('2d');
         let twistCount = 2;
         let n1 = data.unitLength, n2 = data.unitLength, nextTerm;
@@ -61,7 +61,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
             context.closePath();
         }
 
-        while (nextTerm <= imageSize) {
+        while (nextTerm <= imageSize*2) {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
                 drawRay(stroke, i, n2, nextTerm, twistCount)
@@ -83,7 +83,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
 
     let tmpImg = await Jimp.read(imgName);
 
-    await img.composite(tmpImg, 0, 0, {
+    await img.composite(tmpImg, imageSize/2, imageSize/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 

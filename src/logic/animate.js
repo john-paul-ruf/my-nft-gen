@@ -28,7 +28,7 @@ export const animate = async (config) => {
             }
         }
 
-        const getExtraLayers = (effects, w, h) => {
+        const getLayers = (effects, w, h) => {
             const extraLayers = [];
             for (let i = 0; i < effects.length; i++) {
                 extraLayers.push(new Jimp(w, h))
@@ -36,12 +36,12 @@ export const animate = async (config) => {
             return extraLayers;
         }
 
-        const processExtraLayers = async () => {
-            for (let i = 0; i < extraLayers.length; i++) {
-                await applyEffect(extraLayers[i], [effects[i]]);
+        const processLayers = async () => {
+            for (let i = 0; i < layers.length; i++) {
+                await applyEffect(layers[i], [effects[i]]);
 
                 if (effects[i].additionalEffects.length > 0) {
-                    await applyEffect(extraLayers[i], effects[i].additionalEffects);
+                    await applyEffect(layers[i], effects[i].additionalEffects);
                 }
             }
         }
@@ -50,18 +50,18 @@ export const animate = async (config) => {
         //get fresh files
         ////////////////////////
         let background = new Jimp(imageSize, imageSize, Jimp.cssColorToHex('#000000'));
-        let extraLayers = getExtraLayers(effects, imageSize, imageSize)
+        let layers = getLayers(effects, imageSize, imageSize)
 
         ////////////////////////
         //Process Effects
         ////////////////////////
-        await processExtraLayers();
+        await processLayers();
 
         ////////////////////////
         //COMPOSE
         ////////////////////////
-        for (let i = 0; i < extraLayers.length; i++) {
-            await background.composite(extraLayers[i], 0, 0, {
+        for (let i = 0; i < layers.length; i++) {
+            await background.composite(layers[i], 0, 0, {
                 mode: Jimp.BLEND_SOURCE_OVER,
             })
         }
