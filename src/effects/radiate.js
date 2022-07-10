@@ -2,6 +2,7 @@ import {findValue} from "../logic/findValue.js";
 import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
 import {getRandomInt} from "../logic/random.js";
+import {glowEffect} from "./glow.js";
 
 
 const config = {
@@ -9,9 +10,14 @@ const config = {
 }
 
 const generate = () => {
-    return {
-        times: getRandomInt(config.times.lower, config.times.upper)
+    const data = {
+        times: getRandomInt(config.times.lower, config.times.upper),
+        getInfo: () => {
+            return `${radiateEffect.name}: ${data.times} times`
+        }
     }
+
+    return data;
 }
 
 const radiate = async (data, img, currentFrame, totalFrames) => {
