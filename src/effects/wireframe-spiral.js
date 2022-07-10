@@ -89,7 +89,8 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     let tmpImg = await Jimp.read(imgName);
 
 
-    await tmpImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*data.counterClockwise, false);
+    const direction = data.counterClockwise > 0 ? -1 : 1
+    await tmpImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*direction, false);
 
     await img.composite(tmpImg, -imageSize/2, -imageSize/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
