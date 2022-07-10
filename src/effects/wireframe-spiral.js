@@ -9,8 +9,8 @@ const config = {
     size: imageSize*2,
     stroke: 0.5,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
-    sparsityFactor: {lower: 2, upper: 5},
-    unitLength: {lower: 10, upper: 20},
+    sparsityFactor: {lower: 5, upper: 15},
+    unitLength: {lower: 20, upper: 40},
 }
 
 const generate = () => {
@@ -36,7 +36,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = Date.now().toString() + '-wireframe-spiral.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(imageSize*2, imageSize*2)
+        const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
         let twistCount = 2;
         let n1 = data.unitLength, n2 = data.unitLength, nextTerm;
@@ -62,7 +62,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
             context.closePath();
         }
 
-        while (nextTerm <= imageSize*2) {
+        while (nextTerm <= config.size) {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
                 drawRay(stroke, i, n2, nextTerm, twistCount)
@@ -85,7 +85,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     let tmpImg = await Jimp.read(imgName);
     await tmpImg.rotate(((data.sparsityFactor/numberOfFrames)*currentFrame), false);
 
-    await img.composite(tmpImg, config.size/2, config.size/2, {
+    await img.composite(tmpImg, -imageSize/2, -imageSize/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 

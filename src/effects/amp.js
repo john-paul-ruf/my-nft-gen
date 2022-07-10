@@ -6,9 +6,9 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    sparsityFactor: {lower: 0.2, upper: 0.75},
+    sparsityFactor: {lower: 0.75, upper: 1.25},
     size: imageSize,
-    stroke: 5,
+    stroke: 3,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
