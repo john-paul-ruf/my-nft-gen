@@ -10,6 +10,8 @@ const config = {
     stroke: 0.5,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
     sparsityFactor: {lower: 5, upper: 15},
+    speed:{lower:1, upper:4},
+    counterClockwise: {lower: 0, upper: 2},
     unitLength: {lower: 20, upper: 40},
 }
 
@@ -24,8 +26,10 @@ const generate = () => {
         color2: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         color3: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         center: {x:config.size/2,y:config.size/2},
+        speed:getRandomInt(config.speed.lower, config.speed.upper),
+        counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
-            return `${wireframeSpiralEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}, unit length: ${data.unitLength}`
+            return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'counter' : 'clockwise'}`
         }
     }
 
@@ -83,7 +87,9 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     await draw(config.ringStroke, imgName);
 
     let tmpImg = await Jimp.read(imgName);
-    await tmpImg.rotate(((data.sparsityFactor/numberOfFrames)*currentFrame), false);
+
+
+    await tmpImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*data.counterClockwise, false);
 
     await img.composite(tmpImg, -imageSize/2, -imageSize/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
