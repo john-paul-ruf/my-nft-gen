@@ -33,9 +33,9 @@ export const possibleEffects = [
 ];
 
 export const possibleAdditionalEffects = [
+    radiateEffect,
     randomizeEffect,
     glowEffect,
     fadeEffect,
     rotateEffect,
-    radiateEffect,
 ];
