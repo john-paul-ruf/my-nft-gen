@@ -2,7 +2,8 @@ import {getRandomInt} from "../logic/random.js";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {imageSize} from "../logic/gobals.js";
 import fs from "fs";
-import Jimp from "jimp";
+import Jimp from "jimp"
+import THREE from "three.js"
 
 const config = {
     numberOfBalls: {lower: 1, upper: 5},
@@ -28,7 +29,7 @@ const generate = () => {
 
         for (let i = 0; i <= num; i++) {
             info.push({
-                pos: findPointByAngleAndCircle(config.threeCenter, getRandomInt(0, 360), data.rangeFromCenter),
+                pos: findPointByAngleAndCircle(data.threeCenter, 360/num*i, data.rangeFromCenter),
                 color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
             });
         }
@@ -41,9 +42,12 @@ const generate = () => {
 }
 
 const add3dSig = async (data, img, currentFrame, numberOfFrames) => {
+    require("./three-canvasrenderer.js");
+    require("./three-projector.js");
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, 500 / 400, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.CanvasRenderer();
     renderer.setSize(imageSize, imageSize);
 
     const createSphere = (radius, x, y, color) => {
@@ -68,23 +72,26 @@ const add3dSig = async (data, img, currentFrame, numberOfFrames) => {
     camera.position.set(cameraPos.x,cameraPos.y, 0)
     camera.lookAt(0,0,0);
 
-    const target = new THREE.WebGLRenderTarget(imageSize, imageSize)
+    renderer.render(scene, camera)
 
-    renderer.render(scene, camera, target)
-
-    const pngStream = require('three-png-stream')
     const filename = Date.now().toString() + '-3dsig.png';
 
-    const output = fs.createWriteStream(filename)
-    pngStream(renderer, target).pipe(output)
+    renderer.domElement.toBuffer(function(err, buf) {
+        fs.writeFile(join(__dirname, filename), buf, function(err) {
+            if (err) throw err;
+            let tmpImg = Jimp.read(filename);
 
-    let tmpImg = await Jimp.read(filename);
+            img.composite(tmpImg, 0, 0, {
+                mode: Jimp.BLEND_SOURCE_OVER,
+            });
 
-    await img.composite(tmpImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
+            //fs.unlinkSync(filename);
+        });
     });
 
-    //fs.unlinkSync(filename);
+
+
+
 
 }
 
@@ -96,7 +103,7 @@ export const threeSigEffect = {
     name: '3d-sig',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 0,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,

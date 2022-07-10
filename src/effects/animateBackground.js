@@ -37,7 +37,7 @@ export const animateBackgroundEffect = {
     name: 'static',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 0,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,

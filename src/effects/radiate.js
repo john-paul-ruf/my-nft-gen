@@ -46,7 +46,7 @@ export const radiateEffect = {
     name: 'radiate',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 50,
     requiresLayer: false,
     rotatesImg:false,
     allowsRotation: false,

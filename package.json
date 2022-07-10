@@ -18,11 +18,10 @@
   },
   "homepage": "https://github.com/john-paul-ruf/my-nft-gen#readme",
   "dependencies": {
-    "canvas": "^2.9.3",
+    "canvas": "*",
     "fs-xattr": "^0.4.0",
     "gifwrap": "^0.10.1",
     "jimp": "^0.16.1",
-    "three": "^0.142.0",
-    "three-png-stream": "^1.0.3"
+    "three.js": "^0.77.1"
   }
 }

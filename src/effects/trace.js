@@ -45,7 +45,7 @@ export const traceEffect = {
     name: 'trace',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 0,
     requiresLayer: false,
     rotatesImg:false,
     allowsRotation: false,

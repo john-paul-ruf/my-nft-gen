@@ -64,7 +64,7 @@ export const backdropEffect = {
     name: 'backdrop',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,

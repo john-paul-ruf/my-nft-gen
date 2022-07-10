@@ -35,7 +35,7 @@ export const fadeEffect = {
     name: 'fade',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 50,
     requiresLayer: false,
     rotatesImg:false,
     allowsRotation: false,

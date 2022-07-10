@@ -12,7 +12,7 @@ const config = {
 const generate = () => {
     const data = {
         getInfo: () => {
-            return `${sigEffect.name}, ${data.filename}`
+            return `${sigEffect.name}: ${data.filename}`
         }
     }
 
@@ -64,7 +64,7 @@ export const sigEffect = {
     name: 'sig',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,

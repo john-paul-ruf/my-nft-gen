@@ -13,6 +13,7 @@ import {gatesEffect} from "../gates.js";
 import {wireframeSpiralEffect} from "../wireframe-spiral.js";
 import {summonEffect} from "../summons.js";
 import {sigEffect} from "../sig.js";
+import {threeSigEffect} from "../3dSig.js";
 
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
@@ -27,12 +28,14 @@ export const possibleEffects = [
     gatesEffect,
     ampEffect,
     summonEffect,
-    sigEffect
+    sigEffect,
+    /*threeSigEffect*/
 ];
 
 export const possibleAdditionalEffects = [
     randomizeEffect,
     glowEffect,
     fadeEffect,
-    rotateEffect
+    rotateEffect,
+    radiateEffect,
 ];

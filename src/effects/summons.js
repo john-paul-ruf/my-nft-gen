@@ -12,7 +12,7 @@ const config = {
 const generate = () => {
     const data = {
         getInfo: () => {
-            return `${summonEffect.name}, ${data.filename}`
+            return `${summonEffect.name}: ${data.filename}`
         }
     }
 
@@ -64,7 +64,7 @@ export const summonEffect = {
     name: 'summons',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,
