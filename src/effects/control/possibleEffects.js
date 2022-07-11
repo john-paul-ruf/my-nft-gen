@@ -33,7 +33,7 @@ export const possibleEffects = [
 ];
 
 export const possibleAdditionalEffects = [
-    radiateEffect,
+    /*radiateEffect,*/
     randomizeEffect,
     glowEffect,
     fadeEffect,
