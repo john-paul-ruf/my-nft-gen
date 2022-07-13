@@ -11,7 +11,7 @@ const generate = () => {
         times: randomNumber(config.times.lower, config.times.upper),
         counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
-            return `${rotateEffect.name}: ${data.times.toFixed(3)} times, direction: ${data.counterClockwise > 0 ? 'counter' : 'clockwise'}`
+            return `${rotateEffect.name}: ${data.times.toFixed(3)} times, direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
         }
     }
 
