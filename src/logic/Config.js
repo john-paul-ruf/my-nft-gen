@@ -32,7 +32,7 @@ export class Config {
         //No worries, just variable names.  It's cute, isn't it?
         //It is how I think of layers in my head when working in illustrator
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'Mostly 50-50'
+        this.runName = 'the-ripples'
 
         this.summonsName = summonsList[getRandomInt(0, summonsList.length)];
         this.focusName = focusList[getRandomInt(0, focusList.length)];

@@ -14,6 +14,7 @@ import {wireframeSpiralEffect} from "../wireframe-spiral.js";
 import {summonEffect} from "../summons.js";
 import {sigEffect} from "../sig.js";
 import {threeSigEffect} from "../3dSig.js";
+import {rippleEffect} from "../ripples.js";
 
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
@@ -21,6 +22,7 @@ import {threeSigEffect} from "../3dSig.js";
 
 export const possibleEffects = [
     /*animateBackgroundEffect*/,
+    rippleEffect,
     verticalScanLinesEffect,
     wireframeSpiralEffect,
     backdropEffect,
