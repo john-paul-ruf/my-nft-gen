@@ -29,7 +29,7 @@ const generate = () => {
         speed:getRandomInt(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
-            return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'counter' : 'clockwise'}`
+            return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
         }
     }
 
