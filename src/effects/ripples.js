@@ -85,7 +85,7 @@ const ripple = async (data, img, currentFrame, numberOfFrames) => {
 
     let tmpImg = await Jimp.read(imgName);
 
-    await img.composite(tmpImg, -imageSize / 2, -imageSize / 2, {
+    await img.composite(0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
