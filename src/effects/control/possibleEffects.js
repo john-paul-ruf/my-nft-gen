@@ -15,6 +15,7 @@ import {summonEffect} from "../summons.js";
 import {sigEffect} from "../sig.js";
 import {threeSigEffect} from "../3dSig.js";
 import {rippleEffect} from "../ripples.js";
+import {viewportEffect} from "../viewport.js";
 
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
@@ -31,6 +32,7 @@ export const possibleEffects = [
     ampEffect,
     summonEffect,
     sigEffect,
+    viewportEffect,
     /*threeSigEffect*/
 ];
 
