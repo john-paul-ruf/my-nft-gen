@@ -23,10 +23,10 @@ import {viewportEffect} from "../viewport.js";
 
 export const possibleEffects = [
     /*animateBackgroundEffect*/,
-    rippleEffect,
     verticalScanLinesEffect,
     wireframeSpiralEffect,
     backdropEffect,
+    rippleEffect,
     fuzzEffect,
     gatesEffect,
     ampEffect,

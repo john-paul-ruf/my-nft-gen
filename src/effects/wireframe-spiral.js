@@ -108,7 +108,7 @@ export const wireframeSpiralEffect = {
     name: 'wireframe-spiral',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 70,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
