@@ -68,6 +68,6 @@ export const summonEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,
-    rotationTotalAngle: 0.5,
+    rotationTotalAngle: 180,
 }
 

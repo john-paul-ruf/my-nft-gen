@@ -90,6 +90,6 @@ export const ampEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,
-    rotationTotalAngle: 0.2,
+    rotationTotalAngle: 20,
 }
 

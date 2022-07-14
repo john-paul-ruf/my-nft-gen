@@ -105,6 +105,6 @@ export const rippleEffect = {
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: true,
-    rotationTotalAngle: .60,
+    rotationTotalAngle: 60,
 }
 

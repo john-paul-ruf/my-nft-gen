@@ -69,6 +69,6 @@ export const backdropEffect = {
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: true,
-    rotationTotalAngle: 0.20,
+    rotationTotalAngle: 30,
 }
 

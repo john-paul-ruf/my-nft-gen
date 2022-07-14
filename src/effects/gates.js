@@ -107,6 +107,6 @@ export const gatesEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,
-    rotationTotalAngle: .45,
+    rotationTotalAngle: 45,
 }
 
