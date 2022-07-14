@@ -14,11 +14,11 @@ const config = {
     innerColor: '#000000',
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
     largeRadius: {lower: imageSize * 0.35, upper: imageSize * 0.45},
-    smallRadius: {lower: imageSize * 0.2, upper: imageSize * 0.3},
+    smallRadius: {lower: imageSize * 0.15, upper: imageSize * 0.25},
     largeNumberOfRings: {lower: 10, upper: 20},
-    smallNumberOfRings: {lower: 5, upper: 10},
-    ripple: {lower: imageSize / 25, upper: imageSize / 20},
-    times: {lower: 1, upper: 4},
+    smallNumberOfRings: {lower: 3, upper: 7},
+    ripple: {lower: imageSize / 20, upper: imageSize / 30},
+    times: {lower: 1, upper: 2},
     smallerRingsGroupRadius: {lower: imageSize * 0.2, upper: imageSize * 0.3},
 }
 
