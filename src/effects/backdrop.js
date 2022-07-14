@@ -47,17 +47,18 @@ const generate = () => {
     return data;
 }
 
-const addBackdrop = async (data, img, currentFrame, numberOfFrames) => {
+const addBackdrop = async (data, img, currentFrame, numberOfFrames, card) => {
 
     let overlay = await Jimp.read(data.backdrop);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
+        rotationTotalAngle: .25,
     })
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => addBackdrop(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => addBackdrop(data, img, currentFrame, totalFrames, card)
 }
 
 export const backdropEffect = {
@@ -66,7 +67,8 @@ export const backdropEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: true,
+    rotationTotalAngle: 0.20,
 }
 

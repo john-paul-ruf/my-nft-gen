@@ -14,7 +14,7 @@ const generate = () => {
     }
 }
 
-const trace = async (data, img, currentFrame, totalFrames) => {
+const trace = async (data, img, currentFrame, totalFrames, card) => {
 
     let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
 
@@ -38,7 +38,7 @@ const trace = async (data, img, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => trace(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => trace(data, img, currentFrame, totalFrames, card)
 }
 
 export const traceEffect = {
@@ -49,6 +49,7 @@ export const traceEffect = {
     requiresLayer: false,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 
 

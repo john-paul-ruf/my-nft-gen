@@ -30,7 +30,7 @@ const generate = () => {
     return data;
 }
 
-const amp = async (data, img, currentFrame, numberOfFrames) => {
+const amp = async (data, img, currentFrame, numberOfFrames, card) => {
     const drawing = Date.now().toString() + '-amp.png';
 
     const draw = async (stroke, filename) => {
@@ -79,7 +79,7 @@ const amp = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => amp(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => amp(data, img, currentFrame, totalFrames, card)
 }
 
 export const ampEffect = {
@@ -90,5 +90,6 @@ export const ampEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,
+    rotationTotalAngle: 0.2,
 }
 

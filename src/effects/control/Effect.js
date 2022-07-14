@@ -22,16 +22,17 @@ export class Effect {
         this.invoke = card.effect.invoke; //the effect to call
         this.data = card.generateData(); //the effect, instantiated
         this.additionalEffects = []
+        this.card = card;
         if (card.requiresLayer) {  //Does this effect qualify for additional effects?
             this.additionalEffects = generateEffects(possibleAdditionalEffects, card.allowsRotation)  //Then pile them on
         }
     }
 
     async invokeEffect(img, currentFrame, totalFrames) {
-        await this.invoke(this.data, img, currentFrame, totalFrames) //execute the effect
+        await this.invoke(this.data, img, currentFrame, totalFrames, this.card) //execute the effect
         for (let i = 0; i < this.additionalEffects.length; i++) {
             //if any additional effects? call them as well.
-            await this.additionalEffects[i].invoke(this.additionalEffects[i].data, img, currentFrame, totalFrames)
+            await this.additionalEffects[i].invoke(this.additionalEffects[i].data, img, currentFrame, totalFrames, this.card)
         }
     }
 

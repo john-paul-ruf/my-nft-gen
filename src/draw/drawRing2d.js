@@ -22,5 +22,4 @@ export const drawRing2d = (context2d, pos, radius, innerStroke, innerColor, oute
     context2d.stroke();
     context2d.closePath();
 
-
 }

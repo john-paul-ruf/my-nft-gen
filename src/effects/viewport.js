@@ -3,9 +3,7 @@ import {imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
-import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {findValue} from "../logic/findValue.js";
-import {drawRing2d} from "../draw/drawRing2d.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 import {drawRays2d} from "../draw/drawRays2d.js";
 
@@ -20,6 +18,8 @@ const config = {
     ampLength: {lower: imageSize * 0.1, upper: imageSize * 0.15},
     ampRadius: {lower: imageSize * 0.05, upper: imageSize * 0.1},
     sparsityFactor: {lower: 2, upper: 4},
+    amplitude: {lower: imageSize * 0.01, upper: imageSize * 0.02},
+    times: {lower: 1, upper: 2},
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
 }
 
@@ -36,6 +36,8 @@ const generate = () => {
         ampLength: getRandomInt(config.ampLength.lower, config.ampLength.upper),
         ampRadius: getRandomInt(config.ampRadius.lower, config.ampRadius.upper),
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        amplitude: randomNumber(config.amplitude.lower, config.amplitude.upper),
+        times: getRandomInt(config.times.lower, config.times.upper),
         color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         ampInnerColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
         ampOuterColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
@@ -48,15 +50,18 @@ const generate = () => {
     return data;
 }
 
-const viewport = async (data, img, currentFrame, numberOfFrames) => {
+const viewport = async (data, img, currentFrame, numberOfFrames, card) => {
     const imgName = Date.now().toString() + '-viewport.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
-        drawRays2d(context, data.center, data.ampRadius, data.ampLength, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)
-        drawPolygon2d(context, data.radius, data.center, 3, 210,data.thickness, data.innerColor, data.stroke, data.color )
+        const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength+ data.amplitude, data.times, numberOfFrames, currentFrame);
+        drawRays2d(context, data.center, data.ampRadius, theAmpGaston, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)
+
+        const thePolyGaston = findValue(data.radius, data.radius + data.amplitude, data.times, numberOfFrames, currentFrame);
+        drawPolygon2d(context, thePolyGaston, data.center, 3, 210,data.thickness, data.innerColor, data.stroke, data.color )
 
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);
@@ -75,7 +80,7 @@ const viewport = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => viewport(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => viewport(data, img, currentFrame, totalFrames, card)
 }
 
 export const viewportEffect = {
@@ -86,5 +91,6 @@ export const viewportEffect = {
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

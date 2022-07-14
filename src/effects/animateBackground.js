@@ -13,7 +13,7 @@ const generate = () => {
     return config;
 }
 
-const animateBackground = async (data, img) => {
+const animateBackground = async (data, img, currentFrame, totalFrames, card) => {
     for (let x = 0; x < 3000; x++) {
         for (let y = 0; y < 3000; y++) {
             const rando = getRandomInt(0, 20)
@@ -30,7 +30,7 @@ const animateBackground = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => animateBackground(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => animateBackground(data, img, currentFrame, totalFrames, card)
 }
 
 export const animateBackgroundEffect = {
@@ -41,5 +41,6 @@ export const animateBackgroundEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

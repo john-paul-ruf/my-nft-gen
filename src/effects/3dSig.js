@@ -41,7 +41,7 @@ const generate = () => {
     return data;
 }
 
-const add3dSig = async (data, img, currentFrame, numberOfFrames) => {
+const add3dSig = async (data, img, currentFrame, numberOfFrames, card) => {
     require("./three-canvasrenderer.js");
     require("./three-projector.js");
 
@@ -96,7 +96,7 @@ const add3dSig = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => add3dSig(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => add3dSig(data, img, currentFrame, totalFrames, card)
 }
 
 export const threeSigEffect = {
@@ -107,5 +107,6 @@ export const threeSigEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

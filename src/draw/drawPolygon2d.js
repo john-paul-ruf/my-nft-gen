@@ -42,5 +42,4 @@ export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle,
     context2d.stroke();
     context2d.closePath();
 
-
 }

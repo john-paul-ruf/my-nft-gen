@@ -6,6 +6,7 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {findValue} from "../logic/findValue.js";
 import {drawRing2d} from "../draw/drawRing2d.js";
+import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 
 const config = {
     size: imageSize,
@@ -47,7 +48,7 @@ const generate = () => {
     return data;
 }
 
-const ripple = async (data, img, currentFrame, numberOfFrames) => {
+const ripple = async (data, img, currentFrame, numberOfFrames, card) => {
     const imgName = Date.now().toString() + '-ripple.png';
 
     const draw = async (stroke, filename) => {
@@ -55,13 +56,13 @@ const ripple = async (data, img, currentFrame, numberOfFrames) => {
         const context = canvas.getContext('2d');
 
         const drawRing = (pos, radius, innerStroke, innerColor, outerStroke, outerColor) => {
-            const theGaston = findValue(radius, radius+data.ripple, data.times, numberOfFrames, currentFrame);
-            drawRing2d(context, pos, theGaston, innerStroke,innerColor, outerStroke, outerColor)
+            const theGaston = findValue(radius, radius + data.ripple, data.times, numberOfFrames, currentFrame);
+            drawRing2d(context, pos, theGaston, innerStroke, innerColor, outerStroke, outerColor)
         }
 
         const drawRings = (pos, color, radius, numberOfRings) => {
             for (let i = 0; i < numberOfRings; i++) {
-                drawRing(pos,  radius/numberOfRings * i, data.thickness, data.innerColor, data.stroke, color);
+                drawRing(pos, radius / numberOfRings * i, data.thickness, data.innerColor, data.stroke, color);
             }
         }
 
@@ -71,6 +72,8 @@ const ripple = async (data, img, currentFrame, numberOfFrames) => {
         drawRings(findPointByAngleAndCircle(data.center, 210, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
         drawRings(findPointByAngleAndCircle(data.center, 270, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
         drawRings(findPointByAngleAndCircle(data.center, 330, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
+
+        drawPolygon2d(context, data.smallRadius, data.center, 6, 30, data.thickness, data.innerColor, data.stroke, data.smallColor)
 
         drawRings(data.center, data.largeColor, data.largeRadius, data.largeNumberOfRings);
 
@@ -91,7 +94,7 @@ const ripple = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => ripple(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => ripple(data, img, currentFrame, totalFrames, card)
 }
 
 export const rippleEffect = {
@@ -101,6 +104,7 @@ export const rippleEffect = {
     effectChance: 100,
     requiresLayer: true,
     rotatesImg: false,
-    allowsRotation: false,
+    allowsRotation: true,
+    rotationTotalAngle: .60,
 }
 

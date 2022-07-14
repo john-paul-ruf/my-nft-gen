@@ -47,7 +47,7 @@ const generate = () => {
     return data;
 }
 
-const addSig = async (data, img, currentFrame, numberOfFrames) => {
+const addSig = async (data, img, currentFrame, numberOfFrames, card) => {
 
     let overlay = await Jimp.read(data.sig);
 
@@ -57,16 +57,17 @@ const addSig = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => addSig(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => addSig(data, img, currentFrame, totalFrames, card)
 }
 
 export const sigEffect = {
     name: 'sig',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 60,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

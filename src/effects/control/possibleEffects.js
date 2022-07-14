@@ -31,8 +31,8 @@ export const possibleEffects = [
     gatesEffect,
     ampEffect,
     summonEffect,
-    sigEffect,
     viewportEffect,
+    sigEffect,
     /*threeSigEffect*/
 ];
 

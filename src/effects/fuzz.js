@@ -42,7 +42,7 @@ const generate = () => {
     return data;
 }
 
-const fuzz = async (data, img, currentFrame, numberOfFrames) => {
+const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
     const ring = Date.now().toString() + '-ring.png';
     const fuzz = Date.now().toString() + '-fuzz.png';
 
@@ -91,7 +91,7 @@ const fuzz = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => fuzz(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => fuzz(data, img, currentFrame, totalFrames, card)
 }
 
 export const fuzzEffect = {
@@ -102,5 +102,6 @@ export const fuzzEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

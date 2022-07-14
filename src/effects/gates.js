@@ -41,7 +41,7 @@ const generate = () => {
     return data;
 }
 
-const gates = async (data, img, currentFrame, numberOfFrames) => {
+const gates = async (data, img, currentFrame, numberOfFrames, card) => {
     const drawing = Date.now().toString() + '-gate.png';
 
     const draw = async (stroke, filename) => {
@@ -96,7 +96,7 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => gates(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => gates(data, img, currentFrame, totalFrames, card)
 }
 
 export const gatesEffect = {
@@ -107,5 +107,6 @@ export const gatesEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,
+    rotationTotalAngle: .45,
 }
 

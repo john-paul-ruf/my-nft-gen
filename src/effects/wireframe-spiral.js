@@ -36,7 +36,7 @@ const generate = () => {
     return data;
 }
 
-const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
+const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) => {
     const imgName = Date.now().toString() + '-wireframe-spiral.png';
 
     const draw = async (stroke, filename) => {
@@ -101,7 +101,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => wireframeSpiral(data, img, currentFrame, totalFrames)
+    invoke: (data, img, currentFrame, totalFrames, card) => wireframeSpiral(data, img, currentFrame, totalFrames, card)
 }
 
 export const wireframeSpiralEffect = {
@@ -112,5 +112,6 @@ export const wireframeSpiralEffect = {
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

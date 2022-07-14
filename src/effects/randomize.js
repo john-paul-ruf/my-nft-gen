@@ -61,5 +61,6 @@ export const randomizeEffect = {
     requiresLayer: false,
     rotatesImg:false,
     allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 
