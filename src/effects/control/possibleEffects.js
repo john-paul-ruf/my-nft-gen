@@ -28,7 +28,7 @@ import {viewportEffect} from "../viewport.js";
 //possibleAdditionalEffects array below
 export const possibleEffects = [
     /*animateBackgroundEffect*/,
-    /*verticalScanLinesEffect,
+    verticalScanLinesEffect,
     wireframeSpiralEffect,
     backdropEffect,
     rippleEffect,
@@ -37,15 +37,15 @@ export const possibleEffects = [
     ampEffect,
     summonEffect,
     viewportEffect,
-    sigEffect,*/
+    sigEffect,
     threeSigEffect
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
 export const possibleAdditionalEffects = [
-    /*radiateEffect,
+    radiateEffect,
     randomizeEffect,
     glowEffect,
     fadeEffect,
-    rotateEffect,*/
+    rotateEffect,
 ];
