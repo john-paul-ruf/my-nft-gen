@@ -21,6 +21,7 @@ import Jimp from "jimp";
     //Is it the search, the loop, or the point search?
     //Gut says point search: pointInPaths, pointInPath
     //Yeah, that is gross. Focus there.
+    //Trying: path.findIndex(pos => pos.x === x && pos.y === y) >= 0
 export const getImagePaths = async (sourceImg) => {
 
     const paths = [];
@@ -112,12 +113,7 @@ export const getImagePaths = async (sourceImg) => {
     }
 
     const pointInPath = (path, x, y) => {
-        for (let i = 0; i < path.length; i++) {
-            if (path[i].x == x && path[i].y == y) {
-                return true;
-            }
-        }
-        return false;
+        return path.findIndex(pos => pos.x === x && pos.y === y) >= 0;
     }
 
     //start here

@@ -43,7 +43,7 @@ export const possibleEffects = [
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
 export const possibleAdditionalEffects = [
-    /*radiateEffect,*/
+    radiateEffect,
     randomizeEffect,
     glowEffect,
     fadeEffect,
