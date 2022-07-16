@@ -12,6 +12,7 @@ const config = {
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
 }
 
+//TODO: use the three library not the three.js library
 const generate = () => {
     const data = {
         imgCenter: {x:config.size/2,y:config.size/2},

@@ -21,6 +21,11 @@ import {viewportEffect} from "../viewport.js";
 // Just buckets of effects that get applied by chance
 ////////////////////////////////////////////////////////
 
+
+//ordered list, maybe a pipeline if you think about it, maybe, maybe not...
+//Main effects
+//Each effect in this list can have one of the effects in the
+//possibleAdditionalEffects array below
 export const possibleEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
@@ -36,6 +41,7 @@ export const possibleEffects = [
     /*threeSigEffect*/
 ];
 
+//Possible effect to apply to the main effects found in the possibleEffects array found above
 export const possibleAdditionalEffects = [
     /*radiateEffect,*/
     randomizeEffect,

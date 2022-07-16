@@ -12,6 +12,15 @@ import Jimp from "jimp";
 
  **/
 
+//TODO: figure out how to make this faster
+    //Issues:
+    //Can't store in data, if image rotates, previous array of points is invalid
+    //2000x2000 pixel means at 4,000,0000 times through the loop
+    //The expense of the loop.  We need to check to make sure we have not found the point yet.
+    //Faster search?  Probably faster search.
+    //Is it the search, the loop, or the point search?
+    //Gut says point search: pointInPaths, pointInPath
+    //Yeah, that is gross. Focus there.
 export const getImagePaths = async (sourceImg) => {
 
     const paths = [];

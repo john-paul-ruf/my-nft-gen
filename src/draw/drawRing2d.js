@@ -1,5 +1,3 @@
-import {findValue} from "../logic/findValue.js";
-
 export const drawRing2d = (context2d, pos, radius, innerStroke, innerColor, outerStroke, outerColor) => {
 
     context2d.beginPath();
