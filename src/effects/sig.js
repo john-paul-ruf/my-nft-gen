@@ -64,7 +64,7 @@ export const sigEffect = {
     name: 'sig',
     generateData: generate,
     effect: effect,
-    effectChance: 60,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,
