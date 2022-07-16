@@ -41,10 +41,7 @@ export const getImagePaths = async (sourceImg) => {
 
         const checkAround = (pixel, x, y) => {
             const pixelNext = getPixel(x, y);
-
             return isTransparent(pixel) && !isTransparent(pixelNext) || !isTransparent(pixel) && isTransparent(pixelNext);
-
-
         }
 
         if (x < 0 || y < 0 || x > sourceImg.bitmap.width || y > sourceImg.bitmap.height) {

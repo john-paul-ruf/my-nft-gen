@@ -2,7 +2,6 @@ import {findValue} from "../logic/findValue.js";
 import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
 import {getRandomInt} from "../logic/random.js";
-import {glowEffect} from "./glow.js";
 
 
 const config = {
@@ -26,7 +25,8 @@ const radiate = async (data, img, currentFrame, totalFrames, card) => {
     let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
 
     let hex = '#00FF00';
-    hex = hex + alpha.toString(16);
+    const theRadiateGaston = Math.ceil(findValue(8,16, data.times, totalFrames, currentFrame));
+    hex = hex + alpha.toString(theRadiateGaston);
     let color = Jimp.cssColorToHex(hex)
 
     const paths = await getImagePaths(img);
