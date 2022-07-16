@@ -116,8 +116,8 @@ export const getImagePaths = async (sourceImg) => {
 
     for (let y = 0; y < sourceImg.bitmap.height; y++) {
         for (let x = 0; x < sourceImg.bitmap.width; x++) {
-            if (isEdge(x, y)) { //we found a non-transparent pixel
-                if (paths.length === 0 || !pointInPaths(x, y)) { //we don't already have this point in a path
+            if (await isEdge(x, y)) { //we found a non-transparent pixel
+                if (paths.length === 0 || !await pointInPaths(x, y)) { //we don't already have this point in a path
                     await findPath(x, y) //search for complete path if possible
                 }
             }

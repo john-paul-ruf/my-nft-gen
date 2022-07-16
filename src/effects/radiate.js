@@ -3,9 +3,14 @@ import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
 import {getRandomInt} from "../logic/random.js";
 
-
+/**
+ *
+ * This effect is junk.  Costly, adds little to the final piece.
+ *
+ * @type {{times: {lower: number, upper: number}}}
+ */
 const config = {
-    times:  {lower: 1, upper: 3},
+    times: {lower: 1, upper: 3},
 }
 
 const generate = () => {
@@ -22,10 +27,10 @@ const generate = () => {
 const radiate = async (data, img, currentFrame, totalFrames, card) => {
 
     const alpha = Math.ceil(findValue(128, 255, data.times, totalFrames, currentFrame));
-    let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
+    let overlay = new Jimp(img.bitmap.width, img.bitmap.height);
 
     let hex = '#00FF00';
-    const theRadiateGaston = Math.ceil(findValue(8,16, data.times, totalFrames, currentFrame));
+    const theRadiateGaston = Math.ceil(findValue(8, 16, data.times, totalFrames, currentFrame));
     hex = hex + alpha.toString(theRadiateGaston);
     let color = Jimp.cssColorToHex(hex)
 
@@ -52,9 +57,9 @@ export const radiateEffect = {
     name: 'radiate',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 0, //check top level comments
     requiresLayer: false,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

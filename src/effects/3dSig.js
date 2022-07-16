@@ -2,13 +2,18 @@ import {getRandomInt} from "../logic/random.js";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {imageSize} from "../logic/gobals.js";
 import fs from "fs";
-import Jimp from "jimp"
-import * as THREE from 'three'
-import {Canvas, createCanvas} from "canvas";
-import gl from 'gl';
+import THREE from 'three'
 import path, {dirname} from "path";
 import {fileURLToPath} from "url";
-import PNG from "pngjs";
+import PNG from "node-png";
+import SoftwareRenderer from "three-software-renderer";
+
+/**
+ *
+ * No matter how I approach this one I get a solid black image on the output png
+ *
+ * @type {{times: {lower: number, upper: number}}}
+ */
 
 const config = {
     numberOfBalls: {lower: 1, upper: 5},
@@ -50,31 +55,11 @@ const generate = () => {
 }
 
 const add3dSig = async (data, img, currentFrame, numberOfFrames, card) => {
-    const canvas = new Canvas(imageSize, imageSize);
-    const glContext = gl(imageSize, imageSize, {
-        preserveDrawingBuffer: true,
-    })
-    canvas.addEventListener = function(event, func, bind_) {}; // mock function to avoid errors inside THREE.WebGlRenderer()
 
-    const scene = new THREE.Scene();
+    /*const scene = new THREE.Scene();
+
     const camera = new THREE.PerspectiveCamera(50, 500 / 400, 0.1, 2000);
-
     scene.add(camera);
-
-    const renderer = new THREE.WebGLRenderer({
-        canvas,
-        antialias: false,
-        powerPreference: "high-performance",
-        preserveDrawingBuffer: true,
-        context: glContext,
-    });
-
-    const renderTarget = new THREE.WebGLRenderTarget(imageSize, imageSize, {
-        minFilter: THREE.LinearFilter,
-        magFilter: THREE.NearestFilter,
-        format: THREE.RGBAFormat,
-        type: THREE.UnsignedByteType,
-    });
 
     const light = new THREE.AmbientLight(0xffaaff);
     light.position.set(10, 10, 10);
@@ -102,18 +87,71 @@ const add3dSig = async (data, img, currentFrame, numberOfFrames, card) => {
     camera.aspect = imageSize / imageSize
     camera.updateProjectionMatrix();
     camera.position.set(cameraPos.x, cameraPos.y, 0)
+    camera.lookAt(0, 0, 0);*/
+
+    const scene = new THREE.Scene();
+
+// Set the background color
+    scene.background = new THREE.Color('skyblue');
+
+// Create a camera
+    const fov = 35; // AKA Field of View
+    const aspect = imageSize / imageSize;
+    const near = 0.1; // the near clipping plane
+    const far = 100; // the far clipping plane
+
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
+// every object is initially created at ( 0, 0, 0 )
+// move the camera back so we can view the scene
+    camera.position.set(10, 10, 10);
     camera.lookAt(0, 0, 0);
 
-    renderer.setRenderTarget(renderTarget);
-    renderer.render(scene, camera)
+// create a geometry
+    const geometry = new THREE.BufferGeometry(2, 2, 2);
+
+// create a default (white) Basic material
+    const material = new THREE.MeshBasicMaterial();
+
+// create a Mesh containing the geometry and material
+    const cube = new THREE.Mesh(geometry, material);
+
+// add the mesh to the scene
+    scene.add(cube);
+
+    const ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xFFC5CB, .8);
+    pointLight.position.copy(camera.position);
+    scene.add(pointLight);
 
     const filename = Date.now().toString() + '-3dsig.png';
 
-    renderer.domElement.toBuffer(function(err, buf) {
-        fs.writeFile(filename, buf, function(err) {
-            if (err) throw err;
-        });
+    const renderer = new SoftwareRenderer({
+        alpha: false
     });
+
+    renderer.setSize(imageSize, imageSize);
+    const imageData = renderer.render(scene, camera);
+
+    const png = new PNG.PNG({
+        width: imageSize,
+        height: imageSize,
+        colorType: 6
+    });
+
+    for (let i = 0; i < imageData.data.length; i++) {
+        png.data[i] = imageData.data[i];
+    }
+
+    const options = {
+        width: imageSize,
+        height: imageSize,
+        colorType: 6
+    };
+    let buffer = PNG.PNG.sync.write(png, options);
+    fs.writeFileSync(filename, buffer);
 
     /*let tmpImg = await Jimp.read(filename);
 
@@ -133,7 +171,7 @@ export const threeSigEffect = {
     name: '3d-sig',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 0, //check top level comments
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,
