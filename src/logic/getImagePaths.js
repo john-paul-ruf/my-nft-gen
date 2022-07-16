@@ -2,26 +2,13 @@ import Jimp from "jimp";
 
 /**
 
- Experimental
- Possibly abandoned
-
  Given an image with transparency, find the path(s), as an array, of where the pixels become non-transparent.
 
- Useful for outlines.  It remains to be seen if the path is ordered correctly.
-
+ It remains to be seen if the path is an ordered path.
+ Meaning the array represent a list of contiguous points.
 
  **/
 
-//TODO: figure out how to make this faster
-    //Issues:
-    //Can't store in data, if image rotates, previous array of points is invalid
-    //2000x2000 pixel means at 4,000,0000 times through the loop
-    //The expense of the loop.  We need to check to make sure we have not found the point yet.
-    //Faster search?  Probably faster search.
-    //Is it the search, the loop, or the point search?
-    //Gut says point search: pointInPaths, pointInPath
-    //Yeah, that is gross. Focus there.
-    //Trying: path.findIndex(pos => pos.x === x && pos.y === y) >= 0
 export const getImagePaths = async (sourceImg) => {
 
         const paths = [];
@@ -114,7 +101,7 @@ export const getImagePaths = async (sourceImg) => {
             return path.findIndex(pos => pos.x === x && pos.y === y) >= 0;
         }
 
-        //start here outermost layer
+        //start here: outermost layer
         for (let y = 0; y < sourceImg.bitmap.height; y++) {
             for (let x = 0; x < sourceImg.bitmap.width; x++) {
                 if (isEdge(x, y)) { //we found a non-transparent pixel
