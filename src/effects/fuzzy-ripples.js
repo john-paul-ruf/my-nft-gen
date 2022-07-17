@@ -103,8 +103,8 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-    const compName = Date.now().toString() + 'fuzzy-ripple-comp.png';
-    img.write(compName);
+    /*const compName = Date.now().toString() + 'fuzzy-ripple-comp.png';
+    img.write(compName);*/
 
     fs.unlinkSync(imgName);
     fs.unlinkSync(underlayName);
