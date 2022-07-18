@@ -7,15 +7,16 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {findValue} from "../logic/findValue.js";
 import {drawRing2d} from "../draw/drawRing2d.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
+import {findOneWayValue} from "../logic/findOneWayValue.js";
 
 const config = {
     size: imageSize,
-    sparsityFactor: {lower: 12, upper: 12},
-    gapFactor: {lower: 10, upper: 20},
-    radiusFactor: {lower: 5, upper: 10},
+    sparsityFactor: {lower: 24, upper: 24},
+    gapFactor: {lower: 10, upper: 15},
+    radiusFactor: {lower: 10, upper: 20},
     stroke: 1,
     thickness: 5,
-    scaleFactor: 1.05,
+    scaleFactor: 1.3,
     innerColor: '#000000',
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
@@ -51,20 +52,18 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
 
         const drawHexLine = (angle) => {
             for (let i = 0; i < 20; i++) {
-                const direction = -1 * i;
+                const direction = i%2;
+                const invert = direction <= 0;
 
-                let theAngleGaston = findValue(angle, angle + data.sparsityFactor, 1, numberOfFrames, currentFrame);
-
-                if (direction < 0) {
-                    theAngleGaston = findValue(angle - data.sparsityFactor, angle, 1, numberOfFrames, currentFrame);
-                }
+                const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
+                const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
 
                 const scaleBy = (data.scaleFactor * i);
                 const radius = data.radiusFactor * scaleBy;
                 const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy)*i)
                 const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-                drawPolygon2d(context, radius, pos, 6, angle, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+                drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
             }
         }
 
@@ -98,7 +97,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-   /* const compName = Date.now().toString() + 'hex-comp.png';
+    /*const compName = Date.now().toString() + 'hex-comp.png';
     img.write(compName);*/
 
     fs.unlinkSync(imgName);
@@ -116,7 +115,7 @@ export const hexEffect = {
     effectChance: 100,
     requiresLayer: true,
     rotatesImg: false,
-    allowsRotation: true,
-    rotationTotalAngle: 60,
+    allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

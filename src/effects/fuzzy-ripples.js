@@ -120,7 +120,7 @@ export const fuzzyRippleEffect = {
     name: 'fuzzy-ripples',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 0,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: true,
