@@ -87,7 +87,7 @@ export const viewportEffect = {
     name: 'viewport',
     generateData: generate,
     effect: effect,
-    effectChance: 60,
+    effectChance: 80,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,

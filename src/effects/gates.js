@@ -103,7 +103,7 @@ export const gatesEffect = {
     name: 'gates',
     generateData: generate,
     effect: effect,
-    effectChance: 25,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,

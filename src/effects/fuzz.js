@@ -98,7 +98,7 @@ export const fuzzEffect = {
     name: 'fuzz',
     generateData: generate,
     effect: effect,
-    effectChance: 25,
+    effectChance: 70,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,

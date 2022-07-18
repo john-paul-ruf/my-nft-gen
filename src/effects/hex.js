@@ -50,7 +50,8 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
-        const drawHexLine = (angle, loopCount) => {
+        const drawHexLine = (angle, index) => {
+            const loopCount = index + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
 
@@ -62,7 +63,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
             const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-            drawPolygon2d(context, radius, pos, 6, theAngleGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+            drawPolygon2d(context, radius, pos, 6, 0, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
         for (let i = 0; i < 20; i++) {
@@ -97,7 +98,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-    /*const compName = Date.now().toString() + 'hex-comp.png';
+/*    const compName = Date.now().toString() + 'hex-comp.png';
     img.write(compName);*/
 
     fs.unlinkSync(imgName);
