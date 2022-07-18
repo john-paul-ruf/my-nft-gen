@@ -13,7 +13,7 @@ const config = {
     size: imageSize,
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 10, upper: 15},
-    radiusFactor: {lower: 10, upper: 20},
+    radiusFactor: {lower: 15, upper: 30},
     stroke: 1,
     thickness: 5,
     scaleFactor: 1.3,
@@ -50,25 +50,25 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
-        const drawHexLine = (angle) => {
-            for (let i = 0; i < 20; i++) {
-                const direction = i%2;
-                const invert = direction <= 0;
+        const drawHexLine = (angle, loopCount) => {
+            const direction = loopCount % 2;
+            const invert = direction <= 0;
 
-                const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
-                const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
+            const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor * 2, numberOfFrames, currentFrame, invert);
+            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 120, numberOfFrames, currentFrame, invert)
 
-                const scaleBy = (data.scaleFactor * i);
-                const radius = data.radiusFactor * scaleBy;
-                const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy)*i)
-                const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
+            const scaleBy = (data.scaleFactor * loopCount);
+            const radius = data.radiusFactor * scaleBy;
+            const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
+            const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-                drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
-            }
+            drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
-        for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-            drawHexLine(i)
+        for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 360; i = i + data.sparsityFactor) {
+                drawHexLine(i)
+            }
         }
 
         const buffer = canvas.toBuffer('image/png');
