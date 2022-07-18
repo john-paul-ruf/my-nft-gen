@@ -4,6 +4,7 @@ export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle,
 
     let angle = (Math.PI * 2) / numberOfSides;
 
+    //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
     context2d.beginPath();
 
     context2d.save();
@@ -23,6 +24,7 @@ export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle,
     context2d.strokeStyle = outerColor;
     context2d.stroke();
 
+    //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
     context2d.beginPath();
 
     context2d.save();

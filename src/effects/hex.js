@@ -15,7 +15,7 @@ const config = {
     gapFactor: {lower: 10, upper: 15},
     radiusFactor: {lower: 30, upper: 45},
     stroke: 1,
-    thickness: 5,
+    thickness: 3,
     scaleFactor: 1.3,
     innerColor: '#000000',
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
