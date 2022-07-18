@@ -17,6 +17,7 @@ import {threeSigEffect} from "../3dSig.js";
 import {rippleEffect} from "../ripples.js";
 import {viewportEffect} from "../viewport.js";
 import {fuzzyRippleEffect} from "../fuzzy-ripples.js";
+import {hexEffect} from "../hex.js";
 
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
@@ -30,6 +31,7 @@ import {fuzzyRippleEffect} from "../fuzzy-ripples.js";
 export const possibleEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
+    hexEffect,
     wireframeSpiralEffect,
     backdropEffect,
     rippleEffect,

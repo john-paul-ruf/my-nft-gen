@@ -4,42 +4,41 @@ export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle,
 
     context2d.beginPath();
 
-    let start = findPointByAngleAndCircle(pos, startAngle, radius);
-
     context2d.lineWidth = innerStroke + outerStroke;
     context2d.strokeStyle = outerColor;
 
-    context2d.moveTo(start.x, start.y);
+    let angle = (Math.PI * 2) / numberOfSides;
 
-    for (let a = startAngle; a < 360+(startAngle*2); a = a + (360/numberOfSides)) {
-        const angle = a % 360
-        const point = findPointByAngleAndCircle(pos, a, radius);
-        context2d.lineTo(point.x, point.y);
+    context2d.save();
+    context2d.translate(pos.x, pos.y);
+    context2d.rotate(startAngle);
+    context2d.moveTo(radius, 0);
+
+    for (let i = 1; i <= numberOfSides+1; i++) {
+        context2d.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
     }
 
-    context2d.lineTo(start.x, start.y);
-
     context2d.stroke();
+
     context2d.closePath();
+    context2d.restore();
 
     context2d.beginPath();
-
-    start = findPointByAngleAndCircle(pos, startAngle, radius);
 
     context2d.lineWidth = innerStroke;
     context2d.strokeStyle = innerColor;
 
-    context2d.moveTo(start.x, start.y);
+    context2d.save();
+    context2d.translate(pos.x, pos.y);
+    context2d.rotate(startAngle);
+    context2d.moveTo(radius, 0);
 
-    for (let a = startAngle; a < 360+startAngle+(startAngle*2); a = a + (360/numberOfSides)) {
-        const angle = a % 360
-        const point = findPointByAngleAndCircle(pos, angle, radius);
-        context2d.lineTo(point.x, point.y);
+    for (let i = 1; i <= numberOfSides+1; i++) {
+        context2d.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
     }
 
-    context2d.lineTo(start.x, start.y);
-
     context2d.stroke();
-    context2d.closePath();
 
+    context2d.closePath();
+    context2d.restore();
 }
