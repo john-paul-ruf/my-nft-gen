@@ -90,7 +90,7 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
 
     let underlayImg = await Jimp.read(underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(5, 15, 1, numberOfFrames, currentFrame));
+    const theBlurGaston = Math.ceil(findValue(1, 5, 1, numberOfFrames, currentFrame));
     await underlayImg.blur(theBlurGaston);
 
     await underlayImg.opacity(0.5);
