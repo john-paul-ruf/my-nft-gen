@@ -13,7 +13,7 @@ const config = {
     size: imageSize,
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 10, upper: 15},
-    radiusFactor: {lower: 15, upper: 30},
+    radiusFactor: {lower: 30, upper: 45},
     stroke: 1,
     thickness: 5,
     scaleFactor: 1.3,
@@ -54,20 +54,20 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
             const direction = loopCount % 2;
             const invert = direction <= 0;
 
-            const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor * 2, numberOfFrames, currentFrame, invert);
-            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 120, numberOfFrames, currentFrame, invert)
+            const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
+            //const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
             const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-            drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+            drawPolygon2d(context, radius, pos, 6, theAngleGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
         for (let i = 0; i < 20; i++) {
-            for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-                drawHexLine(i)
+            for (let a = 0; a < 360; a = a + data.sparsityFactor) {
+                drawHexLine(a, i)
             }
         }
 
