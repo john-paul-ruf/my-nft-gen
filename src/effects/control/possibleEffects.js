@@ -31,11 +31,11 @@ import {hexEffect} from "../hex.js";
 export const possibleEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
-    hexEffect,
     wireframeSpiralEffect,
     backdropEffect,
     rippleEffect,
     fuzzyRippleEffect,
+    hexEffect,
     fuzzEffect,
     gatesEffect,
     ampEffect,
