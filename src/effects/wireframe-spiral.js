@@ -108,7 +108,7 @@ export const wireframeSpiralEffect = {
     name: 'wireframe-spiral',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 0, //just over the 100MB mark on the simple-hex run
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,

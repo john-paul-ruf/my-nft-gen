@@ -6,7 +6,7 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    gates: {lower: 3, upper: 6},
+    gates: {lower: 5, upper: 11},
     gateWidth: 24,
     size: imageSize,
     stroke: 3,

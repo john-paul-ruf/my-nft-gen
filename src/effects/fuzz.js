@@ -5,7 +5,7 @@ import Jimp from "jimp";
 import fs from "fs";
 
 const config = {
-    circles: {lower: 3, upper: 8},
+    circles: {lower: 10, upper: 20},
     fuzzFactor: {lower: 1, upper: 3},
     size: imageSize,
     times: {lower: 1, upper: 3},
