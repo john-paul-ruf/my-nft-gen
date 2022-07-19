@@ -29,7 +29,7 @@ export const rotateEffect = {
     name: 'rotate',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 100,
     requiresLayer: false,
     rotatesImg: true,
     allowsRotation: false,
