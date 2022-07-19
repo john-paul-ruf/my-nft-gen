@@ -12,10 +12,10 @@ import {findOneWayValue} from "../logic/findOneWayValue.js";
 const config = {
     size: imageSize,
     sparsityFactor: {lower: 24, upper: 24},
-    gapFactor: {lower: 10, upper: 15},
-    radiusFactor: {lower: 30, upper: 45},
-    stroke: 1,
-    thickness: 3,
+    gapFactor: {lower: 20, upper: 25},
+    radiusFactor: {lower: 30, upper: 55},
+    stroke: 0.5,
+    thickness: 1,
     scaleFactor: 1.3,
     innerColor: '#000000',
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
@@ -78,12 +78,12 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
 
     await draw(config.ringStroke, imgName, 0);
 
-    const theAccentGaston = findValue(0, 5, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(0, 5, 2, numberOfFrames, currentFrame);
     await draw(config.ringStroke, underlayName, theAccentGaston);
 
     let underlayImg = await Jimp.read(underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    const theBlurGaston = Math.ceil(findValue(1, 3, 2, numberOfFrames, currentFrame));
     await underlayImg.blur(theBlurGaston);
 
     await underlayImg.opacity(0.5);
