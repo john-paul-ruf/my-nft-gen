@@ -13,7 +13,6 @@ import {gatesEffect} from "../gates.js";
 import {wireframeSpiralEffect} from "../wireframe-spiral.js";
 import {summonEffect} from "../summons.js";
 import {sigEffect} from "../sig.js";
-import {threeSigEffect} from "../3dSig.js";
 import {rippleEffect} from "../ripples.js";
 import {viewportEffect} from "../viewport.js";
 import {fuzzyRippleEffect} from "../fuzzy-ripples.js";
@@ -41,8 +40,7 @@ export const possibleEffects = [
     ampEffect,
     summonEffect,
     viewportEffect,
-    sigEffect,
-    threeSigEffect
+    sigEffect
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
