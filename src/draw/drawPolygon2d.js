@@ -1,4 +1,4 @@
-import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {degreesToRadians, findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor) => {
 
@@ -9,7 +9,7 @@ export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle,
 
     context2d.save();
     context2d.translate(pos.x, pos.y);
-    context2d.rotate(startAngle);
+    context2d.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
 
     context2d.moveTo(radius, 0);
 
@@ -29,7 +29,7 @@ export const drawPolygon2d = (context2d, radius, pos, numberOfSides, startAngle,
 
     context2d.save();
     context2d.translate(pos.x, pos.y);
-    context2d.rotate(startAngle);
+    context2d.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
 
     context2d.moveTo(radius, 0);
 

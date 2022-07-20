@@ -122,9 +122,16 @@ export const animate = async (config) => {
 
     fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, effects), 'utf-8');
 
-    GifUtil.write(config.fileOut, frames).then(gif => {
-        //Always wait for this before killing the process
-        console.log("gif written");
-    });
+    const writeGif = async () => {
+        new Promise((resolve, reject) => {
+            GifUtil.write(config.fileOut, frames).then(gif => {
+                //Always wait for this before killing the process
+                console.log("gif written");
+                resolve();
+            });
+        });
+    }
+
+    await writeGif();
 
 }

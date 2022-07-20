@@ -56,14 +56,14 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
             const invert = direction <= 0;
 
             const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
-            //const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
+            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
             const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-            drawPolygon2d(context, radius, pos, 6, 0, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+            drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
         for (let i = 0; i < 20; i++) {
@@ -98,7 +98,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-/*    const compName = Date.now().toString() + 'hex-comp.png';
+   /* const compName = Date.now().toString() + 'hex-comp.png';
     img.write(compName);*/
 
     fs.unlinkSync(imgName);
