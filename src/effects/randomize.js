@@ -3,9 +3,9 @@ import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
-    red: {lower: -30, upper: 31},
-    blue: {lower: -30, upper: 31},
-    green: {lower: -30, upper: 31}
+    red: {lower: -15, upper: 31},
+    blue: {lower: -15, upper: 31},
+    green: {lower: -15, upper: 31}
 }
 
 const generate = () => {
