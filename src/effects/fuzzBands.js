@@ -7,12 +7,11 @@ import {drawRing2d} from "../draw/drawRing2d.js";
 import {findValue} from "../logic/findValue.js";
 
 const config = {
-    circles: {lower: 10, upper: 20},
-    fuzzFactor: {lower: 1, upper: 3},
+    circles: {lower: 3, upper: 8},
     size: imageSize,
     stroke: 0.5,
-    thickness: 2,
-    scaleFactor: 1.15,
+    thickness: 1,
+    scaleFactor: 1.1,
     innerColor: '#000000',
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
@@ -20,7 +19,6 @@ const config = {
 const generate = () => {
     const data = {
         numberOfCircles: getRandomInt(config.circles.lower, config.circles.upper),
-        fuzzFactor: getRandomInt(config.fuzzFactor.lower, config.fuzzFactor.upper),
         height: config.size,
         width: config.size,
         stroke: config.stroke,
@@ -74,7 +72,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
     await draw(config.ringStroke, ring);
     await draw(data.fuzzFactor + config.ringStroke, fuzz, 0);
 
-    const theAccentGaston = findValue(0, 3, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(0, 2, 1, numberOfFrames, currentFrame);
     await draw(config.ringStroke, fuzz, theAccentGaston);
 
     let fuzzImg = await Jimp.read(fuzz);
@@ -85,8 +83,6 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
     await fuzzImg.opacity(0.5);
 
     let ringImg = await Jimp.read(ring);
-
-    await fuzzImg.blur(theBlurGaston);
 
     await img.composite(fuzzImg, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
