@@ -3,14 +3,17 @@ import {imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
+import {drawRing2d} from "../draw/drawRing2d.js";
+import {findValue} from "../logic/findValue.js";
 
 const config = {
     circles: {lower: 10, upper: 20},
     fuzzFactor: {lower: 1, upper: 3},
     size: imageSize,
-    times: {lower: 1, upper: 3},
-    ringStroke: 0.5,
-    blur: 2,
+    stroke: 0.5,
+    thickness: 2,
+    scaleFactor: 1.15,
+    innerColor: '#000000',
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -20,9 +23,13 @@ const generate = () => {
         fuzzFactor: getRandomInt(config.fuzzFactor.lower, config.fuzzFactor.upper),
         height: config.size,
         width: config.size,
-        times: getRandomInt(config.times.lower, config.times.upper),
+        stroke: config.stroke,
+        thickness: config.thickness,
+        innerColor: config.innerColor,
+        scaleFactor: config.scaleFactor,
+        center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
-            return `${fuzzEffect.name}: ${data.numberOfCircles} circles, fuzz factor: ${data.fuzzFactor}, ${data.times} times`
+            return `${fuzzBandsEffect.name}: ${data.numberOfCircles} fuzzy bands`
         }
     }
 
@@ -42,27 +49,22 @@ const generate = () => {
     return data;
 }
 
-const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
-    const ring = Date.now().toString() + '-ring.png';
-    const fuzz = Date.now().toString() + '-fuzz.png';
+const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
+    const ring = Date.now().toString() + '-fuzzy-band.png';
+    const fuzz = Date.now().toString() + '-fuzzy-band-underlay.png';
 
-    const draw = async (stroke, filename) => {
+    const draw = async (stroke, filename, accentBoost) => {
         const canvas = createCanvas(imageSize, imageSize)
         const context = canvas.getContext('2d');
 
-        const drawRing = (radius, stroke, color) => {
-            context.beginPath();
-            context.lineWidth = stroke;
-            context.strokeStyle = color;
-
-            context.arc(imageSize / 2, imageSize / 2, radius, 0, 2 * Math.PI, false);
-
-            context.stroke();
-            context.closePath();
+        const drawRing = (radius, stroke, color, scaleBy) => {
+            drawRing2d(context, data.center, radius, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, color)
         }
 
         for (let i = 0; i < data.numberOfCircles; i++) {
-            drawRing(data.circles[i].radius, stroke, data.circles[i].color);
+            const loopCount = i + 1;
+            const scaleBy = (data.scaleFactor * loopCount);
+            drawRing(data.circles[i].radius, stroke, data.circles[i].color, scaleBy);
         }
 
         const buffer = canvas.toBuffer('image/png');
@@ -70,12 +72,21 @@ const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
     }
 
     await draw(config.ringStroke, ring);
-    await draw(data.fuzzFactor + config.ringStroke, fuzz);
+    await draw(data.fuzzFactor + config.ringStroke, fuzz, 0);
 
-    let ringImg = await Jimp.read(ring);
+    const theAccentGaston = findValue(0, 3, 1, numberOfFrames, currentFrame);
+    await draw(config.ringStroke, fuzz, theAccentGaston);
+
     let fuzzImg = await Jimp.read(fuzz);
 
-    await fuzzImg.blur(config.blur);
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    await fuzzImg.blur(theBlurGaston);
+
+    await fuzzImg.opacity(0.5);
+
+    let ringImg = await Jimp.read(ring);
+
+    await fuzzImg.blur(theBlurGaston);
 
     await img.composite(fuzzImg, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -85,20 +96,23 @@ const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
+  /*  const compName = Date.now().toString() + 'hex-comp.png';
+    img.write(compName);*/
+
     fs.unlinkSync(ring);
     fs.unlinkSync(fuzz);
 
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => fuzz(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames, card) => fuzzBands(data, img, currentFrame, totalFrames, card)
 }
 
-export const fuzzEffect = {
-    name: 'fuzz',
+export const fuzzBandsEffect = {
+    name: 'fuzz-bands',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 70,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: false,

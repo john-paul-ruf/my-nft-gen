@@ -90,6 +90,9 @@ export const animate = async (config) => {
             })
         }
 
+       /* const backgroundName = Date.now().toString() + 'total-comp.png';
+        background.write(backgroundName);*/
+
         //Apply color depth to composited image
         GifUtil.quantizeDekker(background, config.colorDepth)
 

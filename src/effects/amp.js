@@ -6,9 +6,9 @@ import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
-    sparsityFactor: {lower: 0.75, upper: 1.25},
+    sparsityFactor: {lower: 1.25, upper: 1.75},
     size: imageSize,
-    stroke: 3,
+    stroke: 2,
     colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
@@ -48,6 +48,7 @@ const amp = async (data, img, currentFrame, numberOfFrames, card) => {
             grad.addColorStop(0.5, innerColor);
             grad.addColorStop(1, color);
 
+            context.lineWidth = stroke;
             context.strokeStyle = grad;
 
             context.moveTo(start.x, start.y);

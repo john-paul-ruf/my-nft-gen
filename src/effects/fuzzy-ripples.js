@@ -85,12 +85,12 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
 
     await draw(config.ringStroke, imgName, 0);
 
-    const theAccentGaston = findValue(0, 15, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(0, 10, 1, numberOfFrames, currentFrame);
     await draw(config.ringStroke, underlayName, theAccentGaston);
 
     let underlayImg = await Jimp.read(underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(1, 5, 1, numberOfFrames, currentFrame));
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
     await underlayImg.blur(theBlurGaston);
 
     await underlayImg.opacity(0.5);
@@ -120,7 +120,7 @@ export const fuzzyRippleEffect = {
     name: 'fuzzy-ripples',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: true,
