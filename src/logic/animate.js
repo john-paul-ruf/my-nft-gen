@@ -9,20 +9,12 @@ import {
 } from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
 import {imageSize, neutrals} from "./gobals.js";
-import {getColorBucket} from "./getColorBucket.js";
 import {getRandomInt} from "./random.js";
-
-
-export let colorBucket = [];
-
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
  * @returns {Promise<void>} - return nothing, just await it
  */
 export const animate = async (config) => {
-
-    colorBucket = getColorBucket();
-
     const backgroundColor = neutrals[getRandomInt(0, neutrals.length)];
 
     const frames = []; //will be a collection of jimp images that in the end gets converted to a gif

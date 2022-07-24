@@ -1,14 +1,13 @@
 import {getRandomInt, randomNumber} from "../logic/random.js";
-import {imageSize, neutrals} from "../logic/gobals.js";
+import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {findValue} from "../logic/findValue.js";
-import {drawRing2d} from "../draw/drawRing2d.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 import {findOneWayValue} from "../logic/findOneWayValue.js";
-import {colorBucket} from "../logic/animate.js";
+
 
 const config = {
     size: imageSize,
@@ -31,7 +30,7 @@ const generate = () => {
         sparsityFactor: getRandomInt(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomInt(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomInt(config.radiusFactor.lower, config.radiusFactor.upper),
-        color: colorBucket[getRandomInt(0, colorBucket.length)],
+        color: getColorFromBucket(),
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${hexEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`

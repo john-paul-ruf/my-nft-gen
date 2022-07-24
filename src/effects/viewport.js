@@ -1,12 +1,12 @@
 import {getRandomInt, randomNumber} from "../logic/random.js";
-import {imageSize, neutrals} from "../logic/gobals.js";
+import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findValue} from "../logic/findValue.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 import {drawRays2d} from "../draw/drawRays2d.js";
-import {colorBucket} from "../logic/animate.js";
+
 
 const config = {
     size: imageSize,
@@ -37,9 +37,9 @@ const generate = () => {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         amplitude: randomNumber(config.amplitude.lower, config.amplitude.upper),
         times: getRandomInt(config.times.lower, config.times.upper),
-        color: colorBucket[getRandomInt(0, colorBucket.length)],
-        ampInnerColor: colorBucket[getRandomInt(0, colorBucket.length)],
-        ampOuterColor: colorBucket[getRandomInt(0, colorBucket.length)],
+        color: getColorFromBucket(),
+        ampInnerColor: getColorFromBucket(),
+        ampOuterColor: getColorFromBucket(),
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`

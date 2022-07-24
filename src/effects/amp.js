@@ -1,10 +1,9 @@
-import {getRandomInt, randomNumber} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import { randomNumber} from "../logic/random.js";
+import {getColorFromBucket, imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
-import {colorBucket} from "../logic/animate.js";
 
 const config = {
     sparsityFactor: {lower: 1.25, upper: 1.75},
@@ -17,8 +16,8 @@ const generate = () => {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         height: config.size,
         width: config.size,
-        color: colorBucket[getRandomInt(0, colorBucket.length)],
-        innerColor: colorBucket[getRandomInt(0, colorBucket.length)],
+        color: getColorFromBucket(),
+        innerColor: getColorFromBucket(),
         length: ((config.size / 2)/2)-((config.size / 2)/3),
         lineStart: ((config.size / 2)/3)*2,
         center: {x:imageSize/2,y:imageSize/2},

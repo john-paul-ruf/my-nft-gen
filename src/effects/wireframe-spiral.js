@@ -1,10 +1,10 @@
 import {getRandomInt} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import {getColorFromBucket, imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
-import {colorBucket} from "../logic/animate.js";
+
 
 const config = {
     size: imageSize*2,
@@ -22,9 +22,9 @@ const generate = () => {
         stroke: config.stroke,
         unitLength: getRandomInt(config.unitLength.lower, config.unitLength.upper),
         sparsityFactor: getRandomInt(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        color1: colorBucket[getRandomInt(0, colorBucket.length)],
-        color2: colorBucket[getRandomInt(0, colorBucket.length)],
-        color3: colorBucket[getRandomInt(0, colorBucket.length)],
+        color1: getColorFromBucket(),
+        color2: getColorFromBucket(),
+        color3: getColorFromBucket(),
         center: {x:config.size/2,y:config.size/2},
         speed:getRandomInt(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),

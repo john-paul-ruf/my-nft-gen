@@ -1,10 +1,10 @@
 import {getRandomInt} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import {getColorFromBucket, imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
-import {colorBucket} from "../logic/animate.js";
+
 
 const config = {
     gates: {lower: 5, upper: 11},
@@ -30,7 +30,7 @@ const generate = () => {
         for (let i = 0; i <= num; i++) {
             info.push({
                 radius: getRandomInt(0, config.size / 2),
-                color: colorBucket[getRandomInt(0, colorBucket.length)],
+                color: getColorFromBucket(),
             });
         }
         return info;

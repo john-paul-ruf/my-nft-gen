@@ -1,5 +1,5 @@
 import {getRandomInt} from "../logic/random.js";
-import {imageSize, neutrals} from "../logic/gobals.js";
+import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -7,7 +7,7 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {findValue} from "../logic/findValue.js";
 import {drawRing2d} from "../draw/drawRing2d.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
-import {colorBucket} from "../logic/animate.js";
+
 
 const config = {
     size: imageSize,
@@ -36,8 +36,8 @@ const generate = () => {
         ripple: getRandomInt(config.ripple.lower, config.ripple.upper),
         smallerRingsGroupRadius: getRandomInt(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
         times: getRandomInt(config.times.lower, config.times.upper),
-        largeColor: colorBucket[getRandomInt(0, colorBucket.length)],
-        smallColor: colorBucket[getRandomInt(0, colorBucket.length)],
+        largeColor: getColorFromBucket(),
+        smallColor: getColorFromBucket(),
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${fuzzyRippleEffect.name}: large rings: ${data.largeNumberOfRings}, small rings x6: ${data.smallNumberOfRings}, ripple: ${data.ripple}`
