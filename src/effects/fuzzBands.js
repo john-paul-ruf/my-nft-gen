@@ -1,5 +1,5 @@
-import {getRandomInt} from "../logic/random.js";
-import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
+import {getRandomIntExclusive, getRandomIntInclusive} from "../logic/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -9,7 +9,7 @@ import {findValue} from "../logic/findValue.js";
 
 const config = {
     circles: {lower: 3, upper: 8},
-    size: imageSize,
+    size: IMAGESIZE,
     stroke: 0.5,
     thickness: 1,
     scaleFactor: 1.1,
@@ -17,12 +17,12 @@ const config = {
 
 const generate = () => {
     const data = {
-        numberOfCircles: getRandomInt(config.circles.lower, config.circles.upper),
+        numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
         height: config.size,
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: neutrals[getRandomInt(0, neutrals.length)],
+        innerColor: getNeutralFromBucket(),
         scaleFactor: config.scaleFactor,
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
@@ -34,7 +34,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomInt(0, config.size),
+                radius: getRandomIntExclusive(0, config.size),
                 color: getColorFromBucket(),
             });
         }
@@ -51,7 +51,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
     const fuzz = Date.now().toString() + '-fuzzy-band-underlay.png';
 
     const draw = async (stroke, filename, accentBoost) => {
-        const canvas = createCanvas(imageSize, imageSize)
+        const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
         const drawRing = (radius, stroke, color, scaleBy) => {

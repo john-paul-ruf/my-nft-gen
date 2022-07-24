@@ -2,7 +2,7 @@
 import {findValue} from "../logic/findValue.js";
 import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
-import {getRandomInt} from "../logic/random.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
     times:  {lower: 2, upper: 5},
@@ -10,7 +10,7 @@ const config = {
 
 const generate = () => {
     return {
-        times: getRandomInt(config.times.lower, config.times.upper)
+        times: getRandomIntInclusive(config.times.lower, config.times.upper)
     }
 }
 

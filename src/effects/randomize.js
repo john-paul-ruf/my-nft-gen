@@ -1,5 +1,4 @@
-import {getRandomInt} from "../logic/random.js";
-import {verticalScanLinesEffect} from "./verticalScanLines.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
@@ -11,10 +10,10 @@ const config = {
 const generate = () => {
 
     const props = {
-        hue: getRandomInt(config.spin.lower, config.spin.upper),
-        red: getRandomInt(config.red.lower, config.red.upper),
-        green: getRandomInt(config.green.lower, config.green.upper),
-        blue: getRandomInt(config.blue.lower, config.blue.upper),
+        hue: getRandomIntInclusive(config.spin.lower, config.spin.upper),
+        red: getRandomIntInclusive(config.red.lower, config.red.upper),
+        green: getRandomIntInclusive(config.green.lower, config.green.upper),
+        blue: getRandomIntInclusive(config.blue.lower, config.blue.upper),
     }
 
     const data = {

@@ -1,5 +1,5 @@
 import Jimp from "jimp";
-import {getRandomInt} from "../logic/random.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
     width: 3000,
@@ -16,7 +16,7 @@ const generate = () => {
 const animateBackground = async (data, img, currentFrame, totalFrames, card) => {
     for (let x = 0; x < 3000; x++) {
         for (let y = 0; y < 3000; y++) {
-            const rando = getRandomInt(0, 20)
+            const rando = getRandomIntInclusive(0, 20)
             if (rando < 15) {
                 await img.setPixelColor(Jimp.cssColorToHex(data.color1), x, y)
             } else if (rando < 18) {

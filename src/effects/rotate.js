@@ -1,13 +1,13 @@
-import {getRandomInt, randomNumber} from "../logic/random.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
-    counterClockwise: {lower: 0, upper: 2}
+    counterClockwise: {lower: 0, upper: 1}
 }
 
 const generate = () => {
 
     const data = {
-        counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
+        counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
             return `${rotateEffect.name}: direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
         }

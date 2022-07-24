@@ -1,9 +1,8 @@
 import Jimp from "jimp";
-import {getRandomInt} from "../logic/random.js";
+import {getRandomIntExclusive} from "../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";
-import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
     folderName: '/img/png/backdrops/'
@@ -36,7 +35,7 @@ const generate = () => {
 
         const backdrops = getFilesInDirectory(config.folderName);
 
-        data.filename = backdrops[getRandomInt(0, backdrops.length)];
+        data.filename = backdrops[getRandomIntExclusive(0, backdrops.length)];
 
         return path.join(directory, config.folderName + data.filename);
 

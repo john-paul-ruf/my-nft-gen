@@ -1,5 +1,5 @@
-import {getRandomInt} from "../logic/random.js";
-import {getColorFromBucket, imageSize} from "../logic/gobals.js";
+import {getRandomIntExclusive, getRandomIntInclusive} from "../logic/random.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -9,17 +9,17 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 const config = {
     gates: {lower: 5, upper: 11},
     gateWidth: 24,
-    size: imageSize,
+    size: IMAGESIZE,
     stroke: 3,
 }
 
 const generate = () => {
     const data = {
-        numberOfGates: getRandomInt(config.gates.lower, config.gates.upper),
+        numberOfGates: getRandomIntInclusive(config.gates.lower, config.gates.upper),
         height: config.size,
         width: config.size,
         gateWidth: config.gateWidth,
-        center: {x:imageSize/2,y:imageSize/2},
+        center: {x:IMAGESIZE/2,y:IMAGESIZE/2},
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }
@@ -29,7 +29,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomInt(0, config.size / 2),
+                radius: getRandomIntExclusive(0, config.size / 2),
                 color: getColorFromBucket(),
             });
         }
@@ -45,7 +45,7 @@ const gates = async (data, img, currentFrame, numberOfFrames, card) => {
     const drawing = Date.now().toString() + '-gate.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(imageSize, imageSize)
+        const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
         const drawGate = (radius, stroke, gateColor, scribeColor) => {

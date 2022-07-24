@@ -1,7 +1,7 @@
 import {findValue} from "../logic/findValue.js";
 import Jimp from "jimp";
 import {getImagePaths} from "../logic/getImagePaths.js";
-import {getRandomInt} from "../logic/random.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 /**
  *
@@ -15,7 +15,7 @@ const config = {
 
 const generate = () => {
     const data = {
-        times: getRandomInt(config.times.lower, config.times.upper),
+        times: getRandomIntInclusive(config.times.lower, config.times.upper),
         getInfo: () => {
             return `${radiateEffect.name}: ${data.times} times`
         }

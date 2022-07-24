@@ -1,6 +1,5 @@
 import {findValue} from "../logic/findValue.js";
-import {getRandomInt} from "../logic/random.js";
-import {randomizeEffect} from "./randomize.js";
+import { getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
     lowerRange: {lower: -50, upper: 0},
@@ -10,9 +9,9 @@ const config = {
 
 const generate = () => {
     const data = {
-        lower: getRandomInt(config.lowerRange.lower, config.lowerRange.upper),
-        upper: getRandomInt(config.upperRange.lower, config.upperRange.upper),
-        times: getRandomInt(config.times.lower, config.times.upper),
+        lower: getRandomIntInclusive(config.lowerRange.lower, config.lowerRange.upper),
+        upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
+        times: getRandomIntInclusive(config.times.lower, config.times.upper),
         getInfo: () => {
             return `${glowEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
         }

@@ -1,5 +1,5 @@
-import {getRandomInt, randomNumber} from "../logic/random.js";
-import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
+import {getRandomIntInclusive} from "../logic/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -10,7 +10,7 @@ import {findOneWayValue} from "../logic/findOneWayValue.js";
 
 
 const config = {
-    size: imageSize,
+    size: IMAGESIZE,
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 5, upper: 15},
     radiusFactor: {lower: 30, upper: 55},
@@ -25,11 +25,11 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: neutrals[getRandomInt(0, neutrals.length)],
+        innerColor: getNeutralFromBucket(),
         scaleFactor: config.scaleFactor,
-        sparsityFactor: getRandomInt(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        gapFactor: getRandomInt(config.gapFactor.lower, config.gapFactor.upper),
-        radiusFactor: getRandomInt(config.radiusFactor.lower, config.radiusFactor.upper),
+        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
+        radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
         color: getColorFromBucket(),
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
@@ -58,10 +58,10 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
-            const gapRadius = ((imageSize * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
+            const gapRadius = ((IMAGESIZE * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-            drawPolygon2d(context, radius, pos, 6, theAngleGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+            drawPolygon2d(context, radius, pos, 6, 0, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
         for (let i = 0; i < 20; i++) {

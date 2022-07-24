@@ -1,5 +1,5 @@
-import {getRandomInt} from "../logic/random.js";
-import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
+import {getRandomIntInclusive} from "../logic/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -10,16 +10,16 @@ import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 
 
 const config = {
-    size: imageSize,
+    size: IMAGESIZE,
     stroke: 4,
     thickness: 15,
-    largeRadius: {lower: imageSize * 0.35, upper: imageSize * 0.45},
-    smallRadius: {lower: imageSize * 0.15, upper: imageSize * 0.25},
+    largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
+    smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
     largeNumberOfRings: {lower: 5, upper: 10},
     smallNumberOfRings: {lower: 3, upper: 7},
-    ripple: {lower: imageSize / 20, upper: imageSize / 30},
+    ripple: {lower: IMAGESIZE / 20, upper: IMAGESIZE / 30},
     times: {lower: 1, upper: 2},
-    smallerRingsGroupRadius: {lower: imageSize * 0.2, upper: imageSize * 0.3},
+    smallerRingsGroupRadius: {lower: IMAGESIZE * 0.2, upper: IMAGESIZE * 0.3},
 }
 
 const generate = () => {
@@ -28,14 +28,14 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: neutrals[getRandomInt(0, neutrals.length)],
-        largeRadius: getRandomInt(config.largeRadius.lower, config.largeRadius.upper),
-        smallRadius: getRandomInt(config.smallRadius.lower, config.smallRadius.upper),
-        largeNumberOfRings: getRandomInt(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),
-        smallNumberOfRings: getRandomInt(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),
-        ripple: getRandomInt(config.ripple.lower, config.ripple.upper),
-        smallerRingsGroupRadius: getRandomInt(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
-        times: getRandomInt(config.times.lower, config.times.upper),
+        innerColor: getNeutralFromBucket(),
+        largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
+        smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
+        largeNumberOfRings: getRandomIntInclusive(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),
+        smallNumberOfRings: getRandomIntInclusive(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),
+        ripple: getRandomIntInclusive(config.ripple.lower, config.ripple.upper),
+        smallerRingsGroupRadius: getRandomIntInclusive(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
+        times: getRandomIntInclusive(config.times.lower, config.times.upper),
         largeColor: getColorFromBucket(),
         smallColor: getColorFromBucket(),
         center: {x: config.size / 2, y: config.size / 2},

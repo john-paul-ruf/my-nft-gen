@@ -1,5 +1,5 @@
-import {getRandomInt} from "../logic/random.js";
-import {getColorFromBucket, imageSize} from "../logic/gobals.js";
+import {getRandomIntInclusive} from "../logic/random.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -7,7 +7,7 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 
 const config = {
-    size: imageSize*2,
+    size: IMAGESIZE*2,
     stroke: 2,
     sparsityFactor: {lower: 5, upper: 15},
     speed:{lower:1, upper:5},
@@ -20,14 +20,14 @@ const generate = () => {
         height: config.size,
         width: config.size,
         stroke: config.stroke,
-        unitLength: getRandomInt(config.unitLength.lower, config.unitLength.upper),
-        sparsityFactor: getRandomInt(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        unitLength: getRandomIntInclusive(config.unitLength.lower, config.unitLength.upper),
+        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         color1: getColorFromBucket(),
         color2: getColorFromBucket(),
         color3: getColorFromBucket(),
         center: {x:config.size/2,y:config.size/2},
-        speed:getRandomInt(config.speed.lower, config.speed.upper),
-        counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
+        speed:getRandomIntInclusive(config.speed.lower, config.speed.upper),
+        counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
             return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
         }
@@ -93,7 +93,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
     const direction = data.counterClockwise > 0 ? -1 : 1
     await tmpImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*direction, false);
 
-    await img.composite(tmpImg, -imageSize/2, -imageSize/2, {
+    await img.composite(tmpImg, -IMAGESIZE/2, -IMAGESIZE/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 

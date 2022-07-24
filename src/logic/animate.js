@@ -8,14 +8,13 @@ import {
     possibleEffects
 } from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
-import {imageSize, neutrals} from "./gobals.js";
-import {getRandomInt} from "./random.js";
+import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
  * @returns {Promise<void>} - return nothing, just await it
  */
 export const animate = async (config) => {
-    const backgroundColor = neutrals[getRandomInt(0, neutrals.length)];
+    const backgroundColor = getNeutralFromBucket();
 
     const frames = []; //will be a collection of jimp images that in the end gets converted to a gif
 
@@ -72,8 +71,8 @@ export const animate = async (config) => {
         //get fresh files every loop
         //Everything is kept in memory, because, why thrash the disk and add additional complexity to the code.
         ////////////////////////
-        let background = new Jimp(imageSize, imageSize, Jimp.cssColorToHex(backgroundColor));
-        let layers = getLayers(imageSize, imageSize)
+        let background = new Jimp(IMAGESIZE, IMAGESIZE, Jimp.cssColorToHex(backgroundColor));
+        let layers = getLayers(IMAGESIZE, IMAGESIZE)
 
         ////////////////////////
         //Process Effects

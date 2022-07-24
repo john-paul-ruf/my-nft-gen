@@ -1,4 +1,4 @@
-import {imageSize} from "./gobals.js";
+import {HUE, IMAGESIZE, SCHEME, VARIATION} from "./gobals.js";
 
 
 /*
@@ -26,7 +26,7 @@ export const composeInfo = (config, effects) => {
     }
 
     const info =
-        `Title: ${config.finalFileName}\nRun: ${config.runName}\nArtist: ${config._INVOKER_}\nImage Size: ${imageSize}x${imageSize} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}`
+        `Title: ${config.finalFileName}\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}\nArtist: ${config._INVOKER_}\nImage Size: ${IMAGESIZE}x${IMAGESIZE} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}`
 
     return info;
 

@@ -1,5 +1,5 @@
-import {getRandomInt, randomNumber} from "../logic/random.js";
-import {getColorFromBucket, imageSize, neutrals} from "../logic/gobals.js";
+import {getRandomIntInclusive, randomNumber} from "../logic/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -9,16 +9,16 @@ import {drawRays2d} from "../draw/drawRays2d.js";
 
 
 const config = {
-    size: imageSize,
+    size: IMAGESIZE,
     stroke: 5,
     thickness: 30,
     ampStroke: 1,
     ampThickness: 3,
-    radius: {lower: imageSize * 0.15, upper: imageSize * 0.20},
-    ampLength: {lower: imageSize * 0.1, upper: imageSize * 0.15},
-    ampRadius: {lower: imageSize * 0.05, upper: imageSize * 0.1},
+    radius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.20},
+    ampLength: {lower: IMAGESIZE * 0.1, upper: IMAGESIZE * 0.15},
+    ampRadius: {lower: IMAGESIZE * 0.05, upper: IMAGESIZE * 0.1},
     sparsityFactor: {lower: 2, upper: 4},
-    amplitude: {lower: imageSize * 0.01, upper: imageSize * 0.02},
+    amplitude: {lower: IMAGESIZE * 0.01, upper: IMAGESIZE * 0.02},
     times: {lower: 1, upper: 2},
 }
 
@@ -28,15 +28,15 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: neutrals[getRandomInt(0, neutrals.length)],
-        radius: getRandomInt(config.radius.lower, config.radius.upper),
+        innerColor: getNeutralFromBucket(),
+        radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
         ampStroke: config.ampStroke,
         ampThickness: config.ampThickness,
-        ampLength: getRandomInt(config.ampLength.lower, config.ampLength.upper),
-        ampRadius: getRandomInt(config.ampRadius.lower, config.ampRadius.upper),
+        ampLength: getRandomIntInclusive(config.ampLength.lower, config.ampLength.upper),
+        ampRadius: getRandomIntInclusive(config.ampRadius.lower, config.ampRadius.upper),
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         amplitude: randomNumber(config.amplitude.lower, config.amplitude.upper),
-        times: getRandomInt(config.times.lower, config.times.upper),
+        times: getRandomIntInclusive(config.times.lower, config.times.upper),
         color: getColorFromBucket(),
         ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),

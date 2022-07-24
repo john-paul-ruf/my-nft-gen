@@ -1,4 +1,4 @@
-import {getRandomInt} from "../../logic/random.js";
+import {getRandomIntExclusive} from "../../logic/random.js";
 import {Effect} from "./Effect.js";
 
 export const generateEffects = (possibleEffectList, allowRotate) => {
@@ -6,7 +6,7 @@ export const generateEffects = (possibleEffectList, allowRotate) => {
 
     //For each effect in the possible effects list.
     possibleEffectList.forEach(obj => {
-            const chance = getRandomInt(0, 100) //roll the dice
+            const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
 
                 //if the effect does not allow rotate

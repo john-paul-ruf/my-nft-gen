@@ -1,9 +1,8 @@
 import Jimp from "jimp";
-import {getRandomInt} from "../logic/random.js";
+import {getRandomIntExclusive} from "../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";
-import {verticalScanLinesEffect} from "./verticalScanLines.js";
 
 const config = {
     folderName: '/img/png/summons/png/'
@@ -36,7 +35,7 @@ const generate = () => {
 
         const summons = getFilesInDirectory(config.folderName);
 
-        data.filename = summons[getRandomInt(0, summons.length)];
+        data.filename = summons[getRandomIntExclusive(0, summons.length)];
 
         return path.join(directory, config.folderName + data.filename);
 

@@ -1,5 +1,5 @@
 import Jimp from "jimp";
-import {getRandomInt} from "../logic/random.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
@@ -10,7 +10,7 @@ const config = {
 
 const generate = () => {
     const data = {
-        numberOfLines: getRandomInt(config.lines.lower, config.lines.upper),
+        numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
         height: config.size,
         width: config.size,
         color: config.color,
@@ -22,10 +22,10 @@ const generate = () => {
     const computeInitialLineInfo = (numberOfLines) => {
         const lineInfo = [];
         for (let i = 0; i <= numberOfLines; i++) {
-            const mtl = getRandomInt(config.length.lower, config.length.upper)
+            const mtl = getRandomIntInclusive(config.length.lower, config.length.upper)
 
             lineInfo.push({
-                lineStart: getRandomInt(0, config.size),
+                lineStart: getRandomIntInclusive(0, config.size),
                 maxTrailLength: mtl,
                 pixelsPerGradient: mtl / 16,
             });
@@ -41,14 +41,14 @@ const generate = () => {
 const verticalScanLines = async (data, img, currentFrame, numberOfFrames, card) => {
     const drawLine = async (y, maxTrailLength, pixelsPerGradient) => {
         for (let x = 0; x < data.width; x++) {
-            let rando = getRandomInt(y, y - maxTrailLength)
+            let rando = getRandomIntInclusive(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
 
                 let hex = data.color;
                 let upperRange = 3;
                 let gradientGroup = (curY-rando) / pixelsPerGradient;
-                hex = hex + getRandomInt(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
-                    + getRandomInt(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
+                hex = hex + getRandomIntInclusive(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
+                    + getRandomIntInclusive(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
 
                 let color = Jimp.cssColorToHex(hex)
                 await img.setPixelColor(color, x, curY)

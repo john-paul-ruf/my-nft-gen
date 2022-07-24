@@ -1,5 +1,5 @@
 import { randomNumber} from "../logic/random.js";
-import {getColorFromBucket, imageSize} from "../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -7,7 +7,7 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 
 const config = {
     sparsityFactor: {lower: 1.25, upper: 1.75},
-    size: imageSize,
+    size: IMAGESIZE,
     stroke: 2,
 }
 
@@ -20,7 +20,7 @@ const generate = () => {
         innerColor: getColorFromBucket(),
         length: ((config.size / 2)/2)-((config.size / 2)/3),
         lineStart: ((config.size / 2)/3)*2,
-        center: {x:imageSize/2,y:imageSize/2},
+        center: {x:IMAGESIZE/2,y:IMAGESIZE/2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }
@@ -33,7 +33,7 @@ const amp = async (data, img, currentFrame, numberOfFrames, card) => {
     const drawing = Date.now().toString() + '-amp.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(imageSize, imageSize)
+        const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
         const drawRay = (stroke, color, innerColor, angle, radius, length) => {
