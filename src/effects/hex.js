@@ -1,5 +1,5 @@
 import {getRandomInt, randomNumber} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import {imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -8,6 +8,7 @@ import {findValue} from "../logic/findValue.js";
 import {drawRing2d} from "../draw/drawRing2d.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 import {findOneWayValue} from "../logic/findOneWayValue.js";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     size: imageSize,
@@ -17,8 +18,6 @@ const config = {
     stroke: 0.5,
     thickness: 3,
     scaleFactor: 1.10,
-    innerColor: '#000000',
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
 const generate = () => {
@@ -27,12 +26,12 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: config.innerColor,
+        innerColor: neutrals[getRandomInt(0, neutrals.length)],
         scaleFactor: config.scaleFactor,
         sparsityFactor: getRandomInt(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomInt(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomInt(config.radiusFactor.lower, config.radiusFactor.upper),
-        color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+        color: colorBucket[getRandomInt(0, colorBucket.length)],
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${hexEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`

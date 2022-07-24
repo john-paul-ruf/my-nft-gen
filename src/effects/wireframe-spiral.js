@@ -4,15 +4,15 @@ import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     size: imageSize*2,
-    stroke: 0.5,
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
-    sparsityFactor: {lower: 1, upper: 5},
-    speed:{lower:1, upper:4},
+    stroke: 2,
+    sparsityFactor: {lower: 5, upper: 15},
+    speed:{lower:1, upper:5},
     counterClockwise: {lower: 0, upper: 2},
-    unitLength: {lower: 20, upper: 40},
+    unitLength: {lower: 10, upper: 20},
 }
 
 const generate = () => {
@@ -22,9 +22,9 @@ const generate = () => {
         stroke: config.stroke,
         unitLength: getRandomInt(config.unitLength.lower, config.unitLength.upper),
         sparsityFactor: getRandomInt(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        color1: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
-        color2: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
-        color3: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+        color1: colorBucket[getRandomInt(0, colorBucket.length)],
+        color2: colorBucket[getRandomInt(0, colorBucket.length)],
+        color3: colorBucket[getRandomInt(0, colorBucket.length)],
         center: {x:config.size/2,y:config.size/2},
         speed:getRandomInt(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomInt(config.counterClockwise.lower, config.counterClockwise.upper),
@@ -57,6 +57,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
             grad.addColorStop(0.5, data.color2);
             grad.addColorStop(1, data.color3);
 
+            context.lineWidth = stroke;
             context.strokeStyle = grad;
 
             context.moveTo(start.x, start.y);

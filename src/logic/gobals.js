@@ -1,2 +1,3 @@
 //Globals are bad, mkay...
 export const imageSize = 2000;
+export const neutrals = ['#535353', '#5b5b5b', '#c4c4c4', '#f7f5fa', '#828282'];

@@ -11,6 +11,7 @@ export const drawRay2d = (context2d, pos, stroke, color, innerColor, angle, radi
     grad.addColorStop(0.5, innerColor);
     grad.addColorStop(1, color);
 
+    context2d.lineWidth = stroke;
     context2d.strokeStyle = grad;
 
     context2d.moveTo(start.x, start.y);

@@ -3,6 +3,7 @@ import {imageSize} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     circles: {lower: 10, upper: 20},
@@ -11,7 +12,6 @@ const config = {
     times: {lower: 1, upper: 3},
     ringStroke: 0.5,
     blur: 2,
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
 const generate = () => {
@@ -31,7 +31,7 @@ const generate = () => {
         for (let i = 0; i <= num; i++) {
             info.push({
                 radius: getRandomInt(0, config.size),
-                color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+                color: colorBucket[getRandomInt(0, colorBucket.length)],
             });
         }
         return info;

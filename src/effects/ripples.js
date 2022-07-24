@@ -1,5 +1,5 @@
 import {getRandomInt} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import {imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -7,13 +7,12 @@ import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {findValue} from "../logic/findValue.js";
 import {drawRing2d} from "../draw/drawRing2d.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     size: imageSize,
     stroke: 4,
     thickness: 15,
-    innerColor: '#000000',
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
     largeRadius: {lower: imageSize * 0.35, upper: imageSize * 0.45},
     smallRadius: {lower: imageSize * 0.15, upper: imageSize * 0.25},
     largeNumberOfRings: {lower: 10, upper: 20},
@@ -29,7 +28,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: config.innerColor,
+        innerColor: neutrals[getRandomInt(0, neutrals.length)],
         largeRadius: getRandomInt(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomInt(config.smallRadius.lower, config.smallRadius.upper),
         largeNumberOfRings: getRandomInt(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),
@@ -37,8 +36,8 @@ const generate = () => {
         ripple: getRandomInt(config.ripple.lower, config.ripple.upper),
         smallerRingsGroupRadius: getRandomInt(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
         times: getRandomInt(config.times.lower, config.times.upper),
-        largeColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
-        smallColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+        largeColor: colorBucket[getRandomInt(0, colorBucket.length)],
+        smallColor: colorBucket[getRandomInt(0, colorBucket.length)],
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${rippleEffect.name}: large rings: ${data.largeNumberOfRings}, small rings x6: ${data.smallNumberOfRings}, ripple: ${data.ripple}`

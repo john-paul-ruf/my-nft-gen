@@ -1,10 +1,11 @@
 import {getRandomInt} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import {imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {drawRing2d} from "../draw/drawRing2d.js";
 import {findValue} from "../logic/findValue.js";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     circles: {lower: 3, upper: 8},
@@ -12,8 +13,6 @@ const config = {
     stroke: 0.5,
     thickness: 1,
     scaleFactor: 1.1,
-    innerColor: '#000000',
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
 const generate = () => {
@@ -23,7 +22,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: config.innerColor,
+        innerColor: neutrals[getRandomInt(0, neutrals.length)],
         scaleFactor: config.scaleFactor,
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
@@ -36,7 +35,7 @@ const generate = () => {
         for (let i = 0; i <= num; i++) {
             info.push({
                 radius: getRandomInt(0, config.size),
-                color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+                color: colorBucket[getRandomInt(0, colorBucket.length)],
             });
         }
         return info;

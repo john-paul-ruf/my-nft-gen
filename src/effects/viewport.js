@@ -1,17 +1,17 @@
 import {getRandomInt, randomNumber} from "../logic/random.js";
-import {imageSize} from "../logic/gobals.js";
+import {imageSize, neutrals} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findValue} from "../logic/findValue.js";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 import {drawRays2d} from "../draw/drawRays2d.js";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     size: imageSize,
     stroke: 5,
     thickness: 30,
-    innerColor: '#000000',
     ampStroke: 1,
     ampThickness: 3,
     radius: {lower: imageSize * 0.15, upper: imageSize * 0.20},
@@ -20,7 +20,6 @@ const config = {
     sparsityFactor: {lower: 2, upper: 4},
     amplitude: {lower: imageSize * 0.01, upper: imageSize * 0.02},
     times: {lower: 1, upper: 2},
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',],
 }
 
 const generate = () => {
@@ -29,7 +28,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: config.innerColor,
+        innerColor: neutrals[getRandomInt(0, neutrals.length)],
         radius: getRandomInt(config.radius.lower, config.radius.upper),
         ampStroke: config.ampStroke,
         ampThickness: config.ampThickness,
@@ -38,9 +37,9 @@ const generate = () => {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         amplitude: randomNumber(config.amplitude.lower, config.amplitude.upper),
         times: getRandomInt(config.times.lower, config.times.upper),
-        color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
-        ampInnerColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
-        ampOuterColor: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+        color: colorBucket[getRandomInt(0, colorBucket.length)],
+        ampInnerColor: colorBucket[getRandomInt(0, colorBucket.length)],
+        ampOuterColor: colorBucket[getRandomInt(0, colorBucket.length)],
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`

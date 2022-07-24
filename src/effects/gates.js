@@ -4,13 +4,13 @@ import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {colorBucket} from "../logic/animate.js";
 
 const config = {
     gates: {lower: 5, upper: 11},
     gateWidth: 24,
     size: imageSize,
     stroke: 3,
-    colorBucket: ['#FF0000', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF', '#FFFF00',]
 }
 
 const generate = () => {
@@ -30,7 +30,7 @@ const generate = () => {
         for (let i = 0; i <= num; i++) {
             info.push({
                 radius: getRandomInt(0, config.size / 2),
-                color: config.colorBucket[getRandomInt(0, config.colorBucket.length)],
+                color: colorBucket[getRandomInt(0, colorBucket.length)],
             });
         }
         return info;
