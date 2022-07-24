@@ -3,8 +3,8 @@ import ColorScheme from "color-scheme";
 
 export const getColorBucket = () => {
 
-    const schemeBucket = ['mono', 'contrast', 'triade', 'tetrade', 'analogic'];
-    const variationBucket = ['default', 'pastel', 'soft', 'light', 'hard', 'pale', 'default',];
+    const schemeBucket = [/*'mono',*/ 'contrast', 'triade', 'tetrade', 'analogic'];
+    const variationBucket = ['default', /*'pastel', 'soft', 'light',*/ 'hard', /*'pale',*/];
 
     const scheme = new ColorScheme();
     return scheme.from_hue(getRandomInt(0,360))
