@@ -5,7 +5,10 @@ import {getRandomIntExclusive} from "./random.js";
 export const IMAGESIZE = 2000;
 export const NEUTRALS = ['#535353', '#5b5b5b', '#c4c4c4', '#f7f5fa', '#828282'];
 
+//'mono', 'contrast', 'triade', 'tetrade', and 'analogic'.
 const schemeBucket = ['contrast', 'triade', 'tetrade', 'analogic'];
+
+//'default', 'pastel', 'soft', 'light', 'hard', 'pale'
 const variationBucket = ['default', 'hard' ];
 
 export const SCHEME = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
