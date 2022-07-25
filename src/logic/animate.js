@@ -135,6 +135,6 @@ export const animate = async (config) => {
         });
     }
 
-    await writeGif();
+    return await writeGif();
 
 }

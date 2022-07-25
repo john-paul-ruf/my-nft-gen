@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -11,8 +11,8 @@ import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 
 const config = {
     size: IMAGESIZE,
-    stroke: 4,
-    thickness: 15,
+    stroke: 6,
+    thickness: 30,
     largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
     smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
     largeNumberOfRings: {lower: 10, upper: 20},
@@ -28,7 +28,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
         largeNumberOfRings: getRandomIntInclusive(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),

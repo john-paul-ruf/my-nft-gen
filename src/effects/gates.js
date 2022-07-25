@@ -3,22 +3,27 @@ import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
-import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {drawPolygon2d} from "../draw/drawPolygon2d.js";
+import {findValue} from "../logic/findValue.js";
 
 
 const config = {
     gates: {lower: 5, upper: 11},
-    gateWidth: 24,
+    numberOfSides: {lower: 6, upper: 16},
+    thickness: 12,
+    stroke: 6,
     size: IMAGESIZE,
-    stroke: 3,
 }
 
 const generate = () => {
     const data = {
         numberOfGates: getRandomIntInclusive(config.gates.lower, config.gates.upper),
+        numberOfSides: getRandomIntInclusive(config.numberOfSides.lower, config.numberOfSides.upper),
         height: config.size,
         width: config.size,
-        gateWidth: config.gateWidth,
+        thickness: config.thickness,
+        stroke: config.stroke,
+        innerColor: getColorFromBucket(),
         center: {x:IMAGESIZE/2,y:IMAGESIZE/2},
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
@@ -43,47 +48,35 @@ const generate = () => {
 
 const gates = async (data, img, currentFrame, numberOfFrames, card) => {
     const drawing = Date.now().toString() + '-gate.png';
+    const underlayName = Date.now().toString() + 'gate-accent.png';
 
-    const draw = async (stroke, filename) => {
+    const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
-        const drawGate = (radius, stroke, gateColor, scribeColor) => {
-            function drawOctagon(r) {
-                context.beginPath();
-
-                const start = findPointByAngleAndCircle(data.center, 0, r);
-
-                context.lineWidth = stroke;
-                context.strokeStyle = gateColor;
-
-                context.moveTo(start.x, start.y);
-
-                for (let a = 45; a < 360; a = a + 45) {
-                    const point = findPointByAngleAndCircle(data.center, a, r);
-                    context.lineTo(point.x, point.y);
-                }
-
-                context.lineTo(start.x, start.y);
-
-                context.stroke();
-                context.closePath();
-            }
-
-            drawOctagon(radius);
-            drawOctagon(radius + data.gateWidth);
-        }
-
         for (let i = 0; i < data.numberOfGates; i++) {
-            drawGate(data.gates[i].radius, stroke, data.gates[i].color, data.gates[i].color);
+            drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, 0, data.thickness, data.innerColor, data.stroke+accentBoost, data.gates[i].color)
         }
 
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(config.stroke, drawing);
+    await draw(drawing,0);
 
+    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
+    await draw(underlayName, theAccentGaston);
+
+    let underlayImg = await Jimp.read(underlayName);
+
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    await underlayImg.blur(theBlurGaston);
+
+    await underlayImg.opacity(0.5);
+
+    await img.composite(underlayImg, 0, 0, {
+        mode: Jimp.BLEND_SOURCE_OVER,
+    });
 
     let tmpImg = await Jimp.read(drawing);
 
@@ -91,6 +84,7 @@ const gates = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
+    fs.unlinkSync(underlayName);
     fs.unlinkSync(drawing);
 
 }

@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, randomNumber} from "../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -10,10 +10,10 @@ import {drawRays2d} from "../draw/drawRays2d.js";
 
 const config = {
     size: IMAGESIZE,
-    stroke: 5,
+    stroke: 10,
     thickness: 30,
-    ampStroke: 1,
-    ampThickness: 3,
+    ampStroke: 4,
+    ampThickness: 4,
     radius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.20},
     ampLength: {lower: IMAGESIZE * 0.1, upper: IMAGESIZE * 0.15},
     ampRadius: {lower: IMAGESIZE * 0.05, upper: IMAGESIZE * 0.1},
@@ -28,7 +28,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
         ampStroke: config.ampStroke,
         ampThickness: config.ampThickness,

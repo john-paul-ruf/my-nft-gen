@@ -3,7 +3,7 @@ import {getColorBucket} from "./getColorBucket.js";
 import {getRandomIntExclusive} from "./random.js";
 
 export const IMAGESIZE = 2000;
-export const NEUTRALS = ['#535353', '#5b5b5b', '#c4c4c4', '#f7f5fa', '#828282'];
+export const NEUTRALS = ['#2d2d2d', '#5b5b5b', '#f7f5fa'];
 
 //'mono', 'contrast', 'triade', 'tetrade', and 'analogic'.
 const schemeBucket = ['contrast', 'triade', 'tetrade', 'analogic'];

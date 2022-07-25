@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -10,8 +10,8 @@ import {findValue} from "../logic/findValue.js";
 const config = {
     circles: {lower: 3, upper: 8},
     size: IMAGESIZE,
-    stroke: 0.5,
-    thickness: 1,
+    stroke: 4,
+    thickness: 4,
     scaleFactor: 1.1,
 }
 
@@ -22,7 +22,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
@@ -54,14 +54,10 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
-        const drawRing = (radius, stroke, color, scaleBy) => {
-            drawRing2d(context, data.center, radius, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, color)
-        }
-
         for (let i = 0; i < data.numberOfCircles; i++) {
             const loopCount = i + 1;
             const scaleBy = (data.scaleFactor * loopCount);
-            drawRing(data.circles[i].radius, stroke, data.circles[i].color, scaleBy);
+            drawRing2d(context, data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.circles[i].color)
         }
 
         const buffer = canvas.toBuffer('image/png');
@@ -71,7 +67,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
     await draw(config.ringStroke, ring);
     await draw(data.fuzzFactor + config.ringStroke, fuzz, 0);
 
-    const theAccentGaston = findValue(0, 2, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
     await draw(config.ringStroke, fuzz, theAccentGaston);
 
     let fuzzImg = await Jimp.read(fuzz);

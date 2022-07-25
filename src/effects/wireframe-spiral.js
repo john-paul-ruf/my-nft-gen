@@ -4,15 +4,16 @@ import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {findValue} from "../logic/findValue.js";
 
 
 const config = {
     size: IMAGESIZE*2,
-    stroke: 2,
+    stroke: 5,
     sparsityFactor: {lower: 5, upper: 15},
     speed:{lower:1, upper:5},
-    counterClockwise: {lower: 0, upper: 2},
-    unitLength: {lower: 10, upper: 20},
+    counterClockwise: {lower: 0, upper: 1},
+    unitLength: {lower: 10, upper: 40},
 }
 
 const generate = () => {
@@ -38,8 +39,9 @@ const generate = () => {
 
 const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) => {
     const imgName = Date.now().toString() + '-wireframe-spiral.png';
+    const underlayName = Date.now().toString() + '-wireframe-spiral-underlay.png';
 
-    const draw = async (stroke, filename) => {
+    const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
         let twistCount = 2;
@@ -70,8 +72,8 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
         while (nextTerm <= config.size) {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-                drawRay(stroke, i, n2, nextTerm, twistCount)
-                drawRay(stroke, i, n2, nextTerm, -twistCount)
+                drawRay(data.stroke+accentBoost, i, n2, nextTerm, twistCount)
+                drawRay(data.stroke+accentBoost, i, n2, nextTerm, -twistCount)
             }
 
             //assignment for next loop
@@ -85,18 +87,34 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(config.ringStroke, imgName);
+    await draw(imgName, 0);
+
+
+    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
+    await draw(underlayName, theAccentGaston);
+
+    let underlayImg = await Jimp.read(underlayName);
+
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    await underlayImg.blur(theBlurGaston);
+
+    await underlayImg.opacity(0.5);
 
     let tmpImg = await Jimp.read(imgName);
 
-
     const direction = data.counterClockwise > 0 ? -1 : 1
     await tmpImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*direction, false);
+    await underlayImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*direction, false);
+
+    await img.composite(underlayImg, -IMAGESIZE/2, -IMAGESIZE/2, {
+        mode: Jimp.BLEND_SOURCE_OVER,
+    });
 
     await img.composite(tmpImg, -IMAGESIZE/2, -IMAGESIZE/2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
+    fs.unlinkSync(underlayName);
     fs.unlinkSync(imgName);
 
 }

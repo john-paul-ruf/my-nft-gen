@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -12,7 +12,7 @@ import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 const config = {
     size: IMAGESIZE,
     stroke: 4,
-    thickness: 15,
+    thickness: 4,
     largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
     smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
     largeNumberOfRings: {lower: 5, upper: 10},
@@ -28,7 +28,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
         largeNumberOfRings: getRandomIntInclusive(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),
@@ -84,7 +84,7 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
 
     await draw(config.ringStroke, imgName, 0);
 
-    const theAccentGaston = findValue(0, 10, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
     await draw(config.ringStroke, underlayName, theAccentGaston);
 
     let underlayImg = await Jimp.read(underlayName);

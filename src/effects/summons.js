@@ -63,7 +63,7 @@ export const summonEffect = {
     name: 'summons',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 0,
     requiresLayer: true,
     rotatesImg:false,
     allowsRotation: true,

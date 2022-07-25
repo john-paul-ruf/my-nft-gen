@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
@@ -12,11 +12,11 @@ import {findOneWayValue} from "../logic/findOneWayValue.js";
 const config = {
     size: IMAGESIZE,
     sparsityFactor: {lower: 24, upper: 24},
-    gapFactor: {lower: 5, upper: 15},
+    gapFactor: {lower: 15, upper: 25},
     radiusFactor: {lower: 30, upper: 55},
-    stroke: 0.5,
-    thickness: 3,
-    scaleFactor: 1.10,
+    stroke: 4,
+    thickness: 4,
+    scaleFactor: 1.15,
 }
 
 const generate = () => {
@@ -25,7 +25,7 @@ const generate = () => {
         width: config.size,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
@@ -61,7 +61,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
             const gapRadius = ((IMAGESIZE * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-            drawPolygon2d(context, radius, pos, 6, 0, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+            drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
         for (let i = 0; i < 20; i++) {
