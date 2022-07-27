@@ -19,9 +19,9 @@ const generate = () => {
         width: config.size,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
-        length: 275,
-        lineStart: 350,
-        center: {x:IMAGESIZE/2,y:IMAGESIZE/2},
+        length: 450,
+        lineStart: 200,
+        center: {x:config.size/2,y:config.size/2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }
