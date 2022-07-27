@@ -39,7 +39,7 @@ const amp = async (data, img, currentFrame, numberOfFrames, card) => {
 
         for(let i = 0; i < 360; i = i+ data.sparsityFactor)
         {
-            drawRay2d(context, {x:0,y:0}, stroke, data.color, data.innerColor, i, data.lineStart, data.length )
+            drawRay2d(context, data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length )
         }
 
         const buffer = canvas.toBuffer('image/png');
