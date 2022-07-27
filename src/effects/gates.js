@@ -9,7 +9,7 @@ import {findValue} from "../logic/findValue.js";
 
 const config = {
     gates: {lower: 5, upper: 11},
-    numberOfSides: {lower: 6, upper: 16},
+    numberOfSides: {lower: 3, upper: 10},
     thickness: 12,
     stroke: 6,
     size: IMAGESIZE,

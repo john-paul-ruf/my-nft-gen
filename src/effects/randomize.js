@@ -56,7 +56,7 @@ export const randomizeEffect = {
     name: 'randomize',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 0, //checking the color scheme work
     requiresLayer: false,
     rotatesImg:false,
     allowsRotation: false,

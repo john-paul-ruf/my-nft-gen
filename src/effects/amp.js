@@ -4,6 +4,7 @@ import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {drawRay2d} from "../draw/drawRay2d.js";
 
 const config = {
     sparsityFactor: {lower: 1.25, upper: 1.75},
@@ -18,8 +19,8 @@ const generate = () => {
         width: config.size,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
-        length: ((config.size / 2)/2)-((config.size / 2)/3),
-        lineStart: ((config.size / 2)/3)*2,
+        length: 275,
+        lineStart: 350,
         center: {x:IMAGESIZE/2,y:IMAGESIZE/2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
@@ -36,30 +37,9 @@ const amp = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
-        const drawRay = (stroke, color, innerColor, angle, radius, length) => {
-            const start = findPointByAngleAndCircle(data.center, angle, radius)
-            const end = findPointByAngleAndCircle(data.center, angle, radius + length);
-
-            context.beginPath();
-
-            const grad= context.createLinearGradient(start.x,start.y,end.x, end.y);
-            grad.addColorStop(0, color);
-            grad.addColorStop(0.5, innerColor);
-            grad.addColorStop(1, color);
-
-            context.lineWidth = stroke;
-            context.strokeStyle = grad;
-
-            context.moveTo(start.x, start.y);
-            context.lineTo(end.x, end.y);
-
-            context.stroke();
-            context.closePath();
-        }
-
         for(let i = 0; i < 360; i = i+ data.sparsityFactor)
         {
-            drawRay(stroke, data.color, data.innerColor, i, data.lineStart, data.length)
+            drawRay2d(context, {x:0,y:0}, stroke, data.color, data.innerColor, i, data.lineStart, data.length )
         }
 
         const buffer = canvas.toBuffer('image/png');

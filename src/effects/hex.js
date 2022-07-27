@@ -15,7 +15,7 @@ const config = {
     gapFactor: {lower: 15, upper: 25},
     radiusFactor: {lower: 30, upper: 55},
     stroke: 4,
-    thickness: 4,
+    thickness: 1,
     scaleFactor: 1.15,
 }
 

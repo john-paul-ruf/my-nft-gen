@@ -10,8 +10,8 @@ import {findValue} from "../logic/findValue.js";
 const config = {
     circles: {lower: 3, upper: 8},
     size: IMAGESIZE,
-    stroke: 4,
-    thickness: 4,
+    stroke: 0.5,
+    thickness: 1,
     scaleFactor: 1.1,
 }
 
@@ -34,7 +34,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomIntExclusive(0, config.size),
+                radius: getRandomIntExclusive(0, config.size * 0.75),
                 color: getColorFromBucket(),
             });
         }

@@ -12,7 +12,7 @@ import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 const config = {
     size: IMAGESIZE,
     stroke: 4,
-    thickness: 4,
+    thickness: 8,
     largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
     smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
     largeNumberOfRings: {lower: 5, upper: 10},

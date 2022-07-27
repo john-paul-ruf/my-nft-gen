@@ -1,18 +1,18 @@
 import Jimp from "jimp";
 import {getRandomIntInclusive} from "../logic/random.js";
+import {IMAGESIZE} from "../logic/gobals.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
     length: {lower: 5, upper: 25},
-    size: 2000,
     color: '#bdf379'
 }
 
 const generate = () => {
     const data = {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
-        height: config.size,
-        width: config.size,
+        height: IMAGESIZE,
+        width: IMAGESIZE,
         color: config.color,
         getInfo: () => {
             return `${verticalScanLinesEffect.name}: ${data.numberOfLines} total lines with a min length of ${config.length.lower} and a max length of ${config.length.upper}`
@@ -46,9 +46,9 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames, card) 
 
                 let hex = data.color;
                 let upperRange = 3;
-                let gradientGroup = (curY-rando) / pixelsPerGradient;
-                hex = hex + getRandomIntInclusive(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
-                    + getRandomIntInclusive(gradientGroup < 16 ? gradientGroup : 16, gradientGroup + upperRange < 16 ? gradientGroup + upperRange : 16).toString(16)
+                let gradientGroup = Math.floor((curY-rando) / pixelsPerGradient);
+                hex = hex + getRandomIntInclusive(gradientGroup < 15 ? gradientGroup : 15, gradientGroup + upperRange < 15 ? gradientGroup + upperRange : 15).toString(16)
+                    + getRandomIntInclusive(gradientGroup < 15 ? gradientGroup : 15, gradientGroup + upperRange < 15 ? gradientGroup + upperRange : 15).toString(16)
 
                 let color = Jimp.cssColorToHex(hex)
                 await img.setPixelColor(color, x, curY)
