@@ -9,6 +9,6 @@ To Run:
 3. Install node
 4. Navigate to the root directory
 5. From a terminal, run the command: 'node 'src/index.js'
-6. Wait for output.  Can take 30 minutes to hours depending on effects, number of frames, and output image resolution (estimated time remaining is available after frist frame is processed)
+6. Wait for output.  Can take 30 minutes to hours depending on effects, number of frames, and output image resolution (estimated time remaining is available after first frame is processed)
 
 Please direct questions, comments, and rants to [John Ruf](mailto:john.paul.ruf@gmail.com?subject=[GitHub]%20my-nft-gen)
