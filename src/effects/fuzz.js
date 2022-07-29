@@ -1,4 +1,4 @@
-import {getRandomIntExclusive, getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -43,8 +43,8 @@ const generate = () => {
 }
 
 const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
-    const ring = Date.now().toString() + '-ring.png';
-    const fuzz = Date.now().toString() + '-fuzz.png';
+    const ring = randomId() + '-ring.png';
+    const fuzz = randomId() + '-fuzz.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)

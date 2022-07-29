@@ -1,7 +1,7 @@
-/src/img/
 /package-lock.json
 /node_modules/
 /.idea/workspace.xml
 /.idea/modules.xml
 /.idea/my-nft-gen.iml
 /.idea/vcs.xml
+*.png

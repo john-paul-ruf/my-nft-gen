@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -38,8 +38,8 @@ const generate = () => {
 }
 
 const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) => {
-    const imgName = Date.now().toString() + '-wireframe-spiral.png';
-    const underlayName = Date.now().toString() + '-wireframe-spiral-underlay.png';
+    const imgName = randomId() + '-wireframe-spiral.png';
+    const underlayName = randomId() + '-wireframe-spiral-underlay.png';
 
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)

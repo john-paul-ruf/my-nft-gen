@@ -1,4 +1,4 @@
-import {getRandomIntExclusive, getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -47,8 +47,8 @@ const generate = () => {
 }
 
 const gates = async (data, img, currentFrame, numberOfFrames, card) => {
-    const drawing = Date.now().toString() + '-gate.png';
-    const underlayName = Date.now().toString() + 'gate-accent.png';
+    const drawing = randomId() + '-gate.png';
+    const underlayName = randomId() + 'gate-accent.png';
 
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)

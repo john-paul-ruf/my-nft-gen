@@ -25,7 +25,7 @@ const generate = () => {
             const list = [];
 
             fs.readdirSync(directoryPath).forEach(file => {
-                if (!file.startsWith('.')) {
+                if (!file.startsWith('.') && path.extname(file) === '.png') {
                     list.push(file);
                 }
             });

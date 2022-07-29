@@ -1,4 +1,4 @@
-import {getRandomIntExclusive, getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -12,7 +12,7 @@ const config = {
     size: IMAGESIZE,
     stroke: 0.5,
     thickness: 1,
-    scaleFactor: 1.1,
+    scaleFactor: 1.05,
 }
 
 const generate = () => {
@@ -47,8 +47,8 @@ const generate = () => {
 }
 
 const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
-    const ring = Date.now().toString() + '-fuzzy-band.png';
-    const fuzz = Date.now().toString() + '-fuzzy-band-underlay.png';
+    const ring = randomId() + '-fuzzy-band.png';
+    const fuzz = randomId() + '-fuzzy-band-underlay.png';
 
     const draw = async (stroke, filename, accentBoost) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
@@ -67,7 +67,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
     await draw(config.ringStroke, ring);
     await draw(data.fuzzFactor + config.ringStroke, fuzz, 0);
 
-    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(0, 5, 1, numberOfFrames, currentFrame);
     await draw(config.ringStroke, fuzz, theAccentGaston);
 
     let fuzzImg = await Jimp.read(fuzz);
@@ -87,7 +87,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-  /*  const compName = Date.now().toString() + 'hex-comp.png';
+  /*  const compName = randomId() + 'hex-comp.png';
     img.write(compName);*/
 
     fs.unlinkSync(ring);

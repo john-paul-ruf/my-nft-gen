@@ -1,7 +1,4 @@
 import Jimp from "jimp";
-import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
-import fs from "fs";
-import {timeToString} from "./timeToString.js";
 import {timeLeft} from "./timeLeft.js";
 import {generateEffects} from "../effects/control/generateEffect.js";
 import {
@@ -9,6 +6,10 @@ import {
 } from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
 import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
+import {randomId} from "./random.js";
+import {writeArtistCard} from "../output/writeArtistCard.js";
+import {writeFramesToGif} from "../output/writeFramesToGif.js";
+import {writeGifToMp4} from "../output/writeGifToMp4.js";
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
  * @returns {Promise<void>} - return nothing, just await it
@@ -16,7 +17,7 @@ import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 export const animate = async (config) => {
     const backgroundColor = getNeutralFromBucket();
 
-    const frames = []; //will be a collection of jimp images that in the end gets converted to a gif
+    const frameFilenames = []; //will be a collection of jimp images filenames that in the end gets converted to a gif
 
     config.startTime = new Date();
 
@@ -36,17 +37,6 @@ export const animate = async (config) => {
      * Then based on their order in the effects array they are composed into a single image
      */
     const createAnimation = async (frame) => {
-
-
-        //This applies a single effect to a jimp img.
-        //You can think of each effect as an image layer
-        const applyEffect = async (img, effects) => {
-            for (let i = 0; i < effects.length; i++) {
-                //All effects are treated the same through the use of the Effect.js class
-                await effects[i].invokeEffect(img, frame, config.numberOfFrame);
-            }
-        }
-
         //This function creates a new jimp image (layer) for each main effect
         const getLayers = (w, h) => {
             const extraLayers = [];
@@ -56,28 +46,49 @@ export const animate = async (config) => {
             return extraLayers;
         }
 
-        //The Magic:  This function applies an effect for each main effect. If there are extra effects, like fade
-        // or glow, they are then applied to the main effect jimp image (layer)
-        const processLayers = async () => {
-            for (let i = 0; i < layers.length; i++) {
-                await applyEffect(layers[i], [effects[i]]);
-                if (effects[i].additionalEffects.length > 0) {
-                    await applyEffect(layers[i], effects[i].additionalEffects);
-                }
-            }
-        }
-
         ////////////////////////
         //get fresh files every loop
-        //Everything is kept in memory, because, why thrash the disk and add additional complexity to the code.
         ////////////////////////
         let background = new Jimp(IMAGESIZE, IMAGESIZE, Jimp.cssColorToHex(backgroundColor));
         let layers = getLayers(IMAGESIZE, IMAGESIZE)
 
-        ////////////////////////
-        //Process Effects
-        ////////////////////////
-        await processLayers();
+        /////////////////////////////
+        //Process the main and secondary effects
+        ////////////////////////////
+        const processFrame = async () => {
+            return new Promise(async (resolve, reject) => {
+
+                //Queue up the main layer effect to process together
+                const mainLayeredEffects = [];
+
+                for (let i = 0; i < layers.length; i++) {
+                    mainLayeredEffects.push(effects[i].invokeEffect(layers[i], frame, config.numberOfFrame));
+                }
+
+                Promise.all(mainLayeredEffects).then(() => {
+
+                    //Queue up all the secondary effects to the main layers
+                    const secondaryEffects = [];
+
+                    for (let i = 0; i < layers.length; i++) {
+                        if (effects[i].additionalEffects.length > 0) {
+                            for (let s = 0; s < effects[i].additionalEffects.length; s++) {
+                                secondaryEffects.push(effects[i].additionalEffects[s].invokeEffect(layers[i], frame, config.numberOfFrame));
+                            }
+                        }
+                    }
+
+                    Promise.all(secondaryEffects).then(() => {
+                        resolve(); //All done! We have processed one frame
+                    });
+                });
+            });
+        }
+
+        /////////////////////////////
+        //run all effects for frame
+        ////////////////////////////
+        await processFrame();
 
         ////////////////////////
         //COMPOSE
@@ -90,15 +101,14 @@ export const animate = async (config) => {
             })
         }
 
-       /* const backgroundName = Date.now().toString() + 'total-comp.png';
-        background.write(backgroundName);*/
+        //////////////////////
+        // write to disk
+        // still can run multiple instances at once
+        /////////////////////
+        const filename = 'frame' + randomId() + '.png';
+        await background.write(filename);
+        frameFilenames.push(filename);
 
-        //Apply color depth to composited image
-        GifUtil.quantizeDekker(background, config.colorDepth)
-
-        //Jimp to gif the frame then toss the frame into our in memory array of frames
-        let gifFrame = new GifFrame(new BitmapImage(background.bitmap));
-        frames.push(gifFrame);
     }
 
     ////////////////////////
@@ -116,25 +126,7 @@ export const animate = async (config) => {
     ////////////////////////
     //WRITE TO FILE
     ////////////////////////
-    config.endTime = new Date();
-    const rez = config.endTime.getTime() - config.startTime.getTime();
-    config.processingTime = timeToString(rez);
-
-    console.log("gif write start");
-    console.log(composeInfo(config, effects));
-
-    fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, effects), 'utf-8');
-
-    const writeGif = async () => {
-        new Promise((resolve, reject) => {
-            GifUtil.write(config.fileOut, frames).then(gif => {
-                //Always wait for this before killing the process
-                console.log("gif written");
-                resolve();
-            });
-        });
-    }
-
-    return await writeGif();
-
+    await writeArtistCard(config, effects);
+    await writeFramesToGif(frameFilenames, config);
+    await writeGifToMp4(config);
 }

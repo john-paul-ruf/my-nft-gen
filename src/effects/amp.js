@@ -1,9 +1,8 @@
-import { randomNumber} from "../logic/random.js";
+import {randomId, randomNumber} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
-import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
 import {drawRay2d} from "../draw/drawRay2d.js";
 
 const config = {
@@ -31,7 +30,7 @@ const generate = () => {
 }
 
 const amp = async (data, img, currentFrame, numberOfFrames, card) => {
-    const drawing = Date.now().toString() + '-amp.png';
+    const drawing = randomId() + '-amp.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)

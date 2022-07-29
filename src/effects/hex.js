@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -41,8 +41,8 @@ const generate = () => {
 }
 
 const hex = async (data, img, currentFrame, numberOfFrames, card) => {
-    const imgName = Date.now().toString() + 'hex.png';
-    const underlayName = Date.now().toString() + 'hex-accent.png';
+    const imgName = randomId() + 'hex.png';
+    const underlayName = randomId() + 'hex-accent.png';
 
     const draw = async (stroke, filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
@@ -96,7 +96,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-   /* const compName = Date.now().toString() + 'hex-comp.png';
+   /* const compName = randomId() + 'hex-comp.png';
     img.write(compName);*/
 
     fs.unlinkSync(imgName);

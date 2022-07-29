@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -48,7 +48,7 @@ const generate = () => {
 }
 
 const ripple = async (data, img, currentFrame, numberOfFrames, card) => {
-    const imgName = Date.now().toString() + '-ripple.png';
+    const imgName = randomId() + '-ripple.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(config.size, config.size)

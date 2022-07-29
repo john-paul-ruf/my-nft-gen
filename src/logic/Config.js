@@ -1,6 +1,7 @@
 import path from "path";
 import {fileURLToPath} from 'url';
 import {dirname} from 'path';
+import {randomId} from "./random.js";
 
 export class Config {
     constructor() {
@@ -23,7 +24,7 @@ export class Config {
         //Number of frames in the final gif
         this.numberOfFrame = 70;
 
-        this.finalFileName = Date.now().toString() + '.gif'
+        this.finalFileName = 'Final_' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
     }
 }

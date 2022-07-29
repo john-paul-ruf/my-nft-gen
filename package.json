@@ -24,5 +24,10 @@
     "gifwrap": "^0.10.1",
     "jimp": "^0.16.1",
     "node-png": "^0.4.3"
+  },
+  "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.4.1",
+    "fluent-ffmpeg": "^2.1.2"
   }
 }

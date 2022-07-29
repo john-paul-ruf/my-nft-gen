@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
@@ -48,8 +48,8 @@ const generate = () => {
 }
 
 const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
-    const imgName = Date.now().toString() + 'fuzzy-ripple.png';
-    const underlayName = Date.now().toString() + 'blur-fuzzy-ripple.png';
+    const imgName = randomId() + 'fuzzy-ripple.png';
+    const underlayName = randomId() + 'blur-fuzzy-ripple.png';
     const draw = async (stroke, filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
@@ -104,7 +104,7 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-    /*const compName = Date.now().toString() + 'fuzzy-ripple-comp.png';
+    /*const compName = randomId() + 'fuzzy-ripple-comp.png';
     img.write(compName);*/
 
     fs.unlinkSync(imgName);
