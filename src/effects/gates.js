@@ -55,7 +55,7 @@ const gates = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
-        const theAngleGaston = findOneWayValue(angle, 360/data.numberOfSides, numberOfFrames, currentFrame, invert);
+        const theAngleGaston = findOneWayValue(0, 360/data.numberOfSides, numberOfFrames, currentFrame, invert);
 
         for (let i = 0; i < data.numberOfGates; i++) {
             drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke+accentBoost, data.gates[i].color)
