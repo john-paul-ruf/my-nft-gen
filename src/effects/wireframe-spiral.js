@@ -9,11 +9,11 @@ import {findValue} from "../logic/findValue.js";
 
 const config = {
     size: IMAGESIZE*2,
-    stroke: 5,
+    stroke: 2,
     sparsityFactor: {lower: 5, upper: 15},
     speed:{lower:1, upper:5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 10, upper: 40},
+    unitLength: {lower: 5, upper: 25},
 }
 
 const generate = () => {
@@ -45,7 +45,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
         let twistCount = 2;
-        let n1 = data.unitLength, n2 = data.unitLength, nextTerm;
+        let n1 = 250, n2 = 250, nextTerm;
         nextTerm = n1 + n2;
 
         const drawRay = (stroke, angle, radius, radiusNext, twist) => {

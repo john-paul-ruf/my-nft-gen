@@ -8,7 +8,7 @@ import {findValue} from "../logic/findValue.js";
 
 
 const config = {
-    circles: {lower: 3, upper: 8},
+    circles: {lower: 8, upper: 20},
     size: IMAGESIZE,
     stroke: 0.5,
     thickness: 1,

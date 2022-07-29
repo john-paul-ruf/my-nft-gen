@@ -13,7 +13,7 @@ export class Config {
         //It is how I think of layers in my head when working in illustrator
         //For compose info
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'the-colors-test-run'
+        this.runName = 'the-mp4-run'
 
         //final color depth of image
         this.colorDepth = 128;

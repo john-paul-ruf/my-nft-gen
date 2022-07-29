@@ -7,7 +7,7 @@ export const writeGifToMp4 = async (config) => {
     const maker = ffmpeg().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path)
 
     const writeMp4 = async () => {
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             maker
                 .size(IMAGESIZE.toString() + 'x' + IMAGESIZE.toString())
                 .input(config.fileOut + '.gif')
@@ -15,6 +15,7 @@ export const writeGifToMp4 = async (config) => {
                 .output(config.fileOut + '.mp4')
                 .noAudio()
                 .on("end", () => {
+                    resolve();
                     console.log("mp4 Finished");
                 })
                 .on("error", (e) => console.log(e))

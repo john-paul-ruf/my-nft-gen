@@ -11,7 +11,7 @@ import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 
 const config = {
     size: IMAGESIZE,
-    stroke: 4,
+    stroke: 12,
     thickness: 8,
     largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
     smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
@@ -119,7 +119,7 @@ export const fuzzyRippleEffect = {
     name: 'fuzzy-ripples',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 60,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: true,

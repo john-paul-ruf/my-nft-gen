@@ -5,6 +5,7 @@ import Jimp from "jimp";
 import fs from "fs";
 import {drawPolygon2d} from "../draw/drawPolygon2d.js";
 import {findValue} from "../logic/findValue.js";
+import {findOneWayValue} from "../logic/findOneWayValue.js";
 
 
 const config = {
@@ -54,8 +55,10 @@ const gates = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
+        const theAngleGaston = findOneWayValue(angle, 360/data.numberOfSides, numberOfFrames, currentFrame, invert);
+
         for (let i = 0; i < data.numberOfGates; i++) {
-            drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, 0, data.thickness, data.innerColor, data.stroke+accentBoost, data.gates[i].color)
+            drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke+accentBoost, data.gates[i].color)
         }
 
         const buffer = canvas.toBuffer('image/png');
@@ -97,10 +100,10 @@ export const gatesEffect = {
     name: 'gates',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 60,
     requiresLayer: true,
     rotatesImg:false,
-    allowsRotation: false, //turning off rotation for now
-    rotationTotalAngle: 45,
+    allowsRotation: false,
+    rotationTotalAngle: 0,
 }
 

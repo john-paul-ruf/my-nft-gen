@@ -9,7 +9,7 @@ import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 import {randomId} from "./random.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
 import {writeFramesToGif} from "../output/writeFramesToGif.js";
-import {writeGifToMp4} from "../output/writeGifToMp4.js";
+
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
  * @returns {Promise<void>} - return nothing, just await it
@@ -128,5 +128,4 @@ export const animate = async (config) => {
     ////////////////////////
     await writeArtistCard(config, effects);
     await writeFramesToGif(frameFilenames, config);
-    await writeGifToMp4(config);
 }

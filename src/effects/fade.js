@@ -2,7 +2,7 @@ import {findValue} from "../logic/findValue.js";
 import { getRandomIntInclusive, randomNumber} from "../logic/random.js";
 
 const config = {
-    lowerRange: {lower: 0.8, upper: 0.9},
+    lowerRange: {lower: 0.7, upper: 0.8},
     upperRange: {lower: 0.9, upper: 1},
     times: {lower: 1, upper: 4},
 }

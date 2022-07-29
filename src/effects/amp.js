@@ -6,7 +6,7 @@ import fs from "fs";
 import {drawRay2d} from "../draw/drawRay2d.js";
 
 const config = {
-    sparsityFactor: {lower: 1.25, upper: 1.75},
+    sparsityFactor: {lower: 0.5, upper: 1},
     size: IMAGESIZE,
     stroke: 2,
 }
@@ -16,10 +16,11 @@ const generate = () => {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         height: config.size,
         width: config.size,
+        stroke: config.stroke,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
-        length: 450,
-        lineStart: 200,
+        length: 100,
+        lineStart: 350,
         center: {x:config.size/2,y:config.size/2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`

@@ -10,15 +10,15 @@ import {drawRays2d} from "../draw/drawRays2d.js";
 
 const config = {
     size: IMAGESIZE,
-    stroke: 10,
-    thickness: 30,
+    stroke: 15,
+    thickness: 5,
     ampStroke: 4,
-    ampThickness: 4,
+    ampThickness: 2,
     radius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.20},
     ampLength: {lower: IMAGESIZE * 0.1, upper: IMAGESIZE * 0.15},
     ampRadius: {lower: IMAGESIZE * 0.05, upper: IMAGESIZE * 0.1},
     sparsityFactor: {lower: 2, upper: 4},
-    amplitude: {lower: IMAGESIZE * 0.01, upper: IMAGESIZE * 0.02},
+    amplitude: {lower: IMAGESIZE * 0.005, upper: IMAGESIZE * 0.01},
     times: {lower: 1, upper: 2},
 }
 

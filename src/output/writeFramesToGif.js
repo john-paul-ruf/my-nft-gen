@@ -1,6 +1,7 @@
 import Jimp from "jimp";
 import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
 import fs from "fs";
+import {writeGifToMp4} from "./writeGifToMp4.js";
 
 export const writeFramesToGif = async (frameFilenames, config) => {
     const frames = []
@@ -17,9 +18,8 @@ export const writeFramesToGif = async (frameFilenames, config) => {
     }
 
     const writeGif = async () => {
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             GifUtil.write(config.fileOut + '.gif', frames).then(gif => {
-                //Always wait for this before killing the process
                 console.log("gif written");
                 resolve();
             });
@@ -27,4 +27,5 @@ export const writeFramesToGif = async (frameFilenames, config) => {
     }
 
     await writeGif();
+    await writeGifToMp4(config);
 }
