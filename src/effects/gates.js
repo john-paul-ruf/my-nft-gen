@@ -25,7 +25,7 @@ const generate = () => {
         thickness: config.thickness,
         stroke: config.stroke,
         innerColor: getColorFromBucket(),
-        center: {x:IMAGESIZE/2,y:IMAGESIZE/2},
+        center: {x: IMAGESIZE / 2, y: IMAGESIZE / 2},
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }
@@ -55,17 +55,20 @@ const gates = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
-        const theAngleGaston = findOneWayValue(0, 360/data.numberOfSides, numberOfFrames, currentFrame, invert);
 
         for (let i = 0; i < data.numberOfGates; i++) {
-            drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke+accentBoost, data.gates[i].color)
+            const loopCount = i + 1;
+            const direction = loopCount % 2;
+            const invert = direction <= 0;
+            const theAngleGaston = findOneWayValue(0, 360 / data.numberOfSides, numberOfFrames, currentFrame, invert);
+            drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke + accentBoost, data.gates[i].color)
         }
 
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(drawing,0);
+    await draw(drawing, 0);
 
     const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
     await draw(underlayName, theAccentGaston);
@@ -102,7 +105,7 @@ export const gatesEffect = {
     effect: effect,
     effectChance: 60,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }
