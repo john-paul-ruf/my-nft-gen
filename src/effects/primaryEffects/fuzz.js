@@ -100,7 +100,7 @@ export const fuzzEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

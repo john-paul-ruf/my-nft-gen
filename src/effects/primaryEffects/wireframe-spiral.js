@@ -8,10 +8,10 @@ import {findValue} from "../logic/findValue.js";
 
 
 const config = {
-    size: IMAGESIZE*2,
+    size: IMAGESIZE * 2,
     stroke: 2,
     sparsityFactor: {lower: 5, upper: 15},
-    speed:{lower:1, upper:5},
+    speed: {lower: 1, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
     unitLength: {lower: 5, upper: 25},
 }
@@ -26,8 +26,8 @@ const generate = () => {
         color1: getColorFromBucket(),
         color2: getColorFromBucket(),
         color3: getColorFromBucket(),
-        center: {x:config.size/2,y:config.size/2},
-        speed:getRandomIntInclusive(config.speed.lower, config.speed.upper),
+        center: {x: config.size / 2, y: config.size / 2},
+        speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
             return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
@@ -50,7 +50,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
 
         const drawRay = (stroke, angle, radius, radiusNext, twist) => {
             const start = findPointByAngleAndCircle(data.center, angle, radius)
-            const end = findPointByAngleAndCircle(data.center,angle+(twist*data.sparsityFactor), radiusNext);
+            const end = findPointByAngleAndCircle(data.center, angle + (twist * data.sparsityFactor), radiusNext);
 
             context.beginPath();
 
@@ -72,8 +72,8 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
         while (nextTerm <= config.size) {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-                drawRay(data.stroke+accentBoost, i, n2, nextTerm, twistCount)
-                drawRay(data.stroke+accentBoost, i, n2, nextTerm, -twistCount)
+                drawRay(data.stroke + accentBoost, i, n2, nextTerm, twistCount)
+                drawRay(data.stroke + accentBoost, i, n2, nextTerm, -twistCount)
             }
 
             //assignment for next loop
@@ -103,14 +103,14 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
     let tmpImg = await Jimp.read(imgName);
 
     const direction = data.counterClockwise > 0 ? -1 : 1
-    await tmpImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*direction, false);
-    await underlayImg.rotate((((data.sparsityFactor*data.speed)/numberOfFrames)*currentFrame)*direction, false);
+    await tmpImg.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction, false);
+    await underlayImg.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction, false);
 
-    await img.composite(underlayImg, -IMAGESIZE/2, -IMAGESIZE/2, {
+    await img.composite(underlayImg, -IMAGESIZE / 2, -IMAGESIZE / 2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-    await img.composite(tmpImg, -IMAGESIZE/2, -IMAGESIZE/2, {
+    await img.composite(tmpImg, -IMAGESIZE / 2, -IMAGESIZE / 2, {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
@@ -129,7 +129,7 @@ export const wireframeSpiralEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

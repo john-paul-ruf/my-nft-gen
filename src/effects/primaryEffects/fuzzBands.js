@@ -87,8 +87,8 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-  /*  const compName = randomId() + 'hex-comp.png';
-    img.write(compName);*/
+    /*  const compName = randomId() + 'hex-comp.png';
+      img.write(compName);*/
 
     fs.unlinkSync(ring);
     fs.unlinkSync(fuzz);
@@ -105,7 +105,7 @@ export const fuzzBandsEffect = {
     effect: effect,
     effectChance: 70,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

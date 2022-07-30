@@ -1,6 +1,5 @@
-import path from "path";
+import path, {dirname} from "path";
 import {fileURLToPath} from 'url';
-import {dirname} from 'path';
 import {randomId} from "./random.js";
 
 export class Config {
@@ -13,7 +12,7 @@ export class Config {
         //It is how I think of layers in my head when working in illustrator
         //For compose info
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'the-mp4-run'
+        this.runName = 'secondary effects'
 
         //final color depth of image
         this.colorDepth = 256;

@@ -1,15 +1,11 @@
 import Jimp from "jimp";
 import {timeLeft} from "./timeLeft.js";
 import {generateEffects} from "../effects/control/generateEffect.js";
-import {
-    possibleEffects
-} from "../effects/control/possibleEffects.js";
+import {primaryEffects} from "../effects/control/possibleEffects.js";
 import {composeInfo} from "./composeInfo.js";
 import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 import {randomId} from "./random.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
-import {writeFramesToGif} from "../output/writeFramesToGif.js";
-import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
 import fs from "fs";
 import {writeToMp4} from "../output/writeToMp4.js";
 
@@ -27,7 +23,7 @@ export const animate = async (config) => {
     //This determines the final image contents
     //The effect array is super important
     //Understanding effects is key to running this program.
-    const effects = generateEffects(possibleEffects);
+    const effects = generateEffects(primaryEffects);
 
     console.log(composeInfo(config, effects));
 
@@ -132,8 +128,8 @@ export const animate = async (config) => {
     await writeArtistCard(config, effects);
     await writeToMp4(frameFilenames, config);
 
-    for(let f = 0; f < frameFilenames.length; f++){
+    for (let f = 0; f < frameFilenames.length; f++) {
         //delete files
-       fs.unlinkSync(frameFilenames[f]);
+        fs.unlinkSync(frameFilenames[f]);
     }
 }

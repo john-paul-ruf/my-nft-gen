@@ -5,7 +5,7 @@ import {getImagePaths} from "../logic/getImagePaths.js";
 import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
-    times:  {lower: 2, upper: 5},
+    times: {lower: 2, upper: 5},
 }
 
 const generate = () => {
@@ -16,7 +16,7 @@ const generate = () => {
 
 const trace = async (data, img, currentFrame, totalFrames, card) => {
 
-    let overlay = new Jimp(img.bitmap.width,img.bitmap.height);
+    let overlay = new Jimp(img.bitmap.width, img.bitmap.height);
 
     let hex = '#00FF00';
     let color = Jimp.cssColorToHex(hex)
@@ -24,11 +24,11 @@ const trace = async (data, img, currentFrame, totalFrames, card) => {
     const paths = await getImagePaths(img);
 
     paths.forEach(path => {
-        const point = Math.floor(findValue(0, path.length-1, data.times, totalFrames, currentFrame));
-        overlay.setPixelColor(color, path[point].x, path[point].y+1)
-        overlay.setPixelColor(color, path[point].x+1, path[point].y+1)
-        overlay.setPixelColor(color, path[point].x-1, path[point].y)
-        overlay.setPixelColor(color, path[point].x-1, path[point].y-1)
+        const point = Math.floor(findValue(0, path.length - 1, data.times, totalFrames, currentFrame));
+        overlay.setPixelColor(color, path[point].x, path[point].y + 1)
+        overlay.setPixelColor(color, path[point].x + 1, path[point].y + 1)
+        overlay.setPixelColor(color, path[point].x - 1, path[point].y)
+        overlay.setPixelColor(color, path[point].x - 1, path[point].y - 1)
         overlay.setPixelColor(color, path[point].x, path[point].y)
     })
 
@@ -47,7 +47,7 @@ export const traceEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: false,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

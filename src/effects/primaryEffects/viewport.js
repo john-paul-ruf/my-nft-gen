@@ -56,11 +56,11 @@ const viewport = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
-        const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength+ data.amplitude, data.times, numberOfFrames, currentFrame);
+        const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength + data.amplitude, data.times, numberOfFrames, currentFrame);
         drawRays2d(context, data.center, data.ampRadius, theAmpGaston, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)
 
         const thePolyGaston = findValue(data.radius, data.radius + data.amplitude, data.times, numberOfFrames, currentFrame);
-        drawPolygon2d(context, thePolyGaston, data.center, 3, 210,data.thickness, data.innerColor, data.stroke, data.color )
+        drawPolygon2d(context, thePolyGaston, data.center, 3, 210, data.thickness, data.innerColor, data.stroke, data.color)
 
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);

@@ -1,5 +1,5 @@
 import {findValue} from "../logic/findValue.js";
-import { getRandomIntInclusive, randomNumber} from "../logic/random.js";
+import {getRandomIntInclusive, randomNumber} from "../logic/random.js";
 
 const config = {
     lowerRange: {lower: 0.7, upper: 0.8},
@@ -36,7 +36,7 @@ export const fadeEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: false,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

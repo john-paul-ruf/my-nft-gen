@@ -1,10 +1,10 @@
 import {findValue} from "../logic/findValue.js";
-import { getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive} from "../logic/random.js";
 
 const config = {
     lowerRange: {lower: -20, upper: 0},
     upperRange: {lower: 0, upper: 20},
-    times:  {lower: 1, upper: 3},
+    times: {lower: 1, upper: 3},
 }
 
 const generate = () => {
@@ -35,7 +35,7 @@ export const glowEffect = {
     effect: effect,
     effectChance: 50, //testing color scheme work
     requiresLayer: false,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

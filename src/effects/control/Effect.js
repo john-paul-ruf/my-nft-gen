@@ -1,7 +1,5 @@
 import {generateEffects} from "./generateEffect.js";
-import {possibleAdditionalEffects} from "./possibleEffects.js";
-
-
+import {secondaryEffects} from "./possibleEffects.js";
 
 
 ///////////////////////////////////////////////////////////////
@@ -15,6 +13,7 @@ import {possibleAdditionalEffects} from "./possibleEffects.js";
     they were the same. This is accomplished using the
     strategy pattern.
 */
+
 ///////////////////////////////////////////////////////////////
 export class Effect {
 
@@ -24,7 +23,7 @@ export class Effect {
         this.additionalEffects = []
         this.card = card;
         if (card.requiresLayer) {  //Does this effect qualify for additional effects?
-            this.additionalEffects = generateEffects(possibleAdditionalEffects, card.allowsRotation)  //Then pile them on
+            this.additionalEffects = generateEffects(secondaryEffects, card.allowsRotation)  //Then pile them on
         }
     }
 
@@ -36,7 +35,7 @@ export class Effect {
         }
     }
 
-    getInfo(){ //Gets the effect's info for the artist card output
+    getInfo() { //Gets the effect's info for the artist card output
         return this.data.getInfo();
     }
 }

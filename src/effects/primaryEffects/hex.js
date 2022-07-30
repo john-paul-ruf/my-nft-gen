@@ -96,8 +96,8 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
         mode: Jimp.BLEND_SOURCE_OVER,
     });
 
-   /* const compName = randomId() + 'hex-comp.png';
-    img.write(compName);*/
+    /* const compName = randomId() + 'hex-comp.png';
+     img.write(compName);*/
 
     fs.unlinkSync(imgName);
     fs.unlinkSync(underlayName);

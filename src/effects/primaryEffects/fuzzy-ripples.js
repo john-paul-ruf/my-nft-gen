@@ -77,7 +77,6 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
         drawPolygon2d(context, data.smallerRingsGroupRadius, data.center, 6, 30, data.thickness + accentBoost, data.innerColor, data.stroke, data.smallColor)
 
 
-
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);
     }

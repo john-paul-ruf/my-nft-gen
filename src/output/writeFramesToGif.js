@@ -1,12 +1,10 @@
 import Jimp from "jimp";
 import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
-import fs from "fs";
-import {writeToMp4} from "./writeToMp4.js";
 
 export const writeFramesToGif = async (frameFilenames, config) => {
     const frames = []
 
-    for(let f = 0; f < frameFilenames.length; f++){
+    for (let f = 0; f < frameFilenames.length; f++) {
         const frame = await Jimp.read(frameFilenames[f]);
         //Apply color depth to composited image
         GifUtil.quantizeDekker(frame, config.colorDepth)

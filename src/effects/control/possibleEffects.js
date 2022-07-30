@@ -1,24 +1,25 @@
-import {glowEffect} from "../glow.js";
-import {fadeEffect} from "../fade.js";
-import {rotateEffect} from "../rotate.js";
-import {radiateEffect} from "../radiate.js";
-import {traceEffect} from "../trace.js";
-import {randomizeEffect} from "../randomize.js";
-import {animateBackgroundEffect} from "../animateBackground.js";
-import {verticalScanLinesEffect} from "../verticalScanLines.js";
-import {backdropEffect} from "../backdrop.js";
-import {fuzzEffect} from "../fuzz.js";
-import {ampEffect} from "../amp.js";
-import {gatesEffect} from "../gates.js";
-import {wireframeSpiralEffect} from "../wireframe-spiral.js";
-import {summonEffect} from "../summons.js";
-import {sigEffect} from "../sig.js";
-import {rippleEffect} from "../ripples.js";
-import {viewportEffect} from "../viewport.js";
-import {fuzzyRippleEffect} from "../fuzzy-ripples.js";
-import {hexEffect} from "../hex.js";
-import {fuzzBandsEffect} from "../fuzzBands.js";
-
+import {verticalScanLinesEffect} from "../primaryEffects/verticalScanLines.js";
+import {hexEffect} from "../primaryEffects/hex.js";
+import {wireframeSpiralEffect} from "../primaryEffects/wireframe-spiral.js";
+import {backdropEffect} from "../primaryEffects/backdrop.js";
+import {rippleEffect} from "../primaryEffects/ripples.js";
+import {fuzzyRippleEffect} from "../primaryEffects/fuzzy-ripples.js";
+import {fuzzEffect} from "../primaryEffects/fuzz.js";
+import {fuzzBandsEffect} from "../primaryEffects/fuzzBands.js";
+import {gatesEffect} from "../primaryEffects/gates.js";
+import {summonEffect} from "../primaryEffects/summons.js";
+import {ampEffect} from "../primaryEffects/amp.js";
+import {viewportEffect} from "../primaryEffects/viewport.js";
+import {sigEffect} from "../primaryEffects/sig.js";
+import {radiateEffect} from "../secondaryEffects/radiate.js";
+import {randomizeEffect} from "../secondaryEffects/randomize.js";
+import {glowEffect} from "../secondaryEffects/glow.js";
+import {fadeEffect} from "../secondaryEffects/fade.js";
+import {rotateEffect} from "../secondaryEffects/rotate.js";
+import {blurEffect} from "../secondaryEffects/blur.js";
+import {pixelateEffect} from "../secondaryEffects/pixelate.js";
+import {sepiaEffect} from "../secondaryEffects/sepia.js";
+import {posterizeEffect} from "../secondaryEffects/posterize.js";
 ////////////////////////////////////////////////////////
 // Just buckets of effects that get applied by chance
 ////////////////////////////////////////////////////////
@@ -28,7 +29,9 @@ import {fuzzBandsEffect} from "../fuzzBands.js";
 //Main effects
 //Each effect in this list can have one of the effects in the
 //possibleAdditionalEffects array below
-export const possibleEffects = [
+
+
+export const primaryEffects = [
     /*animateBackgroundEffect*/,
     verticalScanLinesEffect,
     hexEffect,
@@ -46,10 +49,14 @@ export const possibleEffects = [
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
-export const possibleAdditionalEffects = [
+export const secondaryEffects = [
     radiateEffect,
     randomizeEffect,
     glowEffect,
     fadeEffect,
     rotateEffect,
+    blurEffect,
+    pixelateEffect,
+    sepiaEffect,
+    posterizeEffect
 ];
