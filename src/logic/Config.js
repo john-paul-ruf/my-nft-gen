@@ -19,7 +19,7 @@ export class Config {
         this.colorDepth = 256;
 
         //For testing, render every x frame.
-        this.frameInc = 60;
+        this.frameInc = 1;
 
         //Number of frames in the final gif
         this.numberOfFrame = 70;
