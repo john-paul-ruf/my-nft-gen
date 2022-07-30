@@ -3,6 +3,7 @@ import ffprobe from "@ffprobe-installer/ffprobe";
 import ffmpeg from "fluent-ffmpeg";
 import {IMAGESIZE} from "../logic/gobals.js";
 import {writeFramesToGif} from "./writeFramesToGif.js";
+import fs from "fs";
 
 export const writeToMp4 = async (frameFilenames, config) => {
 
@@ -29,4 +30,6 @@ export const writeToMp4 = async (frameFilenames, config) => {
     }
 
     await writeMp4();
+
+    fs.unlinkSync(config.fileOut + '.gif');
 }

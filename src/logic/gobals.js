@@ -6,7 +6,7 @@ export const IMAGESIZE = 2000;
 export const NEUTRALS = ['#2d2d2d', '#5b5b5b', '#f7f5fa'];
 
 //'mono', 'contrast', 'triade', 'tetrade', and 'analogic'.
-const schemeBucket = ['contrast', 'triade', 'tetrade', 'analogic'];
+const schemeBucket = ['contrast', 'triade', 'analogic'];
 
 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
 const variationBucket = ['default', 'hard' ];
