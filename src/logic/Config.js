@@ -16,10 +16,10 @@ export class Config {
         this.runName = 'the-mp4-run'
 
         //final color depth of image
-        this.colorDepth = 128;
+        this.colorDepth = 256;
 
         //For testing, render every x frame.
-        this.frameInc = 1;
+        this.frameInc = 60;
 
         //Number of frames in the final gif
         this.numberOfFrame = 70;

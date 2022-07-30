@@ -7,7 +7,7 @@ import {writeFramesToGif} from "./writeFramesToGif.js";
 export const writeToMp4 = async (frameFilenames, config) => {
 
 
-    await writeFramesToGif(frameFilenames)
+    await writeFramesToGif(frameFilenames, config)
 
     const maker = ffmpeg().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path)
 

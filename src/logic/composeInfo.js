@@ -1,4 +1,4 @@
-import {HUE, IMAGESIZE, SCHEME, VARIATION} from "./gobals.js";
+import {DISTANCE, HUE, IMAGESIZE, SCHEME, VARIATION} from "./gobals.js";
 
 
 /*
@@ -29,7 +29,7 @@ export const composeInfo = (config, effects) => {
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     const info =
-        `Title: ${config.finalFileName}\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}\nArtist: ${config._INVOKER_}\nImage Size: ${IMAGESIZE}x${IMAGESIZE} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}`
+        `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}Distance: ${DISTANCE}\nImage Size: ${IMAGESIZE}x${IMAGESIZE} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}`
 
     return info;
 
