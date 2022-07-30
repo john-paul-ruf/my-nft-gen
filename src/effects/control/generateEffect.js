@@ -12,10 +12,7 @@ export const generateEffects = (possibleEffectList, allowRotate) => {
                 //if the effect does not allow rotate
                 //and the possible effect rotates the image
                 //Don't allow it
-                //TODO: fix how this works it is gross
-                if (!allowRotate && obj.rotatesImg) {
-                    //do not allow rotation
-                } else {
+                if (!(!allowRotate && obj.rotatesImg)) {
                     effectList.push(new Effect(obj));
                 }
             }

@@ -1,12 +1,13 @@
 import Jimp from "jimp";
 import {getRandomIntInclusive} from "../../logic/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../../logic/gobals.js";
 
 const config = {
-    width: 3000,
-    height: 3000,
-    color1: '#06040A',
-    color2: '#1f1f1f',
-    color3: '#016236'
+    width: IMAGESIZE,
+    height: IMAGESIZE,
+    color1: getNeutralFromBucket(),
+    color2: getNeutralFromBucket(),
+    color3: getColorFromBucket()
 }
 
 const generate = () => {
@@ -37,7 +38,7 @@ export const animateBackgroundEffect = {
     name: 'static',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 50,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,

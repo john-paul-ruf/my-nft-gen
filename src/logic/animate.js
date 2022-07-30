@@ -28,14 +28,14 @@ export const animate = async (config) => {
     console.log(composeInfo(config, effects));
 
     /**
-     * @param frame - The current frame we are on.
+     * @param frameNumber - The current frame we are on.
      * @returns {Promise<void>}
      *
      * This function, in general, creates an empty jimp image for each main layer effect
      * Each effect is then applied to the image
      * Then based on their order in the effects array they are composed into a single image
      */
-    const createAnimation = async (frame) => {
+    const createAnimation = async (frameNumber) => {
         //This function creates a new jimp image (layer) for each main effect
         const getLayers = (w, h) => {
             const extraLayers = [];
@@ -61,7 +61,7 @@ export const animate = async (config) => {
                 const mainLayeredEffects = [];
 
                 for (let i = 0; i < layers.length; i++) {
-                    mainLayeredEffects.push(effects[i].invokeEffect(layers[i], frame, config.numberOfFrame));
+                    mainLayeredEffects.push(effects[i].invokeEffect(layers[i], frameNumber, config.numberOfFrame));
                 }
 
                 Promise.all(mainLayeredEffects).then(() => {
@@ -72,7 +72,7 @@ export const animate = async (config) => {
                     for (let i = 0; i < layers.length; i++) {
                         if (effects[i].additionalEffects.length > 0) {
                             for (let s = 0; s < effects[i].additionalEffects.length; s++) {
-                                secondaryEffects.push(effects[i].additionalEffects[s].invokeEffect(layers[i], frame, config.numberOfFrame));
+                                secondaryEffects.push(effects[i].additionalEffects[s].invokeEffect(layers[i], frameNumber, config.numberOfFrame));
                             }
                         }
                     }
@@ -104,7 +104,7 @@ export const animate = async (config) => {
         // write to disk
         // still can run multiple instances at once
         /////////////////////
-        const filename = 'frame' + randomId() + '.png';
+        const filename = config.finalFileName + '_frame_' + frameNumber + randomId() + '.png';
         await background.write(filename);
         frameFilenames.push(filename);
 

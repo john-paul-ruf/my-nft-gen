@@ -2,8 +2,8 @@ import {findValue} from "../../logic/findValue.js";
 import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
-    lowerRange: {lower: 1, upper: 10},
-    upperRange: {lower: 10, upper: 20},
+    lowerRange: {lower: 1, upper: 2},
+    upperRange: {lower: 3, upper: 5},
     times: {lower: 1, upper: 4},
 }
 
