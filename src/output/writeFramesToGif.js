@@ -27,5 +27,4 @@ export const writeFramesToGif = async (frameFilenames, config) => {
     }
 
     await writeGif();
-    await writeToMp4(config);
 }
