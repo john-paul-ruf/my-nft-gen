@@ -9,6 +9,9 @@ import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 import {randomId} from "./random.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
 import {writeFramesToGif} from "../output/writeFramesToGif.js";
+import {BitmapImage, GifFrame, GifUtil} from "gifwrap";
+import fs from "fs";
+import {writeToMp4} from "../output/writeToMp4.js";
 
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
@@ -127,5 +130,10 @@ export const animate = async (config) => {
     //WRITE TO FILE
     ////////////////////////
     await writeArtistCard(config, effects);
-    await writeFramesToGif(frameFilenames, config);
+    await writeToMp4(frameFilenames, config);
+
+    for(let f = 0; f < frameFilenames.length; f++){
+        //delete files
+       fs.unlinkSync(frameFilenames[f]);
+    }
 }
