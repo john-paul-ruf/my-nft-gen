@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
@@ -58,7 +58,7 @@ export const randomizeEffect = {
     effect: effect,
     effectChance: 0, //checking the color scheme work
     requiresLayer: false,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

@@ -1,11 +1,11 @@
 import Jimp from "jimp";
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
     width: 3000,
     height: 3000,
-    color1:'#06040A',
-    color2:'#1f1f1f',
+    color1: '#06040A',
+    color2: '#1f1f1f',
     color3: '#016236'
 }
 
@@ -39,7 +39,7 @@ export const animateBackgroundEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

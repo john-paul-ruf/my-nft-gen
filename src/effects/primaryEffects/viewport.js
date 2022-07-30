@@ -1,11 +1,11 @@
-import {getRandomIntInclusive, randomId, randomNumber} from "../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/random.js";
+import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
-import {findValue} from "../logic/findValue.js";
-import {drawPolygon2d} from "../draw/drawPolygon2d.js";
-import {drawRays2d} from "../draw/drawRays2d.js";
+import {findValue} from "../../logic/findValue.js";
+import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
+import {drawRays2d} from "../../draw/drawRays2d.js";
 
 
 const config = {

@@ -1,6 +1,6 @@
 import Jimp from "jimp";
-import {getRandomIntInclusive} from "../logic/random.js";
-import {IMAGESIZE} from "../logic/gobals.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
+import {IMAGESIZE} from "../../logic/gobals.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
@@ -46,7 +46,7 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames, card) 
 
                 let hex = data.color;
                 let upperRange = 3;
-                let gradientGroup = Math.floor((curY-rando) / pixelsPerGradient);
+                let gradientGroup = Math.floor((curY - rando) / pixelsPerGradient);
                 hex = hex + getRandomIntInclusive(gradientGroup < 15 ? gradientGroup : 15, gradientGroup + upperRange < 15 ? gradientGroup + upperRange : 15).toString(16)
                     + getRandomIntInclusive(gradientGroup < 15 ? gradientGroup : 15, gradientGroup + upperRange < 15 ? gradientGroup + upperRange : 15).toString(16)
 
@@ -78,7 +78,7 @@ export const verticalScanLinesEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

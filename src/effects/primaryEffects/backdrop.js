@@ -1,5 +1,5 @@
 import Jimp from "jimp";
-import {getRandomIntExclusive} from "../logic/random.js";
+import {getRandomIntExclusive} from "../../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";

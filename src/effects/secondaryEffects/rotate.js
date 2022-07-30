@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
     counterClockwise: {lower: 0, upper: 1}
@@ -18,7 +18,7 @@ const generate = () => {
 
 const rotate = async (data, img, currentFrame, totalFrame, card) => {
     const direction = data.counterClockwise > 0 ? -1 : 1;
-    await img.rotate(((card.rotationTotalAngle/ totalFrame) * currentFrame * direction), false);
+    await img.rotate(((card.rotationTotalAngle / totalFrame) * currentFrame * direction), false);
 }
 
 export const effect = {

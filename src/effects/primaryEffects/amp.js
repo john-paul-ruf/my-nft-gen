@@ -1,9 +1,9 @@
-import {randomId, randomNumber} from "../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {randomId, randomNumber} from "../../logic/random.js";
+import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
-import {drawRay2d} from "../draw/drawRay2d.js";
+import {drawRay2d} from "../../draw/drawRay2d.js";
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1},
@@ -21,7 +21,7 @@ const generate = () => {
         innerColor: getColorFromBucket(),
         length: 100,
         lineStart: 350,
-        center: {x:config.size/2,y:config.size/2},
+        center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }
@@ -37,9 +37,8 @@ const amp = async (data, img, currentFrame, numberOfFrames, card) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
-        for(let i = 0; i < 360; i = i+ data.sparsityFactor)
-        {
-            drawRay2d(context, data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length )
+        for (let i = 0; i < 360; i = i + data.sparsityFactor) {
+            drawRay2d(context, data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length)
         }
 
         const buffer = canvas.toBuffer('image/png');
@@ -68,7 +67,7 @@ export const ampEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: true,
     rotationTotalAngle: 20,
 }

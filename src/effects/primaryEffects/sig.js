@@ -1,5 +1,5 @@
 import Jimp from "jimp";
-import {getRandomIntExclusive} from "../logic/random.js";
+import {getRandomIntExclusive} from "../../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";
@@ -65,7 +65,7 @@ export const sigEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    rotatesImg:false,
+    rotatesImg: false,
     allowsRotation: false,
     rotationTotalAngle: 0,
 }

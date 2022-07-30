@@ -1,8 +1,8 @@
 //worst effect ever
-import {findValue} from "../logic/findValue.js";
+import {findValue} from "../../logic/findValue.js";
 import Jimp from "jimp";
-import {getImagePaths} from "../logic/getImagePaths.js";
-import {getRandomIntInclusive} from "../logic/random.js";
+import {getImagePaths} from "../../logic/getImagePaths.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
     times: {lower: 2, upper: 5},

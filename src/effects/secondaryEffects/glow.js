@@ -1,5 +1,5 @@
-import {findValue} from "../logic/findValue.js";
-import {getRandomIntInclusive} from "../logic/random.js";
+import {findValue} from "../../logic/findValue.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
     lowerRange: {lower: -20, upper: 0},

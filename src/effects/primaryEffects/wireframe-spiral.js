@@ -1,10 +1,10 @@
-import {getRandomIntInclusive, randomId} from "../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../logic/gobals.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
 import Jimp from "jimp";
 import fs from "fs";
-import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
-import {findValue} from "../logic/findValue.js";
+import {findPointByAngleAndCircle} from "../../logic/drawingMath.js";
+import {findValue} from "../../logic/findValue.js";
 
 
 const config = {
