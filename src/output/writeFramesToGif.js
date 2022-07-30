@@ -13,8 +13,6 @@ export const writeFramesToGif = async (frameFilenames, config) => {
 
         //Jimp to gif the frame then toss the frame into our in memory array of frames
         frames.push(new GifFrame(new BitmapImage(frame.bitmap)));
-
-        fs.unlinkSync(frameFilenames[f]);
     }
 
     const writeGif = async () => {
