@@ -22,7 +22,7 @@ const generate = () => {
 }
 
 const pixelate = async (data, img, currentFrame, totalFrames, card) => {
-    const pixelateGaston = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
+    const pixelateGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     await img.pixelate(pixelateGaston);
 }
 

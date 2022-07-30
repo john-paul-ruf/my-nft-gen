@@ -22,7 +22,7 @@ const generate = () => {
 }
 
 const posterize = async (data, img, currentFrame, totalFrames, card) => {
-    const posterizeGaston = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
+    const posterizeGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     await img.pixelate(posterizeGaston);
 }
 

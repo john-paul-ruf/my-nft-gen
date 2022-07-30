@@ -22,7 +22,7 @@ const generate = () => {
 }
 
 const blur = async (data, img, currentFrame, totalFrames, card) => {
-    const blurGaston = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
+    const blurGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     await img.blur(blurGaston);
 }
 
