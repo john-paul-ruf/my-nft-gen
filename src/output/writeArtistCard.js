@@ -9,7 +9,7 @@ export const writeArtistCard = (config, effects, finalImageEffects) => {
     config.processingTime = timeToString(rez);
 
     console.log("gif write start");
-    console.log(composeInfo(config, effects));
+    console.log(composeInfo(config, effects, finalImageEffects));
 
     fs.writeFileSync(config.fileOut + '.txt', composeInfo(config, effects, finalImageEffects), 'utf-8');
 

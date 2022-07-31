@@ -127,23 +127,17 @@ export const animate = async (config) => {
     // effects to each frame
     /////////////////////////
     const finalImageProcessing = async () => {
-        return new Promise(async (resolve, reject) => {
+        const finalEffects = [];
+        for (let f = 0; f < frameFilenames.length; f++) {
 
-            const finalEffects = [];
+            const frame = await Jimp.read(frameFilenames[f]);
 
-            for (let f = 0; f < frameFilenames.length; f++) {
-
-                const frame = await Jimp.read(frameFilenames[f]);
-
-                for (let e = 0; e < finalEffects.length; e++) {
-                    finalEffects.push(finalImageEffects[e].invokeEffect(frame, f, config.numberOfFrame));
-                }
+            for (let e = 0; e < finalEffects.length; e++) {
+                await finalImageEffects[e].invokeEffect(frame, f, config.numberOfFrame);
             }
 
-            Promise.all(finalEffects).then(() => {
-                resolve();
-            });
-        });
+            frame.write(config.finalFileName + '_frame_' + f.toString() + randomId() + '.png')
+        }
     }
 
     await finalImageProcessing();

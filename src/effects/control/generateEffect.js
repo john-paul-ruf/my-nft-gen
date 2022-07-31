@@ -22,6 +22,7 @@ import {blurEffect} from "../finalImageEffects/blur.js";
 import {pixelateEffect} from "../finalImageEffects/pixelate.js";
 import {sepiaEffect} from "../finalImageEffects/sepia.js";
 import {posterizeEffect} from "../finalImageEffects/posterize.js";
+import {glitchDrumrollHorizontalWaveEffect} from "../finalImageEffects/glitchDrumrollHorizontalWave.js";
 
 const primaryEffects = [
     /*animateBackgroundEffect*/,
@@ -53,7 +54,8 @@ const finalImageEffects = [
     blurEffect,
     pixelateEffect,
     sepiaEffect,
-    posterizeEffect
+    posterizeEffect,
+    glitchDrumrollHorizontalWaveEffect
 ]
 
 const generateEffects = (possibleEffectList, allowRotate = false) => {
