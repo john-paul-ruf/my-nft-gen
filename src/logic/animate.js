@@ -1,7 +1,6 @@
 import Jimp from "jimp";
 import {timeLeft} from "./timeLeft.js";
-import {generateEffects} from "../effects/control/generateEffect.js";
-import {primaryEffects} from "../effects/control/possibleEffects.js";
+import {generatePrimaryEffect} from "../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
 import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 import {randomId} from "./random.js";
@@ -23,7 +22,7 @@ export const animate = async (config) => {
     //This determines the final image contents
     //The effect array is super important
     //Understanding effects is key to running this program.
-    const effects = generateEffects(primaryEffects);
+    const effects = generatePrimaryEffect();
 
     console.log(composeInfo(config, effects));
 

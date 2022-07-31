@@ -1,7 +1,59 @@
 import {getRandomIntExclusive} from "../../logic/random.js";
 import {Effect} from './Effect.js';
+import {verticalScanLinesEffect} from "../primaryEffects/verticalScanLines.js";
+import {hexEffect} from "../primaryEffects/hex.js";
+import {wireframeSpiralEffect} from "../primaryEffects/wireframe-spiral.js";
+import {backdropEffect} from "../primaryEffects/backdrop.js";
+import {rippleEffect} from "../primaryEffects/ripples.js";
+import {fuzzyRippleEffect} from "../primaryEffects/fuzzy-ripples.js";
+import {fuzzEffect} from "../primaryEffects/fuzz.js";
+import {fuzzBandsEffect} from "../primaryEffects/fuzzBands.js";
+import {gatesEffect} from "../primaryEffects/gates.js";
+import {ampEffect} from "../primaryEffects/amp.js";
+import {summonEffect} from "../primaryEffects/summons.js";
+import {viewportEffect} from "../primaryEffects/viewport.js";
+import {sigEffect} from "../primaryEffects/sig.js";
+import {radiateEffect} from "../secondaryEffects/radiate.js";
+import {randomizeEffect} from "../secondaryEffects/randomize.js";
+import {glowEffect} from "../secondaryEffects/glow.js";
+import {fadeEffect} from "../secondaryEffects/fade.js";
+import {rotateEffect} from "../secondaryEffects/rotate.js";
+import {blurEffect} from "../secondaryEffects/blur.js";
+import {pixelateEffect} from "../secondaryEffects/pixelate.js";
+import {sepiaEffect} from "../secondaryEffects/sepia.js";
+import {posterizeEffect} from "../secondaryEffects/posterize.js";
 
-export const generateEffects = (possibleEffectList, allowRotate) => {
+const primaryEffects = [
+    /*animateBackgroundEffect*/,
+    verticalScanLinesEffect,
+    hexEffect,
+    wireframeSpiralEffect,
+    backdropEffect,
+    rippleEffect,
+    fuzzyRippleEffect,
+    fuzzEffect,
+    fuzzBandsEffect,
+    gatesEffect,
+    ampEffect,
+    summonEffect,
+    viewportEffect,
+    sigEffect
+];
+
+//Possible effect to apply to the main effects found in the possibleEffects array found above
+const secondaryEffects = [
+    radiateEffect,
+    randomizeEffect,
+    glowEffect,
+    fadeEffect,
+    rotateEffect,
+    blurEffect,
+    pixelateEffect,
+    sepiaEffect,
+    posterizeEffect
+];
+
+const generateEffects = (possibleEffectList, allowRotate = false) => {
     const effectList = [];
 
     //For each effect in the possible effects list.
@@ -20,4 +72,12 @@ export const generateEffects = (possibleEffectList, allowRotate) => {
     )
 
     return effectList;
+}
+
+export const generatePrimaryEffect = () => {
+    return generateEffects(primaryEffects)
+}
+
+export const applySecondaryEffect = (allowRotate) => {
+    return generateEffects(secondaryEffects, allowRotate)
 }
