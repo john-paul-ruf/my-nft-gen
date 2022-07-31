@@ -34,7 +34,7 @@ export const posterizeEffect = {
     name: 'posterize',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 10,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,

@@ -1,19 +1,19 @@
 import {findValue} from "../../logic/findValue.js";
-import {getRandomIntInclusive, randomNumber} from "../../logic/random.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 import {IMAGESIZE} from "../../logic/gobals.js";
 
 const config = {
-    lowerRange: {lower: 1, upper: 1.5}, upperRange: {lower: 1.5, upper: 2}, times: {lower: 1, upper: 10},
+    lowerRange: {lower: 1, upper: 1}, upperRange: {lower: 2, upper: 2}, times: {lower: 1, upper: 2},
 }
 
 const generate = () => {
 
     const data = {
-        lower: randomNumber(config.lowerRange.lower, config.lowerRange.upper),
-        upper: randomNumber(config.upperRange.lower, config.upperRange.upper),
+        lower: getRandomIntInclusive(config.lowerRange.lower, config.lowerRange.upper),
+        upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
         getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name}: ${data.times} times, ${data.lower.toFixed(2)} to ${data.upper.toFixed(2)}`
+            return `${glitchDrumrollHorizontalWaveEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
         }
     }
     return data;
@@ -53,7 +53,7 @@ export const glitchDrumrollHorizontalWaveEffect = {
     name: 'glitch drumroll horizontal wave',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 50,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,

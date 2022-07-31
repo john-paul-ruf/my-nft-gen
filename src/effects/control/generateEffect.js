@@ -23,6 +23,8 @@ import {pixelateEffect} from "../finalImageEffects/pixelate.js";
 import {sepiaEffect} from "../finalImageEffects/sepia.js";
 import {posterizeEffect} from "../finalImageEffects/posterize.js";
 import {glitchDrumrollHorizontalWaveEffect} from "../finalImageEffects/glitchDrumrollHorizontalWave.js";
+import {glitchFractalEffect} from "../finalImageEffects/glitchFractal.js";
+import {glitchInverseEffect} from "../finalImageEffects/glitchInverse.js";
 
 const primaryEffects = [
     /*animateBackgroundEffect*/,
@@ -55,7 +57,9 @@ const finalImageEffects = [
     pixelateEffect,
     sepiaEffect,
     posterizeEffect,
-    glitchDrumrollHorizontalWaveEffect
+    glitchInverseEffect,
+    glitchFractalEffect,
+    glitchDrumrollHorizontalWaveEffect,
 ]
 
 const generateEffects = (possibleEffectList, allowRotate = false) => {

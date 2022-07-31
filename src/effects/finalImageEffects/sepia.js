@@ -23,7 +23,7 @@ export const sepiaEffect = {
     name: 'sepia',
     generateData: generate,
     effect: effect,
-    effectChance: 0, //not a fan
+    effectChance: 10, //not a fan
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,
