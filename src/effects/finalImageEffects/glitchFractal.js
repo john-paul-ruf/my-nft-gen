@@ -14,11 +14,17 @@ const glitchFractal = async (data, img, currentFrame, totalFrames, card) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/fractal.js
     /////////////////////
-    for (let i = img.bitmap.data.length; i; i--) {
-        if (parseInt(img.bitmap.data[(i * 2) % img.bitmap.data.length], 10) < parseInt(img.bitmap.data[i], 10)) {
-            img.bitmap.data[i] = img.bitmap.data[(i * 2) % img.bitmap.data.length];
+    function randRange(a, b) {
+        return Math.round(Math.random() * b) + a;
+    }
+
+    let m = randRange(2, 8);
+    for (let j = 0; j < img.bitmap.data.length; j++) {
+        if (parseInt(img.bitmap.data[(j * m) % img.bitmap.data.length], 10) < parseInt(img.bitmap.data[j], 10)) {
+            img.bitmap.data[j] = img.bitmap.data[(j * m) % img.bitmap.data.length];
         }
     }
+
 }
 
 export const effect = {
@@ -29,7 +35,7 @@ export const glitchFractalEffect = {
     name: 'glitch fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 100,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,

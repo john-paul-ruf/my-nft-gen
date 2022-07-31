@@ -14,9 +14,11 @@ const glitchInverse = async (data, img, currentFrame, totalFrames, card) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/inverse.js
     /////////////////////
-    for (let i = 0; i < img.bitmap.data.length; i++) {
-        img.bitmap.data[i] = ~img.bitmap.data[i] | 0xFF000000;
+    const imgData = new Uint32Array(img.bitmap.data);
+    for (let i = 0; i < data.length; i++) {
+        imgData[i] = ~imgData[i] | 0xFF000000;
     }
+    img.bitmap.data = new Buffer(imgData);
 }
 
 export const effect = {
@@ -27,7 +29,7 @@ export const glitchInverseEffect = {
     name: 'glitch inverse',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 100,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,
