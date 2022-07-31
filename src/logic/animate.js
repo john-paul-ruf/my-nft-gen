@@ -100,8 +100,11 @@ export const animate = async (config) => {
             })
         }
 
-        for (let f = 0; f < frameFilenames.length; f++) {
-            await finalImageEffects[e].invokeEffect(background, f, config.numberOfFrame);
+        ////////////////////////
+        // apply final image effects one at a time
+        ////////////////////////
+        for (let e = 0; e < finalImageEffects.length; e++) {
+            await finalImageEffects[e].invokeEffect(background, frameNumber, config.numberOfFrame);
         }
 
         //////////////////////
