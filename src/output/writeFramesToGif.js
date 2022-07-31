@@ -14,8 +14,8 @@ export const writeFramesToGif = async (frameFilenames, config) => {
     }
 
     const writeGif = async () => {
-        return new Promise((resolve, reject) => {
-            GifUtil.write(config.fileOut + '.gif', frames).then(gif => {
+        return new Promise((resolve) => {
+            GifUtil.write(config.fileOut + '.gif', frames).then(() => {
                 console.log("gif written");
                 resolve();
             });

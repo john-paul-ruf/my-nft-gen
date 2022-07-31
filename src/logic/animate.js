@@ -55,7 +55,7 @@ export const animate = async (config) => {
         //Process the main and secondary effects
         ////////////////////////////
         const processFrame = async () => {
-            return new Promise(async (resolve, reject) => {
+            return new Promise(async (resolve) => {
 
                 //Queue up the main layer effect to process together
                 const mainLayeredEffects = [];

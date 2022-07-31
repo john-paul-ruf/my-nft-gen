@@ -13,7 +13,7 @@ export const writeToMp4 = async (frameFilenames, config) => {
     const maker = ffmpeg().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path)
 
     const writeMp4 = async () => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             maker
                 .size(IMAGESIZE.toString() + 'x' + IMAGESIZE.toString())
                 .input(config.fileOut + '.gif')
