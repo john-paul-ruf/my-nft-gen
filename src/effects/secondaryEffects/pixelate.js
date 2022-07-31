@@ -2,8 +2,8 @@ import {findValue} from "../../logic/findValue.js";
 import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
-    lowerRange: {lower: 1, upper: 1},
-    upperRange: {lower: 2, upper: 3},
+    lowerRange: {lower: 1, upper: 5},
+    upperRange: {lower: 5, upper: 10},
     times: {lower: 1, upper: 4},
 }
 
@@ -15,7 +15,7 @@ const generate = () => {
             upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
             times: getRandomIntInclusive(config.times.lower, config.times.upper),
             getInfo: () => {
-                return `${pixelateEffect.name}: ${data.times} times, ${data.lower.toFixed(3)} to ${data.upper.toFixed(3)}`
+                return `${pixelateEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
             }
         }
     return data;
