@@ -100,6 +100,10 @@ export const animate = async (config) => {
             })
         }
 
+        for (let f = 0; f < frameFilenames.length; f++) {
+            await finalImageEffects[e].invokeEffect(background, f, config.numberOfFrame);
+        }
+
         //////////////////////
         // write to disk
         // still can run multiple instances at once
@@ -121,26 +125,6 @@ export const animate = async (config) => {
         timeLeft(config.startTime, f, config.frameInc, config.numberOfFrame);
         console.log("completed " + f.toString() + " frame");
     }
-
-    /////////////////////////
-    // Apply final image
-    // effects to each frame
-    /////////////////////////
-    const finalImageProcessing = async () => {
-        const finalEffects = [];
-        for (let f = 0; f < frameFilenames.length; f++) {
-
-            const frame = await Jimp.read(frameFilenames[f]);
-
-            for (let e = 0; e < finalEffects.length; e++) {
-                await finalImageEffects[e].invokeEffect(frame, f, config.numberOfFrame);
-            }
-
-            frame.write(config.finalFileName + '_frame_' + f.toString() + randomId() + '.png')
-        }
-    }
-
-    await finalImageProcessing();
 
     ////////////////////////
     //WRITE TO FILE
