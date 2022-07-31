@@ -1,25 +1,39 @@
 import {IMAGESIZE} from "../../logic/gobals.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
+import {findValue} from "../../logic/findValue.js";
 
-const generate = () => {
-    return {
-        getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name}`
-        }
-    };
+const config = {
+    lowerRange: {lower: 100, upper: 150},
+    upperRange: {lower: 150, upper: 300},
+    times: {lower: 1, upper: 4},
 }
 
-const glitchDrumrollHorizontalWave = async (data, img) => {
+const generate = () => {
+
+    const data = {
+        lower: getRandomIntInclusive(config.lowerRange.lower, config.lowerRange.upper),
+        upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
+        times: getRandomIntInclusive(config.times.lower, config.times.upper),
+        getInfo: () => {
+            return `${glitchDrumrollHorizontalWaveEffect.name} ${data.times} times, ${data.lower} to ${data.upper}`
+        }
+    }
+    return data;
+}
+
+const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames) => {
+
+    const theRollGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame))
 
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
     // borrowed from https://github.com/ninoseki/glitched-canvas & modified with cosine
     for (let x = 0; x < IMAGESIZE; x++) {
-        const roll = Math.floor(Math.cos(x) * (IMAGESIZE * 2))
         for (let y = 0; y < IMAGESIZE; y++) {
             let idx = (x + y * IMAGESIZE) * 4;
 
-            let x2 = x + roll;
+            let x2 = x + theRollGaston;
             if (x2 > IMAGESIZE - 1) x2 -= IMAGESIZE;
             let idx2 = (x2 + y * IMAGESIZE) * 4;
 
