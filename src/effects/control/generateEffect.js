@@ -18,10 +18,10 @@ import {randomizeEffect} from "../secondaryEffects/randomize.js";
 import {glowEffect} from "../secondaryEffects/glow.js";
 import {fadeEffect} from "../secondaryEffects/fade.js";
 import {rotateEffect} from "../secondaryEffects/rotate.js";
-import {blurEffect} from "../secondaryEffects/blur.js";
-import {pixelateEffect} from "../secondaryEffects/pixelate.js";
-import {sepiaEffect} from "../secondaryEffects/sepia.js";
-import {posterizeEffect} from "../secondaryEffects/posterize.js";
+import {blurEffect} from "../finalImageEffects/blur.js";
+import {pixelateEffect} from "../finalImageEffects/pixelate.js";
+import {sepiaEffect} from "../finalImageEffects/sepia.js";
+import {posterizeEffect} from "../finalImageEffects/posterize.js";
 
 const primaryEffects = [
     /*animateBackgroundEffect*/,
@@ -47,11 +47,14 @@ const secondaryEffects = [
     glowEffect,
     fadeEffect,
     rotateEffect,
+];
+
+const finalImageEffects = [
     blurEffect,
     pixelateEffect,
     sepiaEffect,
     posterizeEffect
-];
+]
 
 const generateEffects = (possibleEffectList, allowRotate = false) => {
     const effectList = [];
@@ -74,10 +77,15 @@ const generateEffects = (possibleEffectList, allowRotate = false) => {
     return effectList;
 }
 
-export const generatePrimaryEffect = () => {
+export const generatePrimaryEffects = () => {
     return generateEffects(primaryEffects)
 }
 
-export const applySecondaryEffect = (allowRotate) => {
+export const applySecondaryEffects = (allowRotate) => {
     return generateEffects(secondaryEffects, allowRotate)
+}
+
+
+export const generateFinalImageEffects = () => {
+    return generateEffects(finalImageEffects)
 }

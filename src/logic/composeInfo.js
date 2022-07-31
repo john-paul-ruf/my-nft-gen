@@ -6,7 +6,7 @@ import {DISTANCE, HUE, IMAGESIZE, SCHEME, VARIATION} from "./gobals.js";
  * @param effects - we call get info to get their part of the art card
  * @returns {string} - the final art card
  */
-export const composeInfo = (config, effects) => {
+export const composeInfo = (config, effects, finalImageEffects) => {
 
     //This function makes use of the newline character \n and spaces for formatting
     //https://stackoverflow.com/questions/1155678/what-is-the-javascript-string-newline-character
@@ -29,7 +29,7 @@ export const composeInfo = (config, effects) => {
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     const info =
-        `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}\nDistance: ${DISTANCE.toFixed(2)}\nImage Size: ${IMAGESIZE}x${IMAGESIZE} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}`
+        `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}\nDistance: ${DISTANCE.toFixed(2)}\nImage Size: ${IMAGESIZE}x${IMAGESIZE} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
 
     return info;
 

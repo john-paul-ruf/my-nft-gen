@@ -1,6 +1,6 @@
 import Jimp from "jimp";
 import {timeLeft} from "./timeLeft.js";
-import {generatePrimaryEffect} from "../effects/control/generateEffect.js";
+import {generateFinalImageEffects, generatePrimaryEffects} from "../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
 import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
 import {randomId} from "./random.js";
@@ -22,9 +22,10 @@ export const animate = async (config) => {
     //This determines the final image contents
     //The effect array is super important
     //Understanding effects is key to running this program.
-    const effects = generatePrimaryEffect();
+    const effects = generatePrimaryEffects();
+    const finalImageEffects = generateFinalImageEffects();
 
-    console.log(composeInfo(config, effects));
+    console.log(composeInfo(config, effects, finalImageEffects));
 
     /**
      * @param frameNumber - The current frame we are on.
@@ -121,10 +122,36 @@ export const animate = async (config) => {
         console.log("completed " + f.toString() + " frame");
     }
 
+    /////////////////////////
+    // Apply final image
+    // effects to each frame
+    /////////////////////////
+    const finalImageProcessing = async () => {
+        return new Promise(async (resolve, reject) => {
+
+            const finalEffects = [];
+
+            for (let f = 0; f < frameFilenames.length; f++) {
+
+                const frame = await Jimp.read(frameFilenames[f]);
+
+                for (let e = 0; e < finalEffects.length; e++) {
+                    finalEffects.push(finalImageEffects[e].invokeEffect(frame, f, config.numberOfFrame));
+                }
+            }
+
+            Promise.all(finalEffects).then(() => {
+                resolve();
+            });
+        });
+    }
+
+    await finalImageProcessing();
+
     ////////////////////////
     //WRITE TO FILE
     ////////////////////////
-    await writeArtistCard(config, effects);
+    await writeArtistCard(config, effects, finalImageEffects);
     await writeToMp4(frameFilenames, config);
 
     for (let f = 0; f < frameFilenames.length; f++) {

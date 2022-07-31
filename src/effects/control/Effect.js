@@ -1,4 +1,4 @@
-import {applySecondaryEffect} from "./generateEffect.js";
+import {applySecondaryEffects} from "./generateEffect.js";
 
 
 ///////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ export class Effect {
         this.additionalEffects = []
         this.card = card;
         if (card.requiresLayer) {  //Does this effect qualify for additional effects?
-            this.additionalEffects = applySecondaryEffect(card.allowsRotation)  //Then pile them on
+            this.additionalEffects = applySecondaryEffects(card.allowsRotation)  //Then pile them on
         }
     }
 
