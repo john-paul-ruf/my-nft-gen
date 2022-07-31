@@ -22,7 +22,7 @@ const generate = () => {
 
 const glitchFractal = async (data, img, currentFrame, totalFrames) => {
 
-    let theRandomGaston = findValue(data.lower, data.upper, data.times, currentFrame, totalFrames);
+    let theRandomGaston = Math.floor(findValue(data.lower, data.upper, data.times, currentFrame, totalFrames));
 
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/fractal.js

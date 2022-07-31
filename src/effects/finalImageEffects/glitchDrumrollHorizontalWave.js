@@ -3,8 +3,9 @@ import {getRandomIntInclusive} from "../../logic/random.js";
 import {findValue} from "../../logic/findValue.js";
 
 const config = {
-    lowerRange: {lower: 100, upper: 150},
-    upperRange: {lower: 150, upper: 300},
+    lowerRange: {lower: 1000, upper: 1500},
+    upperRange: {lower: 1500, upper: 3000},
+    glitchChance: 85,
     times: {lower: 1, upper: 4},
 }
 
@@ -14,6 +15,7 @@ const generate = () => {
         lower: getRandomIntInclusive(config.lowerRange.lower, config.lowerRange.upper),
         upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
+        glitchChance: config.glitchChance,
         getInfo: () => {
             return `${glitchDrumrollHorizontalWaveEffect.name} ${data.times} times, ${data.lower} to ${data.upper}`
         }
@@ -25,6 +27,7 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
 
     const theRollGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame))
 
+
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -34,6 +37,12 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
             let idx = (x + y * IMAGESIZE) * 4;
 
             let x2 = x + theRollGaston;
+
+            const theGlitch = getRandomIntInclusive(0, 100);
+            if (theGlitch < data.glitchChance) {
+                x2 = x;
+            }
+
             if (x2 > IMAGESIZE - 1) x2 -= IMAGESIZE;
             let idx2 = (x2 + y * IMAGESIZE) * 4;
 
