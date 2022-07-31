@@ -29,7 +29,7 @@ export const glitchInverseEffect = {
     name: 'glitch inverse',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 20,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,

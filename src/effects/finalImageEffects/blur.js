@@ -34,7 +34,7 @@ export const blurEffect = {
     name: 'blur',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 5,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,
