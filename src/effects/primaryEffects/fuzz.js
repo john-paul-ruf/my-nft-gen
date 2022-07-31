@@ -42,7 +42,7 @@ const generate = () => {
     return data;
 }
 
-const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
+const fuzz = async (data, img) => {
     const ring = randomId() + '-ring.png';
     const fuzz = randomId() + '-fuzz.png';
 
@@ -91,7 +91,7 @@ const fuzz = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => fuzz(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => fuzz(data, img, currentFrame, totalFrames)
 }
 
 export const fuzzEffect = {

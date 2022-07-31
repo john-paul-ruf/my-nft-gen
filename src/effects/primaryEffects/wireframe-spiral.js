@@ -37,7 +37,7 @@ const generate = () => {
     return data;
 }
 
-const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) => {
+const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + '-wireframe-spiral.png';
     const underlayName = randomId() + '-wireframe-spiral-underlay.png';
 
@@ -120,7 +120,7 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames, card) =>
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => wireframeSpiral(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => wireframeSpiral(data, img, currentFrame, totalFrames)
 }
 
 export const wireframeSpiralEffect = {

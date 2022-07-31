@@ -1,16 +1,12 @@
-const config = {}
-
 const generate = () => {
-
-    const data = {
+    return {
         getInfo: () => {
             return `${glitchInverseEffect.name}`
         }
-    }
-    return data;
+    };
 }
 
-const glitchInverse = async (data, img, currentFrame, totalFrames, card) => {
+const glitchInverse = async (data, img) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/inverse.js
     /////////////////////
@@ -22,7 +18,7 @@ const glitchInverse = async (data, img, currentFrame, totalFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => glitchInverse(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => glitchInverse(data, img, currentFrame, totalFrames)
 }
 
 export const glitchInverseEffect = {

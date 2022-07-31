@@ -14,7 +14,7 @@ const generate = () => {
     return config;
 }
 
-const animateBackground = async (data, img, currentFrame, totalFrames, card) => {
+const animateBackground = async (data, img) => {
     for (let x = 0; x < 3000; x++) {
         for (let y = 0; y < 3000; y++) {
             const rando = getRandomIntInclusive(0, 20)
@@ -31,7 +31,7 @@ const animateBackground = async (data, img, currentFrame, totalFrames, card) => 
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => animateBackground(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => animateBackground(data, img, currentFrame, totalFrames)
 }
 
 export const animateBackgroundEffect = {

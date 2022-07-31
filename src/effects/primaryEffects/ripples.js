@@ -47,7 +47,7 @@ const generate = () => {
     return data;
 }
 
-const ripple = async (data, img, currentFrame, numberOfFrames, card) => {
+const ripple = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + '-ripple.png';
 
     const draw = async (stroke, filename) => {
@@ -93,7 +93,7 @@ const ripple = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => ripple(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => ripple(data, img, currentFrame, totalFrames)
 }
 
 export const rippleEffect = {

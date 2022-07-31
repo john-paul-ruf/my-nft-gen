@@ -1,22 +1,17 @@
-const config = {}
-
 const generate = () => {
-
-    const data =
-        {
-            getInfo: () => {
-                return `${sepiaEffect.name}`
-            }
+    return {
+        getInfo: () => {
+            return `${sepiaEffect.name}`
         }
-    return data;
+    };
 }
 
-const sepia = async (data, img, currentFrame, totalFrames, card) => {
+const sepia = async (data, img) => {
     await img.sepia();
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => sepia(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => sepia(data, img, currentFrame, totalFrames)
 }
 
 export const sepiaEffect = {

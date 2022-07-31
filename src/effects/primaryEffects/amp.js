@@ -30,7 +30,7 @@ const generate = () => {
     return data;
 }
 
-const amp = async (data, img, currentFrame, numberOfFrames, card) => {
+const amp = async (data, img) => {
     const drawing = randomId() + '-amp.png';
 
     const draw = async (stroke, filename) => {
@@ -58,7 +58,7 @@ const amp = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => amp(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => amp(data, img, currentFrame, totalFrames)
 }
 
 export const ampEffect = {

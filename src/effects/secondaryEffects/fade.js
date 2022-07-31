@@ -21,13 +21,13 @@ const generate = () => {
     return data;
 }
 
-const fadeAnimated = async (data, img, currentFrame, totalFrames, card) => {
+const fadeAnimated = async (data, img, currentFrame, totalFrames) => {
     const opacity = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
     await img.opacity(opacity);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => fadeAnimated(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => fadeAnimated(data, img, currentFrame, totalFrames)
 }
 
 export const fadeEffect = {

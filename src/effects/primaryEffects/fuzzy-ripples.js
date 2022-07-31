@@ -47,7 +47,7 @@ const generate = () => {
     return data;
 }
 
-const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
+const fuzzyRipple = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + 'fuzzy-ripple.png';
     const underlayName = randomId() + 'blur-fuzzy-ripple.png';
     const draw = async (stroke, filename, accentBoost) => {
@@ -111,7 +111,7 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => fuzzyRipple(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => fuzzyRipple(data, img, currentFrame, totalFrames)
 }
 
 export const fuzzyRippleEffect = {

@@ -49,7 +49,7 @@ const generate = () => {
     return data;
 }
 
-const viewport = async (data, img, currentFrame, numberOfFrames, card) => {
+const viewport = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + '-viewport.png';
 
     const draw = async (stroke, filename) => {
@@ -79,7 +79,7 @@ const viewport = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => viewport(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => viewport(data, img, currentFrame, totalFrames)
 }
 
 export const viewportEffect = {

@@ -46,7 +46,7 @@ const generate = () => {
     return data;
 }
 
-const addBackdrop = async (data, img, currentFrame, numberOfFrames, card) => {
+const addBackdrop = async (data, img) => {
 
     let overlay = await Jimp.read(data.backdrop);
 
@@ -57,7 +57,7 @@ const addBackdrop = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => addBackdrop(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => addBackdrop(data, img, currentFrame, totalFrames)
 }
 
 export const backdropEffect = {

@@ -21,13 +21,13 @@ const generate = () => {
     return data;
 }
 
-const pixelate = async (data, img, currentFrame, totalFrames, card) => {
+const pixelate = async (data, img, currentFrame, totalFrames) => {
     const pixelateGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     await img.pixelate(pixelateGaston);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => pixelate(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => pixelate(data, img, currentFrame, totalFrames)
 }
 
 export const pixelateEffect = {

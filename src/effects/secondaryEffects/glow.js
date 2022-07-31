@@ -20,13 +20,13 @@ const generate = () => {
     return data;
 }
 
-const glowAnimated = async (data, img, currentFrame, totalFrames, card) => {
+const glowAnimated = async (data, img, currentFrame, totalFrames) => {
     const hue = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
     await img.color([{apply: 'hue', params: [hue]}]);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => glowAnimated(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => glowAnimated(data, img, currentFrame, totalFrames)
 }
 
 export const glowEffect = {

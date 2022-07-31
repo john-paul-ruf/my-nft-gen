@@ -40,7 +40,7 @@ const generate = () => {
     return data;
 }
 
-const hex = async (data, img, currentFrame, numberOfFrames, card) => {
+const hex = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + 'hex.png';
     const underlayName = randomId() + 'hex-accent.png';
 
@@ -104,7 +104,7 @@ const hex = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => hex(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => hex(data, img, currentFrame, totalFrames)
 }
 
 export const hexEffect = {

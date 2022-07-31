@@ -24,7 +24,7 @@ const generate = () => {
     return data;
 }
 
-const radiate = async (data, img, currentFrame, totalFrames, card) => {
+const radiate = async (data, img, currentFrame, totalFrames) => {
 
     const alpha = Math.ceil(findValue(128, 255, data.times, totalFrames, currentFrame));
     let overlay = new Jimp(img.bitmap.width, img.bitmap.height);
@@ -50,7 +50,7 @@ const radiate = async (data, img, currentFrame, totalFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => radiate(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => radiate(data, img, currentFrame, totalFrames)
 }
 
 export const radiateEffect = {

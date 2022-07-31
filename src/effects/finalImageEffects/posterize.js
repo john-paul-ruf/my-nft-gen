@@ -21,13 +21,13 @@ const generate = () => {
     return data;
 }
 
-const posterize = async (data, img, currentFrame, totalFrames, card) => {
+const posterize = async (data, img, currentFrame, totalFrames) => {
     const posterizeGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     await img.pixelate(posterizeGaston);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => posterize(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => posterize(data, img, currentFrame, totalFrames)
 }
 
 export const posterizeEffect = {

@@ -46,7 +46,7 @@ const generate = () => {
     return data;
 }
 
-const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
+const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
     const ring = randomId() + '-fuzzy-band.png';
     const fuzz = randomId() + '-fuzzy-band-underlay.png';
 
@@ -96,7 +96,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => fuzzBands(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => fuzzBands(data, img, currentFrame, totalFrames)
 }
 
 export const fuzzBandsEffect = {

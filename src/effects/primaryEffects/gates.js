@@ -47,7 +47,7 @@ const generate = () => {
     return data;
 }
 
-const gates = async (data, img, currentFrame, numberOfFrames, card) => {
+const gates = async (data, img, currentFrame, numberOfFrames) => {
     const drawing = randomId() + '-gate.png';
     const underlayName = randomId() + 'gate-accent.png';
 
@@ -96,7 +96,7 @@ const gates = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => gates(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => gates(data, img, currentFrame, totalFrames)
 }
 
 export const gatesEffect = {

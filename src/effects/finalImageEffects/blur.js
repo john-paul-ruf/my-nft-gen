@@ -21,13 +21,13 @@ const generate = () => {
     return data;
 }
 
-const blur = async (data, img, currentFrame, totalFrames, card) => {
+const blur = async (data, img, currentFrame, totalFrames) => {
     const blurGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     await img.blur(blurGaston);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => blur(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => blur(data, img, currentFrame, totalFrames)
 }
 
 export const blurEffect = {

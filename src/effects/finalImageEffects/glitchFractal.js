@@ -1,16 +1,12 @@
-const config = {}
-
 const generate = () => {
-
-    const data = {
+    return {
         getInfo: () => {
             return `${glitchFractalEffect.name}`
         }
-    }
-    return data;
+    };
 }
 
-const glitchFractal = async (data, img, currentFrame, totalFrames, card) => {
+const glitchFractal = async (data, img) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/fractal.js
     /////////////////////
@@ -28,7 +24,7 @@ const glitchFractal = async (data, img, currentFrame, totalFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => glitchFractal(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => glitchFractal(data, img, currentFrame, totalFrames)
 }
 
 export const glitchFractalEffect = {

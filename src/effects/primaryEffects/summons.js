@@ -46,7 +46,7 @@ const generate = () => {
     return data;
 }
 
-const addSummon = async (data, img, currentFrame, numberOfFrames, card) => {
+const addSummon = async (data, img) => {
 
     let overlay = await Jimp.read(data.summon);
 
@@ -56,7 +56,7 @@ const addSummon = async (data, img, currentFrame, numberOfFrames, card) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames, card) => addSummon(data, img, currentFrame, totalFrames, card)
+    invoke: (data, img, currentFrame, totalFrames) => addSummon(data, img, currentFrame, totalFrames)
 }
 
 export const summonEffect = {
