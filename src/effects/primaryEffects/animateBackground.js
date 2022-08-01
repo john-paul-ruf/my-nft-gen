@@ -7,7 +7,10 @@ const config = {
     height: IMAGESIZE,
     color1: getNeutralFromBucket(),
     color2: getNeutralFromBucket(),
-    color3: getColorFromBucket()
+    color3: getColorFromBucket(),
+    getInfo: () => {
+        return `${animateBackgroundEffect.name}`
+    }
 }
 
 const generate = () => {
@@ -35,7 +38,7 @@ export const effect = {
 }
 
 export const animateBackgroundEffect = {
-    name: 'static',
+    name: 'static background',
     generateData: generate,
     effect: effect,
     effectChance: 50,
