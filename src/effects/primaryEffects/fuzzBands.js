@@ -50,7 +50,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
     const ring = randomId() + '-fuzzy-band.png';
     const fuzz = randomId() + '-fuzzy-band-underlay.png';
 
-    const draw = async (stroke, filename, accentBoost) => {
+    const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
 
@@ -64,11 +64,11 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(config.ringStroke, ring);
+    await draw(ring);
     await draw(data.fuzzFactor + config.ringStroke, fuzz, 0);
 
     const theAccentGaston = findValue(0, 5, 1, numberOfFrames, currentFrame);
-    await draw(config.ringStroke, fuzz, theAccentGaston);
+    await draw(fuzz, theAccentGaston);
 
     let fuzzImg = await Jimp.read(fuzz);
 

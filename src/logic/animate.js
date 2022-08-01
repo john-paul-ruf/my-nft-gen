@@ -132,7 +132,7 @@ export const animate = async (config) => {
     ////////////////////////
     //WRITE TO FILE
     ////////////////////////
-    await writeArtistCard(config, effects, finalImageEffects);
+    writeArtistCard(config, effects, finalImageEffects);
     await writeToMp4(frameFilenames, config);
 
     for (let f = 0; f < frameFilenames.length; f++) {

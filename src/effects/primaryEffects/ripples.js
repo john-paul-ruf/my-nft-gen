@@ -50,7 +50,7 @@ const generate = () => {
 const ripple = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + '-ripple.png';
 
-    const draw = async (stroke, filename) => {
+    const draw = async (filename) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
@@ -80,7 +80,7 @@ const ripple = async (data, img, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(config.ringStroke, imgName);
+    await draw(imgName);
 
     let tmpImg = await Jimp.read(imgName);
 

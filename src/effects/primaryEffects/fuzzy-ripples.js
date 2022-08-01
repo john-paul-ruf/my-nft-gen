@@ -50,7 +50,7 @@ const generate = () => {
 const fuzzyRipple = async (data, img, currentFrame, numberOfFrames) => {
     const imgName = randomId() + 'fuzzy-ripple.png';
     const underlayName = randomId() + 'blur-fuzzy-ripple.png';
-    const draw = async (stroke, filename, accentBoost) => {
+    const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
@@ -81,10 +81,10 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(config.ringStroke, imgName, 0);
+    await draw(imgName, 0);
 
     const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
-    await draw(config.ringStroke, underlayName, theAccentGaston);
+    await draw(underlayName, theAccentGaston);
 
     let underlayImg = await Jimp.read(underlayName);
 
