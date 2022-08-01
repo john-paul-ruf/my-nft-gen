@@ -13,7 +13,6 @@ import {ampEffect} from "../primaryEffects/amp.js";
 import {summonEffect} from "../primaryEffects/summons.js";
 import {viewportEffect} from "../primaryEffects/viewport.js";
 import {sigEffect} from "../primaryEffects/sig.js";
-import {radiateEffect} from "../secondaryEffects/radiate.js";
 import {randomizeEffect} from "../secondaryEffects/randomize.js";
 import {glowEffect} from "../secondaryEffects/glow.js";
 import {fadeEffect} from "../secondaryEffects/fade.js";
@@ -25,9 +24,10 @@ import {posterizeEffect} from "../finalImageEffects/posterize.js";
 import {glitchDrumrollHorizontalWaveEffect} from "../finalImageEffects/glitchDrumrollHorizontalWave.js";
 import {glitchFractalEffect} from "../finalImageEffects/glitchFractal.js";
 import {glitchInverseEffect} from "../finalImageEffects/glitchInverse.js";
+import {animateBackgroundEffect} from "../primaryEffects/animateBackground.js";
 
 const primaryEffects = [
-    /*animateBackgroundEffect*/,
+    animateBackgroundEffect,
     verticalScanLinesEffect,
     hexEffect,
     wireframeSpiralEffect,
@@ -45,7 +45,6 @@ const primaryEffects = [
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
 const secondaryEffects = [
-    radiateEffect,
     randomizeEffect,
     glowEffect,
     fadeEffect,
