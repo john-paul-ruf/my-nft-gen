@@ -18,7 +18,7 @@ const glitchInverse = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => glitchInverse(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => glitchInverse(data, img)
 }
 
 export const glitchInverseEffect = {

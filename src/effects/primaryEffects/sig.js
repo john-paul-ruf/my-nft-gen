@@ -56,7 +56,7 @@ const addSig = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => addSig(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => addSig(data, img)
 }
 
 export const sigEffect = {

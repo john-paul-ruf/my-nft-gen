@@ -34,7 +34,7 @@ const animateBackground = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => animateBackground(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => animateBackground(data, img)
 }
 
 export const animateBackgroundEffect = {

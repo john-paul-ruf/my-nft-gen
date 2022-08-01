@@ -58,7 +58,7 @@ const amp = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => amp(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => amp(data, img)
 }
 
 export const ampEffect = {

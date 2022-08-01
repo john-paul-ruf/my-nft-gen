@@ -11,7 +11,7 @@ const sepia = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => sepia(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => sepia(data, img)
 }
 
 export const sepiaEffect = {

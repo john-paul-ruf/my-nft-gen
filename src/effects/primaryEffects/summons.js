@@ -56,7 +56,7 @@ const addSummon = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => addSummon(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => addSummon(data, img)
 }
 
 export const summonEffect = {

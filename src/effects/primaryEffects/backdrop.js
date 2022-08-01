@@ -57,7 +57,7 @@ const addBackdrop = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => addBackdrop(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => addBackdrop(data, img)
 }
 
 export const backdropEffect = {

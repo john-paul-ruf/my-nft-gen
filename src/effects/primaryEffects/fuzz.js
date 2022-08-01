@@ -91,7 +91,7 @@ const fuzz = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => fuzz(data, img, currentFrame, totalFrames)
+    invoke: (data, img) => fuzz(data, img)
 }
 
 export const fuzzEffect = {
