@@ -42,13 +42,9 @@ const glitchFractal = async (data, img, currentFrame, totalFrames) => {
 
     await underlay.opacity(0.4);
 
-    await underlay.composite(img, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
+    await img.composite(underlay, 0, 0, {
+        mode: Jimp.BLEND_DESTINATION_OVER,
     });
-
-    await underlay.writeAsync(filename);
-
-    img = await Jimp.read(filename);
 
     fs.unlinkSync(filename);
 }
