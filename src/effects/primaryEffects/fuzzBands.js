@@ -64,8 +64,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(ring);
-    await draw(fuzz, data.fuzzFactor + config.ringStroke;
+    await draw(ring, 0);
 
     const theAccentGaston = findValue(0, 5, 1, numberOfFrames, currentFrame);
     await draw(fuzz, theAccentGaston);
