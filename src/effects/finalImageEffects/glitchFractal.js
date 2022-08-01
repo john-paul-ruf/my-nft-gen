@@ -40,7 +40,7 @@ const glitchFractal = async (data, img, currentFrame, totalFrames) => {
     const theBlurGaston = Math.ceil(findValue(1, 3, data.times, totalFrames, currentFrame));
     await underlay.blur(theBlurGaston);
 
-    await underlay.opacity(0.25);
+    await underlay.opacity(0.4);
 
     await underlay.composite(img, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -49,7 +49,7 @@ const glitchFractal = async (data, img, currentFrame, totalFrames) => {
     await underlay.writeAsync(filename);
 
     img = await Jimp.read(filename);
-    
+
     fs.unlinkSync(filename);
 }
 
