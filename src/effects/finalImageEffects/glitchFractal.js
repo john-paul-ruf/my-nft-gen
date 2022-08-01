@@ -32,7 +32,7 @@ const glitchFractal = async (data, img, currentFrame, totalFrames) => {
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/fractal.js
     /////////////////////
     for (let j = 0; j < underlay.bitmap.data.length; j++) {
-        if (parseInt(underlay.bitmap.data[(j * underlay.theRandom) % underlay.bitmap.data.length], 10) < parseInt(underlay.bitmap.data[j], 10)) {
+        if (parseInt(underlay.bitmap.data[(j * data.theRandom) % underlay.bitmap.data.length], 10) < parseInt(underlay.bitmap.data[j], 10)) {
             underlay.bitmap.data[j] = underlay.bitmap.data[(j * data.theRandom) % underlay.bitmap.data.length];
         }
     }
