@@ -1,4 +1,7 @@
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import Jimp from "jimp";
+import {findValue} from "../../logic/findValue.js";
+import fs from "fs";
 
 const config = {
     theRandom: {lower: 2, upper: 10},
@@ -17,16 +20,37 @@ const generate = () => {
     return data;
 }
 
-const glitchFractal = async (data, img) => {
+const glitchFractal = async (data, img, currentFrame, totalFrames) => {
+
+    const filename = 'fractal' + randomId() + '_underlay.png';
+
+    await img.writeAsync(filename);
+
+    const underlay = await Jimp.read(filename);
+
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/fractal.js
     /////////////////////
-    for (let j = 0; j < img.bitmap.data.length; j++) {
-        if (parseInt(img.bitmap.data[(j * data.theRandom) % img.bitmap.data.length], 10) < parseInt(img.bitmap.data[j], 10)) {
-            img.bitmap.data[j] = img.bitmap.data[(j * data.theRandom) % img.bitmap.data.length];
+    for (let j = 0; j < underlay.bitmap.data.length; j++) {
+        if (parseInt(underlay.bitmap.data[(j * underlay.theRandom) % underlay.bitmap.data.length], 10) < parseInt(underlay.bitmap.data[j], 10)) {
+            underlay.bitmap.data[j] = underlay.bitmap.data[(j * data.theRandom) % underlay.bitmap.data.length];
         }
     }
 
+    const theBlurGaston = Math.ceil(findValue(1, 3, data.times, totalFrames, currentFrame));
+    await underlay.blur(theBlurGaston);
+
+    await underlay.opacity(0.25);
+
+    await underlay.composite(img, 0, 0, {
+        mode: Jimp.BLEND_SOURCE_OVER,
+    });
+
+    await underlay.writeAsync(filename);
+
+    img = await Jimp.read(filename);
+    
+    fs.unlinkSync(filename);
 }
 
 export const effect = {
@@ -37,7 +61,7 @@ export const glitchFractalEffect = {
     name: 'glitch fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 40,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,

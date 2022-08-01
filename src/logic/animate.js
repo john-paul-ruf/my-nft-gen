@@ -112,7 +112,7 @@ export const animate = async (config) => {
         // still can run multiple instances at once
         /////////////////////
         const filename = config.finalFileName + '_frame_' + frameNumber.toString() + randomId() + '.png';
-        await background.write(filename);
+        await background.writeAsync(filename);
         frameFilenames.push(filename);
 
     }

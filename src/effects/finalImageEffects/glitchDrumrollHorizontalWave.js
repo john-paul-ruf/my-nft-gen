@@ -3,9 +3,9 @@ import {getRandomIntInclusive} from "../../logic/random.js";
 import {findValue} from "../../logic/findValue.js";
 
 const config = {
-    lowerRange: {lower: 1000, upper: 1500},
-    upperRange: {lower: 1500, upper: 3000},
-    glitchChance: 85,
+    lowerRange: {lower: 50, upper: 150},
+    upperRange: {lower: 350, upper: 450},
+    glitchChance: 25,
     times: {lower: 1, upper: 4},
 }
 
@@ -61,7 +61,7 @@ export const glitchDrumrollHorizontalWaveEffect = {
     name: 'glitch drumroll horizontal wave',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 40,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,
