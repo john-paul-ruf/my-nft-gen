@@ -36,7 +36,9 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
         for (let y = 0; y < IMAGESIZE; y++) {
             let idx = (x + y * IMAGESIZE) * 4;
 
-            let x2 = x + theRollGaston;
+            const roll = Math.floor(Math.cos(x) * theRollGaston)
+
+            let x2 = x + roll;
 
             const theGlitch = getRandomIntInclusive(0, 100);
             if (theGlitch < data.glitchChance) {
