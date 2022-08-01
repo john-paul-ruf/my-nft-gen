@@ -3,8 +3,8 @@ import {getRandomIntInclusive} from "../../logic/random.js";
 import {findValue} from "../../logic/findValue.js";
 
 const config = {
-    lowerRange: {lower: 50, upper: 150},
-    upperRange: {lower: 350, upper: 450},
+    lowerRange: {lower: 10, upper: 20},
+    upperRange: {lower: 30, upper: 40},
     glitchChance: 25,
     times: {lower: 1, upper: 4},
 }
