@@ -1,11 +1,12 @@
 import {IMAGESIZE} from "../../logic/gobals.js";
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {getRandomIntInclusive, randomNumber} from "../../logic/random.js";
 import {findValue} from "../../logic/findValue.js";
 
 const config = {
     lowerRange: {lower: 400, upper: 450},
     upperRange: {lower: 600, upper: 750},
-    rollFactor: {lower: -2, upper: 2},
+    rollFactorLower: {lower: -2, upper: -0.5},
+    rollFactorUpper: {lower: 0.5, upper: 2},
     glitchChance: 25,
     times: {lower: 1, upper: 4},
 }
@@ -37,7 +38,7 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
         for (let y = 0; y < IMAGESIZE; y++) {
             let idx = (x + y * IMAGESIZE) * 4;
 
-            const roll = Math.floor(data.rollFactor * theRollGaston)
+            const roll = Math.floor(randomNumber(config.rollFactorLower, config.rollFactorUpper) * theRollGaston)
 
             let x2 = x + roll;
 
