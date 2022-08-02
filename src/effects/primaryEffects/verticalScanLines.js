@@ -1,11 +1,11 @@
 import Jimp from "jimp";
 import {getRandomIntInclusive} from "../../logic/random.js";
-import {IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
     length: {lower: 5, upper: 25},
-    color: '#bdf379'
+    color: getColorFromBucket()
 }
 
 const generate = () => {
@@ -25,7 +25,7 @@ const generate = () => {
             const mtl = getRandomIntInclusive(config.length.lower, config.length.upper)
 
             lineInfo.push({
-                lineStart: getRandomIntInclusive(0, config.size),
+                lineStart: getRandomIntInclusive(0, IMAGESIZE),
                 maxTrailLength: mtl
             });
         }
@@ -42,10 +42,11 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
     const overlay = new Jimp(IMAGESIZE, IMAGESIZE)
 
     const drawLine = async (y, maxTrailLength) => {
+        const hex = Jimp.cssColorToHex(data.color)
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
-                await overlay.setPixelColor(data.color, x, curY)
+                await overlay.setPixelColor(hex, x, curY)
             }
         }
     }
@@ -61,7 +62,7 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
         await drawLine(y, data.lineInfo[i].maxTrailLength)
     }
 
-    await overlay.opacity(0.5);
+    await overlay.opacity(0.75);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -76,7 +77,7 @@ export const verticalScanLinesEffect = {
     name: 'scan lines',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 100,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,

@@ -2,7 +2,8 @@ import {IMAGESIZE} from "../../logic/gobals.js";
 import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
-    glitchChance: 3
+    glitchChance: 50,
+    glitchFactor: {lower: 0.5, upper: 0.1}
 }
 
 const generate = () => {
@@ -28,13 +29,12 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
         for (let y = 0; y < IMAGESIZE; y++) {
             let idx = (x + y * IMAGESIZE) * 4;
 
-            const roll = Math.floor(Math.cos(x) * (IMAGESIZE * 2))
-
-            let x2 = x + roll;
+            let x2 = x;
 
             const theGlitch = getRandomIntInclusive(0, 100);
             if (theGlitch < data.glitchChance) {
-                x2 = x;
+                const roll = Math.floor(Math.cos(x) * (IMAGESIZE * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
+                x2 = x + roll;
             }
 
             if (x2 > IMAGESIZE - 1) x2 -= IMAGESIZE;
@@ -57,7 +57,7 @@ export const glitchDrumrollHorizontalWaveEffect = {
     name: 'glitch drumroll horizontal wave',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 100,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,
