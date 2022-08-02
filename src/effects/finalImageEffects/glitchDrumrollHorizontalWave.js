@@ -3,8 +3,9 @@ import {getRandomIntInclusive} from "../../logic/random.js";
 import {findValue} from "../../logic/findValue.js";
 
 const config = {
-    lowerRange: {lower: 100, upper: 150},
-    upperRange: {lower: 200, upper: 250},
+    lowerRange: {lower: 400, upper: 450},
+    upperRange: {lower: 600, upper: 750},
+    rollFactor: {lower: -2, upper: 2},
     glitchChance: 25,
     times: {lower: 1, upper: 4},
 }
@@ -36,7 +37,7 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
         for (let y = 0; y < IMAGESIZE; y++) {
             let idx = (x + y * IMAGESIZE) * 4;
 
-            const roll = Math.floor(Math.cos(x) * theRollGaston)
+            const roll = Math.floor(data.rollFactor * theRollGaston)
 
             let x2 = x + roll;
 

@@ -26,8 +26,7 @@ const generate = () => {
 
             lineInfo.push({
                 lineStart: getRandomIntInclusive(0, config.size),
-                maxTrailLength: mtl,
-                pixelsPerGradient: mtl / 16,
+                maxTrailLength: mtl
             });
         }
         return lineInfo;
@@ -39,19 +38,15 @@ const generate = () => {
 }
 
 const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
-    const drawLine = async (y, maxTrailLength, pixelsPerGradient) => {
+
+    const overlay = new Jimp(IMAGESIZE, IMAGESIZE)
+
+    const drawLine = async (y, maxTrailLength) => {
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
-
-                let hex = data.color;
-                let upperRange = 3;
-                let gradientGroup = Math.floor((curY - rando) / pixelsPerGradient);
-                hex = hex + getRandomIntInclusive(gradientGroup < 15 ? gradientGroup : 15, gradientGroup + upperRange < 15 ? gradientGroup + upperRange : 15).toString(16)
-                    + getRandomIntInclusive(gradientGroup < 15 ? gradientGroup : 15, gradientGroup + upperRange < 15 ? gradientGroup + upperRange : 15).toString(16)
-
-                let color = Jimp.cssColorToHex(hex)
-                await img.setPixelColor(color, x, curY)
+                let color = Jimp.cssColorToHex(data.color)
+                await overlay.setPixelColor(color, x, curY)
             }
         }
     }
@@ -64,8 +59,14 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
             y = y - data.height
         }
 
-        await drawLine(y, data.lineInfo[i].maxTrailLength, data.lineInfo[i].pixelsPerGradient)
+        await drawLine(y, data.lineInfo[i].maxTrailLength)
     }
+
+    overlay.opacity(0.5);
+
+    await img.composite(overlay, 0, 0, {
+        mode: Jimp.BLEND_SOURCE_OVER,
+    });
 }
 
 export const effect = {
