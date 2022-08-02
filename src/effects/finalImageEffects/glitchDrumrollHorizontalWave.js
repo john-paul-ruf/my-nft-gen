@@ -1,44 +1,34 @@
 import {IMAGESIZE} from "../../logic/gobals.js";
-import {getRandomIntInclusive, randomNumber} from "../../logic/random.js";
-import {findValue} from "../../logic/findValue.js";
+import {getRandomIntInclusive} from "../../logic/random.js";
 
 const config = {
-    lowerRange: {lower: 400, upper: 450},
-    upperRange: {lower: 600, upper: 750},
-    rollFactorLower: {lower: -2, upper: -0.5},
-    rollFactorUpper: {lower: 0.5, upper: 2},
-    glitchChance: 25,
-    times: {lower: 1, upper: 4},
+    glitchChance: 3
 }
 
 const generate = () => {
 
     const data = {
-        lower: getRandomIntInclusive(config.lowerRange.lower, config.lowerRange.upper),
-        upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
-        times: getRandomIntInclusive(config.times.lower, config.times.upper),
         glitchChance: config.glitchChance,
         getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name} ${data.times} times, ${data.lower} to ${data.upper}`
+            return `${glitchDrumrollHorizontalWaveEffect.name}`
         }
     }
     return data;
 }
 
 const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames) => {
-
-    const theRollGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame))
-
-
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
     // borrowed from https://github.com/ninoseki/glitched-canvas & modified with cosine
+
+    const imgData = img.bitmap.data;
+
     for (let x = 0; x < IMAGESIZE; x++) {
         for (let y = 0; y < IMAGESIZE; y++) {
             let idx = (x + y * IMAGESIZE) * 4;
 
-            const roll = Math.floor(randomNumber(config.rollFactorLower, config.rollFactorUpper) * x * theRollGaston)
+            const roll = Math.floor(Math.cos(x) * (IMAGESIZE * 2))
 
             let x2 = x + roll;
 
@@ -51,10 +41,12 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
             let idx2 = (x2 + y * IMAGESIZE) * 4;
 
             for (let c = 0; c < 4; c++) {
-                img.bitmap.data[idx2 + c] = img.bitmap.data[idx + c];
+                imgData[idx2 + c] = imgData[idx + c];
             }
         }
     }
+
+    img.bitmap.data = new Buffer(imgData);
 }
 
 export const effect = {

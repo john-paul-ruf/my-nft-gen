@@ -45,8 +45,7 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
-                let color = Jimp.cssColorToHex(data.color)
-                await overlay.setPixelColor(color, x, curY)
+                await overlay.setPixelColor(data.color, x, curY)
             }
         }
     }
@@ -62,7 +61,7 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
         await drawLine(y, data.lineInfo[i].maxTrailLength)
     }
 
-    overlay.opacity(0.5);
+    await overlay.opacity(0.5);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
