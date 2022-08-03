@@ -1,6 +1,7 @@
 import Jimp from "jimp";
 import {getRandomIntInclusive} from "../../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {mapNumberToRange} from "../../logic/mapNumberToRange.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
@@ -42,10 +43,12 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
     const overlay = new Jimp(IMAGESIZE, IMAGESIZE)
 
     const drawLine = async (y, maxTrailLength) => {
-        const hex = Jimp.cssColorToHex(data.color)
+
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
+                const numberAlpha = Math.ceil(mapNumberToRange(curY, 0, maxTrailLength, 255, 0));
+                const hex = Jimp.cssColorToHex(data.color + numberAlpha.toString(16).padStart(2, '0'));
                 await overlay.setPixelColor(hex, x, curY)
             }
         }
