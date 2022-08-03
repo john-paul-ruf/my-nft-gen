@@ -57,7 +57,7 @@ export const glitchFractalEffect = {
     name: 'glitch fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 20,
     requiresLayer: false,
     rotatesImg: false,
     allowsRotation: false,
