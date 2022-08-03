@@ -10,10 +10,10 @@ import {findValue} from "../../logic/findValue.js";
 const config = {
     size: IMAGESIZE * 2,
     stroke: 2,
-    sparsityFactor: {lower: 5, upper: 15},
+    sparsityFactor: {lower: 3, upper: 8},
     speed: {lower: 1, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 5, upper: 25},
+    unitLength: {lower: 1, upper: 10},
 }
 
 const generate = () => {

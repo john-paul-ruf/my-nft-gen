@@ -47,8 +47,9 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
             for (let curY = y; curY >= rando; curY--) {
-                const numberAlpha = Math.ceil(mapNumberToRange(curY, 0, maxTrailLength, 255, 0));
-                const hex = Jimp.cssColorToHex(data.color + numberAlpha.toString(16).padStart(2, '0'));
+                const numberAlpha = Math.ceil(mapNumberToRange(curY - rando, 0, maxTrailLength, 255, 0));
+                const conversion = data.color.substring(0, 6) + numberAlpha.toString(16).padStart(2, '0');
+                const hex = Jimp.cssColorToHex(conversion);
                 await overlay.setPixelColor(hex, x, curY)
             }
         }
@@ -80,7 +81,7 @@ export const verticalScanLinesEffect = {
     name: 'scan lines',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 100,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,
