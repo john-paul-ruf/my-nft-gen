@@ -1,9 +1,12 @@
 import Jimp from "jimp";
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
-import {mapNumberToRange} from "../../logic/mapNumberToRange.js";
+import {createCanvas} from "canvas";
+import {drawGradientLine2d} from "../../draw/drawLine2d.js";
+import fs from "fs";
 
 const config = {
+    size: IMAGESIZE,
     lines: {lower: 4, upper: 8},
     length: {lower: 5, upper: 25},
     color: getColorFromBucket()
@@ -39,19 +42,15 @@ const generate = () => {
 }
 
 const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
+    const imgName = randomId() + '-vertical-scan-lines.png';
+    const canvas = createCanvas(config.size, config.size)
+    const context = canvas.getContext('2d');
 
-    const overlay = new Jimp(IMAGESIZE, IMAGESIZE)
 
     const drawLine = async (y, maxTrailLength) => {
-
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
-            for (let curY = y; curY >= rando; curY--) {
-                const numberAlpha = Math.ceil(mapNumberToRange(curY - rando, 0, maxTrailLength, 255, 0));
-                const conversion = data.color.substring(0, 6) + numberAlpha.toString(16).padStart(2, '0');
-                const hex = Jimp.cssColorToHex(conversion);
-                await overlay.setPixelColor(hex, x, curY)
-            }
+            drawGradientLine2d(context, {x: x, y: y}, {x: x, y: rando}, 1, data.color, data.color + '00')
         }
     }
 
@@ -66,7 +65,10 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
         await drawLine(y, data.lineInfo[i].maxTrailLength)
     }
 
-    await overlay.opacity(0.75);
+    const buffer = canvas.toBuffer('image/png');
+    fs.writeFileSync(imgName, buffer);
+
+    let overlay = await Jimp.read(imgName);
 
     await img.composite(overlay, 0, 0, {
         mode: Jimp.BLEND_SOURCE_OVER,
@@ -81,7 +83,7 @@ export const verticalScanLinesEffect = {
     name: 'scan lines',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 100,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,

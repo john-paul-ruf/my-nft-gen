@@ -13,7 +13,8 @@ const config = {
     sparsityFactor: {lower: 3, upper: 8},
     speed: {lower: 1, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 1, upper: 10},
+    unitLength: {lower: 10, upper: 30},
+    radiusConstant: 250,
 }
 
 const generate = () => {
@@ -45,12 +46,12 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
         let twistCount = 2;
-        let n1 = 250, n2 = 250, nextTerm;
-        nextTerm = n1 + n2;
+        let n1 = data.unitLength, n2 = data.unitLength;
+        let nextTerm = n1 + n2;
 
         const drawRay = (stroke, angle, radius, radiusNext, twist) => {
-            const start = findPointByAngleAndCircle(data.center, angle, radius)
-            const end = findPointByAngleAndCircle(data.center, angle + (twist * data.sparsityFactor), radiusNext);
+            const start = findPointByAngleAndCircle(data.center, angle, radius + config.radiusConstant)
+            const end = findPointByAngleAndCircle(data.center, angle + (twist * data.sparsityFactor), radiusNext + config.radiusConstant);
 
             context.beginPath();
 
@@ -127,7 +128,7 @@ export const wireframeSpiralEffect = {
     name: 'wireframe-spiral',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 100,
     requiresLayer: true,
     rotatesImg: false,
     allowsRotation: false,
