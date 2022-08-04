@@ -2,7 +2,7 @@ import Jimp from "jimp";
 import {getRandomIntInclusive, randomId} from "../../logic/random.js";
 import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import {drawGradientLine2d} from "../../draw/drawLine2d.js";
+import {drawGradientLine2d} from "../../draw/drawGradientLine2d.js";
 import fs from "fs";
 
 const config = {
@@ -50,7 +50,7 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
     const drawLine = async (y, maxTrailLength) => {
         for (let x = 0; x < data.width; x++) {
             let rando = getRandomIntInclusive(y, y - maxTrailLength)
-            drawGradientLine2d(context, {x: x, y: y}, {x: x, y: rando}, 1, data.color, data.color + '00')
+            drawGradientLine2d(context, {x: x, y: y}, {x: x, y: rando}, 1, data.color, 'transparent')
         }
     }
 
