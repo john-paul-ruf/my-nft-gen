@@ -1,11 +1,10 @@
-import Jimp from "jimp";
 import {getRandomIntExclusive} from "../../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";
 
 const config = {
-    folderName: '/img/png/backdrops/'
+    folderName: '../img/png/backdrops/'
 }
 
 const generate = () => {
@@ -46,18 +45,12 @@ const generate = () => {
     return data;
 }
 
-const addBackdrop = async (data, img) => {
-
-    let overlay = await Jimp.read(data.backdrop);
-
-    await img.composite(overlay, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-        rotationTotalAngle: .25,
-    })
+const addBackdrop = async (data, layer) => {
+    await layer.fromFile(data.backdrop);
 }
 
 export const effect = {
-    invoke: (data, img) => addBackdrop(data, img)
+    invoke: (data, layer) => addBackdrop(data, layer)
 }
 
 export const backdropEffect = {
@@ -66,8 +59,5 @@ export const backdropEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: true,
-    rotationTotalAngle: 30,
 }
 

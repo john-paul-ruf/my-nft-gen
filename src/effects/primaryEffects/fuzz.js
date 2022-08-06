@@ -1,8 +1,8 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
@@ -42,9 +42,9 @@ const generate = () => {
     return data;
 }
 
-const fuzz = async (data, img) => {
-    const ring = randomId() + '-ring.png';
-    const fuzz = randomId() + '-fuzz.png';
+const fuzz = async (data, layer) => {
+    const ring = WORKINGDIRETORY + 'ring' + randomId() + '.png';
+    const fuzz = WORKINGDIRETORY + 'fuzz' + randomId() + '.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
@@ -72,18 +72,13 @@ const fuzz = async (data, img) => {
     await draw(config.ringStroke, ring);
     await draw(data.fuzzFactor + config.ringStroke, fuzz);
 
-    let ringImg = await Jimp.read(ring);
-    let fuzzImg = await Jimp.read(fuzz);
+    let ringLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, ring);
+    let fuzzLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, fuzz);
 
-    await fuzzImg.blur(config.blur);
+    await fuzzLayer.blur(config.blur);
 
-    await img.composite(fuzzImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    await img.composite(ringImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    await layer.compositeLayerOver(fuzzLayer);
+    await layer.compositeLayerOver(ringLayer);
 
     fs.unlinkSync(ring);
     fs.unlinkSync(fuzz);
@@ -91,7 +86,7 @@ const fuzz = async (data, img) => {
 }
 
 export const effect = {
-    invoke: (data, img) => fuzz(data, img)
+    invoke: (data, layer) => fuzz(data, layer)
 }
 
 export const fuzzEffect = {
@@ -100,8 +95,5 @@ export const fuzzEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

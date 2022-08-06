@@ -2,6 +2,8 @@ import {getRandomIntInclusive, randomId} from "../../logic/random.js";
 import Jimp from "jimp";
 import {findValue} from "../../logic/findValue.js";
 import fs from "fs";
+import {LayerFactory} from "../../layer/LayerFactory.js";
+import {LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 
 const config = {
     theRandom: {lower: 2, upper: 10},
@@ -20,11 +22,11 @@ const generate = () => {
     return data;
 }
 
-const glitchFractal = async (data, img, currentFrame, totalFrames) => {
+const glitchFractal = async (data, layer, currentFrame, totalFrames) => {
 
-    const filename = 'fractal' + randomId() + '_underlay.png';
+    const filename = WORKINGDIRETORY + 'fractal' + randomId() + '_underlay.png';
 
-    await img.writeAsync(filename);
+    await layer.toFile(filename);
 
     const underlay = await Jimp.read(filename);
 
@@ -42,26 +44,25 @@ const glitchFractal = async (data, img, currentFrame, totalFrames) => {
 
     await underlay.opacity(0.4);
 
-    await img.composite(underlay, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    await underlay.writeAsync(filename)
+
+    const compositeLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, filename);
+
+    await layer.compositeLayerOver(compositeLayer);
 
     fs.unlinkSync(filename);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => glitchFractal(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => glitchFractal(data, layer, currentFrame, totalFrames)
 }
 
 export const glitchFractalEffect = {
     name: 'glitch fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 5,
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
 

@@ -1,5 +1,8 @@
 import {findValue} from "../../logic/findValue.js";
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import Jimp from "jimp";
+import fs from "fs";
+import {WORKINGDIRETORY} from "../../logic/gobals.js";
 
 const config = {
     lowerRange: {lower: 1, upper: 5},
@@ -21,13 +24,25 @@ const generate = () => {
     return data;
 }
 
-const pixelate = async (data, img, currentFrame, totalFrames) => {
+const pixelate = async (data, layer, currentFrame, totalFrames) => {
+    const filename = WORKINGDIRETORY + 'pixelate' + randomId() + '.png';
+
+    await layer.toFile(filename);
+
+    const jimpImage = await Jimp.read(filename);
+
     const pixelateGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
-    await img.pixelate(pixelateGaston);
+    await jimpImage.pixelate(pixelateGaston);
+
+    await jimpImage.writeAsync(filename);
+
+    await layer.fromFile(filename);
+
+    fs.unlinkSync(filename);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => pixelate(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => pixelate(data, layer, currentFrame, totalFrames)
 }
 
 export const pixelateEffect = {
@@ -36,9 +51,6 @@ export const pixelateEffect = {
     effect: effect,
     effectChance: 5,
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
 

@@ -1,6 +1,5 @@
-import Jimp from "jimp";
 import {getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
 import {drawGradientLine2d} from "../../draw/drawGradientLine2d.js";
 import fs from "fs";
@@ -8,7 +7,7 @@ import fs from "fs";
 const config = {
     size: IMAGESIZE,
     lines: {lower: 4, upper: 8},
-    length: {lower: 5, upper: 25},
+    length: {lower: 5, upper: 75},
     color: getColorFromBucket()
 }
 
@@ -41,8 +40,8 @@ const generate = () => {
     return data;
 }
 
-const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
-    const imgName = randomId() + '-vertical-scan-lines.png';
+const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
+    const imgName = WORKINGDIRETORY + 'scan-lines' + randomId() + '.png';
     const canvas = createCanvas(config.size, config.size)
     const context = canvas.getContext('2d');
 
@@ -68,25 +67,20 @@ const verticalScanLines = async (data, img, currentFrame, numberOfFrames) => {
     const buffer = canvas.toBuffer('image/png');
     fs.writeFileSync(imgName, buffer);
 
-    let overlay = await Jimp.read(imgName);
+    await layer.fromFile(imgName)
 
-    await img.composite(overlay, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    fs.unlinkSync(imgName);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => verticalScanLines(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => verticalScanLines(data, layer, currentFrame, totalFrames)
 }
 
 export const verticalScanLinesEffect = {
     name: 'scan lines',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 40,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

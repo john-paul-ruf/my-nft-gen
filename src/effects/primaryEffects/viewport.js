@@ -1,7 +1,6 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {findValue} from "../../logic/findValue.js";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
@@ -10,15 +9,15 @@ import {drawRays2d} from "../../draw/drawRays2d.js";
 
 const config = {
     size: IMAGESIZE,
-    stroke: 15,
+    stroke: 5,
     thickness: 5,
     ampStroke: 4,
     ampThickness: 2,
     radius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.20},
     ampLength: {lower: IMAGESIZE * 0.1, upper: IMAGESIZE * 0.15},
     ampRadius: {lower: IMAGESIZE * 0.05, upper: IMAGESIZE * 0.1},
-    sparsityFactor: {lower: 2, upper: 4},
-    amplitude: {lower: IMAGESIZE * 0.005, upper: IMAGESIZE * 0.01},
+    sparsityFactor: {lower: 1, upper: 3},
+    amplitude: {lower: IMAGESIZE * 0.001, upper: IMAGESIZE * 0.005},
     times: {lower: 1, upper: 2},
 }
 
@@ -49,10 +48,10 @@ const generate = () => {
     return data;
 }
 
-const viewport = async (data, img, currentFrame, numberOfFrames) => {
-    const imgName = randomId() + '-viewport.png';
+const viewport = async (data, layer, currentFrame, numberOfFrames) => {
+    const imgName = WORKINGDIRETORY + 'viewport' + randomId() + '.png';
 
-    const draw = async (filename) => {
+    const draw = async () => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
 
@@ -63,33 +62,25 @@ const viewport = async (data, img, currentFrame, numberOfFrames) => {
         drawPolygon2d(context, thePolyGaston, data.center, 3, 210, data.thickness, data.innerColor, data.stroke, data.color)
 
         const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(filename, buffer);
+        fs.writeFileSync(imgName, buffer);
     }
 
     await draw(imgName);
 
-    let tmpImg = await Jimp.read(imgName);
-
-    await img.composite(tmpImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    await layer.fromFile(imgName);
 
     fs.unlinkSync(imgName);
-
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => viewport(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => viewport(data, layer, currentFrame, totalFrames)
 }
 
 export const viewportEffect = {
     name: 'viewport',
     generateData: generate,
     effect: effect,
-    effectChance: 60,
+    effectChance: 70,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

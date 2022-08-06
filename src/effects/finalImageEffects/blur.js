@@ -21,13 +21,13 @@ const generate = () => {
     return data;
 }
 
-const blur = async (data, img, currentFrame, totalFrames) => {
+const blur = async (data, layer, currentFrame, totalFrames) => {
     const blurGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
-    await img.blur(blurGaston);
+    await layer.blur(blurGaston);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => blur(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => blur(data, layer, currentFrame, totalFrames)
 }
 
 export const blurEffect = {
@@ -36,9 +36,6 @@ export const blurEffect = {
     effect: effect,
     effectChance: 5,
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
 

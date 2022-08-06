@@ -1,11 +1,10 @@
-import Jimp from "jimp";
 import {getRandomIntExclusive} from "../../logic/random.js";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import fs from "fs";
 
 const config = {
-    folderName: '/img/png/summons/png/'
+    folderName: '../img/png/summons/png/'
 }
 
 const generate = () => {
@@ -46,17 +45,12 @@ const generate = () => {
     return data;
 }
 
-const addSummon = async (data, img) => {
-
-    let overlay = await Jimp.read(data.summon);
-
-    await img.composite(overlay, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    })
+const addSummon = async (data, layer) => {
+    await layer.fromFile(data.summon);
 }
 
 export const effect = {
-    invoke: (data, img) => addSummon(data, img)
+    invoke: (data, layer) => addSummon(data, layer)
 }
 
 export const summonEffect = {
@@ -65,8 +59,5 @@ export const summonEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: true,
-    rotationTotalAngle: 180,
 }
 

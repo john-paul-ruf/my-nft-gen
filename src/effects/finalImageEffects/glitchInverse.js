@@ -1,3 +1,8 @@
+import {randomId} from "../../logic/random.js";
+import Jimp from "jimp";
+import fs from "fs";
+import {WORKINGDIRETORY} from "../../logic/gobals.js";
+
 const generate = () => {
     return {
         getInfo: () => {
@@ -6,30 +11,40 @@ const generate = () => {
     };
 }
 
-const glitchInverse = async (data, img) => {
+const glitchInverse = async (data, layer) => {
+
+    const filename = WORKINGDIRETORY + 'glitch-inverse' + randomId() + '.png';
+
+    await layer.toFile(filename);
+
+    const jimpImage = await Jimp.read(filename);
+
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/inverse.js
     /////////////////////
-    const imgData = new Uint32Array(img.bitmap.data);
+    const imgData = new Uint32Array(jimpImage.bitmap.data);
     for (let i = 0; i < data.length; i++) {
         imgData[i] = ~imgData[i] | 0xFF000000;
     }
-    img.bitmap.data = new Buffer(imgData);
+    jimpImage.bitmap.data = Buffer.from(imgData);
+
+    await jimpImage.writeAsync(filename);
+
+    await layer.fromFile(filename);
+
+    fs.unlinkSync(filename);
 }
 
 export const effect = {
-    invoke: (data, img) => glitchInverse(data, img)
+    invoke: (data, layer) => glitchInverse(data, layer)
 }
 
 export const glitchInverseEffect = {
     name: 'glitch inverse',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 5,
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
 

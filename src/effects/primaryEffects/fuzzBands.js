@@ -1,18 +1,18 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {drawRing2d} from "../../draw/drawRing2d.js";
 import {findValue} from "../../logic/findValue.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
     circles: {lower: 8, upper: 20},
     size: IMAGESIZE,
     stroke: 0.5,
-    thickness: 1,
-    scaleFactor: 1.05,
+    thickness: 0.5,
+    scaleFactor: 1.01,
 }
 
 const generate = () => {
@@ -46,9 +46,9 @@ const generate = () => {
     return data;
 }
 
-const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
-    const ring = randomId() + '-fuzzy-band.png';
-    const fuzz = randomId() + '-fuzzy-band-underlay.png';
+const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
+    const ring = WORKINGDIRETORY + 'ring' + randomId() + '.png';
+    const fuzz = WORKINGDIRETORY + 'fuzz' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
@@ -69,25 +69,16 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
     const theAccentGaston = findValue(0, 5, 1, numberOfFrames, currentFrame);
     await draw(fuzz, theAccentGaston);
 
-    let fuzzImg = await Jimp.read(fuzz);
+    let fuzzLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, fuzz);
+    let ringLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, ring);
 
     const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
-    await fuzzImg.blur(theBlurGaston);
 
-    await fuzzImg.opacity(0.5);
+    await fuzzLayer.blur(theBlurGaston);
+    await fuzzLayer.adjustLayerOpacity(0.5);
 
-    let ringImg = await Jimp.read(ring);
-
-    await img.composite(fuzzImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    await img.composite(ringImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    /*  const compName = randomId() + 'hex-comp.png';
-      img.write(compName);*/
+    await layer.compositeLayerOver(fuzzLayer);
+    await layer.compositeLayerOver(ringLayer);
 
     fs.unlinkSync(ring);
     fs.unlinkSync(fuzz);
@@ -95,7 +86,7 @@ const fuzzBands = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => fuzzBands(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => fuzzBands(data, layer, currentFrame, totalFrames)
 }
 
 export const fuzzBandsEffect = {
@@ -104,8 +95,5 @@ export const fuzzBandsEffect = {
     effect: effect,
     effectChance: 70,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
