@@ -1,20 +1,20 @@
 import {getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/drawingMath.js";
 import {findValue} from "../../logic/findValue.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
     size: IMAGESIZE * 2,
-    stroke: 2,
-    sparsityFactor: {lower: 3, upper: 8},
+    stroke: 1,
+    sparsityFactor: {lower: 1, upper: 3},
     speed: {lower: 1, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 10, upper: 30},
-    radiusConstant: 250,
+    unitLength: {lower: 5, upper: 15},
+    radiusConstant: 150,
 }
 
 const generate = () => {
@@ -38,9 +38,9 @@ const generate = () => {
     return data;
 }
 
-const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
-    const imgName = randomId() + '-wireframe-spiral.png';
-    const underlayName = randomId() + '-wireframe-spiral-underlay.png';
+const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
+    const imgName = WORKINGDIRETORY + 'wireframe-spiral' + randomId() + '.png';
+    const underlayName = WORKINGDIRETORY + 'wireframe-spiral-underlay' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
@@ -88,32 +88,24 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(imgName, 0);
-
-
     const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+
+    await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);
 
-    let underlayImg = await Jimp.read(underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
+    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
-    await underlayImg.blur(theBlurGaston);
-
-    await underlayImg.opacity(0.5);
-
-    let tmpImg = await Jimp.read(imgName);
+    await underlayLayer.blur(theBlurGaston);
+    await underlayLayer.adjustLayerOpacity(0.5);
 
     const direction = data.counterClockwise > 0 ? -1 : 1
-    await tmpImg.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction, false);
-    await underlayImg.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction, false);
+    await underlayLayer.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction);
+    await tempLayer.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction);
 
-    await img.composite(underlayImg, -IMAGESIZE / 2, -IMAGESIZE / 2, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    await img.composite(tmpImg, -IMAGESIZE / 2, -IMAGESIZE / 2, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
 
     fs.unlinkSync(underlayName);
     fs.unlinkSync(imgName);
@@ -121,17 +113,14 @@ const wireframeSpiral = async (data, img, currentFrame, numberOfFrames) => {
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => wireframeSpiral(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => wireframeSpiral(data, layer, currentFrame, totalFrames)
 }
 
 export const wireframeSpiralEffect = {
     name: 'wireframe-spiral',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 30,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

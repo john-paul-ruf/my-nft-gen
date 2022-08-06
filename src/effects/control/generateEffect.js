@@ -4,7 +4,6 @@ import {verticalScanLinesEffect} from "../primaryEffects/verticalScanLines.js";
 import {hexEffect} from "../primaryEffects/hex.js";
 import {wireframeSpiralEffect} from "../primaryEffects/wireframe-spiral.js";
 import {backdropEffect} from "../primaryEffects/backdrop.js";
-import {rippleEffect} from "../primaryEffects/ripples.js";
 import {fuzzyRippleEffect} from "../primaryEffects/fuzzy-ripples.js";
 import {fuzzEffect} from "../primaryEffects/fuzz.js";
 import {fuzzBandsEffect} from "../primaryEffects/fuzzBands.js";
@@ -16,7 +15,6 @@ import {sigEffect} from "../primaryEffects/sig.js";
 import {randomizeEffect} from "../secondaryEffects/randomize.js";
 import {glowEffect} from "../secondaryEffects/glow.js";
 import {fadeEffect} from "../secondaryEffects/fade.js";
-import {rotateEffect} from "../secondaryEffects/rotate.js";
 import {blurEffect} from "../finalImageEffects/blur.js";
 import {pixelateEffect} from "../finalImageEffects/pixelate.js";
 import {sepiaEffect} from "../finalImageEffects/sepia.js";
@@ -26,58 +24,23 @@ import {glitchFractalEffect} from "../finalImageEffects/glitchFractal.js";
 import {glitchInverseEffect} from "../finalImageEffects/glitchInverse.js";
 import {animateBackgroundEffect} from "../primaryEffects/animateBackground.js";
 
-const primaryEffects = [
-    animateBackgroundEffect,
-    verticalScanLinesEffect,
-    hexEffect,
-    wireframeSpiralEffect,
-    backdropEffect,
-    rippleEffect,
-    fuzzyRippleEffect,
-    fuzzEffect,
-    fuzzBandsEffect,
-    gatesEffect,
-    ampEffect,
-    summonEffect,
-    viewportEffect,
-    sigEffect
-];
+const primaryEffects = [animateBackgroundEffect, verticalScanLinesEffect, hexEffect, wireframeSpiralEffect, backdropEffect, fuzzyRippleEffect, fuzzEffect, fuzzBandsEffect, gatesEffect, ampEffect, summonEffect, viewportEffect, sigEffect];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
-const secondaryEffects = [
-    randomizeEffect,
-    glowEffect,
-    fadeEffect,
-    rotateEffect,
-];
+const secondaryEffects = [randomizeEffect, glowEffect, fadeEffect,];
 
-const finalImageEffects = [
-    blurEffect,
-    pixelateEffect,
-    sepiaEffect,
-    posterizeEffect,
-    glitchInverseEffect,
-    glitchFractalEffect,
-    glitchDrumrollHorizontalWaveEffect,
-]
+const finalImageEffects = [blurEffect, pixelateEffect, sepiaEffect, posterizeEffect, glitchInverseEffect, glitchFractalEffect, glitchDrumrollHorizontalWaveEffect,]
 
-const generateEffects = (possibleEffectList, allowRotate = false) => {
+const generateEffects = (possibleEffectList) => {
     const effectList = [];
 
     //For each effect in the possible effects list.
     possibleEffectList.forEach(obj => {
-            const chance = getRandomIntExclusive(0, 100) //roll the dice
-            if (obj.effectChance > chance) { //if the roll was below the chance of hit
-
-                //if the effect does not allow rotate
-                //and the possible effect rotates the image
-                //Don't allow it
-                if (!(!allowRotate && obj.rotatesImg)) {
-                    effectList.push(new Effect(obj));
-                }
-            }
+        const chance = getRandomIntExclusive(0, 100) //roll the dice
+        if (obj.effectChance > chance) { //if the roll was below the chance of hit
+            effectList.push(new Effect(obj));
         }
-    )
+    })
 
     return effectList;
 }
@@ -86,8 +49,8 @@ export const generatePrimaryEffects = () => {
     return generateEffects(primaryEffects)
 }
 
-export const applySecondaryEffects = (allowRotate) => {
-    return generateEffects(secondaryEffects, allowRotate)
+export const applySecondaryEffects = () => {
+    return generateEffects(secondaryEffects)
 }
 
 

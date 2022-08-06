@@ -1,12 +1,12 @@
-import Jimp from "jimp";
 import {timeLeft} from "./timeLeft.js";
 import {generateFinalImageEffects, generatePrimaryEffects} from "../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
-import {getNeutralFromBucket, IMAGESIZE} from "./gobals.js";
+import {getNeutralFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "./gobals.js";
 import {randomId} from "./random.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
 import fs from "fs";
 import {writeToMp4} from "../output/writeToMp4.js";
+import {LayerFactory} from "../layer/LayerFactory.js";
 
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
@@ -37,10 +37,10 @@ export const animate = async (config) => {
      */
     const createAnimation = async (frameNumber) => {
         //This function creates a new jimp image (layer) for each main effect
-        const getLayers = (w, h) => {
+        const getLayers = async (w, h) => {
             const extraLayers = [];
             for (let i = 0; i < effects.length; i++) { //effect is found in the outermost layer of this function
-                extraLayers.push(new Jimp(w, h))
+                extraLayers.push(await LayerFactory.getNewLayer(LAYERSTRATEGY, h, w, '#00000000'))
             }
             return extraLayers;
         }
@@ -48,8 +48,8 @@ export const animate = async (config) => {
         ////////////////////////
         //get fresh files every loop
         ////////////////////////
-        let background = new Jimp(IMAGESIZE, IMAGESIZE, Jimp.cssColorToHex(backgroundColor));
-        let layers = getLayers(IMAGESIZE, IMAGESIZE)
+        const background = await LayerFactory.getNewLayer(LAYERSTRATEGY, IMAGESIZE, IMAGESIZE, backgroundColor);
+        let layers = await getLayers(IMAGESIZE, IMAGESIZE)
 
         /////////////////////////////
         //Process the main and secondary effects
@@ -95,9 +95,7 @@ export const animate = async (config) => {
         //Last is on top
         ///////////////////////
         for (let i = 0; i < layers.length; i++) {
-            await background.composite(layers[i], 0, 0, {
-                mode: Jimp.BLEND_SOURCE_OVER,
-            })
+            await background.compositeLayerOver(layers[i]);
         }
 
         ////////////////////////
@@ -111,10 +109,9 @@ export const animate = async (config) => {
         // write to disk
         // still can run multiple instances at once
         /////////////////////
-        const filename = config.finalFileName + '_frame_' + frameNumber.toString() + randomId() + '.png';
-        await background.writeAsync(filename);
+        const filename = WORKINGDIRETORY + config.finalFileName + '-frame-' + frameNumber.toString() + randomId() + '.png';
+        await background.toFile(filename);
         frameFilenames.push(filename);
-
     }
 
     ////////////////////////

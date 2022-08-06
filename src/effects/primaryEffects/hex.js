@@ -1,12 +1,12 @@
 import {getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/drawingMath.js";
 import {findValue} from "../../logic/findValue.js";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
 import {findOneWayValue} from "../../logic/findOneWayValue.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
@@ -14,9 +14,9 @@ const config = {
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 15, upper: 25},
     radiusFactor: {lower: 30, upper: 55},
-    stroke: 4,
-    thickness: 1,
-    scaleFactor: 1.15,
+    stroke: 3,
+    thickness: 3,
+    scaleFactor: 1.05,
 }
 
 const generate = () => {
@@ -40,9 +40,9 @@ const generate = () => {
     return data;
 }
 
-const hex = async (data, img, currentFrame, numberOfFrames) => {
-    const imgName = randomId() + 'hex.png';
-    const underlayName = randomId() + 'hex-accent.png';
+const hex = async (data, layer, currentFrame, numberOfFrames) => {
+    const imgName = WORKINGDIRETORY + 'hex' + randomId() + '.png';
+    const underlayName = WORKINGDIRETORY + 'hex-under' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
@@ -73,38 +73,27 @@ const hex = async (data, img, currentFrame, numberOfFrames) => {
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);
     }
+    const theAccentGaston = findValue(0, 3, 1, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
 
     await draw(imgName, 0);
-
-    const theAccentGaston = findValue(0, 3, 1, numberOfFrames, currentFrame);
     await draw(underlayName, theAccentGaston);
 
-    let underlayImg = await Jimp.read(underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
+    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
-    await underlayImg.blur(theBlurGaston);
+    await underlayLayer.blur(theBlurGaston);
+    await underlayLayer.adjustLayerOpacity(0.5);
 
-    await underlayImg.opacity(0.5);
-
-    let tmpImg = await Jimp.read(imgName);
-
-    await img.composite(underlayImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    await img.composite(tmpImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    /* const compName = randomId() + 'hex-comp.png';
-     img.write(compName);*/
+    await layer.compositeLayerOver(underlayLayer)
+    await layer.compositeLayerOver(tempLayer)
 
     fs.unlinkSync(imgName);
     fs.unlinkSync(underlayName);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => hex(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => hex(data, layer, currentFrame, totalFrames)
 }
 
 export const hexEffect = {
@@ -113,8 +102,5 @@ export const hexEffect = {
     effect: effect,
     effectChance: 70,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

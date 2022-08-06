@@ -1,17 +1,17 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
 import {findValue} from "../../logic/findValue.js";
 import {findOneWayValue} from "../../logic/findOneWayValue.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
     gates: {lower: 5, upper: 11},
-    numberOfSides: {lower: 3, upper: 10},
-    thickness: 12,
+    numberOfSides: {lower: 3, upper: 12},
+    thickness: 6,
     stroke: 6,
     size: IMAGESIZE,
 }
@@ -47,14 +47,14 @@ const generate = () => {
     return data;
 }
 
-const gates = async (data, img, currentFrame, numberOfFrames) => {
-    const drawing = randomId() + '-gate.png';
-    const underlayName = randomId() + 'gate-accent.png';
+const gates = async (data, layer, currentFrame, numberOfFrames) => {
+    const drawing = WORKINGDIRETORY + 'gate' + randomId() + '.png';
+    const underlayName = WORKINGDIRETORY + 'gate-underlay' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
+
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
         const context = canvas.getContext('2d');
-
 
         for (let i = 0; i < data.numberOfGates; i++) {
             const loopCount = i + 1;
@@ -65,38 +65,31 @@ const gates = async (data, img, currentFrame, numberOfFrames) => {
         }
 
         const buffer = canvas.toBuffer('image/png');
+
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(drawing, 0);
-
     const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+
+    await draw(drawing, 0);
     await draw(underlayName, theAccentGaston);
 
-    let underlayImg = await Jimp.read(underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
-    await underlayImg.blur(theBlurGaston);
+    await underlayLayer.blur(theBlurGaston);
+    await underlayLayer.adjustLayerOpacity(0.5);
 
-    await underlayImg.opacity(0.5);
-
-    await img.composite(underlayImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    let tmpImg = await Jimp.read(drawing);
-
-    await img.composite(tmpImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
 
     fs.unlinkSync(underlayName);
     fs.unlinkSync(drawing);
-
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => gates(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => gates(data, layer, currentFrame, totalFrames)
 }
 
 export const gatesEffect = {
@@ -105,8 +98,5 @@ export const gatesEffect = {
     effect: effect,
     effectChance: 60,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

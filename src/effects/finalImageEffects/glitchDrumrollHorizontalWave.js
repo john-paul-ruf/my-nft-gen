@@ -1,5 +1,7 @@
-import {IMAGESIZE} from "../../logic/gobals.js";
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import Jimp from "jimp";
+import fs from "fs";
 
 const config = {
     glitchChance: 50,
@@ -17,13 +19,20 @@ const generate = () => {
     return data;
 }
 
-const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames) => {
+const glitchDrumrollHorizontalWave = async (data, layer) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
     // borrowed from https://github.com/ninoseki/glitched-canvas & modified with cosine
 
-    const imgData = img.bitmap.data;
+    const filename = WORKINGDIRETORY + 'glitch-drumroll' + randomId() + '.png';
+
+    await layer.toFile(filename)
+
+    const jimpImage = await Jimp.read(filename);
+
+
+    const imgData = jimpImage.bitmap.data;
 
     for (let x = 0; x < IMAGESIZE; x++) {
         for (let y = 0; y < IMAGESIZE; y++) {
@@ -46,22 +55,24 @@ const glitchDrumrollHorizontalWave = async (data, img, currentFrame, totalFrames
         }
     }
 
-    img.bitmap.data = new Buffer(imgData);
+    jimpImage.bitmap.data = Buffer.from(imgData);
+    await jimpImage.writeAsync(filename);
+
+    await layer.fromFile(filename);
+
+    fs.unlinkSync(filename);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => glitchDrumrollHorizontalWave(data, img, currentFrame, totalFrames)
+    invoke: (data, layer) => glitchDrumrollHorizontalWave(data, layer)
 }
 
 export const glitchDrumrollHorizontalWaveEffect = {
     name: 'glitch drumroll horizontal wave',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 5,
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
 

@@ -1,18 +1,18 @@
 import {getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/drawingMath.js";
 import {findValue} from "../../logic/findValue.js";
 import {drawRing2d} from "../../draw/drawRing2d.js";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
     size: IMAGESIZE,
-    stroke: 12,
-    thickness: 8,
+    stroke: 3,
+    thickness: 3,
     largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
     smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
     largeNumberOfRings: {lower: 5, upper: 10},
@@ -47,9 +47,10 @@ const generate = () => {
     return data;
 }
 
-const fuzzyRipple = async (data, img, currentFrame, numberOfFrames) => {
-    const imgName = randomId() + 'fuzzy-ripple.png';
-    const underlayName = randomId() + 'blur-fuzzy-ripple.png';
+const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
+    const imgName = WORKINGDIRETORY + 'fuzzy-ripples' + randomId() + '.png';
+    const underlayName = WORKINGDIRETORY + 'fuzzy-ripples-underlay' + randomId() + '.png';
+
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(config.size, config.size)
         const context = canvas.getContext('2d');
@@ -76,42 +77,32 @@ const fuzzyRipple = async (data, img, currentFrame, numberOfFrames) => {
 
         drawPolygon2d(context, data.smallerRingsGroupRadius, data.center, 6, 30, data.thickness + accentBoost, data.innerColor, data.stroke, data.smallColor)
 
-
         const buffer = canvas.toBuffer('image/png');
+
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(imgName, 0);
-
     const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+
+    await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);
 
-    let underlayImg = await Jimp.read(underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
+    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
 
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
-    await underlayImg.blur(theBlurGaston);
+    await underlayLayer.blur(theBlurGaston);
+    await underlayLayer.adjustLayerOpacity(0.5);
 
-    await underlayImg.opacity(0.5);
-
-    let tmpImg = await Jimp.read(imgName);
-
-    await img.composite(underlayImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    await img.composite(tmpImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
-
-    /*const compName = randomId() + 'fuzzy-ripple-comp.png';
-    img.write(compName);*/
+    await layer.compositeLayerOver(underlayLayer)
+    await layer.compositeLayerOver(tempLayer)
 
     fs.unlinkSync(imgName);
     fs.unlinkSync(underlayName);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => fuzzyRipple(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => fuzzyRipple(data, layer, currentFrame, totalFrames)
 }
 
 export const fuzzyRippleEffect = {
@@ -120,8 +111,5 @@ export const fuzzyRippleEffect = {
     effect: effect,
     effectChance: 60,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: true,
-    rotationTotalAngle: 60,
 }
 

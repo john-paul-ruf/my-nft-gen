@@ -12,7 +12,7 @@ export class Config {
         //It is how I think of layers in my head when working in illustrator
         //For compose info
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'enter-the-glitch'
+        this.runName = 'abstractions-in-code'
 
         //final color depth of image
         this.colorDepth = 256;
@@ -23,7 +23,7 @@ export class Config {
         //Number of frames in the final gif
         this.numberOfFrame = 70;
 
-        this.finalFileName = 'Final_' + randomId();
+        this.finalFileName = 'Final' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
     }
 }

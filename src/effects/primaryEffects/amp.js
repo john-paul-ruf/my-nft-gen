@@ -1,14 +1,14 @@
 import {randomId, randomNumber} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
 import {createCanvas} from "canvas";
-import Jimp from "jimp";
 import fs from "fs";
 import {drawRay2d} from "../../draw/drawRay2d.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1},
     size: IMAGESIZE,
-    stroke: 2,
+    stroke: 1,
 }
 
 const generate = () => {
@@ -19,7 +19,7 @@ const generate = () => {
         stroke: config.stroke,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
-        length: 100,
+        length: 400,
         lineStart: 350,
         center: {x: config.size / 2, y: config.size / 2},
         getInfo: () => {
@@ -30,8 +30,8 @@ const generate = () => {
     return data;
 }
 
-const amp = async (data, img) => {
-    const drawing = randomId() + '-amp.png';
+const amp = async (data, layer) => {
+    const amp = WORKINGDIRETORY + 'amp' + randomId() + '.png';
 
     const draw = async (stroke, filename) => {
         const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
@@ -45,20 +45,18 @@ const amp = async (data, img) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    await draw(config.stroke, drawing);
+    await draw(config.stroke, amp);
 
-    let tmpImg = await Jimp.read(drawing);
+    const compositeLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, amp);
 
-    await img.composite(tmpImg, 0, 0, {
-        mode: Jimp.BLEND_SOURCE_OVER,
-    });
+    await layer.compositeLayerOver(compositeLayer);
 
-    fs.unlinkSync(drawing);
+    fs.unlinkSync(amp);
 
 }
 
 export const effect = {
-    invoke: (data, img) => amp(data, img)
+    invoke: (data, layer) => amp(data, layer)
 }
 
 export const ampEffect = {
@@ -67,8 +65,5 @@ export const ampEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: true,
-    rotationTotalAngle: 20,
 }
 

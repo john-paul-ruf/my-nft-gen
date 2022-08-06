@@ -1,6 +1,7 @@
 import Jimp from "jimp";
-import {getRandomIntInclusive} from "../../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE} from "../../logic/gobals.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
+import fs from "fs";
 
 const config = {
     width: IMAGESIZE,
@@ -17,24 +18,35 @@ const generate = () => {
     return config;
 }
 
-const animateBackground = async (data, img) => {
-    for (let x = 0; x < 3000; x++) {
-        for (let y = 0; y < 3000; y++) {
+const animateBackground = async (data, layer) => {
+    const filename = WORKINGDIRETORY + 'static' + randomId() + '.png';
+
+    const jimpImage = new Jimp(IMAGESIZE, IMAGESIZE);
+
+    for (let x = 0; x < IMAGESIZE; x++) {
+        for (let y = 0; y < IMAGESIZE; y++) {
             const rando = getRandomIntInclusive(0, 20)
             if (rando < 15) {
-                await img.setPixelColor(Jimp.cssColorToHex(data.color1), x, y)
+                await jimpImage.setPixelColor(Jimp.cssColorToHex(data.color1), x, y)
             } else if (rando < 18) {
-                await img.setPixelColor(Jimp.cssColorToHex(data.color2), x, y)
+                await jimpImage.setPixelColor(Jimp.cssColorToHex(data.color2), x, y)
             } else {
-                await img.setPixelColor(Jimp.cssColorToHex(data.color3), x, y)
+                await jimpImage.setPixelColor(Jimp.cssColorToHex(data.color3), x, y)
             }
         }
     }
-    await img.blur(1)
+
+    await jimpImage.writeAsync(filename)
+
+    await layer.fromFile(filename);
+
+    await layer.blur(1)
+
+    fs.unlinkSync(filename);
 }
 
 export const effect = {
-    invoke: (data, img) => animateBackground(data, img)
+    invoke: (data, layer) => animateBackground(data, layer)
 }
 
 export const animateBackgroundEffect = {
@@ -43,8 +55,5 @@ export const animateBackgroundEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

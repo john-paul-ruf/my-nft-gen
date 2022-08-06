@@ -1,4 +1,7 @@
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import Jimp from "jimp";
+import fs from "fs";
+import {WORKINGDIRETORY} from "../../logic/gobals.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
@@ -44,12 +47,24 @@ const generate = () => {
     return data;
 };
 
-const randomize = async (data, img) => {
-    await img.color(data.randomize);
+const randomize = async (data, layer) => {
+    const filename = WORKINGDIRETORY + 'randomize' + randomId() + '.png';
+
+    await layer.toFile(filename);
+
+    const jimpImage = await Jimp.read(filename);
+
+    await jimpImage.color(data.randomize);
+
+    await jimpImage.writeAsync(filename);
+
+    await layer.fromFile(filename);
+
+    fs.unlinkSync(filename)
 }
 
 export const effect = {
-    invoke: (data, img) => randomize(data, img)
+    invoke: (data, layer) => randomize(data, layer)
 }
 
 export const randomizeEffect = {
@@ -58,8 +73,5 @@ export const randomizeEffect = {
     effect: effect,
     effectChance: 0, //checking the color scheme work
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 

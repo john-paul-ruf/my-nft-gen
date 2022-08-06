@@ -1,5 +1,8 @@
 import {findValue} from "../../logic/findValue.js";
-import {getRandomIntInclusive} from "../../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import Jimp from "jimp";
+import fs from "fs";
+import {WORKINGDIRETORY} from "../../logic/gobals.js";
 
 const config = {
     lowerRange: {lower: 1, upper: 5},
@@ -21,24 +24,33 @@ const generate = () => {
     return data;
 }
 
-const posterize = async (data, img, currentFrame, totalFrames) => {
+const posterize = async (data, layer, currentFrame, totalFrames) => {
+    const filename = WORKINGDIRETORY + 'pixelate' + randomId() + '.png';
+
+    await layer.toFile(filename);
+
+    const jimpImage = await Jimp.read(filename);
+
     const posterizeGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
-    await img.pixelate(posterizeGaston);
+    jimpImage.posterize(posterizeGaston);
+
+    await jimpImage.writeAsync(filename);
+
+    await layer.fromFile(filename);
+
+    fs.unlinkSync(filename);
 }
 
 export const effect = {
-    invoke: (data, img, currentFrame, totalFrames) => posterize(data, img, currentFrame, totalFrames)
+    invoke: (data, layer, currentFrame, totalFrames) => posterize(data, layer, currentFrame, totalFrames)
 }
 
 export const posterizeEffect = {
     name: 'posterize',
     generateData: generate,
     effect: effect,
-    effectChance: 5,
+    effectChance: 5, //not a fan
     requiresLayer: false,
-    rotatesImg: false,
-    allowsRotation: false,
-    rotationTotalAngle: 0,
 }
 
 

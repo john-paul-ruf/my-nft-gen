@@ -3,7 +3,6 @@ import {checkIfAnyNullOrUndefined} from "./helpers/checkIfAnyNullOrUndefined.js"
 import {verticalScanLinesEffect} from "../effects/primaryEffects/verticalScanLines.js";
 import {hexEffect} from "../effects/primaryEffects/hex.js";
 import {wireframeSpiralEffect} from "../effects/primaryEffects/wireframe-spiral.js";
-import {rippleEffect} from "../effects/primaryEffects/ripples.js";
 import {fuzzyRippleEffect} from "../effects/primaryEffects/fuzzy-ripples.js";
 import {fuzzEffect} from "../effects/primaryEffects/fuzz.js";
 import {fuzzBandsEffect} from "../effects/primaryEffects/fuzzBands.js";
@@ -13,7 +12,6 @@ import {viewportEffect} from "../effects/primaryEffects/viewport.js";
 import {randomizeEffect} from "../effects/secondaryEffects/randomize.js";
 import {glowEffect} from "../effects/secondaryEffects/glow.js";
 import {fadeEffect} from "../effects/secondaryEffects/fade.js";
-import {rotateEffect} from "../effects/secondaryEffects/rotate.js";
 import {blurEffect} from "../effects/finalImageEffects/blur.js";
 import {pixelateEffect} from "../effects/finalImageEffects/pixelate.js";
 import {sepiaEffect} from "../effects/finalImageEffects/sepia.js";
@@ -39,11 +37,6 @@ test('no null or undefined in verticalScanLinesEffect generate function', () => 
 
 test('no null or undefined in wireframeSpiralEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(wireframeSpiralEffect.generateData());
-    expect(hasNullOrUndefined).toBe(false);
-});
-
-test('no null or undefined in rippleEffect generate function', () => {
-    const hasNullOrUndefined = checkIfAnyNullOrUndefined(rippleEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
 
@@ -89,11 +82,6 @@ test('no null or undefined in glowEffect generate function', () => {
 
 test('no null or undefined in fadeEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(fadeEffect.generateData());
-    expect(hasNullOrUndefined).toBe(false);
-});
-
-test('no null or undefined in rotateEffect generate function', () => {
-    const hasNullOrUndefined = checkIfAnyNullOrUndefined(rotateEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
 
