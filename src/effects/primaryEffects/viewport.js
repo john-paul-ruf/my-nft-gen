@@ -65,7 +65,7 @@ const viewport = async (data, layer, currentFrame, numberOfFrames) => {
         fs.writeFileSync(imgName, buffer);
     }
 
-    await draw(imgName);
+    await draw();
 
     await layer.fromFile(imgName);
 

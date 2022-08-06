@@ -49,8 +49,8 @@ export const generatePrimaryEffects = () => {
     return generateEffects(primaryEffects)
 }
 
-export const applySecondaryEffects = (allowRotate) => {
-    return generateEffects(secondaryEffects, allowRotate)
+export const applySecondaryEffects = () => {
+    return generateEffects(secondaryEffects)
 }
 
 
