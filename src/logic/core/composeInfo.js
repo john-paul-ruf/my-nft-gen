@@ -1,4 +1,4 @@
-import {DISTANCE, HUE, IMAGESIZE, SCHEME, VARIATION} from "./gobals.js";
+import {DISTANCE, HUE, IMAGEHEIGHT, IMAGEWIDTH, SCHEME, VARIATION} from "./gobals.js";
 
 /*
  * @param config - for the art card
@@ -28,6 +28,6 @@ export const composeInfo = (config, effects, finalImageEffects) => {
     }
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}\nDistance: ${DISTANCE.toFixed(2)}\nImage Size: ${IMAGESIZE}x${IMAGESIZE} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
+    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n\nRun: ${config.runName}\nHue: ${HUE}\nScheme: ${SCHEME}\nVariation: ${VARIATION}\nDistance: ${DISTANCE.toFixed(2)}\nImage Size: ${IMAGEHEIGHT}x${IMAGEWIDTH} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
 
 }

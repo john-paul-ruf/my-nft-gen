@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
@@ -8,23 +8,22 @@ import {drawRays2d} from "../../draw/drawRays2d.js";
 
 
 const config = {
-    size: IMAGESIZE,
     stroke: 5,
     thickness: 5,
     ampStroke: 4,
     ampThickness: 2,
-    radius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.20},
-    ampLength: {lower: IMAGESIZE * 0.1, upper: IMAGESIZE * 0.15},
-    ampRadius: {lower: IMAGESIZE * 0.05, upper: IMAGESIZE * 0.1},
+    radius: {lower: IMAGEHEIGHT * 0.15, upper: IMAGEHEIGHT * 0.20},
+    ampLength: {lower: IMAGEHEIGHT * 0.1, upper: IMAGEHEIGHT * 0.15},
+    ampRadius: {lower: IMAGEHEIGHT * 0.05, upper: IMAGEHEIGHT * 0.1},
     sparsityFactor: {lower: 1, upper: 3},
-    amplitude: {lower: IMAGESIZE * 0.001, upper: IMAGESIZE * 0.005},
+    amplitude: {lower: IMAGEHEIGHT * 0.001, upper: IMAGEHEIGHT * 0.005},
     times: {lower: 1, upper: 2},
 }
 
 const generate = () => {
     const data = {
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
@@ -39,7 +38,7 @@ const generate = () => {
         color: getColorFromBucket(),
         ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),
-        center: {x: config.size / 2, y: config.size / 2},
+        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`
         }
@@ -52,7 +51,7 @@ const viewport = async (data, layer, currentFrame, numberOfFrames) => {
     const imgName = WORKINGDIRETORY + 'viewport' + randomId() + '.png';
 
     const draw = async () => {
-        const canvas = createCanvas(config.size, config.size)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
         const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength + data.amplitude, data.times, numberOfFrames, currentFrame);

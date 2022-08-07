@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -8,7 +8,6 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
-    size: IMAGESIZE * 2,
     stroke: 1,
     sparsityFactor: {lower: 1, upper: 3},
     speed: {lower: 1, upper: 5},
@@ -19,15 +18,15 @@ const config = {
 
 const generate = () => {
     const data = {
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT * 1.3,
+        width: IMAGEWIDTH * 1.3,
         stroke: config.stroke,
         unitLength: getRandomIntInclusive(config.unitLength.lower, config.unitLength.upper),
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         color1: getColorFromBucket(),
         color2: getColorFromBucket(),
         color3: getColorFromBucket(),
-        center: {x: config.size / 2, y: config.size / 2},
+        center: {x: IMAGEWIDTH * 1.3 / 2, y: IMAGEHEIGHT * 1.3 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
@@ -43,7 +42,7 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
     const underlayName = WORKINGDIRETORY + 'wireframe-spiral-underlay' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
-        const canvas = createCanvas(config.size, config.size)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
         let twistCount = 2;
         let n1 = data.unitLength, n2 = data.unitLength;
@@ -70,7 +69,7 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
             context.closePath();
         }
 
-        while (nextTerm <= config.size) {
+        while (nextTerm <= data.width) {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
                 drawRay(data.stroke + accentBoost, i, n2, nextTerm, twistCount)

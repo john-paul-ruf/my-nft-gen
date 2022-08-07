@@ -7,7 +7,8 @@ export const LAYERSTRATEGY = 'sharp';
 
 export const WORKINGDIRETORY = `src/img/working/`;
 
-export const IMAGESIZE = 2000;
+export const IMAGEHEIGHT = 2000;
+export const IMAGEWIDTH = 4000;
 export const NEUTRALS = ['#2d2d2d', '#5b5b5b', '#f7f5fa'];
 
 //'mono', 'contrast', 'triade', 'tetrade', and 'analogic'.

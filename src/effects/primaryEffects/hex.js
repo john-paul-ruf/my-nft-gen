@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -10,7 +10,6 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
-    size: IMAGESIZE,
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 15, upper: 25},
     radiusFactor: {lower: 30, upper: 55},
@@ -21,8 +20,8 @@ const config = {
 
 const generate = () => {
     const data = {
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
@@ -31,7 +30,7 @@ const generate = () => {
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
         color: getColorFromBucket(),
-        center: {x: config.size / 2, y: config.size / 2},
+        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
             return `${hexEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`
         }
@@ -45,7 +44,7 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
     const underlayName = WORKINGDIRETORY + 'hex-under' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
-        const canvas = createCanvas(config.size, config.size)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
         const drawHexLine = (angle, index) => {
@@ -58,7 +57,7 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
-            const gapRadius = ((IMAGESIZE * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
+            const gapRadius = ((IMAGEHEIGHT * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
             drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
