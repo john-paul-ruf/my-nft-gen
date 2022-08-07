@@ -7,7 +7,7 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1},
-    stroke: 1,
+    stroke: 3,
 }
 
 const generate = () => {

@@ -64,21 +64,7 @@ export const animate = async (config) => {
                 }
 
                 Promise.all(mainLayeredEffects).then(() => {
-
-                    //Queue up all the secondary effects to the main layers
-                    const secondaryEffects = [];
-
-                    for (let i = 0; i < layers.length; i++) {
-                        if (effects[i].additionalEffects.length > 0) {
-                            for (let s = 0; s < effects[i].additionalEffects.length; s++) {
-                                secondaryEffects.push(effects[i].additionalEffects[s].invokeEffect(layers[i], frameNumber, config.numberOfFrame));
-                            }
-                        }
-                    }
-
-                    Promise.all(secondaryEffects).then(() => {
-                        resolve(); //All done! We have processed one frame
-                    });
+                    resolve(); //All done! We have processed one frame
                 });
             });
         }

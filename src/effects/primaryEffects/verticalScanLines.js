@@ -3,10 +3,13 @@ import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../.
 import {createCanvas} from "canvas";
 import {drawGradientLine2d} from "../../draw/drawGradientLine2d.js";
 import fs from "fs";
+import {findValue} from "../../logic/math/findValue.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
-    length: {lower: 5, upper: 75},
+    minlength: {lower: 5, upper: 30},
+    maxlength: {lower: 40, upper: 100},
+    times: {lower: 1, upper: 10},
     color: getColorFromBucket()
 }
 
@@ -17,18 +20,33 @@ const generate = () => {
         width: IMAGEWIDTH,
         color: config.color,
         getInfo: () => {
-            return `${verticalScanLinesEffect.name}: ${data.numberOfLines} total lines with a min length of ${config.length.lower} and a max length of ${config.length.upper}`
+            return `${verticalScanLinesEffect.name}: ${data.numberOfLines} lines`
         }
     }
 
     const computeInitialLineInfo = (numberOfLines) => {
         const lineInfo = [];
-        for (let i = 0; i <= numberOfLines; i++) {
-            const mtl = getRandomIntInclusive(config.length.lower, config.length.upper)
 
+        const getPixelTrailLength = () => {
+            return {
+                min: getRandomIntInclusive(config.minlength.lower, config.minlength.upper),
+                max: getRandomIntInclusive(config.maxlength.lower, config.maxlength.upper)
+            }
+        }
+
+        const fillLineDetail = () => {
+            const pixelLine = [];
+            for (let i = 0; i < data.width; i++) {
+                pixelLine.push(getPixelTrailLength());
+            }
+            return pixelLine;
+        }
+
+        for (let i = 0; i <= numberOfLines; i++) {
             lineInfo.push({
                 lineStart: getRandomIntInclusive(0, data.height),
-                maxTrailLength: mtl
+                pixelLine: fillLineDetail(),
+                times: getRandomIntInclusive(config.times.lower, config.times.upper),
             });
         }
         return lineInfo;
@@ -45,10 +63,10 @@ const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
     const context = canvas.getContext('2d');
 
 
-    const drawLine = async (y, maxTrailLength) => {
+    const drawLine = async (y, pixelLine, times) => {
         for (let x = 0; x < data.width; x++) {
-            let rando = getRandomIntInclusive(y, y - maxTrailLength)
-            drawGradientLine2d(context, {x: x, y: y}, {x: x, y: rando}, 1, data.color, 'transparent')
+            const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, times, numberOfFrames, currentFrame);
+            drawGradientLine2d(context, {x: x, y: y}, {x: x, y: theTrailGaston}, 1, data.color, 'transparent')
         }
     }
 
@@ -60,7 +78,7 @@ const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
             y = y - data.height
         }
 
-        await drawLine(y, data.lineInfo[i].maxTrailLength)
+        await drawLine(y, data.lineInfo[i].pixelLine, data.lineInfo[i].times)
     }
 
     const buffer = canvas.toBuffer('image/png');
@@ -79,7 +97,7 @@ export const verticalScanLinesEffect = {
     name: 'scan lines',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 50,
     requiresLayer: true,
 }
 

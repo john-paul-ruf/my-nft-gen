@@ -15,7 +15,7 @@ const config = {
     radius: {lower: IMAGEHEIGHT * 0.15, upper: IMAGEHEIGHT * 0.20},
     ampLength: {lower: IMAGEHEIGHT * 0.1, upper: IMAGEHEIGHT * 0.15},
     ampRadius: {lower: IMAGEHEIGHT * 0.05, upper: IMAGEHEIGHT * 0.1},
-    sparsityFactor: {lower: 1, upper: 3},
+    sparsityFactor: {lower: 10, upper: 20},
     amplitude: {lower: IMAGEHEIGHT * 0.001, upper: IMAGEHEIGHT * 0.005},
     times: {lower: 1, upper: 2},
 }

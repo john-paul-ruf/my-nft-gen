@@ -19,6 +19,10 @@ const config = {
     ripple: {lower: IMAGEHEIGHT / 20, upper: IMAGEHEIGHT / 30},
     times: {lower: 1, upper: 2},
     smallerRingsGroupRadius: {lower: IMAGEHEIGHT * 0.2, upper: IMAGEHEIGHT * 0.3},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+    accentTimes: {lower: 1, upper: 5},
+    blurTimes: {lower: 1, upper: 5},
 }
 
 const generate = () => {
@@ -38,6 +42,16 @@ const generate = () => {
         largeColor: getColorFromBucket(),
         smallColor: getColorFromBucket(),
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        accentRange: {
+            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
+        blurRange: {
+            lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+            upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+        },
+        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${fuzzyRippleEffect.name}: large rings: ${data.largeNumberOfRings}, small rings x6: ${data.smallNumberOfRings}, ripple: ${data.ripple}`
         }
@@ -81,8 +95,8 @@ const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
 
     await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);

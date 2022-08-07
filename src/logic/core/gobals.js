@@ -7,9 +7,17 @@ export const LAYERSTRATEGY = 'sharp';
 
 export const WORKINGDIRETORY = `src/img/working/`;
 
-export const IMAGEHEIGHT = 2000;
-export const IMAGEWIDTH = 4000;
-export const NEUTRALS = ['#2d2d2d', '#5b5b5b', '#f7f5fa'];
+export const IMAGEHEIGHT = 1080;
+export const IMAGEWIDTH = 1920;
+
+export const NEUTRALS = [
+    /*'#2d2d2d',*/
+    '#5b5b5b',
+    '#f7f5fa',
+    '#eeeeee',
+    '#F0F3F3',
+    '#cbdae1'
+];
 
 //'mono', 'contrast', 'triade', 'tetrade', and 'analogic'.
 const schemeBucket = ['contrast', 'triade', 'analogic'];

@@ -12,6 +12,10 @@ const config = {
     stroke: 0.5,
     thickness: 0.5,
     scaleFactor: 1.01,
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+    accentTimes: {lower: 1, upper: 5},
+    blurTimes: {lower: 1, upper: 5},
 }
 
 const generate = () => {
@@ -24,6 +28,16 @@ const generate = () => {
         innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        accentRange: {
+            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
+        blurRange: {
+            lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+            upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+        },
+        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${fuzzBandsEffect.name}: ${data.numberOfCircles} fuzzy bands`
         }
@@ -65,13 +79,13 @@ const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
 
     await draw(ring, 0);
 
-    const theAccentGaston = findValue(0, 5, 1, numberOfFrames, currentFrame);
+    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
+
     await draw(fuzz, theAccentGaston);
 
     let fuzzLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, fuzz);
     let ringLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, ring);
-
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
 
     await fuzzLayer.blur(theBlurGaston);
     await fuzzLayer.adjustLayerOpacity(0.5);

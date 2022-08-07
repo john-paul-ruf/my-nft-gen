@@ -13,6 +13,10 @@ const config = {
     numberOfSides: {lower: 3, upper: 12},
     thickness: 6,
     stroke: 6,
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+    accentTimes: {lower: 1, upper: 5},
+    blurTimes: {lower: 1, upper: 5},
 }
 
 const generate = () => {
@@ -25,6 +29,16 @@ const generate = () => {
         stroke: config.stroke,
         innerColor: getColorFromBucket(),
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        accentRange: {
+            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
+        blurRange: {
+            lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+            upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+        },
+        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }
@@ -68,8 +82,8 @@ const gates = async (data, layer, currentFrame, numberOfFrames) => {
         fs.writeFileSync(filename, buffer);
     }
 
-    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
 
     await draw(drawing, 0);
     await draw(underlayName, theAccentGaston);

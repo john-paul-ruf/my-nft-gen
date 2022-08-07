@@ -13,6 +13,10 @@ const config = {
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 15, upper: 25},
     radiusFactor: {lower: 30, upper: 55},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+    accentTimes: {lower: 1, upper: 5},
+    blurTimes: {lower: 1, upper: 5},
     stroke: 3,
     thickness: 3,
     scaleFactor: 1.05,
@@ -29,6 +33,16 @@ const generate = () => {
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
+        accentRange: {
+            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
+        blurRange: {
+            lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+            upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+        },
+        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         color: getColorFromBucket(),
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
@@ -72,8 +86,9 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(filename, buffer);
     }
-    const theAccentGaston = findValue(0, 3, 1, numberOfFrames, currentFrame);
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    
+    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
+    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
 
     await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);
