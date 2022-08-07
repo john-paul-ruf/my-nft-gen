@@ -8,11 +8,9 @@ export class Config {
         const fileURLToPath1 = fileURLToPath(import.meta.url);
         const directory = dirname(fileURLToPath1).replace('/logic/core', '');
 
-        //No worries, just variable names.  It's cute, isn't it?
-        //It is how I think of layers in my head when working in illustrator
         //For compose info
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'abstractions-in-code'
+        this.runName = 'scopes'
 
         //final color depth of image
         //Only used when frames are output to gif

@@ -19,6 +19,13 @@ import {posterizeEffect} from "../effects/finalImageEffects/posterize.js";
 import {glitchInverseEffect} from "../effects/finalImageEffects/glitchInverse.js";
 import {glitchFractalEffect} from "../effects/finalImageEffects/glitchFractal.js";
 import {glitchDrumrollHorizontalWaveEffect} from "../effects/finalImageEffects/glitchDrumrollHorizontalWave.js";
+import {scopesEffect} from "../effects/primaryEffects/scopes.js";
+
+
+test('no null or undefined in scopesEffect generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(scopesEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
 
 test('no null or undefined in animateBackgroundEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(animateBackgroundEffect.generateData());
