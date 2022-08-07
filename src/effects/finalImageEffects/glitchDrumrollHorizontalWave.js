@@ -1,5 +1,5 @@
-import {IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
-import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import {IMAGESIZE, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 

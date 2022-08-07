@@ -1,8 +1,8 @@
-import {findValue} from "../../logic/findValue.js";
-import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import {findValue} from "../../logic/math/findValue.js";
+import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {WORKINGDIRETORY} from "../../logic/gobals.js";
+import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
     lowerRange: {lower: -20, upper: 0},

@@ -1,4 +1,4 @@
-import {findPointByAngleAndCircle} from "../logic/drawingMath.js";
+import {findPointByAngleAndCircle} from "../logic/math/drawingMath.js";
 
 export const drawRay2d = (context2d, pos, stroke, color, innerColor, angle, radius, length) => {
     const start = findPointByAngleAndCircle(pos, angle, radius)

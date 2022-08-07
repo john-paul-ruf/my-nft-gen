@@ -1,6 +1,7 @@
 //Globals are bad, mkay...
-import {getColorBucket} from "./getColorBucket.js";
-import {getRandomIntExclusive, randomNumber} from "./random.js";
+
+import {getRandomIntExclusive, randomNumber} from "../math/random.js";
+import {getColorBucket} from "../utils/getColorBucket.js";
 
 export const LAYERSTRATEGY = 'sharp';
 

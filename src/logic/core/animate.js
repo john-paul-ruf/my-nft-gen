@@ -1,11 +1,11 @@
-import {timeLeft} from "./timeLeft.js";
-import {generateFinalImageEffects, generatePrimaryEffects} from "../effects/control/generateEffect.js";
+import {generateFinalImageEffects, generatePrimaryEffects} from "../../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
 import {getNeutralFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "./gobals.js";
-import {writeArtistCard} from "../output/writeArtistCard.js";
+import {writeArtistCard} from "../../output/writeArtistCard.js";
 import fs from "fs";
-import {writeToMp4} from "../output/writeToMp4.js";
-import {LayerFactory} from "../layer/LayerFactory.js";
+import {writeToMp4} from "../../output/writeToMp4.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
+import {timeLeft} from "../utils/timeLeft.js";
 
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )

@@ -1,8 +1,8 @@
-import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
+import {getColorFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
-import {findValue} from "../../logic/findValue.js";
+import {findValue} from "../../logic/math/findValue.js";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
 import {drawRays2d} from "../../draw/drawRays2d.js";
 

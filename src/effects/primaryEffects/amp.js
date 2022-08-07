@@ -1,5 +1,5 @@
-import {randomId, randomNumber} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {randomId, randomNumber} from "../../logic/math/random.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {drawRay2d} from "../../draw/drawRay2d.js";

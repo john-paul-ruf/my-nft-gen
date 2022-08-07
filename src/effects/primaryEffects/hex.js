@@ -1,11 +1,11 @@
-import {getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
-import {findPointByAngleAndCircle} from "../../logic/drawingMath.js";
-import {findValue} from "../../logic/findValue.js";
+import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
+import {findValue} from "../../logic/math/findValue.js";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
-import {findOneWayValue} from "../../logic/findOneWayValue.js";
+import {findOneWayValue} from "../../logic/math/findOneWayValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 
 

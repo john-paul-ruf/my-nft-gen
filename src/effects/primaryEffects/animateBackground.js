@@ -1,6 +1,6 @@
 import Jimp from "jimp";
-import {getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
+import {getColorFromBucket, getNeutralFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import fs from "fs";
 
 const config = {
