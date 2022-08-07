@@ -1,5 +1,5 @@
-import {Config} from "./logic/Config.js";
-import {animate} from "./logic/animate.js";
+import {Config} from "./logic/core/Config.js";
+import {animate} from "./logic/core/animate.js";
 
 //To run: install node
 //from terminal in correct directory

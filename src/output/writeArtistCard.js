@@ -1,6 +1,6 @@
 import fs from "fs";
-import {composeInfo} from "../logic/composeInfo.js";
-import {timeToString} from "../logic/timeToString.js";
+import {composeInfo} from "../logic/core/composeInfo.js";
+import {timeToString} from "../logic/utils/timeToString.js";
 
 export const writeArtistCard = (config, effects, finalImageEffects) => {
 

@@ -1,7 +1,7 @@
-import {randomId} from "../../logic/random.js";
+import {randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {WORKINGDIRETORY} from "../../logic/gobals.js";
+import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const generate = () => {
     return {

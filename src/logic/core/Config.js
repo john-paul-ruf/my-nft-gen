@@ -1,6 +1,6 @@
 import path, {dirname} from "path";
 import {fileURLToPath} from 'url';
-import {randomId} from "./random.js";
+import {randomId} from "../math/random.js";
 
 export class Config {
     constructor() {

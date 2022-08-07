@@ -1,7 +1,7 @@
 import Jimp from "jimp";
-import {randomId} from "../logic/random.js";
+import {randomId} from "../logic/math/random.js";
 import fs from "fs";
-import {IMAGESIZE, WORKINGDIRETORY} from "../logic/gobals.js";
+import {IMAGESIZE, WORKINGDIRETORY} from "../logic/core/gobals.js";
 import sharp from "sharp";
 
 class SharpLayerStrategy {

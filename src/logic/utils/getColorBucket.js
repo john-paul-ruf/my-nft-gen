@@ -1,5 +1,5 @@
 import ColorScheme from "color-scheme";
-import {DISTANCE, HUE, SCHEME, VARIATION} from "./gobals.js";
+import {DISTANCE, HUE, SCHEME, VARIATION} from "../core/gobals.js";
 
 export const getColorBucket = () => {
     const bucket = new ColorScheme();

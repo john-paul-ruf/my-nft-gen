@@ -1,4 +1,4 @@
-import {getRandomIntExclusive} from "../../logic/random.js";
+import {getRandomIntExclusive} from "../../logic/math/random.js";
 import {Effect} from './Effect.js';
 import {verticalScanLinesEffect} from "../primaryEffects/verticalScanLines.js";
 import {hexEffect} from "../primaryEffects/hex.js";

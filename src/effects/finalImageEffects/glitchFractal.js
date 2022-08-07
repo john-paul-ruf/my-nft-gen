@@ -1,9 +1,9 @@
-import {getRandomIntInclusive, randomId} from "../../logic/random.js";
+import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
-import {findValue} from "../../logic/findValue.js";
+import {findValue} from "../../logic/math/findValue.js";
 import fs from "fs";
 import {LayerFactory} from "../../layer/LayerFactory.js";
-import {LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
     theRandom: {lower: 2, upper: 10},

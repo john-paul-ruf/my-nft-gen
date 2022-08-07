@@ -1,9 +1,9 @@
-import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/gobals.js";
+import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
+import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {drawRing2d} from "../../draw/drawRing2d.js";
-import {findValue} from "../../logic/findValue.js";
+import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
