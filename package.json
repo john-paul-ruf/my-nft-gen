@@ -27,11 +27,13 @@
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
     "canvas": "*",
+    "canvas-5-polyfill": "^0.1.5",
     "color-scheme": "^1.0.1",
     "fs-xattr": "^0.4.0",
     "gifwrap": "^0.10.1",
     "jimp": "^0.16.1",
-    "node-png": "^0.4.3"
+    "node-png": "^0.4.3",
+    "sharp": "^0.30.7"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",

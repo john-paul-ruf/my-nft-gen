@@ -23,8 +23,9 @@ import {glitchDrumrollHorizontalWaveEffect} from "../finalImageEffects/glitchDru
 import {glitchFractalEffect} from "../finalImageEffects/glitchFractal.js";
 import {glitchInverseEffect} from "../finalImageEffects/glitchInverse.js";
 import {animateBackgroundEffect} from "../primaryEffects/animateBackground.js";
+import {scopesEffect} from "../primaryEffects/scopes.js";
 
-const primaryEffects = [animateBackgroundEffect, verticalScanLinesEffect, hexEffect, wireframeSpiralEffect, backdropEffect, fuzzyRippleEffect, fuzzEffect, fuzzBandsEffect, gatesEffect, ampEffect, summonEffect, viewportEffect, sigEffect];
+const primaryEffects = [animateBackgroundEffect, verticalScanLinesEffect, scopesEffect, hexEffect, wireframeSpiralEffect, backdropEffect, fuzzyRippleEffect, fuzzEffect, fuzzBandsEffect, gatesEffect, ampEffect, summonEffect, viewportEffect, sigEffect];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
 const secondaryEffects = [randomizeEffect, glowEffect, fadeEffect,];
