@@ -63,14 +63,13 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
             const direction = loopCount % 2;
             const invert = direction <= 0;
 
-            const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
-            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 120, numberOfFrames, currentFrame, invert);
+            const theRotateGaston = findOneWayValue(angle, angle + 120, numberOfFrames, currentFrame, invert);
             const theAlphaGaston = findValue(0.5, 0.75, 5, numberOfFrames, currentFrame);
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
             const gapRadius = ((IMAGEHEIGHT * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
-            const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
+            const pos = findPointByAngleAndCircle(data.center, angle, gapRadius)
 
             drawFilledPolygon2d(context, radius, pos, 6, theRotateGaston, color, theAlphaGaston)
 
