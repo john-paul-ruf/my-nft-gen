@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
@@ -13,19 +13,18 @@ const config = {
     numberOfSides: {lower: 3, upper: 12},
     thickness: 6,
     stroke: 6,
-    size: IMAGESIZE,
 }
 
 const generate = () => {
     const data = {
         numberOfGates: getRandomIntInclusive(config.gates.lower, config.gates.upper),
         numberOfSides: getRandomIntInclusive(config.numberOfSides.lower, config.numberOfSides.upper),
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         thickness: config.thickness,
         stroke: config.stroke,
         innerColor: getColorFromBucket(),
-        center: {x: IMAGESIZE / 2, y: IMAGESIZE / 2},
+        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }
@@ -35,7 +34,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomIntExclusive(0, config.size / 2),
+                radius: getRandomIntExclusive(0, data.width / 2),
                 color: getColorFromBucket(),
             });
         }
@@ -53,7 +52,7 @@ const gates = async (data, layer, currentFrame, numberOfFrames) => {
 
     const draw = async (filename, accentBoost) => {
 
-        const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
         for (let i = 0; i < data.numberOfGates; i++) {

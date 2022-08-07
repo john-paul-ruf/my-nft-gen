@@ -1,11 +1,10 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import {drawGradientLine2d} from "../../draw/drawGradientLine2d.js";
 import fs from "fs";
 
 const config = {
-    size: IMAGESIZE,
     lines: {lower: 4, upper: 8},
     length: {lower: 5, upper: 75},
     color: getColorFromBucket()
@@ -14,8 +13,8 @@ const config = {
 const generate = () => {
     const data = {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
-        height: IMAGESIZE,
-        width: IMAGESIZE,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         color: config.color,
         getInfo: () => {
             return `${verticalScanLinesEffect.name}: ${data.numberOfLines} total lines with a min length of ${config.length.lower} and a max length of ${config.length.upper}`
@@ -28,7 +27,7 @@ const generate = () => {
             const mtl = getRandomIntInclusive(config.length.lower, config.length.upper)
 
             lineInfo.push({
-                lineStart: getRandomIntInclusive(0, IMAGESIZE),
+                lineStart: getRandomIntInclusive(0, data.height),
                 maxTrailLength: mtl
             });
         }
@@ -42,7 +41,7 @@ const generate = () => {
 
 const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
     const imgName = WORKINGDIRETORY + 'scan-lines' + randomId() + '.png';
-    const canvas = createCanvas(config.size, config.size)
+    const canvas = createCanvas(data.width, data.height)
     const context = canvas.getContext('2d');
 
 

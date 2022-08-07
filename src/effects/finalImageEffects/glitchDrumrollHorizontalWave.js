@@ -1,4 +1,4 @@
-import {IMAGESIZE, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
@@ -34,20 +34,20 @@ const glitchDrumrollHorizontalWave = async (data, layer) => {
 
     const imgData = jimpImage.bitmap.data;
 
-    for (let x = 0; x < IMAGESIZE; x++) {
-        for (let y = 0; y < IMAGESIZE; y++) {
-            let idx = (x + y * IMAGESIZE) * 4;
+    for (let x = 0; x < IMAGEHEIGHT; x++) {
+        for (let y = 0; y < IMAGEWIDTH; y++) {
+            let idx = (x + y * IMAGEWIDTH) * 4;
 
             let x2 = x;
 
             const theGlitch = getRandomIntInclusive(0, 100);
             if (theGlitch < data.glitchChance) {
-                const roll = Math.floor(Math.cos(x) * (IMAGESIZE * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
+                const roll = Math.floor(Math.cos(x) * (IMAGEHEIGHT * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
                 x2 = x + roll;
             }
 
-            if (x2 > IMAGESIZE - 1) x2 -= IMAGESIZE;
-            let idx2 = (x2 + y * IMAGESIZE) * 4;
+            if (x2 > IMAGEHEIGHT - 1) x2 -= IMAGEHEIGHT;
+            let idx2 = (x2 + y * IMAGEWIDTH) * 4;
 
             for (let c = 0; c < 4; c++) {
                 imgData[idx2 + c] = imgData[idx + c];

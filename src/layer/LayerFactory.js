@@ -1,7 +1,7 @@
 import Jimp from "jimp";
 import {randomId} from "../logic/math/random.js";
 import fs from "fs";
-import {IMAGESIZE, WORKINGDIRETORY} from "../logic/core/gobals.js";
+import {IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../logic/core/gobals.js";
 import sharp from "sharp";
 
 class SharpLayerStrategy {
@@ -36,7 +36,7 @@ class SharpLayerStrategy {
     async compositeLayerOver(layer) {
         const overlayFile = WORKINGDIRETORY + 'overlay' + randomId() + '.png';
 
-        await layer.resize(IMAGESIZE, IMAGESIZE);
+        await layer.resize(IMAGEHEIGHT, IMAGEWIDTH);
 
         await layer.toFile(overlayFile)
 
@@ -85,7 +85,7 @@ class JimpLayerStrategy {
     }
 
     async newLayer(height, width, backgroundColor) {
-        this.internalRepresentation = new Jimp(IMAGESIZE, IMAGESIZE, Jimp.cssColorToHex(backgroundColor))
+        this.internalRepresentation = new Jimp(width, height, Jimp.cssColorToHex(backgroundColor))
     }
 
     async fromFile(filename) {

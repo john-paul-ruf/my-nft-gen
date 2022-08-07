@@ -1,5 +1,5 @@
 import {randomId, randomNumber} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {drawRay2d} from "../../draw/drawRay2d.js";
@@ -7,21 +7,20 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1},
-    size: IMAGESIZE,
     stroke: 1,
 }
 
 const generate = () => {
     const data = {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         stroke: config.stroke,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
         length: 400,
         lineStart: 350,
-        center: {x: config.size / 2, y: config.size / 2},
+        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }
@@ -34,7 +33,7 @@ const amp = async (data, layer) => {
     const amp = WORKINGDIRETORY + 'amp' + randomId() + '.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
         for (let i = 0; i < 360; i = i + data.sparsityFactor) {

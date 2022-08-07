@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {LayerFactory} from "../../layer/LayerFactory.js";
@@ -8,7 +8,6 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 const config = {
     circles: {lower: 10, upper: 20},
     fuzzFactor: {lower: 1, upper: 3},
-    size: IMAGESIZE,
     times: {lower: 1, upper: 3},
     ringStroke: 0.5,
     blur: 2,
@@ -18,8 +17,8 @@ const generate = () => {
     const data = {
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
         fuzzFactor: getRandomIntInclusive(config.fuzzFactor.lower, config.fuzzFactor.upper),
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
         getInfo: () => {
             return `${fuzzEffect.name}: ${data.numberOfCircles} circles, fuzz factor: ${data.fuzzFactor}, ${data.times} times`
@@ -30,7 +29,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: getRandomIntExclusive(0, config.size),
+                radius: getRandomIntExclusive(0, data.width),
                 color: getColorFromBucket(),
             });
         }
@@ -47,7 +46,7 @@ const fuzz = async (data, layer) => {
     const fuzz = WORKINGDIRETORY + 'fuzz' + randomId() + '.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(IMAGESIZE, IMAGESIZE)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
         const drawRing = (radius, stroke, color) => {
@@ -55,7 +54,7 @@ const fuzz = async (data, layer) => {
             context.lineWidth = stroke;
             context.strokeStyle = color;
 
-            context.arc(IMAGESIZE / 2, IMAGESIZE / 2, radius, 0, 2 * Math.PI, false);
+            context.arc(IMAGEHEIGHT / 2, IMAGEHEIGHT / 2, radius, 0, 2 * Math.PI, false);
 
             context.stroke();
             context.closePath();

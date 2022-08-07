@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -10,22 +10,21 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
-    size: IMAGESIZE,
     stroke: 3,
     thickness: 3,
-    largeRadius: {lower: IMAGESIZE * 0.35, upper: IMAGESIZE * 0.45},
-    smallRadius: {lower: IMAGESIZE * 0.15, upper: IMAGESIZE * 0.25},
+    largeRadius: {lower: IMAGEHEIGHT * 0.35, upper: IMAGEHEIGHT * 0.45},
+    smallRadius: {lower: IMAGEHEIGHT * 0.15, upper: IMAGEHEIGHT * 0.25},
     largeNumberOfRings: {lower: 5, upper: 10},
     smallNumberOfRings: {lower: 3, upper: 7},
-    ripple: {lower: IMAGESIZE / 20, upper: IMAGESIZE / 30},
+    ripple: {lower: IMAGEHEIGHT / 20, upper: IMAGEHEIGHT / 30},
     times: {lower: 1, upper: 2},
-    smallerRingsGroupRadius: {lower: IMAGESIZE * 0.2, upper: IMAGESIZE * 0.3},
+    smallerRingsGroupRadius: {lower: IMAGEHEIGHT * 0.2, upper: IMAGEHEIGHT * 0.3},
 }
 
 const generate = () => {
     const data = {
-        height: config.size,
-        width: config.size,
+        height: IMAGEHEIGHT,
+        width: IMAGEWIDTH,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
@@ -38,7 +37,7 @@ const generate = () => {
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
         largeColor: getColorFromBucket(),
         smallColor: getColorFromBucket(),
-        center: {x: config.size / 2, y: config.size / 2},
+        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
             return `${fuzzyRippleEffect.name}: large rings: ${data.largeNumberOfRings}, small rings x6: ${data.smallNumberOfRings}, ripple: ${data.ripple}`
         }
@@ -52,7 +51,7 @@ const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
     const underlayName = WORKINGDIRETORY + 'fuzzy-ripples-underlay' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
-        const canvas = createCanvas(config.size, config.size)
+        const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
         const drawRing = (pos, radius, innerStroke, innerColor, outerStroke, outerColor) => {

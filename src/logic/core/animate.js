@@ -1,6 +1,6 @@
 import {generateFinalImageEffects, generatePrimaryEffects} from "../../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
-import {getNeutralFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "./gobals.js";
+import {getNeutralFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "./gobals.js";
 import {writeArtistCard} from "../../output/writeArtistCard.js";
 import fs from "fs";
 import {writeToMp4} from "../../output/writeToMp4.js";
@@ -47,8 +47,8 @@ export const animate = async (config) => {
         ////////////////////////
         //get fresh files every loop
         ////////////////////////
-        const background = await LayerFactory.getNewLayer(LAYERSTRATEGY, IMAGESIZE, IMAGESIZE, backgroundColor);
-        let layers = await getLayers(IMAGESIZE, IMAGESIZE)
+        const background = await LayerFactory.getNewLayer(LAYERSTRATEGY, IMAGEHEIGHT, IMAGEWIDTH, backgroundColor);
+        let layers = await getLayers(IMAGEWIDTH, IMAGEHEIGHT)
 
         /////////////////////////////
         //Process the main and secondary effects
