@@ -2,7 +2,6 @@ import {timeLeft} from "./timeLeft.js";
 import {generateFinalImageEffects, generatePrimaryEffects} from "../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
 import {getNeutralFromBucket, IMAGESIZE, LAYERSTRATEGY, WORKINGDIRETORY} from "./gobals.js";
-import {randomId} from "./random.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
 import fs from "fs";
 import {writeToMp4} from "../output/writeToMp4.js";
@@ -109,7 +108,7 @@ export const animate = async (config) => {
         // write to disk
         // still can run multiple instances at once
         /////////////////////
-        const filename = WORKINGDIRETORY + config.finalFileName + '-frame-' + frameNumber.toString() + randomId() + '.png';
+        const filename = WORKINGDIRETORY + config.finalFileName + '-frame-' + frameNumber.toString() + '.png';
         await background.toFile(filename);
         frameFilenames.push(filename);
     }
@@ -130,7 +129,7 @@ export const animate = async (config) => {
     //WRITE TO FILE
     ////////////////////////
     writeArtistCard(config, effects, finalImageEffects);
-    await writeToMp4(frameFilenames, config);
+    await writeToMp4(WORKINGDIRETORY + config.finalFileName + '-frame-%d.png', config);
 
     for (let f = 0; f < frameFilenames.length; f++) {
         //delete files

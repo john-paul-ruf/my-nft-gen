@@ -20,8 +20,8 @@ export class Config {
         //For testing, render every x frame.
         this.frameInc = 1;
 
-        //Number of frames in the final gif
-        this.numberOfFrame = 70;
+        //Number of frames in the final output
+        this.numberOfFrame = 200;
 
         this.finalFileName = 'Final' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
