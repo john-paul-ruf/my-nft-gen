@@ -1,9 +1,8 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
-import {drawGradientLine2d} from "../../draw/drawGradientLine2d.js";
+import {CANVASTRATEGY, getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
@@ -59,14 +58,13 @@ const generate = () => {
 
 const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
     const imgName = WORKINGDIRETORY + 'scan-lines' + randomId() + '.png';
-    const canvas = createCanvas(data.width, data.height)
-    const context = canvas.getContext('2d');
 
+    const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
     const drawLine = async (y, pixelLine, times) => {
         for (let x = 0; x < data.width; x++) {
             const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, times, numberOfFrames, currentFrame);
-            drawGradientLine2d(context, {x: x, y: y}, {x: x, y: theTrailGaston}, 1, data.color, 'transparent')
+            await canvas.drawGradientLine2d({x: x, y: y}, {x: x, y: theTrailGaston}, 1, data.color, 'transparent')
         }
     }
 
@@ -81,8 +79,7 @@ const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
         await drawLine(y, data.lineInfo[i].pixelLine, data.lineInfo[i].times)
     }
 
-    const buffer = canvas.toBuffer('image/png');
-    fs.writeFileSync(imgName, buffer);
+    await canvas.toFile(imgName);
 
     await layer.fromFile(imgName)
 
@@ -94,10 +91,6 @@ export const effect = {
 }
 
 export const verticalScanLinesEffect = {
-    name: 'scan lines',
-    generateData: generate,
-    effect: effect,
-    effectChance: 50,
-    requiresLayer: true,
+    name: 'scan lines', generateData: generate, effect: effect, effectChance: 50, requiresLayer: true,
 }
 

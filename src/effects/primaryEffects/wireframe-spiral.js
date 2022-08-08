@@ -1,10 +1,17 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {
+    CANVASTRATEGY,
+    getColorFromBucket,
+    IMAGEHEIGHT,
+    IMAGEWIDTH,
+    LAYERSTRATEGY,
+    WORKINGDIRETORY
+} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
 import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
@@ -25,7 +32,6 @@ const generate = () => {
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         color1: getColorFromBucket(),
         color2: getColorFromBucket(),
-        color3: getColorFromBucket(),
         center: {x: IMAGEWIDTH * 1.3 / 2, y: IMAGEHEIGHT * 1.3 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
@@ -43,41 +49,28 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
     const direction = data.counterClockwise > 0 ? -1 : 1
 
     const draw = async (filename, accentBoost) => {
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
+
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+
         let twistCount = 2;
         let n1 = data.unitLength, n2 = data.unitLength;
         let nextTerm = n1 + n2;
 
-        const drawRay = (stroke, angle, radius, radiusNext, twist) => {
+        const drawRay = async (stroke, angle, radius, radiusNext, twist) => {
 
             angle = angle + (((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction;
 
             const start = findPointByAngleAndCircle(data.center, angle, radius + config.radiusConstant)
             const end = findPointByAngleAndCircle(data.center, angle + (twist * data.sparsityFactor), radiusNext + config.radiusConstant);
 
-            context.beginPath();
-
-            const grad = context.createLinearGradient(start.x, start.y, end.x, end.y);
-            grad.addColorStop(0, data.color1);
-            grad.addColorStop(0.5, data.color2);
-            grad.addColorStop(1, data.color3);
-
-            context.lineWidth = stroke;
-            context.strokeStyle = grad;
-
-            context.moveTo(start.x, start.y);
-            context.lineTo(end.x, end.y);
-
-            context.stroke();
-            context.closePath();
+            await canvas.drawGradientLine2d(start, end, stroke, data.color1, data.color2);
         }
 
         while (nextTerm <= data.width) {
 
             for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-                drawRay(data.stroke + accentBoost, i, n2, nextTerm, twistCount)
-                drawRay(data.stroke + accentBoost, i, n2, nextTerm, -twistCount)
+                await drawRay(data.stroke + accentBoost, i, n2, nextTerm, twistCount)
+                await drawRay(data.stroke + accentBoost, i, n2, nextTerm, -twistCount)
             }
 
             //assignment for next loop
@@ -87,8 +80,7 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
             nextTerm = n1 + n2;
         }
 
-        const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(filename, buffer);
+        await canvas.toFile(filename)
     }
 
     const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
@@ -103,7 +95,7 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
     await underlayLayer.blur(theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);
     await layer.compositeLayerOver(underlayLayer);
-    
+
     await layer.compositeLayerOver(tempLayer);
 
     fs.unlinkSync(underlayName);

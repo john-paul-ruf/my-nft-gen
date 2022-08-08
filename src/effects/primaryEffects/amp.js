@@ -1,9 +1,15 @@
 import {randomId, randomNumber} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {
+    CANVASTRATEGY,
+    getColorFromBucket,
+    IMAGEHEIGHT,
+    IMAGEWIDTH,
+    LAYERSTRATEGY,
+    WORKINGDIRETORY
+} from "../../logic/core/gobals.js";
 import fs from "fs";
-import {drawRay2d} from "../../draw/drawRay2d.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1},
@@ -33,15 +39,13 @@ const amp = async (data, layer) => {
     const amp = WORKINGDIRETORY + 'amp' + randomId() + '.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
         for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-            drawRay2d(context, data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length)
+            await canvas.drawRay2d(data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length)
         }
 
-        const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(filename, buffer);
+        await canvas.toFile(filename);
     }
 
     await draw(config.stroke, amp);

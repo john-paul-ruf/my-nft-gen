@@ -1,12 +1,18 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {
+    CANVASTRATEGY,
+    getColorFromBucket,
+    IMAGEHEIGHT,
+    IMAGEWIDTH,
+    LAYERSTRATEGY,
+    WORKINGDIRETORY
+} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
 import {findOneWayValue} from "../../logic/math/findOneWayValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
-import {drawFilledPolygon2d} from "../../draw/drawFilledPolygon2d.js";
 import {findValue} from "../../logic/math/findValue.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
@@ -60,10 +66,10 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
     const imgName = WORKINGDIRETORY + 'scopes' + randomId() + '.png';
 
     const draw = async (filename) => {
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
 
-        const drawHexLine = (angle, index, color, alphaRange) => {
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+
+        const drawHexLine = async (angle, index, color, alphaRange) => {
             const loopCount = index + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
@@ -76,16 +82,15 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
             const gapRadius = ((IMAGEHEIGHT * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, angle, gapRadius)
 
-            drawFilledPolygon2d(context, radius, pos, 6, theRotateGaston, color, theAlphaGaston)
+            await canvas.drawFilledPolygon2d(radius, pos, 6, theRotateGaston, color, theAlphaGaston)
 
         }
 
         for (let s = 0; s < data.scopes.length; s++) {
-            drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color, data.scopes[s].alphaRange)
+            await drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color, data.scopes[s].alphaRange)
         }
 
-        const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(filename, buffer);
+        await canvas.toFile(filename);
     }
 
     await draw(imgName);
