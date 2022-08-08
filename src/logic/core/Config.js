@@ -9,7 +9,7 @@ export class Config {
         const directory = dirname(fileURLToPath1).replace('/logic/core', '');
 
         //For compose info
-        this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
+        this._INVOKER_ = 'John Ruf';
         this.runName = 'rando-changes'
 
         //final color depth of image
