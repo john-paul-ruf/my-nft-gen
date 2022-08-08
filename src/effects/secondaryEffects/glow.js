@@ -5,9 +5,9 @@ import fs from "fs";
 import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
-    lowerRange: {lower: -20, upper: 0},
-    upperRange: {lower: 0, upper: 20},
-    times: {lower: 1, upper: 3},
+    lowerRange: {lower: -40, upper: 0},
+    upperRange: {lower: 0, upper: 40},
+    times: {lower: 1, upper: 5},
 }
 
 const generate = () => {
@@ -48,7 +48,7 @@ export const glowEffect = {
     name: 'glow',
     generateData: generate,
     effect: effect,
-    effectChance: 40, //testing color scheme work
+    effectChance: 40,
     requiresLayer: false,
 }
 

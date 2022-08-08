@@ -5,8 +5,8 @@ import fs from "fs";
 import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
-    lowerRange: {lower: 1, upper: 5},
-    upperRange: {lower: 5, upper: 10},
+    lowerRange: {lower: 1, upper: 2},
+    upperRange: {lower: 3, upper: 4},
     times: {lower: 1, upper: 4},
 }
 

@@ -16,9 +16,9 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    sparsityFactor: {lower: 10, upper: 20},
+    sparsityFactor: {lower: 5, upper: 10},
     gapFactor: {lower: 3, upper: 5},
-    radiusFactor: {lower: 10, upper: 20},
+    radiusFactor: {lower: 5, upper: 10},
     stroke: 3,
     thickness: 3,
     scaleFactor: 1.05,

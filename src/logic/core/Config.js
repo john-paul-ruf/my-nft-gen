@@ -10,7 +10,7 @@ export class Config {
 
         //For compose info
         this._INVOKER_ = 'John Ruf - Bookstore Illuminati';
-        this.runName = 'scopes'
+        this.runName = 'rando-changes'
 
         //final color depth of image
         //Only used when frames are output to gif

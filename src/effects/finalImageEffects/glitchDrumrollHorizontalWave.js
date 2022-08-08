@@ -71,7 +71,7 @@ export const glitchDrumrollHorizontalWaveEffect = {
     name: 'glitch drumroll horizontal wave',
     generateData: generate,
     effect: effect,
-    effectChance: 5,
+    effectChance: 0,
     requiresLayer: false,
 }
 

@@ -49,7 +49,7 @@ export const posterizeEffect = {
     name: 'posterize',
     generateData: generate,
     effect: effect,
-    effectChance: 5, //not a fan
+    effectChance: 0, //the new worst effect
     requiresLayer: false,
 }
 
