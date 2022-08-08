@@ -40,6 +40,7 @@ const generate = () => {
 const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
     const imgName = WORKINGDIRETORY + 'wireframe-spiral' + randomId() + '.png';
     const underlayName = WORKINGDIRETORY + 'wireframe-spiral-underlay' + randomId() + '.png';
+    const direction = data.counterClockwise > 0 ? -1 : 1
 
     const draw = async (filename, accentBoost) => {
         const canvas = createCanvas(data.width, data.height)
@@ -49,6 +50,9 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
         let nextTerm = n1 + n2;
 
         const drawRay = (stroke, angle, radius, radiusNext, twist) => {
+
+            angle = angle + (((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction;
+
             const start = findPointByAngleAndCircle(data.center, angle, radius + config.radiusConstant)
             const end = findPointByAngleAndCircle(data.center, angle + (twist * data.sparsityFactor), radiusNext + config.radiusConstant);
 
@@ -98,12 +102,8 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
 
     await underlayLayer.blur(theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);
-
-    const direction = data.counterClockwise > 0 ? -1 : 1
-    await underlayLayer.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction);
-    await tempLayer.rotate((((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction);
-
     await layer.compositeLayerOver(underlayLayer);
+    
     await layer.compositeLayerOver(tempLayer);
 
     fs.unlinkSync(underlayName);

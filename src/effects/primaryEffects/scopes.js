@@ -1,4 +1,4 @@
-import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
+import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
 import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {createCanvas} from "canvas";
 import fs from "fs";
@@ -16,6 +16,7 @@ const config = {
     stroke: 3,
     thickness: 3,
     scaleFactor: 1.05,
+    alphaRange: {bottom: {lower: 0.4, upper: 0.6}, top: {lower: 0.7, upper: 0.9}},
 }
 
 const generate = () => {
@@ -39,6 +40,10 @@ const generate = () => {
                 info.push({
                     loopCount: i + 1,
                     angle: a,
+                    alphaRange: {
+                        lower: randomNumber(config.alphaRange.bottom.lower, config.alphaRange.bottom.upper),
+                        upper: randomNumber(config.alphaRange.top.lower, config.alphaRange.top.upper)
+                    },
                     color: getColorFromBucket(),
                 });
             }
@@ -58,13 +63,13 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
         const canvas = createCanvas(data.width, data.height)
         const context = canvas.getContext('2d');
 
-        const drawHexLine = (angle, index, color) => {
+        const drawHexLine = (angle, index, color, alphaRange) => {
             const loopCount = index + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
 
             const theRotateGaston = findOneWayValue(angle, angle + 120, numberOfFrames, currentFrame, invert);
-            const theAlphaGaston = findValue(0.5, 0.75, 5, numberOfFrames, currentFrame);
+            const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, 5, numberOfFrames, currentFrame);
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
@@ -76,7 +81,7 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
         }
 
         for (let s = 0; s < data.scopes.length; s++) {
-            drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color)
+            drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color, data.scopes[s].alphaRange)
         }
 
         const buffer = canvas.toBuffer('image/png');
