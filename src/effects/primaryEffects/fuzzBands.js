@@ -1,10 +1,16 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {
+    CANVASTRATEGY,
+    getColorFromBucket,
+    IMAGEHEIGHT,
+    IMAGEWIDTH,
+    LAYERSTRATEGY,
+    WORKINGDIRETORY
+} from "../../logic/core/gobals.js";
 import fs from "fs";
-import {drawRing2d} from "../../draw/drawRing2d.js";
 import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
@@ -64,17 +70,15 @@ const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
     const fuzz = WORKINGDIRETORY + 'fuzz' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
         for (let i = 0; i < data.numberOfCircles; i++) {
             const loopCount = i + 1;
             const scaleBy = (data.scaleFactor * loopCount);
-            drawRing2d(context, data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.circles[i].color)
+            await canvas.drawRing2d(data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.circles[i].color)
         }
 
-        const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(filename, buffer);
+        await canvas.toFile(filename);
     }
 
     await draw(ring, 0);

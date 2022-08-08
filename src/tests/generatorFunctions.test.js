@@ -4,7 +4,6 @@ import {verticalScanLinesEffect} from "../effects/primaryEffects/verticalScanLin
 import {hexEffect} from "../effects/primaryEffects/hex.js";
 import {wireframeSpiralEffect} from "../effects/primaryEffects/wireframe-spiral.js";
 import {fuzzyRippleEffect} from "../effects/primaryEffects/fuzzy-ripples.js";
-import {fuzzEffect} from "../effects/primaryEffects/fuzz.js";
 import {fuzzBandsEffect} from "../effects/primaryEffects/fuzzBands.js";
 import {gatesEffect} from "../effects/primaryEffects/gates.js";
 import {ampEffect} from "../effects/primaryEffects/amp.js";
@@ -49,11 +48,6 @@ test('no null or undefined in wireframeSpiralEffect generate function', () => {
 
 test('no null or undefined in fuzzyRippleEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(fuzzyRippleEffect.generateData());
-    expect(hasNullOrUndefined).toBe(false);
-});
-
-test('no null or undefined in fuzzEffect generate function', () => {
-    const hasNullOrUndefined = checkIfAnyNullOrUndefined(fuzzEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
 

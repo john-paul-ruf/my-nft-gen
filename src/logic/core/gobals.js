@@ -4,6 +4,7 @@ import {getRandomIntExclusive, randomNumber} from "../math/random.js";
 import {getColorBucket} from "../utils/getColorBucket.js";
 
 export const LAYERSTRATEGY = 'sharp';
+export const CANVASTRATEGY = 'node-canvas';
 
 export const WORKINGDIRETORY = `src/img/working/`;
 

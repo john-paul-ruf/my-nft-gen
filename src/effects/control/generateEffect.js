@@ -5,7 +5,6 @@ import {hexEffect} from "../primaryEffects/hex.js";
 import {wireframeSpiralEffect} from "../primaryEffects/wireframe-spiral.js";
 import {backdropEffect} from "../primaryEffects/backdrop.js";
 import {fuzzyRippleEffect} from "../primaryEffects/fuzzy-ripples.js";
-import {fuzzEffect} from "../primaryEffects/fuzz.js";
 import {fuzzBandsEffect} from "../primaryEffects/fuzzBands.js";
 import {gatesEffect} from "../primaryEffects/gates.js";
 import {ampEffect} from "../primaryEffects/amp.js";
@@ -25,7 +24,21 @@ import {glitchInverseEffect} from "../finalImageEffects/glitchInverse.js";
 import {animateBackgroundEffect} from "../primaryEffects/animateBackground.js";
 import {scopesEffect} from "../primaryEffects/scopes.js";
 
-const primaryEffects = [animateBackgroundEffect, scopesEffect, verticalScanLinesEffect, hexEffect, wireframeSpiralEffect, backdropEffect, fuzzyRippleEffect, fuzzEffect, fuzzBandsEffect, gatesEffect, ampEffect, summonEffect, viewportEffect, sigEffect];
+const primaryEffects = [
+    animateBackgroundEffect,
+    scopesEffect,
+    verticalScanLinesEffect,
+    hexEffect,
+    wireframeSpiralEffect,
+    backdropEffect,
+    fuzzyRippleEffect,
+    fuzzBandsEffect,
+    gatesEffect,
+    ampEffect,
+    summonEffect,
+    viewportEffect,
+    sigEffect
+];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
 const secondaryEffects = [randomizeEffect, glowEffect, fadeEffect,];

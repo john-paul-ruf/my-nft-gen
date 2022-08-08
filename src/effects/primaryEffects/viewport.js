@@ -1,10 +1,8 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {CANVASTRATEGY, getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
-import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
-import {drawRays2d} from "../../draw/drawRays2d.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
@@ -51,17 +49,16 @@ const viewport = async (data, layer, currentFrame, numberOfFrames) => {
     const imgName = WORKINGDIRETORY + 'viewport' + randomId() + '.png';
 
     const draw = async () => {
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
+
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
         const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength + data.amplitude, data.times, numberOfFrames, currentFrame);
-        drawRays2d(context, data.center, data.ampRadius, theAmpGaston, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)
+        await canvas.drawRays2d(data.center, data.ampRadius, theAmpGaston, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)
 
         const thePolyGaston = findValue(data.radius, data.radius + data.amplitude, data.times, numberOfFrames, currentFrame);
-        drawPolygon2d(context, thePolyGaston, data.center, 3, 210, data.thickness, data.innerColor, data.stroke, data.color)
+        await canvas.drawPolygon2d(thePolyGaston, data.center, 3, 210, data.thickness, data.innerColor, data.stroke, data.color)
 
-        const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(imgName, buffer);
+        await canvas.toFile(imgName);
     }
 
     await draw();

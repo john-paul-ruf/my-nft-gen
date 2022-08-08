@@ -1,11 +1,17 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {
+    CANVASTRATEGY,
+    getColorFromBucket,
+    IMAGEHEIGHT,
+    IMAGEWIDTH,
+    LAYERSTRATEGY,
+    WORKINGDIRETORY
+} from "../../logic/core/gobals.js";
 import fs from "fs";
-import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
 import {findValue} from "../../logic/math/findValue.js";
 import {findOneWayValue} from "../../logic/math/findOneWayValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
@@ -66,20 +72,17 @@ const gates = async (data, layer, currentFrame, numberOfFrames) => {
 
     const draw = async (filename, accentBoost) => {
 
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
         for (let i = 0; i < data.numberOfGates; i++) {
             const loopCount = i + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
             const theAngleGaston = findOneWayValue(0, 360 / data.numberOfSides, numberOfFrames, currentFrame, invert);
-            drawPolygon2d(context, data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke + accentBoost, data.gates[i].color)
+            await canvas.drawPolygon2d(data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke + accentBoost, data.gates[i].color)
         }
 
-        const buffer = canvas.toBuffer('image/png');
-
-        fs.writeFileSync(filename, buffer);
+        await canvas.toFile(filename);
     }
 
     const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);

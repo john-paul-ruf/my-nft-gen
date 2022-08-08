@@ -1,12 +1,18 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
-import {createCanvas} from "canvas";
+import {
+    CANVASTRATEGY,
+    getColorFromBucket,
+    IMAGEHEIGHT,
+    IMAGEWIDTH,
+    LAYERSTRATEGY,
+    WORKINGDIRETORY
+} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
 import {findValue} from "../../logic/math/findValue.js";
-import {drawPolygon2d} from "../../draw/drawPolygon2d.js";
 import {findOneWayValue} from "../../logic/math/findOneWayValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
+import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
@@ -58,10 +64,10 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
     const underlayName = WORKINGDIRETORY + 'hex-under' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
-        const canvas = createCanvas(data.width, data.height)
-        const context = canvas.getContext('2d');
 
-        const drawHexLine = (angle, index) => {
+        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+
+        const drawHexLine = async (angle, index) => {
             const loopCount = index + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
@@ -74,19 +80,18 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
             const gapRadius = ((IMAGEHEIGHT * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
-            drawPolygon2d(context, radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
+            await canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
         }
 
         for (let i = 0; i < 20; i++) {
             for (let a = 0; a < 360; a = a + data.sparsityFactor) {
-                drawHexLine(a, i)
+                await drawHexLine(a, i)
             }
         }
 
-        const buffer = canvas.toBuffer('image/png');
-        fs.writeFileSync(filename, buffer);
+        await canvas.toFile(filename);
     }
-    
+
     const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
     const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
 
