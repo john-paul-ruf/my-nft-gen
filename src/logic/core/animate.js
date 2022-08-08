@@ -6,6 +6,7 @@ import fs from "fs";
 import {writeToMp4} from "../../output/writeToMp4.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 import {timeLeft} from "../utils/timeLeft.js";
+import {writeScreenCap} from "../../output/writeScreenCap.js";
 
 /**
  * @param config - Responsible for filename of gif, total number of frames, gif color depth, and if to skip frames ( frameInc )
@@ -116,6 +117,7 @@ export const animate = async (config) => {
     ////////////////////////
     writeArtistCard(config, effects, finalImageEffects);
     await writeToMp4(WORKINGDIRETORY + config.finalFileName + '-frame-%d.png', config);
+    await writeScreenCap(frameFilenames[0], config);
 
     for (let f = 0; f < frameFilenames.length; f++) {
         //delete files
