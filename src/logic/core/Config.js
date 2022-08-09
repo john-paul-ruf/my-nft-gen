@@ -20,7 +20,7 @@ export class Config {
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 200;
+        this.numberOfFrame = 300;
 
         this.finalFileName = 'Final' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
