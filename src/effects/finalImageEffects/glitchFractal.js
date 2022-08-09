@@ -19,7 +19,7 @@ const generate = () => {
     return data;
 }
 
-const glitchFractal = async (data, layer, currentFrame, totalFrames) => {
+const glitchFractal = async (data, layer) => {
 
     const filename = WORKINGDIRETORY + 'fractal' + randomId() + '_underlay.png';
 
@@ -48,7 +48,7 @@ const glitchFractal = async (data, layer, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => glitchFractal(data, layer, currentFrame, totalFrames)
+    invoke: (data, layer) => glitchFractal(data, layer)
 }
 
 export const glitchFractalEffect = {
