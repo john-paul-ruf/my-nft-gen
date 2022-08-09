@@ -16,7 +16,7 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     gates: {lower: 5, upper: 11},
-    numberOfSides: {lower: 3, upper: 6},
+    numberOfSides: {lower: 4, upper: 8},
     thickness: 8,
     stroke: 8,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
