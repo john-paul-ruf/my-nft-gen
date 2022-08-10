@@ -14,19 +14,19 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    circles: {lower: 10, upper: 20},
-    radiusGap: 80,
+    circles: {lower: 20, upper: 30},
+    radiusGap: 40,
     stroke: 1,
     thickness: 1,
     scaleFactor: 1.01,
-    densityFactor: 0.99,
+    densityFactor: 0.95,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 1, upper: 5},
     blurTimes: {lower: 1, upper: 5},
-    lengthRange: {bottom: {lower: 5, upper: 10}, top: {lower: 30, upper: 60}},
-    lengthTimes: {lower: 1, upper: 5},
-    sparsityFactor: {lower: 30, upper: 60},
+    lengthRange: {bottom: {lower: 1, upper: 5}, top: {lower: 15, upper: 20}},
+    lengthTimes: {lower: 5, upper: 15},
+    sparsityFactor: {lower: 5, upper: 15},
 }
 
 const generate = () => {
@@ -53,7 +53,7 @@ const generate = () => {
         const info = [];
         for (let i = 0; i <= num; i++) {
             info.push({
-                radius: config.radiusGap * i,
+                radius: config.radiusGap * (i + 1),
                 color: getColorFromBucket(),
                 accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
                 accentRange: {
@@ -64,14 +64,14 @@ const generate = () => {
             });
         }
 
-        const getRays = (sparsityFactor, count) => {
+        const getRays = (sparsityFactor) => {
             const rays = [];
 
             for (let i = 0; i < 360; i = i + sparsityFactor) {
                 rays.push({
                     length: {
-                        lower: getRandomIntInclusive(config.lengthRange.bottom.lower, config.lengthRange.bottom.upper) * count * config.scaleFactor,
-                        upper: getRandomIntInclusive(config.lengthRange.top.lower, config.lengthRange.top.upper) * count * config.scaleFactor
+                        lower: getRandomIntInclusive(config.lengthRange.bottom.lower, config.lengthRange.bottom.upper),
+                        upper: getRandomIntInclusive(config.lengthRange.top.lower, config.lengthRange.top.upper)
                     },
                     lengthTimes: getRandomIntInclusive(config.lengthTimes.lower, config.lengthTimes.upper)
                 });
@@ -81,7 +81,7 @@ const generate = () => {
         }
 
         for (let c = 0; c < info.length; c++) {
-            info[c].rays = getRays(info[c].sparsityFactor, c + 1);
+            info[c].rays = getRays(info[c].sparsityFactor);
         }
 
         return info;
