@@ -23,6 +23,7 @@ import {glitchFractalEffect} from "../finalImageEffects/glitchFractal.js";
 import {glitchInverseEffect} from "../finalImageEffects/glitchInverse.js";
 import {animateBackgroundEffect} from "../primaryEffects/animateBackground.js";
 import {scopesEffect} from "../primaryEffects/scopes.js";
+import {rayRingEffect} from "../primaryEffects/ray-ring.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -35,6 +36,7 @@ const primaryEffects = [
     fuzzBandsEffect,
     gatesEffect,
     ampEffect,
+    rayRingEffect,
     summonEffect,
     viewportEffect,
     sigEffect
