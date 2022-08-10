@@ -75,7 +75,7 @@ const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
         for (let i = 0; i < data.numberOfCircles; i++) {
             const loopCount = i + 1;
             const scaleBy = (data.scaleFactor * loopCount);
-            const theAccentGaston = withAccentGaston ? findValue(data.gates[i].accentRange.lower, data.gates[i].accentRange.upper, data.gates[i].accentTimes, numberOfFrames, currentFrame) : 0;
+            const theAccentGaston = withAccentGaston ? findValue(data.circles[i].accentRange.lower, data.circles[i].accentRange.upper, data.circles[i].accentTimes, numberOfFrames, currentFrame) : 0;
             await canvas.drawRing2d(data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + theAccentGaston) * scaleBy, data.circles[i].color)
         }
 
