@@ -17,14 +17,14 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     sparsityFactor: {lower: 24, upper: 24},
-    gapFactor: {lower: 15, upper: 25},
-    radiusFactor: {lower: 30, upper: 55},
+    gapFactor: {lower: 5, upper: 10},
+    radiusFactor: {lower: 15, upper: 30},
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 1, upper: 5},
     blurTimes: {lower: 1, upper: 5},
-    stroke: 3,
-    thickness: 3,
+    stroke: 1,
+    thickness: 1,
     scaleFactor: 1.05,
 }
 

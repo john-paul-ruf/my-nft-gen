@@ -1,20 +1,17 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
-import {findValue} from "../../logic/math/findValue.js";
 import fs from "fs";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 import {LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
-    theRandom: {lower: 2, upper: 10},
-    times: {lower: 1, upper: 4},
+    theRandom: {lower: 2, upper: 5},
 }
 
 const generate = () => {
 
     const data = {
         theRandom: getRandomIntInclusive(config.theRandom.lower, config.theRandom.upper),
-        times: getRandomIntInclusive(config.times.lower, config.times.upper),
         getInfo: () => {
             return `${glitchFractalEffect.name} random: ${data.theRandom}`
         }
@@ -22,7 +19,7 @@ const generate = () => {
     return data;
 }
 
-const glitchFractal = async (data, layer, currentFrame, totalFrames) => {
+const glitchFractal = async (data, layer) => {
 
     const filename = WORKINGDIRETORY + 'fractal' + randomId() + '_underlay.png';
 
@@ -39,10 +36,7 @@ const glitchFractal = async (data, layer, currentFrame, totalFrames) => {
         }
     }
 
-    const theBlurGaston = Math.ceil(findValue(1, 3, data.times, totalFrames, currentFrame));
-    await underlay.blur(theBlurGaston);
-
-    await underlay.opacity(0.4);
+    await underlay.opacity(0.75);
 
     await underlay.writeAsync(filename)
 
@@ -54,14 +48,14 @@ const glitchFractal = async (data, layer, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => glitchFractal(data, layer, currentFrame, totalFrames)
+    invoke: (data, layer) => glitchFractal(data, layer)
 }
 
 export const glitchFractalEffect = {
     name: 'glitch fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 5,
+    effectChance: 15,
     requiresLayer: false,
 }
 

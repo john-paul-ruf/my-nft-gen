@@ -2,9 +2,9 @@ import {findValue} from "../../logic/math/findValue.js";
 import {getRandomIntInclusive} from "../../logic/math/random.js";
 
 const config = {
-    lowerRange: {lower: 1, upper: 5},
-    upperRange: {lower: 5, upper: 10},
-    times: {lower: 1, upper: 4},
+    lowerRange: {lower: 1, upper: 2},
+    upperRange: {lower: 3, upper: 4},
+    times: {lower: 0, upper: 10},
 }
 
 const generate = () => {
@@ -23,7 +23,9 @@ const generate = () => {
 
 const blur = async (data, layer, currentFrame, totalFrames) => {
     const blurGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
-    await layer.blur(blurGaston);
+    if (blurGaston > 0) {
+        await layer.blur(blurGaston);
+    }
 }
 
 export const effect = {

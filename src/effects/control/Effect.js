@@ -27,10 +27,10 @@ export class Effect {
     }
 
     async invokeEffect(layer, currentFrame, totalFrames) {
-        await this.invoke(this.data, layer, currentFrame, totalFrames, this.card) //execute the effect
+        await this.invoke(this.data, layer, currentFrame, totalFrames) //execute the effect
         for (let i = 0; i < this.additionalEffects.length; i++) {
             //if any additional effects? call them as well.
-            await this.additionalEffects[i].invoke(this.additionalEffects[i].data, layer, currentFrame, totalFrames, this.card)
+            await this.additionalEffects[i].invoke(this.additionalEffects[i].data, layer, currentFrame, totalFrames);
         }
     }
 

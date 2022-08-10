@@ -8,14 +8,14 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 const config = {
     stroke: 5,
     thickness: 5,
-    ampStroke: 4,
-    ampThickness: 2,
+    ampStroke: 1,
+    ampThickness: 1,
     radius: {lower: IMAGEHEIGHT * 0.15, upper: IMAGEHEIGHT * 0.20},
     ampLength: {lower: IMAGEHEIGHT * 0.1, upper: IMAGEHEIGHT * 0.15},
     ampRadius: {lower: IMAGEHEIGHT * 0.05, upper: IMAGEHEIGHT * 0.1},
     sparsityFactor: {lower: 10, upper: 20},
     amplitude: {lower: IMAGEHEIGHT * 0.001, upper: IMAGEHEIGHT * 0.005},
-    times: {lower: 1, upper: 2},
+    times: {lower: 1, upper: 5},
 }
 
 const generate = () => {

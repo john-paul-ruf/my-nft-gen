@@ -15,7 +15,7 @@ import {writeScreenCap} from "../../output/writeScreenCap.js";
 export const animate = async (config) => {
     const backgroundColor = getNeutralFromBucket();
 
-    const frameFilenames = []; //will be a collection of jimp images filenames that in the end gets converted to a gif
+    const frameFilenames = []; //will be a collection of png images filenames that in the end gets converted to a gif
 
     config.startTime = new Date();
 

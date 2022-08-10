@@ -20,11 +20,11 @@ export const NEUTRALS = [
     '#cbdae1'
 ];
 
-//'mono', 'contrast', 'triade', 'tetrade', and 'analogic'.
-const schemeBucket = ['contrast', 'triade', 'analogic'];
+//'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
+const schemeBucket = ['mono', 'contrast', 'triade', 'tetrade', 'analogic'];
 
 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
-const variationBucket = ['default', 'hard'];
+const variationBucket = ['default', 'pastel', 'soft', 'light', 'hard', 'pale'];
 
 export const SCHEME = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
 export const VARIATION = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
