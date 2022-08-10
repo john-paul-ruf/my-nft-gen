@@ -34,15 +34,10 @@ const generate = () => {
         innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
-        accentRange: {
-            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
-            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
-        },
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${fuzzBandsEffect.name}: ${data.numberOfCircles} fuzzy bands`
@@ -55,6 +50,11 @@ const generate = () => {
             info.push({
                 radius: getRandomIntExclusive(0, data.width * 0.75),
                 color: getColorFromBucket(),
+                accentRange: {
+                    lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+                    upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+                },
+                accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
             });
         }
         return info;
@@ -69,24 +69,23 @@ const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
     const ring = WORKINGDIRETORY + 'ring' + randomId() + '.png';
     const fuzz = WORKINGDIRETORY + 'fuzz' + randomId() + '.png';
 
-    const draw = async (filename, accentBoost) => {
+    const draw = async (filename, withAccentGaston) => {
         const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
         for (let i = 0; i < data.numberOfCircles; i++) {
             const loopCount = i + 1;
             const scaleBy = (data.scaleFactor * loopCount);
-            await canvas.drawRing2d(data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.circles[i].color)
+            const theAccentGaston = withAccentGaston ? findValue(data.circles[i].accentRange.lower, data.circles[i].accentRange.upper, data.circles[i].accentTimes, numberOfFrames, currentFrame) : 0;
+            await canvas.drawRing2d(data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + theAccentGaston) * scaleBy, data.circles[i].color)
         }
 
         await canvas.toFile(filename);
     }
 
-    await draw(ring, 0);
-
-    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
     const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
 
-    await draw(fuzz, theAccentGaston);
+    await draw(ring, false);
+    await draw(fuzz, true);
 
     let fuzzLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, fuzz);
     let ringLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, ring);

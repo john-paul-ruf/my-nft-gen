@@ -23,6 +23,7 @@ const config = {
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 1, upper: 5},
     blurTimes: {lower: 1, upper: 5},
+
 }
 
 const generate = () => {
@@ -35,15 +36,10 @@ const generate = () => {
         stroke: config.stroke,
         innerColor: getColorFromBucket(),
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
-        accentRange: {
-            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
-            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
-        },
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
@@ -56,6 +52,11 @@ const generate = () => {
             info.push({
                 radius: getRandomIntExclusive(0, data.width / 2),
                 color: getColorFromBucket(),
+                accentRange: {
+                    lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+                    upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+                },
+                accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
             });
         }
         return info;
@@ -70,7 +71,7 @@ const gates = async (data, layer, currentFrame, numberOfFrames) => {
     const drawing = WORKINGDIRETORY + 'gate' + randomId() + '.png';
     const underlayName = WORKINGDIRETORY + 'gate-underlay' + randomId() + '.png';
 
-    const draw = async (filename, accentBoost) => {
+    const draw = async (filename, withAccentGaston) => {
 
         const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
@@ -79,17 +80,17 @@ const gates = async (data, layer, currentFrame, numberOfFrames) => {
             const direction = loopCount % 2;
             const invert = direction <= 0;
             const theAngleGaston = findOneWayValue(0, 360 / data.numberOfSides, numberOfFrames, currentFrame, invert);
-            await canvas.drawPolygon2d(data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke + accentBoost, data.gates[i].color)
+            const theAccentGaston = withAccentGaston ? findValue(data.gates[i].accentRange.lower, data.gates[i].accentRange.upper, data.gates[i].accentTimes, numberOfFrames, currentFrame) : 0;
+            await canvas.drawPolygon2d(data.gates[i].radius, data.center, data.numberOfSides, theAngleGaston, data.thickness, data.innerColor, data.stroke + theAccentGaston, data.gates[i].color)
         }
 
         await canvas.toFile(filename);
     }
 
-    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
     const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
 
-    await draw(drawing, 0);
-    await draw(underlayName, theAccentGaston);
+    await draw(drawing, false);
+    await draw(underlayName, true);
 
     let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
