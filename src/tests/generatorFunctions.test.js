@@ -19,6 +19,7 @@ import {glitchInverseEffect} from "../effects/finalImageEffects/glitchInverse.js
 import {glitchFractalEffect} from "../effects/finalImageEffects/glitchFractal.js";
 import {glitchDrumrollHorizontalWaveEffect} from "../effects/finalImageEffects/glitchDrumrollHorizontalWave.js";
 import {scopesEffect} from "../effects/primaryEffects/scopes.js";
+import {rayRingEffect} from "../effects/primaryEffects/ray-ring";
 
 
 test('no null or undefined in scopesEffect generate function', () => {
@@ -118,5 +119,10 @@ test('no null or undefined in glitchFractalEffect generate function', () => {
 
 test('no null or undefined in glitchDrumrollHorizontalWaveEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(glitchDrumrollHorizontalWaveEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
+
+test('no null or undefined in ray-ring generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(rayRingEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
