@@ -22,10 +22,10 @@ const config = {
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 1, upper: 5},
-    blurTimes: {lower: 1, upper: 5},
+    accentTimes: {lower: 3, upper: 6},
+    blurTimes: {lower: 3, upper: 6},
     lengthRange: {bottom: {lower: 5, upper: 25}, top: {lower: 30, upper: 50}},
-    lengthTimes: {lower: 5, upper: 25},
+    lengthTimes: {lower: 3, upper: 6},
     sparsityFactor: {lower: 5, upper: 15},
 }
 

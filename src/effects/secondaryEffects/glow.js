@@ -5,9 +5,9 @@ import fs from "fs";
 import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
-    lowerRange: {lower: -180, upper: 0},
-    upperRange: {lower: 0, upper: 180},
-    times: {lower: 5, upper: 15},
+    lowerRange: {lower: -22, upper: 0},
+    upperRange: {lower: 0, upper: 22},
+    times: {lower: 3, upper: 6},
 }
 
 const generate = () => {

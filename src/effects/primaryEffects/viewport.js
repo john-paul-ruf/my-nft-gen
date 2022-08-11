@@ -15,7 +15,7 @@ const config = {
     ampRadius: {lower: 50, upper: 150},
     sparsityFactor: {lower: 2, upper: 5},
     amplitude: {lower: 50, upper: 250},
-    times: {lower: 5, upper: 15},
+    times: {lower: 3, upper: 6},
 }
 
 const generate = () => {

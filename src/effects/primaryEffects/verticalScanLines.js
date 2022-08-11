@@ -8,7 +8,7 @@ const config = {
     lines: {lower: 4, upper: 12},
     minlength: {lower: 5, upper: 30},
     maxlength: {lower: 40, upper: 125},
-    times: {lower: 5, upper: 30},
+    times: {lower: 3, upper: 6},
     color: getColorFromBucket()
 }
 
