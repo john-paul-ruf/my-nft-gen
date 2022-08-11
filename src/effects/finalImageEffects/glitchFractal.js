@@ -5,7 +5,7 @@ import {LayerFactory} from "../../layer/LayerFactory.js";
 import {LAYERSTRATEGY, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 
 const config = {
-    theRandom: {lower: 2, upper: 5},
+    theRandom: {lower: 4, upper: 8},
 }
 
 const generate = () => {

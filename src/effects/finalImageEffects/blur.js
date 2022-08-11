@@ -2,9 +2,9 @@ import {findValue} from "../../logic/math/findValue.js";
 import {getRandomIntInclusive} from "../../logic/math/random.js";
 
 const config = {
-    lowerRange: {lower: 1, upper: 2},
-    upperRange: {lower: 3, upper: 4},
-    times: {lower: 0, upper: 10},
+    lowerRange: {lower: 0, upper: 0},
+    upperRange: {lower: 1, upper: 2},
+    times: {lower: 6, upper: 10},
 }
 
 const generate = () => {

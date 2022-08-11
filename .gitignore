@@ -9,3 +9,6 @@
 *.gif
 /coverage/
 /src/img/output/_in the index/
+/.idea/jsLinters/eslint.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/qodana.yaml

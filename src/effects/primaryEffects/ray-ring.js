@@ -19,13 +19,13 @@ const config = {
     stroke: 1,
     thickness: 1,
     scaleFactor: 1.01,
-    densityFactor: 0.95,
+    densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 1, upper: 5},
-    blurTimes: {lower: 1, upper: 5},
-    lengthRange: {bottom: {lower: 1, upper: 5}, top: {lower: 15, upper: 20}},
-    lengthTimes: {lower: 5, upper: 15},
+    accentTimes: {lower: 3, upper: 6},
+    blurTimes: {lower: 3, upper: 6},
+    lengthRange: {bottom: {lower: 5, upper: 25}, top: {lower: 30, upper: 50}},
+    lengthTimes: {lower: 3, upper: 6},
     sparsityFactor: {lower: 5, upper: 15},
 }
 
