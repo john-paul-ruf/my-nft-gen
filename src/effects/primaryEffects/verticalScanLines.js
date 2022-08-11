@@ -7,8 +7,8 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 const config = {
     lines: {lower: 4, upper: 12},
     minlength: {lower: 5, upper: 30},
-    maxlength: {lower: 40, upper: 75},
-    times: {lower: 1, upper: 10},
+    maxlength: {lower: 40, upper: 125},
+    times: {lower: 5, upper: 30},
     color: getColorFromBucket()
 }
 
@@ -29,7 +29,8 @@ const generate = () => {
         const getPixelTrailLength = () => {
             return {
                 min: getRandomIntInclusive(config.minlength.lower, config.minlength.upper),
-                max: getRandomIntInclusive(config.maxlength.lower, config.maxlength.upper)
+                max: getRandomIntInclusive(config.maxlength.lower, config.maxlength.upper),
+                times: getRandomIntInclusive(config.times.lower, config.times.upper)
             }
         }
 
@@ -45,7 +46,6 @@ const generate = () => {
             lineInfo.push({
                 lineStart: getRandomIntInclusive(0, data.height),
                 pixelLine: fillLineDetail(),
-                times: getRandomIntInclusive(config.times.lower, config.times.upper),
             });
         }
         return lineInfo;
@@ -61,9 +61,9 @@ const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
 
     const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
 
-    const drawLine = async (y, pixelLine, times) => {
+    const drawLine = async (y, pixelLine) => {
         for (let x = 0; x < data.width; x++) {
-            const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, times, numberOfFrames, currentFrame);
+            const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, pixelLine[x].times, numberOfFrames, currentFrame);
             await canvas.drawGradientLine2d({x: x, y: y}, {x: x, y: theTrailGaston}, 1, data.color, 'transparent')
         }
     }
@@ -76,7 +76,7 @@ const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
             y = y - data.height
         }
 
-        await drawLine(y, data.lineInfo[i].pixelLine, data.lineInfo[i].times)
+        await drawLine(y, data.lineInfo[i].pixelLine, data.lineInfo[i])
     }
 
     await canvas.toFile(imgName);

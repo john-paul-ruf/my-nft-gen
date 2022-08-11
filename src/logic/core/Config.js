@@ -10,7 +10,7 @@ export class Config {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'rando-changes'
+        this.runName = 'motion-and-light'
 
         //final color depth of image
         //Only used when frames are output to gif

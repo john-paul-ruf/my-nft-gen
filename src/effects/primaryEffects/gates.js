@@ -17,12 +17,12 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 const config = {
     gates: {lower: 5, upper: 11},
     numberOfSides: {lower: 4, upper: 8},
-    thickness: 8,
-    stroke: 8,
+    thickness: 4,
+    stroke: 4,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 1, upper: 5},
-    blurTimes: {lower: 1, upper: 5},
+    accentTimes: {lower: 5, upper: 15},
+    blurTimes: {lower: 5, upper: 15},
 
 }
 

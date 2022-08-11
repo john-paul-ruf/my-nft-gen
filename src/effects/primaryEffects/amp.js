@@ -13,7 +13,7 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1},
-    stroke: 1,
+    stroke: 2,
 }
 
 const generate = () => {

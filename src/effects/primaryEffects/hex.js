@@ -21,11 +21,11 @@ const config = {
     radiusFactor: {lower: 15, upper: 30},
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 1, upper: 5},
-    blurTimes: {lower: 1, upper: 5},
+    accentTimes: {lower: 5, upper: 15},
+    blurTimes: {lower: 5, upper: 15},
     stroke: 1,
     thickness: 1,
-    scaleFactor: 1.05,
+    scaleFactor: 1.005,
 }
 
 const generate = () => {

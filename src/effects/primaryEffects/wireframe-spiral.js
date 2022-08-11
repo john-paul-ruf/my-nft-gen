@@ -16,11 +16,11 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     stroke: 1,
-    sparsityFactor: {lower: 5, upper: 10},
-    speed: {lower: 5, upper: 10},
+    sparsityFactor: {lower: 25, upper: 40},
+    speed: {lower: 2, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 5, upper: 15},
-    radiusConstant: 50,
+    unitLength: {lower: 5, upper: 25},
+    radiusConstant: 75,
 }
 
 const generate = () => {

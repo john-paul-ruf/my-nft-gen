@@ -15,19 +15,19 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    stroke: 1,
-    thickness: 1,
+    stroke: 2,
+    thickness: 2,
     largeRadius: {lower: IMAGEHEIGHT * 0.35, upper: IMAGEHEIGHT * 0.45},
     smallRadius: {lower: IMAGEHEIGHT * 0.15, upper: IMAGEHEIGHT * 0.25},
-    largeNumberOfRings: {lower: 5, upper: 10},
-    smallNumberOfRings: {lower: 3, upper: 7},
+    largeNumberOfRings: {lower: 15, upper: 20},
+    smallNumberOfRings: {lower: 10, upper: 15},
     ripple: {lower: IMAGEHEIGHT / 20, upper: IMAGEHEIGHT / 30},
     times: {lower: 1, upper: 5},
     smallerRingsGroupRadius: {lower: IMAGEHEIGHT * 0.2, upper: IMAGEHEIGHT * 0.3},
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 1, upper: 5},
-    blurTimes: {lower: 1, upper: 5},
+    accentTimes: {lower: 5, upper: 15},
+    blurTimes: {lower: 5, upper: 15},
 }
 
 const generate = () => {

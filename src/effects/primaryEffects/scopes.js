@@ -16,13 +16,11 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    sparsityFactor: {lower: 5, upper: 10},
+    sparsityFactor: {lower: 0.5, upper: 3},
     gapFactor: {lower: 3, upper: 5},
     radiusFactor: {lower: 5, upper: 10},
-    stroke: 3,
-    thickness: 3,
-    scaleFactor: 1.05,
-    alphaRange: {bottom: {lower: 0.4, upper: 0.6}, top: {lower: 0.7, upper: 0.9}},
+    scaleFactor: 1.005,
+    alphaRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
 }
 
 const generate = () => {
@@ -32,7 +30,7 @@ const generate = () => {
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
-        scaleFactor: 1.02,
+        scaleFactor: config.scaleFactor,
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
             return `${scopesEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`
