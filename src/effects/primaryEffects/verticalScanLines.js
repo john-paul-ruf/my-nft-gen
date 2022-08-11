@@ -76,7 +76,7 @@ const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
             y = y - data.height
         }
 
-        await drawLine(y, data.lineInfo[i].pixelLine, data.lineInfo[i])
+        await drawLine(y, data.lineInfo[i].pixelLine)
     }
 
     await canvas.toFile(imgName);
