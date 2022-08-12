@@ -16,9 +16,9 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    sparsityFactor: {lower: 0.5, upper: 3},
-    gapFactor: {lower: 3, upper: 5},
-    radiusFactor: {lower: 5, upper: 10},
+    sparsityFactor: {lower: 1, upper: 5},
+    gapFactor: {lower: 0.1, upper: 1},
+    radiusFactor: {lower: 0.1, upper: 1},
     scaleFactor: 1.005,
     alphaRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
 }
@@ -107,7 +107,7 @@ export const scopesEffect = {
     name: 'scopes',
     generateData: generate,
     effect: effect,
-    effectChance: 60,
+    effectChance: 80,
     requiresLayer: true,
 }
 

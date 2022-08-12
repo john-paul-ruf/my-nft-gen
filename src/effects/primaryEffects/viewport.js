@@ -14,7 +14,7 @@ const config = {
     ampLength: {lower: 75, upper: 150},
     ampRadius: {lower: 50, upper: 150},
     sparsityFactor: {lower: 2, upper: 5},
-    amplitude: {lower: 50, upper: 250},
+    amplitude: {lower: 20, upper: 50},
     times: {lower: 3, upper: 6},
 }
 
@@ -76,7 +76,7 @@ export const viewportEffect = {
     name: 'viewport',
     generateData: generate,
     effect: effect,
-    effectChance: 70,
+    effectChance: 30,
     requiresLayer: true,
 }
 
