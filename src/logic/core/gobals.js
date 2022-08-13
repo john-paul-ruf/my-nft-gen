@@ -12,12 +12,14 @@ export const IMAGEHEIGHT = 1080;
 export const IMAGEWIDTH = 1920;
 
 export const NEUTRALS = [
-    /*'#2d2d2d',*/
-    '#5b5b5b',
-    '#f7f5fa',
-    '#eeeeee',
-    '#F0F3F3',
-    '#cbdae1'
+    '#2d2d2d',
+    '#1F1F1F',
+    '#080808',
+    /*    '#5b5b5b',*/
+    /*  '#f7f5fa',
+      '#eeeeee',
+      '#F0F3F3',
+      '#cbdae1'*/
 ];
 
 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.

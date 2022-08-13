@@ -16,10 +16,10 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    sparsityFactor: {lower: 1, upper: 5},
+    sparsityFactor: {lower: 0.2, upper: 0.5},
     gapFactor: {lower: 0.1, upper: 1},
     radiusFactor: {lower: 0.1, upper: 1},
-    scaleFactor: 1.005,
+    scaleFactor: 1.015,
     alphaRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
 }
 
@@ -84,8 +84,8 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
 
         }
 
-        for (let s = 0; s < data.scopes.length; s++) {
-            await drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color, data.scopes[s].alphaRange)
+        for (let x = 0; x < data.width; x++) {
+            await drawHexLine(data.scopes[x].angle, data.scopes[x].loopCount, data.scopes[x].color, data.scopes[x].alphaRange)
         }
 
         await canvas.toFile(filename);

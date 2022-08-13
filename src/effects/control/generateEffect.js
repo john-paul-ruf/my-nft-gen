@@ -31,12 +31,12 @@ const primaryEffects = [
     verticalScanLinesEffect,
     hexEffect,
     wireframeSpiralEffect,
+    rayRingEffect,
     backdropEffect,
     fuzzyRippleEffect,
     fuzzBandsEffect,
     gatesEffect,
     ampEffect,
-    rayRingEffect,
     summonEffect,
     viewportEffect,
     sigEffect

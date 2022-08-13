@@ -10,7 +10,7 @@ export class Config {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'motion-and-light'
+        this.runName = 'idk'
 
         //final color depth of image
         //Only used when frames are output to gif
@@ -20,7 +20,7 @@ export class Config {
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 300;
+        this.numberOfFrame = 500;
 
         this.finalFileName = 'Final' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
