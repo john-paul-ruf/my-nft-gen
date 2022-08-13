@@ -73,7 +73,7 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
             const invert = direction <= 0;
 
             const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
-            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
+            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, numberOfFrames, currentFrame, invert)
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;

@@ -73,7 +73,7 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
             const direction = loopCount % 2;
             const invert = direction <= 0;
 
-            const theRotateGaston = findOneWayValue(angle, angle + 120, numberOfFrames, currentFrame, invert);
+            const theRotateGaston = findOneWayValue(angle, angle + 720, numberOfFrames, currentFrame, invert);
             const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, 5, numberOfFrames, currentFrame);
 
             const scaleBy = (data.scaleFactor * loopCount);
