@@ -1,4 +1,4 @@
-import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
+import {randomId, randomNumber} from "../../logic/math/random.js";
 import {
     CANVASTRATEGY,
     getColorFromBucket,
@@ -28,13 +28,13 @@ const generate = () => {
     const data = {
         height: IMAGEHEIGHT,
         width: IMAGEWIDTH,
-        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
-        radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
+        sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        gapFactor: randomNumber(config.gapFactor.lower, config.gapFactor.upper),
+        radiusFactor: randomNumber(config.radiusFactor.lower, config.radiusFactor.upper),
         scaleFactor: config.scaleFactor,
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
-            return `${scopesEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`
+            return `${scopesEffect.name}: sparsityFactor: ${data.sparsityFactor.toFixed(3)}, gapFactor: ${data.gapFactor.toFixed(3)}, radiusFactor: ${data.radiusFactor.toFixed(3)}`
         }
     }
 
