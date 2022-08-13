@@ -1,4 +1,4 @@
-import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
+import {randomId, randomNumber} from "../../logic/math/random.js";
 import {
     CANVASTRATEGY,
     getColorFromBucket,
@@ -16,30 +16,31 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    sparsityFactor: {lower: 1, upper: 5},
-    gapFactor: {lower: 0.1, upper: 1},
-    radiusFactor: {lower: 0.1, upper: 1},
-    scaleFactor: 1.005,
+    sparsityFactor: {lower: 0.5, upper: 1.5},
+    gapFactor: {lower: 0.5, upper: 1.5},
+    radiusFactor: {lower: 0.5, upper: 1.5},
+    scaleFactor: 1.5,
     alphaRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
+    numberOfScopesInALine: 150,
 }
 
 const generate = () => {
     const data = {
         height: IMAGEHEIGHT,
         width: IMAGEWIDTH,
-        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
-        radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
+        sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        gapFactor: randomNumber(config.gapFactor.lower, config.gapFactor.upper),
+        radiusFactor: randomNumber(config.radiusFactor.lower, config.radiusFactor.upper),
         scaleFactor: config.scaleFactor,
         center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
         getInfo: () => {
-            return `${scopesEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`
+            return `${scopesEffect.name}: sparsityFactor: ${data.sparsityFactor.toFixed(3)}, gapFactor: ${data.gapFactor.toFixed(3)}, radiusFactor: ${data.radiusFactor.toFixed(3)}`
         }
     }
 
     const computeInitialInfo = () => {
         const info = [];
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < config.numberOfScopesInALine; i++) {
             for (let a = 0; a < 360; a = a + data.sparsityFactor) {
                 info.push({
                     loopCount: i + 1,
@@ -72,7 +73,7 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
             const direction = loopCount % 2;
             const invert = direction <= 0;
 
-            const theRotateGaston = findOneWayValue(angle, angle + 120, numberOfFrames, currentFrame, invert);
+            const theRotateGaston = findOneWayValue(angle, angle + 720, numberOfFrames, currentFrame, invert);
             const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, 5, numberOfFrames, currentFrame);
 
             const scaleBy = (data.scaleFactor * loopCount);
@@ -107,7 +108,7 @@ export const scopesEffect = {
     name: 'scopes',
     generateData: generate,
     effect: effect,
-    effectChance: 80,
+    effectChance: 100,
     requiresLayer: true,
 }
 

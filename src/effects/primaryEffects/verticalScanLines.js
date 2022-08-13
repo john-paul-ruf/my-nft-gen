@@ -5,9 +5,9 @@ import {findValue} from "../../logic/math/findValue.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
-    lines: {lower: 4, upper: 12},
+    lines: {lower: 2, upper: 5},
     minlength: {lower: 5, upper: 30},
-    maxlength: {lower: 40, upper: 125},
+    maxlength: {lower: 150, upper: 300},
     times: {lower: 3, upper: 6},
     color: getColorFromBucket()
 }

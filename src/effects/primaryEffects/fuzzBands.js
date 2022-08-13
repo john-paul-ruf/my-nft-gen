@@ -15,9 +15,9 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 const config = {
     circles: {lower: 10, upper: 20},
-    stroke: 1,
-    thickness: 1,
-    scaleFactor: 1.05,
+    stroke: 0.5,
+    thickness: 0.25,
+    scaleFactor: 1.02,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 3, upper: 6},

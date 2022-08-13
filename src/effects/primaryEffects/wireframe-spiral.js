@@ -15,11 +15,11 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    stroke: 1,
-    sparsityFactor: {lower: 25, upper: 40},
+    stroke: 0.5,
+    sparsityFactor: {lower: 1, upper: 3},
     speed: {lower: 2, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 5, upper: 25},
+    unitLength: {lower: 1, upper: 5},
     radiusConstant: 75,
 }
 

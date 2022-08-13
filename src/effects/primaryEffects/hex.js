@@ -23,8 +23,8 @@ const config = {
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 3, upper: 6},
     blurTimes: {lower: 3, upper: 6},
-    stroke: 1,
-    thickness: 1,
+    stroke: 0.25,
+    thickness: 0.5,
     scaleFactor: 1.005,
 }
 
@@ -73,7 +73,7 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
             const invert = direction <= 0;
 
             const theAngleGaston = findOneWayValue(angle, angle + data.sparsityFactor, numberOfFrames, currentFrame, invert);
-            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 60, numberOfFrames, currentFrame, invert)
+            const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, numberOfFrames, currentFrame, invert)
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
