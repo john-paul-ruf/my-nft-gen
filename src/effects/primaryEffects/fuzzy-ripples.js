@@ -15,7 +15,7 @@ import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
 
 const config = {
-    stroke: 5,
+    stroke: 1,
     thickness: 0.5,
     largeRadius: {lower: IMAGEHEIGHT * 0.3, upper: IMAGEHEIGHT * 0.4},
     smallRadius: {lower: IMAGEHEIGHT * 0.1, upper: IMAGEHEIGHT * 0.2},
