@@ -1,11 +1,10 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -28,10 +27,12 @@ const config = {
     scaleFactor: 1.005,
 }
 
+const finalImageSize = getFinalImageSize();
+
 const generate = () => {
     const data = {
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
@@ -50,7 +51,7 @@ const generate = () => {
         accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         color: getColorFromBucket(),
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${hexEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`
         }
@@ -60,12 +61,12 @@ const generate = () => {
 }
 
 const hex = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = WORKINGDIRETORY + 'hex' + randomId() + '.png';
-    const underlayName = WORKINGDIRETORY + 'hex-under' + randomId() + '.png';
+    const imgName = getWorkingDirectory() + 'hex' + randomId() + '.png';
+    const underlayName = getWorkingDirectory() + 'hex-under' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
 
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         const drawHexLine = async (angle, index) => {
             const loopCount = index + 1;
@@ -77,7 +78,7 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
-            const gapRadius = ((IMAGEHEIGHT * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
+            const gapRadius = ((finalImageSize.height * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, theAngleGaston, gapRadius)
 
             await canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, data.thickness * scaleBy, data.innerColor, (data.stroke + accentBoost) * scaleBy, data.color)
@@ -98,8 +99,8 @@ const hex = async (data, layer, currentFrame, numberOfFrames) => {
     await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
-    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
+    let underlayLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), underlayName);
 
     await underlayLayer.blur(theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);

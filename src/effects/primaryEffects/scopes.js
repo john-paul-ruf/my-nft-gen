@@ -1,11 +1,10 @@
 import {randomId, randomNumber} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -24,15 +23,19 @@ const config = {
     numberOfScopesInALine: 150,
 }
 
+
+const finalImageSize = getFinalImageSize();
+
 const generate = () => {
+
     const data = {
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: randomNumber(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: randomNumber(config.radiusFactor.lower, config.radiusFactor.upper),
         scaleFactor: config.scaleFactor,
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${scopesEffect.name}: sparsityFactor: ${data.sparsityFactor.toFixed(3)}, gapFactor: ${data.gapFactor.toFixed(3)}, radiusFactor: ${data.radiusFactor.toFixed(3)}`
         }
@@ -62,11 +65,11 @@ const generate = () => {
 }
 
 const scopes = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = WORKINGDIRETORY + 'scopes' + randomId() + '.png';
+    const imgName = getWorkingDirectory() + 'scopes' + randomId() + '.png';
 
     const draw = async (filename) => {
 
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         const drawHexLine = async (angle, index, color, alphaRange) => {
             const loopCount = index + 1;
@@ -78,7 +81,7 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
 
             const scaleBy = (data.scaleFactor * loopCount);
             const radius = data.radiusFactor * scaleBy;
-            const gapRadius = ((IMAGEHEIGHT * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
+            const gapRadius = ((finalImageSize.height * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
             const pos = findPointByAngleAndCircle(data.center, angle, gapRadius)
 
             await canvas.drawFilledPolygon2d(radius, pos, 6, theRotateGaston, color, theAlphaGaston)
@@ -94,7 +97,7 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
 
     await draw(imgName);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
+    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
     await layer.compositeLayerOver(tempLayer)
 
     fs.unlinkSync(imgName);

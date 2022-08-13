@@ -1,5 +1,10 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
-import {CANVASTRATEGY, getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {
+    getCanvasStrategy,
+    getColorFromBucket,
+    getFinalImageSize,
+    getWorkingDirectory,
+} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
@@ -19,9 +24,12 @@ const config = {
 }
 
 const generate = () => {
+
+    const finalImageSize = getFinalImageSize();
+
     const data = {
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
@@ -36,7 +44,7 @@ const generate = () => {
         color: getColorFromBucket(),
         ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`
         }
@@ -46,11 +54,11 @@ const generate = () => {
 }
 
 const viewport = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = WORKINGDIRETORY + 'viewport' + randomId() + '.png';
+    const imgName = getWorkingDirectory() + 'viewport' + randomId() + '.png';
 
     const draw = async () => {
 
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength + data.amplitude, data.times, numberOfFrames, currentFrame);
         await canvas.drawRays2d(data.center, data.ampRadius, theAmpGaston, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)

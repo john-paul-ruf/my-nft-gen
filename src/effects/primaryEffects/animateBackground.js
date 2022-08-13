@@ -1,17 +1,13 @@
 import Jimp from "jimp";
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {
-    getColorFromBucket,
-    getNeutralFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    WORKINGDIRETORY
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../logic/core/gobals.js";
 import fs from "fs";
 
+const finalImageSize = getFinalImageSize();
+
 const config = {
-    width: IMAGEWIDTH,
-    height: IMAGEHEIGHT,
+    width: finalImageSize.width,
+    height: finalImageSize.height,
     color1: getNeutralFromBucket(),
     color2: getNeutralFromBucket(),
     color3: getColorFromBucket(),

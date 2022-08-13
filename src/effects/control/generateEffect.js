@@ -3,14 +3,11 @@ import {Effect} from './Effect.js';
 import {verticalScanLinesEffect} from "../primaryEffects/verticalScanLines.js";
 import {hexEffect} from "../primaryEffects/hex.js";
 import {wireframeSpiralEffect} from "../primaryEffects/wireframe-spiral.js";
-import {backdropEffect} from "../primaryEffects/backdrop.js";
 import {fuzzyRippleEffect} from "../primaryEffects/fuzzy-ripples.js";
 import {fuzzBandsEffect} from "../primaryEffects/fuzzBands.js";
 import {gatesEffect} from "../primaryEffects/gates.js";
 import {ampEffect} from "../primaryEffects/amp.js";
-import {summonEffect} from "../primaryEffects/summons.js";
 import {viewportEffect} from "../primaryEffects/viewport.js";
-import {sigEffect} from "../primaryEffects/sig.js";
 import {randomizeEffect} from "../secondaryEffects/randomize.js";
 import {glowEffect} from "../secondaryEffects/glow.js";
 import {fadeEffect} from "../secondaryEffects/fade.js";
@@ -32,14 +29,11 @@ const primaryEffects = [
     hexEffect,
     wireframeSpiralEffect,
     rayRingEffect,
-    backdropEffect,
     fuzzyRippleEffect,
     fuzzBandsEffect,
     gatesEffect,
     ampEffect,
-    summonEffect,
     viewportEffect,
-    sigEffect
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above

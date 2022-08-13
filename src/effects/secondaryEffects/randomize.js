@@ -1,7 +1,7 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getWorkingDirectory} from "../../logic/core/gobals.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
@@ -48,7 +48,7 @@ const generate = () => {
 };
 
 const randomize = async (data, layer) => {
-    const filename = WORKINGDIRETORY + 'randomize' + randomId() + '.png';
+    const filename = getWorkingDirectory() + 'randomize' + randomId() + '.png';
 
     await layer.toFile(filename);
 

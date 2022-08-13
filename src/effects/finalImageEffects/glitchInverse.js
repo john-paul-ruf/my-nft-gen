@@ -1,7 +1,7 @@
 import {randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getWorkingDirectory} from "../../logic/core/gobals.js";
 
 const generate = () => {
     return {
@@ -13,7 +13,7 @@ const generate = () => {
 
 const glitchInverse = async (data, layer) => {
 
-    const filename = WORKINGDIRETORY + 'glitch-inverse' + randomId() + '.png';
+    const filename = getWorkingDirectory() + 'glitch-inverse' + randomId() + '.png';
 
     await layer.toFile(filename);
 

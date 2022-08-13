@@ -1,7 +1,7 @@
-import {IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
+import {getFinalImageSize, getWorkingDirectory} from "../../logic/core/gobals.js";
 
 const config = {
     glitchChance: 50,
@@ -25,29 +25,29 @@ const glitchDrumrollHorizontalWave = async (data, layer) => {
     /////////////////////
     // borrowed from https://github.com/ninoseki/glitched-canvas & modified with cosine
 
-    const filename = WORKINGDIRETORY + 'glitch-drumroll' + randomId() + '.png';
+    const finalImageSize = getFinalImageSize();
+    const filename = getWorkingDirectory() + 'glitch-drumroll' + randomId() + '.png';
 
     await layer.toFile(filename)
 
     const jimpImage = await Jimp.read(filename);
 
-
     const imgData = jimpImage.bitmap.data;
 
-    for (let x = 0; x < IMAGEHEIGHT; x++) {
-        for (let y = 0; y < IMAGEWIDTH; y++) {
-            let idx = (x + y * IMAGEWIDTH) * 4;
+    for (let x = 0; x < finalImageSize.height; x++) {
+        for (let y = 0; y < finalImageSize.width; y++) {
+            let idx = (x + y * finalImageSize.width) * 4;
 
             let x2 = x;
 
             const theGlitch = getRandomIntInclusive(0, 100);
             if (theGlitch < data.glitchChance) {
-                const roll = Math.floor(Math.cos(x) * (IMAGEHEIGHT * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
+                const roll = Math.floor(Math.cos(x) * (finalImageSize.height * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
                 x2 = x + roll;
             }
 
-            if (x2 > IMAGEHEIGHT - 1) x2 -= IMAGEHEIGHT;
-            let idx2 = (x2 + y * IMAGEWIDTH) * 4;
+            if (x2 > finalImageSize.height - 1) x2 -= finalImageSize.height;
+            let idx2 = (x2 + y * finalImageSize.width) * 4;
 
             for (let c = 0; c < 4; c++) {
                 imgData[idx2 + c] = imgData[idx + c];

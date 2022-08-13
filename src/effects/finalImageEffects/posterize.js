@@ -2,7 +2,7 @@ import {findValue} from "../../logic/math/findValue.js";
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {getWorkingDirectory} from "../../logic/core/gobals.js";
 
 const config = {
     lowerRange: {lower: 1, upper: 5},
@@ -25,7 +25,7 @@ const generate = () => {
 }
 
 const posterize = async (data, layer, currentFrame, totalFrames) => {
-    const filename = WORKINGDIRETORY + 'pixelate' + randomId() + '.png';
+    const filename = getWorkingDirectory() + 'pixelate' + randomId() + '.png';
 
     await layer.toFile(filename);
 

@@ -1,11 +1,10 @@
 import {randomId, randomNumber} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {LayerFactory} from "../../layer/LayerFactory.js";
@@ -16,17 +15,19 @@ const config = {
     stroke: 0.5,
 }
 
+const finalImageSize = getFinalImageSize();
+
 const generate = () => {
     const data = {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         stroke: config.stroke,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
         length: 400,
         lineStart: 350,
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }
@@ -36,10 +37,10 @@ const generate = () => {
 }
 
 const amp = async (data, layer) => {
-    const amp = WORKINGDIRETORY + 'amp' + randomId() + '.png';
+    const amp = getWorkingDirectory() + 'amp' + randomId() + '.png';
 
     const draw = async (stroke, filename) => {
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         for (let i = 0; i < 360; i = i + data.sparsityFactor) {
             await canvas.drawRay2d(data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length)
@@ -50,7 +51,7 @@ const amp = async (data, layer) => {
 
     await draw(config.stroke, amp);
 
-    const compositeLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, amp);
+    const compositeLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), amp);
 
     await layer.compositeLayerOver(compositeLayer);
 

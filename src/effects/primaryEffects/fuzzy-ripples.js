@@ -1,11 +1,10 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -13,17 +12,18 @@ import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
+const finalImageSize = getFinalImageSize();
 
 const config = {
     stroke: 1,
     thickness: 0.5,
-    largeRadius: {lower: IMAGEHEIGHT * 0.3, upper: IMAGEHEIGHT * 0.4},
-    smallRadius: {lower: IMAGEHEIGHT * 0.1, upper: IMAGEHEIGHT * 0.2},
+    largeRadius: {lower: finalImageSize.height * 0.3, upper: finalImageSize.height * 0.4},
+    smallRadius: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.2},
     largeNumberOfRings: {lower: 15, upper: 20},
     smallNumberOfRings: {lower: 10, upper: 15},
-    ripple: {lower: IMAGEHEIGHT / 25, upper: IMAGEHEIGHT / 35},
+    ripple: {lower: finalImageSize.height / 25, upper: finalImageSize.height / 35},
     times: {lower: 3, upper: 6},
-    smallerRingsGroupRadius: {lower: IMAGEHEIGHT * 0.25, upper: IMAGEHEIGHT * 0.35},
+    smallerRingsGroupRadius: {lower: finalImageSize.height * 0.25, upper: finalImageSize.height * 0.35},
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 3, upper: 6},
@@ -32,8 +32,8 @@ const config = {
 
 const generate = () => {
     const data = {
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
@@ -46,7 +46,7 @@ const generate = () => {
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
         largeColor: getColorFromBucket(),
         smallColor: getColorFromBucket(),
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
             upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
@@ -66,12 +66,12 @@ const generate = () => {
 }
 
 const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = WORKINGDIRETORY + 'fuzzy-ripples' + randomId() + '.png';
-    const underlayName = WORKINGDIRETORY + 'fuzzy-ripples-underlay' + randomId() + '.png';
+    const imgName = getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png';
+    const underlayName = getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png';
 
     const draw = async (filename, accentBoost) => {
 
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor) => {
             const theGaston = findValue(radius, radius + data.ripple, data.times, numberOfFrames, currentFrame);
@@ -104,8 +104,8 @@ const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
     await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
-    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
+    let underlayLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), underlayName);
 
     await underlayLayer.blur(theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);

@@ -1,17 +1,17 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
 
+const finalImageSize = getFinalImageSize();
 
 const config = {
     circles: {lower: 10, upper: 20},
@@ -27,13 +27,13 @@ const config = {
 const generate = () => {
     const data = {
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
@@ -66,11 +66,11 @@ const generate = () => {
 }
 
 const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
-    const ring = WORKINGDIRETORY + 'ring' + randomId() + '.png';
-    const fuzz = WORKINGDIRETORY + 'fuzz' + randomId() + '.png';
+    const ring = getWorkingDirectory() + 'ring' + randomId() + '.png';
+    const fuzz = getWorkingDirectory() + 'fuzz' + randomId() + '.png';
 
     const draw = async (filename, withAccentGaston) => {
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         for (let i = 0; i < data.numberOfCircles; i++) {
             const loopCount = i + 1;
@@ -87,8 +87,8 @@ const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
     await draw(ring, false);
     await draw(fuzz, true);
 
-    let fuzzLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, fuzz);
-    let ringLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, ring);
+    let fuzzLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), fuzz);
+    let ringLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), ring);
 
     await fuzzLayer.blur(theBlurGaston);
     await fuzzLayer.adjustLayerOpacity(0.5);

@@ -1,11 +1,10 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
@@ -24,15 +23,18 @@ const config = {
 }
 
 const generate = () => {
+
+    const finalImageSize = getFinalImageSize();
+
     const data = {
-        height: IMAGEHEIGHT * 1.3,
-        width: IMAGEWIDTH * 1.3,
+        height: finalImageSize.height * 1.3,
+        width: finalImageSize.width * 1.3,
         stroke: config.stroke,
         unitLength: getRandomIntInclusive(config.unitLength.lower, config.unitLength.upper),
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         color1: getColorFromBucket(),
         color2: getColorFromBucket(),
-        center: {x: IMAGEWIDTH * 1.3 / 2, y: IMAGEHEIGHT * 1.3 / 2},
+        center: {x: finalImageSize.width * 1.3 / 2, y: finalImageSize.height * 1.3 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         getInfo: () => {
@@ -44,13 +46,13 @@ const generate = () => {
 }
 
 const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = WORKINGDIRETORY + 'wireframe-spiral' + randomId() + '.png';
-    const underlayName = WORKINGDIRETORY + 'wireframe-spiral-underlay' + randomId() + '.png';
+    const imgName = getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png';
+    const underlayName = getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png';
     const direction = data.counterClockwise > 0 ? -1 : 1
 
     const draw = async (filename, accentBoost) => {
 
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         let twistCount = 2;
         let n1 = data.unitLength, n2 = data.unitLength;
@@ -89,8 +91,8 @@ const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
     await draw(imgName, 0);
     await draw(underlayName, theAccentGaston);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, imgName);
-    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
+    let underlayLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), underlayName);
 
     await underlayLayer.blur(theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);

@@ -1,6 +1,6 @@
 import {generateFinalImageEffects, generatePrimaryEffects} from "../../effects/control/generateEffect.js";
 import {composeInfo} from "./composeInfo.js";
-import {getNeutralFromBucket, IMAGEHEIGHT, IMAGEWIDTH, LAYERSTRATEGY, WORKINGDIRETORY} from "./gobals.js";
+import {getFinalImageSize, getLayerStrategy, getNeutralFromBucket, getWorkingDirectory,} from "./gobals.js";
 import {writeArtistCard} from "../../output/writeArtistCard.js";
 import fs from "fs";
 import {writeToMp4} from "../../output/writeToMp4.js";
@@ -13,6 +13,11 @@ import {writeScreenCap} from "../../output/writeScreenCap.js";
  * @returns {Promise<void>} - return nothing, just await it
  */
 export const animate = async (config) => {
+
+    const finalImageSize = getFinalImageSize();
+    const workingDirectory = getWorkingDirectory();
+    const layerStrategy = getLayerStrategy();
+
     const backgroundColor = getNeutralFromBucket();
 
     const frameFilenames = []; //will be a collection of png images filenames that in the end gets converted to a gif
@@ -40,7 +45,7 @@ export const animate = async (config) => {
         const getLayers = async (w, h) => {
             const extraLayers = [];
             for (let i = 0; i < effects.length; i++) { //effect is found in the outermost layer of this function
-                extraLayers.push(await LayerFactory.getNewLayer(LAYERSTRATEGY, h, w, '#00000000'))
+                extraLayers.push(await LayerFactory.getNewLayer(layerStrategy, h, w, '#00000000'))
             }
             return extraLayers;
         }
@@ -48,8 +53,8 @@ export const animate = async (config) => {
         ////////////////////////
         //get fresh files every loop
         ////////////////////////
-        const background = await LayerFactory.getNewLayer(LAYERSTRATEGY, IMAGEHEIGHT, IMAGEWIDTH, backgroundColor);
-        let layers = await getLayers(IMAGEWIDTH, IMAGEHEIGHT)
+        const background = await LayerFactory.getNewLayer(layerStrategy, finalImageSize.height, finalImageSize.width, backgroundColor);
+        let layers = await getLayers(finalImageSize.width, finalImageSize.height)
 
         /////////////////////////////
         //Process the main and secondary effects
@@ -116,7 +121,7 @@ export const animate = async (config) => {
     //WRITE TO FILE
     ////////////////////////
     writeArtistCard(config, effects, finalImageEffects);
-    await writeToMp4(WORKINGDIRETORY + config.finalFileName + '-frame-%d.png', config);
+    await writeToMp4(workingDirectory + config.finalFileName + '-frame-%d.png', config);
     await writeScreenCap(frameFilenames[0], config);
 
     for (let f = 0; f < frameFilenames.length; f++) {

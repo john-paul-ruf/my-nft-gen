@@ -1,5 +1,10 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {CANVASTRATEGY, getColorFromBucket, IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../../logic/core/gobals.js";
+import {
+    getCanvasStrategy,
+    getColorFromBucket,
+    getFinalImageSize,
+    getWorkingDirectory,
+} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
@@ -13,10 +18,13 @@ const config = {
 }
 
 const generate = () => {
+
+    const finalImageSize = getFinalImageSize();
+
     const data = {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         color: config.color,
         getInfo: () => {
             return `${verticalScanLinesEffect.name}: ${data.numberOfLines} lines`
@@ -57,9 +65,9 @@ const generate = () => {
 }
 
 const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = WORKINGDIRETORY + 'scan-lines' + randomId() + '.png';
+    const imgName = getWorkingDirectory() + 'scan-lines' + randomId() + '.png';
 
-    const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+    const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
     const drawLine = async (y, pixelLine) => {
         for (let x = 0; x < data.width; x++) {

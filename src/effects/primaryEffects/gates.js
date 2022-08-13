@@ -1,11 +1,10 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import {
-    CANVASTRATEGY,
+    getCanvasStrategy,
     getColorFromBucket,
-    IMAGEHEIGHT,
-    IMAGEWIDTH,
-    LAYERSTRATEGY,
-    WORKINGDIRETORY
+    getFinalImageSize,
+    getLayerStrategy,
+    getWorkingDirectory,
 } from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
@@ -23,19 +22,20 @@ const config = {
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 3, upper: 6},
     blurTimes: {lower: 3, upper: 6},
-
 }
+
+const finalImageSize = getFinalImageSize();
 
 const generate = () => {
     const data = {
         numberOfGates: getRandomIntInclusive(config.gates.lower, config.gates.upper),
         numberOfSides: getRandomIntInclusive(config.numberOfSides.lower, config.numberOfSides.upper),
-        height: IMAGEHEIGHT,
-        width: IMAGEWIDTH,
+        height: finalImageSize.height,
+        width: finalImageSize.width,
         thickness: config.thickness,
         stroke: config.stroke,
         innerColor: getColorFromBucket(),
-        center: {x: IMAGEWIDTH / 2, y: IMAGEHEIGHT / 2},
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
@@ -68,12 +68,12 @@ const generate = () => {
 }
 
 const gates = async (data, layer, currentFrame, numberOfFrames) => {
-    const drawing = WORKINGDIRETORY + 'gate' + randomId() + '.png';
-    const underlayName = WORKINGDIRETORY + 'gate-underlay' + randomId() + '.png';
+    const drawing = getWorkingDirectory() + 'gate' + randomId() + '.png';
+    const underlayName = getWorkingDirectory() + 'gate-underlay' + randomId() + '.png';
 
     const draw = async (filename, withAccentGaston) => {
 
-        const canvas = await Canvas2dFactory.getNewCanvas(CANVASTRATEGY, data.width, data.height);
+        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
 
         for (let i = 0; i < data.numberOfGates; i++) {
             const loopCount = i + 1;
@@ -92,8 +92,8 @@ const gates = async (data, layer, currentFrame, numberOfFrames) => {
     await draw(drawing, false);
     await draw(underlayName, true);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, drawing);
-    let underlayLayer = await LayerFactory.getLayerFromFile(LAYERSTRATEGY, underlayName);
+    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), underlayName);
 
     await underlayLayer.blur(theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);
