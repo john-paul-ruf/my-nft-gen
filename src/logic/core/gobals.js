@@ -23,7 +23,7 @@ export const NEUTRALS = [
 ];
 
 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
-const schemeBucket = ['contrast', 'triade', 'tetrade', 'analogic'];
+const schemeBucket = ['contrast'];
 
 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
 const variationBucket = ['hard'];

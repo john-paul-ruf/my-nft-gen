@@ -19,8 +19,9 @@ const config = {
     sparsityFactor: {lower: 0.2, upper: 0.5},
     gapFactor: {lower: 0.1, upper: 1},
     radiusFactor: {lower: 0.1, upper: 1},
-    scaleFactor: 1.015,
+    scaleFactor: 1.2,
     alphaRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
+    numberOfScopesInALine: 250,
 }
 
 const generate = () => {
@@ -39,7 +40,7 @@ const generate = () => {
 
     const computeInitialInfo = () => {
         const info = [];
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < config.numberOfScopesInALine; i++) {
             for (let a = 0; a < 360; a = a + data.sparsityFactor) {
                 info.push({
                     loopCount: i + 1,
@@ -84,8 +85,8 @@ const scopes = async (data, layer, currentFrame, numberOfFrames) => {
 
         }
 
-        for (let x = 0; x < data.width; x++) {
-            await drawHexLine(data.scopes[x].angle, data.scopes[x].loopCount, data.scopes[x].color, data.scopes[x].alphaRange)
+        for (let s = 0; s < data.scopes.length; s++) {
+            await drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color, data.scopes[s].alphaRange)
         }
 
         await canvas.toFile(filename);
@@ -107,7 +108,7 @@ export const scopesEffect = {
     name: 'scopes',
     generateData: generate,
     effect: effect,
-    effectChance: 80,
+    effectChance: 100,
     requiresLayer: true,
 }
 
