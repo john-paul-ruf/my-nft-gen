@@ -1,11 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getLayerStrategy,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
@@ -22,6 +16,22 @@ const config = {
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     accentTimes: {lower: 3, upper: 6},
     blurTimes: {lower: 3, upper: 6},
+}
+
+const computeInitialInfo = (num, width) => {
+    const info = [];
+    for (let i = 0; i <= num; i++) {
+        info.push({
+            radius: getRandomIntExclusive(0, width * 0.75),
+            color: getColorFromBucket(),
+            accentRange: {
+                lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+                upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+            },
+            accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        });
+    }
+    return info;
 }
 
 const generate = () => {
@@ -44,60 +54,52 @@ const generate = () => {
         }
     }
 
-    const computeInitialInfo = (num) => {
-        const info = [];
-        for (let i = 0; i <= num; i++) {
-            info.push({
-                radius: getRandomIntExclusive(0, data.width * 0.75),
-                color: getColorFromBucket(),
-                accentRange: {
-                    lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
-                    upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
-                },
-                accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
-            });
-        }
-        return info;
-    }
-
-    data.circles = computeInitialInfo(data.numberOfCircles);
+    data.circles = computeInitialInfo(data.numberOfCircles, data.width);
 
     return data;
 }
 
-const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
-    const ring = getWorkingDirectory() + 'ring' + randomId() + '.png';
-    const fuzz = getWorkingDirectory() + 'fuzz' + randomId() + '.png';
-
-    const draw = async (filename, withAccentGaston) => {
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-        for (let i = 0; i < data.numberOfCircles; i++) {
-            const loopCount = i + 1;
-            const scaleBy = (data.scaleFactor * loopCount);
-            const theAccentGaston = withAccentGaston ? findValue(data.circles[i].accentRange.lower, data.circles[i].accentRange.upper, data.circles[i].accentTimes, numberOfFrames, currentFrame) : 0;
-            await canvas.drawRing2d(data.center, data.circles[i].radius, data.thickness * scaleBy, data.innerColor, (data.stroke + theAccentGaston) * scaleBy, data.circles[i].color)
-        }
-
-        await canvas.toFile(filename);
+const draw = async (filename, withAccentGaston, context) => {
+    for (let i = 0; i < context.data.numberOfCircles; i++) {
+        const loopCount = i + 1;
+        const scaleBy = (context.data.scaleFactor * loopCount);
+        const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+        await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + theAccentGaston) * scaleBy, context.data.circles[i].color)
     }
 
-    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
+    await context.canvas.toFile(filename);
+}
 
-    await draw(ring, false);
-    await draw(fuzz, true);
+async function compositeImage(context, layer) {
+    await draw(context.drawing, false, context);
+    await draw(context.underlayName, true, context);
 
-    let fuzzLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), fuzz);
-    let ringLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), ring);
+    let fuzzLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let ringLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
-    await fuzzLayer.blur(theBlurGaston);
+    await fuzzLayer.blur(context.theBlurGaston);
     await fuzzLayer.adjustLayerOpacity(0.5);
 
     await layer.compositeLayerOver(fuzzLayer);
     await layer.compositeLayerOver(ringLayer);
+}
 
-    fs.unlinkSync(ring);
-    fs.unlinkSync(fuzz);
+const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
+
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        drawing: getWorkingDirectory() + 'ring' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'ring-underlay' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data,
+    }
+
+    await compositeImage(context, layer);
+
+    fs.unlinkSync(context.drawing);
+    fs.unlinkSync(context.underlayName);
 
 }
 

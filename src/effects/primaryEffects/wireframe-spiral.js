@@ -1,11 +1,5 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getLayerStrategy,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
 import {findValue} from "../../logic/math/findValue.js";
@@ -23,7 +17,6 @@ const config = {
 }
 
 const generate = () => {
-
     const finalImageSize = getFinalImageSize();
 
     const data = {
@@ -45,64 +38,72 @@ const generate = () => {
     return data;
 }
 
-const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png';
-    const underlayName = getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png';
-    const direction = data.counterClockwise > 0 ? -1 : 1
 
-    const draw = async (filename, accentBoost) => {
+//n2, nextTerm, -twistCount
+const drawRay = async (stroke, angle, loopControl, context) => {
+    angle = angle + (((context.data.sparsityFactor * context.data.speed) / context.numberOfFrames) * context.currentFrame) * context.direction;
 
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
+    const start = findPointByAngleAndCircle(context.data.center, angle, loopControl.n2 + config.radiusConstant)
+    const end = findPointByAngleAndCircle(context.data.center, angle + (loopControl.twistCount * context.data.sparsityFactor), loopControl.nextTerm + config.radiusConstant);
 
-        let twistCount = 2;
-        let n1 = data.unitLength, n2 = data.unitLength;
-        let nextTerm = n1 + n2;
+    await context.canvas.drawGradientLine2d(start, end, stroke, context.data.color1, context.data.color2);
+}
 
-        const drawRay = async (stroke, angle, radius, radiusNext, twist) => {
-
-            angle = angle + (((data.sparsityFactor * data.speed) / numberOfFrames) * currentFrame) * direction;
-
-            const start = findPointByAngleAndCircle(data.center, angle, radius + config.radiusConstant)
-            const end = findPointByAngleAndCircle(data.center, angle + (twist * data.sparsityFactor), radiusNext + config.radiusConstant);
-
-            await canvas.drawGradientLine2d(start, end, stroke, data.color1, data.color2);
-        }
-
-        while (nextTerm <= data.width) {
-
-            for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-                await drawRay(data.stroke + accentBoost, i, n2, nextTerm, twistCount)
-                await drawRay(data.stroke + accentBoost, i, n2, nextTerm, -twistCount)
-            }
-
-            //assignment for next loop
-            twistCount++;
-            n1 = n2;
-            n2 = nextTerm;
-            nextTerm = n1 + n2;
-        }
-
-        await canvas.toFile(filename)
+const draw = async (filename, accentBoost, context) => {
+    const loopControl = {
+        twistCount: 2,
+        n1: context.data.unitLength,
+        n2: context.data.unitLength,
+        nextTerm: context.data.unitLength + context.data.unitLength
     }
 
-    const theAccentGaston = findValue(0, 20, 1, numberOfFrames, currentFrame);
-    const theBlurGaston = Math.ceil(findValue(1, 3, 1, numberOfFrames, currentFrame));
+    while (loopControl.nextTerm <= context.data.width) {
 
-    await draw(imgName, 0);
-    await draw(underlayName, theAccentGaston);
+        for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
+            await drawRay(context.data.stroke + accentBoost, i, loopControl, context)
+            await drawRay(context.data.stroke + accentBoost, i, loopControl, context)
+        }
 
-    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
-    let underlayLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), underlayName);
+        //assignment for next loop
+        loopControl.twistCount++;
+        loopControl.n1 = loopControl.n2;
+        loopControl.n2 = loopControl.nextTerm;
+        loopControl.nextTerm = loopControl.n1 + loopControl.n2;
+    }
 
-    await underlayLayer.blur(theBlurGaston);
+    await context.canvas.toFile(filename)
+}
+
+async function compositeImage(context, layer) {
+    await draw(context.drawing, 0, context);
+    await draw(context.underlayName, context.theAccentGaston, context);
+
+    let tempLayer = await LayerFactory.getLayerFromFile();
+    let underlayLayer = await LayerFactory.getLayerFromFile();
+
+    await underlayLayer.blur(context.theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);
+
     await layer.compositeLayerOver(underlayLayer);
-
     await layer.compositeLayerOver(tempLayer);
+}
 
-    fs.unlinkSync(underlayName);
-    fs.unlinkSync(imgName);
+const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
 
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        theAccentGaston: findValue(0, 20, 1, numberOfFrames, currentFrame),
+        drawing: getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data,
+    }
+
+    await compositeImage(context, layer);
+
+    fs.unlinkSync(context.underlayName);
+    fs.unlinkSync(context.drawing);
 }
 
 export const effect = {

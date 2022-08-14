@@ -1,10 +1,5 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
@@ -15,6 +10,35 @@ const config = {
     maxlength: {lower: 150, upper: 300},
     times: {lower: 3, upper: 6},
     color: getColorFromBucket()
+}
+
+const getPixelTrailLength = () => {
+    return {
+        min: getRandomIntInclusive(config.minlength.lower, config.minlength.upper),
+        max: getRandomIntInclusive(config.maxlength.lower, config.maxlength.upper),
+        times: getRandomIntInclusive(config.times.lower, config.times.upper)
+    }
+}
+
+const fillLineDetail = (width) => {
+    const pixelLine = [];
+    for (let i = 0; i < width; i++) {
+        pixelLine.push(getPixelTrailLength());
+    }
+    return pixelLine;
+}
+
+
+const computeInitialLineInfo = (numberOfLines, height, width) => {
+    const lineInfo = [];
+
+    for (let i = 0; i <= numberOfLines; i++) {
+        lineInfo.push({
+            lineStart: getRandomIntInclusive(0, height), pixelLine: fillLineDetail(width),
+        });
+    }
+
+    return lineInfo;
 }
 
 const generate = () => {
@@ -31,67 +55,49 @@ const generate = () => {
         }
     }
 
-    const computeInitialLineInfo = (numberOfLines) => {
-        const lineInfo = [];
-
-        const getPixelTrailLength = () => {
-            return {
-                min: getRandomIntInclusive(config.minlength.lower, config.minlength.upper),
-                max: getRandomIntInclusive(config.maxlength.lower, config.maxlength.upper),
-                times: getRandomIntInclusive(config.times.lower, config.times.upper)
-            }
-        }
-
-        const fillLineDetail = () => {
-            const pixelLine = [];
-            for (let i = 0; i < data.width; i++) {
-                pixelLine.push(getPixelTrailLength());
-            }
-            return pixelLine;
-        }
-
-        for (let i = 0; i <= numberOfLines; i++) {
-            lineInfo.push({
-                lineStart: getRandomIntInclusive(0, data.height),
-                pixelLine: fillLineDetail(),
-            });
-        }
-        return lineInfo;
-    }
-
-    data.lineInfo = computeInitialLineInfo(data.numberOfLines);
+    data.lineInfo = computeInitialLineInfo(data.numberOfLines, data.height, data.width);
 
     return data;
 }
 
+const drawLine = async (y, pixelLine, context) => {
+    for (let x = 0; x < context.data.width; x++) {
+        const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, pixelLine[x].times, context.numberOfFrames, context.currentFrame);
+        await context.canvas.drawGradientLine2d({x: x, y: y}, {
+            x: x, y: theTrailGaston
+        }, 1, context.data.color, 'transparent')
+    }
+}
+
+function computeY(context, numberOfFrames, currentFrame, i) {
+    const displacement = (context.data.height / numberOfFrames) * currentFrame;
+    let y = context.data.lineInfo[i].lineStart + displacement;
+
+    if (y > context.data.height) {
+        y = y - context.data.height
+    }
+    return y;
+}
+
 const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = getWorkingDirectory() + 'scan-lines' + randomId() + '.png';
 
-    const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-    const drawLine = async (y, pixelLine) => {
-        for (let x = 0; x < data.width; x++) {
-            const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, pixelLine[x].times, numberOfFrames, currentFrame);
-            await canvas.drawGradientLine2d({x: x, y: y}, {x: x, y: theTrailGaston}, 1, data.color, 'transparent')
-        }
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        drawing: getWorkingDirectory() + 'scan-lines' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data,
     }
 
     for (let i = 0; i < data.lineInfo.length; i++) {
-        const displacement = (data.height / numberOfFrames) * currentFrame;
-        let y = data.lineInfo[i].lineStart + displacement;
-
-        if (y > data.height) {
-            y = y - data.height
-        }
-
-        await drawLine(y, data.lineInfo[i].pixelLine)
+        let y = computeY(context, numberOfFrames, currentFrame, i);
+        await drawLine(y, data.lineInfo[i].pixelLine, context)
     }
 
-    await canvas.toFile(imgName);
+    await context.canvas.toFile(context.drawing);
+    await layer.fromFile(context.drawing)
 
-    await layer.fromFile(imgName)
-
-    fs.unlinkSync(imgName);
+    fs.unlinkSync(context.drawing);
 }
 
 export const effect = {

@@ -2,7 +2,7 @@ import Jimp from "jimp";
 import {randomId} from "../logic/math/random.js";
 import fs from "fs";
 import sharp from "sharp";
-import {getFinalImageSize, getWorkingDirectory} from "../logic/core/gobals.js";
+import {getFinalImageSize, getLayerStrategy, getWorkingDirectory} from "../logic/core/gobals.js";
 
 class SharpLayerStrategy {
     constructor() {
@@ -180,8 +180,8 @@ export class LayerFactory {
     constructor() {
     }
 
-    static getNewLayer = async (strategyType, height, width, backgroundColor) => {
-        switch (strategyType) {
+    static getNewLayer = async (height, width, backgroundColor) => {
+        switch (getLayerStrategy()) {
             case 'jimp':
                 const jimpLayer = new Layer(new JimpLayerStrategy())
                 await jimpLayer.newLayer(height, width, backgroundColor);
@@ -195,8 +195,8 @@ export class LayerFactory {
         }
     }
 
-    static getLayerFromFile = async (strategyType, filename) => {
-        switch (strategyType) {
+    static getLayerFromFile = async filename => {
+        switch (getLayerStrategy()) {
             case 'jimp':
                 const jimpLayer = new Layer(new JimpLayerStrategy())
                 await jimpLayer.fromFile(filename);

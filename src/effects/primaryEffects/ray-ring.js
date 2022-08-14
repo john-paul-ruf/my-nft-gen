@@ -1,11 +1,5 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getLayerStrategy,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
@@ -29,6 +23,44 @@ const config = {
     sparsityFactor: {lower: 5, upper: 15},
 }
 
+const getRays = (sparsityFactor) => {
+    const rays = [];
+
+    for (let i = 0; i < 360; i = i + sparsityFactor) {
+        rays.push({
+            length: {
+                lower: getRandomIntInclusive(config.lengthRange.bottom.lower, config.lengthRange.bottom.upper),
+                upper: getRandomIntInclusive(config.lengthRange.top.lower, config.lengthRange.top.upper)
+            },
+            lengthTimes: getRandomIntInclusive(config.lengthTimes.lower, config.lengthTimes.upper)
+        });
+    }
+
+    return rays;
+}
+
+const computeInitialInfo = (num) => {
+    const info = [];
+    for (let i = 0; i <= num; i++) {
+        info.push({
+            radius: config.radiusGap * (i + 1),
+            color: getColorFromBucket(),
+            accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+            accentRange: {
+                lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+                upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+            },
+            sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper) * (config.densityFactor / (i + 1)),
+        });
+    }
+
+    for (let c = 0; c < info.length; c++) {
+        info[c].rays = getRays(info[c].sparsityFactor);
+    }
+
+    return info;
+}
+
 const generate = () => {
     const data = {
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
@@ -49,87 +81,60 @@ const generate = () => {
         }
     }
 
-    const computeInitialInfo = (num) => {
-        const info = [];
-        for (let i = 0; i <= num; i++) {
-            info.push({
-                radius: config.radiusGap * (i + 1),
-                color: getColorFromBucket(),
-                accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
-                accentRange: {
-                    lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
-                    upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
-                },
-                sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper) * (config.densityFactor / (i + 1)),
-            });
-        }
-
-        const getRays = (sparsityFactor) => {
-            const rays = [];
-
-            for (let i = 0; i < 360; i = i + sparsityFactor) {
-                rays.push({
-                    length: {
-                        lower: getRandomIntInclusive(config.lengthRange.bottom.lower, config.lengthRange.bottom.upper),
-                        upper: getRandomIntInclusive(config.lengthRange.top.lower, config.lengthRange.top.upper)
-                    },
-                    lengthTimes: getRandomIntInclusive(config.lengthTimes.lower, config.lengthTimes.upper)
-                });
-            }
-
-            return rays;
-        }
-
-        for (let c = 0; c < info.length; c++) {
-            info[c].rays = getRays(info[c].sparsityFactor);
-        }
-
-        return info;
-    }
-
     data.circles = computeInitialInfo(data.numberOfCircles);
 
     return data;
 }
 
-const rayRing = async (data, layer, currentFrame, numberOfFrames) => {
-    const ring = getWorkingDirectory() + 'ray-ring' + randomId() + '.png';
-    const fuzz = getWorkingDirectory() + 'ray-ring-fuzz' + randomId() + '.png';
+async function drawRayRingInstance(withAccentGaston, i, context) {
+    const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+    await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
 
-    const draw = async (filename, withAccentGaston) => {
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-        for (let i = 0; i < data.numberOfCircles; i++) {
-            const theAccentGaston = withAccentGaston ? findValue(data.circles[i].accentRange.lower, data.circles[i].accentRange.upper, data.circles[i].accentTimes, numberOfFrames, currentFrame) : 0;
-            await canvas.drawRing2d(data.center, data.circles[i].radius, data.thickness, data.innerColor, (data.stroke + theAccentGaston), data.circles[i].color)
-
-            let rayIndex = 0;
-            for (let a = 0; a < 360; a = a + data.circles[i].sparsityFactor) {
-                const theLengthGaston = findValue(data.circles[i].rays[rayIndex].length.lower, data.circles[i].rays[rayIndex].length.upper, data.circles[i].rays[rayIndex].lengthTimes, numberOfFrames, currentFrame);
-                await canvas.drawRay2d(data.center, data.stroke, data.circles[i].color, data.circles[i].color, a, data.circles[i].radius, theLengthGaston);
-                rayIndex++;
-            }
-        }
-
-        await canvas.toFile(filename);
+    let rayIndex = 0;
+    for (let a = 0; a < 360; a = a + context.data.circles[i].sparsityFactor) {
+        const theLengthGaston = findValue(context.data.circles[i].rays[rayIndex].length.lower, context.data.circles[i].rays[rayIndex].length.upper, context.data.circles[i].rays[rayIndex].lengthTimes, context.numberOfFrames, context.currentFrame);
+        await context.canvas.drawRay2d(context.data.center, context.data.stroke, context.data.circles[i].color, context.data.circles[i].color, a, context.data.circles[i].radius, theLengthGaston);
+        rayIndex++;
     }
+}
 
-    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
+const draw = async (filename, withAccentGaston, context) => {
+    for (let i = 0; i < context.data.numberOfCircles; i++) {
+        await drawRayRingInstance(withAccentGaston, i, context);
+    }
+    await context.canvas.toFile(filename);
+}
 
-    await draw(ring, false);
-    await draw(fuzz, true);
+async function compositeImage(ring, fuzz, context, layer) {
+    const theBlurGaston = Math.ceil(findValue(context.data.blurRange.lower, context.data.blurRange.upper, context.data.blurTimes, context.numberOfFrames, context.currentFrame));
 
-    let fuzzLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), fuzz);
-    let ringLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), ring);
+    let fuzzLayer = await LayerFactory.getLayerFromFile(fuzz);
+    let ringLayer = await LayerFactory.getLayerFromFile(ring);
 
     await fuzzLayer.blur(theBlurGaston);
     await fuzzLayer.adjustLayerOpacity(0.5);
 
     await layer.compositeLayerOver(fuzzLayer);
     await layer.compositeLayerOver(ringLayer);
+}
 
-    fs.unlinkSync(ring);
-    fs.unlinkSync(fuzz);
+const rayRing = async (data, layer, currentFrame, numberOfFrames) => {
+
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        drawing: getWorkingDirectory() + 'ray-ring' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'ray-ring-underlay' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data
+    }
+
+    await draw(context.drawing, false, context);
+    await draw(context.underlayName, true, context);
+    await compositeImage(context.drawing, context.underlayName, context, layer);
+
+    fs.unlinkSync(context.drawing);
+    fs.unlinkSync(context.underlayName);
 
 }
 

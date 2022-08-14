@@ -1,11 +1,5 @@
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getLayerStrategy,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
 import {findValue} from "../../logic/math/findValue.js";
@@ -65,56 +59,63 @@ const generate = () => {
     return data;
 }
 
-const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png';
-    const underlayName = getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png';
+const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
+    const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
+    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.accentBoost, outerColor)
+}
 
-    const draw = async (filename, accentBoost) => {
-
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-        const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor) => {
-            const theGaston = findValue(radius, radius + data.ripple, data.times, numberOfFrames, currentFrame);
-            await canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + accentBoost, outerColor)
-        }
-
-        const drawRings = async (pos, color, radius, numberOfRings) => {
-            for (let i = 0; i < numberOfRings; i++) {
-                await drawRing(pos, radius / numberOfRings * i, data.thickness, data.innerColor, data.stroke, color);
-            }
-        }
-
-        await drawRings(findPointByAngleAndCircle(data.center, 30, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
-        await drawRings(findPointByAngleAndCircle(data.center, 90, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
-        await drawRings(findPointByAngleAndCircle(data.center, 150, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
-        await drawRings(findPointByAngleAndCircle(data.center, 210, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
-        await drawRings(findPointByAngleAndCircle(data.center, 270, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
-        await drawRings(findPointByAngleAndCircle(data.center, 330, data.smallerRingsGroupRadius), data.smallColor, data.smallRadius, data.smallNumberOfRings);
-
-        await drawRings(data.center, data.largeColor, data.largeRadius, data.largeNumberOfRings);
-
-        await canvas.drawPolygon2d(data.smallerRingsGroupRadius, data.center, 6, 30, data.thickness + accentBoost, data.innerColor, data.stroke, data.smallColor)
-
-        await canvas.toFile(filename);
+const drawRings = async (pos, color, radius, numberOfRings, context) => {
+    for (let i = 0; i < numberOfRings; i++) {
+        await drawRing(pos, radius / numberOfRings * i, context.data.thickness, context.data.innerColor, context.data.stroke, color, context);
     }
+}
 
-    const theAccentGaston = findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame);
-    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame));
+const draw = async (filename, accentBoost, context) => {
+    context.accentBoost = accentBoost;
 
-    await draw(imgName, 0);
-    await draw(underlayName, theAccentGaston);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 30, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 90, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 150, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 210, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 270, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 330, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
-    let underlayLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), underlayName);
+    await drawRings(context.data.center, context.data.largeColor, context.data.largeRadius, context.data.largeNumberOfRings, context);
 
-    await underlayLayer.blur(theBlurGaston);
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30, context.data.thickness + accentBoost, context.data.innerColor, context.data.stroke, context.data.smallColor)
+
+    await context.canvas.toFile(filename);
+}
+
+async function compositeImage(context, layer) {
+    await draw(context.drawing, 0, context);
+    await draw(context.underlayName, context.theAccentGaston, context);
+
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.blur(context.theBlurGaston);
     await underlayLayer.adjustLayerOpacity(0.5);
 
     await layer.compositeLayerOver(underlayLayer)
     await layer.compositeLayerOver(tempLayer)
+}
 
-    fs.unlinkSync(imgName);
-    fs.unlinkSync(underlayName);
+const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        drawing: getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data,
+    }
+
+    await compositeImage(context, layer);
+
+    fs.unlinkSync(context.drawing);
+    fs.unlinkSync(context.underlayName);
 }
 
 export const effect = {

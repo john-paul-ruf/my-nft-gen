@@ -1,11 +1,5 @@
 import {randomId, randomNumber} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getLayerStrategy,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
@@ -36,27 +30,26 @@ const generate = () => {
     return data;
 }
 
+const draw = async (stroke, context) => {
+    for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
+        await context.canvas.drawRay2d(context.data.center, stroke, context.data.color, context.data.innerColor, i, context.data.lineStart, context.data.length)
+    }
+    await context.canvas.toFile(context.drawing);
+}
+
 const amp = async (data, layer) => {
-    const amp = getWorkingDirectory() + 'amp' + randomId() + '.png';
-
-    const draw = async (stroke, filename) => {
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-        for (let i = 0; i < 360; i = i + data.sparsityFactor) {
-            await canvas.drawRay2d(data.center, stroke, data.color, data.innerColor, i, data.lineStart, data.length)
-        }
-
-        await canvas.toFile(filename);
+    const context = {
+        drawing: getWorkingDirectory() + 'amp' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data,
     }
 
-    await draw(config.stroke, amp);
-
-    const compositeLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), amp);
-
+    await draw(config.stroke, context);
+    const compositeLayer = await LayerFactory.getLayerFromFile(context.drawing);
     await layer.compositeLayerOver(compositeLayer);
 
-    fs.unlinkSync(amp);
-
+    fs.unlinkSync(context.drawing);
 }
 
 export const effect = {

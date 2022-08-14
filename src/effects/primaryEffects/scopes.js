@@ -1,18 +1,11 @@
 import {randomId, randomNumber} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getLayerStrategy,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../logic/math/drawingMath.js";
 import {findOneWayValue} from "../../logic/math/findOneWayValue.js";
 import {LayerFactory} from "../../layer/LayerFactory.js";
 import {findValue} from "../../logic/math/findValue.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
-
 
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1.5},
@@ -23,11 +16,31 @@ const config = {
     numberOfScopesInALine: 150,
 }
 
-
 const finalImageSize = getFinalImageSize();
 
-const generate = () => {
+function getHexLine(sparsityFactor, info, i) {
+    for (let a = 0; a < 360; a = a + sparsityFactor) {
+        info.push({
+            loopCount: i + 1,
+            angle: a,
+            alphaRange: {
+                lower: randomNumber(config.alphaRange.bottom.lower, config.alphaRange.bottom.upper),
+                upper: randomNumber(config.alphaRange.top.lower, config.alphaRange.top.upper)
+            },
+            color: getColorFromBucket(),
+        });
+    }
+}
 
+const computeInitialInfo = (sparsityFactor) => {
+    const info = [];
+    for (let i = 0; i < config.numberOfScopesInALine; i++) {
+        getHexLine(sparsityFactor, info, i);
+    }
+    return info;
+}
+
+const generate = () => {
     const data = {
         height: finalImageSize.height,
         width: finalImageSize.width,
@@ -41,66 +54,49 @@ const generate = () => {
         }
     }
 
-    const computeInitialInfo = () => {
-        const info = [];
-        for (let i = 0; i < config.numberOfScopesInALine; i++) {
-            for (let a = 0; a < 360; a = a + data.sparsityFactor) {
-                info.push({
-                    loopCount: i + 1,
-                    angle: a,
-                    alphaRange: {
-                        lower: randomNumber(config.alphaRange.bottom.lower, config.alphaRange.bottom.upper),
-                        upper: randomNumber(config.alphaRange.top.lower, config.alphaRange.top.upper)
-                    },
-                    color: getColorFromBucket(),
-                });
-            }
-        }
-        return info;
-    }
-
-    data.scopes = computeInitialInfo();
+    data.scopes = computeInitialInfo(data.sparsityFactor);
 
     return data;
 }
 
+const drawHexLine = async (angle, index, color, alphaRange, context) => {
+    const loopCount = index + 1;
+    const direction = loopCount % 2;
+    const invert = direction <= 0;
+
+    const theRotateGaston = findOneWayValue(angle, angle + 720, context.numberOfFrames, context.currentFrame, invert);
+    const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, 5, context.numberOfFrames, context.currentFrame);
+
+    const scaleBy = (context.data.scaleFactor * loopCount);
+    const radius = context.data.radiusFactor * scaleBy;
+    const gapRadius = ((finalImageSize.height * .05) + radius + (context.data.gapFactor * scaleBy) * loopCount)
+    const pos = findPointByAngleAndCircle(context.data.center, angle, gapRadius)
+
+    await context.canvas.drawFilledPolygon2d(radius, pos, 6, theRotateGaston, color, theAlphaGaston)
+}
+
+const draw = async (filename, context) => {
+    for (let s = 0; s < context.data.scopes.length; s++) {
+        await drawHexLine(context.data.scopes[s].angle, context.data.scopes[s].loopCount, context.data.scopes[s].color, context.data.scopes[s].alphaRange, context)
+    }
+    await context.canvas.toFile(filename);
+}
+
 const scopes = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = getWorkingDirectory() + 'scopes' + randomId() + '.png';
-
-    const draw = async (filename) => {
-
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-        const drawHexLine = async (angle, index, color, alphaRange) => {
-            const loopCount = index + 1;
-            const direction = loopCount % 2;
-            const invert = direction <= 0;
-
-            const theRotateGaston = findOneWayValue(angle, angle + 720, numberOfFrames, currentFrame, invert);
-            const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, 5, numberOfFrames, currentFrame);
-
-            const scaleBy = (data.scaleFactor * loopCount);
-            const radius = data.radiusFactor * scaleBy;
-            const gapRadius = ((finalImageSize.height * .05) + radius + (data.gapFactor * scaleBy) * loopCount)
-            const pos = findPointByAngleAndCircle(data.center, angle, gapRadius)
-
-            await canvas.drawFilledPolygon2d(radius, pos, 6, theRotateGaston, color, theAlphaGaston)
-
-        }
-
-        for (let s = 0; s < data.scopes.length; s++) {
-            await drawHexLine(data.scopes[s].angle, data.scopes[s].loopCount, data.scopes[s].color, data.scopes[s].alphaRange)
-        }
-
-        await canvas.toFile(filename);
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        drawing: getWorkingDirectory() + 'scopes' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data
     }
 
-    await draw(imgName);
+    await draw(context.drawing, context);
 
-    let tempLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), imgName);
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     await layer.compositeLayerOver(tempLayer)
 
-    fs.unlinkSync(imgName);
+    fs.unlinkSync(context.drawing);
 }
 
 export const effect = {

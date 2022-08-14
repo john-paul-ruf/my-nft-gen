@@ -1,6 +1,7 @@
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {degreesToRadians, findPointByAngleAndCircle} from "../logic/math/drawingMath.js";
+import {getCanvasStrategy} from "../logic/core/gobals.js";
 
 
 class nodeCanvasStrategy {
@@ -200,8 +201,8 @@ export class Canvas2dFactory {
     constructor() {
     }
 
-    static getNewCanvas = async (strategyType, width, height) => {
-        switch (strategyType) {
+    static getNewCanvas = async (width, height) => {
+        switch (getCanvasStrategy()) {
             case 'node-canvas':
                 const canvas = new Canvas2d(new nodeCanvasStrategy())
                 await canvas.newCanvas(width, height);

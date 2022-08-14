@@ -76,5 +76,5 @@ export const getLayerStrategy = () => {
 }
 
 export const getCanvasStrategy = () => {
-    return globals.layerStrategy;
+    return globals.canvasStrategy;
 }

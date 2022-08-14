@@ -1,13 +1,9 @@
 import {getRandomIntInclusive, randomId, randomNumber} from "../../logic/math/random.js";
-import {
-    getCanvasStrategy,
-    getColorFromBucket,
-    getFinalImageSize,
-    getWorkingDirectory,
-} from "../../logic/core/gobals.js";
+import {getColorFromBucket, getFinalImageSize, getWorkingDirectory,} from "../../logic/core/gobals.js";
 import fs from "fs";
 import {findValue} from "../../logic/math/findValue.js";
 import {Canvas2dFactory} from "../../draw/Canvas2dFactory.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 
 const config = {
@@ -21,6 +17,7 @@ const config = {
     sparsityFactor: {lower: 2, upper: 5},
     amplitude: {lower: 20, upper: 50},
     times: {lower: 3, upper: 6},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
 }
 
 const generate = () => {
@@ -44,6 +41,10 @@ const generate = () => {
         color: getColorFromBucket(),
         ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),
+        blurRange: {
+            lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+            upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+        },
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`
@@ -53,27 +54,45 @@ const generate = () => {
     return data;
 }
 
+const draw = async (imgName, accentBoost, context) => {
+    const theAmpGaston = findValue(context.data.ampRadius, context.data.ampRadius + context.data.ampLength + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
+    await context.canvas.drawRays2d(context.data.center, context.data.ampRadius, theAmpGaston, context.data.sparsityFactor, context.data.ampThickness, context.data.ampInnerColor, context.data.ampStroke + accentBoost, context.data.ampOuterColor)
+
+    const thePolyGaston = findValue(context.data.radius, context.data.radius + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
+    await context.canvas.drawPolygon2d(thePolyGaston, context.data.center, 3, 210, context.data.thickness, context.data.innerColor, context.data.stroke + accentBoost, context.data.color)
+
+    await context.canvas.toFile(imgName);
+}
+
+async function compositeImage(context, layer) {
+    await draw(context.drawing, 0, context);
+    await draw(context.underlayName, context.theAccentGaston, context);
+
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.blur(context.theBlurGaston);
+    await underlayLayer.adjustLayerOpacity(0.5);
+
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
+}
+
 const viewport = async (data, layer, currentFrame, numberOfFrames) => {
-    const imgName = getWorkingDirectory() + 'viewport' + randomId() + '.png';
 
-    const draw = async () => {
-
-        const canvas = await Canvas2dFactory.getNewCanvas(getCanvasStrategy(), data.width, data.height);
-
-        const theAmpGaston = findValue(data.ampRadius, data.ampRadius + data.ampLength + data.amplitude, data.times, numberOfFrames, currentFrame);
-        await canvas.drawRays2d(data.center, data.ampRadius, theAmpGaston, data.sparsityFactor, data.ampThickness, data.ampInnerColor, data.ampStroke, data.ampOuterColor)
-
-        const thePolyGaston = findValue(data.radius, data.radius + data.amplitude, data.times, numberOfFrames, currentFrame);
-        await canvas.drawPolygon2d(thePolyGaston, data.center, 3, 210, data.thickness, data.innerColor, data.stroke, data.color)
-
-        await canvas.toFile(imgName);
+    const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
+        theAccentGaston: findValue(0, 20, 1, numberOfFrames, currentFrame),
+        drawing: getWorkingDirectory() + 'viewport' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'viewport-underlay' + randomId() + '.png',
+        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        data: data,
     }
 
-    await draw();
+    await compositeImage(context, layer);
 
-    await layer.fromFile(imgName);
-
-    fs.unlinkSync(imgName);
+    fs.unlinkSync(context.drawing);
 }
 
 export const effect = {
@@ -84,7 +103,7 @@ export const viewportEffect = {
     name: 'viewport',
     generateData: generate,
     effect: effect,
-    effectChance: 30,
+    effectChance: 100,
     requiresLayer: true,
 }
 

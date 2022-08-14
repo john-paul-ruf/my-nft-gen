@@ -2,7 +2,7 @@ import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 import {LayerFactory} from "../../layer/LayerFactory.js";
-import {getLayerStrategy, getWorkingDirectory} from "../../logic/core/gobals.js";
+import {getWorkingDirectory} from "../../logic/core/gobals.js";
 
 const config = {
     theRandom: {lower: 4, upper: 8},
@@ -40,7 +40,7 @@ const glitchFractal = async (data, layer) => {
 
     await underlay.writeAsync(filename)
 
-    const compositeLayer = await LayerFactory.getLayerFromFile(getLayerStrategy(), filename);
+    const compositeLayer = await LayerFactory.getLayerFromFile(filename);
 
     await layer.compositeLayerOver(compositeLayer);
 

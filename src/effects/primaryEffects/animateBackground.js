@@ -1,6 +1,11 @@
 import Jimp from "jimp";
 import {getRandomIntInclusive, randomId} from "../../logic/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../logic/core/gobals.js";
+import {
+    getColorFromBucket,
+    getFinalImageSize,
+    getNeutralFromBucket,
+    getWorkingDirectory,
+} from "../../logic/core/gobals.js";
 import fs from "fs";
 
 const finalImageSize = getFinalImageSize();
@@ -21,7 +26,7 @@ const generate = () => {
 }
 
 const animateBackground = async (data, layer) => {
-    const filename = WORKINGDIRETORY + 'static' + randomId() + '.png';
+    const filename = getWorkingDirectory() + 'static' + randomId() + '.png';
 
     const jimpImage = new Jimp(data.width, data.height);
 
