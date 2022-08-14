@@ -21,7 +21,7 @@ export class animationConfiguration {
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 20;
+        this.numberOfFrame = 500;
 
         this.finalFileName = 'Final' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);

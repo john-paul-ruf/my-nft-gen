@@ -1,4 +1,4 @@
-import {degreesToRadians, findPointByAngleAndCircle} from "../core/math/drawingMath.js";
+import {degreesToRadians, findPointByAngleAndCircle} from "../src/core/math/drawingMath.js";
 
 test('findPointByAngleAndCircle: point is correct', () => {
 

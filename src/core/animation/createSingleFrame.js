@@ -1,4 +1,5 @@
-import {LayerFactory} from "../factory/LayerFactory.js";
+import {LayerFactory} from "../factory/layer/LayerFactory.js";
+
 //This function creates a new jimp image (layer) for each main effect
 const getLayers = async (w, h, context) => {
     const extraLayers = [];
@@ -13,7 +14,6 @@ const getLayers = async (w, h, context) => {
 ////////////////////////////
 const processFrame = async (frameNumber, context) => {
     return new Promise(async (resolve) => {
-
         //Queue up the main layer effect to process together
         const mainLayeredEffects = [];
 

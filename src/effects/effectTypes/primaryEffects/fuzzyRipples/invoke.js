@@ -4,7 +4,7 @@ import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import fs from "fs";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import {randomId} from "../../../../core/math/random.js";
-import {Canvas2dFactory} from "../../../../core/factory/Canvas2dFactory.js";
+import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);

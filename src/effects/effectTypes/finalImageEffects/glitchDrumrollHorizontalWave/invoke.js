@@ -1,25 +1,9 @@
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
+import {getFinalImageSize, getWorkingDirectory} from "../../../../core/GlobalSettings.js";
+import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {getFinalImageSize, getWorkingDirectory} from "../../../core/GlobalSettings.js";
 
-const config = {
-    glitchChance: 50,
-    glitchFactor: {lower: 0.5, upper: 0.1}
-}
-
-const generate = () => {
-
-    const data = {
-        glitchChance: config.glitchChance,
-        getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name}`
-        }
-    }
-    return data;
-}
-
-const glitchDrumrollHorizontalWave = async (layer, data) => {
+export const glitchDrumrollHorizontalWave = async (layer) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -42,11 +26,14 @@ const glitchDrumrollHorizontalWave = async (layer, data) => {
 
             const theGlitch = getRandomIntInclusive(0, 100);
             if (theGlitch < data.glitchChance) {
-                const roll = Math.floor(Math.cos(x) * (finalImageSize.height * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
+                const roll = Math.floor(Math.cos(x) * (finalImageSize.height * getRandomIntInclusive(data.glitchFactor.lower, data.glitchFactor.upper)))
                 x2 = x + roll;
             }
 
-            if (x2 > finalImageSize.height - 1) x2 -= finalImageSize.height;
+            if (x2 > finalImageSize.height - 1) {
+                // noinspection JSSuspiciousNameCombination
+                x2 -= finalImageSize.height;
+            }
             let idx2 = (x2 + y * finalImageSize.width) * 4;
 
             for (let c = 0; c < 4; c++) {
@@ -62,17 +49,3 @@ const glitchDrumrollHorizontalWave = async (layer, data) => {
 
     fs.unlinkSync(filename);
 }
-
-export const effect = {
-    invoke: (layer, data) => glitchDrumrollHorizontalWave(layer, data)
-}
-
-export const glitchDrumrollHorizontalWaveEffect = {
-    name: 'glitch drumroll horizontal wave',
-    generateData: generate,
-    effect: effect,
-    effectChance: 50,
-    requiresLayer: false,
-}
-
-

@@ -1,7 +1,5 @@
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import Jimp from "jimp";
-import fs from "fs";
-import {getWorkingDirectory} from "../../../core/GlobalSettings.js";
+import {getRandomIntInclusive} from "../../../../core/math/random.js";
+import {randomizeEffect} from "./effect.js";
 
 const config = {
     spin: {lower: -360, upper: 360},
@@ -10,7 +8,7 @@ const config = {
     green: {lower: -15, upper: 31}
 }
 
-const generate = () => {
+export const generate = () => {
 
     const props = {
         hue: getRandomIntInclusive(config.spin.lower, config.spin.upper),
@@ -46,32 +44,3 @@ const generate = () => {
 
     return data;
 };
-
-const randomize = async (layer, data) => {
-    const filename = getWorkingDirectory() + 'randomize' + randomId() + '.png';
-
-    await layer.toFile(filename);
-
-    const jimpImage = await Jimp.read(filename);
-
-    await jimpImage.color(data.randomize);
-
-    await jimpImage.writeAsync(filename);
-
-    await layer.fromFile(filename);
-
-    fs.unlinkSync(filename)
-}
-
-export const effect = {
-    invoke: (layer, data) => randomize(layer, data)
-}
-
-export const randomizeEffect = {
-    name: 'randomize',
-    generateData: generate,
-    effect: effect,
-    effectChance: 50, //checking the color scheme work
-    requiresLayer: false,
-}
-

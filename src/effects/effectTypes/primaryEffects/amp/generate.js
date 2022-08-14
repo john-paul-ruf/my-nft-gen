@@ -1,6 +1,6 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {randomNumber} from "../../../../core/math/random.js";
-import {ampEffect} from "./amp.js";
+import {ampEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 

@@ -1,6 +1,6 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {rayRingEffect} from "./ray-ring.js";
+import {rayRingEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 

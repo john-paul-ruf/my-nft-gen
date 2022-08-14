@@ -1,6 +1,6 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {fuzzBandsEffect} from "./fuzzBands.js";
+import {fuzzBandsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 

@@ -1,17 +1,9 @@
-import {randomId} from "../../../core/math/random.js";
+import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
+import {randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {getWorkingDirectory} from "../../../core/GlobalSettings.js";
 
-const generate = () => {
-    return {
-        getInfo: () => {
-            return `${glitchInverseEffect.name}`
-        }
-    };
-}
-
-const glitchInverse = async (layer, data) => {
+export const glitchInverse = async (layer) => {
 
     const filename = getWorkingDirectory() + 'glitch-inverse' + randomId() + '.png';
 
@@ -23,7 +15,7 @@ const glitchInverse = async (layer, data) => {
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/inverse.js
     /////////////////////
     const imgData = new Uint32Array(jimpImage.bitmap.data);
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < imgData.length; i++) {
         imgData[i] = ~imgData[i] | 0xFF000000;
     }
     jimpImage.bitmap.data = Buffer.from(imgData);
@@ -34,17 +26,3 @@ const glitchInverse = async (layer, data) => {
 
     fs.unlinkSync(filename);
 }
-
-export const effect = {
-    invoke: (layer, data) => glitchInverse(layer, data)
-}
-
-export const glitchInverseEffect = {
-    name: 'glitch inverse',
-    generateData: generate,
-    effect: effect,
-    effectChance: 50,
-    requiresLayer: false,
-}
-
-

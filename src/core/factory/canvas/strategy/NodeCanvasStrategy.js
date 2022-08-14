@@ -1,10 +1,8 @@
 import {createCanvas} from "canvas";
 import fs from "fs";
-import {degreesToRadians, findPointByAngleAndCircle} from "../math/drawingMath.js";
-import {getCanvasStrategy} from "../GlobalSettings.js";
+import {degreesToRadians, findPointByAngleAndCircle} from "../../../math/drawingMath.js";
 
-
-class nodeCanvasStrategy {
+export class NodeCanvasStrategy {
     constructor() {
         this.internalRepresentation = null;
     }
@@ -156,61 +154,5 @@ class nodeCanvasStrategy {
         this.context.restore();
 
         this.context.globalAlpha = globalAlpha;
-    }
-}
-
-class Canvas2d {
-    constructor(strategy) {
-        this.strategy = strategy
-    }
-
-    async newCanvas(width, height) {
-        await this.strategy.newCanvas(width, height);
-    }
-
-    async toFile(filename) {
-        await this.strategy.toFile(filename);
-    }
-
-    async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor) {
-        await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor);
-    }
-
-    async drawRay2d(pos, stroke, color, innerColor, angle, radius, length) {
-        await this.strategy.drawRay2d(pos, stroke, color, innerColor, angle, radius, length);
-    }
-
-    async drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor) {
-        await this.strategy.drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor);
-    }
-
-    async drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor) {
-        await this.strategy.drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor);
-    }
-
-    async drawGradientLine2d(startPos, endPos, stroke, startColor, endColor) {
-        await this.strategy.drawGradientLine2d(startPos, endPos, stroke, startColor, endColor);
-    }
-
-    async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
-        await this.strategy.drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha);
-    }
-}
-
-export class Canvas2dFactory {
-    constructor() {
-    }
-
-    static getNewCanvas = async (width, height) => {
-        switch (getCanvasStrategy()) {
-            case 'node-canvas':
-                const canvas = new Canvas2d(new nodeCanvasStrategy())
-                await canvas.newCanvas(width, height);
-                return canvas;
-            /*case 'node-p5':*/
-
-            default:
-                throw 'Not a valid layer strategy';
-        }
     }
 }
