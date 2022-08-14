@@ -30,14 +30,13 @@ export const rayRing = async (data, layer, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
+        useAccentGaston: true,
         drawing: getWorkingDirectory() + 'ray-ring' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'ray-ring-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
         data: data
     }
 
-    await draw(context.drawing, false, context);
-    await draw(context.underlayName, true, context);
     await compositeImage(draw, context, layer);
 
     fs.unlinkSync(context.drawing);
