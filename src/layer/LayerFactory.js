@@ -1,8 +1,8 @@
 import Jimp from "jimp";
 import {randomId} from "../logic/math/random.js";
 import fs from "fs";
-import {IMAGEHEIGHT, IMAGEWIDTH, WORKINGDIRETORY} from "../logic/core/gobals.js";
 import sharp from "sharp";
+import {getFinalImageSize, getLayerStrategy, getWorkingDirectory} from "../logic/core/gobals.js";
 
 class SharpLayerStrategy {
     constructor() {
@@ -17,7 +17,7 @@ class SharpLayerStrategy {
             }
         })
 
-        const filename = WORKINGDIRETORY + 'blank-layer' + randomId() + '.png'
+        const filename = getWorkingDirectory() + 'blank-layer' + randomId() + '.png'
         await this.toFile(filename)
         await this.fromFile(filename)
         fs.unlinkSync(filename);
@@ -34,9 +34,12 @@ class SharpLayerStrategy {
     }
 
     async compositeLayerOver(layer) {
-        const overlayFile = WORKINGDIRETORY + 'overlay' + randomId() + '.png';
 
-        await layer.resize(IMAGEHEIGHT, IMAGEWIDTH);
+        const finalImageSize = getFinalImageSize();
+
+        const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
+
+        await layer.resize(finalImageSize.height, finalImageSize.width);
 
         await layer.toFile(overlayFile)
 
@@ -55,7 +58,7 @@ class SharpLayerStrategy {
     }
 
     async rotate(angle) {
-        const overlayFile = WORKINGDIRETORY + 'rotate' + randomId() + '.png';
+        const overlayFile = getWorkingDirectory() + 'rotate' + randomId() + '.png';
         await this.internalRepresentation.rotate(angle);
         await this.toFile(overlayFile);
         this.internalRepresentation = null;
@@ -97,7 +100,7 @@ class JimpLayerStrategy {
     }
 
     async compositeLayerOver(layer) {
-        const overlayFile = WORKINGDIRETORY + 'overlay' + randomId() + '.png';
+        const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
         await layer.toFile(overlayFile)
 
         const overlay = await Jimp.read(overlayFile);
@@ -151,7 +154,7 @@ class Layer {
     }
 
     async adjustLayerOpacity(opacity) {
-        const fileName = WORKINGDIRETORY + 'opacity' + randomId() + '.png'
+        const fileName = getWorkingDirectory() + 'opacity' + randomId() + '.png'
         await this.toFile(fileName)
 
         const opacityJimpImage = await Jimp.read(fileName);
@@ -177,8 +180,8 @@ export class LayerFactory {
     constructor() {
     }
 
-    static getNewLayer = async (strategyType, height, width, backgroundColor) => {
-        switch (strategyType) {
+    static getNewLayer = async (height, width, backgroundColor) => {
+        switch (getLayerStrategy()) {
             case 'jimp':
                 const jimpLayer = new Layer(new JimpLayerStrategy())
                 await jimpLayer.newLayer(height, width, backgroundColor);
@@ -192,8 +195,8 @@ export class LayerFactory {
         }
     }
 
-    static getLayerFromFile = async (strategyType, filename) => {
-        switch (strategyType) {
+    static getLayerFromFile = async filename => {
+        switch (getLayerStrategy()) {
             case 'jimp':
                 const jimpLayer = new Layer(new JimpLayerStrategy())
                 await jimpLayer.fromFile(filename);

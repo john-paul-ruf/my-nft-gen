@@ -1,13 +1,12 @@
-import {animateBackgroundEffect} from "../effects/primaryEffects/animateBackground.js";
+import {animateBackgroundEffect} from "../effects/primaryEffects/animateBackground/animateBackground.js";
 import {checkIfAnyNullOrUndefined} from "./helpers/checkIfAnyNullOrUndefined.js";
-import {verticalScanLinesEffect} from "../effects/primaryEffects/verticalScanLines.js";
-import {hexEffect} from "../effects/primaryEffects/hex.js";
-import {wireframeSpiralEffect} from "../effects/primaryEffects/wireframe-spiral.js";
-import {fuzzyRippleEffect} from "../effects/primaryEffects/fuzzy-ripples.js";
-import {fuzzBandsEffect} from "../effects/primaryEffects/fuzzBands.js";
-import {gatesEffect} from "../effects/primaryEffects/gates.js";
-import {ampEffect} from "../effects/primaryEffects/amp.js";
-import {viewportEffect} from "../effects/primaryEffects/viewport.js";
+import {verticalScanLinesEffect} from "../effects/primaryEffects/scanLines/verticalScanLines.js";
+import {hexEffect} from "../effects/primaryEffects/hex/hex.js";
+import {wireframeSpiralEffect} from "../effects/primaryEffects/wireframeSpiral/wireframe-spiral.js";
+import {fuzzyRippleEffect} from "../effects/primaryEffects/fuzzyRipples/fuzzy-ripples.js";
+import {fuzzBandsEffect} from "../effects/primaryEffects/fuzzBands/fuzzBands.js";
+import {gatesEffect} from "../effects/primaryEffects/gates/gates.js";
+import {viewportEffect} from "../effects/primaryEffects/viewport/viewport.js";
 import {randomizeEffect} from "../effects/secondaryEffects/randomize.js";
 import {glowEffect} from "../effects/secondaryEffects/glow.js";
 import {fadeEffect} from "../effects/secondaryEffects/fade.js";
@@ -18,8 +17,9 @@ import {posterizeEffect} from "../effects/finalImageEffects/posterize.js";
 import {glitchInverseEffect} from "../effects/finalImageEffects/glitchInverse.js";
 import {glitchFractalEffect} from "../effects/finalImageEffects/glitchFractal.js";
 import {glitchDrumrollHorizontalWaveEffect} from "../effects/finalImageEffects/glitchDrumrollHorizontalWave.js";
-import {scopesEffect} from "../effects/primaryEffects/scopes.js";
-import {rayRingEffect} from "../effects/primaryEffects/ray-ring";
+import {scopesEffect} from "../effects/primaryEffects/scopes/scopes.js";
+import {rayRingEffect} from "../effects/primaryEffects/rayRing/ray-ring.js";
+import {ampEffect} from "../effects/primaryEffects/amp/amp.js";
 
 
 test('no null or undefined in scopesEffect generate function', () => {
