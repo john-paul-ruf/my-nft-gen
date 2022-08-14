@@ -1,4 +1,4 @@
-import {findValue} from "../core/math/findValue.js";
+import {findValue} from "../src/core/math/findValue.js";
 
 test('findValue: begin and end match', () => {
 

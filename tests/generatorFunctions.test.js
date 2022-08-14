@@ -1,27 +1,29 @@
-import {animateBackgroundEffect} from "../effects/effectTypes/primaryEffects/animateBackground/animateBackground.js";
+import {
+    animateBackgroundEffect
+} from "../src/effects/effectTypes/primaryEffects/animateBackground/animateBackground.js";
 import {checkIfAnyNullOrUndefined} from "./helpers/checkIfAnyNullOrUndefined.js";
-import {verticalScanLinesEffect} from "../effects/effectTypes/primaryEffects/scanLines/verticalScanLines.js";
-import {hexEffect} from "../effects/effectTypes/primaryEffects/hex/hex.js";
-import {wireframeSpiralEffect} from "../effects/effectTypes/primaryEffects/wireframeSpiral/wireframe-spiral.js";
-import {fuzzyRippleEffect} from "../effects/effectTypes/primaryEffects/fuzzyRipples/fuzzy-ripples.js";
-import {fuzzBandsEffect} from "../effects/effectTypes/primaryEffects/fuzzBands/fuzzBands.js";
-import {gatesEffect} from "../effects/effectTypes/primaryEffects/gates/gates.js";
-import {viewportEffect} from "../effects/effectTypes/primaryEffects/viewport/viewport.js";
-import {randomizeEffect} from "../effects/effectTypes/secondaryEffects/randomize.js";
-import {glowEffect} from "../effects/effectTypes/secondaryEffects/glow.js";
-import {fadeEffect} from "../effects/effectTypes/secondaryEffects/fade.js";
-import {blurEffect} from "../effects/effectTypes/finalImageEffects/blur.js";
-import {pixelateEffect} from "../effects/effectTypes/finalImageEffects/pixelate.js";
-import {sepiaEffect} from "../effects/effectTypes/finalImageEffects/sepia.js";
-import {posterizeEffect} from "../effects/effectTypes/finalImageEffects/posterize.js";
-import {glitchInverseEffect} from "../effects/effectTypes/finalImageEffects/glitchInverse.js";
-import {glitchFractalEffect} from "../effects/effectTypes/finalImageEffects/glitchFractal.js";
+import {verticalScanLinesEffect} from "../src/effects/effectTypes/primaryEffects/scanLines/verticalScanLines.js";
+import {hexEffect} from "../src/effects/effectTypes/primaryEffects/hex/hex.js";
+import {wireframeSpiralEffect} from "../src/effects/effectTypes/primaryEffects/wireframeSpiral/wireframe-spiral.js";
+import {fuzzyRippleEffect} from "../src/effects/effectTypes/primaryEffects/fuzzyRipples/fuzzy-ripples.js";
+import {fuzzBandsEffect} from "../src/effects/effectTypes/primaryEffects/fuzzBands/fuzzBands.js";
+import {gatesEffect} from "../src/effects/effectTypes/primaryEffects/gates/gates.js";
+import {viewportEffect} from "../src/effects/effectTypes/primaryEffects/viewport/viewport.js";
+import {randomizeEffect} from "../src/effects/effectTypes/secondaryEffects/randomize.js";
+import {glowEffect} from "../src/effects/effectTypes/secondaryEffects/glow.js";
+import {fadeEffect} from "../src/effects/effectTypes/secondaryEffects/fade.js";
+import {blurEffect} from "../src/effects/effectTypes/finalImageEffects/blur.js";
+import {pixelateEffect} from "../src/effects/effectTypes/finalImageEffects/pixelate.js";
+import {sepiaEffect} from "../src/effects/effectTypes/finalImageEffects/sepia.js";
+import {posterizeEffect} from "../src/effects/effectTypes/finalImageEffects/posterize.js";
+import {glitchInverseEffect} from "../src/effects/effectTypes/finalImageEffects/glitchInverse.js";
+import {glitchFractalEffect} from "../src/effects/effectTypes/finalImageEffects/glitchFractal.js";
 import {
     glitchDrumrollHorizontalWaveEffect
-} from "../effects/effectTypes/finalImageEffects/glitchDrumrollHorizontalWave.js";
-import {scopesEffect} from "../effects/effectTypes/primaryEffects/scopes/scopes.js";
-import {rayRingEffect} from "../effects/effectTypes/primaryEffects/rayRing/ray-ring.js";
-import {ampEffect} from "../effects/effectTypes/primaryEffects/amp/amp.js";
+} from "../src/effects/effectTypes/finalImageEffects/glitchDrumrollHorizontalWave.js";
+import {scopesEffect} from "../src/effects/effectTypes/primaryEffects/scopes/scopes.js";
+import {rayRingEffect} from "../src/effects/effectTypes/primaryEffects/rayRing/ray-ring.js";
+import {ampEffect} from "../src/effects/effectTypes/primaryEffects/amp/amp.js";
 
 
 test('no null or undefined in scopesEffect generate function', () => {
