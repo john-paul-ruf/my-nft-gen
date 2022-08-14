@@ -1,6 +1,6 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
-import {fuzzyRippleEffect} from "./fuzzy-ripples.js";
+import {fuzzyRippleEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 

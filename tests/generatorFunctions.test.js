@@ -1,29 +1,26 @@
-import {
-    animateBackgroundEffect
-} from "../src/effects/effectTypes/primaryEffects/animateBackground/animateBackground.js";
+import {animateBackgroundEffect} from "../src/effects/effectTypes/primaryEffects/animateBackground/effect.js";
 import {checkIfAnyNullOrUndefined} from "./helpers/checkIfAnyNullOrUndefined.js";
-import {verticalScanLinesEffect} from "../src/effects/effectTypes/primaryEffects/scanLines/verticalScanLines.js";
-import {hexEffect} from "../src/effects/effectTypes/primaryEffects/hex/hex.js";
-import {wireframeSpiralEffect} from "../src/effects/effectTypes/primaryEffects/wireframeSpiral/wireframe-spiral.js";
-import {fuzzyRippleEffect} from "../src/effects/effectTypes/primaryEffects/fuzzyRipples/fuzzy-ripples.js";
-import {fuzzBandsEffect} from "../src/effects/effectTypes/primaryEffects/fuzzBands/fuzzBands.js";
-import {gatesEffect} from "../src/effects/effectTypes/primaryEffects/gates/gates.js";
-import {viewportEffect} from "../src/effects/effectTypes/primaryEffects/viewport/viewport.js";
-import {randomizeEffect} from "../src/effects/effectTypes/secondaryEffects/randomize.js";
-import {glowEffect} from "../src/effects/effectTypes/secondaryEffects/glow.js";
-import {fadeEffect} from "../src/effects/effectTypes/secondaryEffects/fade.js";
-import {blurEffect} from "../src/effects/effectTypes/finalImageEffects/blur.js";
-import {pixelateEffect} from "../src/effects/effectTypes/finalImageEffects/pixelate.js";
-import {sepiaEffect} from "../src/effects/effectTypes/finalImageEffects/sepia.js";
-import {posterizeEffect} from "../src/effects/effectTypes/finalImageEffects/posterize.js";
-import {glitchInverseEffect} from "../src/effects/effectTypes/finalImageEffects/glitchInverse.js";
-import {glitchFractalEffect} from "../src/effects/effectTypes/finalImageEffects/glitchFractal.js";
+import {verticalScanLinesEffect} from "../src/effects/effectTypes/primaryEffects/scanLines/effect.js";
+import {hexEffect} from "../src/effects/effectTypes/primaryEffects/hex/effect.js";
+import {wireframeSpiralEffect} from "../src/effects/effectTypes/primaryEffects/wireframeSpiral/effect.js";
+import {fuzzyRippleEffect} from "../src/effects/effectTypes/primaryEffects/fuzzyRipples/effect.js";
+import {fuzzBandsEffect} from "../src/effects/effectTypes/primaryEffects/fuzzBands/effect.js";
+import {gatesEffect} from "../src/effects/effectTypes/primaryEffects/gates/effect.js";
+import {viewportEffect} from "../src/effects/effectTypes/primaryEffects/viewport/effect.js";
+import {randomizeEffect} from "../src/effects/effectTypes/secondaryEffects/randomize/effect.js";
+import {glowEffect} from "../src/effects/effectTypes/secondaryEffects/glow/effect.js";
+import {fadeEffect} from "../src/effects/effectTypes/secondaryEffects/fade/effect.js";
+import {blurEffect} from "../src/effects/effectTypes/finalImageEffects/blur/effect.js";
+import {pixelateEffect} from "../src/effects/effectTypes/finalImageEffects/pixelate/effect.js";
+import {sepiaEffect} from "../src/effects/effectTypes/finalImageEffects/sepia/effect.js";
+import {glitchInverseEffect} from "../src/effects/effectTypes/finalImageEffects/glitchInverse/effect.js";
+import {glitchFractalEffect} from "../src/effects/effectTypes/finalImageEffects/glitchFractal/effect.js";
 import {
     glitchDrumrollHorizontalWaveEffect
-} from "../src/effects/effectTypes/finalImageEffects/glitchDrumrollHorizontalWave.js";
-import {scopesEffect} from "../src/effects/effectTypes/primaryEffects/scopes/scopes.js";
-import {rayRingEffect} from "../src/effects/effectTypes/primaryEffects/rayRing/ray-ring.js";
-import {ampEffect} from "../src/effects/effectTypes/primaryEffects/amp/amp.js";
+} from "../src/effects/effectTypes/finalImageEffects/glitchDrumrollHorizontalWave/effect.js";
+import {scopesEffect} from "../src/effects/effectTypes/primaryEffects/scopes/effect.js";
+import {rayRingEffect} from "../src/effects/effectTypes/primaryEffects/rayRing/effect.js";
+import {ampEffect} from "../src/effects/effectTypes/primaryEffects/amp/effect.js";
 
 
 test('no null or undefined in scopesEffect generate function', () => {
@@ -103,11 +100,6 @@ test('no null or undefined in pixelateEffect generate function', () => {
 
 test('no null or undefined in sepiaEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(sepiaEffect.generateData());
-    expect(hasNullOrUndefined).toBe(false);
-});
-
-test('no null or undefined in posterizeEffect generate function', () => {
-    const hasNullOrUndefined = checkIfAnyNullOrUndefined(posterizeEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
 

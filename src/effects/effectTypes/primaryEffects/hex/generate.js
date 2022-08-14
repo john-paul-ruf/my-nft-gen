@@ -1,6 +1,6 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
-import {hexEffect} from "./hex.js";
+import {hexEffect} from "./effect.js";
 
 const config = {
     sparsityFactor: {lower: 24, upper: 24},

@@ -1,6 +1,6 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
-import {gatesEffect} from "./gates.js";
+import {gatesEffect} from "./effect.js";
 
 const config = {
     gates: {lower: 5, upper: 11},

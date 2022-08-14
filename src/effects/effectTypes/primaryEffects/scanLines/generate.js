@@ -1,6 +1,6 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
-import {verticalScanLinesEffect} from "./verticalScanLines.js";
+import {verticalScanLinesEffect} from "./effect.js";
 
 const config = {
     lines: {lower: 2, upper: 5},
@@ -45,7 +45,7 @@ export const generate = () => {
 
     const data = {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
-        height: finalImageSize.height,
+        height: finalImageSize.height * 1.5,
         width: finalImageSize.width,
         color: config.color,
         getInfo: () => {

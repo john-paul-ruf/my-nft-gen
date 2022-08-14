@@ -1,25 +1,9 @@
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
+import {getFinalImageSize, getWorkingDirectory} from "../../../../core/GlobalSettings.js";
+import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
-import {getFinalImageSize, getWorkingDirectory} from "../../../core/GlobalSettings.js";
 
-const config = {
-    glitchChance: 50,
-    glitchFactor: {lower: 0.5, upper: 0.1}
-}
-
-const generate = () => {
-
-    const data = {
-        glitchChance: config.glitchChance,
-        getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name}`
-        }
-    }
-    return data;
-}
-
-const glitchDrumrollHorizontalWave = async (layer, data) => {
+export const glitchDrumrollHorizontalWave = async (layer, data) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -62,17 +46,3 @@ const glitchDrumrollHorizontalWave = async (layer, data) => {
 
     fs.unlinkSync(filename);
 }
-
-export const effect = {
-    invoke: (layer, data) => glitchDrumrollHorizontalWave(layer, data)
-}
-
-export const glitchDrumrollHorizontalWaveEffect = {
-    name: 'glitch drumroll horizontal wave',
-    generateData: generate,
-    effect: effect,
-    effectChance: 0,
-    requiresLayer: false,
-}
-
-

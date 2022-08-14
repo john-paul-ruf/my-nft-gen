@@ -1,25 +1,10 @@
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
+import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
+import {randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import fs from "fs";
-import {LayerFactory} from "../../../core/factory/LayerFactory.js";
-import {getWorkingDirectory} from "../../../core/GlobalSettings.js";
 
-const config = {
-    theRandom: {lower: 4, upper: 8},
-}
-
-const generate = () => {
-
-    const data = {
-        theRandom: getRandomIntInclusive(config.theRandom.lower, config.theRandom.upper),
-        getInfo: () => {
-            return `${glitchFractalEffect.name} random: ${data.theRandom}`
-        }
-    }
-    return data;
-}
-
-const glitchFractal = async (layer, data) => {
+export const glitchFractal = async (layer, data) => {
 
     const filename = getWorkingDirectory() + 'fractal' + randomId() + '_underlay.png';
 
@@ -46,17 +31,3 @@ const glitchFractal = async (layer, data) => {
 
     fs.unlinkSync(filename);
 }
-
-export const effect = {
-    invoke: (layer, data) => glitchFractal(layer, data)
-}
-
-export const glitchFractalEffect = {
-    name: 'glitch fractal',
-    generateData: generate,
-    effect: effect,
-    effectChance: 0,
-    requiresLayer: false,
-}
-
-

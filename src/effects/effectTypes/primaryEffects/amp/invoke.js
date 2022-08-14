@@ -1,7 +1,7 @@
 import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {randomId} from "../../../../core/math/random.js";
-import {Canvas2dFactory} from "../../../../core/factory/Canvas2dFactory.js";
-import {LayerFactory} from "../../../../core/factory/LayerFactory.js";
+import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import fs from "fs";
 
 const draw = async (stroke, context) => {

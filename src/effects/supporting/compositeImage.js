@@ -1,4 +1,4 @@
-import {LayerFactory} from "../../core/factory/LayerFactory.js";
+import {LayerFactory} from "../../core/factory/layer/LayerFactory.js";
 
 
 //I don't know if this is a good idea...
@@ -18,7 +18,7 @@ export const compositeImage = async (draw, context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
-    if (context.theBlurGaston) {
+    if (context.theBlurGaston === 'number') {
         await underlayLayer.blur(context.theBlurGaston);
     }
 

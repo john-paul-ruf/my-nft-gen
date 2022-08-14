@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {animateBackgroundEffect} from "./animateBackground.js";
+import {animateBackgroundEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 

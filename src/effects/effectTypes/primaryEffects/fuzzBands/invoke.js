@@ -1,7 +1,7 @@
 import {findValue} from "../../../../core/math/findValue.js";
 import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {randomId} from "../../../../core/math/random.js";
-import {Canvas2dFactory} from "../../../../core/factory/Canvas2dFactory.js";
+import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
 

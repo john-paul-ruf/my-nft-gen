@@ -1,6 +1,6 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {viewportEffect} from "./viewport.js";
+import {viewportEffect} from "./effect.js";
 
 
 const config = {
