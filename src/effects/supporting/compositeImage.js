@@ -1,10 +1,19 @@
-import {LayerFactory} from "../../layer/LayerFactory.js";
+import {LayerFactory} from "../../core/factory/LayerFactory.js";
 
 
 //I don't know if this is a good idea...
+//ray ring fix, need to define what this is better
 export const compositeImage = async (draw, context, layer) => {
-    await draw(context.drawing, 0, context);
-    await draw(context.underlayName, context.theAccentGaston, context);
+
+    if (typeof context.theAccentGaston === 'number') {
+        await draw(context.drawing, 0, context);
+        await draw(context.underlayName, context.theAccentGaston, context);
+    }
+
+    if (context.useAccentGaston) {
+        await draw(context.drawing, false, context);
+        await draw(context.underlayName, true, context);
+    }
 
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);

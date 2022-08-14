@@ -1,4 +1,4 @@
-import {findValue} from "../logic/math/findValue.js";
+import {findValue} from "../core/math/findValue.js";
 
 test('findValue: begin and end match', () => {
 

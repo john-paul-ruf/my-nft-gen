@@ -1,4 +1,4 @@
-import {degreesToRadians, findPointByAngleAndCircle} from "../logic/math/drawingMath.js";
+import {degreesToRadians, findPointByAngleAndCircle} from "../core/math/drawingMath.js";
 
 test('findPointByAngleAndCircle: point is correct', () => {
 
@@ -6,7 +6,7 @@ test('findPointByAngleAndCircle: point is correct', () => {
         "x": 81.91520442889917,
         "y": 57.35764363510461
     }
-    
+
     const point = findPointByAngleAndCircle({x: 0, y: 0}, 35, 100)
 
     expect(point.x).toBe(expected.x);
