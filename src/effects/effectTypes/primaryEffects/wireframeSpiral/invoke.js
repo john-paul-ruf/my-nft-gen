@@ -41,7 +41,7 @@ const draw = async (filename, accentBoost, context) => {
     await context.canvas.toFile(filename)
 }
 
-export const wireframeSpiral = async (data, layer, currentFrame, numberOfFrames) => {
+export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames) => {
 
     const context = {
         currentFrame: currentFrame,

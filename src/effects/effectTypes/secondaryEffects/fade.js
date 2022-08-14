@@ -21,20 +21,20 @@ const generate = () => {
     return data;
 }
 
-const fadeAnimated = async (data, layer, currentFrame, totalFrames) => {
+const fadeAnimated = async (layer, data, currentFrame, totalFrames) => {
     const opacity = findValue(data.lower, data.upper, data.times, totalFrames, currentFrame)
     await layer.adjustLayerOpacity(opacity);
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => fadeAnimated(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => fadeAnimated(layer, data, currentFrame, totalFrames)
 }
 
 export const fadeEffect = {
     name: 'fade',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 50,
     requiresLayer: false,
 }
 

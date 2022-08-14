@@ -24,7 +24,7 @@ const generate = () => {
     return data;
 }
 
-const posterize = async (data, layer, currentFrame, totalFrames) => {
+const posterize = async (layer, data, currentFrame, totalFrames) => {
     const filename = getWorkingDirectory() + 'pixelate' + randomId() + '.png';
 
     await layer.toFile(filename);
@@ -42,14 +42,14 @@ const posterize = async (data, layer, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => posterize(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => posterize(layer, data, currentFrame, totalFrames)
 }
 
 export const posterizeEffect = {
     name: 'posterize',
     generateData: generate,
     effect: effect,
-    effectChance: 0, //the new worst effect
+    effectChance: 50, //the new worst effect
     requiresLayer: false,
 }
 

@@ -34,7 +34,7 @@ const draw = async (filename, accentBoost, context) => {
     await context.canvas.toFile(filename);
 }
 
-export const fuzzyRipple = async (data, layer, currentFrame, numberOfFrames) => {
+export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,

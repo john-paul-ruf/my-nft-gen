@@ -23,7 +23,7 @@ function computeY(context, numberOfFrames, currentFrame, i) {
     return y;
 }
 
-export const verticalScanLines = async (data, layer, currentFrame, numberOfFrames) => {
+export const verticalScanLines = async (layer, data, currentFrame, numberOfFrames) => {
 
     const context = {
         currentFrame: currentFrame,

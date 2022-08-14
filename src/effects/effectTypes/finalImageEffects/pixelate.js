@@ -24,7 +24,7 @@ const generate = () => {
     return data;
 }
 
-const pixelate = async (data, layer, currentFrame, totalFrames) => {
+const pixelate = async (layer, data, currentFrame, totalFrames) => {
     const filename = getWorkingDirectory() + 'pixelate' + randomId() + '.png';
 
     await layer.toFile(filename);
@@ -42,14 +42,14 @@ const pixelate = async (data, layer, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => pixelate(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => pixelate(layer, data, currentFrame, totalFrames)
 }
 
 export const pixelateEffect = {
     name: 'pixelate',
     generateData: generate,
     effect: effect,
-    effectChance: 5,
+    effectChance: 50,
     requiresLayer: false,
 }
 

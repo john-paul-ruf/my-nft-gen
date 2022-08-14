@@ -11,7 +11,7 @@ const generate = () => {
     };
 }
 
-const glitchInverse = async (data, layer) => {
+const glitchInverse = async (layer, data) => {
 
     const filename = getWorkingDirectory() + 'glitch-inverse' + randomId() + '.png';
 
@@ -36,14 +36,14 @@ const glitchInverse = async (data, layer) => {
 }
 
 export const effect = {
-    invoke: (data, layer) => glitchInverse(data, layer)
+    invoke: (layer, data) => glitchInverse(layer, data)
 }
 
 export const glitchInverseEffect = {
     name: 'glitch inverse',
     generateData: generate,
     effect: effect,
-    effectChance: 5,
+    effectChance: 50,
     requiresLayer: false,
 }
 

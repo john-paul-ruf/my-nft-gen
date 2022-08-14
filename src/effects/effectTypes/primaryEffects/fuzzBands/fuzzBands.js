@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {fuzzBands} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => fuzzBands(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => fuzzBands(layer, data, currentFrame, totalFrames)
 }
 
 export const fuzzBandsEffect = {

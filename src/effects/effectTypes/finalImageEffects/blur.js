@@ -21,7 +21,7 @@ const generate = () => {
     return data;
 }
 
-const blur = async (data, layer, currentFrame, totalFrames) => {
+const blur = async (layer, data, currentFrame, totalFrames) => {
     const blurGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
     if (blurGaston > 0) {
         await layer.blur(blurGaston);
@@ -29,14 +29,14 @@ const blur = async (data, layer, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => blur(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => blur(layer, data, currentFrame, totalFrames)
 }
 
 export const blurEffect = {
     name: 'blur',
     generateData: generate,
     effect: effect,
-    effectChance: 5,
+    effectChance: 50,
     requiresLayer: false,
 }
 

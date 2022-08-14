@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {verticalScanLines} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => verticalScanLines(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => verticalScanLines(layer, data, currentFrame, totalFrames)
 }
 
 export const verticalScanLinesEffect = {

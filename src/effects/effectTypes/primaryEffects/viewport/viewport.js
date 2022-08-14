@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {viewport} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => viewport(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => viewport(layer, data, currentFrame, totalFrames)
 }
 
 export const viewportEffect = {

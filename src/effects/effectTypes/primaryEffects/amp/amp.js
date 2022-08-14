@@ -2,7 +2,7 @@ import {amp} from "./invoke.js";
 import {generate} from "./generate.js";
 
 export const effect = {
-    invoke: (data, layer) => amp(data, layer)
+    invoke: (layer, data) => amp(layer, data)
 }
 
 export const ampEffect = {

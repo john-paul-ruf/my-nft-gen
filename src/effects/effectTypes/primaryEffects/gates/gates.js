@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {gates} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => gates(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => gates(layer, data, currentFrame, totalFrames)
 }
 
 export const gatesEffect = {

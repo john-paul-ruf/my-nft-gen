@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {rayRing} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => rayRing(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => rayRing(layer, data, currentFrame, totalFrames)
 }
 
 export const rayRingEffect = {

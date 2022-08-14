@@ -2,7 +2,7 @@ import {scopes} from "./invoke.js";
 import {generate} from "./generate.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => scopes(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => scopes(layer, data, currentFrame, totalFrames)
 }
 
 export const scopesEffect = {

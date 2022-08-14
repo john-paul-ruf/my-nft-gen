@@ -11,7 +11,7 @@ const draw = async (stroke, context) => {
     await context.canvas.toFile(context.drawing);
 }
 
-export const amp = async (data, layer) => {
+export const amp = async (layer, data) => {
     const context = {
         drawing: getWorkingDirectory() + 'amp' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',

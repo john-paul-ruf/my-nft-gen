@@ -2,7 +2,7 @@ import {animateBackground} from "./invoke.js";
 import {generate} from "./generate.js";
 
 export const effect = {
-    invoke: (data, layer) => animateBackground(data, layer)
+    invoke: (layer, data) => animateBackground(layer, data)
 }
 
 export const animateBackgroundEffect = {

@@ -32,7 +32,7 @@ const draw = async (filename, context) => {
     await context.canvas.toFile(filename);
 }
 
-export const scopes = async (data, layer, currentFrame, numberOfFrames) => {
+export const scopes = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,

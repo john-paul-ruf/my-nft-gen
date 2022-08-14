@@ -11,7 +11,7 @@ const generate = () => {
     };
 }
 
-const sepia = async (data, layer) => {
+const sepia = async (layer) => {
     const filename = getWorkingDirectory() + 'sepia' + randomId() + '.png';
 
     await layer.toFile(filename);
@@ -28,14 +28,14 @@ const sepia = async (data, layer) => {
 }
 
 export const effect = {
-    invoke: (data, layer) => sepia(data, layer)
+    invoke: (layer) => sepia(layer)
 }
 
 export const sepiaEffect = {
     name: 'sepia',
     generateData: generate,
     effect: effect,
-    effectChance: 0, //not a fan
+    effectChance: 50, //not a fan
     requiresLayer: false,
 }
 

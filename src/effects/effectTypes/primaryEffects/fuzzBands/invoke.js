@@ -16,7 +16,7 @@ const draw = async (filename, withAccentGaston, context) => {
     await context.canvas.toFile(filename);
 }
 
-export const fuzzBands = async (data, layer, currentFrame, numberOfFrames) => {
+export const fuzzBands = async (layer, data, currentFrame, numberOfFrames) => {
 
     const context = {
         currentFrame: currentFrame,

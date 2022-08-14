@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {wireframeSpiral} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => wireframeSpiral(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => wireframeSpiral(layer, data, currentFrame, totalFrames)
 }
 
 export const wireframeSpiralEffect = {

@@ -2,7 +2,7 @@ import {fuzzyRipple} from "./invoke.js";
 import {generate} from "./generate.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => fuzzyRipple(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => fuzzyRipple(layer, data, currentFrame, totalFrames)
 }
 
 export const fuzzyRippleEffect = {

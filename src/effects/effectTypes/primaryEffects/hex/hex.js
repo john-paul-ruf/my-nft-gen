@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {hex} from "./invoke.js";
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => hex(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => hex(layer, data, currentFrame, totalFrames)
 }
 
 export const hexEffect = {

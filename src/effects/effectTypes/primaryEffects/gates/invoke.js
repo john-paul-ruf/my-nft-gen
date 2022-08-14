@@ -19,7 +19,7 @@ const draw = async (filename, withAccentGaston, context) => {
     await context.canvas.toFile(filename);
 }
 
-export const gates = async (data, layer, currentFrame, numberOfFrames) => {
+export const gates = async (layer, data, currentFrame, numberOfFrames) => {
 
     const context = {
         currentFrame: currentFrame,

@@ -23,7 +23,7 @@ const generate = () => {
     return data;
 }
 
-const glowAnimated = async (data, layer, currentFrame, totalFrames) => {
+const glowAnimated = async (layer, data, currentFrame, totalFrames) => {
     const filename = getWorkingDirectory() + 'glow' + randomId() + '.png';
 
     await layer.toFile(filename);
@@ -41,14 +41,14 @@ const glowAnimated = async (data, layer, currentFrame, totalFrames) => {
 }
 
 export const effect = {
-    invoke: (data, layer, currentFrame, totalFrames) => glowAnimated(data, layer, currentFrame, totalFrames)
+    invoke: (layer, data, currentFrame, totalFrames) => glowAnimated(layer, data, currentFrame, totalFrames)
 }
 
 export const glowEffect = {
     name: 'glow',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 50,
     requiresLayer: false,
 }
 

@@ -19,7 +19,7 @@ const generate = () => {
     return data;
 }
 
-const glitchDrumrollHorizontalWave = async (data, layer) => {
+const glitchDrumrollHorizontalWave = async (layer, data) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -64,14 +64,14 @@ const glitchDrumrollHorizontalWave = async (data, layer) => {
 }
 
 export const effect = {
-    invoke: (data, layer) => glitchDrumrollHorizontalWave(data, layer)
+    invoke: (layer, data) => glitchDrumrollHorizontalWave(layer, data)
 }
 
 export const glitchDrumrollHorizontalWaveEffect = {
     name: 'glitch drumroll horizontal wave',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 50,
     requiresLayer: false,
 }
 

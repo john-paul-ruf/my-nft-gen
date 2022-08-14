@@ -3,7 +3,7 @@ import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 
-export const animateBackground = async (data, layer) => {
+export const animateBackground = async (layer, data) => {
     const filename = getWorkingDirectory() + 'static' + randomId() + '.png';
 
     const jimpImage = new Jimp(data.width, data.height);

@@ -47,7 +47,7 @@ const generate = () => {
     return data;
 };
 
-const randomize = async (data, layer) => {
+const randomize = async (layer, data) => {
     const filename = getWorkingDirectory() + 'randomize' + randomId() + '.png';
 
     await layer.toFile(filename);
@@ -64,14 +64,14 @@ const randomize = async (data, layer) => {
 }
 
 export const effect = {
-    invoke: (data, layer) => randomize(data, layer)
+    invoke: (layer, data) => randomize(layer, data)
 }
 
 export const randomizeEffect = {
     name: 'randomize',
     generateData: generate,
     effect: effect,
-    effectChance: 0, //checking the color scheme work
+    effectChance: 50, //checking the color scheme work
     requiresLayer: false,
 }
 

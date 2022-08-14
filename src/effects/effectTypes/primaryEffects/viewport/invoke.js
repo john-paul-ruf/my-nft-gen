@@ -15,7 +15,7 @@ const draw = async (imgName, accentBoost, context) => {
     await context.canvas.toFile(imgName);
 }
 
-export const viewport = async (data, layer, currentFrame, numberOfFrames) => {
+export const viewport = async (layer, data, currentFrame, numberOfFrames) => {
 
     const context = {
         currentFrame: currentFrame,
