@@ -12,12 +12,12 @@ const config = {
     largeNumberOfRings: {lower: 15, upper: 20},
     smallNumberOfRings: {lower: 10, upper: 15},
     ripple: {lower: finalImageSize.height / 25, upper: finalImageSize.height / 35},
-    times: {lower: 3, upper: 6},
+    times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.height * 0.25, upper: finalImageSize.height * 0.35},
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 3, upper: 6},
-    blurTimes: {lower: 3, upper: 6},
+    accentTimes: {lower: 2, upper: 4},
+    blurTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {

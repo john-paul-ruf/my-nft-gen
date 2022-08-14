@@ -4,11 +4,13 @@ import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
     stroke: 0.5,
-    sparsityFactor: {lower: 1, upper: 3},
+    sparsityFactor: {lower: 2, upper: 6},
     speed: {lower: 2, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 1, upper: 5},
+    unitLength: {lower: 5, upper: 10},
     radiusConstant: 75,
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    accentTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {
@@ -26,6 +28,11 @@ export const generate = () => {
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         radiusConstant: config.radiusConstant,
+        accentRange: {
+            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
+        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         getInfo: () => {
             return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
         }

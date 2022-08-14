@@ -11,8 +11,8 @@ const config = {
     scaleFactor: 1.02,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 3, upper: 6},
-    blurTimes: {lower: 3, upper: 6},
+    accentTimes: {lower: 2, upper: 4},
+    blurTimes: {lower: 2, upper: 4},
 }
 
 const computeInitialInfo = (num, width) => {

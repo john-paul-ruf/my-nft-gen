@@ -4,17 +4,18 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    stroke: 2,
-    thickness: 5,
-    ampStroke: 1,
+    stroke: 0.5,
+    thickness: 1,
+    ampStroke: 0.5,
     ampThickness: 1,
     radius: {lower: 150, upper: 300},
     ampLength: {lower: 75, upper: 150},
     ampRadius: {lower: 50, upper: 150},
     sparsityFactor: {lower: 2, upper: 5},
     amplitude: {lower: 20, upper: 50},
-    times: {lower: 3, upper: 6},
+    times: {lower: 2, upper: 4},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+    blurTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {
@@ -42,6 +43,7 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
+        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`

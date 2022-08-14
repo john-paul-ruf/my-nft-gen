@@ -9,7 +9,7 @@ export const animateBackgroundEffect = {
     name: 'static background',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 75,
     requiresLayer: true,
 }
 
