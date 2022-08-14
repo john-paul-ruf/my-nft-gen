@@ -35,7 +35,7 @@ export const sepiaEffect = {
     name: 'sepia',
     generateData: generate,
     effect: effect,
-    effectChance: 50, //not a fan
+    effectChance: 0, //not a fan
     requiresLayer: false,
 }
 
