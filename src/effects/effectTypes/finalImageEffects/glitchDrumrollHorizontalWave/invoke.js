@@ -3,7 +3,7 @@ import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 
-export const glitchDrumrollHorizontalWave = async (layer, data) => {
+export const glitchDrumrollHorizontalWave = async (layer) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -26,11 +26,14 @@ export const glitchDrumrollHorizontalWave = async (layer, data) => {
 
             const theGlitch = getRandomIntInclusive(0, 100);
             if (theGlitch < data.glitchChance) {
-                const roll = Math.floor(Math.cos(x) * (finalImageSize.height * getRandomIntInclusive(config.glitchFactor.lower, config.glitchFactor.upper)))
+                const roll = Math.floor(Math.cos(x) * (finalImageSize.height * getRandomIntInclusive(data.glitchFactor.lower, data.glitchFactor.upper)))
                 x2 = x + roll;
             }
 
-            if (x2 > finalImageSize.height - 1) x2 -= finalImageSize.height;
+            if (x2 > finalImageSize.height - 1) {
+                // noinspection JSSuspiciousNameCombination
+                x2 -= finalImageSize.height;
+            }
             let idx2 = (x2 + y * finalImageSize.width) * 4;
 
             for (let c = 0; c < 4; c++) {

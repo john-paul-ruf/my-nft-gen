@@ -6,12 +6,11 @@ const config = {
 }
 
 export const generate = () => {
-
-    const data = {
+    return {
         glitchChance: config.glitchChance,
+        glitchFactor: config.glitchFactor,
         getInfo: () => {
             return `${glitchDrumrollHorizontalWaveEffect.name}`
         }
     }
-    return data;
 }

@@ -1,4 +1,3 @@
-import sharp from "sharp";
 import {getLayerStrategy} from "../../GlobalSettings.js";
 import {JimpLayerStrategy} from "./strategy/JimpLayerStrategy.js";
 import {SharpLayerStrategy} from "./strategy/SharpLayerStrategy.js";
