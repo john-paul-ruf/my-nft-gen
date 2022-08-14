@@ -5,8 +5,9 @@ import {randomId} from "./math/random.js";
 export class animationConfiguration {
     constructor() {
 
+        //todo: make this so we don't have to change it every time we refactor folder structure
         const fileURLToPath1 = fileURLToPath(import.meta.url);
-        const directory = dirname(fileURLToPath1).replace('/logic/core', '');
+        const directory = dirname(fileURLToPath1).replace('/core', '');
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
