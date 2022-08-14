@@ -4,7 +4,7 @@ import {pixelateEffect} from "./effect.js";
 const config = {
     lowerRange: {lower: 0, upper: 0},
     upperRange: {lower: 1, upper: 2},
-    times: {lower: 5, upper: 10},
+    times: {lower: 2, upper: 4},
 }
 
 export const generate = () => {

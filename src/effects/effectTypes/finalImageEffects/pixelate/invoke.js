@@ -12,7 +12,10 @@ export const pixelate = async (layer, data, currentFrame, totalFrames) => {
     const jimpImage = await Jimp.read(filename);
 
     const pixelateGaston = Math.floor(findValue(data.lower, data.upper, data.times, totalFrames, currentFrame));
-    await jimpImage.pixelate(pixelateGaston);
+
+    if (pixelateGaston > 0) {
+        await jimpImage.pixelate(pixelateGaston);
+    }
 
     await jimpImage.writeAsync(filename);
 

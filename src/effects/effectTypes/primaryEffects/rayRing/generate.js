@@ -13,10 +13,10 @@ const config = {
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    accentTimes: {lower: 3, upper: 6},
-    blurTimes: {lower: 3, upper: 6},
-    lengthRange: {bottom: {lower: 0, upper: 0}, top: {lower: 30, upper: 120}},
-    lengthTimes: {lower: 3, upper: 12},
+    accentTimes: {lower: 2, upper: 4},
+    blurTimes: {lower: 2, upper: 4},
+    lengthRange: {bottom: {lower: 0, upper: 0}, top: {lower: 15, upper: 60}},
+    lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 5, upper: 15},
 }
 

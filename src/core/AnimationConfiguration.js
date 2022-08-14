@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'idk'
+        this.runName = 'the-refactor-run'
 
         //final color depth of image
         //Only used when frames are output to gif

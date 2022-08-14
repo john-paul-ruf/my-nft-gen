@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
     sparsityFactor: {lower: 0.5, upper: 1.5},
     gapFactor: {lower: 0.5, upper: 1.5},
-    radiusFactor: {lower: 0.5, upper: 1.5},
+    radiusFactor: {lower: 1, upper: 3},
     scaleFactor: 1.5,
     alphaRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
     numberOfScopesInALine: 150,
