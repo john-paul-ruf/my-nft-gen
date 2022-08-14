@@ -31,4 +31,5 @@ export const viewport = async (layer, data, currentFrame, numberOfFrames) => {
     await compositeImage(draw, context, layer);
 
     fs.unlinkSync(context.drawing);
+    fs.unlinkSync(context.underlayName);
 }
