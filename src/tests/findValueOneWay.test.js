@@ -1,4 +1,4 @@
-import {findOneWayValue} from "../logic/math/findOneWayValue.js";
+import {findOneWayValue} from "../core/math/findOneWayValue.js";
 
 test('findOneWayValue: begin and end match', () => {
 
