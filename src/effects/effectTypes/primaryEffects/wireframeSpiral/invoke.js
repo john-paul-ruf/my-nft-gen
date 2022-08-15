@@ -8,11 +8,11 @@ import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
 import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 
-const drawRay = async (stroke, angle, loopControl, context) => {
-    angle = angle + (((context.data.sparsityFactor * context.data.speed) / context.numberOfFrames) * context.currentFrame) * context.direction;
+const drawRay = async (stroke, angle, loopControl, context, flipTwist) => {
+    angle = angle + (((context.data.sparsityFactor * context.data.speed) / context.numberOfFrames) * context.currentFrame) * context.data.direction;
 
     const start = findPointByAngleAndCircle(context.data.center, angle, loopControl.n2 + context.data.radiusConstant)
-    const end = findPointByAngleAndCircle(context.data.center, angle + (loopControl.twistCount * context.data.sparsityFactor), loopControl.nextTerm + context.data.radiusConstant);
+    const end = findPointByAngleAndCircle(context.data.center, angle + (loopControl.twistCount * flipTwist * context.data.sparsityFactor), loopControl.nextTerm + context.data.radiusConstant);
 
     await context.canvas.drawGradientLine2d(start, end, stroke, context.data.color1, context.data.color2);
 }
@@ -28,8 +28,8 @@ const draw = async (context, filename) => {
     while (loopControl.nextTerm <= context.data.width) {
 
         for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
-            await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context)
-            await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context)
+            await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context, 1)
+            await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context, -1)
         }
 
         //assignment for next loop
