@@ -6,6 +6,7 @@ import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
+import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 
 const finalImageSize = getFinalImageSize();
 
@@ -25,8 +26,8 @@ const drawHexLine = async (angle, index, context) => {
     await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
 }
 
-const draw = async (filename, accentBoost, context) => {
-    context.accentBoost = accentBoost;
+const draw = async (context, filename) => {
+    context.accentBoost = context.theAccentGaston;
     for (let i = 0; i < 20; i++) {
         for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
             await drawHexLine(a, i, context)
@@ -48,7 +49,8 @@ export const hex = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await processDrawFunction(draw, context);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
     fs.unlinkSync(context.underlayName);

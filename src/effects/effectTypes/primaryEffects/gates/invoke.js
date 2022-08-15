@@ -5,14 +5,15 @@ import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import fs from "fs";
 import {compositeImage} from "../../../supporting/compositeImage.js";
+import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 
-const draw = async (filename, withAccentGaston, context) => {
+const draw = async (context, filename) => {
     for (let i = 0; i < context.data.numberOfGates; i++) {
         const loopCount = i + 1;
         const direction = loopCount % 2;
         const invert = direction <= 0;
         const theAngleGaston = findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert);
-        const theAccentGaston = withAccentGaston ? findValue(context.data.gates[i].accentRange.lower, context.data.gates[i].accentRange.upper, context.data.gates[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+        const theAccentGaston = context.useAccentGaston ? findValue(context.data.gates[i].accentRange.lower, context.data.gates[i].accentRange.upper, context.data.gates[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
         await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.innerColor, context.data.stroke + theAccentGaston, context.data.gates[i].color)
     }
 
@@ -32,7 +33,8 @@ export const gates = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await processDrawFunction(draw, context);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.underlayName);
     fs.unlinkSync(context.drawing);

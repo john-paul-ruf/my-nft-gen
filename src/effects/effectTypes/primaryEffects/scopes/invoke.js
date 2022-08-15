@@ -25,7 +25,7 @@ const drawHexLine = async (angle, index, color, alphaRange, context) => {
     await context.canvas.drawFilledPolygon2d(radius, pos, 6, theRotateGaston, color, theAlphaGaston)
 }
 
-const draw = async (filename, context) => {
+const draw = async (context, filename) => {
     for (let s = 0; s < context.data.scopes.length; s++) {
         await drawHexLine(context.data.scopes[s].angle, context.data.scopes[s].loopCount, context.data.scopes[s].color, context.data.scopes[s].alphaRange, context)
     }
@@ -41,7 +41,7 @@ export const scopes = async (layer, data, currentFrame, numberOfFrames) => {
         data: data
     }
 
-    await draw(context.drawing, context);
+    await draw(context, context.drawing);
 
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     await layer.compositeLayerOver(tempLayer)

@@ -38,5 +38,7 @@ export const generate = () => {
         }
     }
 
+    data.direction = data.counterClockwise ? -1 : 1;
+
     return data;
 }
