@@ -47,7 +47,7 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        theAccentGaston: findValue(0, 20, 1, numberOfFrames, currentFrame),
+        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
