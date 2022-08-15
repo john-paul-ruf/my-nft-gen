@@ -4,13 +4,13 @@ import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
-import {drawUsingAccent} from "../../../supporting/drawUsingAccent.js";
+import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 
-const draw = async (filename, withAccentGaston, context) => {
+const draw = async (context, filename) => {
     for (let i = 0; i < context.data.numberOfCircles; i++) {
         const loopCount = i + 1;
         const scaleBy = (context.data.scaleFactor * loopCount);
-        const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+        const theAccentGaston = context.useAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
         await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + theAccentGaston) * scaleBy, context.data.circles[i].color)
     }
 
@@ -30,7 +30,7 @@ export const fuzzBands = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await drawUsingAccent(context, draw);
+    await processDrawFunction(draw, context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);

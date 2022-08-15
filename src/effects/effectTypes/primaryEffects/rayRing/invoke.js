@@ -4,7 +4,7 @@ import fs from "fs";
 import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
-import {drawUsingAccent} from "../../../supporting/drawUsingAccent.js";
+import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
@@ -19,9 +19,9 @@ async function drawRayRingInstance(withAccentGaston, i, context) {
     }
 }
 
-const draw = async (filename, withAccentGaston, context) => {
+const draw = async (context, filename) => {
     for (let i = 0; i < context.data.numberOfCircles; i++) {
-        await drawRayRingInstance(withAccentGaston, i, context);
+        await drawRayRingInstance(context.useAccentGaston, i, context);
     }
     await context.canvas.toFile(filename);
 }
@@ -38,7 +38,7 @@ export const rayRing = async (layer, data, currentFrame, numberOfFrames) => {
         data: data
     }
 
-    await drawUsingAccent(context, draw);
+    await processDrawFunction(draw, context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
