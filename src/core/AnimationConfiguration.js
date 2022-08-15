@@ -13,10 +13,6 @@ export class animationConfiguration {
         this._INVOKER_ = 'John Ruf';
         this.runName = 'the-refactor-run'
 
-        //final color depth of image
-        //Only used when frames are output to gif
-        this.colorDepth = 256;
-
         //For testing, render every x frame.
         this.frameInc = 1;
 

@@ -3,10 +3,25 @@ export class Canvas2d {
         this.strategy = strategy
     }
 
+    /***
+     *
+     * replaces current canvas with new canvas
+     *
+     * @param width
+     * @param height
+     * @returns {Promise<void>}
+     */
     async newCanvas(width, height) {
         await this.strategy.newCanvas(width, height);
     }
 
+    /***
+     *
+     * replaces current canvas with image from file
+     *
+     * @param filename
+     * @returns {Promise<void>}
+     */
     async toFile(filename) {
         await this.strategy.toFile(filename);
     }

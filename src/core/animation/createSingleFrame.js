@@ -14,15 +14,24 @@ const getLayers = async (w, h, context) => {
 ////////////////////////////
 const processFrame = async (frameNumber, context) => {
     return new Promise(async (resolve) => {
-        //Queue up the main layer effect to process together
-        const mainLayeredEffects = [];
+
+        const mainLayeredEffects = []; //will be an array of promises
 
         for (let i = 0; i < context.layers.length; i++) {
+            /////////////////////////////////////////////////////////////////////
+            // invokes one effect, which returns a promise
+            // In this promise
+            //      main effect occurs
+            //      main effect then awaits attached secondary effects in order
+            // effect promise is added to array
+            /////////////////////////////////////////////////////////////////////
             mainLayeredEffects.push(context.effects[i].invokeEffect(context.layers[i], frameNumber, context.numberOfFrame));
         }
 
+        //when all effect promises complete
         Promise.all(mainLayeredEffects).then(() => {
-            resolve(); //All done! We have processed one frame
+            //resolve process frame promise
+            resolve(); //we have completed a single frame
         });
     });
 }
