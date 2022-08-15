@@ -14,7 +14,9 @@ const config = {
     sparsityFactor: {lower: 2, upper: 5},
     amplitude: {lower: 20, upper: 50},
     times: {lower: 2, upper: 4},
-    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+    accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
 }
 
@@ -39,6 +41,11 @@ export const generate = () => {
         color: getColorFromBucket(),
         ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),
+        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        accentRange: {
+            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
