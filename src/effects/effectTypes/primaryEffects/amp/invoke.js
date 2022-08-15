@@ -16,7 +16,7 @@ const draw = async (context, filenname) => {
 export const amp = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         drawing: getWorkingDirectory() + 'amp' + randomId() + '.png',
-        underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
+        underlayName: getWorkingDirectory() + 'amp-underlay' + randomId() + '.png',
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
         data: data,
@@ -26,4 +26,5 @@ export const amp = async (layer, data, currentFrame, numberOfFrames) => {
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
+    fs.unlinkSync(context.underlayName);
 }

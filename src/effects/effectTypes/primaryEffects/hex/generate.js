@@ -6,13 +6,13 @@ const config = {
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 2, upper: 5},
     radiusFactor: {lower: 8, upper: 15},
-    accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     stroke: 0.25,
     thickness: 0.5,
-    scaleFactor: 1.005,
+    scaleFactor: 1.001,
 }
 
 const finalImageSize = getFinalImageSize();
