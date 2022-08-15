@@ -4,6 +4,7 @@ import fs from "fs";
 import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
+import {drawUsingAccent} from "../../../supporting/drawUsingAccent.js";
 
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
@@ -37,7 +38,8 @@ export const rayRing = async (layer, data, currentFrame, numberOfFrames) => {
         data: data
     }
 
-    await compositeImage(draw, context, layer);
+    await drawUsingAccent(context, draw);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
     fs.unlinkSync(context.underlayName);

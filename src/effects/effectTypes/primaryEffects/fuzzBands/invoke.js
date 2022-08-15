@@ -4,6 +4,7 @@ import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
+import {drawUsingAccent} from "../../../supporting/drawUsingAccent.js";
 
 const draw = async (filename, withAccentGaston, context) => {
     for (let i = 0; i < context.data.numberOfCircles; i++) {
@@ -29,7 +30,8 @@ export const fuzzBands = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await drawUsingAccent(context, draw);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
     fs.unlinkSync(context.underlayName);

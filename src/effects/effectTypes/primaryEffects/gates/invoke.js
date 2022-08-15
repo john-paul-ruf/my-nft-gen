@@ -5,6 +5,7 @@ import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import fs from "fs";
 import {compositeImage} from "../../../supporting/compositeImage.js";
+import {drawUsingAccent} from "../../../supporting/drawUsingAccent.js";
 
 const draw = async (filename, withAccentGaston, context) => {
     for (let i = 0; i < context.data.numberOfGates; i++) {
@@ -32,7 +33,8 @@ export const gates = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await drawUsingAccent(context, draw);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.underlayName);
     fs.unlinkSync(context.drawing);

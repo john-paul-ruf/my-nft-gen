@@ -4,6 +4,7 @@ import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
+import {drawWithAccent} from "../../../supporting/drawWithAccent.js";
 
 const draw = async (imgName, accentBoost, context) => {
     const theAmpGaston = findValue(context.data.ampRadius, context.data.ampRadius + context.data.ampLength + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -28,7 +29,8 @@ export const viewport = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await drawWithAccent(context, draw);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
     fs.unlinkSync(context.underlayName);

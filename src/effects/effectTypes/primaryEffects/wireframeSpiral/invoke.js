@@ -6,6 +6,7 @@ import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
+import {drawWithAccent} from "../../../supporting/drawWithAccent.js";
 
 const drawRay = async (stroke, angle, loopControl, context) => {
     angle = angle + (((context.data.sparsityFactor * context.data.speed) / context.numberOfFrames) * context.currentFrame) * context.direction;
@@ -53,7 +54,8 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await drawWithAccent(context, draw);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.underlayName);
     fs.unlinkSync(context.drawing);

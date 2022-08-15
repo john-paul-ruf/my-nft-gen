@@ -5,6 +5,7 @@ import fs from "fs";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
+import {drawWithAccent} from "../../../supporting/drawWithAccent.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -46,7 +47,8 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         data: data,
     }
 
-    await compositeImage(draw, context, layer);
+    await drawWithAccent(context, draw);
+    await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
     fs.unlinkSync(context.underlayName);
