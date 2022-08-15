@@ -9,7 +9,7 @@ export const ampEffect = {
     name: 'amp',
     generateData: generate,
     effect: effect,
-    effectChance: 75,
+    effectChance: 55,
     requiresLayer: true,
 }
 
