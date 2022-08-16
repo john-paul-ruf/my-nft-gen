@@ -10,8 +10,8 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    stroke: 0.25,
-    thickness: 0.5,
+    stroke: 0.05,
+    thickness: 0.25,
     scaleFactor: 1.001,
 }
 
