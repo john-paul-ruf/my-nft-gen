@@ -28,7 +28,7 @@ export class SharpLayerStrategy {
     }
 
     async toFile(filename) {
-        const buffer = await this.internalRepresentation.png().toBuffer({resolveWithObject: true})
+        const buffer = await this.internalRepresentation.png({palette: true}).toBuffer({resolveWithObject: true})
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
