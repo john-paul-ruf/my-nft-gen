@@ -8,9 +8,9 @@ const config = {
     circles: {lower: 10, upper: 20},
     stroke: 0.5,
     thickness: 0.25,
-    scaleFactor: 1.02,
-    accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    scaleFactor: 1.001,
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
 }

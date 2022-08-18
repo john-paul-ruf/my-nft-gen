@@ -5,17 +5,17 @@ import {rayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    circles: {lower: 20, upper: 30},
-    radiusGap: 40,
+    circles: {lower: 10, upper: 15},
+    radiusGap: 100,
     stroke: 1,
     thickness: 1,
-    scaleFactor: 1.01,
+    scaleFactor: 1.001,
     densityFactor: 0.90,
-    accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    lengthRange: {bottom: {lower: 0, upper: 0}, top: {lower: 15, upper: 60}},
+    lengthRange: {bottom: {lower: 0, upper: 30}, top: {lower: 50, upper: 160}},
     lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 5, upper: 15},
 }

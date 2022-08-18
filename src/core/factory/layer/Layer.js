@@ -1,8 +1,3 @@
-import {getWorkingDirectory} from "../../GlobalSettings.js";
-import {randomId} from "../../math/random.js";
-import Jimp from "jimp";
-import fs from "fs";
-
 export class Layer {
     constructor(strategy) {
         this.strategy = strategy
@@ -50,6 +45,7 @@ export class Layer {
      * @param layer
      * @returns {Promise<void>}
      */
+
     async compositeLayerOver(layer) {
         await this.strategy.compositeLayerOver(layer)
     }
@@ -73,17 +69,7 @@ export class Layer {
      * @returns {Promise<void>}
      */
     async adjustLayerOpacity(opacity) {
-        const fileName = getWorkingDirectory() + 'opacity' + randomId() + '.png'
-        await this.toFile(fileName)
-
-        const opacityJimpImage = await Jimp.read(fileName);
-        await opacityJimpImage.opacity(opacity);
-
-        await opacityJimpImage.writeAsync(fileName);
-
-        await this.fromFile(fileName);
-
-        fs.unlinkSync(fileName)
+        await this.strategy.adjustLayerOpacity(opacity)
     }
 
     /***

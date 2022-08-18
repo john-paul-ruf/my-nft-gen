@@ -28,7 +28,7 @@ export class SharpLayerStrategy {
     }
 
     async toFile(filename) {
-        const buffer = await this.internalRepresentation.png().toBuffer({resolveWithObject: true})
+        const buffer = await this.internalRepresentation.png({palette: true}).toBuffer({resolveWithObject: true})
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
@@ -37,19 +37,30 @@ export class SharpLayerStrategy {
         const finalImageSize = getFinalImageSize();
 
         const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
+        const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
+        const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
 
         await layer.resize(finalImageSize.height, finalImageSize.width);
-
         await layer.toFile(overlayFile)
 
-        const fileBuffer = fs.readFileSync(overlayFile);
+        await this.toFile(targetFile);
 
-        await this.internalRepresentation.composite([{input: fileBuffer}]);
+        const buffer = await sharp(targetFile).composite([{
+            input: overlayFile,
+            blend: 'over'
+        }]).png({palette: true}).toBuffer({resolveWithObject: true});
 
-        await this.toFile(overlayFile);
-        await this.fromFile(overlayFile);
+        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+
+        await this.fromFile(compositeFile);
 
         fs.unlinkSync(overlayFile);
+        fs.unlinkSync(targetFile);
+        fs.unlinkSync(compositeFile);
+    }
+
+    async adjustLayerOpacity(opacity) {
+        this.internalRepresentation.ensureAlpha(opacity);
     }
 
     async blur(byPixels) {
@@ -59,16 +70,10 @@ export class SharpLayerStrategy {
     }
 
     async rotate(angle) {
-        const overlayFile = getWorkingDirectory() + 'rotate' + randomId() + '.png';
         await this.internalRepresentation.rotate(angle);
-        await this.toFile(overlayFile);
-        this.internalRepresentation = null;
-        await this.fromFile(overlayFile);
-        fs.unlinkSync(overlayFile);
     }
 
     async resize(height, width) {
-
         const imageMetaData = await this.internalRepresentation.metadata();
 
         const top = Math.ceil((imageMetaData.height - height) / 2);

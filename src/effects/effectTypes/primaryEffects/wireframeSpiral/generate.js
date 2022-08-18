@@ -7,9 +7,9 @@ const config = {
     sparsityFactor: {lower: 2, upper: 6},
     speed: {lower: 2, upper: 5},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 5, upper: 10},
+    unitLength: {lower: 50, upper: 100},
     radiusConstant: 75,
-    accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     accentTimes: {lower: 2, upper: 4},
 }
 

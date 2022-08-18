@@ -26,6 +26,6 @@ export const composeInfo = (config, effects, finalImageEffects) => {
     const finalImageSize = getFinalImageSize();
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n\nRun: ${config.runName}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\nImage Size: ${finalImageSize.width}x${finalImageSize.height} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
+    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\nRun: ${config.runName}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\nImage Size: ${finalImageSize.width}x${finalImageSize.height} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
 
 }

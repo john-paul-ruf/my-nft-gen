@@ -45,7 +45,7 @@ export const generate = () => {
 
     const data = {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
-        height: finalImageSize.height + (config.maxlength.upper * 2),
+        height: finalImageSize.height + (config.maxlength.upper),
         width: finalImageSize.width,
         color: config.color,
         getInfo: () => {

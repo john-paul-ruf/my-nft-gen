@@ -1,7 +1,7 @@
 import Jimp from "jimp";
+import fs from "fs";
 import {getWorkingDirectory} from "../../../GlobalSettings.js";
 import {randomId} from "../../../math/random.js";
-import fs from "fs";
 
 export class JimpLayerStrategy {
     constructor() {
@@ -29,11 +29,15 @@ export class JimpLayerStrategy {
         const top = Math.ceil((overlay.bitmap.height - this.internalRepresentation.bitmap.height) / 2);
         const left = Math.ceil((overlay.bitmap.width - this.internalRepresentation.bitmap.width) / 2);
 
-        this.internalRepresentation.composite(overlay, top, left, {
+        this.internalRepresentation.composite(overlay, -left, -top, {
             mode: Jimp.BLEND_SOURCE_OVER,
         });
 
         fs.unlinkSync(overlayFile);
+    }
+
+    async adjustLayerOpacity(opacity) {
+        await this.internalRepresentation.opacity(opacity);
     }
 
     async blur(byPixels) {
