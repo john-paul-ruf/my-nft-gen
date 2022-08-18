@@ -24,11 +24,11 @@ export class SharpLayerStrategy {
 
     async fromFile(filename) {
         this.fileBuffer = fs.readFileSync(filename);
-        this.internalRepresentation = sharp(this.fileBuffer).ensureAlpha();
+        this.internalRepresentation = sharp(this.fileBuffer);
     }
 
     async toFile(filename) {
-        const buffer = await this.internalRepresentation.ensureAlpha().png().toBuffer({resolveWithObject: true})
+        const buffer = await this.internalRepresentation.png().toBuffer({resolveWithObject: true})
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
@@ -39,13 +39,11 @@ export class SharpLayerStrategy {
         const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
 
         await layer.resize(finalImageSize.height, finalImageSize.width);
-
         await layer.toFile(overlayFile)
 
-        const fileBuffer = fs.readFileSync(overlayFile);
-
         await this.internalRepresentation.composite([{
-            input: fileBuffer
+            input: overlayFile,
+            blend: 'add'
         }]).ensureAlpha();
 
         await this.toFile(overlayFile);
@@ -56,13 +54,6 @@ export class SharpLayerStrategy {
 
     async adjustLayerOpacity(opacity) {
         this.internalRepresentation.ensureAlpha(opacity);
-
-        const fileName = getWorkingDirectory() + 'opacity' + randomId() + '.png'
-
-        await this.toFile(fileName)
-        await this.fromFile(fileName)
-
-        fs.unlinkSync(fileName)
     }
 
     async blur(byPixels) {
@@ -72,16 +63,10 @@ export class SharpLayerStrategy {
     }
 
     async rotate(angle) {
-        const overlayFile = getWorkingDirectory() + 'rotate' + randomId() + '.png';
         await this.internalRepresentation.rotate(angle);
-        await this.toFile(overlayFile);
-        this.internalRepresentation = null;
-        await this.fromFile(overlayFile);
-        fs.unlinkSync(overlayFile);
     }
 
     async resize(height, width) {
-
         const imageMetaData = await this.internalRepresentation.metadata();
 
         const top = Math.ceil((imageMetaData.height - height) / 2);
@@ -92,6 +77,6 @@ export class SharpLayerStrategy {
             top: top,
             width: width,
             height: height
-        }).resize(width, height).ensureAlpha();
+        }).resize(width, height);
     }
 }
