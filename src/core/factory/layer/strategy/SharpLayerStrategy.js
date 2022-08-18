@@ -24,11 +24,11 @@ export class SharpLayerStrategy {
 
     async fromFile(filename) {
         this.fileBuffer = fs.readFileSync(filename);
-        this.internalRepresentation = sharp(this.fileBuffer);
+        this.internalRepresentation = sharp(this.fileBuffer).ensureAlpha();
     }
 
     async toFile(filename) {
-        const buffer = await this.internalRepresentation.png({palette: true}).toBuffer({resolveWithObject: true})
+        const buffer = await this.internalRepresentation.ensureAlpha().png().toBuffer({resolveWithObject: true})
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
@@ -44,12 +44,25 @@ export class SharpLayerStrategy {
 
         const fileBuffer = fs.readFileSync(overlayFile);
 
-        await this.internalRepresentation.composite([{input: fileBuffer}]);
+        await this.internalRepresentation.composite([{
+            input: fileBuffer
+        }]).ensureAlpha();
 
         await this.toFile(overlayFile);
         await this.fromFile(overlayFile);
 
         fs.unlinkSync(overlayFile);
+    }
+
+    async adjustLayerOpacity(opacity) {
+        this.internalRepresentation.ensureAlpha(opacity);
+
+        const fileName = getWorkingDirectory() + 'opacity' + randomId() + '.png'
+
+        await this.toFile(fileName)
+        await this.fromFile(fileName)
+
+        fs.unlinkSync(fileName)
     }
 
     async blur(byPixels) {
@@ -79,6 +92,6 @@ export class SharpLayerStrategy {
             top: top,
             width: width,
             height: height
-        }).resize(width, height);
+        }).resize(width, height).ensureAlpha();
     }
 }
