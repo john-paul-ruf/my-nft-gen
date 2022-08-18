@@ -53,6 +53,7 @@ export class SharpLayerStrategy {
         fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
 
         await this.fromFile(compositeFile);
+        this.internalRepresentation.ensureAlpha();
 
         fs.unlinkSync(overlayFile);
         fs.unlinkSync(targetFile);
@@ -81,10 +82,7 @@ export class SharpLayerStrategy {
         const left = Math.ceil((imageMetaData.width - width) / 2);
 
         await this.internalRepresentation.extract({
-            left: left,
-            top: top,
-            width: width,
-            height: height
+            left: left, top: top, width: width, height: height
         }).resize(width, height);
     }
 }

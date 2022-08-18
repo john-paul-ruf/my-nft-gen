@@ -29,9 +29,7 @@ export class JimpLayerStrategy {
         const top = Math.ceil((overlay.bitmap.height - this.internalRepresentation.bitmap.height) / 2);
         const left = Math.ceil((overlay.bitmap.width - this.internalRepresentation.bitmap.width) / 2);
 
-        this.internalRepresentation.composite(overlay, -left, -top, {
-            mode: Jimp.BLEND_SOURCE_OVER,
-        });
+        this.internalRepresentation.composite(overlay, -left, -top);
 
         fs.unlinkSync(overlayFile);
     }
