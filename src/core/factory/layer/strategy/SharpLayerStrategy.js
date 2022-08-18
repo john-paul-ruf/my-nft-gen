@@ -41,8 +41,8 @@ export class SharpLayerStrategy {
         const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
 
         await layer.resize(finalImageSize.height, finalImageSize.width);
-        await layer.toFile(overlayFile)
 
+        await layer.toFile(overlayFile)
         await this.toFile(targetFile);
 
         const buffer = await sharp(targetFile).composite([{
@@ -60,6 +60,7 @@ export class SharpLayerStrategy {
     }
 
     async adjustLayerOpacity(opacity) {
+        this.internalRepresentation.removeAlpha();
         this.internalRepresentation.ensureAlpha(opacity);
     }
 
