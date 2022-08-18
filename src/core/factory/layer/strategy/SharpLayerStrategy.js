@@ -28,7 +28,7 @@ export class SharpLayerStrategy {
     }
 
     async toFile(filename) {
-        const buffer = await this.internalRepresentation.png().toBuffer({resolveWithObject: true})
+        const buffer = await this.internalRepresentation.png({palette: true}).toBuffer({resolveWithObject: true})
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
@@ -37,19 +37,26 @@ export class SharpLayerStrategy {
         const finalImageSize = getFinalImageSize();
 
         const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
+        const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
+        const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
 
         await layer.resize(finalImageSize.height, finalImageSize.width);
         await layer.toFile(overlayFile)
 
-        await this.internalRepresentation.composite([{
-            input: overlayFile,
-            blend: 'add'
-        }]).ensureAlpha();
+        await this.toFile(targetFile);
 
-        await this.toFile(overlayFile);
-        await this.fromFile(overlayFile);
+        const buffer = await sharp(targetFile).composite([{
+            input: overlayFile,
+            blend: 'over'
+        }]).png({palette: true}).toBuffer({resolveWithObject: true});
+
+        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+
+        await this.fromFile(compositeFile);
 
         fs.unlinkSync(overlayFile);
+        fs.unlinkSync(targetFile);
+        fs.unlinkSync(compositeFile);
     }
 
     async adjustLayerOpacity(opacity) {
