@@ -12,10 +12,10 @@ class globalSettings {
         this.layerStrategy = 'jimp';
         this.canvasStrategy = 'node-canvas';
         this.workingDirectory = `src/img/working/`;
-        this.finalImageHeight = 1208;
-        this.finalImageWidth = 720;
+        this.finalImageHeight = 1080;
+        this.finalImageWidth = 1920;
         this.neutrals = [
-            '#2d2d2d',
+            '#000000',
             '#1F1F1F',
             '#080808',
             /*    '#5b5b5b',*/

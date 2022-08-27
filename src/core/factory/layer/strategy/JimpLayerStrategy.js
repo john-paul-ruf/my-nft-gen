@@ -29,7 +29,9 @@ export class JimpLayerStrategy {
         const top = Math.ceil((overlay.bitmap.height - this.internalRepresentation.bitmap.height) / 2);
         const left = Math.ceil((overlay.bitmap.width - this.internalRepresentation.bitmap.width) / 2);
 
-        this.internalRepresentation.composite(overlay, -left, -top);
+        this.internalRepresentation.composite(overlay, -left, -top, {
+            mode: Jimp.BLEND_SOURCE_OVER,
+        });
 
         fs.unlinkSync(overlayFile);
     }
@@ -40,7 +42,17 @@ export class JimpLayerStrategy {
 
     async blur(byPixels) {
         if (byPixels > 0) {
-            await this.internalRepresentation.blur(byPixels)
+            await new Promise((resolve, reject) => {
+                this.internalRepresentation.blur(byPixels, function (err) {
+
+                    if (err) {
+                        console.log(err);
+                        reject()
+                    }
+
+                    resolve();
+                })
+            })
         }
     }
 

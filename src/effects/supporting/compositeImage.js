@@ -9,12 +9,17 @@ export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
-    await underlayLayer.adjustLayerOpacity(0.7);
-
-    /*    if (typeof context.theBlurGaston === 'number') {
+    /*
+        if (typeof context.theBlurGaston === 'number') {
             await underlayLayer.blur(context.theBlurGaston);
-        }*/
+        }
+    */
 
-    await tempLayer.compositeLayerOver(underlayLayer);
+    await underlayLayer.adjustLayerOpacity(0.25);
+    await tempLayer.adjustLayerOpacity(0.5);
+    await layer.adjustLayerOpacity(0.5);
+
+    await layer.compositeLayerOver(underlayLayer);
     await layer.compositeLayerOver(tempLayer);
+
 }
