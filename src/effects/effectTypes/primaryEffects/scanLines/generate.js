@@ -3,7 +3,7 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {verticalScanLinesEffect} from "./effect.js";
 
 const config = {
-    lines: {lower: 2, upper: 5},
+    lines: {lower: 2, upper: 8},
     minlength: {lower: 5, upper: 30},
     maxlength: {lower: 75, upper: 300},
     times: {lower: 4, upper: 12},

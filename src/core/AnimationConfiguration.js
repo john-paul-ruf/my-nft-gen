@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'the-refactor-run'
+        this.runName = 'the-bored-and-sick-run'
 
         //For testing, render every x frame.
         this.frameInc = 1;

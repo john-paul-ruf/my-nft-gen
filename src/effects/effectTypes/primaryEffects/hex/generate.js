@@ -3,9 +3,9 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {hexEffect} from "./effect.js";
 
 const config = {
-    sparsityFactor: {lower: 36, upper: 36},
-    gapFactor: {lower: 2, upper: 5},
-    radiusFactor: {lower: 2, upper: 4},
+    sparsityFactor: {lower: 8, upper: 8},
+    gapFactor: {lower: 1, upper: 3},
+    radiusFactor: {lower: 1, upper: 3},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
