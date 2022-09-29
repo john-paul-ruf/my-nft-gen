@@ -4,7 +4,7 @@ import {glowEffect} from "./effect.js";
 const config = {
     lowerRange: {lower: -34, upper: 0},
     upperRange: {lower: 0, upper: 34},
-    times: {lower: 2, upper: 6},
+    times: {lower: 2, upper: 4},
 }
 
 export const generate = () => {
