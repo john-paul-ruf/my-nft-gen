@@ -4,11 +4,11 @@ import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
     stroke: 0.5,
-    sparsityFactor: {lower: 2, upper: 6},
-    speed: {lower: 2, upper: 5},
+    sparsityFactor: {lower: 1, upper: 3},
+    speed: {lower: 8, upper: 12},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 50, upper: 100},
-    radiusConstant: 75,
+    unitLength: {lower: 10, upper: 30},
+    radiusConstant: 50,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     accentTimes: {lower: 2, upper: 4},
 }

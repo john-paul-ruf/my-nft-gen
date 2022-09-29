@@ -12,12 +12,12 @@ class globalSettings {
         this.layerStrategy = 'jimp';
         this.canvasStrategy = 'node-canvas';
         this.workingDirectory = `src/img/working/`;
-        this.finalImageHeight = 1080;
-        this.finalImageWidth = 1920;
+        this.finalImageHeight = 1920;
+        this.finalImageWidth = 1080;
         this.neutrals = [
-            '#000000',
-            '#1F1F1F',
-            '#080808',
+            '#1d1d1d',
+            /*  '#1F1F1F',
+              '#080808',*/
             /*    '#5b5b5b',*/
             /*  '#f7f5fa',
               '#eeeeee',
@@ -26,8 +26,8 @@ class globalSettings {
         ];
         this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
         this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
-        this.hue = getRandomIntExclusive(0, 360);
-        this.distance = randomNumber(0.6, 1);
+        this.hue = getRandomIntExclusive(70, 130);
+        this.distance = randomNumber(0.3, 0.6);
         this.colorBucket = this.getColorBucket()
     }
 

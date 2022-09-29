@@ -2,10 +2,10 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {randomizeEffect} from "./effect.js";
 
 const config = {
-    spin: {lower: -12, upper: 12},
-    red: {lower: -12, upper: 12},
-    blue: {lower: -12, upper: 12},
-    green: {lower: -12, upper: 12}
+    spin: {lower: -18, upper: 18},
+    red: {lower: -18, upper: 18},
+    blue: {lower: -18, upper: 18},
+    green: {lower: -18, upper: 18}
 }
 
 export const generate = () => {
