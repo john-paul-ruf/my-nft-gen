@@ -22,6 +22,7 @@ import {glitchInverseEffect} from "../effectTypes/finalImageEffects/glitchInvers
 import {animateBackgroundEffect} from "../effectTypes/primaryEffects/animateBackground/effect.js";
 import {scopesEffect} from "../effectTypes/primaryEffects/scopes/effect.js";
 import {rayRingEffect} from "../effectTypes/primaryEffects/rayRing/effect.js";
+import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -35,6 +36,7 @@ const primaryEffects = [
     gatesEffect,
     ampEffect,
     viewportEffect,
+    imageOverlayEffect
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
