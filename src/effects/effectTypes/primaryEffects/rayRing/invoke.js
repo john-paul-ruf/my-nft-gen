@@ -9,12 +9,12 @@ import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
     const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
-    await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
+    await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].color, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor)
 
     let rayIndex = 0;
     for (let a = 0; a < 360; a = a + context.data.circles[i].sparsityFactor) {
         const theLengthGaston = findValue(context.data.circles[i].rays[rayIndex].length.lower, context.data.circles[i].rays[rayIndex].length.upper, context.data.circles[i].rays[rayIndex].lengthTimes, context.numberOfFrames, context.currentFrame);
-        await context.canvas.drawRay2d(context.data.center, context.data.stroke, context.data.circles[i].color, context.data.circles[i].color, a, context.data.circles[i].radius, theLengthGaston);
+        await context.canvas.drawRay2d(context.data.center, context.data.stroke, context.data.circles[i].outerColor, context.data.circles[i].color, a, context.data.circles[i].radius, theLengthGaston);
         rayIndex++;
     }
 }

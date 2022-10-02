@@ -5,7 +5,7 @@ import {viewportEffect} from "./effect.js";
 
 const config = {
     stroke: 0.5,
-    thickness: 1,
+    thickness: 5,
     ampStroke: 0.5,
     ampThickness: 1,
     radius: {lower: 150, upper: 300},

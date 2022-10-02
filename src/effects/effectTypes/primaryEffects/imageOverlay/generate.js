@@ -25,7 +25,7 @@ export const generate = () => {
             const list = [];
 
             fs.readdirSync(directoryPath).forEach(file => {
-                if (!file.startsWith('.')) {
+                if (!file.startsWith('.') && !fs.lstatSync(file).isDirectory()) {
                     list.push(file);
                 }
             });
