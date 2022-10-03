@@ -4,7 +4,7 @@ import {fadeEffect} from "./effect.js";
 const config = {
     lowerRange: {lower: 0.4, upper: 0.6},
     upperRange: {lower: 0.8, upper: 1},
-    times: {lower: 2, upper: 6},
+    times: {lower: 1, upper: 6},
 }
 
 export const generate = () => {

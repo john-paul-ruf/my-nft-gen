@@ -21,16 +21,17 @@ const drawRings = async (pos, color, radius, numberOfRings, context) => {
 const draw = async (context, filename) => {
     context.accentBoost = context.theAccentGaston;
 
-    await drawRings(findPointByAngleAndCircle(context.data.center, 30, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 90, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 150, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 210, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 270, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 330, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+
+    await drawRings(findPointByAngleAndCircle(context.data.center, 30 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 90 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 150 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 210 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 270 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    await drawRings(findPointByAngleAndCircle(context.data.center, 330 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
 
     await drawRings(context.data.center, context.data.largeColor, context.data.largeRadius, context.data.largeNumberOfRings, context);
 
-    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30, context.data.thickness + context.accentBoost, context.data.innerColor, context.data.stroke, context.data.smallColor)
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness + context.accentBoost, context.data.innerColor, context.data.stroke, context.data.smallColor)
 
     await context.canvas.toFile(filename);
 }
@@ -41,6 +42,7 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
         theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        theAngleGaston: findValue(0, 60, 1, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),

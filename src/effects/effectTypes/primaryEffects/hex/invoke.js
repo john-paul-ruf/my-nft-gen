@@ -28,7 +28,7 @@ const drawHexLine = async (angle, index, context) => {
 
 const draw = async (context, filename) => {
     context.accentBoost = context.theAccentGaston;
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 60; i++) {
         for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
             await drawHexLine(a, i, context)
         }

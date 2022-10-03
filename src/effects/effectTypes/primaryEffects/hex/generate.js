@@ -3,16 +3,16 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {hexEffect} from "./effect.js";
 
 const config = {
-    sparsityFactor: {lower: 8, upper: 8},
+    sparsityFactor: {lower: 3, upper: 6},
     gapFactor: {lower: 1, upper: 3},
     radiusFactor: {lower: 1, upper: 3},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    stroke: 0.05,
-    thickness: 0.25,
-    scaleFactor: 1.05,
+    stroke: 0.005,
+    thickness: 0.025,
+    scaleFactor: 1.25,
 }
 
 const finalImageSize = getFinalImageSize();
