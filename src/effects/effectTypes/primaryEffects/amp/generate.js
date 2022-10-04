@@ -19,8 +19,8 @@ export const generate = () => {
         stroke: config.stroke,
         color: getColorFromBucket(),
         innerColor: getColorFromBucket(),
-        length: 400,
-        lineStart: 350,
+        length: 200,
+        lineStart: 150,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

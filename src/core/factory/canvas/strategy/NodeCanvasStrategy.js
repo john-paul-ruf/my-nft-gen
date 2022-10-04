@@ -13,7 +13,10 @@ export class NodeCanvasStrategy {
     }
 
     async toFile(filename) {
-        const buffer = this.canvas.toBuffer('image/png');
+        const buffer = this.canvas.toBuffer('image/png', {
+            compressionLevel: 0,
+            filters: this.canvas.PNG_NO_FILTERS,
+        });
         fs.writeFileSync(filename, buffer);
     }
 
