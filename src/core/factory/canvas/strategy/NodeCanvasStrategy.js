@@ -16,6 +16,7 @@ export class NodeCanvasStrategy {
         const buffer = this.canvas.toBuffer('image/png', {
             compressionLevel: 0,
             filters: this.canvas.PNG_NO_FILTERS,
+            palette: new Uint8ClampedArray(37 * 4),
         });
         fs.writeFileSync(filename, buffer);
     }
