@@ -43,7 +43,7 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
         theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
-        theAngleGaston: findOneWayValue(0, 60, 1, numberOfFrames, currentFrame),
+        theAngleGaston: findOneWayValue(0, 60, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
