@@ -10,7 +10,7 @@ const config = {
     radiusFactor: {lower: 0.1, upper: 0.5},
     scaleFactor: 1.04,
     alphaRange: {bottom: {lower: 0.1, upper: 0.5}, top: {lower: 0.8, upper: 1}},
-    alphaTimes: {lower: 5, upper: 40},
+    alphaTimes: {lower: 1, upper: 15},
     numberOfScopesInALine: 300,
 }
 
