@@ -28,7 +28,9 @@ export class SharpLayerStrategy {
     }
 
     async toFile(filename) {
-        const buffer = await this.internalRepresentation.png({palette: true}).toBuffer({resolveWithObject: true})
+        const buffer = await this.internalRepresentation.png({
+            compressionLevel: 0, force: true,
+        }).toBuffer({resolveWithObject: true})
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
@@ -46,14 +48,14 @@ export class SharpLayerStrategy {
         await this.toFile(targetFile);
 
         const buffer = await sharp(targetFile).composite([{
-            input: overlayFile,
-            blend: 'over'
-        }]).png({palette: true}).toBuffer({resolveWithObject: true});
+            input: overlayFile
+        }]).png({
+            compressionLevel: 0, force: true,
+        }).toBuffer({resolveWithObject: true});
 
         fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
 
         await this.fromFile(compositeFile);
-        this.internalRepresentation.ensureAlpha();
 
         fs.unlinkSync(overlayFile);
         fs.unlinkSync(targetFile);
