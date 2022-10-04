@@ -1,6 +1,7 @@
 import {createCanvas} from "canvas";
 import fs from "fs";
 import {degreesToRadians, findPointByAngleAndCircle} from "../../../math/drawingMath.js";
+import {hexToRgba} from "../../../utils/hexToRgba.js";
 
 export class NodeCanvasStrategy {
     constructor() {
@@ -135,14 +136,11 @@ export class NodeCanvasStrategy {
     async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
         let angle = (Math.PI * 2) / numberOfSides;
 
-        const globalAlpha = this.context.globalAlpha;
-
-        this.context.globalAlpha = alpha;
-
         //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
         this.context.beginPath();
 
         this.context.save();
+
         this.context.translate(pos.x, pos.y);
         this.context.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
 
@@ -152,11 +150,9 @@ export class NodeCanvasStrategy {
             this.context.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
         }
 
-        this.context.fillStyle = fillColor;
+        this.context.fillStyle = hexToRgba(fillColor, alpha);
         this.context.fill();
 
         this.context.restore();
-
-        this.context.globalAlpha = globalAlpha;
     }
 }

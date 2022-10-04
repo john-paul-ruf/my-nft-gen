@@ -9,13 +9,13 @@ import fs from "fs";
 
 const finalImageSize = getFinalImageSize();
 
-const drawHexLine = async (angle, index, color, alphaRange, context) => {
+const drawHexLine = async (angle, index, color, alphaRange, alphaTimes, context) => {
     const loopCount = index + 1;
     const direction = loopCount % 2;
     const invert = direction <= 0;
 
     const theRotateGaston = findOneWayValue(angle, angle + 720, context.numberOfFrames, context.currentFrame, invert);
-    const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, 5, context.numberOfFrames, context.currentFrame);
+    const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, alphaTimes, context.numberOfFrames, context.currentFrame);
 
     const scaleBy = (context.data.scaleFactor * loopCount);
     const radius = context.data.radiusFactor * scaleBy;
@@ -27,7 +27,7 @@ const drawHexLine = async (angle, index, color, alphaRange, context) => {
 
 const draw = async (context, filename) => {
     for (let s = 0; s < context.data.scopes.length; s++) {
-        await drawHexLine(context.data.scopes[s].angle, context.data.scopes[s].loopCount, context.data.scopes[s].color, context.data.scopes[s].alphaRange, context)
+        await drawHexLine(context.data.scopes[s].angle, context.data.scopes[s].loopCount, context.data.scopes[s].color, context.data.scopes[s].alphaRange, context.data.scopes[s].alphaTimes, context)
     }
     await context.canvas.toFile(filename);
 }
