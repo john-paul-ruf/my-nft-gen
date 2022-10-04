@@ -6,6 +6,7 @@ import {compositeImage} from "../../../supporting/compositeImage.js";
 import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -42,7 +43,7 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
         theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
-        theAngleGaston: findValue(0, 60, 1, numberOfFrames, currentFrame),
+        theAngleGaston: findOneWayValue(0, 60, 1, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
