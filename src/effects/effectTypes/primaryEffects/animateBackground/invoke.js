@@ -13,7 +13,7 @@ export const animateBackground = async (layer, data) => {
             const rando = getRandomIntInclusive(0, 20)
             if (rando < 15) {
                 await jimpImage.setPixelColor(Jimp.cssColorToHex(data.color1), x, y)
-            } else if (rando < 18) {
+            } else if (rando < 19) {
                 await jimpImage.setPixelColor(Jimp.cssColorToHex(data.color2), x, y)
             } else {
                 await jimpImage.setPixelColor(Jimp.cssColorToHex(data.color3), x, y)

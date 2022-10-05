@@ -4,10 +4,10 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    stroke: 0.5,
+    stroke: 0.25,
     thickness: 5,
-    ampStroke: 0.5,
-    ampThickness: 1,
+    ampStroke: 0.25,
+    ampThickness: 0.5,
     radius: {lower: 150, upper: 300},
     ampLength: {lower: 75, upper: 150},
     ampRadius: {lower: 50, upper: 150},

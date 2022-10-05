@@ -5,14 +5,14 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    circles: {lower: 10, upper: 20},
-    stroke: 0.5,
+    circles: {lower: 5, upper: 10},
+    stroke: 0.25,
     thickness: 0.25,
-    scaleFactor: 1.001,
+    scaleFactor: 1.0001,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
-    blurTimes: {lower: 2, upper: 4},
+    accentTimes: {lower: 4, upper: 8},
+    blurTimes: {lower: 6, upper: 12},
 }
 
 const computeInitialInfo = (num, width) => {

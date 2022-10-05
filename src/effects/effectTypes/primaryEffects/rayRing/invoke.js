@@ -5,16 +5,20 @@ import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue";
 
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
     const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+
+    const invertTheRayGaston = i + 1 % 2;
+    const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor, context.numberOfFrames, context.currentFrame, invertTheRayGaston);
     await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].color, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor)
 
     let rayIndex = 0;
     for (let a = 0; a < 360; a = a + context.data.circles[i].sparsityFactor) {
         const theLengthGaston = findValue(context.data.circles[i].rays[rayIndex].length.lower, context.data.circles[i].rays[rayIndex].length.upper, context.data.circles[i].rays[rayIndex].lengthTimes, context.numberOfFrames, context.currentFrame);
-        await context.canvas.drawRay2d(context.data.center, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor, context.data.circles[i].color, a, context.data.circles[i].radius, theLengthGaston);
+        await context.canvas.drawRay2d(context.data.center, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor, context.data.circles[i].color, a + theRayGaston, context.data.circles[i].radius, theLengthGaston);
         rayIndex++;
     }
 }

@@ -7,8 +7,8 @@ const config = {
     width: finalImageSize.width,
     height: finalImageSize.height,
     color1: getNeutralFromBucket(),
-    color2: getColorFromBucket(),
-    color3: getNeutralFromBucket(),
+    color2: getNeutralFromBucket(),
+    color3: getColorFromBucket(),
     getInfo: () => {
         return `${animateBackgroundEffect.name}`
     }

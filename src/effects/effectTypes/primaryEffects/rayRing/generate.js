@@ -5,9 +5,9 @@ import {rayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    circles: {lower: 10, upper: 15},
+    circles: {lower: 4, upper: 8},
     radiusGap: 100,
-    stroke: 1,
+    stroke: 0.25,
     thickness: 1,
     scaleFactor: 1.001,
     densityFactor: 0.90,
@@ -15,9 +15,9 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    lengthRange: {bottom: {lower: 0, upper: 30}, top: {lower: 50, upper: 160}},
-    lengthTimes: {lower: 4, upper: 8},
-    sparsityFactor: {lower: 5, upper: 15},
+    lengthRange: {bottom: {lower: 0, upper: 60}, top: {lower: 100, upper: 300}},
+    lengthTimes: {lower: 8, upper: 16},
+    sparsityFactor: {lower: 1, upper: 4},
 }
 
 const getRays = (sparsityFactor) => {
