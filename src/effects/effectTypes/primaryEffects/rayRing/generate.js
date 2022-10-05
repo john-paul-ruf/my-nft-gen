@@ -9,7 +9,7 @@ const config = {
     radiusGap: 100,
     stroke: 0.25,
     thickness: 1,
-    scaleFactor: 1.001,
+    scaleFactor: 2,
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
