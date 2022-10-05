@@ -5,7 +5,7 @@ import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
 import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
-import {findOneWayValue} from "../../../../core/math/findOneWayValue";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
