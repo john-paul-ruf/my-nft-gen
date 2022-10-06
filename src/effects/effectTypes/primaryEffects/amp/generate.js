@@ -9,6 +9,7 @@ const config = {
     stroke: 0.5,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
+    speed: {lower: 100, upper: 150},
 }
 
 export const generate = () => {
@@ -27,6 +28,7 @@ export const generate = () => {
             upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
         },
         accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         getInfo: () => {
             return `${ampEffect.name}: sparsity factor: ${data.sparsityFactor.toFixed(3)}`
         }

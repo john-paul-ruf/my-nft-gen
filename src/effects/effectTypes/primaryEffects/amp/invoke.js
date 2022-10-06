@@ -5,12 +5,14 @@ import fs from "fs";
 import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 import {findValue} from "../../../../core/math/findValue.js";
 import {compositeImage} from "../../../supporting/compositeImage.js";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
-const draw = async (context, filenname) => {
+const draw = async (context, filename) => {
+    const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
     for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
-        await context.canvas.drawRay2d(context.data.center, context.data.stroke, context.data.color, context.data.innerColor, i, context.data.lineStart, context.data.length)
+        await context.canvas.drawRay2d(context.data.center, context.data.stroke, context.data.color, context.data.innerColor, (i + theRayGaston) % 360, context.data.lineStart, context.data.length)
     }
-    await context.canvas.toFile(filenname);
+    await context.canvas.toFile(filename);
 }
 
 export const amp = async (layer, data, currentFrame, numberOfFrames) => {
