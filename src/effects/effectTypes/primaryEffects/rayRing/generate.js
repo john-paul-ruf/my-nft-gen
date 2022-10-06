@@ -11,13 +11,14 @@ const config = {
     thickness: 1,
     scaleFactor: 2,
     densityFactor: 0.90,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 3}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 200}},
     lengthTimes: {lower: 8, upper: 16},
     sparsityFactor: {lower: 4, upper: 8},
+    speed: {lower: 5, upper: 20},
 }
 
 const getRays = (sparsityFactor) => {
@@ -49,6 +50,7 @@ const computeInitialInfo = (num) => {
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
             },
             sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper) * (config.densityFactor / (i + 1)),
+            speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         });
     }
 
