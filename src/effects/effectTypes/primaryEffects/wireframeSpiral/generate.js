@@ -3,7 +3,7 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
-    stroke: 0.25,
+    stroke: 0.5,
     sparsityFactor: {lower: 5, upper: 10},
     speed: {lower: 5, upper: 10},
     counterClockwise: {lower: 0, upper: 1},
