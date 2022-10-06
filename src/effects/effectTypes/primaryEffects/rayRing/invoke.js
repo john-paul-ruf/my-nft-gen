@@ -11,7 +11,7 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 async function drawRayRingInstance(withAccentGaston, i, context) {
     const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
 
-    const invertTheRayGaston = i + 1 % 2;
+    const invertTheRayGaston = (i + 1) % 2;
     const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor * context.data.circles[i].speed, context.numberOfFrames, context.currentFrame);
     await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].color, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor)
 
