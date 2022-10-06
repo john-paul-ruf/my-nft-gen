@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     circles: {lower: 4, upper: 8},
-    radiusGap: 100,
+    radiusGap: 250,
     stroke: 0.25,
     thickness: 1,
     scaleFactor: 2,
@@ -17,7 +17,7 @@ const config = {
     blurTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 0, upper: 60}, top: {lower: 100, upper: 300}},
     lengthTimes: {lower: 8, upper: 16},
-    sparsityFactor: {lower: 1, upper: 4},
+    sparsityFactor: {lower: 4, upper: 8},
 }
 
 const getRays = (sparsityFactor) => {
