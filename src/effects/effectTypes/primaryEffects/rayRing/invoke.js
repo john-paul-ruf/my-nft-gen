@@ -18,7 +18,7 @@ async function drawRayRingInstance(withAccentGaston, i, context) {
     let rayIndex = 0;
     for (let a = 0; a < 360; a = a + context.data.circles[i].sparsityFactor) {
         const theLengthGaston = findValue(context.data.circles[i].rays[rayIndex].length.lower, context.data.circles[i].rays[rayIndex].length.upper, context.data.circles[i].rays[rayIndex].lengthTimes, context.numberOfFrames, context.currentFrame);
-        const theFinalAngle = invertTheRayGaston ? (a + theRayGaston) % 360 : (a - theRayGaston) % 360;
+        const theFinalAngle = invertTheRayGaston === 0 ? (a + theRayGaston) % 360 : (a - theRayGaston) % 360;
         await context.canvas.drawRay2d(context.data.center, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor, context.data.circles[i].color, theFinalAngle, context.data.circles[i].radius, theLengthGaston);
         rayIndex++;
     }
