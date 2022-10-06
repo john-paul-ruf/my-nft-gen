@@ -3,9 +3,9 @@ import {getRandomIntExclusive, randomNumber} from "./math/random.js";
 import ColorScheme from "color-scheme";
 
 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
-const schemeBucket = ['contrast'];
+const schemeBucket = ['mono', 'contrast', 'triade', 'tetrade', 'analogic'];
 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
-const variationBucket = ['hard'];
+const variationBucket = ['default', 'pastel', 'soft', 'light', 'hard', 'pale'];
 
 class globalSettings {
     constructor() {
@@ -26,7 +26,7 @@ class globalSettings {
         ];
         this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
         this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
-        this.hue = getRandomIntExclusive(280, 300);
+        this.hue = getRandomIntExclusive(0, 360);
         this.distance = randomNumber(0.1, 0.6);
         this.colorBucket = this.getColorBucket()
     }
