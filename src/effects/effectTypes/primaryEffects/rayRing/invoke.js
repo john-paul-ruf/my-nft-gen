@@ -12,13 +12,14 @@ async function drawRayRingInstance(withAccentGaston, i, context) {
     const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
 
     const invertTheRayGaston = i + 1 % 2;
-    const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor * context.data.circles[i].speed, context.numberOfFrames, context.currentFrame, invertTheRayGaston);
+    const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor * context.data.circles[i].speed, context.numberOfFrames, context.currentFrame);
     await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].color, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor)
 
     let rayIndex = 0;
     for (let a = 0; a < 360; a = a + context.data.circles[i].sparsityFactor) {
         const theLengthGaston = findValue(context.data.circles[i].rays[rayIndex].length.lower, context.data.circles[i].rays[rayIndex].length.upper, context.data.circles[i].rays[rayIndex].lengthTimes, context.numberOfFrames, context.currentFrame);
-        await context.canvas.drawRay2d(context.data.center, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor, context.data.circles[i].color, (a + theRayGaston) % 360, context.data.circles[i].radius, theLengthGaston);
+        const theFinalAngle = invertTheRayGaston ? (a + theRayGaston) % 360 : (a - theRayGaston) % 360;
+        await context.canvas.drawRay2d(context.data.center, (context.data.stroke + theAccentGaston), context.data.circles[i].outerColor, context.data.circles[i].color, theFinalAngle, context.data.circles[i].radius, theLengthGaston);
         rayIndex++;
     }
 }
