@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     circles: {lower: 4, upper: 8},
-    radiusGap: 50,
+    radiusGap: 100,
     stroke: 0.25,
     thickness: 1,
     scaleFactor: 2,
@@ -15,7 +15,7 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 125}},
+    lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 200}},
     lengthTimes: {lower: 8, upper: 16},
     sparsityFactor: {lower: 4, upper: 8},
 }
