@@ -10,7 +10,8 @@ const config = {
     radiusFactor: {lower: 2, upper: 4},
     scaleFactor: 2,
     alphaRange: {bottom: {lower: 0.1, upper: 0.5}, top: {lower: 0.5, upper: 1}},
-    alphaTimes: {lower: 3, upper: 10},
+    alphaTimes: {lower: 3, upper: 6},
+    rotationTimes: {lower: 3, upper: 6},
     numberOfScopesInALine: 100,
 }
 
@@ -24,6 +25,7 @@ function getHexLine(sparsityFactor, info, i) {
                 upper: randomNumber(config.alphaRange.top.lower, config.alphaRange.top.upper)
             },
             alphaTimes: randomNumber(config.alphaTimes.lower, config.alphaTimes.upper),
+            rotationTimes: randomNumber(config.rotationTimes.lower, config.rotationTimes.upper),
             color: getColorFromBucket(),
         });
     }
