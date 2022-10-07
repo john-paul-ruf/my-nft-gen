@@ -75,7 +75,7 @@ export class SharpLayerStrategy {
         const buffer = await sharp(targetFile).composite([{
             input: Buffer.alloc(meta.width * meta.height * 4, newOpacity), raw: {
                 width: meta.width, height: meta.height, channels: 4
-            }, blend: 'dest-out'
+            }, blend: 'dest-in'  //works well with dest-out except for fade
         }]).png({
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: true});
