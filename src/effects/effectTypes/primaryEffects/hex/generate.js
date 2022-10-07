@@ -3,7 +3,7 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {hexEffect} from "./effect.js";
 
 const config = {
-    sparsityFactor: {lower: 15, upper: 30},
+    sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 8, upper: 16},
     radiusFactor: {lower: 5, upper: 10},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
