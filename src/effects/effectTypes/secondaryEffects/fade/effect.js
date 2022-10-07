@@ -9,7 +9,7 @@ export const fadeEffect = {
     name: 'fade',
     generateData: generate,
     effect: effect,
-    effectChance: 0, //broken for sharp
+    effectChance: 55, //testing for sharp
     requiresLayer: false,
 }
 
