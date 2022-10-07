@@ -9,7 +9,7 @@ const variationBucket = ['default', 'pastel', 'soft', 'light', 'hard'];
 
 class globalSettings {
     constructor() {
-        this.layerStrategy = 'jimp';
+        this.layerStrategy = 'sharp';
         this.canvasStrategy = 'node-canvas';
         this.workingDirectory = `src/img/working/`;
         this.finalImageHeight = 1920;

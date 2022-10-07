@@ -12,7 +12,7 @@ const config = {
     scaleFactor: 2,
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 3}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 200}},
@@ -29,8 +29,7 @@ const getRays = (sparsityFactor) => {
             length: {
                 lower: getRandomIntInclusive(config.lengthRange.bottom.lower, config.lengthRange.bottom.upper),
                 upper: getRandomIntInclusive(config.lengthRange.top.lower, config.lengthRange.top.upper)
-            },
-            lengthTimes: getRandomIntInclusive(config.lengthTimes.lower, config.lengthTimes.upper)
+            }, lengthTimes: getRandomIntInclusive(config.lengthTimes.lower, config.lengthTimes.upper)
         });
     }
 

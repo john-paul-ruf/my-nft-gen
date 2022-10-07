@@ -2,6 +2,7 @@ import sharp from "sharp";
 import {getFinalImageSize, getWorkingDirectory} from "../../../GlobalSettings.js";
 import {randomId} from "../../../math/random.js";
 import fs from "fs";
+import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
 
 export class SharpLayerStrategy {
     constructor() {
@@ -62,9 +63,30 @@ export class SharpLayerStrategy {
         fs.unlinkSync(compositeFile);
     }
 
+    /*
+        WARNING: REMOVES ALL TRANSPARENCY THEN APPLIES TRANSPARENCY
+        SHARP STRATEGY ONLY
+     */
     async adjustLayerOpacity(opacity) {
-        this.internalRepresentation.removeAlpha();
-        this.internalRepresentation.ensureAlpha(opacity);
+        const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
+        const finalImageSize = getFinalImageSize();
+
+        const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
+        await this.toFile(targetFile);
+
+        await sharp(targetFile).joinChannel(Buffer.alloc(finalImageSize.width * finalImageSize.height, newOpacity), {
+            raw: {
+                width: finalImageSize.width,
+                height: finalImageSize.height,
+                channels: 1
+            }
+        }).png({
+            compressionLevel: 0, force: true,
+        }).toBuffer({resolveWithObject: true});
+
+        await this.fromFile(targetFile);
+
+        fs.unlinkSync(targetFile);
     }
 
     async blur(byPixels) {
