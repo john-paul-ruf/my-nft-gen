@@ -9,8 +9,8 @@ const config = {
     gapFactor: {lower: 1, upper: 2},
     radiusFactor: {lower: 2, upper: 4},
     scaleFactor: 2,
-    alphaRange: {bottom: {lower: 0.1, upper: 0.5}, top: {lower: 0.5, upper: 1}},
-    alphaTimes: {lower: 3, upper: 6},
+    alphaRange: {bottom: {lower: 0.6, upper: 0.8}, top: {lower: 0.8, upper: 1}},
+    alphaTimes: {lower: 2, upper: 4},
     rotationTimes: {lower: 1, upper: 3},
     numberOfScopesInALine: 100,
 }
