@@ -9,7 +9,7 @@ const config = {
     counterClockwise: {lower: 0, upper: 1},
     unitLength: {lower: 1, upper: 4},
     radiusConstant: 75,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 5}},
     accentTimes: {lower: 2, upper: 4},
 }
 

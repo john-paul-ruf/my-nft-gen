@@ -4,13 +4,13 @@ import {hexEffect} from "./effect.js";
 
 const config = {
     sparsityFactor: {lower: 40, upper: 60},
-    gapFactor: {lower: 6, upper: 12},
-    radiusFactor: {lower: 20, upper: 30},
+    gapFactor: {lower: 8, upper: 16},
+    radiusFactor: {lower: 10, upper: 20},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    stroke: 0.05,
+    stroke: 0.25,
     thickness: 0.1,
     scaleFactor: 2,
 }

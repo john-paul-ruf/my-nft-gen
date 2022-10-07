@@ -9,7 +9,7 @@ export const randomizeEffect = {
     name: 'randomize',
     generateData: generate,
     effect: effect,
-    effectChance: 25,
+    effectChance: 55,
     requiresLayer: false,
 }
 
