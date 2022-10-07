@@ -14,7 +14,7 @@ const drawLine = async (y, pixelLine, context) => {
 }
 
 function computeY(context, numberOfFrames, currentFrame, i) {
-    const displacement = (context.data.height / numberOfFrames) * currentFrame;
+    const displacement = (context.data.height / numberOfFrames) * (currentFrame + 1);
     let y = context.data.lineInfo[i].lineStart + displacement;
 
     if (y > context.data.height) {

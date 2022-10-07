@@ -4,7 +4,7 @@ import {verticalScanLinesEffect} from "./effect.js";
 
 const config = {
     lines: {lower: 4, upper: 8},
-    minlength: {lower: 3, upper: 5},
+    minlength: {lower: 25, upper: 75},
     maxlength: {lower: 100, upper: 500},
     times: {lower: 8, upper: 16},
     color: getColorFromBucket()
