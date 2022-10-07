@@ -69,24 +69,33 @@ export class SharpLayerStrategy {
      */
     async adjustLayerOpacity(opacity) {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
-        const finalImageSize = getFinalImageSize();
+        const meta = await this.internalRepresentation.metadata()
 
         const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
+        const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
+
         await this.toFile(targetFile);
 
-        await sharp(targetFile).joinChannel(Buffer.alloc(finalImageSize.width * finalImageSize.height, newOpacity), {
-            raw: {
-                width: finalImageSize.width,
-                height: finalImageSize.height,
-                channels: 1
-            }
-        }).png({
+        const buffer = await sharp(targetFile).composite(
+            [{
+                input: Buffer.alloc(meta.width * meta.height, newOpacity),
+                raw: {
+                    width: meta.width,
+                    height: meta.height,
+                    channels: 1
+                },
+                blend: 'dest-in'
+            }]
+        ).png({
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: true});
 
-        await this.fromFile(targetFile);
+        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+
+        await this.fromFile(compositeFile);
 
         fs.unlinkSync(targetFile);
+        fs.unlinkSync(compositeFile);
     }
 
     async blur(byPixels) {
