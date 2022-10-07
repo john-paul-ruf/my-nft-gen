@@ -8,10 +8,6 @@
 
  **/
 export const findValue = (min, max, times, totalFrame, currentFrame, invert = false) => {
-
-    //risky maneuver: trying to fix scopes looping issue
-    currentFrame = currentFrame + 1;
-
     const range = max - min; //the range
     const segment = totalFrame / times;  //Segment is the number of frames if we only did the effect once
     const halfSegment = segment / 2;  //number of frame to go up and back with in a given time
