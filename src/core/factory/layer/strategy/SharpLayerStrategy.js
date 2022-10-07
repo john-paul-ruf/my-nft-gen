@@ -78,11 +78,11 @@ export class SharpLayerStrategy {
 
         const buffer = await sharp(targetFile).composite(
             [{
-                input: Buffer.alloc(meta.width * meta.height, newOpacity),
+                input: Buffer.alloc(meta.width * meta.height * 4, newOpacity),
                 raw: {
                     width: meta.width,
                     height: meta.height,
-                    channels: 1
+                    channels: 4
                 },
                 blend: 'dest-in'
             }]
