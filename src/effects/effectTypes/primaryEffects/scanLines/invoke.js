@@ -8,9 +8,10 @@ import {hexToRgba} from "../../../../core/utils/hexToRgba.js";
 const drawLine = async (y, pixelLine, context) => {
     for (let x = 0; x < context.data.width; x++) {
         const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, pixelLine[x].times, context.numberOfFrames, context.currentFrame);
+        const theAlphaGaston = findValue(pixelLine[x].alphaRange.lower, pixelLine[x].alphaRange.upper, pixelLine[x].alphaTimes, context.numberOfFrames, context.currentFrame);
         await context.canvas.drawGradientLine2d({x: x, y: y}, {
             x: x, y: theTrailGaston
-        }, 1, hexToRgba(context.data.color, 0.75), hexToRgba(context.data.color, 0))
+        }, 1, hexToRgba(context.data.color, theAlphaGaston), hexToRgba(context.data.color, 0))
     }
 }
 

@@ -10,13 +10,15 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 const draw = async (context, filename) => {
     const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
     for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
-        await context.canvas.drawRay2d(context.data.center, context.data.stroke, context.data.color, context.data.innerColor, (i + theRayGaston) % 360, context.data.lineStart, context.data.length)
+        await context.canvas.drawRay2d(context.data.center, context.data.stroke + context.theAccentGaston, context.data.color, context.data.innerColor, (i + theRayGaston) % 360, context.data.lineStart, context.data.length)
     }
     await context.canvas.toFile(filename);
 }
 
 export const amp = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
+        currentFrame: currentFrame,
+        numberOfFrames: numberOfFrames,
         drawing: getWorkingDirectory() + 'amp' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'amp-underlay' + randomId() + '.png',
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),

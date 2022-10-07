@@ -10,7 +10,7 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.accentBoost, outerColor)
+    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.theAccentGaston, outerColor)
 }
 
 const drawRings = async (pos, color, radius, numberOfRings, context) => {
@@ -20,9 +20,6 @@ const drawRings = async (pos, color, radius, numberOfRings, context) => {
 }
 
 const draw = async (context, filename) => {
-    context.accentBoost = context.theAccentGaston;
-
-
     await drawRings(findPointByAngleAndCircle(context.data.center, 30 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
     await drawRings(findPointByAngleAndCircle(context.data.center, 90 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
     await drawRings(findPointByAngleAndCircle(context.data.center, 150 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
@@ -32,7 +29,7 @@ const draw = async (context, filename) => {
 
     await drawRings(context.data.center, context.data.largeColor, context.data.largeRadius, context.data.largeNumberOfRings, context);
 
-    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness + context.accentBoost, context.data.innerColor, context.data.stroke, context.data.smallColor)
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness + context.theAccentGaston, context.data.innerColor, context.data.stroke, context.data.smallColor)
 
     await context.canvas.toFile(filename);
 }

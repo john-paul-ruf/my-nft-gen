@@ -11,6 +11,11 @@ export class NodeCanvasStrategy {
     async newCanvas(width, height) {
         this.canvas = createCanvas(width, height)
         this.context = this.canvas.getContext('2d');
+        this.context.antialias = 'subpixel';
+        this.context.quality = 'bilinear';
+        this.context.patternQuality = 'bilinear'
+        this.context.imageSmoothingEnabled = true;
+        this.context.imageSmoothingQuality = 'high'
     }
 
     async toFile(filename) {

@@ -9,8 +9,8 @@ const config = {
     stroke: 0.25,
     thickness: 0.25,
     scaleFactor: 2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 4, upper: 8},
     blurTimes: {lower: 6, upper: 12},
 }

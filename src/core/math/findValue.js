@@ -1,13 +1,17 @@
 /**
 
-    The Gaston of functions.  This runs almost everything.
+ The Gaston of functions.  This runs almost everything.
 
-    Given a range, and the number of times the sequence is to repeat
-    return the current value for the given frame in a total number of
-    frames.
+ Given a range, and the number of times the sequence is to repeat
+ return the current value for the given frame in a total number of
+ frames.
 
-**/
-export const findValue = (min, max, times, totalFrame, currentFrame, invert = false  ) => {
+ **/
+export const findValue = (min, max, times, totalFrame, currentFrame, invert = false) => {
+
+    //risky maneuver: trying to fix scopes looping issue
+    currentFrame = currentFrame + 1;
+
     const range = max - min; //the range
     const segment = totalFrame / times;  //Segment is the number of frames if we only did the effect once
     const halfSegment = segment / 2;  //number of frame to go up and back with in a given time
@@ -15,7 +19,7 @@ export const findValue = (min, max, times, totalFrame, currentFrame, invert = fa
     const frameSegment = currentFrame % segment;
     const step = range / halfSegment; //How much to increment in a single frame
 
-    if(!invert) { //the classic gaston
+    if (!invert) { //the classic gaston
         if (frameSegment <= halfSegment) { //if we haven't reached the midway point
             //bottom of range plus how much to increment per frame times the current frame for the segment
             return min + (step * frameSegment);

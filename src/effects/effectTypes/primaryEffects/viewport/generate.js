@@ -5,17 +5,17 @@ import {viewportEffect} from "./effect.js";
 
 const config = {
     stroke: 0.25,
-    thickness: 5,
+    thickness: 8,
     ampStroke: 0.25,
-    ampThickness: 0.5,
+    ampThickness: 0.25,
     radius: {lower: 150, upper: 300},
     ampLength: {lower: 75, upper: 150},
     ampRadius: {lower: 50, upper: 150},
-    sparsityFactor: {lower: 2, upper: 5},
+    sparsityFactor: {lower: 1, upper: 2},
     amplitude: {lower: 20, upper: 50},
-    times: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    times: {lower: 1, upper: 1},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 14, upper: 18}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
 }

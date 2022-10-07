@@ -5,13 +5,13 @@ import {scopesEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    sparsityFactor: {lower: 5, upper: 10},
-    gapFactor: {lower: 1, upper: 2},
-    radiusFactor: {lower: 2, upper: 4},
+    sparsityFactor: {lower: 2, upper: 3},
+    gapFactor: {lower: 0.5, upper: 1},
+    radiusFactor: {lower: 1, upper: 1.5},
     scaleFactor: 2,
-    alphaRange: {bottom: {lower: 0.2, upper: 0.4}, top: {lower: 0.4, upper: 0.6}},
-    alphaTimes: {lower: 1, upper: 3},
-    rotationTimes: {lower: 1, upper: 3},
+    alphaRange: {bottom: {lower: 0.1, upper: 0.25}, top: {lower: 0.35, upper: 0.5}},
+    alphaTimes: {lower: 4, upper: 8},
+    rotationTimes: {lower: 3, upper: 3},
     numberOfScopesInALine: 30,
 }
 

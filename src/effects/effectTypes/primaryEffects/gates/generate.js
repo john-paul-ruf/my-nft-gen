@@ -3,12 +3,12 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {gatesEffect} from "./effect.js";
 
 const config = {
-    gates: {lower: 5, upper: 11},
+    gates: {lower: 4, upper: 8},
     numberOfSides: {lower: 4, upper: 4},
-    thickness: 5,
+    thickness: 8,
     stroke: 0.25,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 14, upper: 18}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
 }
