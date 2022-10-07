@@ -3,7 +3,7 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {verticalScanLinesEffect} from "./effect.js";
 
 const config = {
-    lines: {lower: 10, upper: 20},
+    lines: {lower: 4, upper: 8},
     minlength: {lower: 25, upper: 75},
     maxlength: {lower: 100, upper: 500},
     times: {lower: 8, upper: 16},
@@ -21,7 +21,7 @@ const getPixelTrailLength = () => {
             lower: randomNumber(config.alphaRange.bottom.lower, config.alphaRange.bottom.upper),
             upper: randomNumber(config.alphaRange.top.lower, config.alphaRange.top.upper)
         },
-        alphaTimes: randomNumber(config.alphaTimes.lower, config.alphaTimes.upper)
+        alphaTimes: getRandomIntInclusive(config.alphaTimes.lower, config.alphaTimes.upper)
     }
 }
 
