@@ -84,7 +84,7 @@ export class SharpLayerStrategy {
                     height: meta.height,
                     channels: 4
                 },
-                blend: 'dest-in'
+                blend: 'dest-out'
             }]
         ).png({
             compressionLevel: 0, force: true,
