@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {randomNumber} from "../../../../core/math/random.js";
+import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {scopesEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -11,7 +11,7 @@ const config = {
     scaleFactor: 2,
     alphaRange: {bottom: {lower: 0.2, upper: 0.4}, top: {lower: 0.4, upper: 0.6}},
     alphaTimes: {lower: 1, upper: 3},
-    rotationTimes: {lower: 1, upper: 2},
+    rotationTimes: {lower: 1, upper: 3},
     numberOfScopesInALine: 30,
 }
 
@@ -25,7 +25,7 @@ function getHexLine(sparsityFactor, info, i) {
                 upper: randomNumber(config.alphaRange.top.lower, config.alphaRange.top.upper)
             },
             alphaTimes: randomNumber(config.alphaTimes.lower, config.alphaTimes.upper),
-            rotationTimes: randomNumber(config.rotationTimes.lower, config.rotationTimes.upper),
+            rotationTimes: getRandomIntInclusive(config.rotationTimes.lower, config.rotationTimes.upper),
             color: getColorFromBucket(),
         });
     }

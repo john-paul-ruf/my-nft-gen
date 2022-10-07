@@ -3,13 +3,14 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import {findValue} from "../../../../core/math/findValue.js";
 import {randomId} from "../../../../core/math/random.js";
 import fs from "fs";
+import {hexToRgba} from "../../../../core/utils/hexToRgba.js";
 
 const drawLine = async (y, pixelLine, context) => {
     for (let x = 0; x < context.data.width; x++) {
         const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, pixelLine[x].times, context.numberOfFrames, context.currentFrame);
         await context.canvas.drawGradientLine2d({x: x, y: y}, {
             x: x, y: theTrailGaston
-        }, 1, context.data.color, 'transparent')
+        }, 1, hexToRgba(context.data.color, 0.75), hexToRgba(context.data.color, 0))
     }
 }
 

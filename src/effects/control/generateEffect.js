@@ -27,7 +27,6 @@ import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/eff
 const primaryEffects = [
     animateBackgroundEffect,
     scopesEffect,
-    verticalScanLinesEffect,
     hexEffect,
     wireframeSpiralEffect,
     rayRingEffect,
@@ -36,6 +35,7 @@ const primaryEffects = [
     gatesEffect,
     ampEffect,
     viewportEffect,
+    verticalScanLinesEffect,
     imageOverlayEffect
 ];
 
