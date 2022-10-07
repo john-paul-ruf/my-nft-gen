@@ -9,10 +9,10 @@ const config = {
     gapFactor: {lower: 1, upper: 2},
     radiusFactor: {lower: 2, upper: 4},
     scaleFactor: 2,
-    alphaRange: {bottom: {lower: 0.4, upper: 0.6}, top: {lower: 0.6, upper: 0.8}},
-    alphaTimes: {lower: 2, upper: 4},
+    alphaRange: {bottom: {lower: 0.2, upper: 0.4}, top: {lower: 0.4, upper: 0.6}},
+    alphaTimes: {lower: 1, upper: 3},
     rotationTimes: {lower: 1, upper: 2},
-    numberOfScopesInALine: 50,
+    numberOfScopesInALine: 30,
 }
 
 function getHexLine(sparsityFactor, info, i) {
