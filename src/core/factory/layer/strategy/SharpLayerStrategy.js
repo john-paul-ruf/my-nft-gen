@@ -63,10 +63,6 @@ export class SharpLayerStrategy {
         fs.unlinkSync(compositeFile);
     }
 
-    /*
-        WARNING: REMOVES ALL TRANSPARENCY THEN APPLIES TRANSPARENCY
-        SHARP STRATEGY ONLY
-     */
     async adjustLayerOpacity(opacity) {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
         const meta = await this.internalRepresentation.metadata()
@@ -76,17 +72,11 @@ export class SharpLayerStrategy {
 
         await this.toFile(targetFile);
 
-        const buffer = await sharp(targetFile).composite(
-            [{
-                input: Buffer.alloc(meta.width * meta.height * 4, newOpacity),
-                raw: {
-                    width: meta.width,
-                    height: meta.height,
-                    channels: 4
-                },
-                blend: 'dest-out'
-            }]
-        ).png({
+        const buffer = await sharp(targetFile).composite([{
+            input: Buffer.alloc(meta.width * meta.height * 4, newOpacity), raw: {
+                width: meta.width, height: meta.height, channels: 4
+            }, blend: 'dest-out'
+        }]).png({
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: true});
 
