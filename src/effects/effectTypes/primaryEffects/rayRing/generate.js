@@ -18,7 +18,7 @@ const config = {
     lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 200}},
     lengthTimes: {lower: 8, upper: 16},
     sparsityFactor: {lower: 4, upper: 8},
-    speed: {lower: 100, upper: 150},
+    speed: {lower: 25, upper: 75},
 }
 
 const getRays = (sparsityFactor) => {
