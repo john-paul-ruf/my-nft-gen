@@ -3,7 +3,7 @@ import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 
-export const glitchDrumrollHorizontalWave = async (layer, data) => {
+export const glitchDrumrollHorizontalWave = async (layer, data, currentFrame) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -23,8 +23,9 @@ export const glitchDrumrollHorizontalWave = async (layer, data) => {
     const theGlitch = getRandomIntInclusive(0, 100);
     if (theGlitch < data.glitchChance) {
         for (let x = 0; x < finalImageSize.width; x++) {
-            if (Math.random() > 0.95) roll = Math.floor(Math.cos(x) * (finalImageSize.height * 2));
-            if (Math.random() > 0.98) roll = 0;
+            const rollIndex = x; //(x + (currentFrame % data.glitchModulus)) % (data.roll.length - 1);
+            if (data.roll[rollIndex] > 0.95) roll = Math.floor(Math.cos(x) * (finalImageSize.height * 2));
+            if (data.roll[rollIndex] > 0.98) roll = 0;
 
             for (let y = 0; y < finalImageSize.height; y++) {
                 let idx = (x + y * finalImageSize.width) * 4;
