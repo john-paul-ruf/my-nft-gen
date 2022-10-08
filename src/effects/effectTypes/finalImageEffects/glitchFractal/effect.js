@@ -9,7 +9,7 @@ export const glitchFractalEffect = {
     name: 'glitch fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 10,
     requiresLayer: false,
 }
 
