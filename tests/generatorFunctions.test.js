@@ -12,7 +12,6 @@ import {glowEffect} from "../src/effects/effectTypes/secondaryEffects/glow/effec
 import {fadeEffect} from "../src/effects/effectTypes/secondaryEffects/fade/effect.js";
 import {blurEffect} from "../src/effects/effectTypes/finalImageEffects/blur/effect.js";
 import {pixelateEffect} from "../src/effects/effectTypes/finalImageEffects/pixelate/effect.js";
-import {sepiaEffect} from "../src/effects/effectTypes/finalImageEffects/sepia/effect.js";
 import {glitchInverseEffect} from "../src/effects/effectTypes/finalImageEffects/glitchInverse/effect.js";
 import {glitchFractalEffect} from "../src/effects/effectTypes/finalImageEffects/glitchFractal/effect.js";
 import {
@@ -95,11 +94,6 @@ test('no null or undefined in blurEffect generate function', () => {
 
 test('no null or undefined in pixelateEffect generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(pixelateEffect.generateData());
-    expect(hasNullOrUndefined).toBe(false);
-});
-
-test('no null or undefined in sepiaEffect generate function', () => {
-    const hasNullOrUndefined = checkIfAnyNullOrUndefined(sepiaEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
 

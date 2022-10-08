@@ -1,28 +1,24 @@
 import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
-import {randomId} from "../../../../core/math/random.js";
+import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 
-export const glitchInverse = async (layer) => {
+export const glitchInverse = async (layer, data) => {
 
-    const filename = getWorkingDirectory() + 'glitch-inverse' + randomId() + '.png';
+    const theGlitch = getRandomIntInclusive(0, 100);
+    if (theGlitch < data.glitchChance) {
+        const filename = getWorkingDirectory() + 'glitch-inverse' + randomId() + '.png';
 
-    await layer.toFile(filename);
+        await layer.toFile(filename);
 
-    const jimpImage = await Jimp.read(filename);
+        const jimpImage = await Jimp.read(filename);
 
-    /////////////////////
-    // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/inverse.js
-    /////////////////////
-    const imgData = new Uint32Array(jimpImage.bitmap.data);
-    for (let i = 0; i < imgData.length; i++) {
-        imgData[i] = ~imgData[i] | 0xFF000000;
+        await jimpImage.invert();
+
+        await jimpImage.writeAsync(filename);
+
+        await layer.fromFile(filename);
+
+        fs.unlinkSync(filename);
     }
-    jimpImage.bitmap.data = Buffer.from(imgData);
-
-    await jimpImage.writeAsync(filename);
-
-    await layer.fromFile(filename);
-
-    fs.unlinkSync(filename);
 }

@@ -3,7 +3,7 @@ import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import fs from "fs";
 
-export const glitchDrumrollHorizontalWave = async (layer) => {
+export const glitchDrumrollHorizontalWave = async (layer, data) => {
     /////////////////////
     // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
     /////////////////////
@@ -18,26 +18,24 @@ export const glitchDrumrollHorizontalWave = async (layer) => {
 
     const imgData = jimpImage.bitmap.data;
 
-    for (let x = 0; x < finalImageSize.height; x++) {
-        for (let y = 0; y < finalImageSize.width; y++) {
-            let idx = (x + y * finalImageSize.width) * 4;
+    let roll = 0;
 
-            let x2 = x;
+    const theGlitch = getRandomIntInclusive(0, 100);
+    if (theGlitch < data.glitchChance) {
+        for (let x = 0; x < finalImageSize.width; x++) {
+            if (Math.random() > 0.95) roll = Math.floor(Math.cos(x) * (finalImageSize.height * 2));
+            if (Math.random() > 0.98) roll = 0;
 
-            const theGlitch = getRandomIntInclusive(0, 100);
-            if (theGlitch < data.glitchChance) {
-                const roll = Math.floor(Math.cos(x) * (finalImageSize.height * getRandomIntInclusive(data.glitchFactor.lower, data.glitchFactor.upper)))
-                x2 = x + roll;
-            }
+            for (let y = 0; y < finalImageSize.height; y++) {
+                let idx = (x + y * finalImageSize.width) * 4;
 
-            if (x2 > finalImageSize.height - 1) {
-                // noinspection JSSuspiciousNameCombination
-                x2 -= finalImageSize.height;
-            }
-            let idx2 = (x2 + y * finalImageSize.width) * 4;
+                let x2 = x + roll;
+                if (x2 > finalImageSize.width - 1) x2 -= finalImageSize.width;
+                let idx2 = (x2 + y * finalImageSize.width) * 4;
 
-            for (let c = 0; c < 4; c++) {
-                imgData[idx2 + c] = imgData[idx + c];
+                for (let c = 0; c < 4; c++) {
+                    imgData[idx2 + c] = imgData[idx + c];
+                }
             }
         }
     }
