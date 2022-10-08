@@ -15,19 +15,15 @@ class globalSettings {
         this.finalImageHeight = 1920;
         this.finalImageWidth = 1080;
         this.neutrals = [
-            '#000000',
-            /*  '#1F1F1F',
-              '#080808',*/
-            /*    '#5b5b5b',*/
-            /*  '#f7f5fa',
-              '#eeeeee',
-              '#F0F3F3',
-              '#cbdae1'*/
+            '#080808',
+            '#1F1F1F',
+            '#5b5b5b',
+            '#7f7f7f',
         ];
         this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
         this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
         this.hue = getRandomIntExclusive(0, 360);
-        this.distance = randomNumber(0.1, 0.6);
+        this.distance = randomNumber(0, 0.3);
         this.colorBucket = this.getColorBucket()
     }
 
