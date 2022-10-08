@@ -6,6 +6,7 @@ const config = {
     glitchChance: 75,
     glitchOffset: {lower: 20, upper: 40},
     glitchOffsetTimes: {lower: 2, upper: 6},
+    cosineFactor: {lower: 2, upper: 6},
 }
 
 export const generate = () => {
@@ -26,9 +27,10 @@ export const generate = () => {
         glitchChance: config.glitchChance,
         glitchOffset: getRandomIntInclusive(config.glitchOffset.lower, config.glitchOffset.upper),
         glitchOffsetTimes: getRandomIntInclusive(config.glitchOffsetTimes.lower, config.glitchOffsetTimes.upper),
+        cosineFactor: getRandomIntInclusive(config.cosineFactor.lower, config.cosineFactor.upper),
         roll: getRoll(),
         getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name} ${data.glitchChance} chance, ${data.glitchModulus} modulus`
+            return `${glitchDrumrollHorizontalWaveEffect.name} ${data.glitchChance} chance, ${data.glitchOffset} offset ${data.glitchOffsetTimes} times, cosine factor ${data.cosineFactor}`
         }
     }
 
