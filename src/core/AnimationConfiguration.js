@@ -1,4 +1,4 @@
-import path, {dirname} from "path";
+import {dirname} from "path";
 import {fileURLToPath} from 'url';
 import {randomId} from "./math/random.js";
 
@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'the-mind-thief-returns-run'
+        this.runName = 'the re://glitch`ez run'
 
         //For testing, render every x frame.
         this.frameInc = 1;
