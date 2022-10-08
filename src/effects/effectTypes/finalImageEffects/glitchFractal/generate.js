@@ -3,7 +3,7 @@ import {glitchFractalEffect} from "./effect.js";
 
 const config = {
     theRandom: {lower: 3, upper: 6},
-    glitchChance: 25,
+    glitchChance: 20,
 }
 
 export const generate = () => {
@@ -12,7 +12,7 @@ export const generate = () => {
         glitchChance: config.glitchChance,
         theRandom: getRandomIntInclusive(config.theRandom.lower, config.theRandom.upper),
         getInfo: () => {
-            return `${glitchFractalEffect.name} random: ${data.theRandom}`
+            return `${glitchFractalEffect.name} ${data.glitchChance} chance, random: ${data.theRandom}`
         }
     }
     return data;

@@ -9,7 +9,7 @@ const config = {
     stroke: 0.5,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
-    speed: {lower: 5, upper: 10},
+    speed: {lower: 15, upper: 30},
 }
 
 export const generate = () => {

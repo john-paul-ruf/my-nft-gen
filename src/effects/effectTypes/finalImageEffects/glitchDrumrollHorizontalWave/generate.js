@@ -1,14 +1,14 @@
 import {glitchDrumrollHorizontalWaveEffect} from "./effect.js";
 
 const config = {
-    glitchChance: 25,
+    glitchChance: 20,
 }
 
 export const generate = () => {
     return {
         glitchChance: config.glitchChance,
         getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name}`
+            return `${glitchDrumrollHorizontalWaveEffect.name} ${config.glitchChance} chance`
         }
     }
 }

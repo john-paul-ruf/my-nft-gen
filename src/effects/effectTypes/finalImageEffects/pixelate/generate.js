@@ -5,7 +5,7 @@ const config = {
     lowerRange: {lower: 0, upper: 0},
     upperRange: {lower: 1, upper: 4},
     times: {lower: 1, upper: 2},
-    glitchChance: 25,
+    glitchChance: 20,
 }
 
 export const generate = () => {
@@ -17,7 +17,7 @@ export const generate = () => {
             upper: getRandomIntInclusive(config.upperRange.lower, config.upperRange.upper),
             times: getRandomIntInclusive(config.times.lower, config.times.upper),
             getInfo: () => {
-                return `${pixelateEffect.name}: ${data.times} times, ${data.lower} to ${data.upper}`
+                return `${pixelateEffect.name}: ${data.glitchChance} chance, ${data.times} times, ${data.lower} to ${data.upper}`
             }
         }
     return data;
