@@ -9,7 +9,7 @@ export const pixelateEffect = {
     name: 'pixelate',
     generateData: generate,
     effect: effect,
-    effectChance: 15,
+    effectChance: 5,
     requiresLayer: false,
 }
 
