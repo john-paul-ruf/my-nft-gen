@@ -2,7 +2,7 @@ import {glitchDrumrollHorizontalWave} from "./invoke.js";
 import {generate} from "./generate.js";
 
 export const effect = {
-    invoke: (layer, data, currentFrame) => glitchDrumrollHorizontalWave(layer, data, currentFrame)
+    invoke: (layer, data, currentFrame, totalFrames) => glitchDrumrollHorizontalWave(layer, data, currentFrame, totalFrames)
 }
 
 export const glitchDrumrollHorizontalWaveEffect = {

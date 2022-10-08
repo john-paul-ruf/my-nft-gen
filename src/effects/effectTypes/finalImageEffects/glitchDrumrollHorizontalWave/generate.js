@@ -4,7 +4,8 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 
 const config = {
     glitchChance: 75,
-    glitchModulus: {lower: 2, upper: 4},
+    glitchOffset: {lower: 20, upper: 40},
+    glitchOffsetTimes: {lower: 2, upper: 6},
 }
 
 export const generate = () => {
@@ -23,7 +24,8 @@ export const generate = () => {
 
     const data = {
         glitchChance: config.glitchChance,
-        glitchModulus: getRandomIntInclusive(config.glitchModulus.lower, config.glitchModulus.upper),
+        glitchOffset: getRandomIntInclusive(config.glitchOffset.lower, config.glitchOffset.upper),
+        glitchOffsetTimes: getRandomIntInclusive(config.glitchOffsetTimes.lower, config.glitchOffsetTimes.upper),
         roll: getRoll(),
         getInfo: () => {
             return `${glitchDrumrollHorizontalWaveEffect.name} ${data.glitchChance} chance, ${data.glitchModulus} modulus`
