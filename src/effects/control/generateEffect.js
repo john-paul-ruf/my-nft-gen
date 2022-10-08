@@ -13,7 +13,6 @@ import {glowEffect} from "../effectTypes/secondaryEffects/glow/effect.js";
 import {fadeEffect} from "../effectTypes/secondaryEffects/fade/effect.js";
 import {blurEffect} from "../effectTypes/finalImageEffects/blur/effect.js";
 import {pixelateEffect} from "../effectTypes/finalImageEffects/pixelate/effect.js";
-import {sepiaEffect} from "../effectTypes/finalImageEffects/sepia/effect.js";
 import {
     glitchDrumrollHorizontalWaveEffect
 } from "../effectTypes/finalImageEffects/glitchDrumrollHorizontalWave/effect.js";
@@ -42,7 +41,7 @@ const primaryEffects = [
 //Possible effect to apply to the main effects found in the possibleEffects array found above
 const secondaryEffects = [randomizeEffect, glowEffect, fadeEffect,];
 
-const finalImageEffects = [blurEffect, pixelateEffect, sepiaEffect, glitchInverseEffect, glitchFractalEffect, glitchDrumrollHorizontalWaveEffect,]
+const finalImageEffects = [blurEffect, pixelateEffect, glitchInverseEffect, glitchFractalEffect, glitchDrumrollHorizontalWaveEffect,]
 
 const generateEffects = (possibleEffectList) => {
     const effectList = [];
