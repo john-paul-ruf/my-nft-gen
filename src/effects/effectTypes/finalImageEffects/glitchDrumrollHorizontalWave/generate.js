@@ -1,7 +1,7 @@
 import {glitchDrumrollHorizontalWaveEffect} from "./effect.js";
 
 const config = {
-    glitchChance: 20,
+    glitchChance: 10,
 }
 
 export const generate = () => {

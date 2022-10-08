@@ -3,7 +3,7 @@ import {glitchFractalEffect} from "./effect.js";
 
 const config = {
     theRandom: {lower: 3, upper: 6},
-    glitchChance: 20,
+    glitchChance: 10,
 }
 
 export const generate = () => {

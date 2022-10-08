@@ -5,7 +5,7 @@ const config = {
     lowerRange: {lower: 0, upper: 0},
     upperRange: {lower: 1, upper: 4},
     times: {lower: 1, upper: 2},
-    glitchChance: 20,
+    glitchChance: 10,
 }
 
 export const generate = () => {
