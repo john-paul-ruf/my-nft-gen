@@ -9,7 +9,7 @@ export const glitchInverseEffect = {
     name: 'glitch inverse',
     generateData: generate,
     effect: effect,
-    effectChance: 15,
+    effectChance: 0, //never turn this on again
     requiresLayer: false,
 }
 
