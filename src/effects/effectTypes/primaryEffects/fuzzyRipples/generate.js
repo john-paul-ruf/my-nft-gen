@@ -5,14 +5,14 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    stroke: 5,
-    thickness: 0.25,
+    stroke: 1,
+    thickness: 20,
     largeRadius: {lower: finalImageSize.width * 0.25, upper: finalImageSize.width * 0.3},
     smallRadius: {lower: finalImageSize.width * 0.15, upper: finalImageSize.width * 0.2},
     largeNumberOfRings: {lower: 7, upper: 14},
     smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.width / 15, upper: finalImageSize.width / 25},
-    times: {lower: 1, upper: 4},
+    times: {lower: 1, upper: 3},
     smallerRingsGroupRadius: {lower: finalImageSize.width * 0.25, upper: finalImageSize.width * 0.35},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 14, upper: 18}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},

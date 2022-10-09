@@ -8,7 +8,7 @@ const config = {
     circles: {lower: 4, upper: 8},
     radiusGap: 100,
     stroke: 0.25,
-    thickness: 1,
+    thickness: 4,
     scaleFactor: 2,
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},

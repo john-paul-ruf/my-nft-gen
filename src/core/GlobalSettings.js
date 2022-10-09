@@ -5,7 +5,7 @@ import ColorScheme from "color-scheme";
 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
 const schemeBucket = ['contrast', 'triade', 'tetrade'];
 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
-const variationBucket = ['default', 'hard'];
+const variationBucket = ['hard'];
 
 class globalSettings {
     constructor() {
@@ -15,15 +15,15 @@ class globalSettings {
         this.finalImageHeight = 1920;
         this.finalImageWidth = 1080;
         this.neutrals = [
-            '#080808',
+            '#080808',/*
             '#1F1F1F',
             '#5b5b5b',
-            '#7f7f7f',
+            '#7f7f7f',*/
         ];
         this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
         this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
-        this.hue = getRandomIntExclusive(0, 360);
-        this.distance = randomNumber(0, 0.3);
+        this.hue = getRandomIntExclusive(25, 35);
+        this.distance = randomNumber(0, 0.8);
         this.colorBucket = this.getColorBucket()
     }
 

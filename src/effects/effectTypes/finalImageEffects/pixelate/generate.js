@@ -3,7 +3,7 @@ import {pixelateEffect} from "./effect.js";
 
 const config = {
     lowerRange: {lower: 0, upper: 0},
-    upperRange: {lower: 10, upper: 20},
+    upperRange: {lower: 3, upper: 6},
     times: {lower: 1, upper: 3},
     glitchChance: 80,
 }

@@ -11,7 +11,7 @@ const config = {
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     stroke: 0.025,
-    thickness: 0.1,
+    thickness: 1,
     scaleFactor: 2,
 }
 
