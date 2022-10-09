@@ -1,7 +1,7 @@
 import {glitchInverseEffect} from "./effect.js";
 
 const config = {
-    glitchChance: 10,
+    glitchChance: 100,
 }
 
 export const generate = () => {
