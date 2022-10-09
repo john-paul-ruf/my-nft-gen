@@ -4,8 +4,8 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 
 const config = {
     glitchChance: 100,
-    glitchOffset: {lower: 20, upper: 40},
-    glitchOffsetTimes: {lower: 2, upper: 6},
+    glitchOffset: {lower: 40, upper: 80},
+    glitchOffsetTimes: {lower: 1, upper: 3},
     cosineFactor: {lower: 2, upper: 6},
 }
 
