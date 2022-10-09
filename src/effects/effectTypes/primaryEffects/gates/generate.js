@@ -5,7 +5,7 @@ import {gatesEffect} from "./effect.js";
 const config = {
     gates: {lower: 4, upper: 8},
     numberOfSides: {lower: 6, upper: 6},
-    thickness: 8,
+    thickness: 30,
     stroke: 0.25,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
