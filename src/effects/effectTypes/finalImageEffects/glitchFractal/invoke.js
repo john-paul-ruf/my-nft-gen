@@ -7,7 +7,7 @@ import fs from "fs";
 export const glitchFractal = async (layer, data) => {
 
     const theGlitch = getRandomIntInclusive(0, 100);
-    if (theGlitch < data.glitchChance) {
+    if (theGlitch <= data.glitchChance) {
         const filename = getWorkingDirectory() + 'fractal' + randomId() + '_underlay.png';
 
         await layer.toFile(filename);

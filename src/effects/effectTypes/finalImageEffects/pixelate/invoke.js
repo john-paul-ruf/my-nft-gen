@@ -6,7 +6,7 @@ import fs from "fs";
 
 export const pixelate = async (layer, data, currentFrame, totalFrames) => {
     const theGlitch = getRandomIntInclusive(0, 100);
-    if (theGlitch < data.glitchChance) {
+    if (theGlitch <= data.glitchChance) {
         const filename = getWorkingDirectory() + 'pixelate' + randomId() + '.png';
 
         await layer.toFile(filename);

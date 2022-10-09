@@ -24,7 +24,7 @@ export const glitchDrumrollHorizontalWave = async (layer, data, currentFrame, to
     let roll = 0;
 
     const theGlitch = getRandomIntInclusive(0, 100);
-    if (theGlitch < data.glitchChance) {
+    if (theGlitch <= data.glitchChance) {
         for (let x = 0; x < finalImageSize.width; x++) {
             const rollIndex = x;
             if (data.roll[rollIndex] > 0.95) roll = Math.floor(Math.cos(x) * (finalImageSize.width * data.cosineFactor));

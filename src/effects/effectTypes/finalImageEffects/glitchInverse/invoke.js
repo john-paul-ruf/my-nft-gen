@@ -6,7 +6,7 @@ import fs from "fs";
 export const glitchInverse = async (layer, data) => {
 
     const theGlitch = getRandomIntInclusive(0, 100);
-    if (theGlitch < data.glitchChance) {
+    if (theGlitch <= data.glitchChance) {
         const filename = getWorkingDirectory() + 'glitch-inverse' + randomId() + '.png';
 
         await layer.toFile(filename);
