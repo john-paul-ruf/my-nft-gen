@@ -26,12 +26,12 @@ import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/eff
 const primaryEffects = [
     animateBackgroundEffect,
     scopesEffect,
-    hexEffect,
     wireframeSpiralEffect,
     rayRingEffect,
     fuzzyRippleEffect,
     fuzzBandsEffect,
     gatesEffect,
+    hexEffect,
     ampEffect,
     viewportEffect,
     verticalScanLinesEffect,
