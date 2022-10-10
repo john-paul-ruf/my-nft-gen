@@ -16,7 +16,7 @@ const config = {
     times: {lower: 1, upper: 1},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 14, upper: 18}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
+    accentTimes: {lower: 10, upper: 20},
     blurTimes: {lower: 2, upper: 4},
 }
 

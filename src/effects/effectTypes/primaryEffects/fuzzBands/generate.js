@@ -11,7 +11,7 @@ const config = {
     scaleFactor: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 4, upper: 8},
+    accentTimes: {lower: 10, upper: 20},
     blurTimes: {lower: 6, upper: 12},
 }
 

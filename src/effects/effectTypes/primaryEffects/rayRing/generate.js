@@ -13,7 +13,7 @@ const config = {
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
+    accentTimes: {lower: 10, upper: 20},
     blurTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 200}},
     lengthTimes: {lower: 8, upper: 16},

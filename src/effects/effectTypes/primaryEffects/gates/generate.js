@@ -4,12 +4,12 @@ import {gatesEffect} from "./effect.js";
 
 const config = {
     gates: {lower: 4, upper: 8},
-    numberOfSides: {lower: 6, upper: 6},
+    numberOfSides: {lower: 4, upper: 4},
     thickness: 30,
-    stroke: 0.25,
+    stroke: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
+    accentTimes: {lower: 10, upper: 20},
     blurTimes: {lower: 2, upper: 4},
 }
 

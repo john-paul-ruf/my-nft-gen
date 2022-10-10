@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {hexEffect} from "./effect.js";
 
@@ -6,11 +6,11 @@ const config = {
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 8, upper: 16},
     radiusFactor: {lower: 5, upper: 10},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+    accentRange: {bottom: {lower: 0.25, upper: 0.5}, top: {lower: .75, upper: 1.25}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
+    accentTimes: {lower: 8, upper: 16},
     blurTimes: {lower: 2, upper: 4},
-    stroke: 0.005,
+    stroke: 0.05,
     thickness: 2,
     scaleFactor: 2,
 }
@@ -29,8 +29,8 @@ export const generate = () => {
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
         accentRange: {
-            lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
-            upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+            lower: randomNumber(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+            upper: randomNumber(config.accentRange.top.lower, config.accentRange.top.upper)
         },
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
