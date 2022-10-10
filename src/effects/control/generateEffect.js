@@ -28,11 +28,11 @@ const primaryEffects = [
     scopesEffect,
     wireframeSpiralEffect,
     rayRingEffect,
+    ampEffect,
+    fuzzBandsEffect,
     hexEffect,
     fuzzyRippleEffect,
-    fuzzBandsEffect,
     gatesEffect,
-    ampEffect,
     viewportEffect,
     verticalScanLinesEffect,
     imageOverlayEffect
