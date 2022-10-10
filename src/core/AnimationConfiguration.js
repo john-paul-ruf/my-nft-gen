@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'the re://glitch`ez run'
+        this.runName = 'the going dark run'
 
         //For testing, render every x frame.
         this.frameInc = 1;
