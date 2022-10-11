@@ -22,7 +22,7 @@ class globalSettings {
         ];
         this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
         this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
-        this.hue = getRandomIntExclusive(25, 35);
+        this.hue = getRandomIntExclusive(0, 360);
         this.distance = randomNumber(0, 0.8);
         this.colorBucket = this.getColorBucket()
     }

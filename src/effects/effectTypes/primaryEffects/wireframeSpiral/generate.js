@@ -3,14 +3,14 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
-    stroke: 0.25,
+    stroke: 1,
     sparsityFactor: {lower: 1, upper: 3},
     speed: {lower: 5, upper: 10},
     counterClockwise: {lower: 0, upper: 1},
     unitLength: {lower: 1, upper: 3},
     radiusConstant: 75,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
-    accentTimes: {lower: 10, upper: 20},
+    accentTimes: {lower: 5, upper: 10},
 }
 
 export const generate = () => {

@@ -13,7 +13,7 @@ export const compositeImage = async (context, layer) => {
         await underlayLayer.blur(context.theBlurGaston);
     }
 
-    await underlayLayer.adjustLayerOpacity(0.1);
+    await underlayLayer.adjustLayerOpacity(0.5);
     await tempLayer.adjustLayerOpacity(1);
 
     await layer.compositeLayerOver(underlayLayer);

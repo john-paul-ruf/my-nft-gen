@@ -6,12 +6,12 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     circles: {lower: 5, upper: 10},
-    stroke: 0.25,
-    thickness: 0.25,
+    stroke: 0.75,
+    thickness: 1.5,
     scaleFactor: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 10, upper: 20},
+    accentTimes: {lower: 5, upper: 10},
     blurTimes: {lower: 6, upper: 12},
 }
 

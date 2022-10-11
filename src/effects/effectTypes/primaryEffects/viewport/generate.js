@@ -4,9 +4,9 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    stroke: 1,
-    thickness: 30,
-    ampStroke: 0.25,
+    stroke: 3,
+    thickness: 15,
+    ampStroke: 0.75,
     ampThickness: 2,
     radius: {lower: 150, upper: 300},
     ampLength: {lower: 75, upper: 125},
@@ -16,7 +16,7 @@ const config = {
     times: {lower: 1, upper: 1},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 14, upper: 18}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 10, upper: 20},
+    accentTimes: {lower: 5, upper: 10},
     blurTimes: {lower: 2, upper: 4},
 }
 
