@@ -5,6 +5,7 @@ import * as THREE from "three";
 import {getFinalImageSize, getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {findValue} from "../../../../core/math/findValue.js";
 import {hexToRgba} from "../../../../core/utils/hexToRgba.js";
+import {degreesToRadians} from "../../../../core/math/drawingMath.js";
 
 const draw = async (context, filename) => {
     const finalImageSize = getFinalImageSize();
@@ -46,10 +47,10 @@ const draw = async (context, filename) => {
 
     camera.position.z = 100;
 
-    const theXGaston = findValue(0, 360, context.data.times, context.numberOfFrames, context.currentFrame);
-    const theYGaston = findValue(0, 360, context.data.times, context.numberOfFrames, context.currentFrame);
+    const theXGaston = findValue(0, 180, context.data.times, context.numberOfFrames, context.currentFrame);
+    const theYGaston = findValue(0, 180, context.data.times, context.numberOfFrames, context.currentFrame);
 
-    item.rotation.x += theXGaston;
+    item.rotation.x += degreesToRadians(theXGaston);
     item.rotation.y += theYGaston;
     renderer.render(scene, camera);
 
