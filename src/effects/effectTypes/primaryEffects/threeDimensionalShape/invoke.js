@@ -51,7 +51,7 @@ const draw = async (context, filename) => {
     const theYGaston = findValue(0, 180, context.data.times, context.numberOfFrames, context.currentFrame);
 
     item.rotation.x += degreesToRadians(theXGaston);
-    item.rotation.y += theYGaston;
+    item.rotation.y += degreesToRadians(theYGaston);
     renderer.render(scene, camera);
 
     canvas.toFile(filename);
