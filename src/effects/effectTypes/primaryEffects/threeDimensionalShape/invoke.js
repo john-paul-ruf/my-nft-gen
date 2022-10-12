@@ -31,7 +31,7 @@ const draw = async (context, filename) => {
         wireframe: true,
     });
     const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
-    scene.add(wireframe);
+    //scene.add(wireframe);
 
     const material = new THREE.MeshStandardMaterial({
         color: hexToRgba(context.data.color),
