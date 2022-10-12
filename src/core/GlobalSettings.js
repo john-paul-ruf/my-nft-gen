@@ -15,7 +15,7 @@ class globalSettings {
         this.finalImageHeight = 1920;
         this.finalImageWidth = 1080;
         this.neutrals = [
-            '#000000',/*
+            '#888888',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/
