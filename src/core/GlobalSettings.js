@@ -3,7 +3,7 @@ import {getRandomIntExclusive, randomNumber} from "./math/random.js";
 import ColorScheme from "color-scheme";
 
 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
-const schemeBucket = ['contrast', 'triade', 'tetrade'];
+const schemeBucket = ['contrast'];
 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
 const variationBucket = ['hard'];
 
@@ -15,7 +15,7 @@ class globalSettings {
         this.finalImageHeight = 1920;
         this.finalImageWidth = 1080;
         this.neutrals = [
-            '#888888',/*
+            '#444444',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/
