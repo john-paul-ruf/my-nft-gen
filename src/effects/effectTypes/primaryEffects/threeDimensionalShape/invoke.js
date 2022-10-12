@@ -27,7 +27,7 @@ const draw = async (context, filename) => {
     const wireframeMaterial = new THREE.MeshStandardMaterial({
         color: hexToRgba(context.data.color),
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.5,
         wireframe: true,
     });
     const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
