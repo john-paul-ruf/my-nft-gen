@@ -22,6 +22,7 @@ import {animateBackgroundEffect} from "../effectTypes/primaryEffects/animateBack
 import {scopesEffect} from "../effectTypes/primaryEffects/scopes/effect.js";
 import {rayRingEffect} from "../effectTypes/primaryEffects/rayRing/effect.js";
 import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/effect.js";
+import {threeDimensionalShapeEffect} from "../effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -35,6 +36,7 @@ const primaryEffects = [
     gatesEffect,
     viewportEffect,
     verticalScanLinesEffect,
+    threeDimensionalShapeEffect,
     imageOverlayEffect
 ];
 

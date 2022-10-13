@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'the going dark run'
+        this.runName = 'LIFTED 3D'
 
         //For testing, render every x frame.
         this.frameInc = 1;
