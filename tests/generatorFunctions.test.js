@@ -20,6 +20,7 @@ import {
 import {scopesEffect} from "../src/effects/effectTypes/primaryEffects/scopes/effect.js";
 import {rayRingEffect} from "../src/effects/effectTypes/primaryEffects/rayRing/effect.js";
 import {ampEffect} from "../src/effects/effectTypes/primaryEffects/amp/effect.js";
+import {threeDimensionalShapeEffect} from "../src/effects/effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 
 
 test('no null or undefined in scopesEffect generate function', () => {
@@ -114,5 +115,10 @@ test('no null or undefined in glitchDrumrollHorizontalWaveEffect generate functi
 
 test('no null or undefined in ray-ring generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(rayRingEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
+
+test('no null or undefined in three-dimensional-shape generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(threeDimensionalShapeEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
