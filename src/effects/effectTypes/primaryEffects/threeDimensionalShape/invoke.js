@@ -22,24 +22,25 @@ const draw = async (context, filename) => {
     });
 
 
-    const geometry = new THREE.DodecahedronGeometry(20, 0);
+    const geometry = new THREE.IcosahedronBufferGeometry(10);
 
-    const wireframeMaterial = new THREE.MeshStandardMaterial({
+    const material = new THREE.MeshBasicMaterial({
         color: hexToRgba(context.data.color),
         transparent: true,
         opacity: 0.5,
-        wireframe: true,
+        polygonOffset: true,
+        polygonOffsetUnits: 2,
+        polygonOffsetFactor: 1,
     });
-    const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
-    //scene.add(wireframe);
 
-    const material = new THREE.MeshStandardMaterial({
-        color: hexToRgba(context.data.color),
-        transparent: true,
-        opacity: 0.8
-    });
-    const item = new THREE.Mesh(geometry, material);
-    scene.add(item);
+    const wireframeMaterial = new THREE.MeshBasicMaterial({color: '#000000', wireframe: true, transparent: true});
+
+    const mesh = new THREE.Mesh(geometry, material);
+    const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
+
+    mesh.add(wireframe);
+
+    scene.add(mesh);
 
     const light = new THREE.SpotLight(hexToRgba(context.data.pointLight), 5, 300);
     light.position.set(50, 50, 50);
@@ -50,8 +51,8 @@ const draw = async (context, filename) => {
     const theXGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
     const theYGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
 
-    item.rotation.x += degreesToRadians(theXGaston);
-    item.rotation.y += degreesToRadians(theYGaston);
+    mesh.rotation.x += degreesToRadians(theXGaston);
+    mesh.rotation.y += degreesToRadians(theYGaston);
     renderer.render(scene, camera);
 
     canvas.toFile(filename);
@@ -64,7 +65,7 @@ export const threeDimensionalShape = async (layer, data, currentFrame, numberOfF
         data: data,
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        drawing: getWorkingDirectory() + 'three-dimensional-shape' + randomId() + '.png'
+        drawing: getWorkingDirectory() + 'threeAdditional-dimensional-shape' + randomId() + '.png'
     }
 
     await draw(context, context.drawing)
