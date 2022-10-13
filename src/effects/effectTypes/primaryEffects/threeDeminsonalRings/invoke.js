@@ -13,7 +13,7 @@ const draw = async (context, filename) => {
     const width = finalImageSize.width, height = finalImageSize.height;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 3000);
 
     const canvas = new Canvas3d(width, height);
 
@@ -25,7 +25,7 @@ const draw = async (context, filename) => {
 
         const innerRadius = context.data.radiusConstant + (context.data.ringGap * (i + 1))
 
-        const geometry = new THREE.CylinderGeometry(innerRadius, innerRadius, 1, 64, 1, true);
+        const geometry = new THREE.CylinderGeometry(innerRadius, innerRadius, 4, 64, 1, true);
 
         const material = new THREE.MeshPhongMaterial({
             color: hexToRgba(context.data.color),
@@ -45,15 +45,14 @@ const draw = async (context, filename) => {
         scene.add(mesh);
 
         mesh.rotation.x = degreesToRadians(90);
-        //mesh.rotation.y = degreesToRadians(90);
-        //mesh.rotation.z = degreesToRadians(90);
+        mesh.rotation.z = degreesToRadians(context.data.ringsInstances[i].initialRotation);
 
         const light = new THREE.AmbientLight(hexToRgba(context.data.light), 100);
-        light.position.set(15, 15, 15);
+        light.position.set(0, 0, 0);
         scene.add(light);
 
 
-        camera.position.z = 125;
+        camera.position.z = 400;
 
         const theRotateGaston = findOneWayValue(0, 180 * context.data.ringsInstances[i].times, context.numberOfFrames, context.currentFrame);
 

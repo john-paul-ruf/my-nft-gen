@@ -3,11 +3,11 @@ import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.
 import {threeDimensionalRingsEffect} from "./effect.js";
 
 const config = {
-    rings: {lower: 30, upper: 40},
+    rings: {lower: 10, upper: 20},
     ringRadius: {lower: 0.5, upper: 1.5},
-    ringGap: {lower: 0.5, upper: 1.5},
-    radiusConstant: 1,
-    times: {lower: 1, upper: 4},
+    ringGap: {lower: 5, upper: 10},
+    radiusConstant: 100,
+    times: {lower: 1, upper: 3},
     counterClockwise: {lower: 0, upper: 1},
 }
 
@@ -16,6 +16,7 @@ const computeInitialInfo = (rings) => {
     for (let i = 0; i <= rings; i++) {
         info.push({
             times: getRandomIntInclusive(config.times.lower, config.times.upper),
+            initialRotation: getRandomIntInclusive(0, 360),
         });
     }
     return info;
