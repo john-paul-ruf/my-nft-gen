@@ -3,9 +3,9 @@ import {randomId} from "../../../../core/math/random.js";
 import fs from "fs";
 import * as THREE from "three";
 import {getFinalImageSize, getWorkingDirectory} from "../../../../core/GlobalSettings.js";
-import {findValue} from "../../../../core/math/findValue.js";
 import {hexToRgba} from "../../../../core/utils/hexToRgba.js";
 import {degreesToRadians} from "../../../../core/math/drawingMath.js";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 const draw = async (context, filename) => {
     const finalImageSize = getFinalImageSize();
@@ -47,8 +47,8 @@ const draw = async (context, filename) => {
 
     camera.position.z = 100;
 
-    const theXGaston = findValue(0, 180, context.data.times, context.numberOfFrames, context.currentFrame);
-    const theYGaston = findValue(0, 180, context.data.times, context.numberOfFrames, context.currentFrame);
+    const theXGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
+    const theYGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
 
     item.rotation.x += degreesToRadians(theXGaston);
     item.rotation.y += degreesToRadians(theYGaston);

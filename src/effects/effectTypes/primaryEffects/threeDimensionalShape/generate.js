@@ -3,7 +3,7 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {threeDimensionalShapeEffect} from "./effect.js";
 
 const config = {
-    times: {lower: 1, upper: 3},
+    times: {lower: 1, upper: 2},
     counterClockwise: {lower: 0, upper: 1},
 }
 
