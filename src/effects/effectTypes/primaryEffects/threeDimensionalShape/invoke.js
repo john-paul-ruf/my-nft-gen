@@ -24,13 +24,17 @@ const draw = async (context, filename) => {
 
     const geometry = new THREE.IcosahedronBufferGeometry(10);
 
-    const material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshPhongMaterial({
         color: hexToRgba(context.data.color),
+        emissive: hexToRgba(context.data.emissive),
+        specular: hexToRgba(context.data.specular),
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.75,
         polygonOffset: true,
         polygonOffsetUnits: 2,
         polygonOffsetFactor: 1,
+        shininess: 100,
+        flatShading: false
     });
 
     const wireframeMaterial = new THREE.MeshBasicMaterial({color: '#000000', wireframe: true, transparent: true});
@@ -42,17 +46,21 @@ const draw = async (context, filename) => {
 
     scene.add(mesh);
 
-    const light = new THREE.SpotLight(hexToRgba(context.data.pointLight), 5, 300);
+    const light = new THREE.SpotLight(hexToRgba(context.data.light), 5, 300);
     light.position.set(50, 50, 50);
     scene.add(light);
+
 
     camera.position.z = 100;
 
     const theXGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
     const theYGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
+    const theZGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
 
     mesh.rotation.x += degreesToRadians(theXGaston);
     mesh.rotation.y += degreesToRadians(theYGaston);
+    mesh.rotation.z += degreesToRadians(theZGaston);
+
     renderer.render(scene, camera);
 
     canvas.toFile(filename);
@@ -65,7 +73,7 @@ export const threeDimensionalShape = async (layer, data, currentFrame, numberOfF
         data: data,
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        drawing: getWorkingDirectory() + 'threeAdditional-dimensional-shape' + randomId() + '.png'
+        drawing: getWorkingDirectory() + 'three-dimensional-shape' + randomId() + '.png'
     }
 
     await draw(context, context.drawing)

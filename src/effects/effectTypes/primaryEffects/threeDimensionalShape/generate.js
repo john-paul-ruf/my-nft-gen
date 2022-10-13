@@ -13,13 +13,13 @@ export const generate = () => {
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         color: getColorFromBucket(),
-        pointLight: getColorFromBucket(),
+        emissive: getColorFromBucket(),
+        specular: getColorFromBucket(),
+        light: getColorFromBucket(),
         getInfo: () => {
             return `${threeDimensionalShapeEffect.name}: ${data.times} rotation speed`
         }
     }
-
-    data.direction = data.counterClockwise ? -1 : 1;
 
     return data;
 }
