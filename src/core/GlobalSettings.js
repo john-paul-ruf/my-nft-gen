@@ -15,11 +15,14 @@ class globalSettings {
         this.finalImageHeight = 1920;
         this.finalImageWidth = 1080;
         this.neutrals = [
-            '#444444',/*
+            '#000000',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/
         ];
+        this.lights = [
+            '#E4E4E4'
+        ]
         this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
         this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
         this.hue = getRandomIntExclusive(0, 360);
@@ -45,6 +48,10 @@ export const getColorFromBucket = () => {
 
 export const getNeutralFromBucket = () => {
     return globals.neutrals[getRandomIntExclusive(0, globals.neutrals.length)]
+}
+
+export const getLightFromBucket = () => {
+    return globals.lights[getRandomIntExclusive(0, globals.lights.length)]
 }
 
 export const getSchemeInfo = () => {
