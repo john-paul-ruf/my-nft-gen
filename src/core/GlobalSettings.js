@@ -3,17 +3,11 @@ import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "./math
 import ColorScheme from "color-scheme";
 import fs from "fs";
 
-
-//'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
-const schemeBucket = ['contrast'];
-//'default', 'pastel', 'soft', 'light', 'hard', 'pale'
-const variationBucket = ['hard'];
+//Loading json for if we pick the nice-colors-palettes strategy
 let niceColors = null;
-
 const getNiceColors500 = async () => {
     niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors-1000.json').toString())
 }
-
 await getNiceColors500();
 
 class globalSettings {
@@ -29,6 +23,7 @@ class globalSettings {
         this.finalImageHeight = 1920;
         this.finalImageWidth = 1080;
 
+        //For 2D palettes
         this.neutrals = [
             '#000000',/*
             '#1F1F1F',
@@ -36,14 +31,26 @@ class globalSettings {
             '#7f7f7f',*/
         ];
 
+        //for three-dimensional lighting
         this.lights = [
-            '#44ee44'
+            '#44ee44',
+            '#ee4444',
+            '#4444ee',
+            '#ee44ee',
+            '#eeee44',
+            '#44eeee',
         ]
 
         this.colorStrategy = getRandomIntInclusive(0, 1) === 1 ? this.colorSchemeStrategy : this.niceColorPalettesStrategy;
 
         switch (this.colorStrategy) {
             case this.colorSchemeStrategy:
+
+                //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
+                const schemeBucket = ['contrast'];
+
+                //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
+                const variationBucket = ['hard'];
 
                 const getColorBucket = () => {
                     const bucket = new ColorScheme();
@@ -67,11 +74,7 @@ class globalSettings {
             default:
                 throw 'no color scheme strategy';
         }
-
-
     }
-
-
 }
 
 const globals = new globalSettings();
