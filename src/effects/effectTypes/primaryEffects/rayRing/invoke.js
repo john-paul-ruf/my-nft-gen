@@ -34,8 +34,8 @@ export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
-    await underlayLayer.adjustLayerOpacity(0.5);
-    await tempLayer.adjustLayerOpacity(1);
+    await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+    await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
     await layer.compositeLayerOver(underlayLayer);
     await layer.compositeLayerOver(tempLayer);
