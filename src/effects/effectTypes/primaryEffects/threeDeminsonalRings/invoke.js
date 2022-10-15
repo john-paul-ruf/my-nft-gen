@@ -25,14 +25,14 @@ const draw = async (context, filename) => {
 
         const innerRadius = context.data.radiusConstant + (context.data.ringGap * (i + 1))
 
-        const geometry = new THREE.CylinderGeometry(innerRadius, innerRadius, 20, 64, 1, true);
+        const geometry = new THREE.CylinderGeometry(innerRadius, innerRadius, context.data.ringsInstances[i].height, 64, 1, true);
 
         const material = new THREE.MeshPhongMaterial({
             color: hexToRgba(context.data.ringsInstances[i].color),
             //emissive: hexToRgba(context.data.ringsInstances[i].emissive),
             //specular: hexToRgba(context.data.ringsInstances[i].specular),
             transparent: true,
-            opacity: 0.60,
+            opacity: 0.55,
             shininess: 50,
             flatShading: false
         });

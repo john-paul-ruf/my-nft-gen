@@ -7,7 +7,8 @@ const config = {
     ringRadius: {lower: 0.5, upper: 1.5},
     ringGap: {lower: 5, upper: 10},
     radiusConstant: 100,
-    times: {lower: 2, upper: 6},
+    times: {lower: 1, upper: 4},
+    height: {lower: 10, upper: 30},
 }
 
 const computeInitialInfo = (rings) => {
@@ -15,6 +16,7 @@ const computeInitialInfo = (rings) => {
     for (let i = 0; i <= rings; i++) {
         info.push({
             times: getRandomIntInclusive(config.times.lower, config.times.upper),
+            height: getRandomIntInclusive(config.height.lower, config.height.upper),
             initialRotation: getRandomIntInclusive(0, 360),
             color: getColorFromBucket(),
             emissive: getColorFromBucket(),

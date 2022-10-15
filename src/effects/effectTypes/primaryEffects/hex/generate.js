@@ -8,7 +8,7 @@ const config = {
     radiusFactor: {lower: 5, upper: 10},
     accentRange: {bottom: {lower: 0.25, upper: 0.5}, top: {lower: .75, upper: 1.25}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 8, upper: 16},
+    accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     stroke: 0.1,
     thickness: 1,

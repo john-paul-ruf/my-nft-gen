@@ -38,8 +38,8 @@ const primaryEffects = [
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
+    imageOverlayEffect,
     threeDimensionalRingsEffect,
-    imageOverlayEffect
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above

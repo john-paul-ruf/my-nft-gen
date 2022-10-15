@@ -10,7 +10,7 @@ const config = {
     unitLength: {lower: 1, upper: 3},
     radiusConstant: 75,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
-    accentTimes: {lower: 5, upper: 10},
+    accentTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {
