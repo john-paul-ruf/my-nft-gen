@@ -45,7 +45,7 @@ export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
-    await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+    await underlayLayer.adjustLayerOpacity(context.data.theUnderLayerOpacityGaston);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
     await layer.compositeLayerOver(underlayLayer);
@@ -69,6 +69,7 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
+        theUnderLayerOpacityGaston: findValue(data.underLayerOpacityRange.lower, data.underLayerOpacityRange.upper, data.underLayerOpacityTimes, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),

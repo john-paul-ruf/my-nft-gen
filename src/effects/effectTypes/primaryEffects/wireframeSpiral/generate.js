@@ -4,12 +4,13 @@ import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
     layerOpacity: 0.5,
-    underLayerOpacity: 0.1,
+    underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
+    underLayerOpacityTimes: {lower: 1, upper: 6},
     stroke: 1,
     sparsityFactor: {lower: 1, upper: 3},
     speed: {lower: 5, upper: 10},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 1, upper: 3},
+    unitLength: {lower: 10, upper: 30},
     radiusConstant: 75,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
     accentTimes: {lower: 2, upper: 4},
@@ -20,7 +21,11 @@ export const generate = () => {
 
     const data = {
         layerOpacity: config.layerOpacity,
-        underLayerOpacity: config.underLayerOpacity,
+        underLayerOpacityRange: {
+            lower: getRandomIntInclusive(config.underLayerOpacityRange.bottom.lower, config.accentRange.underLayerOpacityRange.upper),
+            upper: getRandomIntInclusive(config.underLayerOpacityRange.top.lower, config.accentRange.underLayerOpacityRange.upper)
+        },
+        underLayerOpacityTimes: getRandomIntInclusive(config.underLayerOpacityTimes.lower, config.underLayerOpacityTimes.upper),
         height: finalImageSize.height * 1.3,
         width: finalImageSize.width * 1.3,
         stroke: config.stroke,
