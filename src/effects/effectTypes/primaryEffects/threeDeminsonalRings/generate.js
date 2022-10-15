@@ -9,7 +9,7 @@ const config = {
     radiusConstant: 50,
     times: {lower: 1, upper: 3},
     height: {lower: 10, upper: 60},
-    ringOpacity: {lower: 0.3, upper: 0.6},
+    ringOpacity: {lower: 0.2, upper: 0.4},
 }
 
 const computeInitialInfo = (rings) => {
