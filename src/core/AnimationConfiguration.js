@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'LIFTED 3D'
+        this.runName = 'the fade out'
 
         //For testing, render every x frame.
         this.frameInc = 1;
