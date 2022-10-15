@@ -8,7 +8,7 @@ const config = {
     ringGap: {lower: 2, upper: 3},
     radiusConstant: 50,
     times: {lower: 1, upper: 3},
-    height: {lower: 5, upper: 10},
+    height: {lower: 15, upper: 30},
     ringOpacity: {lower: 0.2, upper: 0.4},
 }
 
