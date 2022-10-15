@@ -18,13 +18,13 @@ const drawRay = async (stroke, angle, loopControl, context, flipTwist) => {
 
 const draw = async (context, filename) => {
     const loopControl = {
-        twistCount: 2,
+        twistCount: context.data.startTwistCount,
         n1: context.data.unitLength,
         n2: context.data.unitLength,
         nextTerm: context.data.unitLength + context.data.unitLength
     }
 
-    while (loopControl.nextTerm <= context.data.width) {
+    while (loopControl.nextTerm <= context.data.height) {
 
         for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
             await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context, 1)

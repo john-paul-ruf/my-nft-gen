@@ -2,7 +2,7 @@
 Software used to create my NFT artwork on [Rarible](https://rarible.com/JohnRuf).
 
 To Run:
-1. Install [node](https://nodejs.org/en/download/) (I run version 16.15.1)
+1. Install [node](https://nodejs.org/en/download/) (I run version 18.11.0)
 2. Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 3. Navigate to the root directory of the project, open a terminal
 4. From terminal, run the command: npm install

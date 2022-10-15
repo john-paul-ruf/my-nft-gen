@@ -27,13 +27,12 @@ const draw = async (context, filename) => {
 
         const geometry = new THREE.CylinderGeometry(innerRadius, innerRadius, context.data.ringsInstances[i].height, 64, 1, true);
 
-        const material = new THREE.MeshPhongMaterial({
+        const material = new THREE.MeshStandardMaterial({
             color: hexToRgba(context.data.ringsInstances[i].color),
             //emissive: hexToRgba(context.data.ringsInstances[i].emissive),
             //specular: hexToRgba(context.data.ringsInstances[i].specular),
             transparent: true,
             opacity: context.data.ringsInstances[i].ringOpacity,
-            shininess: 50,
             flatShading: false
         });
 
@@ -44,13 +43,6 @@ const draw = async (context, filename) => {
         mesh.rotation.x = degreesToRadians(90);
         mesh.rotation.z = degreesToRadians(context.data.ringsInstances[i].initialRotation);
 
-        const light = new THREE.AmbientLight(hexToRgba(context.data.light), 100);
-        light.position.set(0, 0, 0);
-        scene.add(light);
-
-
-        camera.position.z = 400;
-
         const theRotateGaston = findOneWayValue(0, 180 * context.data.ringsInstances[i].times, context.numberOfFrames, context.currentFrame);
 
         if ((i + 1) % 2 === 0) {
@@ -60,6 +52,13 @@ const draw = async (context, filename) => {
         }
 
     }
+
+    camera.position.z = 400;
+
+    const light = new THREE.SpotLight(hexToRgba(context.data.light), 15, 300);
+    light.position.set(25, 25, 250);
+    scene.add(light);
+
 
     renderer.render(scene, camera);
 

@@ -6,13 +6,13 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     sparsityFactor: {lower: 2, upper: 3},
-    gapFactor: {lower: 0.25, upper: 0.5},
+    gapFactor: {lower: 0.1, upper: 0.3},
     radiusFactor: {lower: 0.25, upper: 0.5},
     scaleFactor: 2,
     alphaRange: {bottom: {lower: 0.15, upper: 0.2}, top: {lower: 0.25, upper: 0.4}},
     alphaTimes: {lower: 4, upper: 8},
     rotationTimes: {lower: 2, upper: 2},
-    numberOfScopesInALine: 30,
+    numberOfScopesInALine: 90,
 }
 
 function getHexLine(sparsityFactor, info, i) {
