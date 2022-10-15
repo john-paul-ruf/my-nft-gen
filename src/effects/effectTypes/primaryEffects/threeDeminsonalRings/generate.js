@@ -18,7 +18,7 @@ const computeInitialInfo = (rings) => {
         info.push({
             times: getRandomIntInclusive(config.times.lower, config.times.upper),
             height: getRandomIntInclusive(config.height.lower, config.height.upper),
-            ringOpacity: getRandomIntInclusive(config.ringOpacity.lower, config.ringOpacity.upper),
+            ringOpacity: randomNumber(config.ringOpacity.lower, config.ringOpacity.upper),
             initialRotation: getRandomIntInclusive(0, 360),
             color: getColorFromBucket(),
             emissive: getColorFromBucket(),

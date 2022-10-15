@@ -26,14 +26,14 @@ const draw = async (context, filename) => {
 
     const material = new THREE.MeshPhongMaterial({
         color: hexToRgba(context.data.color),
-        emissive: hexToRgba(context.data.emissive),
-        specular: hexToRgba(context.data.specular),
+        //emissive: hexToRgba(context.data.emissive),
+        //specular: hexToRgba(context.data.specular),
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.6,
         polygonOffset: true,
         polygonOffsetUnits: 2,
         polygonOffsetFactor: 1,
-        shininess: 100,
+        shininess: 50,
         flatShading: false
     });
 
