@@ -9,7 +9,7 @@ const config = {
     radiusConstant: 50,
     times: {lower: 1, upper: 3},
     height: {lower: 10, upper: 60},
-    ringOpacity: {lower: 0.1, upper: 0.3},
+    ringOpacity: {lower: 0.3, upper: 0.6},
 }
 
 const computeInitialInfo = (rings) => {
@@ -35,7 +35,9 @@ export const generate = () => {
         ringGap: randomNumber(config.ringGap.lower, config.ringGap.upper),
         rings: getRandomIntInclusive(config.rings.lower, config.rings.upper),
         ringRadius: randomNumber(config.ringRadius.lower, config.ringRadius.upper),
-        light: getLightFromBucket(),
+        light1: getLightFromBucket(),
+        light2: getLightFromBucket(),
+        light3: getLightFromBucket(),
         getInfo: () => {
             return `${threeDimensionalRingsEffect.name}: ${data.rings} rings`
         }
