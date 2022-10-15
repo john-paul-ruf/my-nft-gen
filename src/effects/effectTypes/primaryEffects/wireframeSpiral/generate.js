@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
@@ -22,8 +22,8 @@ export const generate = () => {
     const data = {
         layerOpacity: config.layerOpacity,
         underLayerOpacityRange: {
-            lower: getRandomIntInclusive(config.underLayerOpacityRange.bottom.lower, config.accentRange.underLayerOpacityRange.upper),
-            upper: getRandomIntInclusive(config.underLayerOpacityRange.top.lower, config.accentRange.underLayerOpacityRange.upper)
+            lower: randomNumber(config.underLayerOpacityRange.bottom.lower, config.underLayerOpacityRange.bottom.upper),
+            upper: randomNumber(config.underLayerOpacityRange.top.lower, config.underLayerOpacityRange.top.upper)
         },
         underLayerOpacityTimes: getRandomIntInclusive(config.underLayerOpacityTimes.lower, config.underLayerOpacityTimes.upper),
         height: finalImageSize.height * 1.3,
