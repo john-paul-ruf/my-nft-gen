@@ -5,7 +5,7 @@ import {threeDimensionalRingsEffect} from "./effect.js";
 const config = {
     rings: {lower: 40, upper: 60},
     ringRadius: {lower: 0.5, upper: 1.5},
-    ringGap: {lower: 3, upper: 6},
+    ringGap: {lower: 2, upper: 3},
     radiusConstant: 50,
     times: {lower: 1, upper: 3},
     height: {lower: 5, upper: 10},
