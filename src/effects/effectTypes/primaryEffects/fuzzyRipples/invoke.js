@@ -2,11 +2,10 @@ import {findPointByAngleAndCircle} from "../../../../core/math/drawingMath.js";
 import {findValue} from "../../../../core/math/findValue.js";
 import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import fs from "fs";
-import {compositeImage} from "../../../supporting/compositeImage.js";
 import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
-import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -32,6 +31,30 @@ const draw = async (context, filename) => {
     await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness + context.theAccentGaston, context.data.innerColor, context.data.stroke, context.data.smallColor)
 
     await context.canvas.toFile(filename);
+}
+
+export const compositeImage = async (context, layer) => {
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.blur(context.theBlurGaston);
+
+    await underlayLayer.adjustLayerOpacity(0.5);
+    await tempLayer.adjustLayerOpacity(1);
+
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
+
+}
+
+export const processDrawFunction = async (draw, context) => {
+
+    await draw(context, context.underlayName);
+
+    context.theAccentGaston = 0;
+    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+    await draw(context, context.drawing);
 }
 
 export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => {

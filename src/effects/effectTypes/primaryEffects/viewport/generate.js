@@ -4,6 +4,8 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
+    layerOpacity: 0.8,
+    underLayerOpacity: 0.25,
     stroke: 3,
     thickness: 15,
     ampStroke: 0.75,
@@ -25,6 +27,8 @@ export const generate = () => {
     const finalImageSize = getFinalImageSize();
 
     const data = {
+        layerOpacity: config.layerOpacity,
+        underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,
         width: finalImageSize.width,
         stroke: config.stroke,

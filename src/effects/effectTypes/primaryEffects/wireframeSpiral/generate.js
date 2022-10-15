@@ -3,6 +3,8 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.1,
     stroke: 1,
     sparsityFactor: {lower: 1, upper: 3},
     speed: {lower: 5, upper: 10},
@@ -17,6 +19,8 @@ export const generate = () => {
     const finalImageSize = getFinalImageSize();
 
     const data = {
+        layerOpacity: config.layerOpacity,
+        underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height * 1.3,
         width: finalImageSize.width * 1.3,
         stroke: config.stroke,

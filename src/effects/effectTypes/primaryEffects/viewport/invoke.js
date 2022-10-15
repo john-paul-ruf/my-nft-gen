@@ -2,9 +2,8 @@ import {findValue} from "../../../../core/math/findValue.js";
 import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
-import {compositeImage} from "../../../supporting/compositeImage.js";
 import fs from "fs";
-import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const draw = async (context, filename) => {
     const theAmpGaston = findValue(context.data.ampRadius, context.data.ampRadius + context.data.ampLength + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -14,6 +13,30 @@ const draw = async (context, filename) => {
     await context.canvas.drawPolygon2d(thePolyGaston, context.data.center, 3, 210, context.data.thickness, context.data.innerColor, context.data.stroke + context.theAccentGaston, context.data.color)
 
     await context.canvas.toFile(filename);
+}
+
+export const compositeImage = async (context, layer) => {
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.blur(context.theBlurGaston);
+
+    await underlayLayer.adjustLayerOpacity(0.5);
+    await tempLayer.adjustLayerOpacity(1);
+
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
+
+}
+
+export const processDrawFunction = async (draw, context) => {
+
+    await draw(context, context.underlayName);
+
+    context.theAccentGaston = 0;
+    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+    await draw(context, context.drawing);
 }
 
 export const viewport = async (layer, data, currentFrame, numberOfFrames) => {

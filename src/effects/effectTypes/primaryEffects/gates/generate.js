@@ -3,6 +3,8 @@ import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../.
 import {gatesEffect} from "./effect.js";
 
 const config = {
+    layerOpacity: 0.75,
+    underLayerOpacity: 0.25,
     gates: {lower: 4, upper: 8},
     numberOfSides: {lower: 4, upper: 4},
     thickness: 15,
@@ -33,6 +35,8 @@ const computeInitialInfo = (num, width) => {
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
+        underLayerOpacity: config.underLayerOpacity,
         numberOfGates: getRandomIntInclusive(config.gates.lower, config.gates.upper),
         numberOfSides: getRandomIntInclusive(config.numberOfSides.lower, config.numberOfSides.upper),
         height: finalImageSize.height,

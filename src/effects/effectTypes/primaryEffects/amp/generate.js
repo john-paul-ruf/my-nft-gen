@@ -5,6 +5,8 @@ import {ampEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    layerOpacity: 0.75,
+    underLayerOpacity: 0.25,
     sparsityFactor: {lower: 2, upper: 5},
     stroke: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
@@ -14,6 +16,8 @@ const config = {
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
+        underLayerOpacity: config.underLayerOpacity,
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         height: finalImageSize.height,
         width: finalImageSize.width,

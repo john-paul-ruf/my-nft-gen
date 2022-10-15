@@ -32,7 +32,7 @@ const draw = async (context, filename) => {
             //emissive: hexToRgba(context.data.ringsInstances[i].emissive),
             //specular: hexToRgba(context.data.ringsInstances[i].specular),
             transparent: true,
-            opacity: 0.55,
+            opacity: context.data.ringsInstances[i].ringOpacity,
             shininess: 50,
             flatShading: false
         });

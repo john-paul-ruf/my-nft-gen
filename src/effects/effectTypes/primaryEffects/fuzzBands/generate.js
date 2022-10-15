@@ -5,6 +5,8 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    layerOpacity: 0.8,
+    underLayerOpacity: 0.25,
     circles: {lower: 5, upper: 10},
     stroke: 0.75,
     thickness: 1.5,
@@ -33,6 +35,8 @@ const computeInitialInfo = (num, width) => {
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
+        underLayerOpacity: config.underLayerOpacity,
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
         height: finalImageSize.height,
         width: finalImageSize.width,

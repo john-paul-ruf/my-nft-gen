@@ -2,10 +2,9 @@ import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {randomId} from "../../../../core/math/random.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import fs from "fs";
-import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 import {findValue} from "../../../../core/math/findValue.js";
-import {compositeImage} from "../../../supporting/compositeImage.js";
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const draw = async (context, filename) => {
     const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
@@ -13,6 +12,28 @@ const draw = async (context, filename) => {
         await context.canvas.drawRay2d(context.data.center, context.data.stroke + context.theAccentGaston, context.data.color, context.data.innerColor, (i + theRayGaston) % 360, context.data.lineStart, context.data.length)
     }
     await context.canvas.toFile(filename);
+}
+
+export const compositeImage = async (context, layer) => {
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.adjustLayerOpacity(0.5);
+    await tempLayer.adjustLayerOpacity(1);
+
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
+
+}
+
+export const processDrawFunction = async (draw, context) => {
+
+    await draw(context, context.underlayName);
+
+    context.theAccentGaston = 0;
+    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+    await draw(context, context.drawing);
 }
 
 export const amp = async (layer, data, currentFrame, numberOfFrames) => {

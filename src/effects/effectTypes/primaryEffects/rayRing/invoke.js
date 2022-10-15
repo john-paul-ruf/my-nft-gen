@@ -3,9 +3,8 @@ import {getWorkingDirectory,} from "../../../../core/GlobalSettings.js";
 import fs from "fs";
 import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
-import {compositeImage} from "../../../supporting/compositeImage.js";
-import {processDrawFunction} from "../../../supporting/processDrawFunction.js";
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
@@ -29,6 +28,28 @@ const draw = async (context, filename) => {
         await drawRayRingInstance(context.useAccentGaston, i, context);
     }
     await context.canvas.toFile(filename);
+}
+
+export const compositeImage = async (context, layer) => {
+    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.adjustLayerOpacity(0.5);
+    await tempLayer.adjustLayerOpacity(1);
+
+    await layer.compositeLayerOver(underlayLayer);
+    await layer.compositeLayerOver(tempLayer);
+
+}
+
+export const processDrawFunction = async (draw, context) => {
+
+    await draw(context, context.underlayName);
+
+    context.useAccentGaston = false;
+    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+    await draw(context, context.drawing);
 }
 
 export const rayRing = async (layer, data, currentFrame, numberOfFrames) => {

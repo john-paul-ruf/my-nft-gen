@@ -5,6 +5,8 @@ import {rayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.1,
     circles: {lower: 4, upper: 8},
     radiusGap: 100,
     stroke: 5,
@@ -62,6 +64,8 @@ const computeInitialInfo = (num) => {
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
+        underLayerOpacity: config.underLayerOpacity,
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
         height: finalImageSize.height,
         width: finalImageSize.width,
