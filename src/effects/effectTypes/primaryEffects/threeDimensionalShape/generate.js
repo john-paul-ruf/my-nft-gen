@@ -1,4 +1,4 @@
-import {getColorFromBucket} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getLightFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {threeDimensionalShapeEffect} from "./effect.js";
 
@@ -15,7 +15,9 @@ export const generate = () => {
         color: getColorFromBucket(),
         emissive: getColorFromBucket(),
         specular: getColorFromBucket(),
-        light: getColorFromBucket(),
+        light1: getLightFromBucket(),
+        light2: getLightFromBucket(),
+        light3: getLightFromBucket(),
         getInfo: () => {
             return `${threeDimensionalShapeEffect.name}: ${data.times} rotation speed`
         }
