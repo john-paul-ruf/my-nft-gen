@@ -4,11 +4,7 @@ import ColorScheme from "color-scheme";
 import fs from "fs";
 
 //Loading json for if we pick the nice-colors-palettes strategy
-let niceColors = null;
-const getNiceColors500 = async () => {
-    niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors-1000.json').toString())
-}
-await getNiceColors500();
+let niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors-1000.json').toString())
 
 class globalSettings {
     constructor() {
