@@ -30,6 +30,7 @@
     "color-scheme": "^1.0.1",
     "fs-xattr": "^0.4.0",
     "gl": "^6.0.1",
+    "google-palette": "^1.1.0",
     "jimp": "^0.16.1",
     "sharp": "^0.30.7",
     "three": "0.125.2"

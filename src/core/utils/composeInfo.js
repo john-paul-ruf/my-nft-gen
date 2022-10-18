@@ -2,6 +2,8 @@ import {
     getColorSchemeStrategy,
     getColorStrategy,
     getFinalImageSize,
+    getGooglePaletteSelector,
+    getGooglePaletteStrategy,
     getNiceColorPalettesStrategy,
     getSchemeInfo
 } from "../GlobalSettings.js";
@@ -37,6 +39,8 @@ const getColorInfo = () => {
             return `Strategy: ${getColorSchemeStrategy()}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
         case getNiceColorPalettesStrategy():
             return `Strategy: ${getNiceColorPalettesStrategy()}\n`
+        case getGooglePaletteStrategy():
+            return `Strategy: ${getGooglePaletteStrategy()}\nSelector: ${getGooglePaletteSelector()}\n`
         default:
             throw 'no color scheme strategy';
     }
