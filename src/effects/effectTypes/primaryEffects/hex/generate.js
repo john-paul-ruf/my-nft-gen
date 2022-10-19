@@ -3,7 +3,7 @@ import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../.
 import {hexEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.6,
+    layerOpacity: 1,
     underLayerOpacity: 0.1,
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 4, upper: 8},

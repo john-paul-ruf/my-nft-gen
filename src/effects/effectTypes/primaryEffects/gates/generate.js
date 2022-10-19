@@ -3,7 +3,7 @@ import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../.
 import {gatesEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.75,
+    layerOpacity: 1,
     underLayerOpacity: 0.25,
     gates: {lower: 4, upper: 8},
     numberOfSides: {lower: 4, upper: 4},

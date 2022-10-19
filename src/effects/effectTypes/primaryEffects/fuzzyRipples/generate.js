@@ -5,7 +5,7 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: .7,
+    layerOpacity: 1,
     underLayerOpacity: 0.25,
     stroke: 3,
     thickness: 6,

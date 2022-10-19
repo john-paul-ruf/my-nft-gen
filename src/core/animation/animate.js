@@ -1,4 +1,4 @@
-import {getFinalImageSize, getLayerStrategy, getNeutralFromBucket, getWorkingDirectory} from "../GlobalSettings.js";
+import {getFinalImageSize, getLayerStrategy, getWorkingDirectory} from "../GlobalSettings.js";
 import {generateFinalImageEffects, generatePrimaryEffects} from "../../effects/control/generateEffect.js";
 import {composeInfo} from "../utils/composeInfo.js";
 import {createSingleFrame} from "./createSingleFrame.js";
@@ -22,8 +22,8 @@ export const animate = async (config) => {
         workingDirectory: getWorkingDirectory(),
         layerStrategy: getLayerStrategy(),
 
-        backgroundColor: getNeutralFromBucket(),
-        //backgroundColor: '#ffffff',
+        //backgroundColor: getNeutralFromBucket(),
+        backgroundColor: '#ffffff',
 
         frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a gif
 
