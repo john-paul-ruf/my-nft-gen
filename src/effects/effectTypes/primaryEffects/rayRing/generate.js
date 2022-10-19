@@ -18,7 +18,7 @@ const config = {
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 75}},
-    lengthTimes: {lower: 8, upper: 16},
+    lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 4, upper: 8},
     speed: {lower: 20, upper: 20},
 }
