@@ -50,8 +50,20 @@ export class NodeCanvasStrategy {
     }
 
     async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
-        const start = findPointByAngleAndCircle(pos, angle, radius)
-        const end = findPointByAngleAndCircle(pos, angle, radius + length);
+        let start = findPointByAngleAndCircle(pos, angle, radius + outerStroke)
+        let end = findPointByAngleAndCircle(pos, angle, radius + length);
+
+        let strokeStart = findPointByAngleAndCircle(pos, angle, radius - outerStroke)
+        let strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length - outerStroke);
+
+        if (length < 0) {
+            start = findPointByAngleAndCircle(pos, angle, radius - outerStroke);
+            end = findPointByAngleAndCircle(pos, angle, radius + length);
+
+            strokeStart = findPointByAngleAndCircle(pos, angle, radius + outerStroke)
+            strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length + outerStroke);
+        }
+
 
         this.context.beginPath();
 
@@ -64,15 +76,15 @@ export class NodeCanvasStrategy {
         this.context.stroke();
         this.context.closePath();
 
-        //TODO THINK ON THIS
-        if (innerColor > 0) {
+        //TODO THINK ON THIS - WOW I WAS TIRED
+        if (innerStroke > 0) {
             this.context.beginPath();
 
             this.context.lineWidth = innerStroke;
             this.context.strokeStyle = innerColor;
 
-            this.context.moveTo(start.x, start.y);
-            this.context.lineTo(end.x, end.y);
+            this.context.moveTo(strokeStart.x, strokeStart.y);
+            this.context.lineTo(strokeEnd.x, strokeEnd.y);
 
             this.context.stroke();
             this.context.closePath();
