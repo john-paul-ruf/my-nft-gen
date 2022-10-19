@@ -22,6 +22,7 @@ import {rayRingEffect} from "../src/effects/effectTypes/primaryEffects/rayRing/e
 import {ampEffect} from "../src/effects/effectTypes/primaryEffects/amp/effect.js";
 import {threeDimensionalShapeEffect} from "../src/effects/effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 import {threeDimensionalRingsEffect} from "../src/effects/effectTypes/primaryEffects/threeDeminsonalRings/effect.js";
+import {invertedRayRingEffect} from "../src/effects/effectTypes/primaryEffects/invertedRayRing/effect.js";
 
 
 test('no null or undefined in scopesEffect generate function', () => {
@@ -126,5 +127,10 @@ test('no null or undefined in three-dimensional-shape generate function', () => 
 
 test('no null or undefined in three-dimensional-ring generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(threeDimensionalRingsEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
+
+test('no null or undefined in inverted-ray-rings generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(invertedRayRingEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });

@@ -24,11 +24,13 @@ import {rayRingEffect} from "../effectTypes/primaryEffects/rayRing/effect.js";
 import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/effect.js";
 import {threeDimensionalShapeEffect} from "../effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 import {threeDimensionalRingsEffect} from "../effectTypes/primaryEffects/threeDeminsonalRings/effect.js";
+import {invertedRayRingEffect} from "../effectTypes/primaryEffects/invertedRayRing/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
     scopesEffect,
     wireframeSpiralEffect,
+    invertedRayRingEffect,
     rayRingEffect,
     ampEffect,
     fuzzBandsEffect,
