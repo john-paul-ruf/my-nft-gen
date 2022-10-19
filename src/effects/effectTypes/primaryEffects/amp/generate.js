@@ -8,7 +8,7 @@ const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.25,
     sparsityFactor: {lower: 2, upper: 5},
-    stroke: 0.5,
+    stroke: 1,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},

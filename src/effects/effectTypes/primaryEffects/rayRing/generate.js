@@ -6,14 +6,14 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    underLayerOpacity: 0.1,
+    underLayerOpacity: 0.4,
     circles: {lower: 4, upper: 8},
     radiusGap: 100,
-    stroke: 1,
+    stroke: 3,
     thickness: 12,
+    rayStroke: 3,
+    rayThickness: 1,
     scaleFactor: 2,
-    rayStroke: 1,
-    rayThickness: 3,
     densityFactor: 0.90,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},

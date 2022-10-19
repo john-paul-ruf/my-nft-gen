@@ -4,7 +4,7 @@ import {hexEffect} from "./effect.js";
 
 const config = {
     layerOpacity: 1,
-    underLayerOpacity: 0.1,
+    underLayerOpacity: 0.3,
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 4, upper: 8},
     radiusFactor: {lower: 1, upper: 3},
@@ -12,8 +12,8 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
-    stroke: 0.1,
-    thickness: 1,
+    stroke: 0.25,
+    thickness: 0.5,
     scaleFactor: 2,
 }
 
