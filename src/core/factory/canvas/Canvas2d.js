@@ -30,8 +30,8 @@ export class Canvas2d {
         await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor);
     }
 
-    async drawRay2d(pos, stroke, color, innerColor, angle, radius, length) {
-        await this.strategy.drawRay2d(pos, stroke, color, innerColor, angle, radius, length);
+    async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
+        await this.strategy.drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor);
     }
 
     async drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor) {

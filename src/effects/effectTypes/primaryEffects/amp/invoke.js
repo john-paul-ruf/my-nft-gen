@@ -9,7 +9,16 @@ import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 const draw = async (context, filename) => {
     const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
     for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
-        await context.canvas.drawRay2d(context.data.center, context.data.stroke + context.theAccentGaston, context.data.color, context.data.innerColor, (i + theRayGaston) % 360, context.data.lineStart, context.data.length)
+        await context.canvas.drawRay2d(
+            context.data.center,
+            (i + theRayGaston) % 360,
+            context.data.lineStart,
+            context.data.length,
+            context.data.thickness,
+            context.data.innerColor,
+            context.data.stroke,
+            context.data.outerColor
+        )
     }
     await context.canvas.toFile(filename);
 }

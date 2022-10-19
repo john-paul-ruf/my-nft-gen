@@ -49,31 +49,40 @@ export class NodeCanvasStrategy {
         this.context.closePath();
     }
 
-    async drawRay2d(pos, stroke, color, innerColor, angle, radius, length) {
+    async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
         const start = findPointByAngleAndCircle(pos, angle, radius)
         const end = findPointByAngleAndCircle(pos, angle, radius + length);
 
         this.context.beginPath();
 
-        const grad = this.context.createLinearGradient(start.x, start.y, end.x, end.y);
-        grad.addColorStop(0, color);
-        grad.addColorStop(0.5, innerColor);
-        grad.addColorStop(1, color);
-
-        this.context.lineWidth = stroke;
-        this.context.strokeStyle = grad;
+        this.context.lineWidth = outerStroke + innerStroke;
+        this.context.strokeStyle = outerColor;
 
         this.context.moveTo(start.x, start.y);
         this.context.lineTo(end.x, end.y);
 
         this.context.stroke();
         this.context.closePath();
+
+        //TODO THINK ON THIS
+        if (innerColor > 0) {
+            this.context.beginPath();
+
+            this.context.lineWidth = innerStroke;
+            this.context.strokeStyle = innerColor;
+
+            this.context.moveTo(start.x, start.y);
+            this.context.lineTo(end.x, end.y);
+
+            this.context.stroke();
+            this.context.closePath();
+        }
+
     }
 
     async drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor) {
         for (let i = 0; i < 360; i = i + sparsityFactor) {
-            await this.drawRay2d(pos, innerStroke + outerStroke, outerColor, innerColor, i, radius, length)
-            await this.drawRay2d(pos, innerStroke, innerColor, innerColor, i, radius, length)
+            await this.drawRay2d(pos, i, radius, length, innerStroke, innerColor, outerStroke, outerColor)
         }
     }
 

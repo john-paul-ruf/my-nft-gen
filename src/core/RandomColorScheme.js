@@ -17,8 +17,8 @@ export class RandomColorScheme {
                 this.colorStrategy = this.colorSchemeStrategy;
                 break;
             case 1:
-                this.colorStrategy = this.niceColorPalettesStrategy;
-                break;
+            /*  this.colorStrategy = this.niceColorPalettesStrategy;
+              break;*/
             case 2:
                 this.colorStrategy = this.googlePaletteStrategy;
                 break;
