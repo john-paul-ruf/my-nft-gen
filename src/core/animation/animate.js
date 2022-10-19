@@ -23,7 +23,7 @@ export const animate = async (config) => {
         layerStrategy: getLayerStrategy(),
 
         //backgroundColor: getNeutralFromBucket(),
-        backgroundColor: '#ffffff',
+        backgroundColor: '#2f2f2f',
 
         frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a gif
 
