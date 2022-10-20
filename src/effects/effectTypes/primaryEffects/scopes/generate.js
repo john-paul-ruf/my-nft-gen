@@ -5,8 +5,8 @@ import {scopesEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    sparsityFactor: {lower: .5, upper: 1},
-    gapFactor: {lower: 0.1, upper: 0.3},
+    sparsityFactor: {lower: 2, upper: 3},
+    gapFactor: {lower: 0.3, upper: 0.5},
     radiusFactor: {lower: 0.1, upper: 0.2},
     scaleFactor: 2,
     alphaRange: {bottom: {lower: 0.15, upper: 0.2}, top: {lower: 0.25, upper: 0.4}},
