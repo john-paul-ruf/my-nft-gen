@@ -16,7 +16,7 @@ const config = {
     thickness: 1,
     scaleFactor: 2,
     numberOfHex: 15,
-    strategy: ['static', 'angle', 'rotate'],
+    strategy: ['static',/* 'angle', 'rotate'*/],
 }
 
 const finalImageSize = getFinalImageSize();
