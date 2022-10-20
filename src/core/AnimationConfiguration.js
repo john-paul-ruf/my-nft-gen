@@ -20,7 +20,7 @@ export class animationConfiguration {
         this.numberOfFrame = 300;
 
         this.finalFileName = 'Final' + randomId();
-        this.fileOut = '/Users/jpr/Library/CloudStorage/OneDrive-Personal/_ZEN_/my-nft-output/' + this.finalFileName;
+        this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
     }
 }
 
