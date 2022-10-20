@@ -22,12 +22,22 @@ const drawHexLine = async (angle, index, context) => {
     const gapRadius = ((finalImageSize.height * .05) + radius + (context.data.gapFactor * scaleBy) * loopCount)
     const pos = findPointByAngleAndCircle(context.data.center, theAngleGaston, gapRadius)
 
-    await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+    switch (context.data.strategy) {
+        case 'rotate':
+            await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+            break;
+        case 'angle':
+            await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+            break;
+        case 'static':
+            await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+            break;
+    }
 }
 
 const draw = async (context, filename) => {
     context.accentBoost = context.theAccentGaston;
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < context.data.numberOfHex; i++) {
         for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
             await drawHexLine(a, i, context)
         }

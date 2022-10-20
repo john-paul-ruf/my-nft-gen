@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'the fade out'
+        this.runName = 'the return of the hex'
 
         //For testing, render every x frame.
         this.frameInc = 1;

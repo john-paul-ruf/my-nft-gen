@@ -21,6 +21,11 @@ class globalSettings {
             '#5b5b5b',
             '#7f7f7f',*/];
 
+        //For 2D palettes
+        this.backgrounds = [
+            '#2f2f2f',
+        ];
+
         //for three-dimensional lighting
         this.lights = [
             '#44ee44',
@@ -40,6 +45,10 @@ export const getColorFromBucket = () => {
 
 export const getNeutralFromBucket = () => {
     return globals.neutrals[getRandomIntExclusive(0, globals.neutrals.length)]
+}
+
+export const getBackgroundFromBucket = () => {
+    return globals.backgrounds[getRandomIntExclusive(0, globals.backgrounds.length)]
 }
 
 export const getLightFromBucket = () => {

@@ -7,20 +7,24 @@ const config = {
     underLayerOpacity: 0.3,
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 4, upper: 8},
-    radiusFactor: {lower: 1, upper: 3},
+    radiusFactor: {lower: 10, upper: 13},
     accentRange: {bottom: {lower: 0.25, upper: 0.5}, top: {lower: .75, upper: 1.25}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     stroke: 0.25,
-    thickness: 0.5,
+    thickness: 1,
     scaleFactor: 2,
+    numberOfHex: 15,
+    strategy: 'static' //'angle', 'rotate'
 }
 
 const finalImageSize = getFinalImageSize();
 
 export const generate = () => {
     const data = {
+        numberOfHex: config.numberOfHex,
+        strategy: config.strategy,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,
