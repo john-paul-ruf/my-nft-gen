@@ -1,13 +1,13 @@
-import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {hexEffect} from "./effect.js";
 
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.3,
-    sparsityFactor: {lower: 12, upper: 12},
+    sparsityFactor: {lower: 12, upper: 18},
     gapFactor: {lower: 4, upper: 8},
-    radiusFactor: {lower: 10, upper: 13},
+    radiusFactor: {lower: 8, upper: 12},
     accentRange: {bottom: {lower: 0.25, upper: 0.5}, top: {lower: .75, upper: 1.25}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 4},
@@ -16,7 +16,7 @@ const config = {
     thickness: 1,
     scaleFactor: 2,
     numberOfHex: 15,
-    strategy: 'static' //'angle', 'rotate'
+    strategy: ['static', 'angle', 'rotate'],
 }
 
 const finalImageSize = getFinalImageSize();
@@ -24,7 +24,7 @@ const finalImageSize = getFinalImageSize();
 export const generate = () => {
     const data = {
         numberOfHex: config.numberOfHex,
-        strategy: config.strategy,
+        strategy: config.strategy[getRandomIntExclusive(0, config.strategy.length)],
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,
@@ -49,7 +49,7 @@ export const generate = () => {
         color: getColorFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
-            return `${hexEffect.name}: sparsityFactor: ${data.sparsityFactor}, gapFactor: ${data.gapFactor}, radiusFactor: ${data.radiusFactor}`
+            return `${hexEffect.name}: strategy: ${data.strategy}, sparsity: ${data.sparsityFactor}, gap: ${data.gapFactor}, radius: ${data.radiusFactor}`
         }
     }
 

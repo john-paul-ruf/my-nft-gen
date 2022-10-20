@@ -14,7 +14,7 @@ const drawHexLine = async (angle, index, context) => {
     const direction = loopCount % 2;
     const invert = direction <= 0;
 
-    const theAngleGaston = findOneWayValue(angle, angle + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
+    const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
     const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, context.numberOfFrames, context.currentFrame, invert)
 
     const scaleBy = (context.data.scaleFactor * loopCount);
