@@ -14,8 +14,8 @@ export class RandomColorScheme {
 
         switch (getRandomIntInclusive(0, 2)) {
             case 0:
-                this.colorStrategy = this.colorSchemeStrategy;
-                break;
+            /* this.colorStrategy = this.colorSchemeStrategy;
+             break;*/
             case 1:
             /*  this.colorStrategy = this.niceColorPalettesStrategy;
               break;*/
