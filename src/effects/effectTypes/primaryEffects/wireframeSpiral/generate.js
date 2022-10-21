@@ -9,7 +9,7 @@ const config = {
     startTwistCount: {lower: 11, upper: 11},
     stroke: 0.5,
     thickness: 2,
-    sparsityFactor: {lower: 20, upper: 25},
+    sparsityFactor: {lower: 10, upper: 15},
     speed: {lower: 1, upper: 2},
     counterClockwise: {lower: 0, upper: 1},
     unitLength: {lower: 18, upper: 22},
