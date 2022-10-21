@@ -1,12 +1,4 @@
-import {
-    getColorSchemeStrategy,
-    getColorStrategy,
-    getFinalImageSize,
-    getGooglePaletteSelector,
-    getGooglePaletteStrategy,
-    getNiceColorPalettesStrategy,
-    getSchemeInfo
-} from "../GlobalSettings.js";
+import {getColorSchemeInfo, getFinalImageSize} from "../GlobalSettings.js";
 
 //This function makes use of the newline character \n and spaces for formatting
 //https://stackoverflow.com/questions/1155678/what-is-the-javascript-string-newline-character
@@ -28,22 +20,7 @@ const getEffectInfo = (effectList) => {
 }
 
 const getColorInfo = () => {
-
-    let schemeInfo = null;
-
-    const colorStrategy = getColorStrategy();
-
-    switch (colorStrategy) {
-        case getColorSchemeStrategy():
-            schemeInfo = getSchemeInfo();
-            return `Strategy: ${getColorSchemeStrategy()}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
-        case getNiceColorPalettesStrategy():
-            return `Strategy: ${getNiceColorPalettesStrategy()}\n`
-        case getGooglePaletteStrategy():
-            return `Strategy: ${getGooglePaletteStrategy()}\nSelector: ${getGooglePaletteSelector()}\n`
-        default:
-            throw 'no color scheme strategy';
-    }
+    return getColorSchemeInfo();
 }
 
 

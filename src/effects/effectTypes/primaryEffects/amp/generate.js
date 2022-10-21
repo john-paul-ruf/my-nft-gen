@@ -10,8 +10,8 @@ const config = {
     sparsityFactor: {lower: 2, upper: 5},
     stroke: 1,
     thickness: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    accentTimes: {lower: 0, upper: 0},
     speed: {lower: 15, upper: 30},
 }
 

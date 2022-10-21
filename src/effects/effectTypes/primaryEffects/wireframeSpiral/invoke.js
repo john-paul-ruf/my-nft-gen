@@ -17,11 +17,14 @@ const drawLine = async (angle, loopControl, context, flipTwist, thickness, color
 }
 
 async function spiral(context, thickness, color) {
+
+    const unitLength = context.data.unitLength + context.theUnitLengthGaston;
+    
     const loopControl = {
         twistCount: context.data.startTwistCount,
-        n1: context.data.unitLength,
-        n2: context.data.unitLength,
-        nextTerm: context.data.unitLength + context.data.unitLength
+        n1: unitLength,
+        n2: unitLength,
+        nextTerm: unitLength + unitLength
     }
 
     while (loopControl.nextTerm <= context.data.height) {
@@ -74,6 +77,7 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
+        theUnitLengthGaston: findValue(0, data.unitLengthChangeConstant, 1, numberOfFrames, currentFrame),
         theUnderLayerOpacityGaston: findValue(data.underLayerOpacityRange.lower, data.underLayerOpacityRange.upper, data.underLayerOpacityTimes, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png',

@@ -55,28 +55,8 @@ export const getLightFromBucket = () => {
     return globals.lights[getRandomIntExclusive(0, globals.lights.length)]
 }
 
-export const getColorSchemeStrategy = () => {
-    return globals.randomColorScheme.getColorSchemeStrategy();
-}
-
-export const getNiceColorPalettesStrategy = () => {
-    return globals.randomColorScheme.getNiceColorPalettesStrategy();
-}
-
-export const getGooglePaletteStrategy = () => {
-    return globals.randomColorScheme.getGooglePaletteStrategy();
-}
-
-export const getGooglePaletteSelector = () => {
-    return globals.randomColorScheme.getGooglePaletteSelector();
-}
-
-export const getColorStrategy = () => {
-    return globals.randomColorScheme.getColorStrategy();
-}
-
-export const getSchemeInfo = () => {
-    return globals.randomColorScheme.getSchemeInfo();
+export const getColorSchemeInfo = () => {
+    return globals.randomColorScheme.getColorSchemeInfo();
 }
 
 export const getWorkingDirectory = () => {
