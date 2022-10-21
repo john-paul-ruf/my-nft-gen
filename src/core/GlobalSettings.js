@@ -2,6 +2,9 @@
 import {getRandomIntExclusive} from "./math/random.js";
 import {RandomColorScheme} from "./RandomColorScheme.js";
 
+const finalImageHeight = 1280;
+const finalImageWidth = 720;
+
 class globalSettings {
     constructor() {
         this.randomColorScheme = new RandomColorScheme();
@@ -11,8 +14,6 @@ class globalSettings {
 
         this.workingDirectory = `src/img/working/`;
 
-        this.finalImageHeight = 1920;
-        this.finalImageWidth = 1080;
 
         //For 2D palettes
         this.neutrals = [
@@ -23,7 +24,7 @@ class globalSettings {
 
         //For 2D palettes
         this.backgrounds = [
-            '#000000',
+            '#59656d',
         ];
 
         //for three-dimensional lighting
@@ -37,7 +38,11 @@ class globalSettings {
     }
 }
 
-const globals = new globalSettings();
+let globals = null;
+
+export const resetGlobalSettings = () => {
+    globals = new globalSettings();
+}
 
 export const getColorFromBucket = () => {
     return globals.randomColorScheme.getColorFromBucket();
@@ -65,7 +70,7 @@ export const getWorkingDirectory = () => {
 
 export const getFinalImageSize = () => {
     return {
-        width: globals.finalImageWidth, height: globals.finalImageHeight
+        width: finalImageWidth, height: finalImageHeight
     }
 }
 

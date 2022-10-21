@@ -8,9 +8,9 @@ const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.4,
     circles: {lower: 6, upper: 12},
-    radiusGap: 125,
+    radiusGap: 100,
     stroke: 1,
-    thickness: 8,
+    thickness: 4,
     rayStroke: 1,
     rayThickness: 1,
     scaleFactor: 2,
@@ -19,10 +19,10 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 0},
-    lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 75}},
+    lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}},
     lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 4, upper: 8},
-    speed: {lower: 20, upper: 20},
+    speed: {lower: 10, upper: 10},
 }
 
 const getRays = (sparsityFactor) => {

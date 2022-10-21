@@ -9,7 +9,6 @@ const config = {
     times: {lower: 8, upper: 16},
     alphaRange: {bottom: {lower: 0, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
     alphaTimes: {lower: 4, upper: 8},
-    color: getColorFromBucket()
 }
 
 const getPixelTrailLength = () => {
@@ -54,7 +53,7 @@ export const generate = () => {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
         height: finalImageSize.height + (config.maxlength.upper),
         width: finalImageSize.width,
-        color: config.color,
+        color: getColorFromBucket(),
         getInfo: () => {
             return `${verticalScanLinesEffect.name}: ${data.numberOfLines} lines`
         }

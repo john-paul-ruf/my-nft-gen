@@ -12,16 +12,17 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 0},
-    stroke: 0.25,
+    stroke: 0.1,
     thickness: 0.25,
     scaleFactor: 2,
-    numberOfHex: 15,
+    numberOfHex: 10,
     strategy: ['static',/* 'angle', 'rotate'*/],
 }
 
-const finalImageSize = getFinalImageSize();
 
 export const generate = () => {
+    const finalImageSize = getFinalImageSize();
+
     const data = {
         numberOfHex: config.numberOfHex,
         strategy: config.strategy[getRandomIntExclusive(0, config.strategy.length)],

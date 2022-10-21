@@ -7,9 +7,11 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const finalImageSize = getFinalImageSize();
 
 const drawHexLine = async (angle, index, context) => {
+
+    const finalImageSize = getFinalImageSize();
+
     const loopCount = index + 1;
     const direction = loopCount % 2;
     const invert = direction <= 0;
