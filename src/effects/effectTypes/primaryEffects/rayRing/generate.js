@@ -11,7 +11,7 @@ const config = {
     radiusGap: 125,
     stroke: 1,
     thickness: 8,
-    rayStroke: 0.5,
+    rayStroke: 1,
     rayThickness: 1,
     scaleFactor: 2,
     densityFactor: 0.90,
