@@ -39,7 +39,7 @@ export const generate = () => {
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
-        center: {x: finalImageSize.width * 1.3 / 2, y: finalImageSize.height * 1.3 / 2},
+        center: {x: finalImageSize.width * 2 / 2, y: finalImageSize.height * 2 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
         radiusConstant: config.radiusConstant,
