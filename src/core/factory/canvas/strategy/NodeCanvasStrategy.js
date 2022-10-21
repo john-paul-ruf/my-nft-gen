@@ -50,45 +50,25 @@ export class NodeCanvasStrategy {
     }
 
     async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
-        let start = findPointByAngleAndCircle(pos, angle, radius + outerStroke)
-        let end = findPointByAngleAndCircle(pos, angle, radius + length);
 
-        let strokeStart = findPointByAngleAndCircle(pos, angle, radius - outerStroke)
-        let strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length - outerStroke);
+        const adjustment = outerStroke;
+
+        let start = findPointByAngleAndCircle(pos, angle, radius - adjustment)
+        let end = findPointByAngleAndCircle(pos, angle, radius + length - adjustment);
+
+        let strokeStart = findPointByAngleAndCircle(pos, angle, radius)
+        let strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length);
 
         if (length < 0) {
-            start = findPointByAngleAndCircle(pos, angle, radius - outerStroke);
-            end = findPointByAngleAndCircle(pos, angle, radius + length);
+            start = findPointByAngleAndCircle(pos, angle, radius + adjustment);
+            end = findPointByAngleAndCircle(pos, angle, radius + length + adjustment);
 
-            strokeStart = findPointByAngleAndCircle(pos, angle, radius + outerStroke)
-            strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length + outerStroke);
+            strokeStart = findPointByAngleAndCircle(pos, angle, radius)
+            strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length);
         }
 
-
-        this.context.beginPath();
-
-        this.context.lineWidth = outerStroke + innerStroke;
-        this.context.strokeStyle = outerColor;
-
-        this.context.moveTo(start.x, start.y);
-        this.context.lineTo(end.x, end.y);
-
-        this.context.stroke();
-        this.context.closePath();
-
-        //TODO THINK ON THIS - WOW I WAS TIRED
-        if (innerStroke > 0) {
-            this.context.beginPath();
-
-            this.context.lineWidth = innerStroke;
-            this.context.strokeStyle = innerColor;
-
-            this.context.moveTo(strokeStart.x, strokeStart.y);
-            this.context.lineTo(strokeEnd.x, strokeEnd.y);
-
-            this.context.stroke();
-            this.context.closePath();
-        }
+        await this.drawLine2d(strokeStart, strokeEnd, innerStroke + outerStroke, outerColor, innerStroke + outerStroke, outerColor);
+        await this.drawLine2d(start, end, innerStroke, innerColor, innerStroke, innerColor);
 
     }
 

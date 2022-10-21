@@ -13,7 +13,7 @@ const config = {
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     stroke: 0.25,
-    thickness: 0.5,
+    thickness: 0.25,
     scaleFactor: 2,
     numberOfHex: 15,
     strategy: ['static',/* 'angle', 'rotate'*/],
