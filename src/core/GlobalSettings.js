@@ -23,7 +23,7 @@ class globalSettings {
 
         //For 2D palettes
         this.backgrounds = [
-            '#000000',
+            '#FFFFFF',
         ];
 
         //for three-dimensional lighting

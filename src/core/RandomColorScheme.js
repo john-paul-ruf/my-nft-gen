@@ -4,7 +4,7 @@ import ColorScheme from "color-scheme";
 import fs from "fs";
 
 //Loading json for if we pick the nice-colors-palettes strategy
-let niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors-1000.json').toString())
+let niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors.json').toString())
 let colrOrgColors = JSON.parse(fs.readFileSync('src/data/colr-org-1000-10-plus.json').toString())
 
 export class RandomColorScheme {
@@ -16,11 +16,11 @@ export class RandomColorScheme {
 
         switch (getRandomIntInclusive(0, 3)) {
             case 0:
-            /* this.colorStrategy = this.colorSchemeStrategy;
-             break;*/
+                this.colorStrategy = this.colorSchemeStrategy;
+                break;
             case 1:
-            /*  this.colorStrategy = this.niceColorPalettesStrategy;
-              break;*/
+                this.colorStrategy = this.niceColorPalettesStrategy;
+                break;
             case 2:
                 this.colorStrategy = this.googlePaletteStrategy;
                 break;
@@ -34,25 +34,24 @@ export class RandomColorScheme {
             case this.colorSchemeStrategy:
 
                 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
-                const schemeBucket = ['contrast'];
+                const schemeBucket = ['contrast', 'triade', 'tetrade', 'analogic'];
 
                 //'default', 'pastel', 'soft', 'light', 'hard', 'pale'
                 const variationBucket = ['hard'];
 
-                const getColorBucket = () => {
-                    const bucket = new ColorScheme();
-                    return bucket.from_hue(this.hue)
-                        .scheme(this.scheme)
-                        .distance(this.distance)
-                        .variation(this.variations)
-                        .colors();
-                }
-
                 this.scheme = schemeBucket[getRandomIntExclusive(0, schemeBucket.length)];
                 this.variations = variationBucket[getRandomIntExclusive(0, variationBucket.length)];
                 this.hue = getRandomIntExclusive(0, 360);
-                this.distance = randomNumber(0, 0.8);
-                this.colorBucket = getColorBucket()
+                this.distance = randomNumber(0, 1);
+
+                const bucket = new ColorScheme();
+
+                this.colorBucket = bucket.from_hue(this.hue)
+                    .scheme(this.scheme)
+                    .variation(this.variations)
+                    .distance(this.distance.toFixed(2))
+                    .add_complement(true)
+                    .colors();
 
                 break;
             case this.niceColorPalettesStrategy:
