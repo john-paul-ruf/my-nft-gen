@@ -8,8 +8,8 @@ const config = {
     sparsityFactor: {lower: 12, upper: 18},
     gapFactor: {lower: 4, upper: 8},
     radiusFactor: {lower: 8, upper: 12},
-    accentRange: {bottom: {lower: 0.25, upper: 0.5}, top: {lower: .75, upper: 1.25}}, //x scale factor x loop count
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+    accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
     stroke: 0.25,

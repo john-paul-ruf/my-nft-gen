@@ -16,8 +16,8 @@ const config = {
     sparsityFactor: {lower: 1, upper: 3},
     amplitude: {lower: 20, upper: 50},
     times: {lower: 1, upper: 1},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 14, upper: 18}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 2, upper: 4},
     blurTimes: {lower: 2, upper: 4},
 }

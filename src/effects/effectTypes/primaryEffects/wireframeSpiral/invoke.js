@@ -7,16 +7,16 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const drawRay = async (stroke, angle, loopControl, context, flipTwist) => {
+const drawLine = async (angle, loopControl, context, flipTwist, thickness, color) => {
     angle = angle + (((context.data.sparsityFactor * context.data.speed) / context.numberOfFrames) * context.currentFrame) * context.data.direction;
 
     const start = findPointByAngleAndCircle(context.data.center, angle, loopControl.n2 + context.data.radiusConstant)
     const end = findPointByAngleAndCircle(context.data.center, angle + (loopControl.twistCount * flipTwist * context.data.sparsityFactor), loopControl.nextTerm + context.data.radiusConstant);
 
-    await context.canvas.drawGradientLine2d(start, end, stroke, context.data.color1, context.data.color2);
+    await context.canvas.drawLine2d(start, end, thickness, color, thickness, color);
 }
 
-const draw = async (context, filename) => {
+async function spiral(context, thickness, color) {
     const loopControl = {
         twistCount: context.data.startTwistCount,
         n1: context.data.unitLength,
@@ -27,8 +27,8 @@ const draw = async (context, filename) => {
     while (loopControl.nextTerm <= context.data.height) {
 
         for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
-            await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context, 1)
-            await drawRay(context.data.stroke + context.theAccentGaston, i, loopControl, context, -1)
+            await drawLine(i, loopControl, context, 1, thickness, color)
+            await drawLine(i, loopControl, context, -1, thickness, color)
         }
 
         //assignment for next loop
@@ -37,6 +37,11 @@ const draw = async (context, filename) => {
         loopControl.n2 = loopControl.nextTerm;
         loopControl.nextTerm = loopControl.n1 + loopControl.n2;
     }
+}
+
+const draw = async (context, filename) => {
+    await spiral(context, context.data.thickness + context.data.stroke, context.data.outerColor);
+    await spiral(context, context.data.thickness, context.data.innerColor);
 
     await context.canvas.toFile(filename)
 }

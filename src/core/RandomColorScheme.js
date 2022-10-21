@@ -54,9 +54,14 @@ export class RandomColorScheme {
                 this.colorBucket = niceColors[getRandomIntExclusive(0, niceColors.length)];
                 break;
             case this.googlePaletteStrategy:
-                switch (getRandomIntInclusive(0, 15)) {
+                switch (getRandomIntInclusive(0, 20)) {
                     case 0:
-                        this.googlePaletteSelector = 'mpn65';
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                        this.googlePaletteSelector = 'mpn65'; //MY ABSOLUTE FAV RIGHT NOW
                         break;
                     case 1:
                         this.googlePaletteSelector = 'tol';

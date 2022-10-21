@@ -181,4 +181,31 @@ export class NodeCanvasStrategy {
 
         this.context.restore();
     }
+
+    async drawLine2d(start, end, innerStroke, innerColor, outerStroke, outerColor) {
+
+        this.context.beginPath();
+
+        this.context.lineWidth = outerStroke + innerStroke;
+        this.context.strokeStyle = outerColor;
+
+        this.context.moveTo(start.x, start.y);
+        this.context.lineTo(end.x, end.y);
+
+        this.context.stroke();
+        this.context.closePath();
+
+        if (innerStroke > 0) {
+            this.context.beginPath();
+
+            this.context.lineWidth = innerStroke;
+            this.context.strokeStyle = innerColor;
+
+            this.context.moveTo(start.x, start.y);
+            this.context.lineTo(end.x, end.y);
+
+            this.context.stroke();
+            this.context.closePath();
+        }
+    }
 }

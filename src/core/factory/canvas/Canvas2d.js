@@ -46,6 +46,10 @@ export class Canvas2d {
         await this.strategy.drawGradientLine2d(startPos, endPos, stroke, startColor, endColor);
     }
 
+    async drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor) {
+        await this.strategy.drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor);
+    }
+
     async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
         await this.strategy.drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha);
     }
