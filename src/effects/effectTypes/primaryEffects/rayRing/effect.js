@@ -6,6 +6,6 @@ export const effect = {
 }
 
 export const rayRingEffect = {
-    name: 'ray-rings', generateData: generate, effect: effect, effectChance: 40, requiresLayer: true,
+    name: 'ray-rings', generateData: generate, effect: effect, effectChance: 30, requiresLayer: true,
 }
 

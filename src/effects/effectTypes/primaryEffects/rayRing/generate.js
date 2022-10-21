@@ -10,7 +10,7 @@ const config = {
     circles: {lower: 4, upper: 8},
     radiusGap: 125,
     stroke: 2,
-    thickness: 24,
+    thickness: 12,
     rayStroke: 2,
     rayThickness: 4,
     scaleFactor: 2,

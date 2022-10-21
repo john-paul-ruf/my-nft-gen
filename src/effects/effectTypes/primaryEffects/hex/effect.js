@@ -9,7 +9,7 @@ export const hexEffect = {
     name: 'hex',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 30,
     requiresLayer: true,
 }
 
