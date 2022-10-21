@@ -61,7 +61,7 @@ export class RandomColorScheme {
                 this.colorBucket = colrOrgColors[getRandomIntExclusive(0, colrOrgColors.length)];
                 break;
             case this.googlePaletteStrategy:
-                switch (getRandomIntInclusive(0, 5)) {
+                switch (getRandomIntInclusive(0, 4)) {
                     case 0:
                         this.googlePaletteSelector = 'mpn65'; //MY ABSOLUTE FAV RIGHT NOW
                         break;
@@ -76,9 +76,6 @@ export class RandomColorScheme {
                         break;
                     case 4:
                         this.googlePaletteSelector = 'tol-rainbow';
-                        break;
-                    case 5:
-                        this.googlePaletteSelector = 'cb-BrBG';
                         break;
                     default:
                         throw 'no google palette selected';
