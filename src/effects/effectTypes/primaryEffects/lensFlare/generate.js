@@ -58,7 +58,7 @@ const getFlareHexArray = (num) => {
             strokeColor: config.getFlareColor(),
             sides: getRandomIntInclusive(6, 6), //ended up with hex...
             angle: getRandomIntInclusive(0, 360),
-            offset: getRandomIntInclusive(-finalImageSize.width * 0.1, finalImageSize.width * 0.1,),
+            offset: getRandomIntInclusive(-finalImageSize.width * 0.1, finalImageSize.width * 0.1),
             opacity: {
                 lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
