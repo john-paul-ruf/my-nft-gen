@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
 
     layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.1}},
-    layerOpacityTimes: {lower: 2, upper: 8},
+    layerOpacityTimes: {lower: 1, upper: 3},
 
     elementOpacity: {lower: 0.1, upper: 0.25},
 
@@ -55,6 +55,8 @@ const getFlareHexArray = (num) => {
             color: config.getFlareColor(),
             sides: getRandomIntInclusive(5, 12),
             angle: getRandomIntInclusive(0, 360),
+            offsetX: getRandomIntInclusive(finalImageSize.width * 0.01),
+            offsetY: getRandomIntInclusive(finalImageSize.height * 0.01),
             opacity: randomNumber(config.elementOpacity.lower, config.elementOpacity.upper),
         });
     }
