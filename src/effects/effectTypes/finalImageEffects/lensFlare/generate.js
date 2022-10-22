@@ -53,6 +53,7 @@ const getFlareHexArray = (num) => {
         info.push({
             size: getRandomIntInclusive(config.flareHexSizeRange.lower, config.flareHexSizeRange.upper),
             color: config.getFlareColor(),
+            sides: getRandomIntInclusive(5, 12),
             opacity: randomNumber(config.elementOpacity.lower, config.elementOpacity.upper),
         });
     }
