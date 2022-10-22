@@ -19,7 +19,7 @@ const config = {
     flareRingStroke: {lower: 0.25, upper: 1},
 
     numberOfFlareRays: {lower: 80, upper: 160},
-    flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.5},
+    flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.7},
     flareRaysStroke: {lower: 0.25, upper: 1},
 
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 6}},
