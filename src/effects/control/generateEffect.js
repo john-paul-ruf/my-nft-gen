@@ -30,7 +30,6 @@ import {lensFlareEffect} from "../effectTypes/primaryEffects/lensFlare/effect.js
 const primaryEffects = [
     animateBackgroundEffect,
     scopesEffect,
-    lensFlareEffect,
     wireframeSpiralEffect,
     hexEffect,
     ampEffect,
@@ -38,6 +37,7 @@ const primaryEffects = [
     gatesEffect,
     invertedRayRingEffect,
     rayRingEffect,
+    lensFlareEffect,
     fuzzyRippleEffect,
     viewportEffect,
     verticalScanLinesEffect,

@@ -9,7 +9,7 @@ const config = {
     layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 3},
 
-    elementOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.15, upper: 0.2}},
+    elementOpacityRange: {bottom: {lower: 0.01, upper: 0.05}, top: {lower: 0.05, upper: 0.1}},
     elementOpacityTimes: {lower: 1, upper: 6},
 
     numberOfFlareHex: {lower: 3, upper: 6},
