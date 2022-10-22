@@ -20,20 +20,18 @@ export class NodeCanvasStrategy {
 
     async toFile(filename) {
         const buffer = this.canvas.toBuffer('image/png', {
-            compressionLevel: 0,
-            filters: this.canvas.PNG_NO_FILTERS,
-            palette: new Uint8ClampedArray(37 * 4),
+            compressionLevel: 0, filters: this.canvas.PNG_NO_FILTERS, palette: new Uint8ClampedArray(37 * 4),
         });
         fs.writeFileSync(filename, buffer);
     }
 
-    async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor) {
+    async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
         this.context.beginPath();
 
         this.context.arc(pos.x, pos.y, radius, 0, 2 * Math.PI, false);
 
         this.context.lineWidth = outerStroke + innerStroke;
-        this.context.strokeStyle = outerColor;
+        this.context.strokeStyle = hexToRgba(outerColor, alpha);
 
         this.context.stroke();
 
@@ -43,7 +41,7 @@ export class NodeCanvasStrategy {
         this.context.arc(pos.x, pos.y, radius, 0, 2 * Math.PI, false);
 
         this.context.lineWidth = innerStroke;
-        this.context.strokeStyle = innerColor;
+        this.context.strokeStyle = hexToRgba(innerColor, alpha);
 
         this.context.stroke();
         this.context.closePath();
@@ -162,12 +160,12 @@ export class NodeCanvasStrategy {
         this.context.restore();
     }
 
-    async drawLine2d(start, end, innerStroke, innerColor, outerStroke, outerColor) {
+    async drawLine2d(start, end, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
 
         this.context.beginPath();
 
         this.context.lineWidth = outerStroke + innerStroke;
-        this.context.strokeStyle = outerColor;
+        this.context.strokeStyle = hexToRgba(outerColor, alpha);
 
         this.context.moveTo(start.x, start.y);
         this.context.lineTo(end.x, end.y);
@@ -179,7 +177,7 @@ export class NodeCanvasStrategy {
             this.context.beginPath();
 
             this.context.lineWidth = innerStroke;
-            this.context.strokeStyle = innerColor;
+            this.context.strokeStyle = hexToRgba(innerColor, alpha);
 
             this.context.moveTo(start.x, start.y);
             this.context.lineTo(end.x, end.y);

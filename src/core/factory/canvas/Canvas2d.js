@@ -26,8 +26,8 @@ export class Canvas2d {
         await this.strategy.toFile(filename);
     }
 
-    async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor) {
-        await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor);
+    async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha) {
+        await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha);
     }
 
     async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
@@ -46,8 +46,8 @@ export class Canvas2d {
         await this.strategy.drawGradientLine2d(startPos, endPos, stroke, startColor, endColor);
     }
 
-    async drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor) {
-        await this.strategy.drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor);
+    async drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor, alpha) {
+        await this.strategy.drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor, alpha);
     }
 
     async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {

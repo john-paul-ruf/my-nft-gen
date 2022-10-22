@@ -25,6 +25,7 @@ import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/eff
 import {threeDimensionalShapeEffect} from "../effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 import {threeDimensionalRingsEffect} from "../effectTypes/primaryEffects/threeDeminsonalRings/effect.js";
 import {invertedRayRingEffect} from "../effectTypes/primaryEffects/invertedRayRing/effect.js";
+import {lensFlareEffect} from "../effectTypes/finalImageEffects/lensFlare/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -45,9 +46,20 @@ const primaryEffects = [
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
-const secondaryEffects = [randomizeEffect, glowEffect, fadeEffect,];
+const secondaryEffects = [
+    randomizeEffect,
+    glowEffect,
+    fadeEffect,
+];
 
-const finalImageEffects = [blurEffect, pixelateEffect, glitchInverseEffect, glitchFractalEffect, glitchDrumrollHorizontalWaveEffect,]
+const finalImageEffects = [
+    blurEffect,
+    pixelateEffect,
+    glitchInverseEffect,
+    glitchFractalEffect,
+    glitchDrumrollHorizontalWaveEffect,
+    lensFlareEffect
+]
 
 const generateEffects = (possibleEffectList) => {
     const effectList = [];
