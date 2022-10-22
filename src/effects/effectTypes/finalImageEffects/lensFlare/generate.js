@@ -9,7 +9,7 @@ const config = {
     layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 3},
 
-    elementOpacity: {lower: 0.1, upper: 0.2},
+    elementOpacity: {lower: 0.05, upper: 0.1},
 
     numberOfFlareHex: {lower: 3, upper: 6},
     flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.15},
