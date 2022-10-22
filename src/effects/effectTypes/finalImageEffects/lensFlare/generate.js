@@ -6,19 +6,19 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.1}},
+    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 3},
 
-    elementOpacity: {lower: 0.1, upper: 0.25},
+    elementOpacity: {lower: 0.1, upper: 0.2},
 
-    numberOfFlareHex: {lower: 5, upper: 15},
-    flareHexSizeRange: {lower: finalImageSize.height * 0.05, upper: finalImageSize.height * 0.2},
+    numberOfFlareHex: {lower: 3, upper: 6},
+    flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.15},
 
-    numberOfFlareRings: {lower: 40, upper: 80},
-    flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.4},
+    numberOfFlareRings: {lower: 200, upper: 500},
+    flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.75},
     flareRingStroke: {lower: 0.25, upper: 1},
 
-    numberOfFlareRays: {lower: 80, upper: 160},
+    numberOfFlareRays: {lower: 200, upper: 500},
     flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.7},
     flareRaysStroke: {lower: 0.25, upper: 1},
 
@@ -31,9 +31,6 @@ const config = {
         '#83ff66',
         '#5aff33',
         '#31ff00',
-        '#27cc00',
-        '#1d9900',
-        '#136600',
         '#9db0ff',
         '#ec9dff',
         '#ffec9d',
@@ -53,10 +50,11 @@ const getFlareHexArray = (num) => {
         info.push({
             size: getRandomIntInclusive(config.flareHexSizeRange.lower, config.flareHexSizeRange.upper),
             color: config.getFlareColor(),
+            strokeColor: config.getFlareColor(),
             sides: getRandomIntInclusive(5, 12),
             angle: getRandomIntInclusive(0, 360),
-            offsetX: getRandomIntInclusive(finalImageSize.width * 0.01),
-            offsetY: getRandomIntInclusive(finalImageSize.height * 0.01),
+            offsetX: getRandomIntInclusive(-finalImageSize.width * 0.025, finalImageSize.width * 0.025,),
+            offsetY: getRandomIntInclusive(-finalImageSize.height * 0.025, finalImageSize.height * 0.025),
             opacity: randomNumber(config.elementOpacity.lower, config.elementOpacity.upper),
         });
     }

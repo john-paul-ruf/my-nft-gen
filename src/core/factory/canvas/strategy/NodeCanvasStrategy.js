@@ -76,7 +76,7 @@ export class NodeCanvasStrategy {
         }
     }
 
-    async drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor) {
+    async drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
         let angle = (Math.PI * 2) / numberOfSides;
 
         //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
@@ -96,7 +96,7 @@ export class NodeCanvasStrategy {
         this.context.restore();
 
         this.context.lineWidth = innerStroke + outerStroke;
-        this.context.strokeStyle = outerColor;
+        this.context.strokeStyle = hexToRgba(outerColor, alpha);
         this.context.stroke();
 
         //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
@@ -116,7 +116,8 @@ export class NodeCanvasStrategy {
         this.context.restore();
 
         this.context.lineWidth = innerStroke;
-        this.context.strokeStyle = innerColor;
+        this.context.strokeStyle = hexToRgba(innerColor, alpha);
+
         this.context.stroke();
     }
 
