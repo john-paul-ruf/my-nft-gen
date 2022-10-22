@@ -14,13 +14,13 @@ const config = {
     numberOfFlareHex: {lower: 2, upper: 6},
     flareHexSizeRange: {lower: finalImageSize.height * 0.05, upper: finalImageSize.height * 0.2},
 
-    numberOfFlareRings: {lower: 10, upper: 20},
+    numberOfFlareRings: {lower: 15, upper: 30},
     flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.4},
-    flareRingStroke: {lower: 1, upper: 5},
+    flareRingStroke: {lower: 0.25, upper: 1},
 
-    numberOfFlareRays: {lower: 20, upper: 40},
+    numberOfFlareRays: {lower: 40, upper: 80},
     flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.5},
-    flareRaysStroke: {lower: 1, upper: 3},
+    flareRaysStroke: {lower: 0.25, upper: 1},
 
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 10}},
     blurTimes: {lower: 1, upper: 6},
