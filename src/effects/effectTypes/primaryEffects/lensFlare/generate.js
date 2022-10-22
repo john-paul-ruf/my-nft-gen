@@ -6,10 +6,10 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 1}},
+    layerOpacityRange: {bottom: {lower: 0.6, upper: 0.8}, top: {lower: 0.8, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 3},
 
-    elementOpacityRange: {bottom: {lower: 0.01, upper: 0.05}, top: {lower: 0.05, upper: 0.1}},
+    elementOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.1, upper: 0.2}},
     elementOpacityTimes: {lower: 1, upper: 6},
 
     numberOfFlareHex: {lower: 3, upper: 6},
@@ -55,8 +55,7 @@ const getFlareHexArray = (num) => {
             strokeColor: config.getFlareColor(),
             sides: getRandomIntInclusive(5, 12),
             angle: getRandomIntInclusive(0, 360),
-            offsetX: getRandomIntInclusive(-finalImageSize.width * 0.025, finalImageSize.width * 0.025,),
-            offsetY: getRandomIntInclusive(-finalImageSize.height * 0.025, finalImageSize.height * 0.025),
+            offset: getRandomIntInclusive(-finalImageSize.width * 0.1, finalImageSize.width * 0.1,),
             opacity: {
                 lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
@@ -101,7 +100,7 @@ const getFlareRayArray = (num) => {
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
             },
             opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
-            offset: getRandomIntInclusive(finalImageSize.width * 0.01, finalImageSize.width * 0.025,),
+            offset: getRandomIntInclusive(finalImageSize.width * 0.1, finalImageSize.width * 0.15,),
         });
     }
 
