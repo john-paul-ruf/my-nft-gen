@@ -14,7 +14,7 @@ const drawHexArray = async (context, array) => {
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
 
         await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
-        await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 0.5, array[i].color, 0.5, array[i].strokeColor, theOpacityGaston);
+        await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
     }
 }
 
