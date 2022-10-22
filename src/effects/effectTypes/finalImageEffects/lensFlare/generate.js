@@ -7,22 +7,22 @@ const finalImageSize = getFinalImageSize();
 const config = {
 
     layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.1}},
-    layerOpacityTimes: {lower: 4, upper: 8},
+    layerOpacityTimes: {lower: 2, upper: 8},
 
     elementOpacity: {lower: 0.1, upper: 0.25},
 
-    numberOfFlareHex: {lower: 2, upper: 6},
+    numberOfFlareHex: {lower: 5, upper: 15},
     flareHexSizeRange: {lower: finalImageSize.height * 0.05, upper: finalImageSize.height * 0.2},
 
-    numberOfFlareRings: {lower: 15, upper: 30},
+    numberOfFlareRings: {lower: 40, upper: 80},
     flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.4},
     flareRingStroke: {lower: 0.25, upper: 1},
 
-    numberOfFlareRays: {lower: 40, upper: 80},
+    numberOfFlareRays: {lower: 80, upper: 160},
     flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.5},
     flareRaysStroke: {lower: 0.25, upper: 1},
 
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 10}},
+    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 6}},
     blurTimes: {lower: 1, upper: 6},
 
     flareColors: [
