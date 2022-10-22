@@ -30,6 +30,7 @@ import {lensFlareEffect} from "../effectTypes/finalImageEffects/lensFlare/effect
 const primaryEffects = [
     animateBackgroundEffect,
     scopesEffect,
+    lensFlareEffect,
     wireframeSpiralEffect,
     hexEffect,
     ampEffect,
@@ -58,7 +59,6 @@ const finalImageEffects = [
     glitchInverseEffect,
     glitchFractalEffect,
     glitchDrumrollHorizontalWaveEffect,
-    lensFlareEffect
 ]
 
 const generateEffects = (possibleEffectList) => {
