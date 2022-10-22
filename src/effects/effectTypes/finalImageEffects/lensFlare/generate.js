@@ -116,7 +116,7 @@ export const generate = () => {
             },
             blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
             getInfo: () => {
-                return `${lensFlareEffect.name}: ${data.glitchChance} chance, ${data.times} times, ${data.lower} to ${data.upper}`
+                return `${lensFlareEffect.name}: ${data.numberOfFlareHex} polygons, ${data.numberOfFlareRings} rings, ${data.numberOfFlareRays} rays`
             }
         };
 
