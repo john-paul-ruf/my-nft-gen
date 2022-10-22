@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
+    layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 3},
 
     elementOpacity: {lower: 0.1, upper: 0.2},
@@ -22,8 +22,9 @@ const config = {
     flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.7},
     flareRaysStroke: {lower: 0.25, upper: 1},
 
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 6}},
-    blurTimes: {lower: 1, upper: 6},
+    //no blur, it is bad
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    blurTimes: {lower: 0, upper: 0},
 
     flareColors: [
         '#d5fecc',
