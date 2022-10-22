@@ -12,8 +12,8 @@ const config = {
     elementOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.1, upper: 0.2}},
     elementOpacityTimes: {lower: 1, upper: 6},
 
-    elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 25}},
-    elementGastonTimes: {lower: 1, upper: 6},
+    elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 0}},
+    elementGastonTimes: {lower: 1, upper: 3},
 
     numberOfFlareHex: {lower: 3, upper: 6},
     flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.05},
@@ -56,7 +56,7 @@ const getFlareHexArray = (num) => {
             size: getRandomIntInclusive(config.flareHexSizeRange.lower, config.flareHexSizeRange.upper),
             color: config.getFlareColor(),
             strokeColor: config.getFlareColor(),
-            sides: getRandomIntInclusive(5, 8),
+            sides: getRandomIntInclusive(6, 6), //ended up with hex...
             angle: getRandomIntInclusive(0, 360),
             offset: getRandomIntInclusive(-finalImageSize.width * 0.1, finalImageSize.width * 0.1,),
             opacity: {
