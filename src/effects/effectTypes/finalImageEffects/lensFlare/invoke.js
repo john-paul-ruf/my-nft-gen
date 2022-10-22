@@ -9,7 +9,7 @@ import fs from "fs";
 //not hex but hey...
 const drawHexArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
-        const pos = {x: context.data.center + array[i].offsetX, y: context.data.center + array[i].offsetY};
+        const pos = {x: context.data.center.x + array[i].offsetX, y: context.data.center.y + array[i].offsetY};
         await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, array[i].opacity);
     }
 }
