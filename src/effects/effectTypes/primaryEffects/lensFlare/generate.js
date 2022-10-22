@@ -9,7 +9,8 @@ const config = {
     layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 3},
 
-    elementOpacity: {lower: 0.05, upper: 0.1},
+    elementOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.15, upper: 0.2}},
+    elementOpacityTimes: {lower: 1, upper: 6},
 
     numberOfFlareHex: {lower: 3, upper: 6},
     flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.15},
@@ -56,7 +57,11 @@ const getFlareHexArray = (num) => {
             angle: getRandomIntInclusive(0, 360),
             offsetX: getRandomIntInclusive(-finalImageSize.width * 0.025, finalImageSize.width * 0.025,),
             offsetY: getRandomIntInclusive(-finalImageSize.height * 0.025, finalImageSize.height * 0.025),
-            opacity: randomNumber(config.elementOpacity.lower, config.elementOpacity.upper),
+            opacity: {
+                lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
+                upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
+            },
+            opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
         });
     }
 
@@ -71,7 +76,11 @@ const getFlareRingArray = (num) => {
             size: getRandomIntInclusive(config.flareRingsSizeRange.lower, config.flareRingsSizeRange.upper),
             stroke: getRandomIntInclusive(config.flareRingStroke.lower, config.flareRingStroke.upper),
             color: config.getFlareColor(),
-            opacity: randomNumber(config.elementOpacity.lower, config.elementOpacity.upper),
+            opacity: {
+                lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
+                upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
+            },
+            opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
         });
     }
 
@@ -87,7 +96,12 @@ const getFlareRayArray = (num) => {
             stroke: getRandomIntInclusive(config.flareRaysStroke.lower, config.flareRaysStroke.upper),
             radius: getRandomIntInclusive(0, 360),
             color: config.getFlareColor(),
-            opacity: randomNumber(config.elementOpacity.lower, config.elementOpacity.upper),
+            opacity: {
+                lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
+                upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
+            },
+            opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
+            offset: getRandomIntInclusive(finalImageSize.width * 0.01, finalImageSize.width * 0.025,),
         });
     }
 

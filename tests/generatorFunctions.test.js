@@ -23,7 +23,7 @@ import {ampEffect} from "../src/effects/effectTypes/primaryEffects/amp/effect.js
 import {threeDimensionalShapeEffect} from "../src/effects/effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 import {threeDimensionalRingsEffect} from "../src/effects/effectTypes/primaryEffects/threeDeminsonalRings/effect.js";
 import {invertedRayRingEffect} from "../src/effects/effectTypes/primaryEffects/invertedRayRing/effect.js";
-import {lensFlareEffect} from "../src/effects/effectTypes/finalImageEffects/lensFlare/effect.js";
+import {lensFlareEffect} from "../src/effects/effectTypes/primaryEffects/lensFlare/effect.js";
 import {resetGlobalSettings} from "../src/core/GlobalSettings.js";
 
 resetGlobalSettings();

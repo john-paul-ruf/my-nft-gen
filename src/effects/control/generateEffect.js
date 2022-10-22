@@ -25,7 +25,7 @@ import {imageOverlayEffect} from "../effectTypes/primaryEffects/imageOverlay/eff
 import {threeDimensionalShapeEffect} from "../effectTypes/primaryEffects/threeDimensionalShape/effect.js";
 import {threeDimensionalRingsEffect} from "../effectTypes/primaryEffects/threeDeminsonalRings/effect.js";
 import {invertedRayRingEffect} from "../effectTypes/primaryEffects/invertedRayRing/effect.js";
-import {lensFlareEffect} from "../effectTypes/finalImageEffects/lensFlare/effect.js";
+import {lensFlareEffect} from "../effectTypes/primaryEffects/lensFlare/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,

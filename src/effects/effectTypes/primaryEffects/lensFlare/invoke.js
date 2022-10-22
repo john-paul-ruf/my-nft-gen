@@ -10,22 +10,30 @@ import fs from "fs";
 const drawHexArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
         const pos = {x: context.data.center.x + array[i].offsetX, y: context.data.center.y + array[i].offsetY};
-        await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, array[i].opacity);
-        await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 0.5, array[i].color, 0.5, array[i].strokeColor, array[i].opacity);
+
+        const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+
+        await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
+        await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 0.5, array[i].color, 0.5, array[i].strokeColor, theOpacityGaston);
     }
 }
 
 const drawRingArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
-        await context.canvas.drawRing2d(context.data.center, array[i].size, array[i].stroke, array[i].color, array[i].stroke, array[i].color, array[i].opacity);
+        const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+
+        await context.canvas.drawRing2d(context.data.center, array[i].size, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
     }
 }
 
 const drawRayArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
-        const start = context.data.center
+        const start = findPointByAngleAndCircle(context.data.center, array[i].radius, array[i].offset);
         const end = findPointByAngleAndCircle(context.data.center, array[i].radius, array[i].size);
-        await context.canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, array[i].opacity);
+
+        const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+
+        await context.canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
     }
 }
 
