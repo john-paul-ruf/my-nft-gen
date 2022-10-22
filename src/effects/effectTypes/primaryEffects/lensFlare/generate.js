@@ -12,7 +12,7 @@ const config = {
     elementOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.1, upper: 0.2}},
     elementOpacityTimes: {lower: 1, upper: 6},
 
-    elementGastonRange: {bottom: {lower: 5, upper: 20}, top: {lower: 30, upper: 50}},
+    elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 25}},
     elementGastonTimes: {lower: 1, upper: 6},
 
     numberOfFlareHex: {lower: 3, upper: 6},
