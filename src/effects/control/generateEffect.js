@@ -37,13 +37,13 @@ const primaryEffects = [
     gatesEffect,
     invertedRayRingEffect,
     rayRingEffect,
-    lensFlareEffect,
     fuzzyRippleEffect,
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
     imageOverlayEffect,
     threeDimensionalRingsEffect,
+    lensFlareEffect,
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above

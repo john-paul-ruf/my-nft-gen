@@ -16,7 +16,10 @@ const config = {
     elementGastonTimes: {lower: 1, upper: 3},
 
     numberOfFlareHex: {lower: 3, upper: 6},
-    flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.05},
+    flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.07},
+
+    angleRangeFlareHex: {bottom: {lower: 30, upper: 35}, top: {lower: 45, upper: 50}},
+    angleGastonTimes: {lower: 1, upper: 3},
 
     numberOfFlareRings: {lower: 200, upper: 500},
     flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.75},
@@ -58,7 +61,7 @@ const getFlareHexArray = (num) => {
             strokeColor: config.getFlareColor(),
             sides: getRandomIntInclusive(6, 6), //ended up with hex...
             angle: getRandomIntInclusive(0, 360),
-            offset: getRandomIntInclusive(-finalImageSize.width * 0.1, finalImageSize.width * 0.1),
+            offset: getRandomIntInclusive(-finalImageSize.width * 0.2, finalImageSize.width * 0.2),
             opacity: {
                 lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
@@ -145,6 +148,13 @@ export const generate = () => {
                 upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
             },
             blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
+
+            angleRangeFlareHex: {
+                lower: randomNumber(config.angleRangeFlareHex.bottom.lower, config.angleRangeFlareHex.bottom.upper),
+                upper: randomNumber(config.angleRangeFlareHex.top.lower, config.angleRangeFlareHex.top.upper)
+            },
+            angleGastonTimes: getRandomIntInclusive(config.angleGastonTimes.lower, config.angleGastonTimes.upper),
+
             getInfo: () => {
                 return `${lensFlareEffect.name}: ${data.numberOfFlareHex} polygons, ${data.numberOfFlareRings} rings, ${data.numberOfFlareRays} rays`
             }

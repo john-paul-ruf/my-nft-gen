@@ -9,7 +9,10 @@ import fs from "fs";
 //not hex but hey...
 const drawHexArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
-        const pos = {x: context.data.center.x + array[i].offset, y: context.data.center.y + array[i].offset};
+
+        const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
+
+        const pos = findPointByAngleAndCircle(context.data.center, angleGaston, array[i].offset)
 
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
 
