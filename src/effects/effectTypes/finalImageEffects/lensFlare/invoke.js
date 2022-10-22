@@ -1,5 +1,5 @@
 import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive, randomId} from "../../../../core/math/random.js";
+import {randomId} from "../../../../core/math/random.js";
 import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
@@ -9,7 +9,7 @@ import fs from "fs";
 //not hex but hey...
 const drawHexArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
-        await context.canvas.drawFilledPolygon2d(array[i].size, context.data.center, array[i].sides, getRandomIntInclusive(0, 360), array[i].color, array[i].opacity);
+        await context.canvas.drawFilledPolygon2d(array[i].size, context.data.center, array[i].sides, array[i].angle, array[i].color, array[i].opacity);
     }
 }
 
