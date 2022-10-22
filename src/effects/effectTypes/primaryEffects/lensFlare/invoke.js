@@ -21,17 +21,19 @@ const drawHexArray = async (context, array) => {
 const drawRingArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theRadiusGaston = findValue(array[i].size + array[i].gastonRange.lower, array[i].size + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
 
-        await context.canvas.drawRing2d(context.data.center, array[i].size, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+        await context.canvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
     }
 }
 
 const drawRayArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
-        const start = findPointByAngleAndCircle(context.data.center, array[i].radius, array[i].offset);
-        const end = findPointByAngleAndCircle(context.data.center, array[i].radius, array[i].size);
-
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theAngleGaston = findValue(array[i].angle + array[i].gastonRange.lower, array[i].angle + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
+
+        const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
+        const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
         await context.canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
     }

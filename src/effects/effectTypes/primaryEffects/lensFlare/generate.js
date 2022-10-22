@@ -12,6 +12,9 @@ const config = {
     elementOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.1, upper: 0.2}},
     elementOpacityTimes: {lower: 1, upper: 6},
 
+    elementGastonRange: {bottom: {lower: 5, upper: 20}, top: {lower: 30, upper: 50}},
+    elementGastonTimes: {lower: 1, upper: 6},
+
     numberOfFlareHex: {lower: 3, upper: 6},
     flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.15},
 
@@ -80,6 +83,12 @@ const getFlareRingArray = (num) => {
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
             },
             opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
+            gastonRange: {
+                lower: randomNumber(config.elementGastonRange.bottom.lower, config.elementGastonRange.bottom.upper),
+                upper: randomNumber(config.elementGastonRange.top.lower, config.elementGastonRange.top.upper)
+            },
+            gastonTimes: getRandomIntInclusive(config.elementGastonTimes.lower, config.elementGastonTimes.upper),
+            gastonInvert: getRandomIntInclusive(0, 1) > 0,
         });
     }
 
@@ -93,7 +102,7 @@ const getFlareRayArray = (num) => {
         info.push({
             size: getRandomIntInclusive(config.flareRaysSizeRange.lower, config.flareRaysSizeRange.upper),
             stroke: getRandomIntInclusive(config.flareRaysStroke.lower, config.flareRaysStroke.upper),
-            radius: getRandomIntInclusive(0, 360),
+            angle: getRandomIntInclusive(0, 360),
             color: config.getFlareColor(),
             opacity: {
                 lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
@@ -101,6 +110,12 @@ const getFlareRayArray = (num) => {
             },
             opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
             offset: getRandomIntInclusive(finalImageSize.width * 0.1, finalImageSize.width * 0.15,),
+            gastonRange: {
+                lower: randomNumber(config.elementGastonRange.bottom.lower, config.elementGastonRange.bottom.upper),
+                upper: randomNumber(config.elementGastonRange.top.lower, config.elementGastonRange.top.upper)
+            },
+            gastonTimes: getRandomIntInclusive(config.elementGastonTimes.lower, config.elementGastonTimes.upper),
+            gastonInvert: getRandomIntInclusive(0, 1) > 0,
         });
     }
 
