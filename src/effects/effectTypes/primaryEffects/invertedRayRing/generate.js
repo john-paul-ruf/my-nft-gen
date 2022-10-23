@@ -45,8 +45,8 @@ const computeInitialInfo = (num) => {
     for (let i = 0; i <= num; i++) {
         info.push({
             radius: config.radiusGap * (i + 1),
-            color: getNeutralFromBucket(),
-            outerColor: getColorFromBucket(),
+            color: getColorFromBucket(),
+            outerColor: getNeutralFromBucket(),
             accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
