@@ -19,7 +19,7 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 0},
-    lengthRange: {bottom: {lower: 0, upper: 15}, top: {lower: 20, upper: 50}},
+    lengthRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 50}}, //when spin, length must be at 0 or glitches the loop
     lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 4, upper: 8},
     speed: {lower: 10, upper: 10},

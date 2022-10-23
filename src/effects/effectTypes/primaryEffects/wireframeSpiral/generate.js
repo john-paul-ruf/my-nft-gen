@@ -7,16 +7,16 @@ const config = {
     underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.6, upper: 0.8}},
     underLayerOpacityTimes: {lower: 1, upper: 6},
     startTwistCount: {lower: 2, upper: 2},
-    stroke: 1,
-    thickness: 1.5,
+    stroke: 0.5,
+    thickness: 0.25,
     sparsityFactor: {lower: 10, upper: 15},
     speed: {lower: 1, upper: 2},
     counterClockwise: {lower: 0, upper: 1},
     unitLength: {lower: 18, upper: 22},
     unitLengthChangeConstant: 5,
     radiusConstant: 175,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 0, upper: 0},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 5}},
+    accentTimes: {lower: 1, upper: 4},
 }
 
 export const generate = () => {

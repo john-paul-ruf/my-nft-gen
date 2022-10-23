@@ -17,11 +17,11 @@ const config = {
 
 const finalImageSize = getFinalImageSize();
 
-const computeInitialInfo = (num, width) => {
+const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: getRandomIntExclusive(0, width / 2),
+            radius: getRandomIntExclusive(0, finalImageSize.height / 2),
             color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
@@ -55,7 +55,7 @@ export const generate = () => {
         }
     }
 
-    data.gates = computeInitialInfo(data.numberOfGates, data.width);
+    data.gates = computeInitialInfo(data.numberOfGates);
 
     return data;
 }

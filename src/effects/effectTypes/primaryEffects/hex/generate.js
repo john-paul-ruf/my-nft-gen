@@ -7,7 +7,7 @@ const config = {
     underLayerOpacity: 0.3,
     sparsityFactor: {lower: 12, upper: 18},
     gapFactor: {lower: 4, upper: 8},
-    radiusFactor: {lower: 8, upper: 12},
+    radiusFactor: {lower: 4, upper: 8},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},

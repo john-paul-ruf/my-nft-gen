@@ -18,8 +18,8 @@ const config = {
     numberOfFlareHex: {lower: 3, upper: 6},
     flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.07},
 
-    angleRangeFlareHex: {bottom: {lower: 30, upper: 35}, top: {lower: 45, upper: 50}},
-    angleGastonTimes: {lower: 1, upper: 3},
+    angleRangeFlareHex: {bottom: {lower: 0, upper: 0}, top: {lower: 360, upper: 360}},
+    angleGastonTimes: {lower: 1, upper: 2},
 
     numberOfFlareRings: {lower: 200, upper: 500},
     flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.75},
