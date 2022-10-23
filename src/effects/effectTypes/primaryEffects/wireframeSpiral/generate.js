@@ -7,7 +7,7 @@ const config = {
     underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.6, upper: 0.8}},
     underLayerOpacityTimes: {lower: 1, upper: 6},
     startTwistCount: {lower: 2, upper: 2},
-    stroke: 0.5,
+    stroke: 1,
     thickness: 0.25,
     sparsityFactor: {lower: 10, upper: 15},
     speed: {lower: 1, upper: 2},
