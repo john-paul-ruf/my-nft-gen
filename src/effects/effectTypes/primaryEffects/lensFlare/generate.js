@@ -15,17 +15,17 @@ const config = {
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 0}},
     elementGastonTimes: {lower: 1, upper: 3},
 
-    numberOfFlareHex: {lower: 3, upper: 12},
+    numberOfFlareHex: {lower: 2, upper: 8},
     flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.07},
 
     angleRangeFlareHex: {bottom: {lower: 25, upper: 30}, top: {lower: 60, upper: 65}},
     angleGastonTimes: {lower: 1, upper: 4},
 
-    numberOfFlareRings: {lower: 50, upper: 200},
+    numberOfFlareRings: {lower: 150, upper: 500},
     flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.75},
     flareRingStroke: {lower: 0.25, upper: 1},
 
-    numberOfFlareRays: {lower: 50, upper: 200},
+    numberOfFlareRays: {lower: 150, upper: 500},
     flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.7},
     flareRaysStroke: {lower: 0.25, upper: 1},
 
