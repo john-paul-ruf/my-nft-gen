@@ -12,8 +12,8 @@ export const writeToMp4 = async (fileSelector, config) => {
 
             video.addInput(fileSelector)
                 .outputFormat('mp4')
-                .videoCodec('libx264')
-                .outputOptions(['-preset veryslow', '-crf 10', '-tune zerolatency', '-pix_fmt yuv420p', '-movflags +faststart', '-an'])
+                .videoCodec('libx265')
+                .outputOptions(['-tag:v hvc1', '-preset veryslow', '-crf 28', '-tune zerolatency', '-pix_fmt yuv420p', '-movflags +faststart', '-an'])
                 .on("end", () => {
                     resolve();
                     console.log("mp4 Finished");
