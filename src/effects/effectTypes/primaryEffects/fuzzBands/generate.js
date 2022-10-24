@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {fuzzBandsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -9,7 +9,7 @@ const config = {
     underLayerOpacity: 0.25,
     circles: {lower: 5, upper: 10},
     stroke: 0.75,
-    thickness: 1.5,
+    thickness: 5,
     scaleFactor: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 30}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
@@ -42,7 +42,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         scaleFactor: config.scaleFactor,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         blurRange: {

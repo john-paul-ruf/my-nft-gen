@@ -12,7 +12,7 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 0},
-    stroke: 0.1,
+    stroke: 0.25,
     thickness: 0.25,
     scaleFactor: 2,
     numberOfHex: 10,
@@ -32,7 +32,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
@@ -47,7 +47,7 @@ export const generate = () => {
         },
         accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
-        color: getColorFromBucket(),
+        color: getNeutralFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${hexEffect.name}: strategy: ${data.strategy}, sparsity: ${data.sparsityFactor}, gap: ${data.gapFactor}, radius: ${data.radiusFactor}`

@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.25,
-    stroke: 2,
+    stroke: 3,
     thickness: 5,
     largeRadius: {lower: finalImageSize.width * 0.35, upper: finalImageSize.width * 0.45},
     smallRadius: {lower: finalImageSize.width * 0.15, upper: finalImageSize.width * 0.2},
@@ -30,7 +30,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
         largeNumberOfRings: getRandomIntInclusive(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),
@@ -38,8 +38,8 @@ export const generate = () => {
         ripple: getRandomIntInclusive(config.ripple.lower, config.ripple.upper),
         smallerRingsGroupRadius: getRandomIntInclusive(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
-        largeColor: getColorFromBucket(),
-        smallColor: getColorFromBucket(),
+        largeColor: getNeutralFromBucket(),
+        smallColor: getNeutralFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
