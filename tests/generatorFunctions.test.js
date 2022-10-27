@@ -25,6 +25,8 @@ import {threeDimensionalRingsEffect} from "../src/effects/effectTypes/primaryEff
 import {invertedRayRingEffect} from "../src/effects/effectTypes/primaryEffects/invertedRayRing/effect.js";
 import {lensFlareEffect} from "../src/effects/effectTypes/primaryEffects/lensFlare/effect.js";
 import {resetGlobalSettings} from "../src/core/GlobalSettings.js";
+import {layeredHexEffect} from "../src/effects/effectTypes/primaryEffects/layeredHex/effect.js";
+import {layeredRingsEffect} from "../src/effects/effectTypes/primaryEffects/layeredRings/effect.js";
 
 resetGlobalSettings();
 
@@ -140,5 +142,15 @@ test('no null or undefined in inverted-ray-rings generate function', () => {
 
 test('no null or undefined in lens-flare generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(lensFlareEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
+
+test('no null or undefined in lens-flare generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(layeredHexEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
+
+test('no null or undefined in lens-flare generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(layeredRingsEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });

@@ -26,6 +26,8 @@ import {threeDimensionalShapeEffect} from "../effectTypes/primaryEffects/threeDi
 import {threeDimensionalRingsEffect} from "../effectTypes/primaryEffects/threeDeminsonalRings/effect.js";
 import {invertedRayRingEffect} from "../effectTypes/primaryEffects/invertedRayRing/effect.js";
 import {lensFlareEffect} from "../effectTypes/primaryEffects/lensFlare/effect.js";
+import {layeredHexEffect} from "../effectTypes/primaryEffects/layeredHex/effect.js";
+import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -41,6 +43,8 @@ const primaryEffects = [
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
+    layeredRingsEffect,
+    layeredHexEffect,
     imageOverlayEffect,
     threeDimensionalRingsEffect,
     lensFlareEffect,
