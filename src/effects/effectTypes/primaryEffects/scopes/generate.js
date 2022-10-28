@@ -5,6 +5,7 @@ import {scopesEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    layerOpacity: 0.5,
     sparsityFactor: {lower: 0.5, upper: 3},
     gapFactor: {lower: 0.3, upper: 0.5},
     radiusFactor: {lower: 0.2, upper: 0.6},
@@ -41,6 +42,7 @@ const computeInitialInfo = (sparsityFactor) => {
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
         height: finalImageSize.height,
         width: finalImageSize.width,
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),

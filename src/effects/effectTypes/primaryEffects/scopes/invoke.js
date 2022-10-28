@@ -44,6 +44,9 @@ export const scopes = async (layer, data, currentFrame, numberOfFrames) => {
     await draw(context, context.drawing);
 
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+
+    await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+
     await layer.compositeLayerOver(tempLayer)
 
     fs.unlinkSync(context.drawing);
