@@ -10,7 +10,7 @@ export const lensFlareEffect = {
     generateData: generate,
     effect: effect,
     effectChance: 50,
-    requiresLayer: false,
+    requiresLayer: true,
 }
 
 

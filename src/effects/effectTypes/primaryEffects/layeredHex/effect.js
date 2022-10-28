@@ -10,7 +10,7 @@ export const layeredHexEffect = {
     generateData: generate,
     effect: effect,
     effectChance: 30,
-    requiresLayer: false,
+    requiresLayer: true,
 }
 
 

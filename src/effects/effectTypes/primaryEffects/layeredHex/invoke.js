@@ -11,7 +11,8 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 
     const number = layer > 0 ? 6 * layer : 1;
     const element = context.data.hexArray[arrayIndex];
-    const theAngleGaston = findValue(0, 60, 1, context.numberOfFrames, context.currentFrame)
+    const invert = (layer % 2) > 0;
+    const theAngleGaston = findValue(0, 60, 1, context.numberOfFrames, context.currentFrame, invert);
 
     for (let i = 0; i < number; i++) {
 
@@ -20,7 +21,7 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 
         const pos = findPointByAngleAndCircle(context.data.center, angle + theAngleGaston, offset);
 
-        const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
         await context.canvas.drawFilledPolygon2d(context.data.radius, pos, 6, context.data.startAngle, element.color, theOpacityGaston);
         await context.canvas.drawPolygon2d(context.data.radius, pos, 6, context.data.startAngle, context.data.thickness, element.outline, context.data.stroke, element.outlineStrokeColor, theOpacityGaston);

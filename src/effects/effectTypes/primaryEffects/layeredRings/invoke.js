@@ -11,7 +11,8 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 
     const number = layer > 0 ? 6 * layer : 1;
     const element = context.data.ringArray[arrayIndex];
-    const theAngleGaston = findValue(0, 60, 1, context.numberOfFrames, context.currentFrame)
+    const invert = (layer % 2) > 0;
+    const theAngleGaston = findValue(0, 60, 1, context.numberOfFrames, context.currentFrame, invert);
 
     for (let i = 0; i < number; i++) {
 
@@ -22,7 +23,7 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 
         const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame)
 
-        await context.canvas.drawRing2d(pos, context.data.radius, context.data.thickness, element.color, context.data.stroke, element.outline, theOpacityGaston);
+        await context.canvas.drawRing2d(pos, context.data.radius, context.data.thickness, element.color, context.data.stroke, element.outline, theOpacityGaston, invert);
     }
 }
 const createLayers = async (context) => {
