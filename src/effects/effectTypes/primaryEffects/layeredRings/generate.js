@@ -9,12 +9,12 @@ const config = {
     stroke: 2,
 
     layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
-    layerOpacityTimes: {lower: 1, upper: 3},
+    layerOpacityTimes: {lower: 1, upper: 12},
 
-    indexOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.2, upper: 0.4}},
-    indexOpacityTimes: {lower: 1, upper: 6},
+    indexOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
+    indexOpacityTimes: {lower: 1, upper: 12},
 
-    radius: {lower: 40, upper: 60},
+    radius: {lower: 20, upper: 80},
 
     numberOfIndex: {lower: 6, upper: 12},
     startIndex: {lower: 2, upper: 4},

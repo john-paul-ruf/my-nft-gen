@@ -31,6 +31,7 @@ import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/eff
 
 const primaryEffects = [
     animateBackgroundEffect,
+    lensFlareEffect,
     scopesEffect,
     wireframeSpiralEffect,
     hexEffect,
@@ -47,7 +48,7 @@ const primaryEffects = [
     layeredHexEffect,
     imageOverlayEffect,
     threeDimensionalRingsEffect,
-    lensFlareEffect,
+
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
