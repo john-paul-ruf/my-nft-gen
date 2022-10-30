@@ -27,6 +27,7 @@ import {lensFlareEffect} from "../src/effects/effectTypes/primaryEffects/lensFla
 import {resetGlobalSettings} from "../src/core/GlobalSettings.js";
 import {layeredHexEffect} from "../src/effects/effectTypes/primaryEffects/layeredHex/effect.js";
 import {layeredRingsEffect} from "../src/effects/effectTypes/primaryEffects/layeredRings/effect.js";
+import {encircledSpiralEffect} from "../src/effects/effectTypes/primaryEffects/encircledSpiral/effect.js";
 
 resetGlobalSettings();
 
@@ -145,12 +146,17 @@ test('no null or undefined in lens-flare generate function', () => {
     expect(hasNullOrUndefined).toBe(false);
 });
 
-test('no null or undefined in lens-flare generate function', () => {
+test('no null or undefined in layered-hex generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(layeredHexEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });
 
-test('no null or undefined in lens-flare generate function', () => {
+test('no null or undefined in layered-ring generate function', () => {
     const hasNullOrUndefined = checkIfAnyNullOrUndefined(layeredRingsEffect.generateData());
+    expect(hasNullOrUndefined).toBe(false);
+});
+
+test('no null or undefined in encircled-Spiral generate function', () => {
+    const hasNullOrUndefined = checkIfAnyNullOrUndefined(encircledSpiralEffect.generateData());
     expect(hasNullOrUndefined).toBe(false);
 });

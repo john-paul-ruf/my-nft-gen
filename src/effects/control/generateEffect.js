@@ -28,12 +28,14 @@ import {invertedRayRingEffect} from "../effectTypes/primaryEffects/invertedRayRi
 import {lensFlareEffect} from "../effectTypes/primaryEffects/lensFlare/effect.js";
 import {layeredHexEffect} from "../effectTypes/primaryEffects/layeredHex/effect.js";
 import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/effect.js";
+import {encircledSpiralEffect} from "../effectTypes/primaryEffects/encircledSpiral/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
     lensFlareEffect,
     scopesEffect,
     wireframeSpiralEffect,
+    encircledSpiralEffect,
     hexEffect,
     ampEffect,
     fuzzBandsEffect,
