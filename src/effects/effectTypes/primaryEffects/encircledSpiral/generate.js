@@ -15,8 +15,8 @@ const config = {
     thickness: 0.5,
     ringStroke: 0,
     ringThickness: 12,
-    sparsityFactor: {lower: 10, upper: 15},
-    numberOfSegments: {lower: 10, upper: 15},
+    sparsityFactor: {lower: 5, upper: 10},
+    numberOfSegments: {lower: 5, upper: 10},
     speed: {lower: 1, upper: 6},
 }
 
@@ -50,9 +50,9 @@ export const generate = () => {
     const data = {
         numberOfRings: getRandomIntInclusive(config.numberOfRings.lower, config.numberOfRings.upper),
         layerOpacity: config.layerOpacity,
-        height: finalImageSize.height * 2,
-        width: finalImageSize.width * 2,
-        center: {x: finalImageSize.width * 2 / 2, y: finalImageSize.height * 2 / 2},
+        height: finalImageSize.height,
+        width: finalImageSize.width,
+        center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${encircledSpiralEffect.name}: ${data.numberOfRings} rings`
         }
