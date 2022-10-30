@@ -11,7 +11,7 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = '720p run'
+        this.runName = 'encircled run'
 
         //For testing, render every x frame.
         this.frameInc = 1;

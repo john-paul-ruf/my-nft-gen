@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.75,
-    numberOfRings: {lower: 1, upper: 4},
+    numberOfRings: {lower: 1, upper: 6},
     radiusRange: {lower: finalImageSize.height * 0.2, upper: finalImageSize.height * 0.45},
     elementOpacityRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
     elementOpacityTimes: {lower: 1, upper: 6},

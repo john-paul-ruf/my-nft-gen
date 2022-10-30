@@ -9,7 +9,7 @@ export const scopesEffect = {
     name: 'scopes',
     generateData: generate,
     effect: effect,
-    effectChance: 30,
+    effectChance: 0,
     requiresLayer: true,
 }
 
