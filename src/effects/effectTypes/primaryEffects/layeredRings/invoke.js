@@ -21,9 +21,9 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 
         const pos = findPointByAngleAndCircle(context.data.center, angle + theAngleGaston, offset);
 
-        const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
-        await context.canvas.drawRing2d(pos, context.data.radius, context.data.thickness, element.color, context.data.stroke, element.outline, theOpacityGaston, invert);
+        await context.canvas.drawRing2d(pos, context.data.radius, context.data.thickness, element.color, context.data.stroke, element.outline, theOpacityGaston);
     }
 }
 const createLayers = async (context) => {
