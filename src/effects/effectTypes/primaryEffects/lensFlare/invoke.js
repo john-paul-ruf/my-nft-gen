@@ -65,10 +65,10 @@ export const lensFlare = async (layer, data, currentFrame, numberOfFrames) => {
     let drawingLayer = await LayerFactory.getLayerFromFile(context.drawing);
 
     const theOpacityGaston = findValue(data.layerOpacityRange.lower, data.layerOpacityRange.upper, data.layerOpacityTimes, numberOfFrames, currentFrame)
-    await drawingLayer.adjustLayerOpacity(theOpacityGaston); //gaston this later
+    await drawingLayer.adjustLayerOpacity(theOpacityGaston);
 
     const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame))
-    await drawingLayer.blur(theBlurGaston); //gaston this later
+    await drawingLayer.blur(theBlurGaston);
 
     await layer.compositeLayerOver(drawingLayer);
     fs.unlinkSync(context.drawing);
