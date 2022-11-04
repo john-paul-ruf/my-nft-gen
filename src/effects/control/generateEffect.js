@@ -29,6 +29,7 @@ import {lensFlareEffect} from "../effectTypes/primaryEffects/lensFlare/effect.js
 import {layeredHexEffect} from "../effectTypes/primaryEffects/layeredHex/effect.js";
 import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/effect.js";
 import {encircledSpiralEffect} from "../effectTypes/primaryEffects/encircledSpiral/effect.js";
+import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -42,6 +43,7 @@ const primaryEffects = [
     gatesEffect,
     invertedRayRingEffect,
     rayRingEffect,
+    eightEffect,
     fuzzyRippleEffect,
     viewportEffect,
     verticalScanLinesEffect,

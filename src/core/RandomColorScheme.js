@@ -16,17 +16,18 @@ export class RandomColorScheme {
 
         switch (getRandomIntInclusive(0, 3)) {
             case 0:
-                this.colorStrategy = this.colorSchemeStrategy;
-                break;
+            /*   this.colorStrategy = this.colorSchemeStrategy;
+               break;*/
             case 1:
-                this.colorStrategy = this.niceColorPalettesStrategy;
-                break;
+            // this.colorStrategy = this.niceColorPalettesStrategy;
+            // break;
+            case 3:
+            /* this.colorStrategy = this.colrOrgStrategy;
+             break;*/
             case 2:
                 this.colorStrategy = this.googlePaletteStrategy;
                 break;
-            case 3:
-                this.colorStrategy = this.colrOrgStrategy;
-                break;
+
         }
 
 
