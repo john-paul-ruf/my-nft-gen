@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {encircledSpiralEffect} from "./effect.js";
 
 
@@ -7,17 +7,15 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    numberOfRings: {lower: 1, upper: 6},
+    numberOfRings: {lower: 1, upper: 3},
     radiusRange: {lower: finalImageSize.height * 0.2, upper: finalImageSize.height * 0.45},
-    elementOpacityRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
-    elementOpacityTimes: {lower: 1, upper: 6},
-    stroke: 2,
+    stroke: 1,
     thickness: 2,
-    ringStroke: 4,
-    ringThickness: 12,
+    ringStroke: 1,
+    ringThickness: 2,
     sparsityFactor: {lower: 5, upper: 10},
     numberOfSegments: {lower: 5, upper: 10},
-    speed: {lower: 1, upper: 6},
+    speed: {lower: 4, upper: 8},
 }
 
 const getRingArray = (num) => {
@@ -33,13 +31,8 @@ const getRingArray = (num) => {
             ringThickness: config.ringThickness,
             numberOfSegments: getRandomIntInclusive(config.numberOfSegments.lower, config.numberOfSegments.upper),
             sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
-            innerColor: getColorFromBucket(),
-            outerColor: getNeutralFromBucket(),
-            opacity: {
-                lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
-                upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
-            },
-            opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
+            innerColor: getNeutralFromBucket(),
+            outerColor: getColorFromBucket(),
         });
     }
 

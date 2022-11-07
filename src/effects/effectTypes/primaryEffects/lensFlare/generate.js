@@ -34,11 +34,11 @@ const config = {
     blurTimes: {lower: 0, upper: 0},
 
     flareColors: [
-        '#d5fecc',
-        '#acff99',
-        '#83ff66',
-        '#5aff33',
-        '#31ff00',
+        /*        '#d5fecc',
+                '#acff99',
+                '#83ff66',
+                '#5aff33',
+                '#31ff00',*/
         '#9db0ff',
         '#ec9dff',
         '#ffec9d',

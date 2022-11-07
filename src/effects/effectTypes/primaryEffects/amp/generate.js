@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {ampEffect} from "./effect.js";
 
@@ -8,8 +8,8 @@ const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.25,
     sparsityFactor: {lower: 1, upper: 3},
-    stroke: 0,
-    thickness: .75,
+    stroke: 1,
+    thickness: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
     speed: {lower: 15, upper: 30},
@@ -24,7 +24,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
         length: 100,
         lineStart: 150,

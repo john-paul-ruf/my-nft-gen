@@ -35,6 +35,8 @@ const primaryEffects = [
     animateBackgroundEffect,
     lensFlareEffect,
     scopesEffect,
+    layeredRingsEffect,
+    layeredHexEffect,
     wireframeSpiralEffect,
     encircledSpiralEffect,
     hexEffect,
@@ -48,8 +50,6 @@ const primaryEffects = [
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
-    layeredRingsEffect,
-    layeredHexEffect,
     imageOverlayEffect,
     threeDimensionalRingsEffect,
 

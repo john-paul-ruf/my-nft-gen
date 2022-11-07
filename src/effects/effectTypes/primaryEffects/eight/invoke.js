@@ -12,21 +12,20 @@ const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outer
     await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.theAccentGaston, outerColor)
 }
 
-const drawRings = async (pos, color, radius, numberOfRings, context) => {
+const drawRings = async (pos, color, radius, numberOfRings, context, weight) => {
     for (let i = 0; i < numberOfRings; i++) {
-        await drawRing(pos, radius / numberOfRings * i, context.data.thickness, context.data.innerColor, context.data.stroke, color, context);
+        await drawRing(pos, radius / numberOfRings * i, weight, color, 0, color, context);
     }
 }
 
 const draw = async (context, filename) => {
-    await drawRings(findPointByAngleAndCircle(context.data.center, 0 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 45 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 90 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 135 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 180 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 225 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 270 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 315 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
+    for (let i = 0; i < 360; i += 45) {
+        await drawRings(findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.outerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness + context.data.stroke);
+    }
+
+    for (let i = 0; i < 360; i += 45) {
+        await drawRings(findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.innerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness);
+    }
 
     await context.canvas.toFile(filename);
 }
