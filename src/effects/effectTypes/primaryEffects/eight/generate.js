@@ -7,10 +7,10 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.25,
-    stroke: 1,
-    thickness: 2,
+    stroke: 2,
+    thickness: 10,
     smallRadius: {lower: finalImageSize.width * 0.15, upper: finalImageSize.width * 0.2},
-    smallNumberOfRings: {lower: 5, upper: 15},
+    smallNumberOfRings: {lower: 4, upper: 8},
     ripple: {lower: finalImageSize.width / 15, upper: finalImageSize.width / 25},
     times: {lower: 1, upper: 2},
     smallerRingsGroupRadius: {lower: finalImageSize.width * 0.2, upper: finalImageSize.width * 0.3},

@@ -31,15 +31,14 @@ async function spiral(context, index, thickness, color) {
 
     const unitLength = context.data.ringArray[index].size / await findSegmentCount(context.data.ringArray[index].numberOfSegments);
 
-    for (let seg = 0; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
+    await context.canvas.drawRing2d(context.data.center, context.data.ringArray[index].size, context.data.ringArray[index].ringThickness, context.data.ringArray[index].innerColor, context.data.ringArray[index].ringStroke, context.data.ringArray[index].outerColor);
+
+    for (let seg = 4; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
         for (let i = 0; i < 360; i = i + context.data.ringArray[index].sparsityFactor) {
             await drawLine(i, unitLength, seg, context, 1, thickness, color, index)
             await drawLine(i, unitLength, seg, context, -1, thickness, color, index)
         }
     }
-
-
-    await context.canvas.drawRing2d(context.data.center, context.data.ringArray[index].size, context.data.ringArray[index].ringThickness, context.data.ringArray[index].innerColor, context.data.ringArray[index].ringStroke, context.data.ringArray[index].outerColor);
 }
 
 const draw = async (context, filename) => {

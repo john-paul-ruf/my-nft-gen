@@ -2,8 +2,8 @@
 import {getRandomIntExclusive} from "./math/random.js";
 import {RandomColorScheme} from "./RandomColorScheme.js";
 
-const finalImageHeight = 1280;
-const finalImageWidth = 720;
+const finalImageHeight = 1920;
+const finalImageWidth = 1080;
 
 class globalSettings {
     constructor() {

@@ -101,11 +101,15 @@ export class SharpLayerStrategy {
     async resize(height, width) {
         const imageMetaData = await this.internalRepresentation.metadata();
 
-        const top = Math.ceil((imageMetaData.height - height) / 2);
-        const left = Math.ceil((imageMetaData.width - width) / 2);
+        if (imageMetaData.height > height || imageMetaData.widthSegments > width) {
+            const top = Math.ceil((imageMetaData.height - height) / 2);
+            const left = Math.ceil((imageMetaData.width - width) / 2);
 
-        await this.internalRepresentation.extract({
-            left: left, top: top, width: width, height: height
-        }).resize(width, height);
+            await this.internalRepresentation.extract({
+                left: left, top: top, width: width, height: height
+            }).resize(width, height);
+        } else {
+            await this.internalRepresentation.resize(width, height);
+        }
     }
 }
