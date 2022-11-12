@@ -5,18 +5,18 @@ import {eightEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
+    layerOpacity: 0.7,
     underLayerOpacity: 0.25,
-    stroke: 2,
-    thickness: 10,
+    stroke: 4,
+    thickness: 20,
     smallRadius: {lower: finalImageSize.width * 0.15, upper: finalImageSize.width * 0.2},
-    smallNumberOfRings: {lower: 4, upper: 8},
+    smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.width / 15, upper: finalImageSize.width / 25},
     times: {lower: 1, upper: 2},
     smallerRingsGroupRadius: {lower: finalImageSize.width * 0.2, upper: finalImageSize.width * 0.3},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 1, upper: 6},
+    accentTimes: {lower: 6, upper: 12},
     blurTimes: {lower: 0, upper: 0},
 }
 
