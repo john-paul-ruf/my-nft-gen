@@ -44,15 +44,12 @@ async function spiral(context, index, thickness, color) {
 const draw = async (context, filename) => {
 
     for (let i = 0; i < context.data.ringArray.length; i++) {
-        await spiral(context, i, context.data.ringArray[i].thickness + context.data.ringArray[i].stroke, context.data.ringArray[i].outerColor);
-    }
-
-
-    for (let i = 0; i < context.data.ringArray.length; i++) {
+        await spiral(context, i, (context.data.ringArray[i].thickness + context.data.ringArray[i].stroke), context.data.ringArray[i].outerColor);
         await spiral(context, i, context.data.ringArray[i].thickness, context.data.ringArray[i].innerColor);
     }
 
     await context.canvas.toFile(filename)
+
 }
 
 export const compositeImage = async (context, layer) => {

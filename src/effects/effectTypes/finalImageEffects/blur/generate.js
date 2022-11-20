@@ -4,8 +4,8 @@ import {blurEffect} from "./effect.js";
 const config = {
     lowerRange: {lower: 0, upper: 0},
     upperRange: {lower: 3, upper: 6},
-    times: {lower: 1, upper: 3},
-    glitchChance: 80,
+    times: {lower: 2, upper: 4},
+    glitchChance: 100,
 }
 
 export const generate = () => {

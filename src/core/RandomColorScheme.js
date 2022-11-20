@@ -13,8 +13,9 @@ export class RandomColorScheme {
         this.niceColorPalettesStrategy = 'nice-color-palettes';
         this.googlePaletteStrategy = 'google-palette';
         this.colrOrgStrategy = 'colr.org';
+        this.neons = 'neons';
 
-        switch (getRandomIntInclusive(0, 3)) {
+        switch (getRandomIntInclusive(0, 4)) {
             case 0:
                 this.colorStrategy = this.colorSchemeStrategy;
                 break;
@@ -26,6 +27,9 @@ export class RandomColorScheme {
                 break;
             case 2:
                 this.colorStrategy = this.googlePaletteStrategy;
+                break;
+            case 4:
+                this.colorStrategy = this.neons;
                 break;
 
         }
@@ -60,6 +64,16 @@ export class RandomColorScheme {
                 break;
             case this.colrOrgStrategy:
                 this.colorBucket = colrOrgColors[getRandomIntExclusive(0, colrOrgColors.length)];
+                break;
+            case this.neons:
+                this.colorBucket = [
+                    '#FFFF00',
+                    '#FF00FF',
+                    '#00FFFF',
+                    '#FF0000',
+                    '#00FF00',
+                    '#0000FF',
+                ];
                 break;
             case this.googlePaletteStrategy:
                 switch (getRandomIntInclusive(0, 4)) {
@@ -97,6 +111,8 @@ export class RandomColorScheme {
                 return '#' + this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             case this.niceColorPalettesStrategy:
                 return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
+            case this.neons:
+                return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             case this.colrOrgStrategy:
                 return '#' + this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             case this.googlePaletteStrategy:
@@ -120,6 +136,8 @@ export class RandomColorScheme {
                 return `Strategy: ${this.colorSchemeStrategy}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
             case  this.niceColorPalettesStrategy:
                 return `Strategy: ${this.niceColorPalettesStrategy}\n`
+            case  this.neons:
+                return `Strategy: ${this.neons}\n`
             case  this.colrOrgStrategy:
                 return `Strategy: ${this.colrOrgStrategy}\n`
             case  this.googlePaletteStrategy:

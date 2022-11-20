@@ -7,12 +7,12 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.4,
-    circles: {lower: 6, upper: 12},
-    radiusGap: 150,
-    stroke: 1,
-    thickness: 4,
-    rayStroke: 1,
-    rayThickness: 1,
+    circles: {lower: 4, upper: 8},
+    radiusGap: 250,
+    stroke: 2,
+    thickness: 8,
+    rayStroke: 2,
+    rayThickness: 2,
     scaleFactor: 2,
     densityFactor: 0.70,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
@@ -45,8 +45,8 @@ const computeInitialInfo = (num) => {
     for (let i = 0; i <= num; i++) {
         info.push({
             radius: config.radiusGap * (i + 1),
-            color: getColorFromBucket(),
-            outerColor: getNeutralFromBucket(),
+            color: getNeutralFromBucket(),
+            outerColor: getColorFromBucket(),
             accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
