@@ -101,7 +101,7 @@ export class SharpLayerStrategy {
     async resize(height, width) {
         const imageMetaData = await this.internalRepresentation.metadata();
 
-        if (imageMetaData.height > height || imageMetaData.widthSegments > width) {
+        if (imageMetaData.height > height && imageMetaData.widthSegments > width) {
             const top = Math.ceil((imageMetaData.height - height) / 2);
             const left = Math.ceil((imageMetaData.width - width) / 2);
 
