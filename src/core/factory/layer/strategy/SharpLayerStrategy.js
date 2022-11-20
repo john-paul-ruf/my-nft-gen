@@ -102,6 +102,7 @@ export class SharpLayerStrategy {
         const imageMetaData = await this.internalRepresentation.metadata();
 
         if (imageMetaData.height > height && imageMetaData.widthSegments > width) {
+            //this might be a crop method rather than resize
             const top = Math.ceil((imageMetaData.height - height) / 2);
             const left = Math.ceil((imageMetaData.width - width) / 2);
 
