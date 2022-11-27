@@ -4,10 +4,13 @@ import {getFinalImageSize} from "../../../../core/GlobalSettings.js";
 
 const finalImageSize = getFinalImageSize();
 
+const longestSide = finalImageSize.height > finalImageSize.width ? finalImageSize.height : finalImageSize.width;
+const shortestSide = finalImageSize.height > finalImageSize.width ? finalImageSize.width : finalImageSize.height;
+
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.1, upper: 0.15}, top: {lower: 0.2, upper: 0.25}},
-    layerOpacityTimes: {lower: 2, upper: 4},
+    layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+    layerOpacityTimes: {lower: 2, upper: 12},
 
     elementOpacityRange: {bottom: {lower: 0.2, upper: 0.25}, top: {lower: 0.3, upper: 0.35}},
     elementOpacityTimes: {lower: 2, upper: 4},
@@ -16,17 +19,17 @@ const config = {
     elementGastonTimes: {lower: 2, upper: 4},
 
     numberOfFlareHex: {lower: 2, upper: 8},
-    flareHexSizeRange: {lower: finalImageSize.height * 0.01, upper: finalImageSize.height * 0.07},
+    flareHexSizeRange: {lower: shortestSide * 0.01, upper: shortestSide * 0.07},
 
     angleRangeFlareHex: {bottom: {lower: 25, upper: 30}, top: {lower: 60, upper: 65}},
     angleGastonTimes: {lower: 1, upper: 4},
 
     numberOfFlareRings: {lower: 150, upper: 250},
-    flareRingsSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.75},
+    flareRingsSizeRange: {lower: longestSide * 0.1, upper: longestSide * 1.1},
     flareRingStroke: {lower: 0.25, upper: 1},
 
     numberOfFlareRays: {lower: 150, upper: 250},
-    flareRaysSizeRange: {lower: finalImageSize.height * 0.1, upper: finalImageSize.height * 0.7},
+    flareRaysSizeRange: {lower: longestSide * 0.1, upper: longestSide * 1.1},
     flareRaysStroke: {lower: 0.25, upper: 1},
 
     //no blur, it is bad
@@ -34,11 +37,11 @@ const config = {
     blurTimes: {lower: 0, upper: 0},
 
     flareColors: [
-        /*        '#d5fecc',
-                '#acff99',
-                '#83ff66',
-                '#5aff33',
-                '#31ff00',*/
+        '#d5fecc',
+        '#acff99',
+        '#83ff66',
+        '#5aff33',
+        '#31ff00',
         '#9db0ff',
         '#ec9dff',
         '#ffec9d',

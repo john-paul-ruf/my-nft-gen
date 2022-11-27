@@ -33,7 +33,6 @@ import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
-    lensFlareEffect,
     scopesEffect,
     layeredRingsEffect,
     layeredHexEffect,
@@ -52,6 +51,7 @@ const primaryEffects = [
     threeDimensionalShapeEffect,
     imageOverlayEffect,
     threeDimensionalRingsEffect,
+    lensFlareEffect,
 
 ];
 
