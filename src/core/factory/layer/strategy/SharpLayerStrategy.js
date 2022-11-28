@@ -43,7 +43,18 @@ export class SharpLayerStrategy {
         const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
         const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
 
-        await layer.resize(finalImageSize.height, finalImageSize.width);
+        const imageMetaData = await layer.getInfo();
+
+        if (imageMetaData.height > finalImageSize.height && imageMetaData.width > finalImageSize.width) {
+            //this might be a crop method rather than resize
+            const top = Math.ceil((imageMetaData.height - finalImageSize.height) / 2);
+            const left = Math.ceil((imageMetaData.width - finalImageSize.width) / 2);
+
+            await layer.crop(left, top, finalImageSize.width, finalImageSize.height);
+
+        } else {
+            await layer.resize(finalImageSize.height, finalImageSize.width);
+        }
 
         await layer.toFile(overlayFile)
         await this.toFile(targetFile);
@@ -65,7 +76,7 @@ export class SharpLayerStrategy {
 
     async adjustLayerOpacity(opacity) {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
-        const meta = await this.internalRepresentation.metadata()
+        const meta = await this.getInfo();
 
         const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
         const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
@@ -99,18 +110,16 @@ export class SharpLayerStrategy {
     }
 
     async resize(height, width) {
-        const imageMetaData = await this.internalRepresentation.metadata();
+        await this.internalRepresentation.resize(width, height);
+    }
 
-        if (imageMetaData.height > height && imageMetaData.widthSegments > width) {
-            //this might be a crop method rather than resize
-            const top = Math.ceil((imageMetaData.height - height) / 2);
-            const left = Math.ceil((imageMetaData.width - width) / 2);
+    async crop(left, top, width, height) {
+        await this.internalRepresentation.extract({
+            left: left, top: top, width: width, height: height
+        }).resize(width, height);
+    }
 
-            await this.internalRepresentation.extract({
-                left: left, top: top, width: width, height: height
-            }).resize(width, height);
-        } else {
-            await this.internalRepresentation.resize(width, height);
-        }
+    async getInfo() {
+        return await this.internalRepresentation.metadata()
     }
 }

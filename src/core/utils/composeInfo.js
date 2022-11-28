@@ -1,4 +1,4 @@
-import {getColorSchemeInfo, getFinalImageSize} from "../GlobalSettings.js";
+import {getColorSchemeInfo, getFinalImageSize, getLayerStrategy} from "../GlobalSettings.js";
 
 //This function makes use of the newline character \n and spaces for formatting
 //https://stackoverflow.com/questions/1155678/what-is-the-javascript-string-newline-character
@@ -30,6 +30,6 @@ export const composeInfo = (config, effects, finalImageEffects) => {
     const finalImageSize = getFinalImageSize();
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\nRun: ${config.runName}\n${getColorInfo()}Image Size: ${finalImageSize.width}x${finalImageSize.height} pixels\nNumber of Frames: ${config.numberOfFrame}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
+    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\nRun: ${config.runName}\n${getColorInfo()}Image Size: ${finalImageSize.width}x${finalImageSize.height} pixels\nNumber of Frames: ${config.numberOfFrame}\nLayer Strategy: ${getLayerStrategy()}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
 
 }

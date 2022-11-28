@@ -9,7 +9,7 @@ class globalSettings {
     constructor() {
         this.randomColorScheme = new RandomColorScheme();
 
-        this.layerStrategy = 'sharp';
+        this.layerStrategy = getRandomIntExclusive(0, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
 
         this.workingDirectory = `src/img/working/`;
@@ -72,7 +72,10 @@ export const getWorkingDirectory = () => {
 
 export const getFinalImageSize = () => {
     return {
-        width: finalImageWidth, height: finalImageHeight
+        width: finalImageWidth,
+        height: finalImageHeight,
+        longestSide: finalImageHeight > finalImageWidth ? finalImageHeight : finalImageWidth,
+        shortestSide: finalImageHeight > finalImageWidth ? finalImageWidth : finalImageHeight,
     }
 }
 

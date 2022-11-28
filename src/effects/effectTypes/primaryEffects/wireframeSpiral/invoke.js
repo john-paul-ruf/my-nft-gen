@@ -19,7 +19,7 @@ const drawLine = async (angle, loopControl, context, flipTwist, thickness, color
 async function spiral(context, thickness, color) {
 
     const unitLength = context.data.unitLength + context.theUnitLengthGaston;
-    
+
     const loopControl = {
         twistCount: context.data.startTwistCount,
         n1: unitLength,
@@ -53,7 +53,7 @@ export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
-    await underlayLayer.adjustLayerOpacity(context.data.theUnderLayerOpacityGaston);
+    await underlayLayer.adjustLayerOpacity(context.theUnderLayerOpacityGaston);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
     await layer.compositeLayerOver(underlayLayer);

@@ -95,4 +95,27 @@ export class Layer {
     async resize(height, width) {
         await this.strategy.resize(height, width);
     }
+
+    /****
+     *
+     * Crops current layer
+     * @param left
+     * @param top
+     * @param height
+     * @param width
+     * @returns {Promise<void>}
+     */
+    async crop(left, top, width, height) {
+        await this.strategy.crop(left, top, width, height);
+    }
+
+    /****
+     *
+     * Gets info about current layer
+     *
+     * @returns {Promise<void>}
+     */
+    async getInfo() {
+        return await this.strategy.getInfo();
+    }
 }
