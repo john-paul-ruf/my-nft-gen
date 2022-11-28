@@ -1,5 +1,5 @@
 //Encapsulated globals are less bad...
-import {getRandomIntExclusive} from "./math/random.js";
+import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import {RandomColorScheme} from "./RandomColorScheme.js";
 
 const finalImageHeight = 1080;
@@ -9,7 +9,7 @@ class globalSettings {
     constructor() {
         this.randomColorScheme = new RandomColorScheme();
 
-        this.layerStrategy = getRandomIntExclusive(0, 1) === 0 ? 'jimp' : 'sharp'
+        this.layerStrategy = getRandomIntInclusive(0, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
 
         this.workingDirectory = `src/img/working/`;
