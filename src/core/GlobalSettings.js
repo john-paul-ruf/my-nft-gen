@@ -2,14 +2,14 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import {RandomColorScheme} from "./RandomColorScheme.js";
 
-const finalImageHeight = 1080;
-const finalImageWidth = 1920;
+const finalImageHeight = 1920;
+const finalImageWidth = 1080;
 
 class globalSettings {
     constructor() {
         this.randomColorScheme = new RandomColorScheme();
 
-        this.layerStrategy = getRandomIntInclusive(0, 1) === 0 ? 'jimp' : 'sharp'
+        this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
 
         this.workingDirectory = `src/img/working/`;

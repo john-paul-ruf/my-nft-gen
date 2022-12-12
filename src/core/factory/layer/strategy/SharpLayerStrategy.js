@@ -43,18 +43,7 @@ export class SharpLayerStrategy {
         const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
         const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
 
-        const imageMetaData = await layer.getInfo();
-
-        if (imageMetaData.height > finalImageSize.height && imageMetaData.width > finalImageSize.width) {
-            //this might be a crop method rather than resize
-            const top = Math.ceil((imageMetaData.height - finalImageSize.height) / 2);
-            const left = Math.ceil((imageMetaData.width - finalImageSize.width) / 2);
-
-            await layer.crop(left, top, finalImageSize.width, finalImageSize.height);
-
-        } else {
-            await layer.resize(finalImageSize.height, finalImageSize.width);
-        }
+        await layer.resize(finalImageSize.height, finalImageSize.width);
 
         await layer.toFile(overlayFile)
         await this.toFile(targetFile);

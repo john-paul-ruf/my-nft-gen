@@ -30,7 +30,7 @@ const config = {
     flareRaysStroke: {lower: 0.25, upper: 1},
 
     //no blur, it is bad
-    //trying blur again
+    //trying blur again - sharp: ok, jimp: not the best
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurTimes: {lower: 2, upper: 8},
 

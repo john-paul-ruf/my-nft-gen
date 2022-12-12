@@ -30,6 +30,7 @@ import {layeredHexEffect} from "../effectTypes/primaryEffects/layeredHex/effect.
 import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/effect.js";
 import {encircledSpiralEffect} from "../effectTypes/primaryEffects/encircledSpiral/effect.js";
 import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
+import {animatedImageOverlayEffect} from "../effectTypes/primaryEffects/animatedOverlay/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -50,6 +51,7 @@ const primaryEffects = [
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
     imageOverlayEffect,
+    animatedImageOverlayEffect,
     threeDimensionalRingsEffect,
     lensFlareEffect,
 

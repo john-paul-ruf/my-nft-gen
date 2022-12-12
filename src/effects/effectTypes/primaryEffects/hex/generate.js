@@ -9,9 +9,9 @@ const config = {
     gapFactor: {lower: 4, upper: 8},
     radiusFactor: {lower: 4, upper: 8},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     accentTimes: {lower: 0, upper: 0},
-    blurTimes: {lower: 0, upper: 0},
+    blurTimes: {lower: 2, upper: 8},
     stroke: 0.15,
     thickness: 0.15,
     scaleFactor: 2,

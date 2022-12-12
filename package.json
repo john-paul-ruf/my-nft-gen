@@ -29,6 +29,7 @@
     "canvas": "*",
     "color-scheme": "^1.0.1",
     "fs-xattr": "^0.4.0",
+    "gif-frames": "^1.0.1",
     "gl": "^6.0.1",
     "google-palette": "^1.1.0",
     "jimp": "^0.16.1",

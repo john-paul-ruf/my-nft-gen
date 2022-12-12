@@ -1,1 +1,0 @@
-working image directory
