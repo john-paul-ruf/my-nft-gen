@@ -31,6 +31,7 @@ import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/eff
 import {encircledSpiralEffect} from "../effectTypes/primaryEffects/encircledSpiral/effect.js";
 import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
 import {animatedImageOverlayEffect} from "../effectTypes/primaryEffects/animatedOverlay/effect.js";
+import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -52,6 +53,7 @@ const primaryEffects = [
     threeDimensionalShapeEffect,
     imageOverlayEffect,
     animatedImageOverlayEffect,
+    mappedFramesEffect,
     threeDimensionalRingsEffect,
     lensFlareEffect,
 

@@ -9,7 +9,7 @@ export const animatedImageOverlayEffect = {
     name: 'animated-image-overlay',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 0,
     requiresLayer: true,
     baseLayer: true,
 }
