@@ -12,9 +12,9 @@ const config = {
     thickness: 0.5,
     scaleFactor: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 30}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 1, upper: 6},
-    blurTimes: {lower: 2, upper: 8},
+    blurTimes: {lower: 0, upper: 0},
 }
 
 const computeInitialInfo = (num, width) => {
