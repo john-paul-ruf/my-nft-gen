@@ -31,8 +31,8 @@ const getRingArray = (num) => {
             ringThickness: config.ringThickness,
             numberOfSegments: getRandomIntInclusive(config.numberOfSegments.lower, config.numberOfSegments.upper),
             sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
-            innerColor: getColorFromBucket(),
-            outerColor: getNeutralFromBucket(),
+            innerColor: getNeutralFromBucket(),
+            outerColor: getColorFromBucket(),
         });
     }
 
