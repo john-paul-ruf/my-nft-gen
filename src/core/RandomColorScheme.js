@@ -133,15 +133,15 @@ export class RandomColorScheme {
                     scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance
                 };
 
-                return `Strategy: ${this.colorSchemeStrategy}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
+                return `Color Strategy: ${this.colorSchemeStrategy}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
             case  this.niceColorPalettesStrategy:
-                return `Strategy: ${this.niceColorPalettesStrategy}\n`
+                return `Color Strategy: ${this.niceColorPalettesStrategy}\n`
             case  this.neons:
-                return `Strategy: ${this.neons}\n`
+                return `Color Strategy: ${this.neons}\n`
             case  this.colrOrgStrategy:
-                return `Strategy: ${this.colrOrgStrategy}\n`
+                return `Color Strategy: ${this.colrOrgStrategy}\n`
             case  this.googlePaletteStrategy:
-                return `Strategy: ${this.googlePaletteStrategy}\nSelector: ${this.googlePaletteSelector}\n`
+                return `Color Strategy: ${this.googlePaletteStrategy}\nSelector: ${this.googlePaletteSelector}\n`
             default:
                 throw 'no color scheme strategy';
         }
