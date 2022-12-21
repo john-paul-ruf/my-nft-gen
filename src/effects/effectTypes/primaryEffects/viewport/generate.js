@@ -6,10 +6,10 @@ import {viewportEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    stroke: 3,
-    thickness: 15,
+    stroke: 0,
+    thickness: 2,
     ampStroke: 0,
-    ampThickness: 0.5,
+    ampThickness: 2,
     radius: {lower: 50, upper: 150},
     ampLength: {lower: 50, upper: 100},
     ampRadius: {lower: 25, upper: 50},

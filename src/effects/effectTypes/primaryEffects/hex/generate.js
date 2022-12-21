@@ -12,10 +12,10 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 0},
-    stroke: 0.15,
+    stroke: 0,
     thickness: 0.15,
     scaleFactor: 2,
-    numberOfHex: 10,
+    numberOfHex: 30,
     strategy: ['static',/* 'angle', 'rotate'*/],
 }
 
