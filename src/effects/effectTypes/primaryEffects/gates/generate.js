@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {gatesEffect} from "./effect.js";
 
 const config = {
@@ -43,7 +43,7 @@ export const generate = () => {
         width: finalImageSize.width,
         thickness: config.thickness,
         stroke: config.stroke,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),

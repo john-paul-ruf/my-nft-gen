@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {viewportEffect} from "./effect.js";
 
@@ -42,8 +42,8 @@ export const generate = () => {
         sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
         amplitude: randomNumber(config.amplitude.lower, config.amplitude.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
-        color: getNeutralFromBucket(),
-        ampInnerColor: getNeutralFromBucket(),
+        color: getColorFromBucket(),
+        ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),
         accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         accentRange: {

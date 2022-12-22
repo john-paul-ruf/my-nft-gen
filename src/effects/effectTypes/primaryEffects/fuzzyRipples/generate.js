@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {fuzzyRippleEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -38,8 +38,8 @@ export const generate = () => {
         ripple: getRandomIntInclusive(config.ripple.lower, config.ripple.upper),
         smallerRingsGroupRadius: getRandomIntInclusive(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
-        largeColor: getNeutralFromBucket(),
-        smallColor: getNeutralFromBucket(),
+        largeColor: getColorFromBucket(),
+        smallColor: getColorFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

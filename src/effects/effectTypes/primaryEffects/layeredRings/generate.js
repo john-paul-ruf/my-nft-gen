@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {layeredRingsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -28,7 +28,7 @@ const getRingsIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getNeutralFromBucket(),
+            color: getColorFromBucket(),
             outline: getColorFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
