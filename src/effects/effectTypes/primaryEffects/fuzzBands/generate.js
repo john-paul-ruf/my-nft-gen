@@ -9,7 +9,7 @@ const config = {
     underLayerOpacity: 0.25,
     circles: {lower: 5, upper: 10},
     stroke: 0,
-    thickness: 0.5,
+    thickness: 1,
     scaleFactor: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 30}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},

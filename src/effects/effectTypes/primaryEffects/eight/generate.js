@@ -8,7 +8,7 @@ const config = {
     layerOpacity: 0.7,
     underLayerOpacity: 0.25,
     stroke: 0,
-    thickness: 0.5,
+    thickness: 1,
     smallRadius: {lower: finalImageSize.width * 0.15, upper: finalImageSize.width * 0.2},
     smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.width / 15, upper: finalImageSize.width / 25},
