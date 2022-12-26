@@ -11,13 +11,13 @@ export class animationConfiguration {
 
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'encircled run'
+        this.runName = 'fine-lines-run'
 
         //For testing, render every x frame.
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 300;
+        this.numberOfFrame = 150;
 
         this.finalFileName = 'Final' + randomId();
         this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
