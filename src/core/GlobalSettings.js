@@ -2,8 +2,8 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import {RandomColorScheme} from "./RandomColorScheme.js";
 
-const finalImageHeight = 1080;
-const finalImageWidth = 1920;
+const finalImageHeight = 2160;
+const finalImageWidth = 3840;
 
 class globalSettings {
     constructor() {
@@ -25,7 +25,7 @@ class globalSettings {
         //For 2D palettes
         this.backgrounds = [
             /* '#000000',*/
-            '#222222',
+            '#000000',
             /* '#FFFFFF',*/
         ];
 

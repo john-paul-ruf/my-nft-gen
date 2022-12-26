@@ -16,8 +16,8 @@ const config = {
 
     radius: {lower: 20, upper: 80},
 
-    numberOfIndex: {lower: 6, upper: 12},
-    startIndex: {lower: 2, upper: 4},
+    numberOfIndex: {lower: 60, upper: 120},
+    startIndex: {lower: 20, upper: 40},
 
     startAngle: 0,
 
