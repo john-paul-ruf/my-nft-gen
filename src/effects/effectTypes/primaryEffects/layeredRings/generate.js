@@ -14,15 +14,15 @@ const config = {
     indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
     indexOpacityTimes: {lower: 1, upper: 6},
 
-    radius: {lower: 30, upper: 90},
-    offsetRadius: {lower: 40, upper: 60},
+    radius: {lower: 40, upper: 120},
+    offsetRadius: {lower: 25, upper: 35},
 
     numberOfIndex: {lower: 60, upper: 120},
     startIndex: {lower: 20, upper: 40},
 
     startAngle: 0,
 
-    movementGaston: {lower: 10, upper: 30},
+    movementGaston: {lower: 4, upper: 12},
 }
 
 const getRingsIndexArray = (num) => {
