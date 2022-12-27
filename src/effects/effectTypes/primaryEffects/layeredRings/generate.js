@@ -9,18 +9,20 @@ const config = {
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
-    layerOpacityTimes: {lower: 1, upper: 12},
+    layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
-    indexOpacityTimes: {lower: 1, upper: 12},
+    indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
+    indexOpacityTimes: {lower: 1, upper: 6},
 
-    radius: {lower: 20, upper: 80},
+    radius: {lower: 30, upper: 90},
+    offsetRadius: {lower: 40, upper: 60},
 
     numberOfIndex: {lower: 60, upper: 120},
     startIndex: {lower: 20, upper: 40},
 
     startAngle: 0,
 
+    movementGaston: {lower: 10, upper: 30},
 }
 
 const getRingsIndexArray = (num) => {
@@ -35,6 +37,8 @@ const getRingsIndexArray = (num) => {
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)
             },
             opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
+            movementGaston: getRandomIntInclusive(config.movementGaston.lower, config.movementGaston.upper),
+            radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
         });
     }
 
@@ -53,7 +57,6 @@ export const generate = () => {
             thickness: config.thickness,
             stroke: config.stroke,
 
-            radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
             numberOfIndex: getRandomIntInclusive(config.numberOfIndex.lower, config.numberOfIndex.upper),
             startIndex: getRandomIntInclusive(config.startIndex.lower, config.startIndex.upper),
 
@@ -62,6 +65,8 @@ export const generate = () => {
                 upper: randomNumber(config.layerOpacityRange.top.lower, config.layerOpacityRange.top.upper)
             },
             layerOpacityTimes: getRandomIntInclusive(config.layerOpacityTimes.lower, config.layerOpacityTimes.upper),
+
+            offsetRadius: getRandomIntInclusive(config.offsetRadius.lower, config.offsetRadius.upper),
 
             getInfo: () => {
                 return `${layeredRingsEffect.name}: ${data.radius} radius, ${data.numberOfIndex} layers, ${data.startIndex} offset`
@@ -72,3 +77,4 @@ export const generate = () => {
 
     return data;
 }
+

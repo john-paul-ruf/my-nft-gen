@@ -12,18 +12,18 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
     const number = layer > 0 ? 6 * layer : 1;
     const element = context.data.ringArray[arrayIndex];
     const invert = (layer % 2) > 0;
-    const theAngleGaston = findValue(0, 60, 1, context.numberOfFrames, context.currentFrame, invert);
+    const theAngleGaston = findValue(0, context.data.ringArray[arrayIndex].movementGaston, 1, context.numberOfFrames, context.currentFrame, invert);
 
     for (let i = 0; i < number; i++) {
 
         const angle = (60 / layer) * i;
-        const offset = context.data.radius * layer;
+        const offset = context.data.offsetRadius * layer;
 
         const pos = findPointByAngleAndCircle(context.data.center, angle + theAngleGaston, offset);
 
         const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
-        await context.canvas.drawRing2d(pos, context.data.radius, context.data.thickness, element.color, context.data.stroke, element.outline, theOpacityGaston);
+        await context.canvas.drawRing2d(pos, context.data.ringArray[arrayIndex].radius, context.data.thickness, element.color, context.data.stroke, element.outline, theOpacityGaston);
     }
 }
 const createLayers = async (context) => {
