@@ -13,7 +13,7 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
     const number = layer > 0 ? 3 * layer : 1;
     const element = context.data.ringArray[arrayIndex];
     const invert = (layer % 2) > 0;
-    const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * context.data.ringArray[arrayIndex].radius, context.numberOfFrames, context.currentFrame, invert)
+    const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * (context.data.ringArray[arrayIndex].radius * 2), context.numberOfFrames, context.currentFrame, invert)
 
     for (let i = 0; i < number; i++) {
 

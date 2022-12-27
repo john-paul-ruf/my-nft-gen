@@ -12,7 +12,7 @@ const config = {
     smallRadius: {lower: finalImageSize.width * 0.25, upper: finalImageSize.width * 0.30},
     smallNumberOfRings: {lower: 10, upper: 15},
     ripple: {lower: finalImageSize.width / 30, upper: finalImageSize.width / 35},
-    times: {lower: 1, upper: 4},
+    times: {lower: 1, upper: 1},
     smallerRingsGroupRadius: {lower: finalImageSize.width * 0.15, upper: finalImageSize.width * 0.2},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
