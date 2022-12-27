@@ -5,6 +5,7 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import {findPointByAngleAndCircle} from "../../../../core/math/drawingMath.js";
 import fs from "fs";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 //not hex but hey...
 const drawHexLayer = async (context, arrayIndex, layer) => {
@@ -12,7 +13,7 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
     const number = layer > 0 ? 6 * layer : 1;
     const element = context.data.hexArray[arrayIndex];
     const invert = (layer % 2) > 0;
-    const theAngleGaston = findValue(0, 60, 1, context.numberOfFrames, context.currentFrame, invert);
+    const theAngleGaston = findOneWayValue(0, 60, context.numberOfFrames, context.currentFrame, invert);
 
     for (let i = 0; i < number; i++) {
 
