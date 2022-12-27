@@ -9,14 +9,14 @@ import fs from "fs";
 //not hex but hey...
 const drawHexLayer = async (context, arrayIndex, layer) => {
 
-    const number = layer > 0 ? 6 * layer : 1;
+    const number = layer > 0 ? 3 * layer : 1;
     const element = context.data.ringArray[arrayIndex];
     const invert = (layer % 2) > 0;
     const theAngleGaston = findValue(0, context.data.ringArray[arrayIndex].movementGaston, 1, context.numberOfFrames, context.currentFrame, invert);
 
     for (let i = 0; i < number; i++) {
 
-        const angle = (60 / layer) * i;
+        const angle = (120 / layer) * i;
         const offset = context.data.offsetRadius * layer;
 
         const pos = findPointByAngleAndCircle(context.data.center, angle + theAngleGaston, offset);

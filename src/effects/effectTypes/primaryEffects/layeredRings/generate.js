@@ -14,15 +14,15 @@ const config = {
     indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
     indexOpacityTimes: {lower: 1, upper: 6},
 
-    radius: {lower: 40, upper: 120},
-    offsetRadius: {lower: 25, upper: 35},
+    radius: {lower: 20, upper: 60},
+    offsetRadius: {lower: 25, upper: 30},
 
-    numberOfIndex: {lower: 60, upper: 120},
-    startIndex: {lower: 20, upper: 40},
+    numberOfIndex: {lower: 40, upper: 60},
+    startIndex: {lower: 20, upper: 25},
 
     startAngle: 0,
 
-    movementGaston: {lower: 4, upper: 12},
+    movementGaston: {lower: 2, upper: 6},
 }
 
 const getRingsIndexArray = (num) => {
@@ -38,7 +38,7 @@ const getRingsIndexArray = (num) => {
             },
             opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
             movementGaston: getRandomIntInclusive(config.movementGaston.lower, config.movementGaston.upper),
-            radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
+            radius: getRandomIntInclusive(config.offsetRadius.lower, config.radius.upper),
         });
     }
 
@@ -69,7 +69,7 @@ export const generate = () => {
             offsetRadius: getRandomIntInclusive(config.offsetRadius.lower, config.offsetRadius.upper),
 
             getInfo: () => {
-                return `${layeredRingsEffect.name}: ${data.radius} radius, ${data.numberOfIndex} layers, ${data.startIndex} offset`
+                return `${layeredRingsEffect.name}: ${data.offsetRadius} offset radius, ${data.numberOfIndex} layers, ${data.startIndex} offset`
             }
         };
 
