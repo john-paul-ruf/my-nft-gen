@@ -14,10 +14,10 @@ const config = {
     indexOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
     indexOpacityTimes: {lower: 1, upper: 12},
 
-    radius: {lower: 25, upper: 75},
+    radius: {lower: 20, upper: 60},
 
-    numberOfIndex: {lower: 40, upper: 120},
-    startIndex: {lower: 10, upper: 40},
+    numberOfIndex: {lower: 5, upper: 10},
+    startIndex: {lower: 5, upper: 10},
 
     startAngle: 30,
 
