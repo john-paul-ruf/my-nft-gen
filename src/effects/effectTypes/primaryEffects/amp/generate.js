@@ -7,12 +7,12 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.25,
-    sparsityFactor: {lower: 2, upper: 6},
+    sparsityFactor: {lower: 1, upper: 3},
     stroke: 0,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
-    speed: {lower: 15, upper: 30},
+    speed: {lower: 3, upper: 6},
 }
 
 export const generate = () => {

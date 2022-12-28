@@ -10,7 +10,7 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 //not hex but hey...
 const drawHexLayer = async (context, arrayIndex, layer) => {
 
-    const layerFactor = 3;
+    const layerFactor = 2;
     const startingAngleStatic = 360 / layerFactor;
     const startingAngle = startingAngleStatic / layer;
 
