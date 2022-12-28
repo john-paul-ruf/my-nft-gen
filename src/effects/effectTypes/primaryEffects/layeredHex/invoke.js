@@ -10,22 +10,26 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 //not hex but hey...
 const drawHexLayer = async (context, arrayIndex, layer) => {
 
+    const layerFactor = 3;
+    const startingAngleStatic = 360 / layerFactor;
+    const startingAngle = startingAngleStatic / layer;
+
     const number = layer > 0 ? 6 * layer : 1;
     const element = context.data.hexArray[arrayIndex];
     const invert = (layer % 2) > 0;
-    const theAngleGaston = findOneWayValue(0, 60 / layer, context.numberOfFrames, context.currentFrame, invert);
+    const theAngleGaston = findOneWayValue(0, context.data.hexArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, invert);
 
     for (let i = 0; i < number; i++) {
 
-        const angle = (60 / layer) * i;
+        const angle = startingAngle * i;
         const offset = context.data.radius * layer;
 
         const pos = findPointByAngleAndCircle(context.data.center, angle + theAngleGaston, offset);
 
         const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
-        await context.canvas.drawFilledPolygon2d(context.data.radius, pos, 6, context.data.startAngle, element.color, theOpacityGaston);
-        await context.canvas.drawPolygon2d(context.data.radius, pos, 6, context.data.startAngle, context.data.thickness, element.outline, context.data.stroke, element.outlineStrokeColor, theOpacityGaston);
+        await context.canvas.drawFilledPolygon2d(context.data.hexArray[arrayIndex].radius, pos, 6, context.data.startAngle, element.color, theOpacityGaston);
+        await context.canvas.drawPolygon2d(context.data.hexArray[arrayIndex].radius, pos, 6, context.data.startAngle, context.data.thickness, element.outline, context.data.stroke, element.outlineStrokeColor, theOpacityGaston);
     }
 }
 const createLayers = async (context) => {

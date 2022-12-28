@@ -8,19 +8,21 @@ const config = {
     thickness: 1,
     stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
+    layerOpacityRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
     layerOpacityTimes: {lower: 1, upper: 12},
 
     indexOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
     indexOpacityTimes: {lower: 1, upper: 12},
 
-    radius: {lower: 20, upper: 60},
+    radius: {lower: 20, upper: 120},
+    offsetRadius: {lower: 25, upper: 30},
 
-    numberOfIndex: {lower: 5, upper: 10},
-    startIndex: {lower: 5, upper: 10},
+    numberOfIndex: {lower: 10, upper: 20},
+    startIndex: {lower: 10, upper: 15},
 
     startAngle: 30,
 
+    movementGaston: {lower: 4, upper: 12},
 }
 
 const getHexIndexArray = (num) => {
@@ -36,6 +38,8 @@ const getHexIndexArray = (num) => {
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)
             },
             opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
+            movementGaston: getRandomIntInclusive(config.movementGaston.lower, config.movementGaston.upper),
+            radius: getRandomIntInclusive(config.offsetRadius.lower, config.radius.upper),
         });
     }
 
@@ -64,8 +68,10 @@ export const generate = () => {
             },
             layerOpacityTimes: getRandomIntInclusive(config.layerOpacityTimes.lower, config.layerOpacityTimes.upper),
 
+            offsetRadius: getRandomIntInclusive(config.offsetRadius.lower, config.offsetRadius.upper),
+
             getInfo: () => {
-                return `${layeredHexEffect.name}: ${data.radius} radius, ${data.numberOfIndex} layers, ${data.startIndex} offset`
+                return `${layeredHexEffect.name}: ${data.offsetRadius} offset radius, ${data.numberOfIndex} layers, ${data.startIndex} offset`
             }
         };
 

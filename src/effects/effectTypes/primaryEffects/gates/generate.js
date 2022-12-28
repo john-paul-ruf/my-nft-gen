@@ -6,12 +6,12 @@ const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
     gates: {lower: 4, upper: 12},
-    numberOfSides: {lower: 8, upper: 8},
+    numberOfSides: {lower: 4, upper: 4},
     thickness: 1,
     stroke: 0,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 0, upper: 0},
+    accentTimes: {lower: 2, upper: 8},
     blurTimes: {lower: 0, upper: 0},
 }
 

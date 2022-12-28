@@ -15,19 +15,19 @@ const config = {
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
     elementGastonTimes: {lower: 2, upper: 4},
 
-    numberOfFlareHex: {lower: 2, upper: 8},
+    numberOfFlareHex: {lower: 0, upper: 0},
     flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.01, upper: finalImageSize.shortestSide * 0.07},
 
-    angleRangeFlareHex: {bottom: {lower: 25, upper: 30}, top: {lower: 60, upper: 65}},
-    angleGastonTimes: {lower: 1, upper: 4},
+    angleRangeFlareHex: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    angleGastonTimes: {lower: 0, upper: 0},
 
     numberOfFlareRings: {lower: 150, upper: 250},
     flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 1.1},
-    flareRingStroke: {lower: 0.25, upper: 1},
+    flareRingStroke: {lower: 0.1, upper: 0.5},
 
     numberOfFlareRays: {lower: 150, upper: 250},
-    flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 1.1},
-    flareRaysStroke: {lower: 0.25, upper: 1},
+    flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.5, upper: finalImageSize.longestSide * 1.1},
+    flareRaysStroke: {lower: 0.1, upper: 0.5},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
