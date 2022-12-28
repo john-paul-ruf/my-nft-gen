@@ -15,14 +15,14 @@ const config = {
     indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 20, upper: 120},
-    offsetRadius: {lower: 25, upper: 30},
+    offsetRadius: {lower: 25, upper: 35},
 
     numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 2, upper: 6},
+    startIndex: {lower: 8, upper: 12},
 
     startAngle: 30,
 
-    movementGaston: {lower: 4, upper: 12},
+    movementGaston: {lower: 1, upper: 3},
 }
 
 const getHexIndexArray = (num) => {

@@ -22,7 +22,7 @@ const config = {
 
     startAngle: 0,
 
-    movementGaston: {lower: 4, upper: 12},
+    movementGaston: {lower: 1, upper: 3},
 }
 
 const getRingsIndexArray = (num) => {

@@ -15,7 +15,7 @@ const config = {
     ampRadius: {lower: 125, upper: 150},
     sparsityFactor: {lower: 1, upper: 4},
     amplitude: {lower: 20, upper: 30},
-    times: {lower: 1, upper: 4},
+    times: {lower: 1, upper: 2},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
