@@ -8,17 +8,17 @@ const config = {
     thickness: 1,
     stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
-    layerOpacityTimes: {lower: 1, upper: 12},
+    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
+    layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
-    indexOpacityTimes: {lower: 1, upper: 12},
+    indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
+    indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 20, upper: 120},
     offsetRadius: {lower: 25, upper: 30},
 
     numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 10, upper: 15},
+    startIndex: {lower: 2, upper: 6},
 
     startAngle: 30,
 
