@@ -55,7 +55,7 @@ const config = {
 const getFlareHexArray = (num) => {
     const info = [];
 
-    for (let i = 0; i <= num; i++) {
+    for (let i = 0; i < num; i++) {
         info.push({
             size: getRandomIntInclusive(config.flareHexSizeRange.lower, config.flareHexSizeRange.upper),
             color: config.getFlareColor(),
