@@ -10,17 +10,23 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 //not hex but hey...
 const drawHexLayer = async (context, arrayIndex, layer) => {
 
-    const number = layer > 0 ? 3 * layer : 1;
+    const layerFactor = 3;
+    const startingAngleStatic = 360 / layerFactor;
+    const startingAngle = startingAngleStatic / layer;
+
+    const number = layer > 0 ? layerFactor * layer : 1;
     const element = context.data.ringArray[arrayIndex];
+
+    const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, false)
+
     const invert = (layer % 2) > 0;
-    const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * (context.data.ringArray[arrayIndex].radius * 2), context.numberOfFrames, context.currentFrame, invert)
 
     for (let i = 0; i < number; i++) {
 
-        const angle = (120 / layer) * i;
+        const angle = startingAngle * i;
         const offset = context.data.offsetRadius * layer;
 
-        const pos = findPointByAngleAndCircle(context.data.center, angle + theAngleGaston, offset);
+        const pos = findPointByAngleAndCircle(context.data.center, invert ? angle - theAngleGaston : angle + theAngleGaston, offset);
 
         const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
