@@ -1,13 +1,21 @@
 //Encapsulated globals are less bad...
 import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
-import {RandomColorScheme} from "./RandomColorScheme.js";
+import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
 
-const finalImageHeight = 1080;
-const finalImageWidth = 1920;
+const longestSideInPixels = 1920
+const shortestSideInPixels = 1080
+
+const isHoz = false;
+
+const finalImageHeight = isHoz ? shortestSideInPixels : longestSideInPixels;
+const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
 
 class globalSettings {
     constructor() {
         this.randomColorScheme = new RandomColorScheme();
+
+        //override - love me some neons
+        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.neons);
 
         this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';

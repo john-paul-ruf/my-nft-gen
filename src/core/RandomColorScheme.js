@@ -7,36 +7,43 @@ import fs from "fs";
 let niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors.json').toString())
 let colrOrgColors = JSON.parse(fs.readFileSync('src/data/colr-org-1000-10-plus.json').toString())
 
+export const possibleColorSchemes = {
+    colorSchemeStrategy: 'color-scheme',
+    niceColorPalettesStrategy: 'nice-color-palettes',
+    googlePaletteStrategy: 'google-palette',
+    colrOrgStrategy: 'colr.org',
+    neons: 'neons',
+}
+
 export class RandomColorScheme {
-    constructor() {
-        this.colorSchemeStrategy = 'color-scheme';
-        this.niceColorPalettesStrategy = 'nice-color-palettes';
-        this.googlePaletteStrategy = 'google-palette';
-        this.colrOrgStrategy = 'colr.org';
-        this.neons = 'neons';
+    constructor(overrideWithScheme = null) {
 
-        switch (getRandomIntInclusive(0, 4)) {
-            case 0:
-                this.colorStrategy = this.colorSchemeStrategy;
-                break;
-            case 1:
-                this.colorStrategy = this.niceColorPalettesStrategy;
-                break;
-            case 3:
-                this.colorStrategy = this.colrOrgStrategy;
-                break;
-            case 2:
-                this.colorStrategy = this.googlePaletteStrategy;
-                break;
-            case 4:
-                this.colorStrategy = this.neons;
-                break;
+        if (overrideWithScheme) {
+            this.colorStrategy = overrideWithScheme;
+        } else {
+            switch (getRandomIntInclusive(0, 4)) {
+                case 0:
+                    this.colorStrategy = possibleColorSchemes.colorSchemeStrategy;
+                    break;
+                case 1:
+                    this.colorStrategy = possibleColorSchemes.niceColorPalettesStrategy;
+                    break;
+                case 3:
+                    this.colorStrategy = possibleColorSchemes.colrOrgStrategy;
+                    break;
+                case 2:
+                    this.colorStrategy = possibleColorSchemes.googlePaletteStrategy;
+                    break;
+                case 4:
+                    this.colorStrategy = possibleColorSchemes.neons;
+                    break;
 
+            }
         }
 
 
         switch (this.colorStrategy) {
-            case this.colorSchemeStrategy:
+            case possibleColorSchemes.colorSchemeStrategy:
 
                 //'mono', 'contrast', 'triade', 'tetrade', 'analogic'.
                 const schemeBucket = ['contrast', 'triade', 'tetrade', 'analogic'];
@@ -59,13 +66,13 @@ export class RandomColorScheme {
                     .colors();
 
                 break;
-            case this.niceColorPalettesStrategy:
+            case possibleColorSchemes.niceColorPalettesStrategy:
                 this.colorBucket = niceColors[getRandomIntExclusive(0, niceColors.length)];
                 break;
-            case this.colrOrgStrategy:
+            case possibleColorSchemes.colrOrgStrategy:
                 this.colorBucket = colrOrgColors[getRandomIntExclusive(0, colrOrgColors.length)];
                 break;
-            case this.neons:
+            case possibleColorSchemes.neons:
                 this.colorBucket = [
                     '#FFFF00',
                     '#FF00FF',
@@ -75,7 +82,7 @@ export class RandomColorScheme {
                     '#0000FF',
                 ];
                 break;
-            case this.googlePaletteStrategy:
+            case possibleColorSchemes.googlePaletteStrategy:
                 switch (getRandomIntInclusive(0, 4)) {
                     case 0:
                         this.googlePaletteSelector = 'mpn65'; //MY ABSOLUTE FAV RIGHT NOW
@@ -107,15 +114,15 @@ export class RandomColorScheme {
 
     getColorFromBucket() {
         switch (this.colorStrategy) {
-            case this.colorSchemeStrategy:
+            case possibleColorSchemes.colorSchemeStrategy:
                 return '#' + this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
-            case this.niceColorPalettesStrategy:
+            case possibleColorSchemes.niceColorPalettesStrategy:
                 return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
-            case this.neons:
+            case possibleColorSchemes.neons:
                 return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
-            case this.colrOrgStrategy:
+            case possibleColorSchemes.colrOrgStrategy:
                 return '#' + this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
-            case this.googlePaletteStrategy:
+            case possibleColorSchemes.googlePaletteStrategy:
                 return '#' + this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             default:
                 throw 'no color scheme strategy';
@@ -128,20 +135,20 @@ export class RandomColorScheme {
         const colorStrategy = this.colorStrategy;
 
         switch (colorStrategy) {
-            case  this.colorSchemeStrategy:
+            case  possibleColorSchemes.colorSchemeStrategy:
                 schemeInfo = {
                     scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance
                 };
 
-                return `Color Strategy: ${this.colorSchemeStrategy}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
-            case  this.niceColorPalettesStrategy:
-                return `Color Strategy: ${this.niceColorPalettesStrategy}\n`
-            case  this.neons:
-                return `Color Strategy: ${this.neons}\n`
-            case  this.colrOrgStrategy:
-                return `Color Strategy: ${this.colrOrgStrategy}\n`
-            case  this.googlePaletteStrategy:
-                return `Color Strategy: ${this.googlePaletteStrategy}\nSelector: ${this.googlePaletteSelector}\n`
+                return `Color Strategy: ${possibleColorSchemes.colorSchemeStrategy}\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
+            case  possibleColorSchemes.niceColorPalettesStrategy:
+                return `Color Strategy: ${possibleColorSchemes.niceColorPalettesStrategy}\n`
+            case  possibleColorSchemes.neons:
+                return `Color Strategy: ${possibleColorSchemes.neons}\n`
+            case  possibleColorSchemes.colrOrgStrategy:
+                return `Color Strategy: ${possibleColorSchemes.colrOrgStrategy}\n`
+            case  possibleColorSchemes.googlePaletteStrategy:
+                return `Color Strategy: ${possibleColorSchemes.googlePaletteStrategy}\nSelector: ${this.googlePaletteSelector}\n`
             default:
                 throw 'no color scheme strategy';
         }
