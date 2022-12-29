@@ -36,8 +36,7 @@ import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/eff
 const primaryEffects = [
     animateBackgroundEffect,
     scopesEffect,
-    layeredRingsEffect,
-    layeredHexEffect,
+
     wireframeSpiralEffect,
     encircledSpiralEffect,
     eightEffect,
@@ -48,6 +47,8 @@ const primaryEffects = [
     invertedRayRingEffect,
     rayRingEffect,
     fuzzyRippleEffect,
+    layeredRingsEffect,
+    layeredHexEffect,
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
@@ -56,6 +57,7 @@ const primaryEffects = [
     mappedFramesEffect,
     threeDimensionalRingsEffect,
     lensFlareEffect,
+
 
 ];
 

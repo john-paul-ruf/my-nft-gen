@@ -30,7 +30,7 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#848484',/*
+            '#222222',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/];
@@ -38,7 +38,7 @@ class globalSettings {
         //For 2D palettes
         this.backgrounds = [
             /* '#000000',*/
-            '#222222',
+            '#444444',
             /* '#FFFFFF',*/
         ];
 
