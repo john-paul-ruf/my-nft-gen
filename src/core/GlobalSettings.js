@@ -30,7 +30,7 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#222222',/*
+            '#888888',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/];
