@@ -17,9 +17,17 @@ export const writeToMp4 = async (fileSelector, config) => {
                 .withFpsInput(30)
                 .outputOptions([
                     '-preset veryslow', //take time to compress
-                    '-crf 28',  //compression rate*/
                     '-pix_fmt yuv420p', //quicktime apple compatibility
-                    '-an' //no audio
+                    '-an', //no audio
+                    //https://superuser.com/questions/866798/what-ffmpeg-command-line-matches-the-one-youtube-uses
+                    '-movflags +faststart',
+                    '-profile:v high',
+                    '-level 4.0',
+                    '-bf 2',
+                    '-g 15',
+                    '-coder 1',
+                    '-r 24000/1001',
+                    '-aspect 16:9',
                 ])
                 .on("end", () => {
                     resolve();
