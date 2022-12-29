@@ -16,7 +16,6 @@ export const writeToMp4 = async (fileSelector, config) => {
                 .videoCodec('libx264')
                 .withFpsInput(30)
                 .outputOptions([
-                    '-tag:v hvc1', //compatibility
                     '-preset veryslow', //take time to compress
                     '-crf 28',  //compression rate*/
                     '-pix_fmt yuv420p', //quicktime apple compatibility
