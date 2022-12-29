@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
+import {getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {gatesEffect} from "./effect.js";
 
 const config = {
@@ -7,7 +7,7 @@ const config = {
     underLayerOpacity: 0.25,
     gates: {lower: 4, upper: 12},
     numberOfSides: {lower: 4, upper: 4},
-    thickness: 1,
+    thickness: 0.25,
     stroke: 0,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 4}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
@@ -22,7 +22,7 @@ const computeInitialInfo = (num) => {
     for (let i = 0; i <= num; i++) {
         info.push({
             radius: getRandomIntExclusive(0, finalImageSize.height / 2),
-            color: getColorFromBucket(),
+            color: getNeutralFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
@@ -43,7 +43,7 @@ export const generate = () => {
         width: finalImageSize.width,
         thickness: config.thickness,
         stroke: config.stroke,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         blurRange: {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),

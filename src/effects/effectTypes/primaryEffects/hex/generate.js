@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
+import {getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {hexEffect} from "./effect.js";
 
 const config = {
@@ -13,7 +13,7 @@ const config = {
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 0},
     stroke: 0,
-    thickness: 0.15,
+    thickness: 0.05,
     scaleFactor: 2,
     numberOfHex: 30,
     strategy: ['static',/* 'angle', 'rotate'*/],
@@ -32,7 +32,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         scaleFactor: config.scaleFactor,
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
@@ -47,7 +47,7 @@ export const generate = () => {
         },
         accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
-        color: getColorFromBucket(),
+        color: getNeutralFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${hexEffect.name}: strategy: ${data.strategy}, sparsity: ${data.sparsityFactor}, gap: ${data.gapFactor}, radius: ${data.radiusFactor}`
