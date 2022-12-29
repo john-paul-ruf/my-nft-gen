@@ -22,6 +22,8 @@ export const writeToMp4 = async (fileSelector, config) => {
                     '-an' //no audio
                 ])
                 .on("end", () => {
+                    resolve();
+                    console.log("mp4 Finished");
                 })
                 .on('progress', (progress) => {
                     console.log(progress);
