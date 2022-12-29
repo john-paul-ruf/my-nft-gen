@@ -9,25 +9,24 @@ export const writeToMp4 = async (fileSelector, config) => {
         return new Promise((resolve, reject) => {
 
             const pass1 = ffmpeg().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
-            const pass2 = ffmpeg().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
             pass1.addInput(fileSelector)
                 .outputFormat('mp4')
-                .videoCodec('libx264')
+                .videoCodec('libx265')
                 .withFpsInput(30)
                 .outputOptions([
+                    '-tag:v hvc1', //compatibility
                     '-preset veryslow', //take time to compress
                     '-pix_fmt yuv420p', //quicktime apple compatibility
                     '-an', //no audio
                     //https://superuser.com/questions/866798/what-ffmpeg-command-line-matches-the-one-youtube-uses
                     '-movflags +faststart',
-                    '-profile:v high',
+                    /*'-profile:v high',*/ //264
                     '-level 4.0',
                     '-bf 2',
                     '-g 15',
                     '-coder 1',
                     '-r 24000/1001',
-                    '-aspect 16:9',
                 ])
                 .on("end", () => {
                     resolve();
