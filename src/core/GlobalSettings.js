@@ -5,7 +5,7 @@ import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
 const longestSideInPixels = 1920
 const shortestSideInPixels = 1080
 
-const isHoz = false;
+const isHoz = true;
 
 const finalImageHeight = isHoz ? shortestSideInPixels : longestSideInPixels;
 const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
