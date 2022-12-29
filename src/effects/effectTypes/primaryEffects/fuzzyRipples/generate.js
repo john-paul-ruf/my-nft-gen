@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
+import {getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {fuzzyRippleEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -9,13 +9,13 @@ const config = {
     underLayerOpacity: 0.25,
     stroke: 0,
     thickness: 1,
-    largeRadius: {lower: finalImageSize.width * 0.35, upper: finalImageSize.width * 0.45},
-    smallRadius: {lower: finalImageSize.width * 0.35, upper: finalImageSize.width * 0.40},
-    largeNumberOfRings: {lower: 35, upper: 45},
-    smallNumberOfRings: {lower: 16, upper: 24},
-    ripple: {lower: finalImageSize.width / 30, upper: finalImageSize.width / 35},
+    largeRadius: {lower: finalImageSize.longestSide * 0.35, upper: finalImageSize.longestSide * 0.45},
+    smallRadius: {lower: finalImageSize.longestSide * 0.35, upper: finalImageSize.longestSide * 0.40},
+    largeNumberOfRings: {lower: 20, upper: 30},
+    smallNumberOfRings: {lower: 7, upper: 14},
+    ripple: {lower: finalImageSize.shortestSide / 40, upper: finalImageSize.shortestSide / 50},
     times: {lower: 1, upper: 2},
-    smallerRingsGroupRadius: {lower: finalImageSize.width * 0.25, upper: finalImageSize.width * 0.35},
+    smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.shortestSide * 0.35},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
@@ -30,7 +30,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
         largeNumberOfRings: getRandomIntInclusive(config.largeNumberOfRings.lower, config.largeNumberOfRings.upper),
@@ -38,8 +38,8 @@ export const generate = () => {
         ripple: getRandomIntInclusive(config.ripple.lower, config.ripple.upper),
         smallerRingsGroupRadius: getRandomIntInclusive(config.smallerRingsGroupRadius.lower, config.smallerRingsGroupRadius.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
-        largeColor: getColorFromBucket(),
-        smallColor: getColorFromBucket(),
+        largeColor: getNeutralFromBucket(),
+        smallColor: getNeutralFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

@@ -1,11 +1,16 @@
 //Encapsulated globals are less bad...
 import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
+import parseArgs from 'minimist';
 
 const longestSideInPixels = 1920
 const shortestSideInPixels = 1080
 
-const isHoz = true;
+//--isHoz
+const argv = parseArgs(process.argv)
+//console.log(argv)
+
+const isHoz = argv.hasOwnProperty('isHoz') ? argv.isHoz === 'true' : true;
 
 const finalImageHeight = isHoz ? shortestSideInPixels : longestSideInPixels;
 const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
@@ -25,7 +30,7 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#000000',/*
+            '#848484',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/];
@@ -33,7 +38,7 @@ class globalSettings {
         //For 2D palettes
         this.backgrounds = [
             /* '#000000',*/
-            '#000000',
+            '#484848',
             /* '#FFFFFF',*/
         ];
 

@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {ampEffect} from "./effect.js";
 
@@ -24,8 +24,8 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
-        outerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
+        outerColor: getNeutralFromBucket(),
         length: 100,
         lineStart: 150,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
