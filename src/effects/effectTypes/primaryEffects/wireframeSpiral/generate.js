@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
@@ -37,8 +37,8 @@ export const generate = () => {
         unitLength: getRandomIntInclusive(config.unitLength.lower, config.unitLength.upper),
         unitLengthChangeConstant: config.unitLengthChangeConstant,
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        innerColor: getColorFromBucket(),
-        outerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
+        outerColor: getNeutralFromBucket(),
         center: {x: finalImageSize.width * 2 / 2, y: finalImageSize.height * 2 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
