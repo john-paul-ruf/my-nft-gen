@@ -14,15 +14,19 @@ const config = {
     indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
     indexOpacityTimes: {lower: 1, upper: 6},
 
-    radius: {lower: 10, upper: 30},
-    offsetRadius: {lower: 15, upper: 20},
+    radius: {lower: 25, upper: 75},
+    offsetRadius: {lower: 25, upper: 35},
 
     numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 8, upper: 12},
+    startIndex: {lower: 1, upper: 3},
 
     startAngle: 30,
 
     movementGaston: {lower: 1, upper: 3},
+
+    initialNumberOfPoints: 5,
+    scaleByFactor: 1.05
+
 }
 
 const getHexIndexArray = (num) => {
@@ -58,7 +62,9 @@ export const generate = () => {
             thickness: config.thickness,
             stroke: config.stroke,
 
-            radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
+            initialNumberOfPoints: config.initialNumberOfPoints,
+            scaleByFactor: config.scaleByFactor,
+
             numberOfIndex: getRandomIntInclusive(config.numberOfIndex.lower, config.numberOfIndex.upper),
             startIndex: getRandomIntInclusive(config.startIndex.lower, config.startIndex.upper),
 

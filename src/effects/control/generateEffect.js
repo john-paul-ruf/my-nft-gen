@@ -39,16 +39,18 @@ const primaryEffects = [
 
     wireframeSpiralEffect,
     encircledSpiralEffect,
-    eightEffect,
+
     hexEffect,
     ampEffect,
     fuzzBandsEffect,
     gatesEffect,
     invertedRayRingEffect,
     rayRingEffect,
-    fuzzyRippleEffect,
     layeredRingsEffect,
     layeredHexEffect,
+    fuzzyRippleEffect,
+    eightEffect,
+
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,

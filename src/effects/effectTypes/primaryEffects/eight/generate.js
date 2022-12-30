@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {eightEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -10,10 +10,10 @@ const config = {
     stroke: 0,
     thickness: 0.25,
     smallRadius: {lower: finalImageSize.longestSide * 0.25, upper: finalImageSize.longestSide * 0.30},
-    smallNumberOfRings: {lower: 10, upper: 15},
+    smallNumberOfRings: {lower: 4, upper: 8},
     ripple: {lower: finalImageSize.longestSide / 35, upper: finalImageSize.longestSide / 45},
     times: {lower: 1, upper: 1},
-    smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.2},
+    smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.1},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 0, upper: 0},
@@ -28,8 +28,8 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
-        outerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
+        outerColor: getColorFromBucket(),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
         smallNumberOfRings: getRandomIntInclusive(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),
         ripple: getRandomIntInclusive(config.ripple.lower, config.ripple.upper),

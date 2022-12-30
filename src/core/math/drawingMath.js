@@ -5,6 +5,17 @@ export const findPointByAngleAndCircle = (pos, angle, radius) => {
     return {x: x, y: y};
 }
 
+export const getPointsForLayerAndDensity = (initialNumberOfPoints, scaleByFactor, iteration) => {
+
+    let numberOfPoints = initialNumberOfPoints;
+
+    for (let i = 0; i < iteration; i++) {
+        numberOfPoints = numberOfPoints * scaleByFactor;
+    }
+
+    return Math.floor(numberOfPoints);
+}
+
 //See comment on method above
 export const degreesToRadians = (degrees) => {
     let pi = Math.PI;

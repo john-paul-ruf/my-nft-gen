@@ -3,30 +3,27 @@ import {randomId} from "../../../../core/math/random.js";
 import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
-import {findPointByAngleAndCircle} from "../../../../core/math/drawingMath.js";
+import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../../core/math/drawingMath.js";
 import fs from "fs";
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 //not hex but hey...
 const drawHexLayer = async (context, arrayIndex, layer) => {
 
-    const layerFactor = 2;
-    const startingAngleStatic = 360 / layerFactor;
-    const startingAngle = startingAngleStatic / layer;
+    const numberOfPoints = getPointsForLayerAndDensity(context.data.initialNumberOfPoints, context.data.scaleByFactor, layer);
+    const startingAngle = 360 / numberOfPoints;
 
-    const number = layer > 0 ? layerFactor * layer : 1;
     const element = context.data.ringArray[arrayIndex];
 
-    const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, false)
-
     const invert = (layer % 2) > 0;
+    const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, invert)
 
-    for (let i = 0; i < number; i++) {
+    for (let i = 1; i <= numberOfPoints; i++) {
 
-        const angle = startingAngle * i;
+        const angle = ((startingAngle * i) + theAngleGaston) % 360;
         const offset = context.data.offsetRadius * layer;
 
-        const pos = findPointByAngleAndCircle(context.data.center, invert ? angle - theAngleGaston : angle + theAngleGaston, offset);
+        const pos = findPointByAngleAndCircle(context.data.center, angle, offset);
 
         const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
@@ -35,13 +32,8 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 }
 const createLayers = async (context) => {
 
-    const start = context.data.startIndex;
-    const end = context.data.startIndex + context.data.numberOfIndex;
-
-    for (let i = start; i < end; i++) {
-        const arrayIndex = i - start;
-        const layer = i;
-        await drawHexLayer(context, arrayIndex, layer);
+    for (let i = 0; i < context.data.ringArray.length; i++) {
+        await drawHexLayer(context, i, context.data.startIndex + i);
     }
 
     await context.canvas.toFile(context.drawing);
