@@ -7,15 +7,15 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    numberOfRings: {lower: 1, upper: 2},
+    numberOfRings: {lower: 1, upper: 1},
     radiusRange: {lower: finalImageSize.height * 0.2, upper: finalImageSize.height * 0.45},
     stroke: 0,
-    thickness: 1,
+    thickness: 0.5,
     ringStroke: 0,
-    ringthickness: 1,
+    ringthickness: 0.5,
     sparsityFactor: {lower: 5, upper: 10},
     numberOfSegments: {lower: 5, upper: 10},
-    speed: {lower: 1, upper: 12},
+    speed: {lower: 6, upper: 12},
 }
 
 const getRingArray = (num) => {

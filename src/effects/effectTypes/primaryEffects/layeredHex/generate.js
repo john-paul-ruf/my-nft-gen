@@ -17,15 +17,15 @@ const config = {
     radius: {lower: 25, upper: 75},
     offsetRadius: {lower: 25, upper: 35},
 
-    numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 1, upper: 3},
+    numberOfIndex: {lower: 30, upper: 40},
+    startIndex: {lower: 13, upper: 15},
 
     startAngle: 30,
 
     movementGaston: {lower: 1, upper: 3},
 
-    initialNumberOfPoints: 5,
-    scaleByFactor: 1.05
+    initialNumberOfPoints: 8,
+    scaleByFactor: 1.08
 
 }
 
