@@ -35,6 +35,10 @@ import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/eff
 
 const primaryEffects = [
     animateBackgroundEffect,
+
+    fuzzyRippleEffect,
+    eightEffect,
+
     scopesEffect,
 
     wireframeSpiralEffect,
@@ -46,10 +50,11 @@ const primaryEffects = [
     gatesEffect,
     invertedRayRingEffect,
     rayRingEffect,
+
+
     layeredRingsEffect,
     layeredHexEffect,
-    fuzzyRippleEffect,
-    eightEffect,
+
 
     viewportEffect,
     verticalScanLinesEffect,
