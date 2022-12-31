@@ -8,9 +8,9 @@ const config = {
     layerOpacity: 0.7,
     underLayerOpacity: 0.25,
     stroke: 0,
-    thickness: 0.5,
+    thickness: 1,
     smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.10},
-    smallNumberOfRings: {lower: 4, upper: 8},
+    smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.longestSide / 15, upper: finalImageSize.longestSide / 20},
     times: {lower: 1, upper: 1},
     smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.1},
@@ -47,7 +47,7 @@ export const generate = () => {
         accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
         blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
-            return `${eightEffect.name}: ripple: ${data.ripple}`
+            return `${eightEffect.name}: ripple: ${data.ripple.toFixed(3)}`
         }
     }
 

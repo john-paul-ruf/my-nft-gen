@@ -3,7 +3,7 @@ import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.
 import {threeDimensionalRingsEffect} from "./effect.js";
 
 const config = {
-    rings: {lower: 15, upper: 30},
+    rings: {lower: 4, upper: 8},
     ringRadius: {lower: 0.5, upper: 1.5},
     ringGap: {lower: 2, upper: 3},
     radiusConstant: 50,

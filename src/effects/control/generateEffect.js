@@ -51,10 +51,8 @@ const primaryEffects = [
     invertedRayRingEffect,
     rayRingEffect,
 
-
-    layeredRingsEffect,
     layeredHexEffect,
-
+    layeredRingsEffect,
 
     viewportEffect,
     verticalScanLinesEffect,

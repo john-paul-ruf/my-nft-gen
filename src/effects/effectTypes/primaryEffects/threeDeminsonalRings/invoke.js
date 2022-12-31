@@ -55,15 +55,15 @@ const draw = async (context, filename) => {
 
     camera.position.z = 400;
 
-    const light1 = new THREE.SpotLight(hexToRgba(context.data.light1), 1, 300);
+    const light1 = new THREE.SpotLight(hexToRgba(context.data.light1), 10, 300);
     light1.position.set(25, 25, 250);
     scene.add(light1);
 
-    const light2 = new THREE.SpotLight(hexToRgba(context.data.light2), 1, 300);
+    const light2 = new THREE.SpotLight(hexToRgba(context.data.light2), 10, 300);
     light2.position.set(-25, 25, 250);
     scene.add(light2);
 
-    const light3 = new THREE.SpotLight(hexToRgba(context.data.light2), 1, 300);
+    const light3 = new THREE.SpotLight(hexToRgba(context.data.light2), 10, 300);
     light3.position.set(0, -25, 250);
     scene.add(light3);
 

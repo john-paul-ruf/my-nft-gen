@@ -18,7 +18,7 @@ const config = {
     offsetRadius: {lower: 25, upper: 35},
 
     numberOfIndex: {lower: 30, upper: 40},
-    startIndex: {lower: 15, upper: 18},
+    startIndex: {lower: 14, upper: 16},
 
     startAngle: 0,
 

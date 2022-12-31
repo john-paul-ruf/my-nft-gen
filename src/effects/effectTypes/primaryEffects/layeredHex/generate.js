@@ -8,10 +8,10 @@ const config = {
     thickness: 1,
     stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
+    layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.8}},
+    indexOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.15, upper: 0.2}},
     indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 15, upper: 25},
@@ -34,7 +34,7 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: '#00000000',
+            color: getColorFromBucket(),
             outline: getColorFromBucket(),
             outlineStrokeColor: getColorFromBucket(),
             opacity: {
