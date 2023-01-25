@@ -5,27 +5,27 @@ import {layeredHexEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 1,
+    thickness: 2,
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.05, upper: 0.1}, top: {lower: 0.15, upper: 0.2}},
+    indexOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     indexOpacityTimes: {lower: 1, upper: 6},
 
-    radius: {lower: 15, upper: 25},
-    offsetRadius: {lower: 20, upper: 23},
+    radius: {lower: 40, upper: 60},
+    offsetRadius: {lower: 30, upper: 50},
 
     numberOfIndex: {lower: 30, upper: 40},
-    startIndex: {lower: 13, upper: 15},
+    startIndex: {lower: 8, upper: 10},
 
     startAngle: 30,
 
-    movementGaston: {lower: 1, upper: 3},
+    movementGaston: {lower: 1, upper: 12},
 
-    initialNumberOfPoints: 8,
-    scaleByFactor: 1.08
+    initialNumberOfPoints: 15,
+    scaleByFactor: 1.05
 
 }
 

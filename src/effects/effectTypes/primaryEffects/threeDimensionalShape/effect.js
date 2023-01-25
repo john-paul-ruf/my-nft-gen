@@ -9,7 +9,7 @@ export const threeDimensionalShapeEffect = {
     name: 'three-dimensional-shape',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 10,
     requiresLayer: true,
 }
 

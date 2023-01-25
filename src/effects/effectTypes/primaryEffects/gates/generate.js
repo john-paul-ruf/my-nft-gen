@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {gatesEffect} from "./effect.js";
 
 const config = {
@@ -7,8 +7,8 @@ const config = {
     underLayerOpacity: 0.25,
     gates: {lower: 4, upper: 12},
     numberOfSides: {lower: 4, upper: 4},
-    thickness: 0.25,
-    stroke: 0,
+    thickness: 4,
+    stroke: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 4}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 1, upper: 3},
@@ -22,7 +22,7 @@ const computeInitialInfo = (num) => {
     for (let i = 0; i <= num; i++) {
         info.push({
             radius: getRandomIntExclusive(0, finalImageSize.height / 2),
-            color: getNeutralFromBucket(),
+            color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)

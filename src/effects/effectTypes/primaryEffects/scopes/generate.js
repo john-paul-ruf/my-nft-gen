@@ -8,7 +8,7 @@ const config = {
     layerOpacity: 1,
     sparsityFactor: {lower: 0.5, upper: 3},
     gapFactor: {lower: 0.3, upper: 0.5},
-    radiusFactor: {lower: 0.05, upper: 0.1},
+    radiusFactor: {lower: 0.15, upper: 0.3},
     scaleFactor: 2,
     alphaRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.35}},
     alphaTimes: {lower: 4, upper: 8},

@@ -12,7 +12,7 @@ const config = {
     stroke: 1,
     thickness: 1,
     rayStroke: 1,
-    raythickness: 1,
+    rayThickness: 1,
     scaleFactor: 2,
     densityFactor: 0.70,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},

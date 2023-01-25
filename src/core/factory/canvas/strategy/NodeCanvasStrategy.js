@@ -36,15 +36,18 @@ export class NodeCanvasStrategy {
         this.context.stroke();
 
         this.context.closePath();
-        this.context.beginPath();
 
-        this.context.arc(pos.x, pos.y, radius, 0, 2 * Math.PI, false);
+        if (innerStroke !== 0) {
+            this.context.beginPath();
 
-        this.context.lineWidth = innerStroke;
-        this.context.strokeStyle = hexToRgba(innerColor, alpha);
+            this.context.arc(pos.x, pos.y, radius, 0, 2 * Math.PI, false);
 
-        this.context.stroke();
-        this.context.closePath();
+            this.context.lineWidth = innerStroke;
+            this.context.strokeStyle = hexToRgba(innerColor, alpha);
+
+            this.context.stroke();
+            this.context.closePath();
+        }
     }
 
     async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
@@ -100,25 +103,27 @@ export class NodeCanvasStrategy {
         this.context.stroke();
 
         //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
-        this.context.beginPath();
+        if (innerStroke !== 0) {
+            this.context.beginPath();
 
-        this.context.save();
-        this.context.translate(pos.x, pos.y);
-        this.context.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
+            this.context.save();
+            this.context.translate(pos.x, pos.y);
+            this.context.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
 
-        this.context.moveTo(radius, 0);
+            this.context.moveTo(radius, 0);
 
-        for (let i = 0; i <= numberOfSides + 1; i++) { //sides plus one for proper end-caps on the polygons
-            this.context.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
+            for (let i = 0; i <= numberOfSides + 1; i++) { //sides plus one for proper end-caps on the polygons
+                this.context.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
+            }
+
+            this.context.closePath();
+            this.context.restore();
+
+            this.context.lineWidth = innerStroke;
+            this.context.strokeStyle = hexToRgba(innerColor, alpha);
+
+            this.context.stroke();
         }
-
-        this.context.closePath();
-        this.context.restore();
-
-        this.context.lineWidth = innerStroke;
-        this.context.strokeStyle = hexToRgba(innerColor, alpha);
-
-        this.context.stroke();
     }
 
     async drawGradientLine2d(startPos, endPos, stroke, startColor, endColor) {
