@@ -3,8 +3,8 @@ import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
 import parseArgs from 'minimist';
 
-const longestSideInPixels = 1280
-const shortestSideInPixels = 720
+const longestSideInPixels = 1920
+const shortestSideInPixels = 1080
 
 //--isHoz
 const argv = parseArgs(process.argv)
@@ -30,7 +30,7 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#121212',/*
+            '#444444',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/];
@@ -38,7 +38,7 @@ class globalSettings {
         //For 2D palettes
         this.backgrounds = [
             /* '#000000',*/
-            '#333333',
+            '#444444',
             /* '#FFFFFF',*/
         ];
 

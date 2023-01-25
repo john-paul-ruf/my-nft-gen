@@ -34,7 +34,7 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getColorFromBucket(),
+            color: '#00000000',
             outline: getColorFromBucket(),
             outlineStrokeColor: getColorFromBucket(),
             opacity: {

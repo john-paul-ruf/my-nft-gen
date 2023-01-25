@@ -5,6 +5,8 @@
 /.idea/my-nft-gen.iml
 /.idea/vcs.xml
 *.png
+!/src/img/imageOverlay/*.png
+!/src/img/imageOverlay/not-in-use/*.png
 *.mp4
 *.gif
 /coverage/

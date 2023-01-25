@@ -57,10 +57,13 @@ const primaryEffects = [
     viewportEffect,
     verticalScanLinesEffect,
     threeDimensionalShapeEffect,
-    imageOverlayEffect,
+
     animatedImageOverlayEffect,
     mappedFramesEffect,
     threeDimensionalRingsEffect,
+
+    imageOverlayEffect,
+    
     lensFlareEffect,
 
 

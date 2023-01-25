@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {rayRingEffect} from "./effect.js";
 
@@ -9,9 +9,9 @@ const config = {
     underLayerOpacity: 0.4,
     circles: {lower: 4, upper: 8},
     radiusGap: 250,
-    stroke: 0,
+    stroke: 1,
     thickness: 1,
-    rayStroke: 0,
+    rayStroke: 1,
     raythickness: 1,
     scaleFactor: 2,
     densityFactor: 0.7,
@@ -45,7 +45,7 @@ const computeInitialInfo = (num) => {
     for (let i = 0; i <= num; i++) {
         info.push({
             radius: config.radiusGap * (i + 1),
-            color: getColorFromBucket(),
+            color: getNeutralFromBucket(),
             outerColor: getColorFromBucket(),
             accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
             accentRange: {

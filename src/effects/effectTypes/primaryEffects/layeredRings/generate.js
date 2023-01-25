@@ -33,7 +33,7 @@ const getRingsIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getColorFromBucket(),
+            color: '#00000000',
             outline: getColorFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),

@@ -1,4 +1,4 @@
-import path, {dirname} from "path";
+import {dirname} from "path";
 import {fileURLToPath} from 'url';
 import {randomId} from "./math/random.js";
 
@@ -17,10 +17,10 @@ export class animationConfiguration {
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 150;
+        this.numberOfFrame = 720;
 
-        this.finalFileName = 'Final' + randomId();
-        this.fileOut = path.join(directory, '/img/output/' + this.finalFileName);
+        this.finalFileName = 'remix-sku' + randomId();
+        this.fileOut = '/Users/jpr/Library/CloudStorage/OneDrive-Personal/_ZEN_/my-nft-output/' + this.finalFileName;
     }
 }
 
