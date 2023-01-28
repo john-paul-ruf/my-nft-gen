@@ -2,8 +2,8 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {blurEffect} from "./effect.js";
 
 const config = {
-    lowerRange: {lower: 0, upper: 1},
-    upperRange: {lower: 3, upper: 4},
+    lowerRange: {lower: 0, upper: 0},
+    upperRange: {lower: 4, upper: 8},
     times: {lower: 2, upper: 6},
     glitchChance: 85,
 }

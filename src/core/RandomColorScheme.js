@@ -83,6 +83,8 @@ export class RandomColorScheme {
                 ];
                 break;
             case possibleColorSchemes.googlePaletteStrategy:
+                this.googlePaletteSelector = 'mpn65'; //MY ABSOLUTE FAV RIGHT NOW
+                /*
                 switch (getRandomIntInclusive(0, 4)) {
                     case 0:
                         this.googlePaletteSelector = 'mpn65'; //MY ABSOLUTE FAV RIGHT NOW
@@ -101,7 +103,7 @@ export class RandomColorScheme {
                         break;
                     default:
                         throw 'no google palette selected';
-                }
+                }*/
 
 
                 this.colorBucket = palette(this.googlePaletteSelector, 10);

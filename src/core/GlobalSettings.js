@@ -20,7 +20,7 @@ class globalSettings {
         this.randomColorScheme = new RandomColorScheme();
 
         //override - love me some neons
-        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.neons);
+        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.googlePaletteStrategy);
 
         this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
