@@ -22,7 +22,7 @@ class globalSettings {
         //override - love me some neons
         this.randomColorScheme = new RandomColorScheme(/*possibleColorSchemes.neons*/);
 
-        this.layerStrategy = getRandomIntInclusive(0, 1) === 0 ? 'jimp' : 'sharp'
+        this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
 
         this.workingDirectory = `src/img/working/`;
