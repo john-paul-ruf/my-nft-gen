@@ -1,6 +1,6 @@
 //Encapsulated globals are less bad...
 import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
-import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
+import {RandomColorScheme} from "./RandomColorScheme.js";
 import parseArgs from 'minimist';
 
 const longestSideInPixels = 1980;
@@ -20,9 +20,9 @@ class globalSettings {
         this.randomColorScheme = new RandomColorScheme();
 
         //override - love me some neons
-        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.googlePaletteStrategy);
+        this.randomColorScheme = new RandomColorScheme(/*possibleColorSchemes.neons*/);
 
-        this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
+        this.layerStrategy = getRandomIntInclusive(0, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
 
         this.workingDirectory = `src/img/working/`;

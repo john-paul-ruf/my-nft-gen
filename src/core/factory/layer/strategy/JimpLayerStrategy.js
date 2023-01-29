@@ -1,6 +1,7 @@
 import Jimp from "jimp";
 import {getFinalImageSize, getWorkingDirectory} from "../../../GlobalSettings.js";
 import {randomId} from "../../../math/random.js";
+import fs from "fs";
 
 export class JimpLayerStrategy {
     constructor() {
@@ -39,6 +40,8 @@ export class JimpLayerStrategy {
         this.internalRepresentation.composite(overlay, 0, 0, {
             mode: Jimp.BLEND_SOURCE_OVER,
         });
+
+        fs.unlinkSync(overlayFile);
     }
 
     async adjustLayerOpacity(opacity) {
