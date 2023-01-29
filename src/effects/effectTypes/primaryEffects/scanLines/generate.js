@@ -9,7 +9,7 @@ const config = {
     times: {lower: 8, upper: 16},
     alphaRange: {bottom: {lower: 0, upper: 0.3}, top: {lower: 0.4, upper: 0.8}},
     alphaTimes: {lower: 1, upper: 8},
-    loopTimes: {lower: 1, upper: 3},
+    loopTimes: {lower: 1, upper: 2},
 }
 
 const getPixelTrailLength = () => {

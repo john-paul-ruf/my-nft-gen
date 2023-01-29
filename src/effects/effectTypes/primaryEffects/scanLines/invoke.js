@@ -20,7 +20,7 @@ function computeY(context, numberOfFrames, currentFrame, i, loopTimes) {
     let y = context.data.lineInfo[i].lineStart + displacement;
 
     if (y > context.data.height) {
-        y = y - context.data.height
+        y = y % context.data.height
     }
     return y;
 }
