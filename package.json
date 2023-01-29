@@ -5,7 +5,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "vert": "node src/index.js --isHoz false",
+    "hoz": "node src/index.js"
   },
   "jest": {
     "collectCoverage": true,
