@@ -15,8 +15,8 @@ const drawLine = async (y, pixelLine, context) => {
     }
 }
 
-function computeY(context, numberOfFrames, currentFrame, i) {
-    const displacement = (context.data.height / numberOfFrames) * (currentFrame + 1);
+function computeY(context, numberOfFrames, currentFrame, i, loopTimes) {
+    const displacement = (context.data.height / numberOfFrames) * ((currentFrame + 1) * loopTimes);
     let y = context.data.lineInfo[i].lineStart + displacement;
 
     if (y > context.data.height) {
@@ -36,7 +36,7 @@ export const verticalScanLines = async (layer, data, currentFrame, numberOfFrame
     }
 
     for (let i = 0; i < data.lineInfo.length; i++) {
-        let y = computeY(context, numberOfFrames, currentFrame, i);
+        let y = computeY(context, numberOfFrames, currentFrame, i, data.lineInfo[i].loopTimes);
         await drawLine(y, data.lineInfo[i].pixelLine, context)
     }
 
