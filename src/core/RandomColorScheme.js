@@ -13,6 +13,8 @@ export const possibleColorSchemes = {
     googlePaletteStrategy: 'google-palette',
     colrOrgStrategy: 'colr.org',
     neons: 'neons',
+    paulTovBright: 'Paul Tov - Bright', //https://personal.sron.nl/~pault/
+    paulTovVibrant: 'Paul Tov - Vibrant', //https://personal.sron.nl/~pault/
 }
 
 export class RandomColorScheme {
@@ -80,6 +82,26 @@ export class RandomColorScheme {
                     '#FF0000',
                     '#00FF00',
                     '#0000FF',
+                ];
+                break;
+            case possibleColorSchemes.paulTovBright:
+                this.colorBucket = [
+                    '#4477aa',
+                    '#66ccee',
+                    '#228833',
+                    '#ccbb44',
+                    '#ee6677',
+                    '#aa3377',
+                ];
+                break;
+            case possibleColorSchemes.paulTovVibrant:
+                this.colorBucket = [
+                    '#0077bb',
+                    '#33bbee',
+                    '#009988',
+                    '#ee7733',
+                    '#cc3311',
+                    '#ee3377',
                 ];
                 break;
             case possibleColorSchemes.googlePaletteStrategy:
