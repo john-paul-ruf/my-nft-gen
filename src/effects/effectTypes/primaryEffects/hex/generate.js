@@ -16,7 +16,7 @@ const config = {
     thickness: 0.05,
     scaleFactor: 2,
     numberOfHex: 30,
-    strategy: ['static',/* 'angle', 'rotate'*/],
+    strategy: ['static', 'angle', 'rotate'],
 }
 
 
