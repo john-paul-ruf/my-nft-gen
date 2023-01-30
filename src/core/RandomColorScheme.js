@@ -143,6 +143,10 @@ export class RandomColorScheme {
                 return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             case possibleColorSchemes.neons:
                 return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
+            case possibleColorSchemes.paulTovBright:
+                return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
+            case possibleColorSchemes.paulTovVibrant:
+                return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             case possibleColorSchemes.colrOrgStrategy:
                 return '#' + this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
             case possibleColorSchemes.googlePaletteStrategy:
@@ -168,6 +172,10 @@ export class RandomColorScheme {
                 return `Color Strategy: ${possibleColorSchemes.niceColorPalettesStrategy}\n`
             case  possibleColorSchemes.neons:
                 return `Color Strategy: ${possibleColorSchemes.neons}\n`
+            case  possibleColorSchemes.paulTovBright:
+                return `Color Strategy: ${possibleColorSchemes.paulTovBright}\n`
+            case  possibleColorSchemes.paulTovVibrant:
+                return `Color Strategy: ${possibleColorSchemes.paulTovVibrant}\n`
             case  possibleColorSchemes.colrOrgStrategy:
                 return `Color Strategy: ${possibleColorSchemes.colrOrgStrategy}\n`
             case  possibleColorSchemes.googlePaletteStrategy:
