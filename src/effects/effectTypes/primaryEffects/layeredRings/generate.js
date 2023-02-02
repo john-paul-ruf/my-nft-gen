@@ -22,7 +22,7 @@ const config = {
 
     startAngle: 0,
 
-    movementGaston: {lower: 1, upper: 6},
+    movementGaston: {lower: 1, upper: 20},
 
     initialNumberOfPoints: 15,
     scaleByFactor: 1.05
