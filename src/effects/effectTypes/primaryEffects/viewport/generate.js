@@ -6,20 +6,20 @@ import {viewportEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    stroke: 0,
+    stroke: 2,
     thickness: 12,
-    ampStroke: 0,
-    ampthickness: 1,
+    ampStroke: 1,
+    ampThickness: 1,
     radius: {lower: 50, upper: 150},
     ampLength: {lower: 50, upper: 100},
     ampRadius: {lower: 125, upper: 150},
     sparsityFactor: {lower: 1, upper: 4},
     amplitude: {lower: 20, upper: 30},
     times: {lower: 1, upper: 2},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 0, upper: 0},
-    blurTimes: {lower: 0, upper: 0},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    accentTimes: {lower: 1, upper: 6},
+    blurTimes: {lower: 1, upper: 6},
 }
 
 export const generate = () => {
