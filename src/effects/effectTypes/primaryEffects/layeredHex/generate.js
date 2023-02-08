@@ -14,13 +14,13 @@ const config = {
     indexOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     indexOpacityTimes: {lower: 1, upper: 6},
 
-    radius: {lower: 40, upper: 60},
-    offsetRadius: {lower: 30, upper: 50},
+    radius: {lower: 20, upper: 30},
+    offsetRadius: {lower: 20, upper: 30},
 
     numberOfIndex: {lower: 30, upper: 40},
     startIndex: {lower: 8, upper: 10},
 
-    startAngle: 30,
+    startAngle: 15,
 
     movementGaston: {lower: 1, upper: 20},
 

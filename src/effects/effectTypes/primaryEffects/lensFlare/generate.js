@@ -10,10 +10,10 @@ const config = {
     layerOpacityTimes: {lower: 2, upper: 12},
 
     elementOpacityRange: {bottom: {lower: 0.2, upper: 0.25}, top: {lower: 0.3, upper: 0.35}},
-    elementOpacityTimes: {lower: 2, upper: 4},
+    elementOpacityTimes: {lower: 2, upper: 12},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
-    elementGastonTimes: {lower: 2, upper: 4},
+    elementGastonTimes: {lower: 2, upper: 12},
 
     numberOfFlareHex: {lower: 0, upper: 0},
     flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.01, upper: finalImageSize.shortestSide * 0.07},
@@ -21,11 +21,11 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     angleGastonTimes: {lower: 0, upper: 0},
 
-    numberOfFlareRings: {lower: 150, upper: 250},
+    numberOfFlareRings: {lower: 150, upper: 350},
     flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 1.1},
     flareRingStroke: {lower: 0.1, upper: 0.5},
 
-    numberOfFlareRays: {lower: 150, upper: 250},
+    numberOfFlareRays: {lower: 150, upper: 350},
     flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 1.1},
     flareRaysStroke: {lower: 0.1, upper: 0.5},
 

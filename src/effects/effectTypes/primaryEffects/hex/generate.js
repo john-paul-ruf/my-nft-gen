@@ -1,5 +1,5 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {hexEffect} from "./effect.js";
 
 const config = {
@@ -10,10 +10,10 @@ const config = {
     radiusFactor: {lower: 4, upper: 8},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 0, upper: 0},
+    accentTimes: {lower: 2, upper: 12},
     blurTimes: {lower: 0, upper: 0},
-    stroke: 0,
-    thickness: 0.05,
+    stroke: 0.05,
+    thickness: 0.1,
     scaleFactor: 2,
     numberOfHex: 30,
     strategy: ['static', 'angle', 'rotate'],
@@ -32,7 +32,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         scaleFactor: config.scaleFactor,
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
