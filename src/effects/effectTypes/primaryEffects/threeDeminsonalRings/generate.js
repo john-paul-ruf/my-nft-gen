@@ -5,10 +5,10 @@ import {threeDimensionalRingsEffect} from "./effect.js";
 const config = {
     rings: {lower: 4, upper: 12},
     ringRadius: {lower: 0.1, upper: 0.5},
-    ringGap: {lower: 4, upper: 8},
+    ringGap: {lower: 10, upper: 20},
     radiusConstant: 50,
     times: {lower: 1, upper: 12},
-    height: {lower: 15, upper: 60},
+    height: {lower: 5, upper: 10},
     ringOpacity: {lower: 0.2, upper: 0.4},
 }
 
