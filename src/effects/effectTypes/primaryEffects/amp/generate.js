@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.25,
-    sparsityFactor: {lower: 1, upper: 3},
+    sparsityFactor: {lower: 4, upper: 8},
     stroke: 0,
     thickness: 0.25,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},

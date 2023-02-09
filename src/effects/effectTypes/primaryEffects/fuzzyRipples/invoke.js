@@ -7,32 +7,32 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
+const drawRing = async (pos, radius, weight, color, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.theAccentGaston, outerColor)
+    await context.canvas.drawRing2d(pos, theGaston, weight, color, context.theAccentGaston, color)
 }
 
-const drawRings = async (pos, color, radius, numberOfRings, context) => {
+const drawRings = async (context, pos, radius, numberOfRings, color, weight) => {
     for (let i = 0; i < numberOfRings; i++) {
-        await drawRing(pos, radius / numberOfRings * i, context.data.thickness, context.data.innerColor, context.data.stroke, color, context);
+        await drawRing(pos, radius / numberOfRings * i, weight, color, context);
     }
 }
 
 const draw = async (context, filename) => {
 
-    //larger rings
-    await drawRings(context.data.center, context.data.largeColor, context.data.largeRadius, context.data.largeNumberOfRings, context);
+    //outer color
+    await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke, context);
+    for (let i = 30; i <= 330; i += 60) {
+        await drawRings(context, findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallRadius, context.data.smallNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke, context);
+    }
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor)
 
-    //smaller rings
-    await drawRings(findPointByAngleAndCircle(context.data.center, 30 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 90 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 150 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 210 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 270 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-    await drawRings(findPointByAngleAndCircle(context.data.center, 330 + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallColor, context.data.smallRadius, context.data.smallNumberOfRings, context);
-
- 
-    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness + context.theAccentGaston, context.data.innerColor, context.data.stroke, context.data.smallColor)
+    //inner color
+    await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness, context);
+    for (let i = 30; i <= 330; i += 60) {
+        await drawRings(context, findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallRadius, context.data.smallNumberOfRings, context.data.innerColor, context.data.thickness, context);
+    }
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
 
     await context.canvas.toFile(filename);
 }

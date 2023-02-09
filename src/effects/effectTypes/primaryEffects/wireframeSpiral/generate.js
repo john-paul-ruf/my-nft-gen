@@ -8,7 +8,7 @@ const config = {
     underLayerOpacityTimes: {lower: 1, upper: 6},
     startTwistCount: {lower: 1, upper: 1},
     stroke: 1,
-    thickness: 3,
+    thickness: 0.5,
     sparsityFactor: {lower: 5, upper: 10},
     speed: {lower: 1, upper: 8},
     counterClockwise: {lower: 0, upper: 1},
