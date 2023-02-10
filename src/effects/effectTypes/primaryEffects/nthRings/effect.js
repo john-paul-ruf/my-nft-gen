@@ -9,7 +9,7 @@ export const nthRingsEffect = {
     name: 'nth-rings',
     generateData: generate,
     effect: effect,
-    effectChance: 15,
+    effectChance: 25,
     requiresLayer: true,
 }
 

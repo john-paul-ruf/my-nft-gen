@@ -9,7 +9,7 @@ export const encircledSpiralEffect = {
     name: 'encircled-spiral',
     generateData: generate,
     effect: effect,
-    effectChance: 15,
+    effectChance: 25,
     requiresLayer: true,
 }
 
