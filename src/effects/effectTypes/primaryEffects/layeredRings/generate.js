@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     thickness: 0,
-    stroke: 4,
+    stroke: 2,
 
     layerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 6},

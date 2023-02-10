@@ -32,10 +32,12 @@ import {encircledSpiralEffect} from "../effectTypes/primaryEffects/encircledSpir
 import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
 import {animatedImageOverlayEffect} from "../effectTypes/primaryEffects/animatedOverlay/effect.js";
 import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/effect.js";
+import {nthRingsEffect} from "../effectTypes/primaryEffects/nthRings/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
 
+    nthRingsEffect,
     fuzzyRippleEffect,
     eightEffect,
 
@@ -63,7 +65,7 @@ const primaryEffects = [
     threeDimensionalRingsEffect,
 
     imageOverlayEffect,
-    
+
     lensFlareEffect,
 
 
