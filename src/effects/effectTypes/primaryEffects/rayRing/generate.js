@@ -5,7 +5,7 @@ import {rayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
+    layerOpacity: 0.25,
     underLayerOpacity: 0.4,
     circles: {lower: 4, upper: 8},
     radiusGap: 250,
