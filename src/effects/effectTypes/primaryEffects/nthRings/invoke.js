@@ -20,14 +20,16 @@ const drawRings = async (pos, color, radius, numberOfRings, context, weight) => 
 
 const draw = async (context, filename) => {
 
-    const angle = Math.floor((360 / context.data.totalRingCount));
+    const angle = (360 / context.data.totalRingCount);
+
+    const theAngleGaston = findOneWayValue(0, angle, context.numberOfFrames, context.currentFrame)
 
     for (let i = 0; i < 360; i += angle) {
-        await drawRings(findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.outerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness + context.data.stroke);
+        await drawRings(findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius), context.data.outerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness + context.data.stroke);
     }
 
     for (let i = 0; i < 360; i += angle) {
-        await drawRings(findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.innerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness);
+        await drawRings(findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius), context.data.innerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness);
     }
 
     await context.canvas.toFile(filename);
@@ -63,7 +65,6 @@ export const nthRings = async (layer, data, currentFrame, numberOfFrames) => {
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
         theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
-        theAngleGaston: findOneWayValue(0, 45, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'nth-rings' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'nth-rings-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
