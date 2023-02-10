@@ -9,7 +9,7 @@ export const viewportEffect = {
     name: 'viewport',
     generateData: generate,
     effect: effect,
-    effectChance: 20,
+    effectChance: 15,
     requiresLayer: true,
 }
 

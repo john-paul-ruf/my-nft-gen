@@ -38,7 +38,7 @@ class globalSettings {
         //For 2D palettes
         this.backgrounds = [
             /* '#000000',*/
-            '#000000',
+            '#1F1F1F',
             /* '#FFFFFF',*/
         ];
 

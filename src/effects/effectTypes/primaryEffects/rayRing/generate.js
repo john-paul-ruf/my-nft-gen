@@ -13,7 +13,7 @@ const config = {
     thickness: 2,
     rayStroke: 2,
     rayThickness: 2,
-    scaleFactor: 2,
+    scaleFactor: 1.25,
     densityFactor: 0.6,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
