@@ -3,7 +3,7 @@ import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.5,
+    layerOpacity: 0.1,
     underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.6, upper: 0.8}},
     underLayerOpacityTimes: {lower: 1, upper: 6},
     startTwistCount: {lower: 1, upper: 1},

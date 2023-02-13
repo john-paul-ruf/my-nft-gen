@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+    layerOpacityRange: {bottom: {lower: 0.03, upper: 0.04}, top: {lower: 0.05, upper: 0.06}},
     layerOpacityTimes: {lower: 2, upper: 12},
 
     elementOpacityRange: {bottom: {lower: 0.2, upper: 0.25}, top: {lower: 0.3, upper: 0.35}},
@@ -16,7 +16,7 @@ const config = {
     elementGastonTimes: {lower: 2, upper: 12},
 
     numberOfFlareHex: {lower: 0, upper: 0},
-    flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.01, upper: finalImageSize.shortestSide * 0.07},
+    flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.015, upper: finalImageSize.shortestSide * 0.07},
 
     angleRangeFlareHex: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     angleGastonTimes: {lower: 0, upper: 0},

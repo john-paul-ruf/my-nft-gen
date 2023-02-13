@@ -6,8 +6,8 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     totalRingCount: {lower: 10, upper: 20},
-    layerOpacity: 0.25,
-    underLayerOpacity: 0.25,
+    layerOpacity: 0.1,
+    underLayerOpacity: 0.1,
     stroke: 4,
     thickness: 4,
     smallRadius: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.3},

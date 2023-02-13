@@ -7,7 +7,7 @@ const config = {
     minlength: {lower: 10, upper: 75},
     maxlength: {lower: 75, upper: 250},
     times: {lower: 8, upper: 16},
-    alphaRange: {bottom: {lower: 0, upper: 0.3}, top: {lower: 0.4, upper: 0.8}},
+    alphaRange: {bottom: {lower: 0, upper: 0.1}, top: {lower: 0.2, upper: 0.3}},
     alphaTimes: {lower: 1, upper: 8},
     loopTimes: {lower: 1, upper: 2},
 }

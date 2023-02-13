@@ -6,7 +6,7 @@ import {encircledSpiralEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
+    layerOpacity: 0.1,
     numberOfRings: {lower: 1, upper: 1},
     radiusRange: {lower: finalImageSize.height * 0.2, upper: finalImageSize.height * 0.45},
     stroke: 1,
