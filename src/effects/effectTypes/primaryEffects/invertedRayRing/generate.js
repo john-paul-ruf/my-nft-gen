@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.5,
-    underLayerOpacity: 0.1,
+    underLayerOpacity: 0.25,
     circles: {lower: 4, upper: 8},
     radiusGap: 250,
     stroke: 4,

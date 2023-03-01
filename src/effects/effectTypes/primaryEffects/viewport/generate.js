@@ -4,8 +4,8 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    layerOpacity: 0.3,
-    underLayerOpacity: 0.1,
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.25,
     stroke: 4,
     thickness: 24,
     ampStroke: 4,

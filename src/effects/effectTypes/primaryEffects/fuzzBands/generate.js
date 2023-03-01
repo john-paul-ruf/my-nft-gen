@@ -5,8 +5,8 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.3,
-    underLayerOpacity: 0.1,
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.25,
     circles: {lower: 5, upper: 10},
     stroke: 0,
     thickness: 4,
