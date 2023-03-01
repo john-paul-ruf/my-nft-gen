@@ -5,14 +5,14 @@ import {rayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.1,
+    layerOpacity: 0.5,
     underLayerOpacity: 0.1,
     circles: {lower: 4, upper: 8},
     radiusGap: 250,
-    stroke: 2,
-    thickness: 2,
-    rayStroke: 2,
-    rayThickness: 2,
+    stroke: 4,
+    thickness: 4,
+    rayStroke: 4,
+    rayThickness: 4,
     scaleFactor: 1.25,
     densityFactor: 0.6,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},

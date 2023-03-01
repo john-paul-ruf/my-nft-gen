@@ -3,7 +3,7 @@ import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../.
 import {hexEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.1,
+    layerOpacity: 0.3,
     underLayerOpacity: 0.1,
     sparsityFactor: {lower: 12, upper: 18},
     gapFactor: {lower: 4, upper: 8},
@@ -12,8 +12,8 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     accentTimes: {lower: 2, upper: 12},
     blurTimes: {lower: 0, upper: 0},
-    stroke: 0.5,
-    thickness: 1,
+    stroke: 1,
+    thickness: 3,
     scaleFactor: 2,
     numberOfHex: 30,
     strategy: ['static', 'angle', 'rotate'],

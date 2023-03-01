@@ -5,10 +5,10 @@ import {eightEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.1,
+    layerOpacity: 0.3,
     underLayerOpacity: 0.1,
-    stroke: 2,
-    thickness: 8,
+    stroke: 4,
+    thickness: 16,
     smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.1},
     smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.longestSide / 40, upper: finalImageSize.longestSide / 30},

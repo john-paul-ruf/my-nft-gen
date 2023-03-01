@@ -6,16 +6,16 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     thickness: 0,
-    stroke: 2,
+    stroke: 8,
 
-    layerOpacityRange: {bottom: {lower: 0.07, upper: 0.08}, top: {lower: 0.09, upper: 0.1}},
-    layerOpacityTimes: {lower: 1, upper: 6},
+    layerOpacityRange: {bottom: {lower: 0.8, upper: 0.85}, top: {lower: 0.9, upper: 1}},
+    layerOpacityTimes: {lower: 1, upper: 12},
 
-    indexOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-    indexOpacityTimes: {lower: 1, upper: 6},
+    indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+    indexOpacityTimes: {lower: 1, upper: 12},
 
-    radius: {lower: 20, upper: 30},
-    offsetRadius: {lower: 40, upper: 80},
+    radius: {lower: 40, upper: 80},
+    offsetRadius: {lower: 80, upper: 160},
 
     numberOfIndex: {lower: 20, upper: 30},
     startIndex: {lower: 6, upper: 8},
@@ -24,8 +24,8 @@ const config = {
 
     movementGaston: {lower: 1, upper: 8},
 
-    initialNumberOfPoints: 10,
-    scaleByFactor: 1.1
+    initialNumberOfPoints: 4,
+    scaleByFactor: 1.15
 }
 
 const getRingsIndexArray = (num) => {
