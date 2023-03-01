@@ -14,17 +14,17 @@ const config = {
     indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
     indexOpacityTimes: {lower: 1, upper: 12},
 
-    radius: {lower: 40, upper: 80},
-    offsetRadius: {lower: 80, upper: 160},
+    radius: {lower: 40, upper: 250},
+    offsetRadius: {lower: 200, upper: 300},
 
-    numberOfIndex: {lower: 20, upper: 30},
-    startIndex: {lower: 6, upper: 8},
+    numberOfIndex: {lower: 10, upper: 20},
+    startIndex: {lower: 1, upper: 4},
 
     startAngle: 15,
 
-    movementGaston: {lower: 1, upper: 20},
+    movementGaston: {lower: 1, upper: 12},
 
-    initialNumberOfPoints: 4,
+    initialNumberOfPoints: 8,
     scaleByFactor: 1.15
 
 }
@@ -43,7 +43,7 @@ const getHexIndexArray = (num) => {
             },
             opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
             movementGaston: getRandomIntInclusive(config.movementGaston.lower, config.movementGaston.upper),
-            radius: getRandomIntInclusive(config.offsetRadius.lower, config.radius.upper),
+            radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
         });
     }
 
