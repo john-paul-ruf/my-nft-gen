@@ -7,13 +7,23 @@ import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const draw = async (context, filename) => {
+
+    //quick fix
     for (let i = 0; i < context.data.numberOfGates; i++) {
         const loopCount = i + 1;
         const direction = loopCount % 2;
         const invert = direction <= 0;
         const theAngleGaston = findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert);
         const theAccentGaston = context.useAccentGaston ? findValue(context.data.gates[i].accentRange.lower, context.data.gates[i].accentRange.upper, context.data.gates[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
-        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.innerColor, context.data.stroke + theAccentGaston, context.data.gates[i].color)
+        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].color, context.data.stroke + theAccentGaston, context.data.gates[i].color)
+    }
+
+    for (let i = 0; i < context.data.numberOfGates; i++) {
+        const loopCount = i + 1;
+        const direction = loopCount % 2;
+        const invert = direction <= 0;
+        const theAngleGaston = findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert);
+        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
     }
 
     await context.canvas.toFile(filename);

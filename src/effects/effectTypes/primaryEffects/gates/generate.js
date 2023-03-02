@@ -5,7 +5,7 @@ import {gatesEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    gates: {lower: 4, upper: 12},
+    gates: {lower: 10, upper: 20},
     numberOfSides: {lower: 4, upper: 4},
     thickness: 24,
     stroke: 8,
@@ -21,7 +21,7 @@ const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: getRandomIntExclusive(0, finalImageSize.height / 2),
+            radius: getRandomIntExclusive(0, finalImageSize.longestSide * 0.8),
             color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
