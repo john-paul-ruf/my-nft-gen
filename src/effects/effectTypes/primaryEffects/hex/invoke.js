@@ -37,12 +37,89 @@ const drawHexLine = async (angle, index, context) => {
     }
 }
 
+const drawHexLineOuter = async (angle, index, context) => {
+
+    const finalImageSize = getFinalImageSize();
+
+    const loopCount = index + 1;
+    const direction = loopCount % 2;
+    const invert = direction <= 0;
+
+    const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
+    const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, context.numberOfFrames, context.currentFrame, invert)
+
+    const scaleBy = (context.data.scaleFactor * loopCount);
+    const radius = context.data.radiusFactor * scaleBy;
+    const gapRadius = ((finalImageSize.height * .05) + radius + (context.data.gapFactor * scaleBy) * loopCount)
+    const pos = findPointByAngleAndCircle(context.data.center, theAngleGaston, gapRadius)
+
+    switch (context.data.strategy) {
+        case 'rotate':
+            await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+            break;
+        case 'angle':
+            await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+            break;
+        case 'static':
+            await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color)
+            break;
+    }
+}
+
+const drawHexLineInner = async (angle, index, context) => {
+
+    const finalImageSize = getFinalImageSize();
+
+    const loopCount = index + 1;
+    const direction = loopCount % 2;
+    const invert = direction <= 0;
+
+    const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
+    const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, context.numberOfFrames, context.currentFrame, invert)
+
+    const scaleBy = (context.data.scaleFactor * loopCount);
+    const radius = context.data.radiusFactor * scaleBy;
+    const gapRadius = ((finalImageSize.height * .05) + radius + (context.data.gapFactor * scaleBy) * loopCount)
+    const pos = findPointByAngleAndCircle(context.data.center, theAngleGaston, gapRadius)
+
+    switch (context.data.strategy) {
+        case 'rotate':
+            await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor)
+            break;
+        case 'angle':
+            await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor)
+            break;
+        case 'static':
+            await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor)
+            break;
+    }
+}
+
+
 const draw = async (context, filename) => {
     context.accentBoost = context.theAccentGaston;
-    for (let i = 0; i < context.data.numberOfHex; i++) {
-        for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
-            await drawHexLine(a, i, context)
-        }
+
+    switch (context.data.overlayStrategy) {
+        case 'overlay':
+            for (let i = 0; i < context.data.numberOfHex; i++) {
+                for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
+                    await drawHexLine(a, i, context)
+                }
+            }
+            break;
+        case 'flat':
+            for (let i = 0; i < context.data.numberOfHex; i++) {
+                for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
+                    await drawHexLineOuter(a, i, context)
+                }
+            }
+
+            for (let i = 0; i < context.data.numberOfHex; i++) {
+                for (let a = 0; a < 360; a = a + context.data.sparsityFactor) {
+                    await drawHexLineInner(a, i, context)
+                }
+            }
+            break;
     }
     await context.canvas.toFile(filename);
 }

@@ -12,7 +12,7 @@ const config = {
     thickness: 12,
     smallRadius: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.3},
     smallNumberOfRings: {lower: 3, upper: 6},
-    ripple: {lower: finalImageSize.longestSide / 30, upper: finalImageSize.longestSide / 20},
+    ripple: {lower: finalImageSize.longestSide / 15, upper: finalImageSize.longestSide / 10},
     times: {lower: 1, upper: 6},
     smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.3, upper: finalImageSize.longestSide * 0.35},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},

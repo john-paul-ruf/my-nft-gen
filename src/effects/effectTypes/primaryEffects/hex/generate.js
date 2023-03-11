@@ -17,6 +17,7 @@ const config = {
     scaleFactor: 2,
     numberOfHex: 30,
     strategy: ['static', 'angle', 'rotate'],
+    overlayStrategy: ['flat', 'overlay'],
 }
 
 
@@ -26,6 +27,7 @@ export const generate = () => {
     const data = {
         numberOfHex: config.numberOfHex,
         strategy: config.strategy[getRandomIntExclusive(0, config.strategy.length)],
+        overlayStrategy: config.overlayStrategy[getRandomIntExclusive(0, config.overlayStrategy.length)],
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,
@@ -50,7 +52,7 @@ export const generate = () => {
         color: getColorFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
-            return `${hexEffect.name}: strategy: ${data.strategy}, sparsity: ${data.sparsityFactor}, gap: ${data.gapFactor}, radius: ${data.radiusFactor}`
+            return `${hexEffect.name}: strategy: ${data.strategy} - ${data.overlayStrategy}, sparsity: ${data.sparsityFactor}, gap: ${data.gapFactor}, radius: ${data.radiusFactor}`
         }
     }
 
