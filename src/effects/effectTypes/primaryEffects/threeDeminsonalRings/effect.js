@@ -9,7 +9,7 @@ export const threeDimensionalRingsEffect = {
     name: 'three-dimensional-rings',
     generateData: generate,
     effect: effect,
-    effectChance: 25, //actually gorgeous in retrospect
+    effectChance: 0, //actually gorgeous in retrospect
     requiresLayer: true,
 }
 

@@ -5,14 +5,14 @@ import {gatesEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    gates: {lower: 10, upper: 20},
+    gates: {lower: 5, upper: 10},
     numberOfSides: {lower: 4, upper: 4},
     thickness: 24,
     stroke: 8,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 15}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 1, upper: 12},
-    blurTimes: {lower: 0, upper: 0},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
+    accentTimes: {lower: 1, upper: 6},
+    blurTimes: {lower: 0, upper: 6},
 }
 
 const finalImageSize = getFinalImageSize();

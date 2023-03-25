@@ -6,16 +6,16 @@ import {encircledSpiralEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.5,
-    numberOfRings: {lower: 1, upper: 1},
-    radiusRange: {lower: finalImageSize.height * 0.2, upper: finalImageSize.height * 0.45},
-    stroke: 2,
-    thickness: 5,
-    ringStroke: 2,
-    ringThickness: 5,
-    sparsityFactor: {lower: 5, upper: 10},
-    numberOfSegments: {lower: 5, upper: 10},
-    speed: {lower: 6, upper: 12},
+    layerOpacity: 0.25,
+    numberOfRings: {lower: 1, upper: 3},
+    radiusRange: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.45},
+    stroke: 1,
+    thickness: 2,
+    ringStroke: 1,
+    ringThickness: 2,
+    sparsityFactor: {lower: 1, upper: 3},
+    numberOfSegments: {lower: 3, upper: 6},
+    speed: {lower: 3, upper: 6},
 }
 
 const getRingArray = (num) => {

@@ -6,13 +6,13 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    sparsityFactor: {lower: 1, upper: 8},
+    sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 1, upper: 2},
-    radiusFactor: {lower: 0.4, upper: 0.8},
+    radiusFactor: {lower: 1, upper: 3},
     scaleFactor: 2.5,
     alphaRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.5, upper: 0.6}},
-    alphaTimes: {lower: 1, upper: 12},
-    rotationTimes: {lower: 1, upper: 12},
+    alphaTimes: {lower: 1, upper: 6},
+    rotationTimes: {lower: 1, upper: 6},
     numberOfScopesInALine: 30,
 }
 

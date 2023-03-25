@@ -5,7 +5,7 @@ import {ampEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.5,
+    layerOpacity: 0.25,
     underLayerOpacity: 0.25,
     sparsityFactor: {lower: 4, upper: 8},
     stroke: 0,

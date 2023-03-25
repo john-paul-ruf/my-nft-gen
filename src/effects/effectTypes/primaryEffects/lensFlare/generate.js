@@ -7,19 +7,19 @@ const finalImageSize = getFinalImageSize();
 const config = {
 
     layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.4, upper: 0.5}},
-    layerOpacityTimes: {lower: 2, upper: 12},
+    layerOpacityTimes: {lower: 2, upper: 6},
 
     elementOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
-    elementOpacityTimes: {lower: 2, upper: 12},
+    elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
-    elementGastonTimes: {lower: 2, upper: 12},
+    elementGastonTimes: {lower: 2, upper: 6},
 
     numberOfFlareHex: {lower: 0, upper: 0},
     flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.015, upper: finalImageSize.shortestSide * 0.07},
 
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    angleGastonTimes: {lower: 1, upper: 12},
+    angleGastonTimes: {lower: 1, upper: 6},
 
     numberOfFlareRings: {lower: 150, upper: 350},
     flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 1.1},
@@ -31,8 +31,8 @@ const config = {
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurTimes: {lower: 0, upper: 0},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
+    blurTimes: {lower: 0, upper: 6},
 
     flareColors: [
         '#d5fecc',

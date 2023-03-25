@@ -5,7 +5,7 @@ import {eightEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.5,
+    layerOpacity: 0.25,
     underLayerOpacity: 0.25,
     stroke: 4,
     thickness: 16,
@@ -14,10 +14,10 @@ const config = {
     ripple: {lower: finalImageSize.longestSide / 40, upper: finalImageSize.longestSide / 30},
     times: {lower: 1, upper: 6},
     smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.15},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    accentTimes: {lower: 0, upper: 0},
-    blurTimes: {lower: 0, upper: 0},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
+    accentTimes: {lower: 0, upper: 6},
+    blurTimes: {lower: 0, upper: 6},
 }
 
 export const generate = () => {

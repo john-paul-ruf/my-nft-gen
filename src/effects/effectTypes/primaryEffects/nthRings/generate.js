@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     totalRingCount: {lower: 10, upper: 20},
-    layerOpacity: 0.5,
+    layerOpacity: 0.25,
     underLayerOpacity: 0.25,
     stroke: 12,
     thickness: 12,
@@ -16,9 +16,9 @@ const config = {
     times: {lower: 1, upper: 6},
     smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.3, upper: finalImageSize.longestSide * 0.35},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 0, upper: 0},
-    blurTimes: {lower: 0, upper: 0},
+    blurTimes: {lower: 0, upper: 6},
 }
 
 export const generate = () => {
