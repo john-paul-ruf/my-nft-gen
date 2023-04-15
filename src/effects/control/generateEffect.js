@@ -37,27 +37,31 @@ import {nthRingsEffect} from "../effectTypes/primaryEffects/nthRings/effect.js";
 const primaryEffects = [
     animateBackgroundEffect,
 
-    nthRingsEffect,
-    fuzzyRippleEffect,
-    eightEffect,
+    verticalScanLinesEffect,
 
-    scopesEffect,
+    lensFlareEffect,
 
     wireframeSpiralEffect,
     encircledSpiralEffect,
 
+    scopesEffect,
+
     hexEffect,
+    layeredHexEffect,
+    layeredRingsEffect,
+
+    nthRingsEffect,
+    fuzzyRippleEffect,
+    eightEffect,
+
     ampEffect,
     fuzzBandsEffect,
     gatesEffect,
     invertedRayRingEffect,
     rayRingEffect,
 
-    layeredHexEffect,
-    layeredRingsEffect,
-
     viewportEffect,
-    verticalScanLinesEffect,
+
     threeDimensionalShapeEffect,
 
     animatedImageOverlayEffect,
@@ -65,10 +69,6 @@ const primaryEffects = [
     threeDimensionalRingsEffect,
 
     imageOverlayEffect,
-
-    lensFlareEffect,
-
-
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above

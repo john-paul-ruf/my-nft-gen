@@ -5,14 +5,14 @@ import {scopesEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
+    layerOpacity: 0.5,
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 1, upper: 2},
     radiusFactor: {lower: 1, upper: 3},
     scaleFactor: 2.5,
     alphaRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.5, upper: 0.6}},
-    alphaTimes: {lower: 1, upper: 6},
-    rotationTimes: {lower: 1, upper: 6},
+    alphaTimes: {lower: 4, upper: 4},
+    rotationTimes: {lower: 2, upper: 2},
     numberOfScopesInALine: 30,
 }
 

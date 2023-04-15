@@ -7,7 +7,7 @@ const config = {
     underLayerOpacity: 0.25,
     sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 4, upper: 8},
-    radiusFactor: {lower: 12, upper: 18},
+    radiusFactor: {lower: 6, upper: 6},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 6},
@@ -15,7 +15,7 @@ const config = {
     stroke: 1,
     thickness: 3,
     scaleFactor: 2,
-    numberOfHex: 6,
+    numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],
     overlayStrategy: ['flat', 'overlay'],
 }
