@@ -20,7 +20,7 @@ export class JimpLayerStrategy {
         await this.internalRepresentation.writeAsync(filename)
     }
 
-    async compositeLayerOver(layer) {
+    async compositeLayerOver(layer, withResize = true) {
         const info = await layer.getInfo();
         const finalImageSize = getFinalImageSize();
 

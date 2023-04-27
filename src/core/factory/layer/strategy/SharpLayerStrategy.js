@@ -35,7 +35,7 @@ export class SharpLayerStrategy {
         fs.writeFileSync(filename, Buffer.from(buffer.data));
     }
 
-    async compositeLayerOver(layer) {
+    async compositeLayerOver(layer, withResize = true) {
 
         const finalImageSize = getFinalImageSize();
 
@@ -43,7 +43,9 @@ export class SharpLayerStrategy {
         const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
         const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
 
-        await layer.resize(finalImageSize.height, finalImageSize.width);
+        if (withResize) {
+            await layer.resize(finalImageSize.height, finalImageSize.width);
+        }
 
         await layer.toFile(overlayFile)
         await this.toFile(targetFile);

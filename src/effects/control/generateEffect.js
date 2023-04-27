@@ -33,6 +33,7 @@ import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
 import {animatedImageOverlayEffect} from "../effectTypes/primaryEffects/animatedOverlay/effect.js";
 import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/effect.js";
 import {nthRingsEffect} from "../effectTypes/primaryEffects/nthRings/effect.js";
+import {blinkOnEffect} from "../effectTypes/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -64,11 +65,15 @@ const primaryEffects = [
 
     threeDimensionalShapeEffect,
 
+    blinkOnEffect,
+
     animatedImageOverlayEffect,
     mappedFramesEffect,
     threeDimensionalRingsEffect,
 
     imageOverlayEffect,
+
+
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
