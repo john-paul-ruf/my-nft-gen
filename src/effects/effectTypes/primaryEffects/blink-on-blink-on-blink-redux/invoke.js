@@ -6,7 +6,7 @@ import {findValue} from "../../../../core/math/findValue.js";
 import fs from "fs";
 
 
-export const glowAnimated = async (layer, data, currentFrame, totalFrames, index) => {
+const glowAnimated = async (layer, data, currentFrame, totalFrames, index) => {
     const filename = getWorkingDirectory() + 'glow-blink' + randomId() + '.png';
 
     await layer.toFile(filename);
@@ -23,42 +23,51 @@ export const glowAnimated = async (layer, data, currentFrame, totalFrames, index
     fs.unlinkSync(filename)
 }
 
+const blinkinate = async (data, currentFrame, totalFrames, index) => {
+    const scale = 1.25;
+    const finalImageSize = getFinalImageSize();
+    const blink = data.blinkArray[index];
+    const fileName = getWorkingDirectory() + 'blink-in-action' + randomId() + '.png';
+    const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile);
+    await tempLayer.resize(blink.diameter, blink.diameter);
+
+    const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide * scale, finalImageSize.longestSide * scale, '#00000000');
+    await fullSizedLayer.compositeLayerOver(tempLayer, false);
+
+    await fullSizedLayer.toFile(fileName);
+
+    const jimpImage = await Jimp.read(fileName);
+    await jimpImage.rotate(blink.rotationSpeedRange * (blink.counterClockwise ? -1 : 1), false);
+    await jimpImage.writeAsync(fileName);
+
+    await fullSizedLayer.fromFile(fileName);
+
+    await glowAnimated(fullSizedLayer, data, currentFrame, totalFrames, index);
+
+    const top = Math.ceil(((finalImageSize.longestSide * scale) - finalImageSize.height) / 2);
+    const left = Math.ceil(((finalImageSize.longestSide * scale) - finalImageSize.width) / 2);
+    await fullSizedLayer.crop(left, top, finalImageSize.width, finalImageSize.height);
+
+    await fullSizedLayer.toFile(fileName);
+
+    return fileName;
+}
+
 export const blinkOnOverlay = async (layer, data, currentFrame, totalFrames) => {
 
-    const finalImageSize = getFinalImageSize();
+    const filenames = [];
 
     for (let i = 0; i < data.blinkArray.length; i++) {
-        const finalFileName = getWorkingDirectory() + 'blink-final' + randomId() + '.png';
-        const rotatedFileName = getWorkingDirectory() + 'blink-rotate' + randomId() + '.png';
-        const resizedFileName = getWorkingDirectory() + 'blink-resize' + randomId() + '.png';
+        filenames.push(await blinkinate(data, currentFrame, totalFrames, i));
+    }
 
-        const blink = data.blinkArray[i];
-
-        const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile);
-        await tempLayer.resize(blink.diameter, blink.diameter);
-
-        const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide, finalImageSize.longestSide, '#00000000');
-        await fullSizedLayer.compositeLayerOver(tempLayer, false);
-        await fullSizedLayer.toFile(rotatedFileName);
-
-        const rotateLayer = await LayerFactory.getLayerFromFile(rotatedFileName);
-        await rotateLayer.rotate(blink.rotationSpeedRange * (blink.counterClockwise ? -1 : 1));
-        await rotateLayer.toFile(resizedFileName);
-
-        const resizeLayer = await LayerFactory.getLayerFromFile(resizedFileName);
-        await resizeLayer.resize(finalImageSize.height, finalImageSize.width);
-        await resizeLayer.toFile(finalFileName);
-
-        const finalLayer = await LayerFactory.getLayerFromFile(finalFileName);
-        await glowAnimated(finalLayer, data, currentFrame, totalFrames, i);
-
-        await layer.compositeLayerOver(finalLayer);
-
-        fs.unlinkSync(finalFileName);
-        fs.unlinkSync(rotatedFileName);
-        fs.unlinkSync(resizedFileName);
+    for (let file of filenames) {
+        await layer.compositeLayerOver(await LayerFactory.getLayerFromFile(file));
     }
 
     await layer.adjustLayerOpacity(data.layerOpacity);
 
+    for (let file of filenames) {
+        fs.unlinkSync(file)
+    }
 }
