@@ -6,6 +6,21 @@ import {findValue} from "../../../../core/math/findValue.js";
 import fs from "fs";
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
+const randomize = async (layer, data, index) => {
+    const filename = getWorkingDirectory() + 'randomize-blink' + randomId() + '.png';
+
+    await layer.toFile(filename);
+
+    const jimpImage = await Jimp.read(filename);
+
+    await jimpImage.color(data.blinkArray[index].randomize);
+
+    await jimpImage.writeAsync(filename);
+
+    await layer.fromFile(filename);
+
+    fs.unlinkSync(filename)
+}
 
 const glowAnimated = async (layer, data, currentFrame, totalFrames, index) => {
     const filename = getWorkingDirectory() + 'glow-blink' + randomId() + '.png';
@@ -25,7 +40,7 @@ const glowAnimated = async (layer, data, currentFrame, totalFrames, index) => {
 }
 
 const blinkinate = async (data, currentFrame, totalFrames, index) => {
-    const scale = 1.25;
+    const scale = 1.1;
     const finalImageSize = getFinalImageSize();
     const blink = data.blinkArray[index];
     const fileName = getWorkingDirectory() + 'blink-in-action' + randomId() + '.png';
@@ -46,6 +61,7 @@ const blinkinate = async (data, currentFrame, totalFrames, index) => {
 
     await fullSizedLayer.fromFile(fileName);
 
+    await randomize(fullSizedLayer, data, index);
     await glowAnimated(fullSizedLayer, data, currentFrame, totalFrames, index);
 
     const top = Math.ceil(((finalImageSize.longestSide * scale) - finalImageSize.height) / 2);

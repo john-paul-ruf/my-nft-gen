@@ -8,18 +8,29 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.75,
-    numberOfBlinks: {lower: 2, upper: 4},
+    numberOfBlinks: {lower: 2, upper: 6},
     rotationSpeedRange: {lower: 0, upper: 2},
     counterClockwise: {lower: 0, upper: 1},
     diameterRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.9},
-    glowLowerRange: {lower: -24, upper: -6},
-    glowUpperRange: {lower: 6, upper: 24},
+    glowLowerRange: {lower: -128, upper: -64},
+    glowUpperRange: {lower: 64, upper: 128},
     glowTimes: {lower: 1, upper: 6},
+    randomizeSpin: {lower: -64, upper: 64},
+    randomizeRed: {lower: -64, upper: 64},
+    randomizeBlue: {lower: -64, upper: 64},
+    randomizeGreen: {lower: -64, upper: 64}
 }
 
 const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
+        const props = {
+            hue: getRandomIntInclusive(config.randomizeSpin.lower, config.randomizeSpin.upper),
+            red: getRandomIntInclusive(config.randomizeRed.lower, config.randomizeRed.upper),
+            green: getRandomIntInclusive(config.randomizeGreen.lower, config.randomizeGreen.upper),
+            blue: getRandomIntInclusive(config.randomizeBlue.lower, config.randomizeBlue.upper),
+        }
+
         info.push({
             rotationSpeedRange: getRandomIntInclusive(config.rotationSpeedRange.lower, config.rotationSpeedRange.upper),
             counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
@@ -27,6 +38,24 @@ const computeInitialInfo = (num) => {
             glowLowerRange: getRandomIntInclusive(config.glowLowerRange.lower, config.glowLowerRange.upper),
             glowUpperRange: getRandomIntInclusive(config.glowUpperRange.lower, config.glowUpperRange.upper),
             glowTimes: getRandomIntInclusive(config.glowTimes.lower, config.glowTimes.upper),
+            randomize: [
+                {
+                    apply: 'hue',
+                    params: [props.hue]
+                },
+                {
+                    apply: 'red',
+                    params: [props.red]
+                },
+                {
+                    apply: 'green',
+                    params: [props.green]
+                },
+                {
+                    apply: 'blue',
+                    params: [props.blue]
+                }
+            ]
         });
     }
     return info;
