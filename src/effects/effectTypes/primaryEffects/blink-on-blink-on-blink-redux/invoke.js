@@ -4,6 +4,7 @@ import {randomId} from "../../../../core/math/random.js";
 import Jimp from "jimp";
 import {findValue} from "../../../../core/math/findValue.js";
 import fs from "fs";
+import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 
 
 const glowAnimated = async (layer, data, currentFrame, totalFrames, index) => {
@@ -37,7 +38,10 @@ const blinkinate = async (data, currentFrame, totalFrames, index) => {
     await fullSizedLayer.toFile(fileName);
 
     const jimpImage = await Jimp.read(fileName);
-    await jimpImage.rotate(blink.rotationSpeedRange * (blink.counterClockwise ? -1 : 1), false);
+
+    const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, totalFrames, currentFrame, blink.counterClockwise === 1);
+
+    await jimpImage.rotate(rotateGaston, false);
     await jimpImage.writeAsync(fileName);
 
     await fullSizedLayer.fromFile(fileName);
