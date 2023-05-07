@@ -38,6 +38,8 @@ import {blinkOnEffect} from "../effectTypes/primaryEffects/blink-on-blink-on-bli
 const primaryEffects = [
     animateBackgroundEffect,
 
+    blinkOnEffect,
+
     verticalScanLinesEffect,
 
     lensFlareEffect,
@@ -65,7 +67,6 @@ const primaryEffects = [
 
     threeDimensionalShapeEffect,
 
-    blinkOnEffect,
 
     animatedImageOverlayEffect,
     mappedFramesEffect,
