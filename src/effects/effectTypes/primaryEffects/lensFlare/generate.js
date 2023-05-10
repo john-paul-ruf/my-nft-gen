@@ -31,8 +31,8 @@ const config = {
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    blurTimes: {lower: 0, upper: 6},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    blurTimes: {lower: 0, upper: 0},
 
     flareColors: [
         '#d5fecc',

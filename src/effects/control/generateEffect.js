@@ -38,7 +38,6 @@ import {blinkOnEffect} from "../effectTypes/primaryEffects/blink-on-blink-on-bli
 const primaryEffects = [
     animateBackgroundEffect,
 
-    blinkOnEffect,
 
     verticalScanLinesEffect,
 
@@ -50,6 +49,9 @@ const primaryEffects = [
     scopesEffect,
 
     hexEffect,
+
+    blinkOnEffect,
+
     layeredHexEffect,
     layeredRingsEffect,
 
