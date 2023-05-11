@@ -8,7 +8,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.5,
-    numberOfBlinks: {lower: 3, upper: 10},
+    numberOfBlinks: {lower: 2, upper: 6},
     rotationSpeedRange: {lower: 1, upper: 1},
     counterClockwise: {lower: 0, upper: 1},
     diameterRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.9},

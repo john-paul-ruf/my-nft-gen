@@ -23,11 +23,11 @@ const config = {
 
     numberOfFlareRings: {lower: 150, upper: 350},
     flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 1.1},
-    flareRingStroke: {lower: 1, upper: 5},
+    flareRingStroke: {lower: 1, upper: 1},
 
     numberOfFlareRays: {lower: 150, upper: 350},
     flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 1.1},
-    flareRaysStroke: {lower: 1, upper: 3},
+    flareRaysStroke: {lower: 1, upper: 1},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
