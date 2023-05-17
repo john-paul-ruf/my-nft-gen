@@ -9,6 +9,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.75,
     numberOfBlinks: {lower: 2, upper: 6},
+    initialRotation: {lower: 0, upper: 360},
     rotationSpeedRange: {lower: 1, upper: 1},
     counterClockwise: {lower: 0, upper: 1},
     diameterRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.9},
@@ -32,6 +33,7 @@ const computeInitialInfo = (num) => {
         }
 
         info.push({
+            initialRotation: getRandomIntInclusive(config.initialRotation.lower, config.initialRotation.upper),
             rotationSpeedRange: getRandomIntInclusive(config.rotationSpeedRange.lower, config.rotationSpeedRange.upper),
             counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
             diameter: getRandomIntInclusive(config.diameterRange.lower, config.diameterRange.upper),
