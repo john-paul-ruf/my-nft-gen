@@ -50,14 +50,14 @@ const primaryEffects = [
 
     hexEffect,
 
-    blinkOnEffect,
-
     layeredHexEffect,
     layeredRingsEffect,
 
     nthRingsEffect,
     fuzzyRippleEffect,
     eightEffect,
+
+    blinkOnEffect,
 
     ampEffect,
     fuzzBandsEffect,
