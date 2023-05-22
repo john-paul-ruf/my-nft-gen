@@ -7,7 +7,7 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.75,
+    layerOpacity: 0.55,
     numberOfBlinks: {lower: 2, upper: 6},
     initialRotation: {lower: 0, upper: 360},
     rotationSpeedRange: {lower: 1, upper: 1},
