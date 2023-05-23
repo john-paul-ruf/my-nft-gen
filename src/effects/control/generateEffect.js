@@ -38,6 +38,8 @@ import {blinkOnEffect} from "../effectTypes/primaryEffects/blink-on-blink-on-bli
 const primaryEffects = [
     animateBackgroundEffect,
 
+    invertedRayRingEffect,
+    rayRingEffect,
 
     verticalScanLinesEffect,
 
@@ -62,8 +64,7 @@ const primaryEffects = [
     ampEffect,
     fuzzBandsEffect,
     gatesEffect,
-    invertedRayRingEffect,
-    rayRingEffect,
+
 
     viewportEffect,
 
