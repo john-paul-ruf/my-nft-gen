@@ -5,14 +5,14 @@ import {invertedRayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.5,
+    layerOpacity: 0.25,
     underLayerOpacity: 0.25,
     circles: {lower: 4, upper: 8},
     radiusGap: 250,
     stroke: 1,
-    thickness: 1,
+    thickness: 4,
     rayStroke: 1,
-    rayThickness: 1,
+    rayThickness: 4,
     scaleFactor: 1.25,
     densityFactor: 0.6,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},

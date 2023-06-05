@@ -54,8 +54,8 @@ export const generate = () => {
 
     const data = {
         numberOfLines: getRandomIntInclusive(config.lines.lower, config.lines.upper),
-        height: finalImageSize.height + (config.maxlength.upper),
-        width: finalImageSize.width,
+        height: (finalImageSize.height * 1.25),
+        width: (finalImageSize.width * 1.25),
         color: getColorFromBucket(),
         getInfo: () => {
             return `${verticalScanLinesEffect.name}: ${data.numberOfLines} lines`

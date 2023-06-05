@@ -101,7 +101,11 @@ export class SharpLayerStrategy {
     }
 
     async resize(height, width) {
-        await this.internalRepresentation.resize(width, height);
+        await this.internalRepresentation.resize(width, height, {
+            kernel: sharp.kernel.nearest,
+            fit: 'inside',
+            position: 'center',
+        });
     }
 
     async crop(left, top, width, height) {

@@ -56,7 +56,9 @@ const blinkinate = async (data, currentFrame, totalFrames, index) => {
 
     const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, totalFrames, currentFrame, blink.counterClockwise === 1);
 
+    await jimpImage.rotate(data.blinkArray[index].initialRotation, false);
     await jimpImage.rotate(rotateGaston, false);
+
     await jimpImage.writeAsync(fileName);
 
     await fullSizedLayer.fromFile(fileName);
