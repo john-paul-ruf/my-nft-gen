@@ -5,11 +5,11 @@ export const effect = {
     invoke: (layer, data, currentFrame, totalFrames) => blur(layer, data, currentFrame, totalFrames)
 }
 
-export const blurEffect = {
-    name: 'blur',
+export const singleLayerBlurEffect = {
+    name: 'single-layer-blur',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 25,
     requiresLayer: false,
 }
 
