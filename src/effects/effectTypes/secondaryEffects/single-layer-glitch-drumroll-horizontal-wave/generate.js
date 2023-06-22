@@ -1,4 +1,4 @@
-import {glitchDrumrollHorizontalWaveEffect} from "./effect.js";
+import {singleLayerGlitchDrumrollHorizontalWaveEffect} from "./effect.js";
 import {getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
 
@@ -30,7 +30,7 @@ export const generate = () => {
         cosineFactor: getRandomIntInclusive(config.cosineFactor.lower, config.cosineFactor.upper),
         roll: getRoll(),
         getInfo: () => {
-            return `${glitchDrumrollHorizontalWaveEffect.name} ${data.glitchChance} chance, ${data.glitchOffset} offset ${data.glitchOffsetTimes} times, cosine factor ${data.cosineFactor}`
+            return `${singleLayerGlitchDrumrollHorizontalWaveEffect.name} ${data.glitchChance} chance, ${data.glitchOffset} offset ${data.glitchOffsetTimes} times, cosine factor ${data.cosineFactor}`
         }
     }
 
