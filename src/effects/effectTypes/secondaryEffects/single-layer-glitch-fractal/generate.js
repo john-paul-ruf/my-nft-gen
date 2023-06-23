@@ -2,7 +2,7 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {singleLayerGlitchFractalEffect} from "./effect.js";
 
 const config = {
-    theRandom: {lower: 5, upper: 10},
+    theRandom: {lower: 12, upper: 12},
     glitchChance: 95,
 }
 

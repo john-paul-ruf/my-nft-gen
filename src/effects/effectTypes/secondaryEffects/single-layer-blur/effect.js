@@ -9,7 +9,7 @@ export const singleLayerBlurEffect = {
     name: 'single-layer-blur',
     generateData: generate,
     effect: effect,
-    effectChance: 25,
+    effectChance: 40,
     requiresLayer: false,
 }
 
