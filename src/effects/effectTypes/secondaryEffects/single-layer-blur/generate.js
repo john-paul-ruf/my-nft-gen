@@ -3,9 +3,9 @@ import {singleLayerBlurEffect} from "./effect.js";
 
 const config = {
     lowerRange: {lower: 0, upper: 0},
-    upperRange: {lower: 6, upper: 12},
+    upperRange: {lower: 2, upper: 6},
     times: {lower: 2, upper: 9},
-    glitchChance: 95,
+    glitchChance: 100,
 }
 
 export const generate = () => {

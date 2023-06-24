@@ -3,7 +3,7 @@ import {getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
 
 const config = {
-    glitchChance: 95,
+    glitchChance: 100,
     glitchOffset: {lower: 40, upper: 80},
     glitchOffsetTimes: {lower: 1, upper: 3},
     cosineFactor: {lower: 2, upper: 6},
