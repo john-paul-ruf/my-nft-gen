@@ -9,7 +9,7 @@ export const singleLayerGlitchFractalEffect = {
     name: 'single-layer-glitch-fractal',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 40,
     requiresLayer: false,
 }
 

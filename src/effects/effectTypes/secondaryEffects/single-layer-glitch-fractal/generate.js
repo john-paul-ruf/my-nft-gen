@@ -3,7 +3,7 @@ import {singleLayerGlitchFractalEffect} from "./effect.js";
 
 const config = {
     theRandom: {lower: 12, upper: 12},
-    glitchChance: 95,
+    glitchChance: 100,
 }
 
 export const generate = () => {
