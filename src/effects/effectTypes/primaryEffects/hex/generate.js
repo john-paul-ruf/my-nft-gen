@@ -17,7 +17,7 @@ const config = {
     scaleFactor: 1.2,
     numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],
-    overlayStrategy: ['flat', 'overlay'],
+    overlayStrategy: ['flat'/*, 'overlay'*/],
 }
 
 
