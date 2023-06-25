@@ -14,7 +14,7 @@ const config = {
     ringStroke: 1,
     ringThickness: 1,
     sparsityFactor: {lower: 1, upper: 1},
-    numberOfSegments: {lower: 3, upper: 6},
+    numberOfSegments: {lower: 8, upper: 12},
     speed: {lower: 3, upper: 6},
 }
 
