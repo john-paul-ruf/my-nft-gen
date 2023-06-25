@@ -9,7 +9,7 @@ export const singleLayerGlitchDrumrollHorizontalWaveEffect = {
     name: 'single-layer-glitch-drumroll-horizontal-wave',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 0,
     requiresLayer: false,
 }
 
