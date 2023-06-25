@@ -3,8 +3,8 @@ import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
 import parseArgs from 'minimist';
 
-const longestSideInPixels = 1920;
-const shortestSideInPixels = 1080;
+const longestSideInPixels = 640;
+const shortestSideInPixels = 480;
 
 //--isHoz
 const argv = parseArgs(process.argv)

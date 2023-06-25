@@ -13,7 +13,7 @@ const config = {
     thickness: 2,
     ringStroke: 1,
     ringThickness: 2,
-    sparsityFactor: {lower: 1, upper: 3},
+    sparsityFactor: {lower: 1, upper: 1},
     numberOfSegments: {lower: 3, upper: 6},
     speed: {lower: 3, upper: 6},
 }

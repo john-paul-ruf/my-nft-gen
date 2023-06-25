@@ -34,6 +34,11 @@ import {animatedImageOverlayEffect} from "../effectTypes/primaryEffects/animated
 import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/effect.js";
 import {nthRingsEffect} from "../effectTypes/primaryEffects/nthRings/effect.js";
 import {blinkOnEffect} from "../effectTypes/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
+import {
+    singleLayerGlitchDrumrollHorizontalWaveEffect
+} from "../effectTypes/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/effect.js";
+import {singleLayerGlitchFractalEffect} from "../effectTypes/secondaryEffects/single-layer-glitch-fractal/effect.js";
+import {singleLayerBlurEffect} from "../effectTypes/secondaryEffects/single-layer-blur/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -85,6 +90,9 @@ const secondaryEffects = [
     randomizeEffect,
     glowEffect,
     fadeEffect,
+    singleLayerBlurEffect,
+    singleLayerGlitchFractalEffect,
+    singleLayerGlitchDrumrollHorizontalWaveEffect,
 ];
 
 const finalImageEffects = [
