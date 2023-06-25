@@ -7,13 +7,13 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.25,
-    numberOfRings: {lower: 1, upper: 3},
+    numberOfRings: {lower: 1, upper: 1},
     radiusRange: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.45},
-    stroke: 1,
+    stroke: 0,
     thickness: 1,
-    ringStroke: 1,
+    ringStroke: 0,
     ringThickness: 1,
-    sparsityFactor: {lower: 1, upper: 1},
+    sparsityFactor: {lower: 4, upper: 4},
     numberOfSegments: {lower: 8, upper: 12},
     speed: {lower: 3, upper: 6},
 }

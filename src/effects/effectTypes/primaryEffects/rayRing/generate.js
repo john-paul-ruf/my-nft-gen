@@ -8,7 +8,7 @@ const config = {
     layerOpacity: 0.25,
     underLayerOpacity: 0.25,
     circles: {lower: 4, upper: 8},
-    radiusGap: 250,
+    radiusGap: 75,
     stroke: 1,
     thickness: 2,
     rayStroke: 1,
@@ -19,7 +19,7 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 0, upper: 0},
     blurTimes: {lower: 0, upper: 6},
-    lengthRange: {bottom: {lower: 5, upper: 75}, top: {lower: 75, upper: 150}}, //when spin, length must be at 0 or glitches the loop
+    lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}}, //when spin, length must be at 0 or glitches the loop
     lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 4, upper: 8},
     speed: {lower: 0, upper: 0},
