@@ -5,7 +5,7 @@ import {hexEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    sparsityFactor: {lower: 12, upper: 12},
+    sparsityFactor: {lower: 24, upper: 24},
     gapFactor: {lower: 1, upper: 2},
     radiusFactor: {lower: 1, upper: 3},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
