@@ -14,7 +14,7 @@ const config = {
     rayStroke: 0,
     rayThickness: 1,
     scaleFactor: 1.25,
-    densityFactor: 2,
+    densityFactor: 1.75,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 0, upper: 0},
