@@ -12,7 +12,7 @@ const config = {
     scaleFactor: 1.5,
     alphaRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.5, upper: 0.6}},
     alphaTimes: {lower: 4, upper: 4},
-    rotationTimes: {lower: 15, upper: 15},
+    rotationTimes: {lower: 3, upper: 3},
     numberOfScopesInALine: 30,
 }
 
