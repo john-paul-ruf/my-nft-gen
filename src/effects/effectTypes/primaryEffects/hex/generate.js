@@ -1,23 +1,23 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {hexEffect} from "./effect.js";
 
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
     sparsityFactor: {lower: 24, upper: 24},
-    gapFactor: {lower: 4, upper: 8},
-    radiusFactor: {lower: 6, upper: 6},
+    gapFactor: {lower: 1, upper: 2},
+    radiusFactor: {lower: 1, upper: 3},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 2, upper: 6},
-    blurTimes: {lower: 0, upper: 6},
-    stroke: 1,
-    thickness: 3,
-    scaleFactor: 1.2,
+    blurTimes: {lower: 0, upper: 0},
+    stroke: 0.15,
+    thickness: 0.15,
+    scaleFactor: 0.75,
     numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],
-    overlayStrategy: ['flat', 'overlay'],
+    overlayStrategy: ['flat'/*, 'overlay'*/],
 }
 
 
@@ -34,7 +34,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         scaleFactor: config.scaleFactor,
         sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),

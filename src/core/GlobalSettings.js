@@ -20,6 +20,7 @@ class globalSettings {
         this.randomColorScheme = new RandomColorScheme();
 
         //override - love me some neons
+        //todo: random color scheme should take a list of possible color schemes and pick from the list.
         this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.neons);
 
         this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
@@ -37,7 +38,7 @@ class globalSettings {
 
         //For 2D palettes
         this.backgrounds = [
-            '#2d2d2d',
+            '#000000',
         ];
 
         //for three-dimensional lighting

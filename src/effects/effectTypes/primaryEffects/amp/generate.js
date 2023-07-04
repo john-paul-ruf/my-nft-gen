@@ -7,8 +7,8 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.25,
     underLayerOpacity: 0.25,
-    sparsityFactor: {lower: 1, upper: 3},
-    stroke: 0,
+    sparsityFactor: {lower: 10, upper: 20},
+    stroke: 1,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
     accentTimes: {lower: 1, upper: 6},
@@ -26,8 +26,8 @@ export const generate = () => {
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
-        length: 300,
-        lineStart: 200,
+        length: 50,
+        lineStart: 75,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
