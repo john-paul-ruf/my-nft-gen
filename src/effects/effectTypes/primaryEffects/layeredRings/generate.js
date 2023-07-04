@@ -15,7 +15,7 @@ const config = {
     indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 10, upper: 40},
-    offsetRadius: {lower: 5, upper: 20},
+    offsetRadius: {lower: 20, upper: 60},
 
     numberOfIndex: {lower: 10, upper: 20},
     startIndex: {lower: 1, upper: 2},
@@ -25,7 +25,7 @@ const config = {
     movementGaston: {lower: 1, upper: 6},
 
     initialNumberOfPoints: 8,
-    scaleByFactor: 1.1
+    scaleByFactor: 1.05
 }
 
 const getRingsIndexArray = (num) => {
