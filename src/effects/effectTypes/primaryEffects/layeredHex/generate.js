@@ -15,17 +15,17 @@ const config = {
     indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 10, upper: 40},
-    offsetRadius: {lower: 5, upper: 20},
+    offsetRadius: {lower: 20, upper: 60},
 
     numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 1, upper: 2},
+    startIndex: {lower: 2, upper: 4},
 
     startAngle: 15,
 
     movementGaston: {lower: 1, upper: 6},
 
     initialNumberOfPoints: 8,
-    scaleByFactor: 1.1
+    scaleByFactor: 1.05
 
 }
 
