@@ -5,19 +5,19 @@ import {nthRings} from "./invoke.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    totalRingCount: {lower: 10, upper: 20},
+    totalRingCount: {lower: 12, upper: 16},
     layerOpacity: 0.25,
     underLayerOpacity: 0.25,
-    stroke: 1,
-    thickness: 2,
-    smallRadius: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.3},
-    smallNumberOfRings: {lower: 3, upper: 6},
-    ripple: {lower: finalImageSize.longestSide / 15, upper: finalImageSize.longestSide / 10},
+    stroke: 2,
+    thickness: 6,
+    smallRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.2},
+    smallNumberOfRings: {lower: 4, upper: 8},
+    ripple: {lower: finalImageSize.longestSide / 40, upper: finalImageSize.longestSide / 30},
     times: {lower: 1, upper: 6},
-    smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.3, upper: finalImageSize.longestSide * 0.35},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.4},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 0, upper: 0},
+    accentTimes: {lower: 0, upper: 6},
     blurTimes: {lower: 0, upper: 6},
 }
 

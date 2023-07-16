@@ -5,8 +5,8 @@ import {layeredHexEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 1,
-    stroke: 0,
+    thickness: 2,
+    stroke: 1,
 
     layerOpacityRange: {bottom: {lower: 0.8, upper: 0.85}, top: {lower: 0.9, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 6},
@@ -34,7 +34,7 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: '#00000000',
+            color: getColorFromBucket(),
             outline: getColorFromBucket(),
             outlineStrokeColor: getColorFromBucket(),
             opacity: {
