@@ -9,7 +9,7 @@ export const blinkOnEffect = {
     name: 'blink-on-blink-on-blink-redux',
     generateData: generate,
     effect: effect,
-    effectChance: 25,
+    effectChance: 0,
     requiresLayer: true,
     baseLayer: true,
 }
