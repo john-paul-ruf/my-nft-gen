@@ -14,7 +14,7 @@ const config = {
     blurTimes: {lower: 0, upper: 0},
     stroke: 0.15,
     thickness: 0.15,
-    scaleFactor: 0.75,
+    scaleFactor: 0.9,
     numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],
     overlayStrategy: ['flat'/*, 'overlay'*/],

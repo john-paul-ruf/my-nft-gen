@@ -34,7 +34,7 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurTimes: {lower: 0, upper: 0},
 
-    strategy: ['original', 'color-bucket', 'neutral-bucket'],
+    strategy: [/*'original', */'color-bucket'/*, 'neutral-bucket'*/],
 
     flareColors: [
         '#d5fecc',
