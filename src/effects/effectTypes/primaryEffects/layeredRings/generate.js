@@ -15,7 +15,7 @@ const config = {
     indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 10, upper: 40},
-    offsetRadius: {lower: 20, upper: 60},
+    offsetRadius: {lower: 5, upper: 15},
 
     numberOfIndex: {lower: 10, upper: 20},
     startIndex: {lower: 1, upper: 2},
