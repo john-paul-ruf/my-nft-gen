@@ -21,7 +21,7 @@ const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: getRandomIntExclusive(0, finalImageSize.longestSide * 0.8),
+            radius: getRandomIntExclusive(finalImageSize.longestSide * 0.25, finalImageSize.longestSide * 0.6),
             color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

@@ -5,7 +5,7 @@ import {nthRings} from "./invoke.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    totalRingCount: {lower: 8, upper: 12},
+    totalRingCount: {lower: 6, upper: 8},
     layerOpacity: 0.15,
     underLayerOpacity: 0.125,
     stroke: 1,

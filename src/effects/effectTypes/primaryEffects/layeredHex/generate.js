@@ -5,14 +5,14 @@ import {layeredHexEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 4,
-    stroke: 1,
+    thickness: 2,
+    stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: 0.8, upper: 0.85}, top: {lower: 0.9, upper: 1}},
+    layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
-    indexOpacityTimes: {lower: 1, upper: 6},
+    indexOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
+    indexOpacityTimes: {lower: 4, upper: 12},
 
     radius: {lower: 10, upper: 40},
     offsetRadius: {lower: 20, upper: 60},
@@ -22,7 +22,7 @@ const config = {
 
     startAngle: 15,
 
-    movementGaston: {lower: 1, upper: 6},
+    movementGaston: {lower: 1, upper: 12},
 
     initialNumberOfPoints: 8,
     scaleByFactor: 1.1
@@ -34,9 +34,9 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: '#00000000',
-            outline: getNeutralFromBucket(),
-            outlineStrokeColor: getColorFromBucket(),
+            color: getNeutralFromBucket(),
+            outline: getColorFromBucket(),
+            outlineStrokeColor: getNeutralFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)
