@@ -5,8 +5,8 @@ import {eightEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.5,
-    underLayerOpacity: 0.25,
+    layerOpacity: 0.2,
+    underLayerOpacity: 0.15,
     stroke: 1,
     thickness: 2,
     smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.1},

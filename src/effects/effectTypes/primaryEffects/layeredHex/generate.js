@@ -25,7 +25,7 @@ const config = {
     movementGaston: {lower: 1, upper: 6},
 
     initialNumberOfPoints: 8,
-    scaleByFactor: 1.05
+    scaleByFactor: 1.1
 
 }
 
@@ -34,8 +34,8 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getNeutralFromBucket(),
-            outline: getColorFromBucket(),
+            color: '#00000000',
+            outline: getNeutralFromBucket(),
             outlineStrokeColor: getColorFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),

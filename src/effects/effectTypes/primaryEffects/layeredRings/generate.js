@@ -1,11 +1,11 @@
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {layeredRingsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 4,
+    thickness: 2,
     stroke: 1,
 
     layerOpacityRange: {bottom: {lower: 0.8, upper: 0.85}, top: {lower: 0.9, upper: 1}},
@@ -15,17 +15,17 @@ const config = {
     indexOpacityTimes: {lower: 1, upper: 6},
 
     radius: {lower: 10, upper: 40},
-    offsetRadius: {lower: 5, upper: 15},
+    offsetRadius: {lower: 40, upper: 80},
 
-    numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 1, upper: 2},
+    numberOfIndex: {lower: 20, upper: 40},
+    startIndex: {lower: 8, upper: 12},
 
     startAngle: 0,
 
     movementGaston: {lower: 1, upper: 6},
 
     initialNumberOfPoints: 8,
-    scaleByFactor: 1.05
+    scaleByFactor: 1.1
 }
 
 const getRingsIndexArray = (num) => {
@@ -33,7 +33,7 @@ const getRingsIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getNeutralFromBucket(),
+            color: '#00000000',
             outline: getColorFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
