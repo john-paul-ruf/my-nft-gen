@@ -7,8 +7,8 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.4,
     underLayerOpacity: 0.3,
-    stroke: 1,
-    thickness: 4,
+    stroke: 3,
+    thickness: 8,
     smallRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.2},
     smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.longestSide / 40, upper: finalImageSize.longestSide / 30},
@@ -16,8 +16,8 @@ const config = {
     smallerRingsGroupRadius: {lower: finalImageSize.longestSide * 0.25, upper: finalImageSize.longestSide * 0.35},
     accentRange: {bottom: {lower: 0, upper: 6}, top: {lower: 8, upper: 12}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 0, upper: 6},
-    blurTimes: {lower: 0, upper: 6},
+    accentTimes: {lower: 4, upper: 12},
+    blurTimes: {lower: 4, upper: 12},
 }
 
 export const generate = () => {

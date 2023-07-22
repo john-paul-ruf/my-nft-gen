@@ -18,8 +18,8 @@ const config = {
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.15},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 1, upper: 8},
-    blurTimes: {lower: 0, upper: 6},
+    accentTimes: {lower: 4, upper: 12},
+    blurTimes: {lower: 4, upper: 12},
 }
 
 export const generate = () => {

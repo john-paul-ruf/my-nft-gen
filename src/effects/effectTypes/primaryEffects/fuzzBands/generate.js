@@ -14,7 +14,7 @@ const config = {
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 60}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 4, upper: 12},
-    blurTimes: {lower: 0, upper: 0},
+    blurTimes: {lower: 4, upper: 12},
 }
 
 const computeInitialInfo = (num, width) => {
