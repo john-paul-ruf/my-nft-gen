@@ -9,7 +9,7 @@ export const gatesEffect = {
     name: 'gates',
     generateData: generate,
     effect: effect,
-    effectChance: 35,
+    effectChance: 50,
     requiresLayer: true,
 }
 
