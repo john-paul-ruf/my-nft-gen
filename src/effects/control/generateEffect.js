@@ -56,7 +56,7 @@ const primaryEffects = [
     rayRingEffect,
 
     nthRingsEffect,
-    fuzzyRippleEffect,
+
     eightEffect,
 
     lensFlareEffect,
@@ -71,6 +71,8 @@ const primaryEffects = [
     viewportEffect,
 
     threeDimensionalShapeEffect,
+
+    fuzzyRippleEffect,
 
     animatedImageOverlayEffect,
     mappedFramesEffect,

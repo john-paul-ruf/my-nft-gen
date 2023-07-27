@@ -7,8 +7,8 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.3,
     underLayerOpacity: 0.2,
-    stroke: 3,
-    thickness: 3,
+    stroke: 1,
+    thickness: 2,
     largeRadius: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 0.45},
     smallRadius: {lower: finalImageSize.longestSide * 0.2, upper: finalImageSize.longestSide * 0.35},
     largeNumberOfRings: {lower: 10, upper: 20},
