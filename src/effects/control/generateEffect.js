@@ -45,6 +45,8 @@ const primaryEffects = [
 
     scopesEffect,
 
+    fuzzyRippleEffect,
+
     layeredHexEffect,
     layeredRingsEffect,
 
@@ -72,7 +74,6 @@ const primaryEffects = [
 
     threeDimensionalShapeEffect,
 
-    fuzzyRippleEffect,
 
     animatedImageOverlayEffect,
     mappedFramesEffect,
