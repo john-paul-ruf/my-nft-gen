@@ -7,12 +7,12 @@ const config = {
     underLayerOpacity: 0.25,
     gates: {lower: 5, upper: 10},
     numberOfSides: {lower: 4, upper: 4},
-    thickness: 2,
-    stroke: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 15}},
+    thickness: 8,
+    stroke: 3,
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 8, upper: 12}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 1, upper: 6},
-    blurTimes: {lower: 0, upper: 6},
+    accentTimes: {lower: 4, upper: 12},
+    blurTimes: {lower: 4, upper: 12},
 }
 
 const finalImageSize = getFinalImageSize();
@@ -21,7 +21,7 @@ const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: getRandomIntExclusive(0, finalImageSize.longestSide * 0.8),
+            radius: getRandomIntExclusive(finalImageSize.longestSide * 0.05, finalImageSize.longestSide * 0.6),
             color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

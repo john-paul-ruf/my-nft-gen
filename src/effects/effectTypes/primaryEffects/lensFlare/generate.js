@@ -1,6 +1,6 @@
 import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {lensFlareEffect} from "./effect.js";
-import {getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 
 const finalImageSize = getFinalImageSize();
 
@@ -21,18 +21,20 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 30, upper: 50},
-    flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 1.1},
-    flareRingStroke: {lower: 1, upper: 8},
+    numberOfFlareRings: {lower: 20, upper: 40},
+    flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * .75},
+    flareRingStroke: {lower: 1, upper: 2},
 
-    numberOfFlareRays: {lower: 20, upper: 40},
-    flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 1.1},
-    flareRaysStroke: {lower: 1, upper: 8},
+    numberOfFlareRays: {lower: 30, upper: 60},
+    flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * .85},
+    flareRaysStroke: {lower: 1, upper: 2},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurTimes: {lower: 0, upper: 0},
+
+    strategy: [/*'original', */'color-bucket'/*, 'neutral-bucket'*/],
 
     flareColors: [
         '#d5fecc',
@@ -47,19 +49,28 @@ const config = {
         '#ff9daf',
     ],
 
-    getFlareColor: () => {
-        return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)]
+    getFlareColor: (strategy) => {
+        switch (strategy) {
+            case 'original':
+                return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
+            case 'color-bucket':
+                return getColorFromBucket();
+            case 'neutral-bucket':
+                return getNeutralFromBucket();
+            default:
+                return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
+        }
     }
 }
 
-const getFlareHexArray = (num) => {
+const getFlareHexArray = (num, strategy) => {
     const info = [];
 
     for (let i = 0; i < num; i++) {
         info.push({
             size: getRandomIntInclusive(config.flareHexSizeRange.lower, config.flareHexSizeRange.upper),
-            color: config.getFlareColor(),
-            strokeColor: config.getFlareColor(),
+            color: config.getFlareColor(strategy),
+            strokeColor: config.getFlareColor(strategy),
             sides: getRandomIntInclusive(6, 6), //ended up with hex...
             angle: getRandomIntInclusive(0, 360),
             offset: getRandomIntInclusive(-finalImageSize.width * 0.15, finalImageSize.width * 0.15),
@@ -74,14 +85,14 @@ const getFlareHexArray = (num) => {
     return info;
 }
 
-const getFlareRingArray = (num) => {
+const getFlareRingArray = (num, strategy) => {
     const info = [];
 
     for (let i = 0; i <= num; i++) {
         info.push({
             size: getRandomIntInclusive(config.flareRingsSizeRange.lower, config.flareRingsSizeRange.upper),
             stroke: getRandomIntInclusive(config.flareRingStroke.lower, config.flareRingStroke.upper),
-            color: config.getFlareColor(),
+            color: config.getFlareColor(strategy),
             opacity: {
                 lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
@@ -99,7 +110,7 @@ const getFlareRingArray = (num) => {
     return info;
 }
 
-const getFlareRayArray = (num) => {
+const getFlareRayArray = (num, strategy) => {
     const info = [];
 
     for (let i = 0; i <= num; i++) {
@@ -107,7 +118,7 @@ const getFlareRayArray = (num) => {
             size: getRandomIntInclusive(config.flareRaysSizeRange.lower, config.flareRaysSizeRange.upper),
             stroke: getRandomIntInclusive(config.flareRaysStroke.lower, config.flareRaysStroke.upper),
             angle: getRandomIntInclusive(0, 360),
-            color: config.getFlareColor(),
+            color: config.getFlareColor(strategy),
             opacity: {
                 lower: randomNumber(config.elementOpacityRange.bottom.lower, config.elementOpacityRange.bottom.upper),
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
@@ -156,14 +167,16 @@ export const generate = () => {
             },
             angleGastonTimes: getRandomIntInclusive(config.angleGastonTimes.lower, config.angleGastonTimes.upper),
 
+            strategy: config.strategy[getRandomIntExclusive(0, config.strategy.length)],
+
             getInfo: () => {
-                return `${lensFlareEffect.name}: ${data.numberOfFlareHex} polygons, ${data.numberOfFlareRings} rings, ${data.numberOfFlareRays} rays`
+                return `${lensFlareEffect.name}: ${data.strategy} strategy, ${data.numberOfFlareHex} polygons, ${data.numberOfFlareRings} rings, ${data.numberOfFlareRays} rays`
             }
         };
 
-    data.hexArray = getFlareHexArray(data.numberOfFlareHex);
-    data.ringArray = getFlareRingArray(data.numberOfFlareRings);
-    data.rayArray = getFlareRayArray(data.numberOfFlareRays);
+    data.hexArray = getFlareHexArray(data.numberOfFlareHex, data.strategy);
+    data.ringArray = getFlareRingArray(data.numberOfFlareRings, data.strategy);
+    data.rayArray = getFlareRayArray(data.numberOfFlareRays, data.strategy);
 
     return data;
 }

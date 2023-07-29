@@ -5,14 +5,14 @@ import {ampEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.25,
+    layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    sparsityFactor: {lower: 10, upper: 20},
-    stroke: 1,
+    sparsityFactor: {lower: 2, upper: 4},
+    stroke: 0,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
     accentTimes: {lower: 1, upper: 6},
-    speed: {lower: 3, upper: 12},
+    speed: {lower: 12, upper: 24},
 }
 
 export const generate = () => {
@@ -26,8 +26,8 @@ export const generate = () => {
         thickness: config.thickness,
         innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
-        length: 50,
-        lineStart: 75,
+        length: 150,
+        lineStart: 250,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

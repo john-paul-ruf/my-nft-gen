@@ -8,11 +8,11 @@ const config = {
     layerOpacity: 0.5,
     sparsityFactor: {lower: 4, upper: 8},
     gapFactor: {lower: 0.2, upper: 0.6},
-    radiusFactor: {lower: 0.2, upper: 0.6},
-    scaleFactor: 1.5,
-    alphaRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.5, upper: 0.6}},
-    alphaTimes: {lower: 4, upper: 4},
-    rotationTimes: {lower: 3, upper: 3},
+    radiusFactor: {lower: 0.05, upper: 0.1},
+    scaleFactor: 1.2,
+    alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.8, upper: 1}},
+    alphaTimes: {lower: 4, upper: 12},
+    rotationTimes: {lower: 0, upper: 0},
     numberOfScopesInALine: 30,
 }
 

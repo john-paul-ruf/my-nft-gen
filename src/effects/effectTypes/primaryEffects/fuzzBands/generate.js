@@ -5,23 +5,23 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.25,
-    underLayerOpacity: 0.15,
-    circles: {lower: 5, upper: 10},
-    stroke: 0,
-    thickness: 1,
+    layerOpacity: 0.4,
+    underLayerOpacity: 0.2,
+    circles: {lower: 10, upper: 20},
+    stroke: 4,
+    thickness: 4,
     scaleFactor: 1.2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 60}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 1, upper: 6},
-    blurTimes: {lower: 0, upper: 6},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 8, upper: 16}},
+    accentTimes: {lower: 4, upper: 12},
+    blurTimes: {lower: 4, upper: 12},
 }
 
 const computeInitialInfo = (num, width) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: getRandomIntExclusive(0, width * 0.75),
+            radius: getRandomIntExclusive(0, width * 0.95),
             color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

@@ -1,31 +1,31 @@
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {layeredRingsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 1,
+    thickness: 2,
     stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: 0.8, upper: 0.85}, top: {lower: 0.9, upper: 1}},
+    layerOpacityRange: {bottom: {lower: .75, upper: .75}, top: {lower: .75, upper: .75}},
     layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
-    indexOpacityTimes: {lower: 1, upper: 6},
+    indexOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
+    indexOpacityTimes: {lower: 4, upper: 12},
 
-    radius: {lower: 10, upper: 40},
-    offsetRadius: {lower: 20, upper: 60},
+    radius: {lower: 10, upper: 20},
+    offsetRadius: {lower: 30, upper: 60},
 
-    numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 1, upper: 2},
+    numberOfIndex: {lower: 20, upper: 40},
+    startIndex: {lower: 4, upper: 8},
 
     startAngle: 0,
 
-    movementGaston: {lower: 1, upper: 6},
+    movementGaston: {lower: 1, upper: 12},
 
     initialNumberOfPoints: 8,
-    scaleByFactor: 1.05
+    scaleByFactor: 1.1
 }
 
 const getRingsIndexArray = (num) => {
@@ -33,8 +33,8 @@ const getRingsIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: '#00000000',
-            outline: getColorFromBucket(),
+            color: getColorFromBucket(),
+            outline: getNeutralFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)
