@@ -5,16 +5,16 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.4,
-    underLayerOpacity: 0.2,
+    layerOpacity: 0.3,
+    underLayerOpacity: 0.1,
     circles: {lower: 10, upper: 20},
-    stroke: 4,
-    thickness: 4,
+    stroke: 2,
+    thickness: 2,
     scaleFactor: 1.2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 8, upper: 16}},
-    accentTimes: {lower: 4, upper: 12},
-    blurTimes: {lower: 4, upper: 12},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 12, upper: 24}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 6, upper: 8}},
+    accentTimes: {lower: 4, upper: 4},
+    blurTimes: {lower: 4, upper: 4},
 }
 
 const computeInitialInfo = (num, width) => {
