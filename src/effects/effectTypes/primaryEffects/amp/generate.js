@@ -27,7 +27,7 @@ export const generate = () => {
         innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
         length: 150,
-        lineStart: 250,
+        lineStart: 200,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
