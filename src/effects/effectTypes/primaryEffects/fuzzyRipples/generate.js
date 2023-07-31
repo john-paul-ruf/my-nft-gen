@@ -5,21 +5,21 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
-    underLayerOpacity: 0.75,
-    stroke: 2,
-    thickness: 6,
-    largeRadius: {lower: finalImageSize.longestSide * 0.3, upper: finalImageSize.longestSide * 0.35},
+    layerOpacity: 0.6,
+    underLayerOpacity: 0.4,
+    stroke: 1,
+    thickness: 4,
+    largeRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.25},
     smallRadius: {lower: finalImageSize.longestSide * 0.10, upper: finalImageSize.longestSide * 0.15},
-    largeNumberOfRings: {lower: 14, upper: 14},
-    smallNumberOfRings: {lower: 7, upper: 7},
-    ripple: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.shortestSide * 0.4},
+    largeNumberOfRings: {lower: 15, upper: 15},
+    smallNumberOfRings: {lower: 5, upper: 5},
+    ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 4, upper: 8},
-    smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.shortestSide * 0.3},
+    smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.25},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 12, upper: 24}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 8}},
-    accentTimes: {lower: 4, upper: 4},
-    blurTimes: {lower: 4, upper: 4},
+    accentTimes: {lower: 4, upper: 8},
+    blurTimes: {lower: 4, upper: 8},
 }
 
 export const generate = () => {

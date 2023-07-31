@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {viewportEffect} from "./effect.js";
 
@@ -7,19 +7,19 @@ const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
     stroke: 4,
-    thickness: 24,
-    ampStroke: 4,
-    ampThickness: 4,
-    radius: {lower: 50, upper: 150},
-    ampLength: {lower: 50, upper: 100},
-    ampRadius: {lower: 125, upper: 150},
-    sparsityFactor: {lower: 5, upper: 10},
-    amplitude: {lower: 40, upper: 60},
-    times: {lower: 1, upper: 6},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    accentTimes: {lower: 1, upper: 6},
-    blurTimes: {lower: 1, upper: 6},
+    thickness: 12,
+    ampStroke: 1,
+    ampThickness: 0,
+    radius: {lower: 150, upper: 200},
+    ampLength: {lower: 125, upper: 175},
+    ampRadius: {lower: 25, upper: 50},
+    sparsityFactor: {lower: 3, upper: 6},
+    amplitude: {lower: 10, upper: 20},
+    times: {lower: 2, upper: 4},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+    accentTimes: {lower: 4, upper: 8},
+    blurTimes: {lower: 4, upper: 8},
 }
 
 export const generate = () => {
@@ -33,7 +33,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
         ampStroke: config.ampStroke,
         ampThickness: config.ampThickness,

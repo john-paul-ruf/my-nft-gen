@@ -9,7 +9,7 @@ export const layeredRingsEffect = {
     name: 'layered-rings',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 75,
     requiresLayer: true,
 }
 

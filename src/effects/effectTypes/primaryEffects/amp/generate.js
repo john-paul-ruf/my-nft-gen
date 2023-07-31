@@ -11,7 +11,7 @@ const config = {
     stroke: 0,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
-    accentTimes: {lower: 1, upper: 6},
+    accentTimes: {lower: 4, upper: 8},
     speed: {lower: 12, upper: 24},
 }
 

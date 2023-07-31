@@ -45,7 +45,6 @@ const primaryEffects = [
 
     scopesEffect,
 
-    fuzzyRippleEffect,
 
     layeredHexEffect,
     layeredRingsEffect,
@@ -69,6 +68,8 @@ const primaryEffects = [
     blinkOnEffect,
 
     hexEffect,
+
+    fuzzyRippleEffect,
 
     viewportEffect,
 
