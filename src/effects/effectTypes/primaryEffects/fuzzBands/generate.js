@@ -7,11 +7,11 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.3,
     underLayerOpacity: 0.1,
-    circles: {lower: 10, upper: 20},
+    circles: {lower: 5, upper: 10},
     stroke: 2,
     thickness: 10,
     scaleFactor: 1.2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 12, upper: 24}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 50, upper: 150}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 6, upper: 8}},
     accentTimes: {lower: 4, upper: 4},
     blurTimes: {lower: 4, upper: 4},

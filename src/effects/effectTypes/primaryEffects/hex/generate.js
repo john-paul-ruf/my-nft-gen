@@ -5,15 +5,15 @@ import {hexEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    sparsityFactor: {lower: 24, upper: 24},
+    sparsityFactor: {lower: 36, upper: 36},
     gapFactor: {lower: 2, upper: 4},
-    radiusFactor: {lower: 2, upper: 4},
+    radiusFactor: {lower: 6, upper: 12},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 4, upper: 12},
     blurTimes: {lower: 4, upper: 12},
     stroke: 0.3,
-    thickness: 2,
+    thickness: 1,
     scaleFactor: 0.9,
     numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],

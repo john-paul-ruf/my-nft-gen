@@ -6,10 +6,10 @@ const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
     gates: {lower: 5, upper: 10},
-    numberOfSides: {lower: 4, upper: 4},
-    thickness: 8,
+    numberOfSides: {lower: 8, upper: 8},
+    thickness: 16,
     stroke: 3,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 8, upper: 12}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 25, upper: 50}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 4, upper: 12},
     blurTimes: {lower: 4, upper: 12},
@@ -28,6 +28,7 @@ const computeInitialInfo = (num) => {
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
             },
             accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+            startingAngle: ((360 / num) * i),
         });
     }
     return info;
