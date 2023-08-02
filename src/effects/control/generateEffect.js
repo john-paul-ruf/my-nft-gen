@@ -45,11 +45,12 @@ const primaryEffects = [
 
     scopesEffect,
 
+    ampEffect,
 
     layeredHexEffect,
     layeredRingsEffect,
 
-    ampEffect,
+
     fuzzBandsEffect,
     gatesEffect,
 

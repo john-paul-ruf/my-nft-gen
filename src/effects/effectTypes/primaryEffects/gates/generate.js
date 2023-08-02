@@ -9,8 +9,8 @@ const config = {
     numberOfSides: {lower: 8, upper: 8},
     thickness: 16,
     stroke: 3,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 25, upper: 50}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 4, upper: 12},
     blurTimes: {lower: 4, upper: 12},
 }
