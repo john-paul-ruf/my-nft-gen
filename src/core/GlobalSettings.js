@@ -31,14 +31,14 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#202020',/*
+            '#0c0c0c',/*
             '#1F1F1F',
             '#5b5b5b',
             '#7f7f7f',*/];
 
         //For 2D palettes
         this.backgrounds = [
-            '#202020',
+            '#0c0c0c',
         ];
 
         //for three-dimensional lighting

@@ -3,13 +3,13 @@ import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../.
 import {gatesEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.5,
-    underLayerOpacity: 0.25,
-    gates: {lower: 5, upper: 10},
-    numberOfSides: {lower: 4, upper: 4},
-    thickness: 6,
-    stroke: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
+    layerOpacity: 0.75,
+    underLayerOpacity: 0.5,
+    gates: {lower: 4, upper: 8},
+    numberOfSides: {lower: 8, upper: 8},
+    thickness: 16,
+    stroke: 4,
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     accentTimes: {lower: 4, upper: 8},
     blurTimes: {lower: 4, upper: 8},
@@ -21,7 +21,7 @@ const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: getRandomIntExclusive(finalImageSize.longestSide * 0.05, finalImageSize.longestSide * 0.8),
+            radius: getRandomIntExclusive(finalImageSize.shortestSide * 0.05, finalImageSize.shortestSide * 0.4),
             color: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
