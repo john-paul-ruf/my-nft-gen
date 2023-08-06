@@ -2,7 +2,7 @@ import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.
 import {fadeEffect} from "./effect.js";
 
 const config = {
-    lowerRange: {lower: 0.8, upper: 0.85},
+    lowerRange: {lower: 0.4, upper: 0.7},
     upperRange: {lower: 0.95, upper: 1},
     times: {lower: 2, upper: 6},
 }

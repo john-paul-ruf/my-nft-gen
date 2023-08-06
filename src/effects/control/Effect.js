@@ -21,8 +21,10 @@ export class Effect {
         this.data = card.generateData(); //the effect, instantiated
         this.additionalEffects = []
         this.card = card;
-        if (card.requiresLayer) {  //Does this effect qualify for additional effects?
-            this.additionalEffects = applySecondaryEffects()  //Then pile them on
+        if (this.card.requiresLayer) {  //Does this effect qualify for additional effects?
+            if (!this.card.ignoreAdditionalEffects) {
+                this.additionalEffects = applySecondaryEffects()  //Then pile them on
+            }
         }
     }
 
@@ -30,7 +32,9 @@ export class Effect {
         await this.invoke(layer, this.data, currentFrame, totalFrames) //execute the effect
         for (let i = 0; i < this.additionalEffects.length; i++) {
             //if any additional effects? call them as well.
-            await this.additionalEffects[i].invoke(layer, this.additionalEffects[i].data, currentFrame, totalFrames);
+            if (!this.card.ignoreAdditionalEffects) {
+                await this.additionalEffects[i].invoke(layer, this.additionalEffects[i].data, currentFrame, totalFrames);
+            }
         }
     }
 
