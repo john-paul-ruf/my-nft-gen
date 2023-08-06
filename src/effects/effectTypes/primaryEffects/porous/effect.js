@@ -2,7 +2,7 @@ import {generate} from "./generate.js";
 import {porousOverlay} from "./invoke.js";
 
 export const effect = {
-    invoke: (layer, data, currentFrame, totalFrames) => porousOverlay(layer, data, currentFrame, totalFrames)
+    invoke: (layer, data) => porousOverlay(layer, data)
 }
 
 export const porousEffect = {
