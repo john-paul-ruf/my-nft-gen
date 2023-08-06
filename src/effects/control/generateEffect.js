@@ -39,6 +39,7 @@ import {
 } from "../effectTypes/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/effect.js";
 import {singleLayerGlitchFractalEffect} from "../effectTypes/secondaryEffects/single-layer-glitch-fractal/effect.js";
 import {singleLayerBlurEffect} from "../effectTypes/secondaryEffects/single-layer-blur/effect.js";
+import {porousEffect} from "../effectTypes/primaryEffects/porous/effect.js";
 
 const primaryEffects = [
     animateBackgroundEffect,
@@ -83,6 +84,8 @@ const primaryEffects = [
     mappedFramesEffect,
     threeDimensionalRingsEffect,
 
+
+    porousEffect,
 
     verticalScanLinesEffect,
 
