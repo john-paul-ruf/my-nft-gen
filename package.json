@@ -7,7 +7,8 @@
   "scripts": {
     "test": "jest",
     "vert": "node src/index.js --isHoz false",
-    "hoz": "node src/index.js"
+    "hoz": "node src/index.js",
+    "make-me-a-pretty": "node src/index.js --isHoz false"
   },
   "jest": {
     "collectCoverage": true,
