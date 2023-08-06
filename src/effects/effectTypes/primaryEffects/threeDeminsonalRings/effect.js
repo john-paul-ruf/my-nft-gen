@@ -11,5 +11,6 @@ export const threeDimensionalRingsEffect = {
     effect: effect,
     effectChance: 0, //actually gorgeous in retrospect
     requiresLayer: true,
+    ignoreAdditionalEffects: false,
 }
 

@@ -5,11 +5,13 @@ import fs from "fs";
 import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
-    folderName: '/img/mappedFrames/'
+    folderName: '/img/mappedFrames/',
+    layerOpacity: 0.75,
 }
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
         getInfo: () => {
             return `${mappedFramesEffect.name}, ${data.folderName}`
         }

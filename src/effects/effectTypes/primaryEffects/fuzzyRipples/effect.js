@@ -11,5 +11,6 @@ export const fuzzyRippleEffect = {
     effect: effect,
     effectChance: 70,
     requiresLayer: true,
+    ignoreAdditionalEffects: false,
 }
 

@@ -11,6 +11,7 @@ export const layeredRingsEffect = {
     effect: effect,
     effectChance: 75,
     requiresLayer: true,
+    ignoreAdditionalEffects: false,
 }
 
 

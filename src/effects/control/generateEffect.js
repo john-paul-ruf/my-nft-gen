@@ -43,6 +43,8 @@ import {singleLayerBlurEffect} from "../effectTypes/secondaryEffects/single-laye
 const primaryEffects = [
     animateBackgroundEffect,
 
+    imageOverlayEffect,
+
     hexEffect,
 
     scopesEffect,
@@ -81,7 +83,6 @@ const primaryEffects = [
     mappedFramesEffect,
     threeDimensionalRingsEffect,
 
-    imageOverlayEffect,
 
     verticalScanLinesEffect,
 

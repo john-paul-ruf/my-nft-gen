@@ -5,11 +5,13 @@ import fs from "fs";
 import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
-    folderName: '/img/imageOverlay/'
+    folderName: '/img/imageOverlay/',
+    layerOpacity: 0.60,
 }
 
 export const generate = () => {
     const data = {
+        layerOpacity: config.layerOpacity,
         getInfo: () => {
             return `${imageOverlayEffect.name}, ${data.filename}`
         }

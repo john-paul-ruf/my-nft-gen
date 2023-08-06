@@ -11,5 +11,5 @@ export const blinkOnEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    baseLayer: true,
+    ignoreAdditionalEffects: false,
 }

@@ -44,6 +44,9 @@ export const mappedFrames = async (layer, data, currentFrame, numberOfFrames) =>
     await extractFrame(context);
 
     let tempLayer = await LayerFactory.getLayerFromFile(context.filename);
+
+    await tempLayer.adjustLayerOpacity(data.layerOpacity);
+
     const finalSize = getFinalImageSize();
     await tempLayer.resize(finalSize.height, finalSize.width);
     await layer.compositeLayerOver(tempLayer);
