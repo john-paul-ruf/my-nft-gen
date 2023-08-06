@@ -19,9 +19,8 @@ class globalSettings {
     constructor() {
         this.randomColorScheme = new RandomColorScheme();
 
-        //override - love me some neons
         //todo: random color scheme should take a list of possible color schemes and pick from the list.
-        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.neons);
+        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.paulTovVibrant);
 
         this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
@@ -31,14 +30,12 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#000000',/*
-            '#1F1F1F',
-            '#5b5b5b',
-            '#7f7f7f',*/];
+            '#0c0c0c',
+        ];
 
         //For 2D palettes
         this.backgrounds = [
-            '#080808',
+            '#0c0c0c',
         ];
 
         //for three-dimensional lighting

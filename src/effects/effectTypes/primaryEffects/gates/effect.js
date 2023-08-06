@@ -11,5 +11,6 @@ export const gatesEffect = {
     effect: effect,
     effectChance: 50,
     requiresLayer: true,
+    ignoreAdditionalEffects: false,
 }
 

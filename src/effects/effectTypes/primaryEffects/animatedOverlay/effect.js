@@ -11,5 +11,5 @@ export const animatedImageOverlayEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    baseLayer: true,
+    ignoreAdditionalEffects: false,
 }

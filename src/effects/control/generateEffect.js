@@ -43,13 +43,17 @@ import {singleLayerBlurEffect} from "../effectTypes/secondaryEffects/single-laye
 const primaryEffects = [
     animateBackgroundEffect,
 
+    imageOverlayEffect,
+
+    hexEffect,
+
     scopesEffect,
 
+    ampEffect,
 
     layeredHexEffect,
     layeredRingsEffect,
 
-    ampEffect,
     fuzzBandsEffect,
     gatesEffect,
 
@@ -67,19 +71,18 @@ const primaryEffects = [
 
     blinkOnEffect,
 
-    hexEffect,
+
+    fuzzyRippleEffect,
 
     viewportEffect,
 
     threeDimensionalShapeEffect,
 
-    fuzzyRippleEffect,
 
     animatedImageOverlayEffect,
     mappedFramesEffect,
     threeDimensionalRingsEffect,
 
-    imageOverlayEffect,
 
     verticalScanLinesEffect,
 

@@ -9,7 +9,8 @@ export const eightEffect = {
     name: 'eight',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 70,
     requiresLayer: true,
+    ignoreAdditionalEffects: false,
 }
 

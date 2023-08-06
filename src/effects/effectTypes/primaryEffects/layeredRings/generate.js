@@ -8,10 +8,10 @@ const config = {
     thickness: 2,
     stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: .75, upper: .75}, top: {lower: .75, upper: .75}},
+    layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 1, upper: 6},
 
-    indexOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
+    indexOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.75}},
     indexOpacityTimes: {lower: 4, upper: 12},
 
     radius: {lower: 10, upper: 20},

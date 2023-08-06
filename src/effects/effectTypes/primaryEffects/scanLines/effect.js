@@ -6,6 +6,11 @@ export const effect = {
 }
 
 export const verticalScanLinesEffect = {
-    name: 'scan lines', generateData: generate, effect: effect, effectChance: 0, requiresLayer: true,
+    name: 'scan lines',
+    generateData: generate,
+    effect: effect,
+    effectChance: 0,
+    requiresLayer: true,
+    ignoreAdditionalEffects: false,
 }
 
