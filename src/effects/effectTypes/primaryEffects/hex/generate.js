@@ -5,14 +5,14 @@ import {hexEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.4,
     underLayerOpacity: 0.2,
-    sparsityFactor: {lower: 6, upper: 6},
+    sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 4, upper: 6},
     radiusFactor: {lower: 4, upper: 6},
     accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 6}},
     accentTimes: {lower: 4, upper: 8},
     blurTimes: {lower: 4, upper: 8},
-    stroke: 0.3,
+    stroke: 0.8,
     thickness: 1,
     scaleFactor: 0.9,
     numberOfHex: 12,

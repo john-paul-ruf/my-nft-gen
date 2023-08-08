@@ -20,7 +20,7 @@ class globalSettings {
         this.randomColorScheme = new RandomColorScheme();
 
         //todo: random color scheme should take a list of possible color schemes and pick from the list.
-        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.paulTovVibrant);
+        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.neons);
 
         this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';

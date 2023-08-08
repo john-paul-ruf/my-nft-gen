@@ -9,7 +9,7 @@ export const verticalScanLinesEffect = {
     name: 'scan lines',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 10,
     requiresLayer: true,
     ignoreAdditionalEffects: false,
 }

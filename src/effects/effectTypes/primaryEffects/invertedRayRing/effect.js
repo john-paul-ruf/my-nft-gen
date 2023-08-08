@@ -9,7 +9,7 @@ export const invertedRayRingEffect = {
     name: 'inverted-ray-rings',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 40,
     requiresLayer: true,
     ignoreAdditionalEffects: false,
 }

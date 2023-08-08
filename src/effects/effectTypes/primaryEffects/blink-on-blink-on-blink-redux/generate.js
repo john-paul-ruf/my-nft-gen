@@ -7,19 +7,19 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.55,
-    numberOfBlinks: {lower: 2, upper: 6},
+    layerOpacity: 0.75,
+    numberOfBlinks: {lower: 1, upper: 2},
     initialRotation: {lower: 0, upper: 360},
     rotationSpeedRange: {lower: 1, upper: 1},
     counterClockwise: {lower: 0, upper: 1},
-    diameterRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.9},
+    diameterRange: {lower: finalImageSize.shortestSide * 0.5, upper: finalImageSize.longestSide * 0.8},
     glowLowerRange: {lower: -128, upper: -64},
     glowUpperRange: {lower: 64, upper: 128},
-    glowTimes: {lower: 3, upper: 6},
-    randomizeSpin: {lower: -128, upper: 128},
-    randomizeRed: {lower: -128, upper: 128},
-    randomizeBlue: {lower: -128, upper: 128},
-    randomizeGreen: {lower: -128, upper: 128}
+    glowTimes: {lower: 4, upper: 8},
+    randomizeSpin: {lower: -12, upper: 12},
+    randomizeRed: {lower: -12, upper: 12},
+    randomizeBlue: {lower: -12, upper: 12},
+    randomizeGreen: {lower: -12, upper: 12}
 }
 
 const computeInitialInfo = (num) => {
