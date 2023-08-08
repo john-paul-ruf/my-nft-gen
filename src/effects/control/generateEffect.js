@@ -67,8 +67,6 @@ const primaryEffects = [
 
     eightEffect,
 
-    lensFlareEffect,
-
     wireframeSpiralEffect,
     encircledSpiralEffect,
 
@@ -76,6 +74,8 @@ const primaryEffects = [
     fuzzyRippleEffect,
 
     viewportEffect,
+
+    lensFlareEffect,
 
     threeDimensionalShapeEffect,
 

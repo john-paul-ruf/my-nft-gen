@@ -5,11 +5,11 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.3,
+    layerOpacity: 0.75,
     underLayerOpacity: 0.1,
     circles: {lower: 5, upper: 10},
-    stroke: 2,
-    thickness: 10,
+    stroke: 5,
+    thickness: 2,
     scaleFactor: 1.2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 15, upper: 25}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 8}},

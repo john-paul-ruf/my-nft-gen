@@ -6,7 +6,7 @@ import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
     folderName: '/img/mappedFrames/',
-    layerOpacity: 0.75,
+    layerOpacity: 1,
 }
 
 export const generate = () => {
