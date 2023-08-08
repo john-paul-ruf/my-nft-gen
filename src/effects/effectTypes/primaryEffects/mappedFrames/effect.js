@@ -9,7 +9,7 @@ export const mappedFramesEffect = {
     name: 'mapped-frames',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 40,
     requiresLayer: true,
     ignoreAdditionalEffects: true,
 }

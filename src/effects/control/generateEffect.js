@@ -44,6 +44,8 @@ import {porousEffect} from "../effectTypes/primaryEffects/porous/effect.js";
 const primaryEffects = [
     animateBackgroundEffect,
 
+    blinkOnEffect,
+
     imageOverlayEffect,
 
     hexEffect,
@@ -69,8 +71,6 @@ const primaryEffects = [
 
     wireframeSpiralEffect,
     encircledSpiralEffect,
-
-    blinkOnEffect,
 
 
     fuzzyRippleEffect,
