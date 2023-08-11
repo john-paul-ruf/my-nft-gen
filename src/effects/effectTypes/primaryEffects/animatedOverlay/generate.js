@@ -5,7 +5,7 @@ import fs from "fs";
 import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
-    folderName: '/img/animatedOverlay/'
+    folderName: '/animatedOverlay/'
 }
 
 export const generate = () => {

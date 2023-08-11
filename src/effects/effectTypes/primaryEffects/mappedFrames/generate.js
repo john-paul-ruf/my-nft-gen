@@ -5,7 +5,7 @@ import fs from "fs";
 import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
-    folderName: '/img/mappedFrames/',
+    folderName: '/mappedFrames/',
     layerOpacity: 1,
 }
 
@@ -19,7 +19,7 @@ export const generate = () => {
 
     const getMappedFramesFolder = () => {
         const fileURLToPath1 = fileURLToPath(import.meta.url);
-        const directory = dirname(fileURLToPath1).replace('/effects/effectTypes/primaryEffects/mappedFrames', '');
+        const directory = dirname(fileURLToPath1);
 
         const getFoldersInDirectory = (dir) => {
 
