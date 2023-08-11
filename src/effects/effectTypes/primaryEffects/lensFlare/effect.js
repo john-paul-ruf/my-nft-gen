@@ -11,7 +11,7 @@ export const lensFlareEffect = {
     effect: effect,
     effectChance: 80,
     requiresLayer: true,
-    ignoreAdditionalEffects: false,
+    ignoreAdditionalEffects: true,
 }
 
 
