@@ -6,15 +6,15 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.75,
-    underLayerOpacity: 0.1,
+    underLayerOpacity: 0.4,
     circles: {lower: 5, upper: 10},
     stroke: 5,
-    thickness: 2,
+    thickness: 3,
     scaleFactor: 1.2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 15, upper: 25}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 8}},
-    accentTimes: {lower: 4, upper: 4},
-    blurTimes: {lower: 4, upper: 4},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 40, upper: 75}},
+    blurRange: {bottom: {lower: 0, upper: 12}, top: {lower: 16, upper: 18}},
+    accentTimes: {lower: 8, upper: 8},
+    blurTimes: {lower: 8, upper: 8},
 }
 
 const computeInitialInfo = (num, width) => {

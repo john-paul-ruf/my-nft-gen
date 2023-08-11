@@ -15,8 +15,8 @@ const config = {
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
     elementGastonTimes: {lower: 2, upper: 6},
 
-    numberOfFlareHex: {lower: 0, upper: 0},
-    flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.015, upper: finalImageSize.shortestSide * 0.07},
+    numberOfFlareHex: {lower: 0, upper: 4},
+    flareHexSizeRange: {lower: finalImageSize.shortestSide * 0.015, upper: finalImageSize.shortestSide * 0.025},
 
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
