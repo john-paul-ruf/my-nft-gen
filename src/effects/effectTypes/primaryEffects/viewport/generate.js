@@ -15,11 +15,11 @@ const config = {
     ampRadius: {lower: 25, upper: 50},
     sparsityFactor: {lower: 3, upper: 6},
     amplitude: {lower: 10, upper: 20},
-    times: {lower: 2, upper: 4},
+    times: {lower: 2, upper: 8},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 4, upper: 8},
-    blurTimes: {lower: 4, upper: 8},
+    accentTimes: {lower: 0, upper: 0},
+    blurTimes: {lower: 0, upper: 0},
 }
 
 export const generate = () => {

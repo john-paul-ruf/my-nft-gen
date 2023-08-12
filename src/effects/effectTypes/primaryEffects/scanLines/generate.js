@@ -3,9 +3,9 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {verticalScanLinesEffect} from "./effect.js";
 
 const config = {
-    lines: {lower: 3, upper: 6},
-    minlength: {lower: 15, upper: 40},
-    maxlength: {lower: 60, upper: 100},
+    lines: {lower: 4, upper: 8},
+    minlength: {lower: 30, upper: 40},
+    maxlength: {lower: 80, upper: 100},
     times: {lower: 4, upper: 8},
     alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
     alphaTimes: {lower: 4, upper: 8},

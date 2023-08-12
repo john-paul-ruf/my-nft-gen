@@ -5,8 +5,8 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.4,
-    underLayerOpacity: 0.3,
+    layerOpacity: 0.6,
+    underLayerOpacity: 0.5,
     stroke: 1,
     thickness: 2,
     largeRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.25},
@@ -18,8 +18,8 @@ const config = {
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.25},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 8}},
-    accentTimes: {lower: 2, upper: 4},
-    blurTimes: {lower: 2, upper: 4},
+    accentTimes: {lower: 6, upper: 6},
+    blurTimes: {lower: 6, upper: 6},
 }
 
 export const generate = () => {

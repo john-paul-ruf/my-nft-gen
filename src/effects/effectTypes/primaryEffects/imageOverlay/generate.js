@@ -5,8 +5,8 @@ import fs from "fs";
 import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
-    folderName: '/img/imageOverlay/',
-    layerOpacity: 0.60,
+    folderName: '/imageOverlay/',
+    layerOpacity: 0.7,
 }
 
 export const generate = () => {
@@ -19,7 +19,7 @@ export const generate = () => {
 
     const getBackdrop = () => {
         const fileURLToPath1 = fileURLToPath(import.meta.url);
-        const directory = dirname(fileURLToPath1).replace('/effects/effectTypes/primaryEffects/imageOverlay', '');
+        const directory = dirname(fileURLToPath1);
 
         const getFilesInDirectory = (dir) => {
 

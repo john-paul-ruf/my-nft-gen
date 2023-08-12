@@ -10,7 +10,7 @@ export class animationConfiguration {
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 7200;
+        this.numberOfFrame = 1800;
 
         this.finalFileName = 'remix-sku' + randomId();
         this.fileOut = '/Users/jpr/Library/CloudStorage/OneDrive-Personal/_ZEN_/my-nft-output/' + this.finalFileName;
