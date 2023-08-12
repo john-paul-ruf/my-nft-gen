@@ -8,12 +8,12 @@ const config = {
     layerOpacity: 0.6,
     underLayerOpacity: 0.4,
     circles: {lower: 5, upper: 10},
-    stroke: 5,
+    stroke: 10,
     thickness: 3,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 15, upper: 40}},
-    blurRange: {bottom: {lower: 0, upper: 6}, top: {lower: 8, upper: 12}},
-    featherTimes: {lower: 8, upper: 8},
+    accentRange: {bottom: {lower: 0, upper: 25}, top: {lower: 50, upper: 150}},
+    blurRange: {bottom: {lower: 0, upper: 12}, top: {lower: 16, upper: 20}},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 const computeInitialInfo = (num) => {
