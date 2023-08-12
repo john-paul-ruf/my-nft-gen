@@ -5,13 +5,13 @@ import {ampEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.75,
+    layerOpacity: 0.5,
     underLayerOpacity: 0.25,
     sparsityFactor: {lower: 2, upper: 4},
     stroke: 0,
     thickness: 1,
-    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 15, upper: 35}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 8}},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 5, upper: 15}},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 3, upper: 4}},
     featherTimes: {lower: 2, upper: 8},
     speed: {lower: 12, upper: 24},
 }

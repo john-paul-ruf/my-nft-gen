@@ -3,13 +3,13 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {hexEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.4,
-    underLayerOpacity: 0.2,
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.25,
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 4, upper: 8},
     radiusFactor: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 6}},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 5, upper: 15}},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 3, upper: 4}},
     featherTimes: {lower: 2, upper: 8},
     stroke: 0.8,
     thickness: 1,
