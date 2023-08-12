@@ -34,7 +34,7 @@ const createThoseFuzzyBands = async (context) => {
 
         let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
 
-        const theBlurGaston = findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame);
+        const theBlurGaston = Math.ceil(findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame));
         await underlayLayer.blur(theBlurGaston);
 
         await compositeLayer.compositeLayerOver(underlayLayer);
@@ -72,9 +72,9 @@ export const fuzzBands = async (layer, data, currentFrame, numberOfFrames) => {
         }
 
         return {
-            layerNames:layerNames,
-            underlayNames:underlayNames,
-            compositeNames:compositeNames,
+            layerNames: layerNames,
+            underlayNames: underlayNames,
+            compositeNames: compositeNames,
         }
     }
     const context = {
