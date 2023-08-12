@@ -6,10 +6,10 @@ export const effect = {
 }
 
 export const fuzzBandsEffect = {
-    name: 'fuzz-bands',
+    name: 'fuzz-bands-mark-two',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 100,
     requiresLayer: true,
     ignoreAdditionalEffects: false,
 }

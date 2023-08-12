@@ -5,56 +5,86 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const draw = async (context, filename) => {
+const createThoseFuzzyBands = async (context) => {
+
+    //draw with top
     for (let i = 0; i < context.data.numberOfCircles; i++) {
-        const theAccentGaston = context.useAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
-        await context.canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
+        let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+        await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, context.data.stroke, context.data.circles[i].color)
+
+        await canvas.toFile(context.names.layerNames[i]);
     }
 
-    await context.canvas.toFile(filename);
-}
+    //draw underlay, blur and composite under top
+    for (let i = 0; i < context.data.numberOfCircles; i++) {
 
-export const compositeImage = async (context, layer) => {
-    let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-    let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-    await underlayLayer.blur(context.theBlurGaston);
+        const theAccentGaston = findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame);
+        await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
 
-    await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
-    await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+        await canvas.toFile(context.names.underlayNames[i]);
 
-    await layer.compositeLayerOver(underlayLayer);
-    await layer.compositeLayerOver(tempLayer);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
 
-}
+        let compositeCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        await compositeCanvas.toFile(context.names.compositeNames[i]);
 
-export const processDrawFunction = async (draw, context) => {
+        let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
 
-    await draw(context, context.underlayName);
+        const theBlurGaston = findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame);
+        await underlayLayer.blur(theBlurGaston);
 
-    context.useAccentGaston = false;
-    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        await compositeLayer.compositeLayerOver(underlayLayer);
+        await compositeLayer.compositeLayerOver(tempLayer);
 
-    await draw(context, context.drawing);
+        await compositeLayer.toFile(context.names.compositeNames[i]);
+
+        fs.unlinkSync(context.names.layerNames[i]);
+        fs.unlinkSync(context.names.underlayNames[i]);
+    }
+
+    //add all composites, with individual feathering, to effect layer
+    for (let i = 0; i < context.data.numberOfCircles; i++) {
+        let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
+
+        await context.layer.compositeLayerOver(compositeLayer);
+
+        fs.unlinkSync(context.names.compositeNames[i]);
+    }
 }
 
 export const fuzzBands = async (layer, data, currentFrame, numberOfFrames) => {
 
+    const generateNames = (data) => {
+
+        const layerNames = [];
+        const underlayNames = [];
+        const compositeNames = [];
+
+
+        for (let index = 0; index < data.numberOfCircles; index++) {
+            layerNames.push(getWorkingDirectory() + 'fuzz' + randomId() + '-layer-' + index.toString() + '.png')
+            underlayNames.push(getWorkingDirectory() + 'fuzz' + randomId() + '-layer-underlay-' + index.toString() + '.png')
+            compositeNames.push(getWorkingDirectory() + 'fuzz' + randomId() + '-layer-comp-' + index.toString() + '.png')
+        }
+
+        return {
+            layerNames:layerNames,
+            underlayNames:underlayNames,
+            compositeNames:compositeNames,
+        }
+    }
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        useAccentGaston: true,
-        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
-        drawing: getWorkingDirectory() + 'ring' + randomId() + '.png',
-        underlayName: getWorkingDirectory() + 'ring-underlay' + randomId() + '.png',
-        canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
+        names: (generateNames(data)),
         data: data,
+        layer: layer,
     }
 
-    await processDrawFunction(draw, context);
-    await compositeImage(context, layer);
-
-    fs.unlinkSync(context.drawing);
-    fs.unlinkSync(context.underlayName);
+    await createThoseFuzzyBands(context);
 
 }
