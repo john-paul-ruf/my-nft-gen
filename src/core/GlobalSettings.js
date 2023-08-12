@@ -30,12 +30,12 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#000000', //trying for a glow effect with effects with accent and blur
+            '#080808', //trying for a glow effect with effects with accent and blur
         ];
 
         //For 2D palettes
         this.backgrounds = [
-            '#000000', //trying for a glow effect with effects with accent and blur
+            '#080808', //trying for a glow effect with effects with accent and blur
         ];
 
         //for three-dimensional lighting

@@ -5,7 +5,7 @@ import {layeredRingsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 2,
+    thickness: 4,
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -24,7 +24,7 @@ const config = {
 
     movementGaston: {lower: 1, upper: 12},
 
-    initialNumberOfPoints: 8,
+    initialNumberOfPoints: 12,
     scaleByFactor: 1.1
 }
 
