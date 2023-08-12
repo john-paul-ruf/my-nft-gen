@@ -16,7 +16,7 @@ const draw = async (context, filename) => {
             context.data.length,
             context.data.thickness,
             context.data.innerColor,
-            context.data.stroke,
+            context.data.stroke + context.theAccentGaston,
             context.data.outerColor
         )
     }

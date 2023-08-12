@@ -10,7 +10,7 @@ const config = {
     sparsityFactor: {lower: 2, upper: 4},
     stroke: 0,
     thickness: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
+    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 15, upper: 35}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 8}},
     featherTimes: {lower: 2, upper: 8},
     speed: {lower: 12, upper: 24},
