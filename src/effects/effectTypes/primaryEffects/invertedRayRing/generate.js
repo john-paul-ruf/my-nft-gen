@@ -17,8 +17,7 @@ const config = {
     densityFactor: 1.75,
     accentRange: {bottom: {lower: 0, upper: 3}, top: {lower: 4, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 0, upper: 6},
-    blurTimes: {lower: 0, upper: 6},
+    featherTimes: {lower: 2, upper: 8},
     lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}},//when spin, length must be at 0 or glitches the loop
     lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 4, upper: 8},
@@ -47,7 +46,7 @@ const computeInitialInfo = (num) => {
             radius: config.radiusGap * (i + 1),
             color: getNeutralFromBucket(),
             outerColor: getColorFromBucket(),
-            accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+            featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
@@ -82,7 +81,6 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${invertedRayRingEffect.name}: ${data.numberOfCircles} inverted ray rings`
         }

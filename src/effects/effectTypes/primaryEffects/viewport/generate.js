@@ -18,8 +18,7 @@ const config = {
     times: {lower: 2, upper: 8},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 0, upper: 0},
-    blurTimes: {lower: 0, upper: 0},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 export const generate = () => {
@@ -45,7 +44,7 @@ export const generate = () => {
         color: getColorFromBucket(),
         ampInnerColor: getColorFromBucket(),
         ampOuterColor: getColorFromBucket(),
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
             upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
@@ -54,7 +53,6 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
             return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`

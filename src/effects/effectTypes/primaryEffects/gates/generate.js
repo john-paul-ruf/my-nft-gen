@@ -11,8 +11,7 @@ const config = {
     stroke: 4,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    accentTimes: {lower: 4, upper: 8},
-    blurTimes: {lower: 4, upper: 8},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 const finalImageSize = getFinalImageSize();
@@ -27,7 +26,7 @@ const computeInitialInfo = (num) => {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
             },
-            accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+            featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
             startingAngle: ((360 / num) * i),
         });
     }
@@ -50,7 +49,6 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         getInfo: () => {
             return `${gatesEffect.name}: ${data.numberOfGates} gates`
         }

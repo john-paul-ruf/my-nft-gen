@@ -17,8 +17,7 @@ const config = {
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.30, upper: finalImageSize.shortestSide * 0.35},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
     blurRange: {bottom: {lower: 0, upper: 4}, top: {lower: 12, upper: 18}},
-    accentTimes: {lower: 2, upper: 2},
-    blurTimes: {lower: 2, upper: 2},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 export const generate = () => {
@@ -46,8 +45,7 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
+        featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         getInfo: () => {
             return `${nthRings.name}: ${data.totalRingCount} ring groups, ripple: ${data.ripple.toFixed(2)}`
         }

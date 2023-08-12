@@ -76,7 +76,7 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
+        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.featherTimes, numberOfFrames, currentFrame),
         theUnitLengthGaston: findValue(0, data.unitLengthChangeConstant, 1, numberOfFrames, currentFrame),
         theUnderLayerOpacityGaston: findValue(data.underLayerOpacityRange.lower, data.underLayerOpacityRange.upper, data.underLayerOpacityTimes, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',
