@@ -52,7 +52,7 @@ export const generate = () => {
         }
     }
 
-    data.circles = computeInitialInfo(data.numberOfCircles, data.width);
+    data.circles = computeInitialInfo(data.numberOfCircles);
 
     return data;
 }
