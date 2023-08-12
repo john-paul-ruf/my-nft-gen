@@ -16,7 +16,7 @@ const config = {
     featherTimes: {lower: 8, upper: 8},
 }
 
-const computeInitialInfo = (num, width) => {
+const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
