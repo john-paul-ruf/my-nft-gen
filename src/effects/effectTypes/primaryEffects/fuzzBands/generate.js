@@ -1,4 +1,4 @@
-import {getRandomIntExclusive, getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {fuzzBandsEffect} from "./effect.js";
 
@@ -11,8 +11,8 @@ const config = {
     stroke: 5,
     thickness: 3,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 40, upper: 75}},
-    blurRange: {bottom: {lower: 0, upper: 12}, top: {lower: 16, upper: 18}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 15, upper: 40}},
+    blurRange: {bottom: {lower: 0, upper: 6}, top: {lower: 8, upper: 12}},
     featherTimes: {lower: 8, upper: 8},
 }
 
