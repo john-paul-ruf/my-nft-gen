@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {fuzzBandsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -22,7 +22,7 @@ const computeInitialInfo = (num) => {
         info.push({
             radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
             color: getColorFromBucket(),
-            innerColor: getNeutralFromBucket(),
+            innerColor: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)

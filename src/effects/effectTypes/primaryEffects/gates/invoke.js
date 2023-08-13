@@ -23,7 +23,7 @@ const draw = async (context, filename) => {
         const direction = loopCount % 2;
         const invert = direction <= 0;
         const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
-        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
+        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].innerColor, 0, context.data.gates[i].innerColor)
     }
 
     await context.canvas.toFile(filename);
