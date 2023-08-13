@@ -55,7 +55,6 @@ const primaryEffects = [
     layeredHexEffect,
     layeredRingsEffect,
 
-    fuzzBandsEffect,
 
     invertedRayRingEffect,
     rayRingEffect,
@@ -73,10 +72,10 @@ const primaryEffects = [
 
     ampEffect,
 
+    fuzzBandsEffect,
     lensFlareEffect,
 
     threeDimensionalShapeEffect,
-
 
     animatedImageOverlayEffect,
     mappedFramesEffect,
