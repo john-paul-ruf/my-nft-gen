@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.5,
-    underLayerOpacity: 0.3,
+    underLayerOpacity: 0.25,
     stroke: 1,
     thickness: 2,
     smallRadius: {lower: finalImageSize.longestSide * 0.10, upper: finalImageSize.longestSide * 0.15},
@@ -14,10 +14,9 @@ const config = {
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.shortestSide * 0.30},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
-    blurRange: {bottom: {lower: 0, upper: 4}, top: {lower: 12, upper: 18}},
-    accentTimes: {lower: 4, upper: 4},
-    blurTimes: {lower: 4, upper: 4},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
+    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 export const generate = () => {
@@ -44,8 +43,7 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
+        featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         getInfo: () => {
             return `${eightEffect.name}: ripple: ${data.ripple.toFixed(3)}`
         }

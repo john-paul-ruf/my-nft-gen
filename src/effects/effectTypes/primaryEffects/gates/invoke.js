@@ -14,7 +14,7 @@ const draw = async (context, filename) => {
         const direction = loopCount % 2;
         const invert = direction <= 0;
         const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
-        const theAccentGaston = context.useAccentGaston ? findValue(context.data.gates[i].accentRange.lower, context.data.gates[i].accentRange.upper, context.data.gates[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+        const theAccentGaston = context.useAccentGaston ? findValue(context.data.gates[i].accentRange.lower, context.data.gates[i].accentRange.upper, context.data.gates[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
         await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].color, context.data.stroke + theAccentGaston, context.data.gates[i].color)
     }
 
@@ -59,7 +59,7 @@ export const gates = async (layer, data, currentFrame, numberOfFrames) => {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
         useAccentGaston: true,
-        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         drawing: getWorkingDirectory() + 'gate' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'gate-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),

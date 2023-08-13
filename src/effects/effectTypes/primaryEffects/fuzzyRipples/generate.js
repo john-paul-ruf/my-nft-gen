@@ -5,8 +5,8 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.6,
-    underLayerOpacity: 0.5,
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.25,
     stroke: 1,
     thickness: 2,
     largeRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.25},
@@ -16,10 +16,9 @@ const config = {
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.25},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 40}},
-    blurRange: {bottom: {lower: 0, upper: 4}, top: {lower: 12, upper: 18}},
-    accentTimes: {lower: 6, upper: 6},
-    blurTimes: {lower: 6, upper: 6},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
+    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 export const generate = () => {
@@ -48,8 +47,7 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
+        featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         getInfo: () => {
             return `${fuzzyRippleEffect.name}: large rings: ${data.largeNumberOfRings}, small rings x6: ${data.smallNumberOfRings}, ripple: ${data.ripple}`
         }

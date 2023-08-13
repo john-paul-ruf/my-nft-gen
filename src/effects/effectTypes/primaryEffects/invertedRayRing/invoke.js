@@ -8,7 +8,7 @@ import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 
 async function drawRayRingInstance(withAccentGaston, i, context) {
-    const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].accentTimes, context.numberOfFrames, context.currentFrame) : 0;
+    const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
     const invertTheRayGaston = (i + 1) % 2;
     const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor * context.data.circles[i].speed, context.numberOfFrames, context.currentFrame);
 
@@ -52,6 +52,8 @@ export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
+    await underlayLayer.blur(context.theBlurGaston);
+
     await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
@@ -76,6 +78,7 @@ export const invertedRayRing = async (layer, data, currentFrame, numberOfFrames)
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
         useAccentGaston: true,
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         drawing: getWorkingDirectory() + 'inverted-ray-ring' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'inverted-ray-ring-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),

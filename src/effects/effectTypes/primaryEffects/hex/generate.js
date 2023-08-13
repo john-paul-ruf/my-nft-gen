@@ -3,15 +3,14 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {hexEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.4,
-    underLayerOpacity: 0.2,
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.25,
     sparsityFactor: {lower: 12, upper: 12},
     gapFactor: {lower: 4, upper: 8},
     radiusFactor: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0.05, upper: 0.15}, top: {lower: 0.25, upper: 0.5}}, //x scale factor x loop count
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 3, upper: 6}},
-    accentTimes: {lower: 4, upper: 8},
-    blurTimes: {lower: 4, upper: 8},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 5}},
+    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
+    featherTimes: {lower: 2, upper: 8},
     stroke: 0.8,
     thickness: 1,
     scaleFactor: 0.9,
@@ -47,8 +46,7 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
             upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
-        blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
+        featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         color: getColorFromBucket(),
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {

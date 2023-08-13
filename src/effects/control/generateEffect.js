@@ -52,33 +52,30 @@ const primaryEffects = [
 
     scopesEffect,
 
-    ampEffect,
-
     layeredHexEffect,
     layeredRingsEffect,
 
-    fuzzBandsEffect,
-    gatesEffect,
 
     invertedRayRingEffect,
     rayRingEffect,
 
-    nthRingsEffect,
-
-    eightEffect,
-
     wireframeSpiralEffect,
     encircledSpiralEffect,
 
-
+    nthRingsEffect,
+    eightEffect,
     fuzzyRippleEffect,
+
+    gatesEffect,
 
     viewportEffect,
 
+    ampEffect,
+
+    fuzzBandsEffect,
     lensFlareEffect,
 
     threeDimensionalShapeEffect,
-
 
     animatedImageOverlayEffect,
     mappedFramesEffect,

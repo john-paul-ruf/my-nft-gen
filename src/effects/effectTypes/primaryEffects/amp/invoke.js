@@ -16,7 +16,7 @@ const draw = async (context, filename) => {
             context.data.length,
             context.data.thickness,
             context.data.innerColor,
-            context.data.stroke,
+            context.data.stroke + context.theAccentGaston,
             context.data.outerColor
         )
     }
@@ -26,6 +26,8 @@ const draw = async (context, filename) => {
 export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+
+    await underlayLayer.blur(context.theBlurGaston);
 
     await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
@@ -51,7 +53,8 @@ export const amp = async (layer, data, currentFrame, numberOfFrames) => {
         numberOfFrames: numberOfFrames,
         drawing: getWorkingDirectory() + 'amp' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'amp-underlay' + randomId() + '.png',
-        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
+        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.featherTimes, numberOfFrames, currentFrame),
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
         data: data,
     }

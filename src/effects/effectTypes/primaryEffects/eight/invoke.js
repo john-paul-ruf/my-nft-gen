@@ -58,8 +58,8 @@ export const eight = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
-        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.featherTimes, numberOfFrames, currentFrame),
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         theAngleGaston: findOneWayValue(0, 45, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'eight' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'eight-underlay' + randomId() + '.png',

@@ -44,8 +44,8 @@ export const viewport = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
-        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.featherTimes, numberOfFrames, currentFrame),
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         drawing: getWorkingDirectory() + 'viewport' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'viewport-underlay' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),

@@ -153,8 +153,8 @@ export const hex = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.accentTimes, numberOfFrames, currentFrame),
-        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame)),
+        theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.featherTimes, numberOfFrames, currentFrame),
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         drawing: getWorkingDirectory() + 'hex' + randomId() + '.png',
         underlayName: getWorkingDirectory() + 'hex-under' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),

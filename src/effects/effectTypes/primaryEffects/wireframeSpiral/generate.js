@@ -16,7 +16,7 @@ const config = {
     unitLengthChangeConstant: 0,
     radiusConstant: 50,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 5}},
-    accentTimes: {lower: 1, upper: 4},
+    featherTimes: {lower: 1, upper: 4},
 }
 
 export const generate = () => {
@@ -47,7 +47,7 @@ export const generate = () => {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
             upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
         },
-        accentTimes: getRandomIntInclusive(config.accentTimes.lower, config.accentTimes.upper),
+        featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         getInfo: () => {
             return `${wireframeSpiralEffect.name}: sparsity: ${data.sparsityFactor.toFixed(3)}, unit: ${data.unitLength}, speed: ${data.speed}, direction: ${data.counterClockwise > 0 ? 'clockwise' : 'counter'}`
         }

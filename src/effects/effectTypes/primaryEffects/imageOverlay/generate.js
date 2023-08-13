@@ -6,7 +6,7 @@ import {getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
     folderName: '/imageOverlay/',
-    layerOpacity: 0.7,
+    layerOpacity: 0.6,
 }
 
 export const generate = () => {
