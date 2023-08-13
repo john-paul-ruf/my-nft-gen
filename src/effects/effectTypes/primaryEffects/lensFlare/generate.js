@@ -22,12 +22,12 @@ const config = {
     angleGastonTimes: {lower: 1, upper: 6},
 
     numberOfFlareRings: {lower: 60, upper: 80},
-    flareRingsSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * .75},
-    flareRingStroke: {lower: 1, upper: 2},
+    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * .75},
+    flareRingStroke: {lower: 1, upper: 1},
 
-    numberOfFlareRays: {lower: 80, upper: 160},
-    flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * .85},
-    flareRaysStroke: {lower: 1, upper: 2},
+    numberOfFlareRays: {lower: 60, upper: 120},
+    flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * .85},
+    flareRaysStroke: {lower: 1, upper: 1},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
