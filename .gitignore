@@ -1,16 +1,8 @@
 /package-lock.json
 /node_modules/
-/.idea/workspace.xml
-/.idea/modules.xml
-/.idea/my-nft-gen.iml
-/.idea/vcs.xml
+/.idea/
 *.png
-!/src/img/imageOverlay/*.png
-!/src/img/imageOverlay/not-in-use/*.png
 *.mp4
 *.gif
 /coverage/
-/src/img/output/_in the index/
-/.idea/jsLinters/eslint.xml
-/.idea/inspectionProfiles/Project_Default.xml
 /qodana.yaml

@@ -15,8 +15,8 @@ const config = {
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.30, upper: finalImageSize.shortestSide * 0.35},
-    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 5, upper: 15}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 3, upper: 4}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
+    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
     featherTimes: {lower: 2, upper: 8},
 }
 

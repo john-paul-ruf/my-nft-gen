@@ -24,7 +24,7 @@ const config = {
 
     movementGaston: {lower: 1, upper: 12},
 
-    initialNumberOfPoints: 12,
+    initialNumberOfPoints: 8,
     scaleByFactor: 1.1
 
 }
