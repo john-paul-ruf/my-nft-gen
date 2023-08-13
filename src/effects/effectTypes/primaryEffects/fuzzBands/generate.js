@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {fuzzBandsEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -9,11 +9,11 @@ const config = {
     underLayerOpacity: 0.25,
     circles: {lower: 3, upper: 6},
     stroke: 10,
-    thickness: 3,
+    thickness: 5,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
     accentRange: {bottom: {lower: 0, upper: 10}, top: {lower: 25, upper: 75}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 6, upper: 10}},
-    featherTimes: {lower: 2, upper: 8},
+    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
+    featherTimes: {lower: 4, upper: 12},
 }
 
 const computeInitialInfo = (num) => {
@@ -22,7 +22,7 @@ const computeInitialInfo = (num) => {
         info.push({
             radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
             color: getColorFromBucket(),
-            innerColor: getColorFromBucket(),
+            innerColor: getNeutralFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
