@@ -15,5 +15,10 @@ Please direct questions, comments, and rants to [John Ruf](mailto:john.paul.ruf@
 Example Output
 
 
-https://user-images.githubusercontent.com/52080647/197175551-c8900e56-e153-4c7d-9d62-5301dd074f83.mp4
+https://github.com/john-paul-ruf/my-nft-gen/assets/52080647/04ace19d-2511-4bf7-a5e5-1368fecc6353
+
+
+
+
+
 
