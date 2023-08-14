@@ -1,5 +1,5 @@
 # my-nft-gen
-Software used to create my NFT artwork on [Rarible](https://rarible.com/JohnRuf).
+This program is akin to a musical instrument.  It can be tuned and adjusted to create new works of art in the style I have been perfecting since my teenage years.  It is a infinite reel generator.  I post these reels in many places but my favorite is [TikTok](https://www.tiktok.com/@john.paul.ruf).  The rest can be found on my [linktree](https://linktr.ee/john.paul.ruf).  The software can be difficult to get running on a Windows box.  You may need Python and MS build tools.  I mainly run this on a Mac Mini with three threads at a time going.
 
 To Run:
 1. Install [node](https://nodejs.org/en/download/) (I run version 18.11.0)
