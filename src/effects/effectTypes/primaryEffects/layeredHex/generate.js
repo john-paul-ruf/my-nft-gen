@@ -5,7 +5,7 @@ import {layeredHexEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 3,
+    thickness: 8,
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},

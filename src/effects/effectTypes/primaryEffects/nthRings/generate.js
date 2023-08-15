@@ -1,23 +1,23 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {nthRings} from "./invoke.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
     totalRingCount: {lower: 8, upper: 16},
-    layerOpacity: 0.25,
-    underLayerOpacity: 0.5,
-    stroke: 1,
-    thickness: 2,
+    layerOpacity: 1,
+    underLayerOpacity: 0.4,
+    stroke: 2,
+    thickness: 8,
     smallRadius: {lower: finalImageSize.longestSide * 0.10, upper: finalImageSize.longestSide * 0.15},
-    smallNumberOfRings: {lower: 5, upper: 10},
+    smallNumberOfRings: {lower: 4, upper: 8},
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.30, upper: finalImageSize.shortestSide * 0.35},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-    featherTimes: {lower: 2, upper: 8},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 5}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    featherTimes: {lower: 4, upper: 8},
 }
 
 export const generate = () => {
@@ -29,7 +29,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
         smallNumberOfRings: getRandomIntInclusive(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),

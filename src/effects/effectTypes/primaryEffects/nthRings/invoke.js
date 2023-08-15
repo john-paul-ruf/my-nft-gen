@@ -9,7 +9,7 @@ import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.theAccentGaston, outerColor)
+    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke, outerColor)
 }
 
 const drawRings = async (pos, color, radius, numberOfRings, context, weight) => {
@@ -25,11 +25,33 @@ const draw = async (context, filename) => {
     const theAngleGaston = findOneWayValue(0, angle, context.numberOfFrames, context.currentFrame)
 
     for (let i = 0; i < 360; i += angle) {
-        await drawRings(findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius), context.data.outerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness + context.data.stroke);
+        await drawRings(
+            findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.innerColor,
+            context.data.smallRadius,
+            context.data.smallNumberOfRings,
+            context,
+            context.data.thickness
+        );
     }
 
+    await context.canvas.toFile(filename);
+}
+
+const drawUnderlay = async (context, filename) => {
+
+    const angle = (360 / context.data.totalRingCount);
+
+    const theAngleGaston = findOneWayValue(0, angle, context.numberOfFrames, context.currentFrame)
+
     for (let i = 0; i < 360; i += angle) {
-        await drawRings(findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius), context.data.innerColor, context.data.smallRadius, context.data.smallNumberOfRings, context, context.data.thickness);
+        await drawRings(
+            findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.outerColor,
+            context.data.smallRadius,
+            context.data.smallNumberOfRings,
+            context,
+            context.data.thickness + context.data.stroke + context.theAccentGaston);
     }
 
     await context.canvas.toFile(filename);
@@ -49,9 +71,9 @@ export const compositeImage = async (context, layer) => {
 
 }
 
-export const processDrawFunction = async (draw, context) => {
+export const processDrawFunction = async (context) => {
 
-    await draw(context, context.underlayName);
+    await drawUnderlay(context, context.underlayName);
 
     context.theAccentGaston = 0;
     context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -71,7 +93,7 @@ export const nthRings = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await processDrawFunction(draw, context);
+    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
