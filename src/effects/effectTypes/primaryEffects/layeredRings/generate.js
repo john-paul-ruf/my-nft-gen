@@ -5,7 +5,7 @@ import {layeredRingsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 6,
+    thickness: 3,
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
