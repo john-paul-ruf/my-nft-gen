@@ -6,11 +6,11 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    underLayerOpacity: 0.4,
+    underLayerOpacity: 0.5,
     sparsityFactor: {lower: 4, upper: 4},
     stroke: 2,
     thickness: 2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 5}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 4, upper: 8},
     speed: {lower: 12, upper: 24},

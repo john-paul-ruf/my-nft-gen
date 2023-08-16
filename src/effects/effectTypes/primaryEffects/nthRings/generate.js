@@ -5,18 +5,18 @@ import {nthRings} from "./invoke.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    totalRingCount: {lower: 4, upper: 8},
+    totalRingCount: {lower: 8, upper: 12},
     layerOpacity: 1,
-    underLayerOpacity: 0.4,
-    stroke: 3,
+    underLayerOpacity: 0.5,
+    stroke: 0,
     thickness: 12,
     smallRadius: {lower: finalImageSize.longestSide * 0.10, upper: finalImageSize.longestSide * 0.15},
     smallNumberOfRings: {lower: 3, upper: 6},
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.30, upper: finalImageSize.shortestSide * 0.35},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    accentRange: {bottom: {lower: 2, upper: 5}, top: {lower: 10, upper: 20}},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 3, upper: 4}},
     featherTimes: {lower: 4, upper: 8},
 }
 

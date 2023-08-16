@@ -3,15 +3,15 @@ import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../.
 import {gatesEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.5,
-    underLayerOpacity: 0.25,
+    layerOpacity: 1,
+    underLayerOpacity: 0.5,
     gates: {lower: 4, upper: 8},
     numberOfSides: {lower: 4, upper: 4},
-    thickness: 8,
-    stroke: 2,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 15}},
-    blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-    featherTimes: {lower: 2, upper: 8},
+    thickness: 12,
+    stroke: 0,
+    accentRange: {bottom: {lower: 2, upper: 5}, top: {lower: 10, upper: 15}},
+    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 3, upper: 4}},
+    featherTimes: {lower: 4, upper: 8},
 }
 
 const finalImageSize = getFinalImageSize();
