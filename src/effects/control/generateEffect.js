@@ -49,7 +49,6 @@ const primaryEffects = [
 
     blinkOnEffect,
 
-    imageOverlayEffect,
 
     hexEffect,
 
@@ -83,6 +82,7 @@ const primaryEffects = [
     threeDimensionalRingsEffect,
 
 
+    imageOverlayEffect,
     porousEffect,
 
     verticalScanLinesEffect,

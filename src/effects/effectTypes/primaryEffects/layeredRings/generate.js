@@ -9,10 +9,10 @@ const config = {
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
-    layerOpacityTimes: {lower: 2, upper: 8},
+    layerOpacityTimes: {lower: 2, upper: 4},
 
     indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
-    indexOpacityTimes: {lower: 2, upper: 8},
+    indexOpacityTimes: {lower: 2, upper: 4},
 
     radius: {lower: 10, upper: 20},
     offsetRadius: {lower: 30, upper: 60},

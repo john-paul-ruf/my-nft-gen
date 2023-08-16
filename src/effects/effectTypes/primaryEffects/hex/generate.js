@@ -10,7 +10,7 @@ const config = {
     radiusFactor: {lower: 2, upper: 4},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-    featherTimes: {lower: 2, upper: 8},
+    featherTimes: {lower: 2, upper: 4},
     stroke: 0.8,
     thickness: 1,
     scaleFactor: 0.9,

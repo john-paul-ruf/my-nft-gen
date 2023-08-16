@@ -11,7 +11,7 @@ const config = {
     stroke: 0,
     accentRange: {bottom: {lower: 2, upper: 5}, top: {lower: 10, upper: 15}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 3, upper: 4}},
-    featherTimes: {lower: 4, upper: 8},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 const finalImageSize = getFinalImageSize();

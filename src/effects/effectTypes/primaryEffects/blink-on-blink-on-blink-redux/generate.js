@@ -15,7 +15,7 @@ const config = {
     diameterRange: {lower: finalImageSize.shortestSide * 0.5, upper: finalImageSize.longestSide * 0.8},
     glowLowerRange: {lower: -128, upper: -64},
     glowUpperRange: {lower: 64, upper: 128},
-    glowTimes: {lower: 4, upper: 8},
+    glowTimes: {lower: 2, upper: 4},
     randomizeSpin: {lower: -12, upper: 12},
     randomizeRed: {lower: -12, upper: 12},
     randomizeBlue: {lower: -12, upper: 12},

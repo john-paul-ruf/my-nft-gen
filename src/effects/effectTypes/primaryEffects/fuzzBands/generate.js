@@ -6,14 +6,14 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    underLayerOpacity: 0.5,
+    underLayerOpacity: 0.35,
     circles: {lower: 4, upper: 8},
     stroke: 0,
     thickness: 12,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
     accentRange: {bottom: {lower: 10, upper: 25}, top: {lower: 50, upper: 150}},
-    blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-    featherTimes: {lower: 4, upper: 8},
+    blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 const computeInitialInfo = (num) => {
