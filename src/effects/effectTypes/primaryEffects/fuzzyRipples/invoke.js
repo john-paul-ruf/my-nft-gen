@@ -9,7 +9,7 @@ import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const drawRing = async (pos, radius, weight, color, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-    await context.canvas.drawRing2d(pos, theGaston, weight, color, context.theAccentGaston, color)
+    await context.canvas.drawRing2d(pos, theGaston, weight, color, 0, color)
 }
 
 const drawRings = async (context, pos, radius, numberOfRings, color, weight) => {
@@ -18,19 +18,35 @@ const drawRings = async (context, pos, radius, numberOfRings, color, weight) => 
     }
 }
 
-const draw = async (context, filename) => {
+const drawUnderlay = async (context, filename) => {
 
     //outer color
     await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
     for (let i = 30; i <= 330; i += 60) {
-        await drawRings(context, findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallRadius, context.data.smallNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
+        await drawRings(
+            context,
+            findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.smallRadius, context.data.smallNumberOfRings,
+            context.data.outerColor,
+            context.data.thickness + context.data.stroke + context.theAccentGaston);
     }
     await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor)
+
+    await context.canvas.toFile(filename);
+}
+
+const draw = async (context, filename) => {
 
     //inner color
     await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
     for (let i = 30; i <= 330; i += 60) {
-        await drawRings(context, findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius), context.data.smallRadius, context.data.smallNumberOfRings, context.data.innerColor, context.data.thickness);
+        await drawRings(
+            context,
+            findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.smallRadius,
+            context.data.smallNumberOfRings,
+            context.data.innerColor,
+            context.data.thickness);
     }
     await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
 
@@ -51,9 +67,9 @@ export const compositeImage = async (context, layer) => {
 
 }
 
-export const processDrawFunction = async (draw, context) => {
+export const processDrawFunction = async (context) => {
 
-    await draw(context, context.underlayName);
+    await drawUnderlay(context, context.underlayName);
 
     context.theAccentGaston = 0;
     context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -74,7 +90,7 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         data: data,
     }
 
-    await processDrawFunction(draw, context);
+    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);

@@ -44,9 +44,11 @@ import {porousEffect} from "../effectTypes/primaryEffects/porous/effect.js";
 const primaryEffects = [
     animateBackgroundEffect,
 
+    fuzzBandsEffect,
+    lensFlareEffect,
+
     blinkOnEffect,
 
-    imageOverlayEffect,
 
     hexEffect,
 
@@ -72,8 +74,6 @@ const primaryEffects = [
 
     ampEffect,
 
-    fuzzBandsEffect,
-    lensFlareEffect,
 
     threeDimensionalShapeEffect,
 
@@ -82,6 +82,7 @@ const primaryEffects = [
     threeDimensionalRingsEffect,
 
 
+    imageOverlayEffect,
     porousEffect,
 
     verticalScanLinesEffect,

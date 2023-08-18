@@ -16,7 +16,7 @@ const createThoseFuzzyBands = async (context) => {
         await canvas.toFile(context.names.layerNames[i]);
     }
 
-    //draw underlay, blur and composite under top
+    //draw underlay, blur and composite on main layer
     for (let i = 0; i < context.data.numberOfCircles; i++) {
 
         let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -26,7 +26,6 @@ const createThoseFuzzyBands = async (context) => {
 
         await canvas.toFile(context.names.underlayNames[i]);
 
-        let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
         let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
 
         let compositeCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -38,15 +37,26 @@ const createThoseFuzzyBands = async (context) => {
         await underlayLayer.blur(theBlurGaston);
 
         await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
-        await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
         await compositeLayer.compositeLayerOver(underlayLayer);
-        await compositeLayer.compositeLayerOver(tempLayer);
+        await compositeLayer.toFile(context.names.compositeNames[i]);
 
+        fs.unlinkSync(context.names.underlayNames[i]);
+    }
+
+    //composite all top layers over the underlay
+    for (let i = 0; i < context.data.numberOfCircles; i++) {
+
+        let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+
+        let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
+
+        await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+
+        await compositeLayer.compositeLayerOver(tempLayer);
         await compositeLayer.toFile(context.names.compositeNames[i]);
 
         fs.unlinkSync(context.names.layerNames[i]);
-        fs.unlinkSync(context.names.underlayNames[i]);
     }
 
     //add all composites, with individual feathering, to effect layer

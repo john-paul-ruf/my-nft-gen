@@ -6,8 +6,27 @@ import {findValue} from "../../../../core/math/findValue.js";
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
+const drawUnderlay = async (context, filename) => {
+    const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
+    for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
+        await context.canvas.drawRay2d(
+            context.data.center,
+            (i + theRayGaston) % 360,
+            context.data.lineStart + context.data.stroke,
+            context.data.length + context.data.stroke,
+            context.data.stroke,
+            context.data.outerColor,
+            context.data.stroke + context.theAccentGaston,
+            context.data.outerColor
+        )
+    }
+
+    await context.canvas.toFile(filename);
+}
+
 const draw = async (context, filename) => {
     const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
+
     for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
         await context.canvas.drawRay2d(
             context.data.center,
@@ -16,10 +35,11 @@ const draw = async (context, filename) => {
             context.data.length,
             context.data.thickness,
             context.data.innerColor,
-            context.data.stroke + context.theAccentGaston,
-            context.data.outerColor
+            context.data.thickness,
+            context.data.innerColor
         )
     }
+
     await context.canvas.toFile(filename);
 }
 
@@ -37,9 +57,9 @@ export const compositeImage = async (context, layer) => {
 
 }
 
-export const processDrawFunction = async (draw, context) => {
+export const processDrawFunction = async (context) => {
 
-    await draw(context, context.underlayName);
+    await drawUnderlay(context, context.underlayName);
 
     context.theAccentGaston = 0;
     context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -59,7 +79,7 @@ export const amp = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await processDrawFunction(draw, context);
+    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);

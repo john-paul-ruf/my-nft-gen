@@ -1,8 +1,6 @@
 /package-lock.json
 /node_modules/
+/src/img/
 /.idea/
-*.png
-*.mp4
-*.gif
 /coverage/
 /qodana.yaml

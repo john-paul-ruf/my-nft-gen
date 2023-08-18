@@ -17,7 +17,7 @@ const config = {
     densityFactor: 1.75,
     accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
     blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
-    featherTimes: {lower: 2, upper: 8},
+    featherTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}}, //when spin, length must be at 0 or glitches the loop
     lengthTimes: {lower: 4, upper: 8},
     sparsityFactor: {lower: 4, upper: 8},

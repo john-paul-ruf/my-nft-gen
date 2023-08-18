@@ -9,7 +9,7 @@ export const lensFlareEffect = {
     name: 'lens-flare',
     generateData: generate,
     effect: effect,
-    effectChance: 80,
+    effectChance: 20,
     requiresLayer: true,
     ignoreAdditionalEffects: true,
 }

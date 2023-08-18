@@ -6,7 +6,7 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const draw = async (context, filename) => {
+const drawUnderlay = async (context, filename) => {
 
     //quick fix
     for (let i = 0; i < context.data.numberOfGates; i++) {
@@ -18,12 +18,16 @@ const draw = async (context, filename) => {
         await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].color, context.data.stroke + theAccentGaston, context.data.gates[i].color)
     }
 
+    await context.canvas.toFile(filename);
+}
+
+const draw = async (context, filename) => {
     for (let i = 0; i < context.data.numberOfGates; i++) {
         const loopCount = i + 1;
         const direction = loopCount % 2;
         const invert = direction <= 0;
         const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
-        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
+        await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].innerColor, 0, context.data.gates[i].innerColor)
     }
 
     await context.canvas.toFile(filename);
@@ -43,9 +47,9 @@ export const compositeImage = async (context, layer) => {
 
 }
 
-export const processDrawFunction = async (draw, context) => {
+export const processDrawFunction = async (context) => {
 
-    await draw(context, context.underlayName);
+    await drawUnderlay(context, context.underlayName);
 
     context.useAccentGaston = false;
     context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -66,7 +70,7 @@ export const gates = async (layer, data, currentFrame, numberOfFrames) => {
         data: data,
     }
 
-    await processDrawFunction(draw, context);
+    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.underlayName);
