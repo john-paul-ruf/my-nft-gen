@@ -9,7 +9,7 @@ export const rayRingEffect = {
     name: 'ray-rings',
     generateData: generate,
     effect: effect,
-    effectChance: 40,
+    effectChance: 0,
     requiresLayer: true,
     ignoreAdditionalEffects: false,
 }
