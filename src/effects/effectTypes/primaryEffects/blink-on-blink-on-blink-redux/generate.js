@@ -10,16 +10,16 @@ const config = {
     layerOpacity: 0.75,
     numberOfBlinks: {lower: 1, upper: 2},
     initialRotation: {lower: 0, upper: 360},
-    rotationSpeedRange: {lower: 1, upper: 1},
+    rotationSpeedRange: {lower: 1, upper: 2},
     counterClockwise: {lower: 0, upper: 1},
-    diameterRange: {lower: finalImageSize.shortestSide * 0.5, upper: finalImageSize.longestSide * 0.8},
+    diameterRange: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.longestSide * 0.8},
     glowLowerRange: {lower: -128, upper: -64},
     glowUpperRange: {lower: 64, upper: 128},
     glowTimes: {lower: 2, upper: 4},
-    randomizeSpin: {lower: -12, upper: 12},
-    randomizeRed: {lower: -12, upper: 12},
-    randomizeBlue: {lower: -12, upper: 12},
-    randomizeGreen: {lower: -12, upper: 12}
+    randomizeSpin: {lower: -64, upper: 64},
+    randomizeRed: {lower: -64, upper: 64},
+    randomizeBlue: {lower: -64, upper: 64},
+    randomizeGreen: {lower: -64, upper: 64}
 }
 
 const computeInitialInfo = (num) => {

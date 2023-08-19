@@ -5,7 +5,7 @@ import {scopesEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.5,
+    layerOpacity: 0.75,
     sparsityFactor: {lower: 4, upper: 8},
     gapFactor: {lower: 0.2, upper: 0.6},
     radiusFactor: {lower: 0.1, upper: 0.2},

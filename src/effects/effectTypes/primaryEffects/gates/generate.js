@@ -6,7 +6,7 @@ const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.5,
     gates: {lower: 4, upper: 8},
-    numberOfSides: {lower: 4, upper: 4},
+    numberOfSides: {lower: 8, upper: 8},
     thickness: 12,
     stroke: 0,
     accentRange: {bottom: {lower: 2, upper: 5}, top: {lower: 10, upper: 15}},

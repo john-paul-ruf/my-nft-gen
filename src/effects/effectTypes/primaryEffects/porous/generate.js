@@ -3,7 +3,7 @@ import path from "path";
 import {porousEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.75,
+    layerOpacity: 0.5,
 }
 
 export const generate = () => {
