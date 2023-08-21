@@ -9,7 +9,7 @@ export const layeredHexEffect = {
     name: 'layered-hex',
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 0,
     requiresLayer: true,
     ignoreAdditionalEffects: false,
 }

@@ -11,7 +11,7 @@ const config = {
     stroke: 0,
     thickness: 12,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
-    accentRange: {bottom: {lower: 10, upper: 25}, top: {lower: 50, upper: 150}},
+    accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 75}},
     blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
     featherTimes: {lower: 2, upper: 4},
 }
