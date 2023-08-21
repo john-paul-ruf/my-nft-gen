@@ -8,7 +8,7 @@ const config = {
     sparsityFactor: {lower: 36, upper: 36},
     gapFactor: {lower: 8, upper: 12},
     radiusFactor: {lower: 8, upper: 12},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0.25, upper: 0.5}},
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
     featherTimes: {lower: 2, upper: 4},
     stroke: 1,

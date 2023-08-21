@@ -5,8 +5,8 @@ import {gatesEffect} from "./effect.js";
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.5,
-    gates: {lower: 4, upper: 8},
-    numberOfSides: {lower: 8, upper: 8},
+    gates: {lower: 8, upper: 12},
+    numberOfSides: {lower: 4, upper: 4},
     thickness: 12,
     stroke: 0,
     accentRange: {bottom: {lower: 2, upper: 5}, top: {lower: 10, upper: 15}},
@@ -28,7 +28,7 @@ const computeInitialInfo = (num) => {
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
             },
             featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
-            startingAngle: ((360 / num) * i),
+            startingAngle: 45,
         });
     }
     return info;
