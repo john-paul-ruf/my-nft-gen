@@ -11,15 +11,15 @@ const config = {
     numberOfRings: {lower: 2, upper: 4},
     radiusRange: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.longestSide * 0.45},
     stroke: 0,
-    thickness: 0,
+    thickness: 2,
     ringStroke: 0,
-    ringThickness: 0,
+    ringThickness: 2,
     sparsityFactor: {lower: 24, upper: 24},
     numberOfSegments: {lower: 7, upper: 14},
     speed: {lower: 1, upper: 12},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 1}},
-    featherTimes: {lower: 2, upper: 4},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    featherTimes: {lower: 0, upper: 0},
 }
 
 const getRingArray = (num) => {
