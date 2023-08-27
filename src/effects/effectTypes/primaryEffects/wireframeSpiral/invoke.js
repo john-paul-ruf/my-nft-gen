@@ -13,7 +13,7 @@ const drawLine = async (angle, loopControl, context, flipTwist, thickness, color
     const start = findPointByAngleAndCircle(context.data.center, angle, loopControl.n2 + context.data.radiusConstant)
     const end = findPointByAngleAndCircle(context.data.center, angle + (loopControl.twistCount * flipTwist * context.data.sparsityFactor), loopControl.nextTerm + context.data.radiusConstant);
 
-    await context.canvas.drawLine2d(start, end, thickness, color, thickness, color);
+    await context.canvas.drawLine2d(start, end, thickness + context.theAccentGaston, color, thickness, color);
 }
 
 async function spiral(context, thickness, color) {
@@ -53,7 +53,9 @@ export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
+    await underlayLayer.blur(context.theBlurGaston);
     await underlayLayer.adjustLayerOpacity(context.theUnderLayerOpacityGaston);
+
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
     await layer.compositeLayerOver(underlayLayer);
@@ -77,6 +79,7 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
         theAccentGaston: findValue(data.accentRange.lower, data.accentRange.upper, data.featherTimes, numberOfFrames, currentFrame),
+        theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
         theUnitLengthGaston: findValue(0, data.unitLengthChangeConstant, 1, numberOfFrames, currentFrame),
         theUnderLayerOpacityGaston: findValue(data.underLayerOpacityRange.lower, data.underLayerOpacityRange.upper, data.underLayerOpacityTimes, numberOfFrames, currentFrame),
         drawing: getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',

@@ -1,12 +1,12 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {GetRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {scopesEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.75,
-    sparsityFactor: {lower: 4, upper: 8},
+    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
     gapFactor: {lower: 0.2, upper: 0.6},
     radiusFactor: {lower: 0.1, upper: 0.2},
     scaleFactor: 1.2,
@@ -45,7 +45,7 @@ export const generate = () => {
         layerOpacity: config.layerOpacity,
         height: finalImageSize.height,
         width: finalImageSize.width,
-        sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
         gapFactor: randomNumber(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: randomNumber(config.radiusFactor.lower, config.radiusFactor.upper),
         scaleFactor: config.scaleFactor,

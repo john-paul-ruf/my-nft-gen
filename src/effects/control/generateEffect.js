@@ -45,7 +45,12 @@ const primaryEffects = [
     animateBackgroundEffect,
 
     fuzzBandsEffect,
+
     lensFlareEffect,
+
+    encircledSpiralEffect,
+
+    nthRingsEffect,
 
     blinkOnEffect,
 
@@ -62,9 +67,8 @@ const primaryEffects = [
     rayRingEffect,
 
     wireframeSpiralEffect,
-    encircledSpiralEffect,
 
-    nthRingsEffect,
+
     eightEffect,
     fuzzyRippleEffect,
 

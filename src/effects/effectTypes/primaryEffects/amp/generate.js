@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive} from "../../../../core/math/random.js";
+import {GetRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {ampEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.5,
-    sparsityFactor: {lower: 4, upper: 4},
+    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
     stroke: 1,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
@@ -20,7 +20,7 @@ export const generate = () => {
     const data = {
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
-        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
         height: finalImageSize.height,
         width: finalImageSize.width,
         stroke: config.stroke,

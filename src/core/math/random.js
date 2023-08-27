@@ -9,6 +9,11 @@ export const getRandomIntInclusive = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+//inspired
+export const GetRandomFromArray = (array) => {
+    return array[getRandomIntExclusive(0, array.length)];
+}
+
 //Same
 export const randomNumber = (min, max) => {
     return Math.random() * (max - min) + min;

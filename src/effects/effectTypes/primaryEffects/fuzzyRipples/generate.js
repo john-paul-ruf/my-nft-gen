@@ -5,10 +5,10 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
-    underLayerOpacity: 0.5,
+    layerOpacity: 0.4,
+    underLayerOpacity: 0.35,
     stroke: 2,
-    thickness: 2,
+    thickness: 0,
     largeRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.15},
     smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.075},
     largeNumberOfRings: {lower: 15, upper: 15},

@@ -8,7 +8,7 @@ const config = {
     thickness: 1,
     stroke: 0,
 
-    layerOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.7, upper: 0.8}},
+    layerOpacityRange: {bottom: {lower: 0.7, upper: 0.75}, top: {lower: 0.85, upper: 0.9}},
     layerOpacityTimes: {lower: 2, upper: 4},
 
     indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},

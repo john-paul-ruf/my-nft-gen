@@ -5,7 +5,7 @@ import {gatesEffect} from "./effect.js";
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.5,
-    gates: {lower: 8, upper: 12},
+    gates: {lower: 1, upper: 3},
     numberOfSides: {lower: 4, upper: 4},
     thickness: 12,
     stroke: 0,
