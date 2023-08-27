@@ -8,18 +8,19 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.4,
     underLayerOpacity: 0.3,
-    numberOfRings: {lower: 2, upper: 4},
-    radiusRange: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.longestSide * 0.45},
+    numberOfRings: {lower: 3, upper: 6},
+    radiusRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.4},
     stroke: 0,
     thickness: 2,
     ringStroke: 0,
     ringThickness: 2,
-    sparsityFactor: [3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36],
-    numberOfSegments: {lower: 5, upper: 15},
+    sparsityFactor: [12, 15, 18, 20, 24, 30, 36],
+    startSegment: 8,
+    numberOfSegments: {lower: 12, upper: 24},
     speed: {lower: 3, upper: 12},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    featherTimes: {lower: 0, upper: 0},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 6}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    featherTimes: {lower: 2, upper: 6},
 }
 
 const getRingArray = (num) => {
@@ -55,6 +56,7 @@ const getRingArray = (num) => {
 export const generate = () => {
     const data = {
         numberOfRings: getRandomIntInclusive(config.numberOfRings.lower, config.numberOfRings.upper),
+        startSegment: config.startSegment,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,

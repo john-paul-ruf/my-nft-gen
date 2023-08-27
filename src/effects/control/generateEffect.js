@@ -41,14 +41,17 @@ import {singleLayerGlitchFractalEffect} from "../effectTypes/secondaryEffects/si
 import {singleLayerBlurEffect} from "../effectTypes/secondaryEffects/single-layer-blur/effect.js";
 import {porousEffect} from "../effectTypes/primaryEffects/porous/effect.js";
 
-const primaryEffects = [
-    animateBackgroundEffect,
+const primaryEffects = [animateBackgroundEffect,
 
     fuzzBandsEffect,
 
     lensFlareEffect,
 
     encircledSpiralEffect,
+
+    wireframeSpiralEffect,
+
+    fuzzBandsEffect,
 
     nthRingsEffect,
 
@@ -59,18 +62,13 @@ const primaryEffects = [
 
     scopesEffect,
 
-    layeredHexEffect,
-    layeredRingsEffect,
+    layeredHexEffect, layeredRingsEffect,
 
 
-    invertedRayRingEffect,
-    rayRingEffect,
-
-    wireframeSpiralEffect,
+    invertedRayRingEffect, rayRingEffect,
 
 
-    eightEffect,
-    fuzzyRippleEffect,
+    eightEffect, fuzzyRippleEffect,
 
     gatesEffect,
 
@@ -81,13 +79,10 @@ const primaryEffects = [
 
     threeDimensionalShapeEffect,
 
-    animatedImageOverlayEffect,
-    mappedFramesEffect,
-    threeDimensionalRingsEffect,
+    animatedImageOverlayEffect, mappedFramesEffect, threeDimensionalRingsEffect,
 
 
-    imageOverlayEffect,
-    porousEffect,
+    imageOverlayEffect, porousEffect,
 
     verticalScanLinesEffect,
 
@@ -95,22 +90,9 @@ const primaryEffects = [
 ];
 
 //Possible effect to apply to the main effects found in the possibleEffects array found above
-const secondaryEffects = [
-    randomizeEffect,
-    glowEffect,
-    fadeEffect,
-    singleLayerBlurEffect,
-    singleLayerGlitchFractalEffect,
-    singleLayerGlitchDrumrollHorizontalWaveEffect,
-];
+const secondaryEffects = [randomizeEffect, glowEffect, fadeEffect, singleLayerBlurEffect, singleLayerGlitchFractalEffect, singleLayerGlitchDrumrollHorizontalWaveEffect,];
 
-const finalImageEffects = [
-    blurEffect,
-    pixelateEffect,
-    glitchInverseEffect,
-    glitchFractalEffect,
-    glitchDrumrollHorizontalWaveEffect,
-]
+const finalImageEffects = [blurEffect, pixelateEffect, glitchInverseEffect, glitchFractalEffect, glitchDrumrollHorizontalWaveEffect,]
 
 const generateEffects = (possibleEffectList) => {
     const effectList = [];
