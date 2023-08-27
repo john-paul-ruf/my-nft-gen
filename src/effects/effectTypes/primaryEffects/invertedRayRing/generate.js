@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {GetRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {invertedRayRingEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -20,7 +20,7 @@ const config = {
     featherTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}},//when spin, length must be at 0 or glitches the loop
     lengthTimes: {lower: 4, upper: 8},
-    sparsityFactor: {lower: 4, upper: 8},
+    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
     speed: {lower: 0, upper: 0},
 }
 
@@ -51,7 +51,7 @@ const computeInitialInfo = (num) => {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
             },
-            sparsityFactor: randomNumber(config.sparsityFactor.lower, config.sparsityFactor.upper) * (config.densityFactor / (i + 1)),
+            sparsityFactor: GetRandomFromArray(config.sparsityFactor) * (config.densityFactor / (i + 1)),
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         });
     }

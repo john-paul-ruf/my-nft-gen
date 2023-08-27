@@ -1,21 +1,22 @@
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {GetRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.25,
-    underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.6, upper: 0.8}},
+    layerOpacity: 0.4,
+    underLayerOpacityRange: {bottom: {lower: 0.2, upper: 0.25}, top: {lower: 0.3, upper: 0.35}},
     underLayerOpacityTimes: {lower: 1, upper: 6},
     startTwistCount: {lower: 1, upper: 1},
-    stroke: 3,
+    stroke: 0,
     thickness: 1,
-    sparsityFactor: {lower: 4, upper: 8},
+    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
     speed: {lower: 1, upper: 8},
     counterClockwise: {lower: 0, upper: 1},
-    unitLength: {lower: 10, upper: 10},
-    unitLengthChangeConstant: 0,
+    unitLength: {lower: 1, upper: 3},
+    unitLengthChangeConstant: 5,
     radiusConstant: 50,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 5}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 1, upper: 4},
 }
 
@@ -36,8 +37,8 @@ export const generate = () => {
         thickness: config.thickness,
         unitLength: getRandomIntInclusive(config.unitLength.lower, config.unitLength.upper),
         unitLengthChangeConstant: config.unitLengthChangeConstant,
-        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
-        innerColor: getNeutralFromBucket(),
+        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
+        innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
         center: {x: finalImageSize.width * 2 / 2, y: finalImageSize.height * 2 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
@@ -46,6 +47,10 @@ export const generate = () => {
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
             upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+        },
+        blurRange: {
+            lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+            upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
         },
         featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         getInfo: () => {

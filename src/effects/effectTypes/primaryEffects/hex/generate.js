@@ -1,11 +1,16 @@
-import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {
+    GetRandomFromArray,
+    getRandomIntExclusive,
+    getRandomIntInclusive,
+    randomNumber
+} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {hexEffect} from "./effect.js";
 
 const config = {
     layerOpacity: 0.25,
     underLayerOpacity: 0.2,
-    sparsityFactor: {lower: 36, upper: 36},
+    sparsityFactor: [12, 15, 18, 20, 24, 30, 36],
     gapFactor: {lower: 8, upper: 12},
     radiusFactor: {lower: 8, upper: 12},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0.25, upper: 0.5}},
@@ -15,8 +20,8 @@ const config = {
     thickness: 3,
     scaleFactor: 0.8,
     numberOfHex: 12,
-    strategy: [/*'static', 'angle',*/ 'rotate'],
-    overlayStrategy: ['flat'/*, 'overlay'*/],
+    strategy: ['static', 'angle', 'rotate'],
+    overlayStrategy: ['flat', 'overlay'],
 }
 
 
@@ -35,7 +40,7 @@ export const generate = () => {
         thickness: config.thickness,
         innerColor: '#00000000',
         scaleFactor: config.scaleFactor,
-        sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
+        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
         accentRange: {

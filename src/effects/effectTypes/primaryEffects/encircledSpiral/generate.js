@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {getRandomIntInclusive} from "../../../../core/math/random.js";
+import {GetRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {encircledSpiralEffect} from "./effect.js";
 
 
@@ -14,9 +14,9 @@ const config = {
     thickness: 2,
     ringStroke: 0,
     ringThickness: 2,
-    sparsityFactor: {lower: 24, upper: 24},
-    numberOfSegments: {lower: 7, upper: 14},
-    speed: {lower: 1, upper: 12},
+    sparsityFactor: [3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36],
+    numberOfSegments: {lower: 5, upper: 15},
+    speed: {lower: 3, upper: 12},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     featherTimes: {lower: 0, upper: 0},
@@ -34,7 +34,7 @@ const getRingArray = (num) => {
             ringStroke: config.ringStroke,
             ringThickness: config.ringThickness,
             numberOfSegments: getRandomIntInclusive(config.numberOfSegments.lower, config.numberOfSegments.upper),
-            sparsityFactor: getRandomIntInclusive(config.sparsityFactor.lower, config.sparsityFactor.upper),
+            sparsityFactor: GetRandomFromArray(config.sparsityFactor),
             innerColor: getColorFromBucket(),
             outerColor: getColorFromBucket(),
             accentRange: {
