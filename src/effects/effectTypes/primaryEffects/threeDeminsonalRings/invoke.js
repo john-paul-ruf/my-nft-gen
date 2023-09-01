@@ -10,6 +10,9 @@ import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 const draw = async (context, filename) => {
     const finalImageSize = getFinalImageSize();
 
+    const center = new THREE.Object3D();
+    center.position.set(0, 0, 0);
+
     const width = finalImageSize.width, height = finalImageSize.height;
 
     const scene = new THREE.Scene();
@@ -54,17 +57,21 @@ const draw = async (context, filename) => {
     }
 
     camera.position.z = 400;
+    camera.lookAt(0, 0, 0);
 
-    const light1 = new THREE.SpotLight(hexToRgba(context.data.light1), 10, 300);
-    light1.position.set(25, 25, 250);
+    const light1 = new THREE.SpotLight(hexToRgba(context.data.light1), 50, 600);
+    light1.position.set(0, 0, 250);
+    light1.target = center;
     scene.add(light1);
 
-    const light2 = new THREE.SpotLight(hexToRgba(context.data.light2), 10, 300);
-    light2.position.set(-25, 25, 250);
+    const light2 = new THREE.SpotLight(hexToRgba(context.data.light2), 50, 600);
+    light2.position.set(0, 0, 250);
+    light2.target = center;
     scene.add(light2);
 
-    const light3 = new THREE.SpotLight(hexToRgba(context.data.light2), 10, 300);
-    light3.position.set(0, -25, 250);
+    const light3 = new THREE.SpotLight(hexToRgba(context.data.light2), 50, 600);
+    light3.position.set(0, 0, 250);
+    light3.target = center;
     scene.add(light3);
 
 

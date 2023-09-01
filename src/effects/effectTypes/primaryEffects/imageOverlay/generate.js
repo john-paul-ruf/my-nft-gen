@@ -2,18 +2,20 @@ import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import {imageOverlayEffect} from "./effect.js";
 import fs from "fs";
-import {getRandomIntExclusive} from "../../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntExclusive} from "../../../../core/math/random.js";
 
 const config = {
     folderName: '/imageOverlay/',
-    layerOpacity: 0.8,
+    layerOpacity: [0.4, 0.6, 0.8],
+    buffer: [250, 350, 500]
 }
 
 export const generate = () => {
     const data = {
-        layerOpacity: config.layerOpacity,
+        layerOpacity: getRandomFromArray(config.layerOpacity),
+        buffer: getRandomFromArray(config.buffer),
         getInfo: () => {
-            return `${imageOverlayEffect.name}, ${data.filename}`
+            return `${imageOverlayEffect.name} ${data.filename} buffer: ${data.buffer}`;
         }
     }
 

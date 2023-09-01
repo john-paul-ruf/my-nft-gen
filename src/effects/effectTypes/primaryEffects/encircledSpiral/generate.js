@@ -1,5 +1,5 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {GetRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {encircledSpiralEffect} from "./effect.js";
 
 
@@ -7,16 +7,17 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 0.4,
-    underLayerOpacity: 0.3,
-    numberOfRings: {lower: 2, upper: 4},
-    radiusRange: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.longestSide * 0.45},
+    underLayerOpacity: 1,
+    numberOfRings: {lower: 2, upper: 5},
+    radiusRange: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.longestSide * 0.45},
     stroke: 0,
-    thickness: 2,
+    thickness: 1,
     ringStroke: 0,
-    ringThickness: 2,
-    sparsityFactor: [3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36],
-    numberOfSegments: {lower: 5, upper: 15},
-    speed: {lower: 3, upper: 12},
+    ringThickness: 1,
+    sparsityFactor: [/*12, 15, 18,*/ 20, 24, 30, 36],
+    startSegment: 8,
+    numberOfSegments: [/*6, 8, */12, 16, 22],
+    speed: {lower: 2, upper: 6},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     featherTimes: {lower: 0, upper: 0},
@@ -33,10 +34,10 @@ const getRingArray = (num) => {
             thickness: config.thickness,
             ringStroke: config.ringStroke,
             ringThickness: config.ringThickness,
-            numberOfSegments: getRandomIntInclusive(config.numberOfSegments.lower, config.numberOfSegments.upper),
-            sparsityFactor: GetRandomFromArray(config.sparsityFactor),
+            numberOfSegments: getRandomFromArray(config.numberOfSegments),
+            sparsityFactor: getRandomFromArray(config.sparsityFactor),
             innerColor: getColorFromBucket(),
-            outerColor: getColorFromBucket(),
+            outerColor: getNeutralFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
@@ -55,6 +56,7 @@ const getRingArray = (num) => {
 export const generate = () => {
     const data = {
         numberOfRings: getRandomIntInclusive(config.numberOfRings.lower, config.numberOfRings.upper),
+        startSegment: config.startSegment,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,

@@ -13,7 +13,7 @@ const drawLine = async (angle, loopControl, context, flipTwist, thickness, color
     const start = findPointByAngleAndCircle(context.data.center, angle, loopControl.n2 + context.data.radiusConstant)
     const end = findPointByAngleAndCircle(context.data.center, angle + (loopControl.twistCount * flipTwist * context.data.sparsityFactor), loopControl.nextTerm + context.data.radiusConstant);
 
-    await context.canvas.drawLine2d(start, end, thickness + context.theAccentGaston, color, thickness, color);
+    await context.canvas.drawLine2d(start, end, thickness, color, thickness, color);
 }
 
 async function spiral(context, thickness, color) {
@@ -27,7 +27,7 @@ async function spiral(context, thickness, color) {
         nextTerm: unitLength + unitLength
     }
 
-    while (loopControl.nextTerm <= context.data.height) {
+    while (loopControl.nextTerm <= context.data.drawHeight) {
 
         for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
             await drawLine(i, loopControl, context, 1, thickness, color)
@@ -42,12 +42,16 @@ async function spiral(context, thickness, color) {
     }
 }
 
-const draw = async (context, filename) => {
-    await spiral(context, context.data.thickness + context.data.stroke, context.data.outerColor);
-    await spiral(context, context.data.thickness, context.data.innerColor);
-
+const drawUnderlay = async (context, filename) => {
+    await spiral(context, context.data.thickness + context.data.stroke + context.theAccentGaston, context.data.outerColor);
     await context.canvas.toFile(filename)
 }
+
+const draw = async (context, filename) => {
+    await spiral(context, context.data.thickness, context.data.innerColor);
+    await context.canvas.toFile(filename)
+}
+
 
 export const compositeImage = async (context, layer) => {
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
@@ -63,9 +67,9 @@ export const compositeImage = async (context, layer) => {
 
 }
 
-export const processDrawFunction = async (draw, context) => {
+export const processDrawFunction = async (context) => {
 
-    await draw(context, context.underlayName);
+    await drawUnderlay(context, context.underlayName);
 
     context.theAccentGaston = 0;
     context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
@@ -88,7 +92,7 @@ export const wireframeSpiral = async (layer, data, currentFrame, numberOfFrames)
         data: data,
     }
 
-    await processDrawFunction(draw, context);
+    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.underlayName);

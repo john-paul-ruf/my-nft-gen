@@ -11,7 +11,7 @@ const config = {
     stroke: 0,
     thickness: 4,
     smallRadius: {lower: finalImageSize.longestSide * 0.10, upper: finalImageSize.longestSide * 0.15},
-    smallNumberOfRings: {lower: 3, upper: 6},
+    smallNumberOfRings: {lower: 6, upper: 12},
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.45, upper: finalImageSize.shortestSide * 0.55},

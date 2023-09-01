@@ -10,7 +10,7 @@ export const getRandomIntInclusive = (min, max) => {
 }
 
 //inspired
-export const GetRandomFromArray = (array) => {
+export const getRandomFromArray = (array) => {
     return array[getRandomIntExclusive(0, array.length)];
 }
 

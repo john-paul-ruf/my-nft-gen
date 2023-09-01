@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {fuzzBandsEffect} from "./effect.js";
 
@@ -6,7 +6,8 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    underLayerOpacity: 0.35,
+    underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.6, upper: 0.7}},
+    underLayerOpacityTimes: {lower: 3, upper: 6},
     circles: {lower: 4, upper: 8},
     stroke: 0,
     thickness: 12,
@@ -32,6 +33,11 @@ const computeInitialInfo = (num) => {
                 upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
             },
             featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
+            underLayerOpacityRange: {
+                lower: randomNumber(config.underLayerOpacityRange.bottom.lower, config.underLayerOpacityRange.bottom.upper),
+                upper: randomNumber(config.underLayerOpacityRange.top.lower, config.underLayerOpacityRange.top.upper)
+            },
+            underLayerOpacityTimes: getRandomIntInclusive(config.underLayerOpacityTimes.lower, config.underLayerOpacityTimes.upper),
         });
     }
     return info;
@@ -40,7 +46,6 @@ const computeInitialInfo = (num) => {
 export const generate = () => {
     const data = {
         layerOpacity: config.layerOpacity,
-        underLayerOpacity: config.underLayerOpacity,
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
         height: finalImageSize.height,
         width: finalImageSize.width,

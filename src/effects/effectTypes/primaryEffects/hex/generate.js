@@ -1,5 +1,5 @@
 import {
-    GetRandomFromArray,
+    getRandomFromArray,
     getRandomIntExclusive,
     getRandomIntInclusive,
     randomNumber
@@ -10,10 +10,10 @@ import {hexEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.25,
     underLayerOpacity: 0.2,
-    sparsityFactor: [12, 15, 18, 20, 24, 30, 36],
+    sparsityFactor: [/*12, 15,*/ 18, 20, 24, 30, 36],
     gapFactor: {lower: 8, upper: 12},
     radiusFactor: {lower: 8, upper: 12},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0.25, upper: 0.5}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0.75, upper: 1.5}},
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
     featherTimes: {lower: 2, upper: 4},
     stroke: 1,
@@ -40,7 +40,7 @@ export const generate = () => {
         thickness: config.thickness,
         innerColor: '#00000000',
         scaleFactor: config.scaleFactor,
-        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
+        sparsityFactor: getRandomFromArray(config.sparsityFactor),
         gapFactor: getRandomIntInclusive(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: getRandomIntInclusive(config.radiusFactor.lower, config.radiusFactor.upper),
         accentRange: {
