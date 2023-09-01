@@ -7,7 +7,7 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.75,
     sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
-    gapFactor: {lower: 0.05, upper: 0.15},
+    gapFactor: {lower: 0.2, upper: 0.4},
     radiusFactor: {lower: 0.1, upper: 0.2},
     scaleFactor: 1.2,
     alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},

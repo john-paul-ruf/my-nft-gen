@@ -6,20 +6,22 @@ import {encircledSpiralEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.4,
-    underLayerOpacity: 1,
-    numberOfRings: {lower: 2, upper: 5},
+    layerOpacity: 1,
+    underLayerOpacity: 0.3,
+    numberOfRings: {lower: 2, upper: 4},
     radiusRange: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.longestSide * 0.45},
     stroke: 0,
-    thickness: 1,
-    ringStroke: 0,
-    ringThickness: 1,
-    sparsityFactor: [/*12, 15, 18,*/ 20, 24, 30, 36],
-    startSegment: 8,
-    numberOfSegments: [/*6, 8, */12, 16, 22],
+    thickness: 4,
+    /*
+    ringStroke: 0, the ring draws with the wrong weight - instead of fixing decided that the ring is NOT pretty - commented out in invoke function
+    ringThickness: 4,
+    */
+    sparsityFactor: [30, 36, 40, 45, 60],
+    startSegment: 4,
+    numberOfSegments: [10, 12, 14, 16, 18],
     speed: {lower: 2, upper: 6},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    accentRange: {bottom: {lower: 2, upper: 8}, top: {lower: 15, upper: 32}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 0, upper: 0},
 }
 
@@ -36,8 +38,8 @@ const getRingArray = (num) => {
             ringThickness: config.ringThickness,
             numberOfSegments: getRandomFromArray(config.numberOfSegments),
             sparsityFactor: getRandomFromArray(config.sparsityFactor),
-            innerColor: getColorFromBucket(),
-            outerColor: getNeutralFromBucket(),
+            innerColor: getNeutralFromBucket(),
+            outerColor: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)

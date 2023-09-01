@@ -32,7 +32,8 @@ async function spiral(context, index, thickness, color) {
 
     const unitLength = context.data.ringArray[index].radius / await findSegmentCount(context.data.ringArray[index].numberOfSegments);
 
-    await context.canvas.drawRing2d(context.data.center, context.data.ringArray[index].radius, context.data.ringArray[index].ringThickness, context.data.ringArray[index].innerColor, context.data.ringArray[index].ringStroke, context.data.ringArray[index].outerColor);
+    //I think I want to remove this
+    //await context.canvas.drawRing2d(context.data.center, context.data.ringArray[index].radius, context.data.ringArray[index].ringThickness, context.data.ringArray[index].innerColor, context.data.ringArray[index].ringStroke, context.data.ringArray[index].outerColor);
 
     for (let seg = context.data.startSegment; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
         for (let i = 0; i < 360; i = i + context.data.ringArray[index].sparsityFactor) {
