@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {GetRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {scopesEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -7,13 +7,13 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.75,
     sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
-    gapFactor: {lower: 0.2, upper: 0.6},
+    gapFactor: {lower: 0.05, upper: 0.15},
     radiusFactor: {lower: 0.1, upper: 0.2},
     scaleFactor: 1.2,
-    alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.8, upper: 1}},
+    alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
     alphaTimes: {lower: 2, upper: 8},
     rotationTimes: {lower: 0, upper: 0},
-    numberOfScopesInALine: 30,
+    numberOfScopesInALine: 40,
 }
 
 function getHexLine(sparsityFactor, info, i) {
@@ -45,7 +45,7 @@ export const generate = () => {
         layerOpacity: config.layerOpacity,
         height: finalImageSize.height,
         width: finalImageSize.width,
-        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
+        sparsityFactor: getRandomFromArray(config.sparsityFactor),
         gapFactor: randomNumber(config.gapFactor.lower, config.gapFactor.upper),
         radiusFactor: randomNumber(config.radiusFactor.lower, config.radiusFactor.upper),
         scaleFactor: config.scaleFactor,

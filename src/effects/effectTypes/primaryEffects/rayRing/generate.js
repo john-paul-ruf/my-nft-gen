@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {GetRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {rayRingEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -51,7 +51,7 @@ const computeInitialInfo = (num) => {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
             },
-            sparsityFactor: GetRandomFromArray(config.sparsityFactor) * (config.densityFactor / (i + 1)),
+            sparsityFactor: getRandomFromArray(config.sparsityFactor) * (config.densityFactor / (i + 1)),
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         });
     }

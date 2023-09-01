@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {GetRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {wireframeSpiralEffect} from "./effect.js";
 
 const config = {
@@ -8,14 +8,14 @@ const config = {
     underLayerOpacityTimes: {lower: 1, upper: 6},
     startTwistCount: {lower: 1, upper: 1},
     stroke: 0,
-    thickness: 4,
-    sparsityFactor: [3, 4, 5, 6, 8, 9, 10],
-    speed: {lower: 1, upper: 8},
+    thickness: [1],
+    sparsityFactor: [6, 8, 9, 10],
+    speed: {lower: 4, upper: 8},
     counterClockwise: {lower: 0, upper: 1},
     unitLength: {lower: 2, upper: 6},
-    unitLengthChangeConstant: 4,
-    radiusConstant: 125,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 5}},
+    unitLengthChangeConstant: [2, 4, 8],
+    radiusConstant: [50, 75, 150],
+    accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 1, upper: 4},
 }
@@ -35,16 +35,16 @@ export const generate = () => {
         height: finalImageSize.height * 2,
         width: finalImageSize.width * 2,
         stroke: config.stroke,
-        thickness: config.thickness,
+        thickness: getRandomFromArray(config.thickness),
         unitLength: getRandomIntInclusive(config.unitLength.lower, config.unitLength.upper),
-        unitLengthChangeConstant: config.unitLengthChangeConstant,
-        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
+        unitLengthChangeConstant: getRandomFromArray(config.unitLengthChangeConstant),
+        sparsityFactor: getRandomFromArray(config.sparsityFactor),
         innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
         center: {x: finalImageSize.width * 2 / 2, y: finalImageSize.height * 2 / 2},
         speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
         counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
-        radiusConstant: config.radiusConstant,
+        radiusConstant: getRandomFromArray(config.radiusConstant),
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
             upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)

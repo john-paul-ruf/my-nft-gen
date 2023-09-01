@@ -40,12 +40,13 @@ class globalSettings {
 
         //for three-dimensional lighting
         this.lights = [
-            '#44ee44',
-            '#ee4444',
-            '#4444ee',
-            '#ee44ee',
-            '#eeee44',
-            '#44eeee',]
+            '#FFFF00',
+            '#FF00FF',
+            '#00FFFF',
+            '#FF0000',
+            '#00FF00',
+            '#0000FF',
+        ]
     }
 }
 

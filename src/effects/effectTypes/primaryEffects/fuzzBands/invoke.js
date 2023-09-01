@@ -36,7 +36,9 @@ const createThoseFuzzyBands = async (context) => {
         const theBlurGaston = Math.ceil(findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame));
         await underlayLayer.blur(theBlurGaston);
 
-        await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+        const theUnderLayerOpacityGaston = findValue(context.data.circles[i].underLayerOpacityRange.lower, context.data.circles[i].underLayerOpacityRange.upper, context.data.circles[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
+
+        await underlayLayer.adjustLayerOpacity(theUnderLayerOpacityGaston);
 
         await compositeLayer.compositeLayerOver(underlayLayer);
         await compositeLayer.toFile(context.names.compositeNames[i]);

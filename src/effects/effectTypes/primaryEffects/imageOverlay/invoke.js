@@ -5,6 +5,6 @@ export const imageOverlay = async (layer, data) => {
     let tempLayer = await LayerFactory.getLayerFromFile(data.imageOverlay);
     const finalSize = getFinalImageSize();
     await tempLayer.adjustLayerOpacity(data.layerOpacity);
-    await tempLayer.resize(finalSize.height - 250, finalSize.width - 250);
+    await tempLayer.resize(finalSize.height - data.buffer, finalSize.width - data.buffer);
     await layer.compositeLayerOver(tempLayer)
 }

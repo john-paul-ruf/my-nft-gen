@@ -1,5 +1,5 @@
 import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
-import {GetRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {viewportEffect} from "./effect.js";
 
 
@@ -10,10 +10,10 @@ const config = {
     thickness: 12,
     ampStroke: 1,
     ampThickness: 0,
-    radius: {lower: 150, upper: 200},
-    ampLength: {lower: 125, upper: 175},
+    radius: {lower: 250, upper: 350},
+    ampLength: {lower: 175, upper: 275},
     ampRadius: {lower: 25, upper: 50},
-    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
+    sparsityFactor: [/*1, 2, */3, 4, 5, 6, /*8, 9, 10*/],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
@@ -38,7 +38,7 @@ export const generate = () => {
         ampThickness: config.ampThickness,
         ampLength: getRandomIntInclusive(config.ampLength.lower, config.ampLength.upper),
         ampRadius: getRandomIntInclusive(config.ampRadius.lower, config.ampRadius.upper),
-        sparsityFactor: GetRandomFromArray(config.sparsityFactor),
+        sparsityFactor: getRandomFromArray(config.sparsityFactor),
         amplitude: randomNumber(config.amplitude.lower, config.amplitude.upper),
         times: getRandomIntInclusive(config.times.lower, config.times.upper),
         color: getColorFromBucket(),

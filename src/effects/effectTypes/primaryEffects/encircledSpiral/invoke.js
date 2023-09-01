@@ -55,9 +55,7 @@ const draw = async (context, filename) => {
         await bottomLayer.blur(theBlurGaston);
         await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
         await context.layer.compositeLayerOver(bottomLayer);
-    }
 
-    for (let i = 0; i < context.data.ringArray.length; i++) {
         //top Layer
         context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
         await spiral(context, i, context.data.ringArray[i].thickness, context.data.ringArray[i].innerColor);
