@@ -4,7 +4,7 @@ export class animationConfiguration {
     constructor() {
         //For compose info
         this._INVOKER_ = 'John Ruf';
-        this.runName = 'birthday-wishes'
+        this.runName = 'drifting'
 
         //For testing, render every x frame.
         this.frameInc = 1;
