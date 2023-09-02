@@ -12,7 +12,7 @@ const config = {
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
-    featherTimes: {lower: 2, upper: 4},
+    featherTimes: {lower: 2, upper: 6},
     speed: {lower: 24, upper: 36},
 }
 
