@@ -1,7 +1,26 @@
-import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "./math/random.js";
+/*
+import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../math/random.js";
 import palette from "google-palette";
 import ColorScheme from "color-scheme";
 import fs from "fs";
+
+--------------------------------
+Was I a good class?
+           ______
+        .-"      "-.
+       /            \
+      |              |
+      |,  .-.  .-.  ,|
+      | )(__/  \__)( |
+      |/     /\     \|
+      (_     ^^     _)
+       \__|IIIIII|__/
+        | \IIIIII/ |
+        \          /
+         `--------`
+
+No.  You were the best class...
+--------------------------------
 
 //Loading json for if we pick the nice-colors-palettes strategy
 let niceColors = JSON.parse(fs.readFileSync('src/data/nice-colors.json').toString())
@@ -187,3 +206,4 @@ export class RandomColorScheme {
     }
 
 }
+*/
