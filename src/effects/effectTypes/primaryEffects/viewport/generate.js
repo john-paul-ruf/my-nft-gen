@@ -6,10 +6,10 @@ import {viewportEffect} from "./effect.js";
 const config = {
     layerOpacity: 0.5,
     underLayerOpacity: 0.25,
-    stroke: 8,
+    stroke: 4,
     thickness: 24,
     ampStroke: 1,
-    ampThickness: 0,
+    ampThickness: 3,
     radius: [300, 325, 350, 375],
     startAngle: [210, 270],
     ampLength: [/*50, 100, */150, 175, 200],
@@ -17,8 +17,8 @@ const config = {
     sparsityFactor: [/*1, 2, */3, 4, 5, 6, /*8, 9, 10*/],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 7, upper: 14}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
     featherTimes: {lower: 2, upper: 4},
 }
 

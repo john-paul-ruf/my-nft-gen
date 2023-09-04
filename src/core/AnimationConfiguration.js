@@ -1,4 +1,4 @@
-import {randomId} from "./math/random.js";
+import {getRandomFromArray, randomId} from "./math/random.js";
 
 export class animationConfiguration {
     constructor() {
@@ -10,7 +10,7 @@ export class animationConfiguration {
         this.frameInc = 1;
 
         //Number of frames in the final output
-        this.numberOfFrame = 1800;
+        this.numberOfFrame = getRandomFromArray([1800 * 2, 1800 * 3]);
 
         this.finalFileName = 'remix-sku' + randomId();
         this.fileOut = '/Users/jpr/Library/CloudStorage/OneDrive-Personal/_ZEN_/my-nft-output/' + this.finalFileName;
