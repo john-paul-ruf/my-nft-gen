@@ -12,14 +12,14 @@ const config = {
     ampThickness: 0,
     radius: [300, 325, 350, 375],
     startAngle: [210, 270],
-    ampLength: [/*50, 100, */150, 175, 200, 250],
+    ampLength: [/*50, 100, */150, 175, 200],
     ampRadius: [75, 125, 150],
     sparsityFactor: [/*1, 2, */3, 4, 5, 6, /*8, 9, 10*/],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 7, upper: 14}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
-    featherTimes: {lower: 2, upper: 6},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {
