@@ -17,6 +17,7 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
+                            '#FFFFFF',
                             '#FFFF00',
                             '#FF00FF',
                             '#00FFFF',
@@ -33,6 +34,7 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
+                            '#FFFFFF',
                             '#FFFF00',
                             '#FF00FF',
                             '#FF0000',
@@ -46,6 +48,7 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
+                            '#FFFFFF',
                             '#FF00FF',
                             '#00FFFF',
                             '#0000FF',
@@ -59,6 +62,7 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
+                            '#FFFFFF',
                             '#FFFF00',
                             '#00FFFF',
                             '#00FF00',

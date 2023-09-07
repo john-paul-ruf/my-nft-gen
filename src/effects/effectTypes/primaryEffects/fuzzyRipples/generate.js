@@ -8,7 +8,7 @@ const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.35,
     stroke: 0,
-    thickness: 6,
+    thickness: 12,
     largeRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.15},
     smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.075},
     largeNumberOfRings: {lower: 3, upper: 6},
@@ -16,7 +16,7 @@ const config = {
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.25},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 5, upper: 10}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 2, upper: 4},
 }
