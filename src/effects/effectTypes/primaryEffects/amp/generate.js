@@ -5,10 +5,10 @@ import {ampEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
-    underLayerOpacity: 0.5,
-    sparsityFactor: [2, 3, 4],
-    stroke: 1,
+    layerOpacity: .4,
+    underLayerOpacity: 0.3,
+    sparsityFactor: [2, 3, 4, 5, 6, 8, 9, 10, 12],
+    stroke: 0,
     thickness: 1,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
