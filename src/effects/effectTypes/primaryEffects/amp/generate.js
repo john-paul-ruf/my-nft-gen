@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {ampEffect} from "./effect.js";
 
@@ -7,11 +7,11 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: .4,
     underLayerOpacity: 0.3,
-    sparsityFactor: [2, 3, 4, 5, 6, 8, 9, 10, 12],
+    sparsityFactor: [2, 3, 4, 5,],
     stroke: 0,
     thickness: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 2}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
     featherTimes: {lower: 2, upper: 6},
     speed: {lower: 24, upper: 36},
 }
@@ -25,10 +25,10 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
-        length: 75,
-        lineStart: 250,
+        length: 150,
+        lineStart: 200,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
