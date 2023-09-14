@@ -11,5 +11,5 @@ export const imageOverlayEffect = {
     effect: effect,
     effectChance: 25,
     requiresLayer: true,
-    ignoreAdditionalEffects: true,
+    ignoreAdditionalEffects: false,
 }

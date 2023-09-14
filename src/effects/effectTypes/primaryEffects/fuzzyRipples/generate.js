@@ -16,9 +16,9 @@ const config = {
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.25},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 2}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 6}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
-    featherTimes: {lower: 2, upper: 6},
+    featherTimes: {lower: 2, upper: 8},
 }
 
 export const generate = () => {
