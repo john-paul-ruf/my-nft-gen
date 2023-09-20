@@ -1,5 +1,5 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
 import {fuzzyRippleEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
@@ -7,8 +7,8 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 0.4,
     underLayerOpacity: 0.3,
-    stroke: 0,
-    thickness: 1,
+    stroke: 1,
+    thickness: 4,
     largeRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.15},
     smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.075},
     largeNumberOfRings: {lower: 9, upper: 12},
@@ -29,7 +29,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
         largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
