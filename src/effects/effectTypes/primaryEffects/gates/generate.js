@@ -7,7 +7,7 @@ const config = {
     underLayerOpacity: 0.5,
     gates: {lower: 1, upper: 3},
     numberOfSides: {lower: 4, upper: 4},
-    thickness: 8,
+    thickness: 24,
     stroke: 0,
     accentRange: {bottom: {lower: 2, upper: 5}, top: {lower: 10, upper: 15}},
     blurRange: {bottom: {lower: 1, upper: 2}, top: {lower: 3, upper: 4}},

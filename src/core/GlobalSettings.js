@@ -1,7 +1,7 @@
 //Encapsulated globals are less bad...
-import {getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
-import {possibleColorSchemes, RandomColorScheme} from "./RandomColorScheme.js";
+import {getRandomFromArray, getRandomIntExclusive, getRandomIntInclusive} from "./math/random.js";
 import parseArgs from 'minimist';
+import {NeonColorScheme, NeonColorSchemeFactory} from "./color/NeonColorSchemeFactory.js";
 
 const longestSideInPixels = 1280;
 const shortestSideInPixels = 720;
@@ -17,10 +17,10 @@ const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
 
 class globalSettings {
     constructor() {
-        this.randomColorScheme = new RandomColorScheme();
 
-        //todo: random color scheme should take a list of possible color schemes and pick from the list.
-        this.randomColorScheme = new RandomColorScheme(possibleColorSchemes.neons);
+        const availableColorSchemes = [NeonColorScheme.neons, NeonColorScheme.blueNeons, NeonColorScheme.redNeons, NeonColorScheme.greenNeons];
+
+        this.colorScheme = NeonColorSchemeFactory.getColorScheme(getRandomFromArray(availableColorSchemes));
 
         this.layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
         this.canvasStrategy = 'node-canvas';
@@ -30,12 +30,12 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#000000', //trying for a glow effect with effects with accent and blur
+            '#000000',
         ];
 
         //For 2D palettes
         this.backgrounds = [
-            '#000000', //trying for a glow effect with effects with accent and blur
+            '#000000',
         ];
 
         //for three-dimensional lighting
@@ -57,7 +57,7 @@ export const resetGlobalSettings = () => {
 }
 
 export const getColorFromBucket = () => {
-    return globals.randomColorScheme.getColorFromBucket();
+    return globals.colorScheme.getColorFromBucket();
 }
 
 export const getNeutralFromBucket = () => {
@@ -73,7 +73,7 @@ export const getLightFromBucket = () => {
 }
 
 export const getColorSchemeInfo = () => {
-    return globals.randomColorScheme.getColorSchemeInfo();
+    return globals.colorScheme.getColorSchemeInfo();
 }
 
 export const getWorkingDirectory = () => {

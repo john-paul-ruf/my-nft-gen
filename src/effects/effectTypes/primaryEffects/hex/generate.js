@@ -8,8 +8,8 @@ import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSet
 import {hexEffect} from "./effect.js";
 
 const config = {
-    layerOpacity: 0.25,
-    underLayerOpacity: 0.2,
+    layerOpacity: 0.4,
+    underLayerOpacity: 0.4,
     sparsityFactor: [/*12, 15,*/ 18, 20, 24, 30, 36],
     gapFactor: {lower: 8, upper: 12},
     radiusFactor: {lower: 8, upper: 12},

@@ -7,14 +7,14 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.6, upper: 0.7}},
-    underLayerOpacityTimes: {lower: 3, upper: 6},
-    circles: {lower: 4, upper: 8},
+    underLayerOpacityTimes: {lower: 2, upper: 6},
+    circles: {lower: 4, upper: 12},
     stroke: 0,
-    thickness: 12,
+    thickness: 8,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
     accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 75}},
     blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
-    featherTimes: {lower: 2, upper: 4},
+    featherTimes: {lower: 2, upper: 6},
 }
 
 const computeInitialInfo = (num) => {

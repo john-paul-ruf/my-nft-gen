@@ -2,8 +2,8 @@ import {getWorkingDirectory} from "../../../../core/GlobalSettings.js";
 import {randomId} from "../../../../core/math/random.js";
 import {findValue} from "../../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.js";
-import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import {findPointByAngleAndCircle} from "../../../../core/math/drawingMath.js";
+import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import fs from "fs";
 
 //not hex but hey...
@@ -23,22 +23,53 @@ const drawHexArray = async (context, array) => {
 
 const drawRingArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
+
+        const tempFileName = getWorkingDirectory() + 'lens-flare-ring' + randomId() + '.png'
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
         const theRadiusGaston = findValue(array[i].size + array[i].gastonRange.lower, array[i].size + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
 
-        await context.canvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+
+        await canvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+
+        await canvas.toFile(tempFileName);
+
+        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+
+        await tempLayer.blur(theBlurGaston);
+        await tempLayer.adjustLayerOpacity(theOpacityGaston);
+        await context.layer.compositeLayerOver(tempLayer);
+
+        fs.unlinkSync(tempFileName);
     }
 }
 
 const drawRayArray = async (context, array) => {
     for (let i = 0; i < array.length; i++) {
+        const tempFileName = getWorkingDirectory() + 'lens-flare-ray' + randomId() + '.png'
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
+
         const theAngleGaston = findValue(array[i].angle + array[i].gastonRange.lower, array[i].angle + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
 
         const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
-        await context.canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+        await canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+        await canvas.toFile(tempFileName);
+
+        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+
+        await tempLayer.blur(theBlurGaston);
+        await tempLayer.adjustLayerOpacity(theOpacityGaston);
+        await context.layer.compositeLayerOver(tempLayer);
+
+        fs.unlinkSync(tempFileName);
+
     }
 }
 
@@ -46,8 +77,6 @@ const createLensFlare = async (context) => {
     await drawHexArray(context, context.data.hexArray);
     await drawRingArray(context, context.data.ringArray);
     await drawRayArray(context, context.data.rayArray);
-
-    await context.canvas.toFile(context.drawing);
 }
 
 
@@ -55,21 +84,13 @@ export const lensFlare = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
         currentFrame: currentFrame,
         numberOfFrames: numberOfFrames,
-        drawing: getWorkingDirectory() + 'lens-flare' + randomId() + '.png',
         canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
-        data: data
+        data: data,
+        layer: layer
     };
 
     await createLensFlare(context);
 
-    let drawingLayer = await LayerFactory.getLayerFromFile(context.drawing);
-
     const theOpacityGaston = findValue(data.layerOpacityRange.lower, data.layerOpacityRange.upper, data.layerOpacityTimes, numberOfFrames, currentFrame)
-    await drawingLayer.adjustLayerOpacity(theOpacityGaston);
-
-    const theBlurGaston = Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.blurTimes, numberOfFrames, currentFrame))
-    await drawingLayer.blur(theBlurGaston);
-
-    await layer.compositeLayerOver(drawingLayer);
-    fs.unlinkSync(context.drawing);
+    await layer.adjustLayerOpacity(theOpacityGaston);
 }

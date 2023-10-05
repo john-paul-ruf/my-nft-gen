@@ -2,8 +2,8 @@ import {getRandomIntInclusive} from "../../../../core/math/random.js";
 import {glowEffect} from "./effect.js";
 
 const config = {
-    lowerRange: {lower: -8, upper: -2},
-    upperRange: {lower: 2, upper: 8},
+    lowerRange: {lower: -24, upper: -12},
+    upperRange: {lower: 12, upper: 24},
     times: {lower: 2, upper: 6},
 }
 

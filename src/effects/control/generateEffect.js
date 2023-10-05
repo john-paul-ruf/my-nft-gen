@@ -43,6 +43,8 @@ import {porousEffect} from "../effectTypes/primaryEffects/porous/effect.js";
 
 const primaryEffects = [animateBackgroundEffect,
 
+    wireframeSpiralEffect,
+
     fuzzBandsEffect,
 
     encircledSpiralEffect,
@@ -66,8 +68,6 @@ const primaryEffects = [animateBackgroundEffect,
     ampEffect,
 
     viewportEffect,
-
-    wireframeSpiralEffect,
 
     threeDimensionalShapeEffect,
 

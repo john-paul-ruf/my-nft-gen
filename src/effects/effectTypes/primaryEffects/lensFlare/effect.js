@@ -6,12 +6,12 @@ export const effect = {
 }
 
 export const lensFlareEffect = {
-    name: 'lens-flare',
+    name: 'upgraded-lens-flare', //this will make it so slow...
     generateData: generate,
     effect: effect,
-    effectChance: 50,
+    effectChance: 100,
     requiresLayer: true,
-    ignoreAdditionalEffects: true,
+    ignoreAdditionalEffects: false,
 }
 
 
