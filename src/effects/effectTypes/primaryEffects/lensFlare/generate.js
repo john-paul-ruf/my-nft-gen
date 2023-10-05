@@ -9,7 +9,7 @@ const config = {
     layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
     layerOpacityTimes: {lower: 2, upper: 6},
 
-    elementOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
+    elementOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
     elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
@@ -22,17 +22,17 @@ const config = {
     angleGastonTimes: {lower: 1, upper: 6},
 
     numberOfFlareRings: {lower: 60, upper: 80},
-    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * .75},
-    flareRingStroke: {lower: 1, upper: 1},
+    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.5},
+    flareRingStroke: {lower: 1, upper: 4},
 
     numberOfFlareRays: {lower: 60, upper: 120},
-    flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * .85},
-    flareRaysStroke: {lower: 1, upper: 1},
+    flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
+    flareRaysStroke: {lower: 1, upper: 3},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurTimes: {lower: 0, upper: 0},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurTimes: {lower: 2, upper: 6},
 
     strategy: [/*'original', */'color-bucket'/*, 'neutral-bucket'*/],
 
@@ -104,6 +104,12 @@ const getFlareRingArray = (num, strategy) => {
             },
             gastonTimes: getRandomIntInclusive(config.elementGastonTimes.lower, config.elementGastonTimes.upper),
             gastonInvert: getRandomIntInclusive(0, 1) > 0,
+
+            blurRange: {
+                lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+                upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+            },
+            blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         });
     }
 
@@ -131,6 +137,12 @@ const getFlareRayArray = (num, strategy) => {
             },
             gastonTimes: getRandomIntInclusive(config.elementGastonTimes.lower, config.elementGastonTimes.upper),
             gastonInvert: getRandomIntInclusive(0, 1) > 0,
+
+            blurRange: {
+                lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+                upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+            },
+            blurTimes: getRandomIntInclusive(config.blurTimes.lower, config.blurTimes.upper),
         });
     }
 
