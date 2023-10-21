@@ -6,10 +6,10 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+    layerOpacityRange: {bottom: {lower: 0.8, upper: 0.8}, top: {lower: 0.9, upper: 0.9}},
     layerOpacityTimes: {lower: 2, upper: 6},
 
-    elementOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+    elementOpacityRange: {bottom: {lower: 0.4, upper: 0.45}, top: {lower: 0.5, upper: 0.65}},
     elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
@@ -21,13 +21,13 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 60, upper: 80},
-    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.5},
-    flareRingStroke: {lower: 1, upper: 4},
+    numberOfFlareRings: {lower: 80, upper: 120},
+    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
+    flareRingStroke: {lower: 1, upper: 1},
 
-    numberOfFlareRays: {lower: 60, upper: 120},
+    numberOfFlareRays: {lower: 200, upper: 300},
     flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
-    flareRaysStroke: {lower: 1, upper: 3},
+    flareRaysStroke: {lower: 1, upper: 1},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
