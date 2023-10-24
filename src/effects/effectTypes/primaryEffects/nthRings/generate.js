@@ -1,15 +1,15 @@
 import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {nthRings} from "./invoke.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
     totalRingCount: {lower: 12, upper: 16},
-    layerOpacity: 1,
+    layerOpacity: .4,
     underLayerOpacity: 0.3,
     stroke: 1,
-    thickness: 4,
+    thickness: 2,
     smallRadius: [finalImageSize.longestSide * 0.10, finalImageSize.longestSide * 0.15, finalImageSize.longestSide * 0.2],
     smallNumberOfRings: {lower: 9, upper: 12},
     ripple: [finalImageSize.shortestSide * 0.05, finalImageSize.shortestSide * 0.10, finalImageSize.shortestSide * 0.15, finalImageSize.shortestSide * 0.20],
@@ -29,7 +29,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
         smallRadius: getRandomFromArray(config.smallRadius),
         smallNumberOfRings: getRandomIntInclusive(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),

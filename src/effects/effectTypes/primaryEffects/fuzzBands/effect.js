@@ -9,7 +9,7 @@ export const fuzzBandsEffect = {
     name: 'fuzz-bands-mark-two',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
+    effectChance: 50,
     requiresLayer: true,
     ignoreAdditionalEffects: false,
 }

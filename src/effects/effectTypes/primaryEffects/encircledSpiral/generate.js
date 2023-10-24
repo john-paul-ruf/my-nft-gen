@@ -18,8 +18,8 @@ const config = {
     */
     sparsityFactor: [30, 36, 40, 45, 60],
     startSegment: [8, 10, 12],
-    numberOfSegments: [16, 18, 20, 24, 30, 36, 40, 45, 60],
-    speed: {lower: 2, upper: 6},
+    numberOfSegments: [16, 18, 20, 24, /*30, 36, 40, 45, 60*/],
+    speed: {lower: 4, upper: 8},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     featherTimes: {lower: 0, upper: 0},

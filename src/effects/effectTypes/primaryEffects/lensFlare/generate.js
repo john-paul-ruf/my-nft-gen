@@ -6,10 +6,10 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+    layerOpacityRange: {bottom: {lower: 0.8, upper: 0.8}, top: {lower: 0.9, upper: 0.9}},
     layerOpacityTimes: {lower: 2, upper: 6},
 
-    elementOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+    elementOpacityRange: {bottom: {lower: 0.4, upper: 0.45}, top: {lower: 0.5, upper: 0.65}},
     elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
@@ -21,17 +21,17 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 60, upper: 80},
-    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.5},
-    flareRingStroke: {lower: 1, upper: 4},
+    numberOfFlareRings: {lower: 40, upper: 80},
+    flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
+    flareRingStroke: {lower: 1, upper: 2},
 
-    numberOfFlareRays: {lower: 60, upper: 120},
+    numberOfFlareRays: {lower: 200, upper: 300},
     flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
-    flareRaysStroke: {lower: 1, upper: 3},
+    flareRaysStroke: {lower: 1, upper: 2},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
     blurTimes: {lower: 2, upper: 6},
 
     strategy: [/*'original', */'color-bucket'/*, 'neutral-bucket'*/],
@@ -130,7 +130,7 @@ const getFlareRayArray = (num, strategy) => {
                 upper: randomNumber(config.elementOpacityRange.top.lower, config.elementOpacityRange.top.upper)
             },
             opacityTimes: getRandomIntInclusive(config.elementOpacityTimes.lower, config.elementOpacityTimes.upper),
-            offset: getRandomIntInclusive(finalImageSize.width * 0.1, finalImageSize.width * 0.15,),
+            offset: getRandomIntInclusive(finalImageSize.width * 0.15, finalImageSize.width * 0.25,),
             gastonRange: {
                 lower: randomNumber(config.elementGastonRange.bottom.lower, config.elementGastonRange.bottom.upper),
                 upper: randomNumber(config.elementGastonRange.top.lower, config.elementGastonRange.top.upper)

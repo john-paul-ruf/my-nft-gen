@@ -1,23 +1,23 @@
 import {getRandomIntInclusive} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket,} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize,} from "../../../../core/GlobalSettings.js";
 import {fuzzyRippleEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 1,
+    layerOpacity: 0.4,
     underLayerOpacity: 0.3,
     stroke: 1,
-    thickness: 4,
+    thickness: 2,
     largeRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.15},
-    smallRadius: {lower: finalImageSize.longestSide * 0.05, upper: finalImageSize.longestSide * 0.075},
-    largeNumberOfRings: {lower: 9, upper: 12},
-    smallNumberOfRings: {lower: 8, upper: 14},
+    smallRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.25},
+    largeNumberOfRings: {lower: 6, upper: 10},
+    smallNumberOfRings: {lower: 6, upper: 10},
     ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
-    smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.15, upper: finalImageSize.shortestSide * 0.25},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 6}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
+    smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.2, upper: finalImageSize.shortestSide * 0.3},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 2, upper: 8},
 }
 
@@ -29,7 +29,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getNeutralFromBucket(),
+        innerColor: getColorFromBucket(),
         outerColor: getColorFromBucket(),
         largeRadius: getRandomIntInclusive(config.largeRadius.lower, config.largeRadius.upper),
         smallRadius: getRandomIntInclusive(config.smallRadius.lower, config.smallRadius.upper),
