@@ -7,9 +7,9 @@ const finalImageSize = getFinalImageSize();
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 1,
-    sparsityFactor: [1, 2, 3, 4, 5,],
+    sparsityFactor: [3, 4, 5,],
     stroke: 0,
-    thickness: 1,
+    thickness: 2,
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
     featherTimes: {lower: 2, upper: 6},
