@@ -4,8 +4,9 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
+    invertLayers: true,
     layerOpacity: 1,
-    underLayerOpacity: 1,
+    underLayerOpacity: 0.8,
     stroke: 8,
     thickness: 24,
     ampStroke: 0,
@@ -18,7 +19,7 @@ const config = {
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 3}},
+    blurRange: {bottom: {lower: 2, upper: 4}, top: {lower: 6, upper: 10}},
     featherTimes: {lower: 4, upper: 8},
 }
 
@@ -27,6 +28,7 @@ export const generate = () => {
     const finalImageSize = getFinalImageSize();
 
     const data = {
+        invertLayers: config.invertLayers,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,

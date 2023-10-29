@@ -54,6 +54,15 @@ const draw = async (context, filename) => {
 }
 
 export const compositeImage = async (context, layer) => {
+
+
+    await drawUnderlay(context, context.underlayName);
+
+    context.theAccentGaston = 0;
+    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+    await draw(context, context.drawing);
+
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
@@ -72,15 +81,6 @@ export const compositeImage = async (context, layer) => {
 
 }
 
-export const processDrawFunction = async (context) => {
-
-    await drawUnderlay(context, context.underlayName);
-
-    context.theAccentGaston = 0;
-    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-
-    await draw(context, context.drawing);
-}
 
 export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
@@ -95,7 +95,6 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         data: data,
     }
 
-    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);
