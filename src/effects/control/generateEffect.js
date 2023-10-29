@@ -59,13 +59,13 @@ const primaryEffects = [animateBackgroundEffect,
 
     ampEffect,
 
+    nthRingsEffect, eightEffect, fuzzyRippleEffect,
+
     layeredHexEffect, layeredRingsEffect,
 
     invertedRayRingEffect, rayRingEffect,
 
     gatesEffect,
-
-    nthRingsEffect, eightEffect, fuzzyRippleEffect,
 
     viewportEffect,
 
