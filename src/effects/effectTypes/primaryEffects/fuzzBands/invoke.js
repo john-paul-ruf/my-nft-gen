@@ -49,36 +49,31 @@ const createThoseFuzzyBands = async (context) => {
     //Combine top and bottom layers
     if (!context.data.invertLayers) {
         for (let i = 0; i < context.data.numberOfCircles; i++) {
-
-            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
             let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
-
-            await tempUnderlay.compositeLayerOver(tempLayer);
-            await tempUnderlay.toFile(context.names.compositeNames[i]);
-
+            await context.layer.compositeLayerOver(tempUnderlay);
             fs.unlinkSync(context.names.underlayNames[i]);
+        }
+
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
+            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+            await context.layer.compositeLayerOver(tempLayer);
             fs.unlinkSync(context.names.layerNames[i]);
         }
+
     } else {
         for (let i = 0; i < context.data.numberOfCircles; i++) {
-
             let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
-            let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
-
-            await tempLayer.compositeLayerOver(tempUnderlay);
-            await tempLayer.toFile(context.names.compositeNames[i]);
-
-            fs.unlinkSync(context.names.underlayNames[i]);
+            await context.layer.compositeLayerOver(tempLayer);
             fs.unlinkSync(context.names.layerNames[i]);
+        }
+
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
+            let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
+            await context.layer.compositeLayerOver(tempUnderlay);
+            fs.unlinkSync(context.names.underlayNames[i]);
         }
     }
 
-    //add all composites, with individual feathering, to effect layer
-    for (let i = 0; i < context.data.numberOfCircles; i++) {
-        let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
-        await context.layer.compositeLayerOver(compositeLayer);
-        fs.unlinkSync(context.names.compositeNames[i]);
-    }
 }
 
 export const fuzzBands = async (layer, data, currentFrame, numberOfFrames) => {

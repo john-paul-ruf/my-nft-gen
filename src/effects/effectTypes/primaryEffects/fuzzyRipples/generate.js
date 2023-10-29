@@ -5,7 +5,7 @@ import {fuzzyRippleEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    invertLayers: true,
+    invertLayers: false,
     layerOpacity: 1,
     underLayerOpacity: 0.8,
     stroke: 1,
@@ -18,7 +18,7 @@ const config = {
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.2, upper: finalImageSize.shortestSide * 0.3},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 2, upper: 4}},
-    blurRange: {bottom: {lower: 2, upper: 4}, top: {lower: 6, upper: 10}},
+    blurRange: {bottom: {lower: 2, upper: 3}, top: {lower: 4, upper: 6}},
     featherTimes: {lower: 2, upper: 8},
 }
 
