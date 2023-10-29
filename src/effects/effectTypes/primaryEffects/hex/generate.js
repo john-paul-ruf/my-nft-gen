@@ -10,7 +10,7 @@ import {hexEffect} from "./effect.js";
 const config = {
     layerOpacity: 1,
     underLayerOpacity: 1,
-    sparsityFactor: [/*12, 15,*/ 18, 20, 24, 30, 36],
+    sparsityFactor: [/*12, 15, 18, 20,*/ 24, 30, 36],
     gapFactor: {lower: 6, upper: 10},
     radiusFactor: {lower: 8, upper: 12},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0.75, upper: 1.5}},

@@ -5,19 +5,21 @@ import {ampEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    invertLayers: true,
     layerOpacity: 1,
-    underLayerOpacity: 1,
-    sparsityFactor: [3, 4, 5,],
+    underLayerOpacity: 0.8,
+    sparsityFactor: [6, 8, 9, 10, 12, 15,],
     stroke: 0,
-    thickness: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    thickness: 2,
+    accentRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 8}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
     featherTimes: {lower: 2, upper: 6},
     speed: {lower: 24, upper: 36},
 }
 
 export const generate = () => {
     const data = {
+        invertLayers: config.invertLayers,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         sparsityFactor: getRandomFromArray(config.sparsityFactor),
