@@ -10,7 +10,7 @@ const config = {
     gapFactor: {lower: 0.2, upper: 0.4},
     radiusFactor: {lower: 0.1, upper: 0.2},
     scaleFactor: 1.2,
-    alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+    alphaRange: {bottom: {lower: 0.8, upper: 0.85}, top: {lower: 0.95, upper: 1}},
     alphaTimes: {lower: 2, upper: 8},
     rotationTimes: {lower: 0, upper: 0},
     numberOfScopesInALine: 40,
