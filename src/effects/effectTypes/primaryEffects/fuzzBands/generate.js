@@ -5,12 +5,13 @@ import {fuzzBandsEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    invertLayers: true,
     layerOpacity: 1,
-    underLayerOpacityRange: {bottom: {lower: 0.8, upper: 0.9}, top: {lower: 1, upper: 1}},
+    underLayerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
     underLayerOpacityTimes: {lower: 2, upper: 6},
     circles: {lower: 3, upper: 6},
     stroke: 0,
-    thickness: 18,
+    thickness: 12,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
     accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
     blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
@@ -45,6 +46,7 @@ const computeInitialInfo = (num) => {
 
 export const generate = () => {
     const data = {
+        invertLayers: config.invertLayers,
         layerOpacity: config.layerOpacity,
         numberOfCircles: getRandomIntInclusive(config.circles.lower, config.circles.upper),
         height: finalImageSize.height,

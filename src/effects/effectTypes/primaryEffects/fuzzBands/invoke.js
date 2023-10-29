@@ -7,66 +7,76 @@ import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const createThoseFuzzyBands = async (context) => {
 
-    //draw with top
+    //draw with top, opacity
     for (let i = 0; i < context.data.numberOfCircles; i++) {
         let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
+        //draw
         await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, context.data.stroke, context.data.circles[i].color)
-
         await canvas.toFile(context.names.layerNames[i]);
+
+        //opacity
+        let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+        await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+
+        await tempLayer.toFile(context.names.layerNames[i]);
     }
 
-    //draw underlay, blur and composite on main layer
+    //draw underlay, blur, and opacity
     for (let i = 0; i < context.data.numberOfCircles; i++) {
 
         let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
+        //draw underlay
         const theAccentGaston = findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame);
         await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
-
         await canvas.toFile(context.names.underlayNames[i]);
 
         let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
 
-        let compositeCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-        await compositeCanvas.toFile(context.names.compositeNames[i]);
-
-        let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
-
+        //blur
         const theBlurGaston = Math.ceil(findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame));
         await underlayLayer.blur(theBlurGaston);
 
+        //opacity
         const theUnderLayerOpacityGaston = findValue(context.data.circles[i].underLayerOpacityRange.lower, context.data.circles[i].underLayerOpacityRange.upper, context.data.circles[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
-
         await underlayLayer.adjustLayerOpacity(theUnderLayerOpacityGaston);
 
-        await compositeLayer.compositeLayerOver(underlayLayer);
-        await compositeLayer.toFile(context.names.compositeNames[i]);
-
-        fs.unlinkSync(context.names.underlayNames[i]);
+        await underlayLayer.toFile(context.names.underlayNames[i]);
     }
 
-    //composite all top layers over the underlay
-    for (let i = 0; i < context.data.numberOfCircles; i++) {
 
-        let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+    //Combine top and bottom layers
+    if (!context.data.invertLayers) {
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
 
-        let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
+            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+            let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
 
-        await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+            await tempUnderlay.compositeLayerOver(tempLayer);
+            await tempUnderlay.toFile(context.names.compositeNames[i]);
 
-        await compositeLayer.compositeLayerOver(tempLayer);
-        await compositeLayer.toFile(context.names.compositeNames[i]);
+            fs.unlinkSync(context.names.underlayNames[i]);
+            fs.unlinkSync(context.names.layerNames[i]);
+        }
+    } else {
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
 
-        fs.unlinkSync(context.names.layerNames[i]);
+            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+            let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
+
+            await tempLayer.compositeLayerOver(tempUnderlay);
+            await tempLayer.toFile(context.names.compositeNames[i]);
+
+            fs.unlinkSync(context.names.underlayNames[i]);
+            fs.unlinkSync(context.names.layerNames[i]);
+        }
     }
 
     //add all composites, with individual feathering, to effect layer
     for (let i = 0; i < context.data.numberOfCircles; i++) {
         let compositeLayer = await LayerFactory.getLayerFromFile(context.names.compositeNames[i]);
-
         await context.layer.compositeLayerOver(compositeLayer);
-
         fs.unlinkSync(context.names.compositeNames[i]);
     }
 }

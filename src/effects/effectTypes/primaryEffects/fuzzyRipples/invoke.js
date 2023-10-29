@@ -62,8 +62,13 @@ export const compositeImage = async (context, layer) => {
     await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
-    await layer.compositeLayerOver(underlayLayer);
-    await layer.compositeLayerOver(tempLayer);
+    if (!context.data.invertLayers) {
+        await layer.compositeLayerOver(underlayLayer);
+        await layer.compositeLayerOver(tempLayer);
+    } else {
+        await layer.compositeLayerOver(tempLayer);
+        await layer.compositeLayerOver(underlayLayer);
+    }
 
 }
 
