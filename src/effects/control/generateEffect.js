@@ -49,6 +49,8 @@ const primaryEffects = [animateBackgroundEffect,
 
     encircledSpiralEffect,
 
+    nthRingsEffect, eightEffect, fuzzyRippleEffect,
+
     lensFlareEffect,
 
     scopesEffect,
@@ -58,8 +60,6 @@ const primaryEffects = [animateBackgroundEffect,
     hexEffect,
 
     ampEffect,
-
-    nthRingsEffect, eightEffect, fuzzyRippleEffect,
 
     layeredHexEffect, layeredRingsEffect,
 
