@@ -32,10 +32,35 @@ const drawUnderlay = async (context, filename) => {
     }
     await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor)
 
+    //inner color
+    await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
+    for (let i = 30; i <= 330; i += 60) {
+        await drawRings(
+            context,
+            findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.smallRadius,
+            context.data.smallNumberOfRings,
+            context.data.innerColor,
+            context.data.thickness);
+    }
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
+
     await context.canvas.toFile(filename);
 }
 
 const draw = async (context, filename) => {
+
+    //outer color
+    await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
+    for (let i = 30; i <= 330; i += 60) {
+        await drawRings(
+            context,
+            findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.smallRadius, context.data.smallNumberOfRings,
+            context.data.outerColor,
+            context.data.thickness + context.data.stroke + context.theAccentGaston);
+    }
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor)
 
     //inner color
     await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
