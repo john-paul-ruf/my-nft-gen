@@ -11,6 +11,6 @@ export const viewportEffect = {
     effect: effect,
     effectChance: 100,
     requiresLayer: true,
-    ignoreAdditionalEffects: false,
+    ignoreAdditionalEffects: true,
 }
 
