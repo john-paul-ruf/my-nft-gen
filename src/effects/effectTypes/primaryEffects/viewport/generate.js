@@ -18,9 +18,9 @@ const config = {
     sparsityFactor: [3, 4, 5, 6,],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
-    blurRange: {bottom: {lower: 2, upper: 4}, top: {lower: 6, upper: 10}},
-    featherTimes: {lower: 4, upper: 8},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 40, upper: 70}},
+    blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 6, upper: 9}},
+    featherTimes: {lower: 2, upper: 6},
 }
 
 export const generate = () => {

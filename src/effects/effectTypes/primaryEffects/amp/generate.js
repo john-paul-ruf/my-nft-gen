@@ -8,7 +8,7 @@ const config = {
     invertLayers: true,
     layerOpacity: 1,
     underLayerOpacity: 0.8,
-    sparsityFactor: [6, 8, 9, 10, 12, 15,],
+    sparsityFactor: [6, 8, 9],
     stroke: 0,
     thickness: 2,
     accentRange: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 8}},

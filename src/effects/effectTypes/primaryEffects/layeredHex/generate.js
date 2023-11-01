@@ -1,11 +1,11 @@
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {layeredHexEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 3,
+    thickness: 1,
     stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -34,9 +34,9 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getColorFromBucket(),
-            outline: getColorFromBucket(),
-            outlineStrokeColor: getColorFromBucket(),
+            color: getNeutralFromBucket(),
+            outline: getNeutralFromBucket(),
+            outlineStrokeColor: getNeutralFromBucket(),
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)

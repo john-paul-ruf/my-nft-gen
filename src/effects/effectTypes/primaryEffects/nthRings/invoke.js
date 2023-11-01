@@ -12,9 +12,9 @@ const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outer
     await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke, outerColor)
 }
 
-const drawRings = async (pos, color, radius, numberOfRings, context, weight) => {
+const drawRings = async (pos, radius, numberOfRings, context, weight) => {
     for (let i = 0; i < numberOfRings; i++) {
-        await drawRing(pos, radius / numberOfRings * i, weight, color, 0, color, context);
+        await drawRing(pos, radius / numberOfRings * i, weight, context.data.innerColor, 0, context.data.outerColor, context);
     }
 }
 
@@ -27,7 +27,6 @@ const draw = async (context, filename) => {
     for (let i = 0; i < 360; i += angle) {
         await drawRings(
             findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius),
-            context.data.innerColor,
             context.data.smallRadius,
             context.data.smallNumberOfRings,
             context,
@@ -47,7 +46,6 @@ const drawUnderlay = async (context, filename) => {
     for (let i = 0; i < 360; i += angle) {
         await drawRings(
             findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius),
-            context.data.outerColor,
             context.data.smallRadius,
             context.data.smallNumberOfRings,
             context,
@@ -66,8 +64,13 @@ export const compositeImage = async (context, layer) => {
     await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
-    await layer.compositeLayerOver(underlayLayer);
-    await layer.compositeLayerOver(tempLayer);
+    if (!context.data.invertLayers) {
+        await layer.compositeLayerOver(underlayLayer);
+        await layer.compositeLayerOver(tempLayer);
+    } else {
+        await layer.compositeLayerOver(tempLayer);
+        await layer.compositeLayerOver(underlayLayer);
+    }
 
 }
 
