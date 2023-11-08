@@ -31,10 +31,10 @@ const config = {
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurTimes: {lower: 2, upper: 6},
 
-    strategy: [/*'original', */'color-bucket'/*, 'neutral-bucket'*/],
+    strategy: ['original', /*'color-bucket'*//*, 'neutral-bucket'*/],
 
     flareColors: [
         '#d5fecc',

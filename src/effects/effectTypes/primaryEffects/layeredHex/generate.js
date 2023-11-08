@@ -5,13 +5,13 @@ import {layeredHexEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 1,
-    stroke: 1,
+    thickness: 2,
+    stroke: 0,
 
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 2, upper: 4},
 
-    indexOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 1}},
+    indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
     indexOpacityTimes: {lower: 2, upper: 4},
 
     radius: {lower: 10, upper: 40},
