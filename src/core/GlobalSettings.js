@@ -30,12 +30,12 @@ class globalSettings {
 
         //For 2D palettes
         this.neutrals = [
-            '#000000',
+            '#FFFFFF',
         ];
 
         //For 2D palettes
         this.backgrounds = [
-            '#FFFFFF',
+            '#000000',
         ];
 
         //for three-dimensional lighting

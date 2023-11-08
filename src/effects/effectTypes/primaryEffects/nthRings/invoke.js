@@ -9,7 +9,7 @@ import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
 const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-    await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke, outerColor)
+    await context.canvas.drawRing2d(pos, theGaston, context.data.thickness, innerColor, context.data.stroke + context.theAccentGaston, outerColor)
 }
 
 const drawRings = async (pos, radius, numberOfRings, context, weight) => {
@@ -30,7 +30,6 @@ const draw = async (context, filename) => {
             context.data.smallRadius,
             context.data.smallNumberOfRings,
             context,
-            context.data.thickness
         );
     }
 
@@ -48,8 +47,7 @@ const drawUnderlay = async (context, filename) => {
             findPointByAngleAndCircle(context.data.center, i + theAngleGaston, context.data.smallerRingsGroupRadius),
             context.data.smallRadius,
             context.data.smallNumberOfRings,
-            context,
-            context.data.thickness + context.data.stroke + context.theAccentGaston);
+            context);
     }
 
     await context.canvas.toFile(filename);

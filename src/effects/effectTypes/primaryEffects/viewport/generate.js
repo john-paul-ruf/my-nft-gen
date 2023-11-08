@@ -4,11 +4,11 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    invertLayers: true,
+    invertLayers: false,
     layerOpacity: 1,
-    underLayerOpacity: 0.8,
+    underLayerOpacity: 1,
     stroke: 8,
-    thickness: 24,
+    thickness: 18,
     ampStroke: 0,
     ampThickness: 1,
     radius: [225, 250, 275],
@@ -18,8 +18,8 @@ const config = {
     sparsityFactor: [3, 4, 5, 6,],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 40, upper: 70}},
-    blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 6, upper: 9}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 30}},
+    blurRange: {bottom: {lower: 2, upper: 3}, top: {lower: 5, upper: 8}},
     featherTimes: {lower: 2, upper: 6},
 }
 
