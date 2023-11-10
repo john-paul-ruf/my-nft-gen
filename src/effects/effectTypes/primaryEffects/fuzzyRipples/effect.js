@@ -9,8 +9,8 @@ export const fuzzyRippleEffect = {
     name: 'fuzzy-ripples',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
+    effectChance: 50,
     requiresLayer: true,
-    ignoreAdditionalEffects: true,
+    ignoreAdditionalEffects: false,
 }
 

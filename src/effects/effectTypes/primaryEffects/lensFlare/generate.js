@@ -9,7 +9,7 @@ const config = {
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 2, upper: 6},
 
-    elementOpacityRange: {bottom: {lower: 0.8, upper: 0.9}, top: {lower: 1, upper: 1}},
+    elementOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.8, upper: 1}},
     elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},

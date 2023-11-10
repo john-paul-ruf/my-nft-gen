@@ -11,6 +11,6 @@ export const nthRingsEffect = {
     effect: effect,
     effectChance: 100,
     requiresLayer: true,
-    ignoreAdditionalEffects: true,
+    ignoreAdditionalEffects: false,
 }
 

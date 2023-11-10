@@ -6,7 +6,7 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     layerOpacity: 1,
-    underLayerOpacity: 1,
+    underLayerOpacity: 0.8,
     circles: {lower: 4, upper: 8},
     radiusGap: 75,
     stroke: 1,
@@ -15,12 +15,12 @@ const config = {
     rayThickness: 1,
     scaleFactor: 1.25,
     densityFactor: 1.75,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 6}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 3}},
     featherTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}}, //when spin, length must be at 0 or glitches the loop
-    lengthTimes: {lower: 4, upper: 8},
-    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
+    lengthTimes: {lower: 2, upper: 6},
+    sparsityFactor: [1, 2, 3, 4, 5,],
     speed: {lower: 0, upper: 0},
 }
 
