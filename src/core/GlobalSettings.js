@@ -18,7 +18,7 @@ const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
 class globalSettings {
     constructor() {
 
-        const availableColorSchemes = [/*NeonColorScheme.neons,*/ NeonColorScheme.blueNeons,/* NeonColorScheme.redNeons, */NeonColorScheme.greenNeons];
+        const availableColorSchemes = [NeonColorScheme.neons, NeonColorScheme.blueNeons, NeonColorScheme.redNeons, NeonColorScheme.greenNeons];
 
         this.colorScheme = NeonColorSchemeFactory.getColorScheme(getRandomFromArray(availableColorSchemes));
 
@@ -29,24 +29,13 @@ class globalSettings {
 
 
         //For 2D palettes
-        this.neutrals = [
-            '#FFFFFF',
-        ];
+        this.neutrals = ['#FFFFFF',];
 
         //For 2D palettes
-        this.backgrounds = [
-            '#888888',
-        ];
+        this.backgrounds = ['#aaaaaa',];
 
         //for three-dimensional lighting
-        this.lights = [
-            '#FFFF00',
-            '#FF00FF',
-            '#00FFFF',
-            '#FF0000',
-            '#00FF00',
-            '#0000FF',
-        ]
+        this.lights = ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF',]
     }
 }
 
