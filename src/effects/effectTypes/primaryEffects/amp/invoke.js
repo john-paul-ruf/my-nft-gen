@@ -15,7 +15,7 @@ const drawUnderlay = async (context, filename) => {
             context.data.lineStart + context.data.stroke,
             context.data.length + context.data.stroke,
             context.data.stroke,
-            context.data.outerColor,
+            context.data.innerColor,
             context.data.stroke + context.theAccentGaston,
             context.data.outerColor
         )
@@ -36,7 +36,7 @@ const draw = async (context, filename) => {
             context.data.thickness,
             context.data.innerColor,
             context.data.thickness,
-            context.data.innerColor
+            context.data.outerColor
         )
     }
 
@@ -52,8 +52,13 @@ export const compositeImage = async (context, layer) => {
     await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
-    await layer.compositeLayerOver(underlayLayer);
-    await layer.compositeLayerOver(tempLayer);
+    if (!context.data.invertLayers) {
+        await layer.compositeLayerOver(underlayLayer);
+        await layer.compositeLayerOver(tempLayer);
+    } else {
+        await layer.compositeLayerOver(tempLayer);
+        await layer.compositeLayerOver(underlayLayer);
+    }
 
 }
 

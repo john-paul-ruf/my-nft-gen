@@ -5,12 +5,12 @@ import {getColorSchemeInfo, getFinalImageSize, getLayerStrategy} from "../Global
 const getEffectInfo = (effectList) => {
     let results = '';
     for (let i = 0; i < effectList.length; i++) { //for each effect in the effectList
-        let data = `\n  ` + effectList[i].getInfo() //start new string with effect info
+        let data = `\n*` + effectList[i].getInfo() //start new string with effect info
 
         if (effectList[i].additionalEffects.length > 0) {  // if this effect has additional effects
-            data = data + `\n    with additional effects: ` //append additional effects to the string we started above
+            data = data + `\nwith additional effects:` //append additional effects to the string we started above
             for (let a = 0; a < effectList[i].additionalEffects.length; a++) {
-                data = data + `\n      ` + effectList[i].additionalEffects[a].getInfo(); //Append additional info
+                data = data + `\n*` + effectList[i].additionalEffects[a].getInfo(); //Append additional info
             }
         }
 
@@ -30,6 +30,6 @@ export const composeInfo = (config, effects, finalImageEffects) => {
     const finalImageSize = getFinalImageSize();
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    return `Title: ${config.finalFileName}\nArtist: ${config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\nRun: ${config.runName}\n${getColorInfo()}Image Size: ${finalImageSize.width}x${finalImageSize.height} pixels\nNumber of Frames: ${config.numberOfFrame}\nLayer Strategy: ${getLayerStrategy()}\n\nEffects: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
+    return `**Title**: ${config.finalFileName}\\\n**Artist**: ${config._INVOKER_}\\\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\n\\\\**Run**: ${config.runName}\\\n${getColorInfo()}**Image Size**: ${finalImageSize.width}x${finalImageSize.height} pixels\n**Number of Frames**: ${config.numberOfFrame}\\\n**Layer Strategy**: ${getLayerStrategy()}\\\n\\\n**Effects**: ${getEffectInfo(effects)}\\\n\\\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
 
 }

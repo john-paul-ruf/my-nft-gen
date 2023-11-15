@@ -41,7 +41,14 @@ import {singleLayerGlitchFractalEffect} from "../effectTypes/secondaryEffects/si
 import {singleLayerBlurEffect} from "../effectTypes/secondaryEffects/single-layer-blur/effect.js";
 import {porousEffect} from "../effectTypes/primaryEffects/porous/effect.js";
 
-const primaryEffects = [animateBackgroundEffect,
+
+const primaryEffects = [
+
+    animateBackgroundEffect,
+
+    hexEffect,
+
+    invertedRayRingEffect, rayRingEffect,
 
     wireframeSpiralEffect,
 
@@ -49,23 +56,19 @@ const primaryEffects = [animateBackgroundEffect,
 
     encircledSpiralEffect,
 
+    nthRingsEffect, eightEffect, fuzzyRippleEffect,
+
+    ampEffect,
+
     lensFlareEffect,
 
     scopesEffect,
 
-    nthRingsEffect, eightEffect, fuzzyRippleEffect,
-
     blinkOnEffect,
-
-    hexEffect,
 
     layeredHexEffect, layeredRingsEffect,
 
-    invertedRayRingEffect, rayRingEffect,
-
     gatesEffect,
-
-    ampEffect,
 
     viewportEffect,
 

@@ -32,10 +32,35 @@ const drawUnderlay = async (context, filename) => {
     }
     await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor)
 
+    //inner color
+    await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
+    for (let i = 30; i <= 330; i += 60) {
+        await drawRings(
+            context,
+            findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.smallRadius,
+            context.data.smallNumberOfRings,
+            context.data.innerColor,
+            context.data.thickness);
+    }
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor)
+
     await context.canvas.toFile(filename);
 }
 
 const draw = async (context, filename) => {
+
+    //outer color
+    await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
+    for (let i = 30; i <= 330; i += 60) {
+        await drawRings(
+            context,
+            findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
+            context.data.smallRadius, context.data.smallNumberOfRings,
+            context.data.outerColor,
+            context.data.thickness + context.data.stroke + context.theAccentGaston);
+    }
+    await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor)
 
     //inner color
     await drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
@@ -54,6 +79,15 @@ const draw = async (context, filename) => {
 }
 
 export const compositeImage = async (context, layer) => {
+
+
+    await drawUnderlay(context, context.underlayName);
+
+    context.theAccentGaston = 0;
+    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+    await draw(context, context.drawing);
+
     let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
     let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
 
@@ -62,20 +96,16 @@ export const compositeImage = async (context, layer) => {
     await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
     await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
-    await layer.compositeLayerOver(underlayLayer);
-    await layer.compositeLayerOver(tempLayer);
+    if (!context.data.invertLayers) {
+        await layer.compositeLayerOver(underlayLayer);
+        await layer.compositeLayerOver(tempLayer);
+    } else {
+        await layer.compositeLayerOver(tempLayer);
+        await layer.compositeLayerOver(underlayLayer);
+    }
 
 }
 
-export const processDrawFunction = async (context) => {
-
-    await drawUnderlay(context, context.underlayName);
-
-    context.theAccentGaston = 0;
-    context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-
-    await draw(context, context.drawing);
-}
 
 export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => {
     const context = {
@@ -90,7 +120,6 @@ export const fuzzyRipple = async (layer, data, currentFrame, numberOfFrames) => 
         data: data,
     }
 
-    await processDrawFunction(context);
     await compositeImage(context, layer);
 
     fs.unlinkSync(context.drawing);

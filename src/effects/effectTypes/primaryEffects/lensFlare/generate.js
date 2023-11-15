@@ -6,10 +6,10 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
 
-    layerOpacityRange: {bottom: {lower: 0.8, upper: 0.8}, top: {lower: 0.9, upper: 0.9}},
+    layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 2, upper: 6},
 
-    elementOpacityRange: {bottom: {lower: 0.4, upper: 0.45}, top: {lower: 0.5, upper: 0.65}},
+    elementOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.8, upper: 1}},
     elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
@@ -21,20 +21,20 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 40, upper: 80},
+    numberOfFlareRings: {lower: 30, upper: 60},
     flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
-    flareRingStroke: {lower: 1, upper: 2},
+    flareRingStroke: {lower: 1, upper: 1},
 
-    numberOfFlareRays: {lower: 200, upper: 300},
+    numberOfFlareRays: {lower: 50, upper: 100},
     flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
-    flareRaysStroke: {lower: 1, upper: 2},
+    flareRaysStroke: {lower: 1, upper: 1},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     blurTimes: {lower: 2, upper: 6},
 
-    strategy: [/*'original', */'color-bucket'/*, 'neutral-bucket'*/],
+    strategy: [/*'original',*/ 'color-bucket' /*, 'neutral-bucket'*/],
 
     flareColors: [
         '#d5fecc',

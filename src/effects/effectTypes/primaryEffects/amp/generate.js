@@ -1,23 +1,25 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {ampEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.4,
-    underLayerOpacity: 0.3,
-    sparsityFactor: [1, 2, 3, 4, 5,],
+    invertLayers: true,
+    layerOpacity: 1,
+    underLayerOpacity: 0.8,
+    sparsityFactor: [3, 4, 5],
     stroke: 0,
     thickness: 1,
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+    accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 3}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
     featherTimes: {lower: 2, upper: 6},
     speed: {lower: 24, upper: 36},
 }
 
 export const generate = () => {
     const data = {
+        invertLayers: config.invertLayers,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         sparsityFactor: getRandomFromArray(config.sparsityFactor),
@@ -25,7 +27,7 @@ export const generate = () => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: getColorFromBucket(),
+        innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
         length: 150,
         lineStart: 200,

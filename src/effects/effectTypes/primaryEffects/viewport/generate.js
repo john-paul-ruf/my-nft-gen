@@ -4,10 +4,11 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    layerOpacity: 0.5,
-    underLayerOpacity: 0.25,
-    stroke: 8,
-    thickness: 24,
+    invertLayers: false,
+    layerOpacity: 1,
+    underLayerOpacity: 0.8,
+    stroke: 3,
+    thickness: 12,
     ampStroke: 0,
     ampThickness: 1,
     radius: [225, 250, 275],
@@ -17,9 +18,9 @@ const config = {
     sparsityFactor: [3, 4, 5, 6,],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 10, upper: 20}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 3}},
-    featherTimes: {lower: 4, upper: 8},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 30}},
+    blurRange: {bottom: {lower: 2, upper: 3}, top: {lower: 5, upper: 8}},
+    featherTimes: {lower: 2, upper: 6},
 }
 
 export const generate = () => {
@@ -27,6 +28,7 @@ export const generate = () => {
     const finalImageSize = getFinalImageSize();
 
     const data = {
+        invertLayers: config.invertLayers,
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,

@@ -5,22 +5,23 @@ import {rayRingEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.25,
-    underLayerOpacity: 0.15,
+    layerOpacity: 1,
+    underLayerOpacity: 0.8,
     circles: {lower: 4, upper: 8},
-    radiusGap: 75,
+    radiusInitial: 300,
+    radiusGap: 60,
     stroke: 1,
     thickness: 1,
     rayStroke: 1,
     rayThickness: 1,
     scaleFactor: 1.25,
     densityFactor: 1.75,
-    accentRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 6}},
-    blurRange: {bottom: {lower: 0, upper: 2}, top: {lower: 4, upper: 8}},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 6}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 3}},
     featherTimes: {lower: 2, upper: 4},
     lengthRange: {bottom: {lower: 5, upper: 15}, top: {lower: 20, upper: 50}}, //when spin, length must be at 0 or glitches the loop
-    lengthTimes: {lower: 4, upper: 8},
-    sparsityFactor: [1, 2, 3, 4, 5, 6, 8, 9, 10],
+    lengthTimes: {lower: 2, upper: 6},
+    sparsityFactor: [1, 2, 3,],
     speed: {lower: 0, upper: 0},
 }
 
@@ -43,7 +44,7 @@ const computeInitialInfo = (num) => {
     const info = [];
     for (let i = 0; i <= num; i++) {
         info.push({
-            radius: config.radiusGap * (i + 1),
+            radius: config.radiusInitial + (config.radiusGap * (i + 1)),
             color: getNeutralFromBucket(),
             outerColor: getColorFromBucket(),
             featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),

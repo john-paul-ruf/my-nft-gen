@@ -11,5 +11,5 @@ export const mappedFramesEffect = {
     effect: effect,
     effectChance: 0,
     requiresLayer: true,
-    ignoreAdditionalEffects: true,
+    ignoreAdditionalEffects: false,
 }
