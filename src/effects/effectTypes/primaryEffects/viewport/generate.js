@@ -4,11 +4,11 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    invertLayers: true,
+    invertLayers: false,
     layerOpacity: 1,
     underLayerOpacity: 0.8,
-    stroke: 14,
-    thickness: 24,
+    stroke: 3,
+    thickness: 12,
     ampStroke: 0,
     ampThickness: 1,
     radius: [225, 250, 275],
