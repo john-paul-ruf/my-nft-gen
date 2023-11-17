@@ -18,7 +18,7 @@ const config = {
     featherTimes: {lower: 2, upper: 4},
     stroke: 1,
     thickness: 3,
-    scaleFactor: 0.8,
+    scaleFactor: 0.5,
     numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],
     overlayStrategy: ['flat', 'overlay'],

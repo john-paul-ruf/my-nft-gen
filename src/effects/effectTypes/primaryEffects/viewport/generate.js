@@ -4,7 +4,7 @@ import {viewportEffect} from "./effect.js";
 
 
 const config = {
-    invertLayers: false,
+    invertLayers: true,
     layerOpacity: 1,
     underLayerOpacity: 0.8,
     stroke: 3,
@@ -13,14 +13,14 @@ const config = {
     ampThickness: 1,
     radius: [225, 250, 275],
     startAngle: [210, 270],
-    ampLength: [20, 30, 40, 50],
+    ampLength: [/*20, 30, 40,*/ 50, 75, 100],
     ampRadius: [50, 75, 100],
     sparsityFactor: [3, 4, 5, 6,],
     amplitude: {lower: 10, upper: 20},
     times: {lower: 2, upper: 4},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 30}},
     blurRange: {bottom: {lower: 2, upper: 3}, top: {lower: 5, upper: 8}},
-    featherTimes: {lower: 2, upper: 6},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {

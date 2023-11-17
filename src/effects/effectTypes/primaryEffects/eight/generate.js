@@ -16,7 +16,7 @@ const config = {
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.shortestSide * 0.30},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
     blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
-    featherTimes: {lower: 2, upper: 8},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {
