@@ -1,3 +1,7 @@
+
+import {createCanvas} from "canvas";
+import sharp from "sharp";
+
 import {animationConfiguration} from "./core/AnimationConfiguration.js";
 import {animate} from "./core/animation/animate.js";
 import {resetGlobalSettings} from "./core/GlobalSettings.js";
