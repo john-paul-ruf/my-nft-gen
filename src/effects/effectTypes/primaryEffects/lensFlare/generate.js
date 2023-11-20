@@ -26,7 +26,7 @@ const config = {
     flareRingStroke: {lower: 1, upper: 1},
 
     numberOfFlareRays: {lower: 50, upper: 100},
-    flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
+    flareRaysSizeRange: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.longestSide * 0.55},
     flareRaysStroke: {lower: 1, upper: 1},
 
     //no blur, it is bad

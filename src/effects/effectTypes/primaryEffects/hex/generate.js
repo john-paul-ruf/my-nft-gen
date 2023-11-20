@@ -17,7 +17,7 @@ const config = {
     blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
     featherTimes: {lower: 2, upper: 4},
     stroke: 1,
-    thickness: 3,
+    thickness: 0.5,
     scaleFactor: 0.5,
     numberOfHex: 12,
     strategy: ['static', 'angle', 'rotate'],
