@@ -30,7 +30,6 @@ import {layeredHexEffect} from "../effectTypes/primaryEffects/layeredHex/effect.
 import {layeredRingsEffect} from "../effectTypes/primaryEffects/layeredRings/effect.js";
 import {encircledSpiralEffect} from "../effectTypes/primaryEffects/encircledSpiral/effect.js";
 import {eightEffect} from "../effectTypes/primaryEffects/eight/effect.js";
-import {animatedImageOverlayEffect} from "../effectTypes/primaryEffects/animatedOverlay/effect.js";
 import {mappedFramesEffect} from "../effectTypes/primaryEffects/mappedFrames/effect.js";
 import {nthRingsEffect} from "../effectTypes/primaryEffects/nthRings/effect.js";
 import {blinkOnEffect} from "../effectTypes/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
@@ -74,7 +73,7 @@ const primaryEffects = [
 
     threeDimensionalShapeEffect,
 
-    animatedImageOverlayEffect, mappedFramesEffect, threeDimensionalRingsEffect,
+    mappedFramesEffect, threeDimensionalRingsEffect,
 
     imageOverlayEffect, porousEffect,
 

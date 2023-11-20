@@ -30,14 +30,11 @@
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
     "canvas": "^2.11.0",
-    "color-scheme": "^1.0.1",
-    "gif-frames": "^0.2.4",
     "gl": "^6.0.1",
-    "google-palette": "^1.1.0",
     "jimp": "^0.16.1",
     "minimist": "^1.2.7",
     "npm": "^9.2.0",
-    "sharp": "^0.30.7",
+    "sharp": "^0.32.6",
     "three": "0.125.2"
   },
   "devDependencies": {
