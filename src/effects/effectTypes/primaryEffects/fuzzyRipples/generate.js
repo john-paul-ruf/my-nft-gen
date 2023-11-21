@@ -8,8 +8,8 @@ const config = {
     invertLayers: true,
     layerOpacity: 1,
     underLayerOpacity: 0.8,
-    stroke: 1,
-    thickness: 8,
+    stroke: 2,
+    thickness: 2,
     largeRadius: {lower: finalImageSize.longestSide * 0.1, upper: finalImageSize.longestSide * 0.15},
     smallRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.25},
     largeNumberOfRings: {lower: 2, upper: 5},
@@ -19,7 +19,7 @@ const config = {
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.2, upper: finalImageSize.shortestSide * 0.3},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
-    featherTimes: {lower: 2, upper: 6},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 export const generate = () => {

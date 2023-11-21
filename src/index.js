@@ -1,3 +1,7 @@
+//https://github.com/Automattic/node-canvas/issues/2155#issuecomment-1669503493
+import {createCanvas} from "canvas";
+import sharp from "sharp";
+
 import {animationConfiguration} from "./core/AnimationConfiguration.js";
 import {animate} from "./core/animation/animate.js";
 import {resetGlobalSettings} from "./core/GlobalSettings.js";

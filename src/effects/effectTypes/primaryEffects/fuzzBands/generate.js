@@ -11,7 +11,7 @@ const config = {
     underLayerOpacityTimes: {lower: 2, upper: 6},
     circles: {lower: 3, upper: 6},
     stroke: 0,
-    thickness: 12,
+    thickness: 4,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},
     accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
     blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
