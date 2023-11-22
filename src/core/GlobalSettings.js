@@ -3,8 +3,8 @@ import {getRandomFromArray, getRandomIntExclusive, getRandomIntInclusive} from "
 import parseArgs from 'minimist';
 import {NeonColorScheme, NeonColorSchemeFactory} from "./color/NeonColorSchemeFactory.js";
 
-const longestSideInPixels = 1280;
-const shortestSideInPixels = 720;
+const longestSideInPixels = 1920;
+const shortestSideInPixels = 1080;
 
 //--isHoz
 const argv = parseArgs(process.argv)
