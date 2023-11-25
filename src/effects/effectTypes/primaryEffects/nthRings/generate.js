@@ -7,8 +7,8 @@ const finalImageSize = getFinalImageSize();
 const config = {
     invertLayers: true,
     totalRingCount: {lower: 12, upper: 16},
-    layerOpacity: 1,
-    underLayerOpacity: 0.8,
+    layerOpacity: 0.5,
+    underLayerOpacity: 0.4,
     stroke: 2,
     thickness: 2,
     smallRadius: [finalImageSize.longestSide * 0.10, finalImageSize.longestSide * 0.1/*5, finalImageSize.longestSide * 0.2*/],
