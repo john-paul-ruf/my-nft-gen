@@ -53,11 +53,11 @@ const primaryEffects = [
 
     fuzzBandsEffect,
 
-    encircledSpiralEffect,
-
     nthRingsEffect, eightEffect, fuzzyRippleEffect,
 
     ampEffect,
+
+    encircledSpiralEffect,
 
     lensFlareEffect,
 

@@ -28,17 +28,29 @@ async function findSegmentCount(num) {
     return returnValue;
 }
 
-async function spiral(context, index, thickness, color) {
-
+async function drawBottomLayer(context, index) {
     const unitLength = context.data.ringArray[index].radius / await findSegmentCount(context.data.ringArray[index].numberOfSegments);
-
-    //I think I want to remove this
-    //await context.canvas.drawRing2d(context.data.center, context.data.ringArray[index].radius, context.data.ringArray[index].ringThickness, context.data.ringArray[index].innerColor, context.data.ringArray[index].ringStroke, context.data.ringArray[index].outerColor);
-
+    const theAccentGaston = findValue(context.data.ringArray[index].accentRange.lower, context.data.ringArray[index].accentRange.upper, context.data.ringArray[index].featherTimes, context.numberOfFrames, context.currentFrame);
     for (let seg = context.data.startSegment; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
         for (let i = 0; i < 360; i = i + context.data.ringArray[index].sparsityFactor) {
-            await drawLine(i, unitLength, seg, context, 1, thickness, color, index)
-            await drawLine(i, unitLength, seg, context, -1, thickness, color, index)
+            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness + theAccentGaston, context.data.ringArray[index].outerColor, index);
+            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness + theAccentGaston, context.data.ringArray[index].outerColor, index);
+
+            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
+            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
+        }
+    }
+}
+
+async function drawTopLayer(context, index) {
+    const unitLength = context.data.ringArray[index].radius / await findSegmentCount(context.data.ringArray[index].numberOfSegments);
+    for (let seg = context.data.startSegment; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
+        for (let i = 0; i < 360; i = i + context.data.ringArray[index].sparsityFactor) {
+            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness, context.data.ringArray[index].outerColor, index);
+            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness, context.data.ringArray[index].outerColor, index);
+
+            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
+            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
         }
     }
 }
@@ -46,24 +58,48 @@ async function spiral(context, index, thickness, color) {
 const draw = async (context, filename) => {
 
     for (let i = 0; i < context.data.ringArray.length; i++) {
-        //bottom layer
-        context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-        const theAccentGaston = findValue(context.data.ringArray[i].accentRange.lower, context.data.ringArray[i].accentRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame);
-        await spiral(context, i, (context.data.ringArray[i].thickness + context.data.ringArray[i].stroke + theAccentGaston), context.data.ringArray[i].outerColor);
-        await context.canvas.toFile(filename)
-        const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
-        await bottomLayer.blur(theBlurGaston);
-        await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
-        await context.layer.compositeLayerOver(bottomLayer);
 
-        //top Layer
-        context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-        await spiral(context, i, context.data.ringArray[i].thickness, context.data.ringArray[i].innerColor);
-        await context.canvas.toFile(filename)
-        const topLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        await topLayer.adjustLayerOpacity(context.data.layerOpacity);
-        await context.layer.compositeLayerOver(topLayer);
+        if (!context.data.invertLayers) {
+            //bottom layer
+            context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+            await drawBottomLayer(context, i);
+            await context.canvas.toFile(filename)
+            const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing);
+            const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
+            await bottomLayer.blur(theBlurGaston);
+            await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+            await context.layer.compositeLayerOver(bottomLayer);
+
+            //top Layer
+            context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+            await drawTopLayer(context, i);
+            await context.canvas.toFile(filename)
+            const topLayer = await LayerFactory.getLayerFromFile(context.drawing);
+            await topLayer.adjustLayerOpacity(context.data.layerOpacity);
+            await context.layer.compositeLayerOver(topLayer);
+        } else {
+
+            //top Layer
+            context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+            await drawTopLayer(context, i);
+            await context.canvas.toFile(filename)
+            const topLayer = await LayerFactory.getLayerFromFile(context.drawing);
+            await topLayer.adjustLayerOpacity(context.data.layerOpacity);
+            await context.layer.compositeLayerOver(topLayer);
+
+            //bottom layer
+            context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+            await drawBottomLayer(context, i);
+            await context.canvas.toFile(filename)
+            const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing);
+            const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
+            await bottomLayer.blur(theBlurGaston);
+            await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+            await context.layer.compositeLayerOver(bottomLayer);
+
+        }
+
+
     }
 }
 

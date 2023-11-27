@@ -1,4 +1,4 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
 import {encircledSpiralEffect} from "./effect.js";
 
@@ -6,23 +6,24 @@ import {encircledSpiralEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.3,
-    underLayerOpacity: 0.3,
+    invertLayers: true,
+    layerOpacity: 1,
+    underLayerOpacity: 0.8,
     numberOfRings: {lower: 2, upper: 4},
     radiusRange: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.longestSide * 0.45},
-    stroke: 0,
+    stroke: 1,
     thickness: 1,
     /*
     ringStroke: 0, the ring draws with the wrong weight - instead of fixing decided that the ring is NOT pretty - commented out in invoke function
     ringThickness: 4,
     */
-    sparsityFactor: [30, 36, 40, 45, 60],
-    startSegment: [8, 10, 12],
-    numberOfSegments: [16, 18, 20, 24, /*30, 36, 40, 45, 60*/],
+    sparsityFactor: [30, 36],
+    startSegment: [6, 7, 8],
+    numberOfSegments: [10, 11, 12],
     speed: {lower: 4, upper: 8},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    featherTimes: {lower: 0, upper: 0},
+    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 const getRingArray = (num) => {
@@ -38,7 +39,7 @@ const getRingArray = (num) => {
             ringThickness: config.ringThickness,
             numberOfSegments: getRandomFromArray(config.numberOfSegments),
             sparsityFactor: getRandomFromArray(config.sparsityFactor),
-            innerColor: getColorFromBucket(),
+            innerColor: getNeutralFromBucket(),
             outerColor: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
@@ -57,6 +58,7 @@ const getRingArray = (num) => {
 
 export const generate = () => {
     const data = {
+        invertLayers: config.invertLayers,
         numberOfRings: getRandomIntInclusive(config.numberOfRings.lower, config.numberOfRings.upper),
         startSegment: getRandomFromArray(config.startSegment),
         layerOpacity: config.layerOpacity,
