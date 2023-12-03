@@ -20,7 +20,7 @@ const config = {
     sparsityFactor: [30, 36],
     startSegment: [6, 7, 8],
     numberOfSegments: [10, 11, 12],
-    speed: {lower: 4, upper: 8},
+    speed: {lower: 2, upper: 4},
     accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 3, upper: 5}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
     featherTimes: {lower: 2, upper: 4},
