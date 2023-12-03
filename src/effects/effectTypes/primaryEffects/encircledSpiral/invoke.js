@@ -11,8 +11,8 @@ const drawLine = async (angle, context, flipTwist, thickness, color, ringIndex, 
     const direction = ringIndex % 2 > 0 ? -1 : 1;
     angle = angle + (((context.data.ringArray[ringIndex].sparsityFactor * context.data.ringArray[ringIndex].speed) / context.numberOfFrames) * context.currentFrame) * direction;
 
-    const pointOne = context.data.sequence[sequenceIndex] * context.data.sequencePixelConstant;
-    const pointTwo = context.data.sequence[sequenceIndex + 1] * context.data.sequencePixelConstant;
+    const pointOne = context.data.sequence[sequenceIndex] * context.data.ringArray[ringIndex].sequencePixelConstant;
+    const pointTwo = context.data.sequence[sequenceIndex + 1] * context.data.ringArray[ringIndex].sequencePixelConstant;
 
     const start = findPointByAngleAndCircle(context.data.center, angle, pointOne)
     const end = findPointByAngleAndCircle(context.data.center, (angle + context.data.ringArray[ringIndex].sparsityFactor * flipTwist), pointTwo);
