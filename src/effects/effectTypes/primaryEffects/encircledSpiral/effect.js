@@ -6,7 +6,7 @@ export const effect = {
 }
 
 export const encircledSpiralEffect = {
-    name: 'encircled-spiral',
+    name: 'encircled-spiral-round-2',
     generateData: generate,
     effect: effect,
     effectChance: 100,

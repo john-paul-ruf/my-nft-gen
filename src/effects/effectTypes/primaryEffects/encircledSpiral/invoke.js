@@ -7,50 +7,41 @@ import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import {findValue} from "../../../../core/math/findValue.js";
 
-const drawLine = async (angle, unitLength, seg, context, flipTwist, thickness, color, index) => {
-    const direction = index % 2 > 0 ? -1 : 1;
-    angle = angle + (((context.data.ringArray[index].sparsityFactor * context.data.ringArray[index].speed) / context.numberOfFrames) * context.currentFrame) * direction;
+const drawLine = async (angle, context, flipTwist, thickness, color, ringIndex, sequenceIndex) => {
+    const direction = ringIndex % 2 > 0 ? -1 : 1;
+    angle = angle + (((context.data.ringArray[ringIndex].sparsityFactor * context.data.ringArray[ringIndex].speed) / context.numberOfFrames) * context.currentFrame) * direction;
 
-    const start = findPointByAngleAndCircle(context.data.center, angle, unitLength * await findSegmentCount(seg - 1))
-    const end = findPointByAngleAndCircle(context.data.center, angle + (seg * flipTwist * context.data.ringArray[index].sparsityFactor), unitLength * await findSegmentCount(seg));
+    const pointOne = context.data.sequence[sequenceIndex] * context.data.sequencePixelConstant;
+    const pointTwo = context.data.sequence[sequenceIndex + 1] * context.data.sequencePixelConstant;
+
+    const start = findPointByAngleAndCircle(context.data.center, angle, pointOne)
+    const end = findPointByAngleAndCircle(context.data.center, (angle + context.data.ringArray[ringIndex].sparsityFactor * flipTwist), pointTwo);
 
 
     await context.canvas.drawLine2d(start, end, thickness, color, 0, color);
 }
 
-async function findSegmentCount(num) {
-    let returnValue = 0
+async function drawBottomLayer(context, ringIndex) {
+    const theAccentGaston = findValue(context.data.ringArray[ringIndex].accentRange.lower, context.data.ringArray[ringIndex].accentRange.upper, context.data.ringArray[ringIndex].featherTimes, context.numberOfFrames, context.currentFrame);
+    for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex <= context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
+        for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
+            await drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
+            await drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
 
-    for (let i = 1; i < num; i++) {
-        returnValue += i;
-    }
-
-    return returnValue;
-}
-
-async function drawBottomLayer(context, index) {
-    const unitLength = context.data.ringArray[index].radius / await findSegmentCount(context.data.ringArray[index].numberOfSegments);
-    const theAccentGaston = findValue(context.data.ringArray[index].accentRange.lower, context.data.ringArray[index].accentRange.upper, context.data.ringArray[index].featherTimes, context.numberOfFrames, context.currentFrame);
-    for (let seg = context.data.startSegment; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
-        for (let i = 0; i < 360; i = i + context.data.ringArray[index].sparsityFactor) {
-            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness + theAccentGaston, context.data.ringArray[index].outerColor, index);
-            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness + theAccentGaston, context.data.ringArray[index].outerColor, index);
-
-            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
-            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
+            await drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
+            await drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
         }
     }
 }
 
-async function drawTopLayer(context, index) {
-    const unitLength = context.data.ringArray[index].radius / await findSegmentCount(context.data.ringArray[index].numberOfSegments);
-    for (let seg = context.data.startSegment; seg <= context.data.ringArray[index].numberOfSegments; seg++) {
-        for (let i = 0; i < 360; i = i + context.data.ringArray[index].sparsityFactor) {
-            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness, context.data.ringArray[index].outerColor, index);
-            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke + context.data.ringArray[index].thickness, context.data.ringArray[index].outerColor, index);
+async function drawTopLayer(context, ringIndex) {
+    for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex <= context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
+        for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
+            await drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
+            await drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
 
-            await drawLine(i, unitLength, seg, context, 1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
-            await drawLine(i, unitLength, seg, context, -1, context.data.ringArray[index].stroke, context.data.ringArray[index].innerColor, index);
+            await drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
+            await drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
         }
     }
 }
