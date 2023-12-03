@@ -7,14 +7,14 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import {findOneWayValue} from "../../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const drawRing = async (pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) => {
+const drawRing = async (pos, radius, innerColor, outerColor, context) => {
     const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
     await context.canvas.drawRing2d(pos, theGaston, context.data.thickness, innerColor, context.data.stroke + context.theAccentGaston, outerColor)
 }
 
-const drawRings = async (pos, radius, numberOfRings, context, weight) => {
+const drawRings = async (pos, radius, numberOfRings, context) => {
     for (let i = 0; i < numberOfRings; i++) {
-        await drawRing(pos, radius / numberOfRings * i, weight, context.data.innerColor, 0, context.data.outerColor, context);
+        await drawRing(pos, radius / numberOfRings * i, context.data.innerColor, context.data.outerColor, context);
     }
 }
 

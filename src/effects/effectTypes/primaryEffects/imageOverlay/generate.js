@@ -6,7 +6,7 @@ import {getRandomFromArray, getRandomIntExclusive} from "../../../../core/math/r
 
 const config = {
     folderName: '/imageOverlay/',
-    layerOpacity: [0.5],
+    layerOpacity: [0.9],
     buffer: [500, 550, 600, 650]
 }
 

@@ -1,28 +1,27 @@
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
-import {getRandomFromArray, getRandomIntInclusive} from "../../../../core/math/random.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
+import {getRandomFromArray, getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
 import {encircledSpiralEffect} from "./effect.js";
 
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    layerOpacity: 0.3,
-    underLayerOpacity: 0.3,
-    numberOfRings: {lower: 2, upper: 4},
+    invertLayers: true,
+    layerOpacity: 1,
+    underLayerOpacity: 0.8,
+    numberOfRings: {lower: 4, upper: 8},
     radiusRange: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.longestSide * 0.45},
-    stroke: 0,
-    thickness: 1,
-    /*
-    ringStroke: 0, the ring draws with the wrong weight - instead of fixing decided that the ring is NOT pretty - commented out in invoke function
-    ringThickness: 4,
-    */
-    sparsityFactor: [30, 36, 40, 45, 60],
-    startSegment: [8, 10, 12],
-    numberOfSegments: [16, 18, 20, 24, /*30, 36, 40, 45, 60*/],
-    speed: {lower: 4, upper: 8},
-    accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-    featherTimes: {lower: 0, upper: 0},
+    stroke: 2,
+    thickness: 2,
+    sparsityFactor: [12, 15, 18],
+    sequencePixelConstant: {lower: finalImageSize.shortestSide * 0.01, upper: finalImageSize.shortestSide * 0.025},
+    sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
+    minSequenceIndex: [1, 2],
+    numberOfSequenceElements: [3, 4, 5,],
+    speed: {lower: 2, upper: 4},
+    accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 5}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 const getRingArray = (num) => {
@@ -30,15 +29,14 @@ const getRingArray = (num) => {
 
     for (let i = 0; i < num; i++) {
         info.push({
-            radius: getRandomIntInclusive(config.radiusRange.lower, config.radiusRange.upper),
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,
-            ringStroke: config.ringStroke,
-            ringThickness: config.ringThickness,
-            numberOfSegments: getRandomFromArray(config.numberOfSegments),
+            sequence: getRandomFromArray(config.minSequenceIndex),
+            minSequenceIndex: getRandomFromArray(config.minSequenceIndex),
+            numberOfSequenceElements: getRandomFromArray(config.numberOfSequenceElements),
             sparsityFactor: getRandomFromArray(config.sparsityFactor),
-            innerColor: getColorFromBucket(),
+            innerColor: getNeutralFromBucket(),
             outerColor: getColorFromBucket(),
             accentRange: {
                 lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
@@ -57,8 +55,10 @@ const getRingArray = (num) => {
 
 export const generate = () => {
     const data = {
+        invertLayers: config.invertLayers,
+        sequence: config.sequence,
+        sequencePixelConstant: randomNumber(config.sequencePixelConstant.lower, config.sequencePixelConstant.upper),
         numberOfRings: getRandomIntInclusive(config.numberOfRings.lower, config.numberOfRings.upper),
-        startSegment: getRandomFromArray(config.startSegment),
         layerOpacity: config.layerOpacity,
         underLayerOpacity: config.underLayerOpacity,
         height: finalImageSize.height,
