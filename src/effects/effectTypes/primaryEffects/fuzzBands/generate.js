@@ -9,7 +9,7 @@ const config = {
     layerOpacity: 1,
     underLayerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
     underLayerOpacityTimes: {lower: 2, upper: 6},
-    circles: {lower: 3, upper: 6},
+    circles: {lower: 6, upper: 10},
     stroke: 0,
     thickness: 4,
     radius: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.longestSide * 0.45},

@@ -9,18 +9,18 @@ const config = {
     invertLayers: true,
     layerOpacity: 1,
     underLayerOpacity: 0.8,
-    numberOfRings: {lower: 3, upper: 3},
-    radiusRange: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.longestSide * 0.45},
-    stroke: 2,
+    startAngle: {lower: 0, upper: 360},
+    numberOfRings: {lower: 2, upper: 2},
+    stroke: 1,
     thickness: 2,
-    sparsityFactor: [9, 10, 12, 15, 18, 20, 24,],
-    sequencePixelConstant: {lower: finalImageSize.shortestSide * 0.00075, upper: finalImageSize.shortestSide * 0.00125},
+    sparsityFactor: [15],
+    sequencePixelConstant: {lower: finalImageSize.shortestSide * 0.001, upper: finalImageSize.shortestSide * 0.001},
     sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-    minSequenceIndex: [9],
-    numberOfSequenceElements: [5],
-    speed: {lower: 2, upper: 4},
-    accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 5}},
-    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
+    minSequenceIndex: [7],
+    numberOfSequenceElements: [7],
+    speed: {lower: 1, upper: 3},
+    accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
     featherTimes: {lower: 2, upper: 4},
 }
 
@@ -29,6 +29,7 @@ const getRingArray = (num) => {
 
     for (let i = 0; i < num; i++) {
         info.push({
+            startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,

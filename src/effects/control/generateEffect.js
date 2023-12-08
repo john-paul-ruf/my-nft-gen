@@ -51,13 +51,13 @@ const primaryEffects = [
 
     wireframeSpiralEffect,
 
+    encircledSpiralEffect,
+
     fuzzBandsEffect,
 
     nthRingsEffect, eightEffect, fuzzyRippleEffect,
 
     ampEffect,
-
-    encircledSpiralEffect,
 
     lensFlareEffect,
 
