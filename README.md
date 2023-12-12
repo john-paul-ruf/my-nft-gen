@@ -1,8 +1,15 @@
 # my-nft-gen
-This program is akin to a musical instrument.  It can be tuned and adjusted to create new works of art in the style I have been perfecting since my teenage years.  It is a infinite reel generator.  I post these reels in many places but my favorite is [TikTok](https://www.tiktok.com/@john.paul.ruf).  The rest can be found on my [linktree](https://linktr.ee/john.paul.ruf).  The software can be difficult to get running on a Windows box.  You may need Python and MS build tools.  I mainly run this on a Mac Mini with three threads at a time going.
+
+Searching for the perfect loop?  So am I...
+
+my-nft-gen makes loops.  An infinite amount of loops.  With a massive amount of setting with which to change the output.  
+
+You can think of my-nft-gen as akin to a musical instrument.  It can be tuned and adjusted to create new works of art in the style I have been perfecting since my teenage years.  
+
+It is an infinite reel generator.  I post these reels in many places, my favorite being [TikTok](https://www.tiktok.com/@john.paul.ruf).  The rest can be found on my [linktree](https://linktr.ee/john.paul.ruf). 
 
 To Run:
-1. Install [node](https://nodejs.org/en/download/) (I run version 18.11.0)
+1. Install [node](https://nodejs.org/en/download/) 
 2. Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 3. Navigate to the root directory of the project, open a terminal
 4. From terminal, run the command: npm install
@@ -15,7 +22,9 @@ Please direct questions, comments, and rants to [John Ruf](mailto:john.paul.ruf@
 Example Output
 
 
-https://github.com/john-paul-ruf/my-nft-gen/assets/52080647/04ace19d-2511-4bf7-a5e5-1368fecc6353
+
+https://github.com/john-paul-ruf/my-nft-gen/assets/52080647/43de9803-f3ee-4fe3-a64a-f5f443baf1c4
+
 
 
 
