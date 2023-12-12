@@ -27,7 +27,6 @@ const drawHexLayer = async (context, arrayIndex, layer) => {
 
         const theOpacityGaston = findValue(element.opacity.lower, element.opacity.upper, element.opacityTimes, context.numberOfFrames, context.currentFrame, invert)
 
-        // i don't like this right now //await context.canvas.drawFilledPolygon2d(context.data.hexArray[arrayIndex].radius, pos, 6, context.data.startAngle, element.color, theOpacityGaston);
         await context.canvas.drawPolygon2d(context.data.hexArray[arrayIndex].radius, pos, 6, context.data.startAngle, context.data.thickness, element.outline, context.data.stroke, element.outlineStrokeColor, theOpacityGaston);
     }
 }

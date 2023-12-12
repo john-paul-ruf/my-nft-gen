@@ -8,7 +8,7 @@ const config = {
     layerOpacity: 1,
     underLayerOpacity: 0.8,
     stroke: 4,
-    thickness: 6,
+    thickness: 18,
     ampStroke: 0,
     ampThickness: 1,
     radius: [325],

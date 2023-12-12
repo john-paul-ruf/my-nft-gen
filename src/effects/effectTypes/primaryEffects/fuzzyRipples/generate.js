@@ -12,13 +12,13 @@ const config = {
     thickness: 2,
     largeRadius: {lower: finalImageSize.longestSide * 0.15, upper: finalImageSize.longestSide * 0.15},
     smallRadius: {lower: finalImageSize.longestSide * 0.25, upper: finalImageSize.longestSide * 0.25},
-    largeNumberOfRings: {lower: 5, upper: 5},
-    smallNumberOfRings: {lower: 5, upper: 5},
+    largeNumberOfRings: {lower: 8, upper: 8},
+    smallNumberOfRings: {lower: 8, upper: 8},
     ripple: {lower: finalImageSize.shortestSide * 0.10, upper: finalImageSize.shortestSide * 0.10},
     times: {lower: 2, upper: 4},
     smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.3, upper: finalImageSize.shortestSide * 0.3},
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     featherTimes: {lower: 2, upper: 4},
 }
 

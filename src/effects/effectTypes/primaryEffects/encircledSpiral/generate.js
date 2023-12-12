@@ -7,20 +7,20 @@ const finalImageSize = getFinalImageSize();
 
 const config = {
     invertLayers: true,
-    layerOpacity: 1,
-    underLayerOpacity: 0.8,
+    layerOpacity: 0.55,
+    underLayerOpacity: 0.5,
     startAngle: {lower: 0, upper: 360},
-    numberOfRings: {lower: 2, upper: 2},
+    numberOfRings: {lower: 10, upper: 10},
     stroke: 1,
-    thickness: 2,
-    sparsityFactor: [15],
+    thickness: 3,
+    sparsityFactor: [40],
     sequencePixelConstant: {lower: finalImageSize.shortestSide * 0.001, upper: finalImageSize.shortestSide * 0.001},
     sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-    minSequenceIndex: [7],
-    numberOfSequenceElements: [7],
-    speed: {lower: 1, upper: 3},
+    minSequenceIndex: [13],
+    numberOfSequenceElements: [2],
+    speed: {lower: 9, upper: 9},
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     featherTimes: {lower: 2, upper: 4},
 }
 
@@ -29,7 +29,8 @@ const getRingArray = (num) => {
 
     for (let i = 0; i < num; i++) {
         info.push({
-            startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
+            //startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
+            startAngle: i * 4, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,

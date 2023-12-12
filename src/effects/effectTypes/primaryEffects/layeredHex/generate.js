@@ -5,8 +5,8 @@ import {layeredHexEffect} from "./effect.js";
 const finalImageSize = getFinalImageSize();
 
 const config = {
-    thickness: 4,
-    stroke: 0,
+    thickness: 1,
+    stroke: 1,
 
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 2, upper: 4},
@@ -15,7 +15,7 @@ const config = {
     indexOpacityTimes: {lower: 2, upper: 4},
 
     radius: {lower: 40, upper: 60},
-    offsetRadius: {lower: 20, upper: 60},
+    offsetRadius: {lower: 40, upper: 60},
 
     numberOfIndex: {lower: 10, upper: 20},
     startIndex: {lower: 4, upper: 8},

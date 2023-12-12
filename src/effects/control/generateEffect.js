@@ -53,6 +53,8 @@ const primaryEffects = [
 
     fuzzBandsEffect,
 
+    layeredHexEffect, layeredRingsEffect,
+
     encircledSpiralEffect,
 
     nthRingsEffect, eightEffect, fuzzyRippleEffect,
@@ -64,8 +66,6 @@ const primaryEffects = [
     scopesEffect,
 
     blinkOnEffect,
-
-    layeredHexEffect, layeredRingsEffect,
 
     gatesEffect,
 

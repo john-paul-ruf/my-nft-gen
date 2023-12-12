@@ -7,9 +7,21 @@ import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 import {findValue} from "../../../../core/math/findValue.js";
 
+const computeAngle = async (angle, context, direction, ringIndex) => {
+    const spindleStartAngle = angle + context.data.ringArray[ringIndex].startAngle;
+    const movementConstant = context.data.ringArray[ringIndex].sparsityFactor * context.data.ringArray[ringIndex].speed;
+    const movementForFrame = ((movementConstant / context.numberOfFrames) * context.currentFrame);
+
+    const spindleForFrame = spindleStartAngle + movementForFrame;
+
+    const spindle = spindleForFrame * direction;
+
+    return (spindle % 360);
+}
+
 const drawLine = async (angle, context, flipTwist, thickness, color, ringIndex, sequenceIndex) => {
     const direction = ringIndex % 2 > 0 ? -1 : 1;
-    angle = (angle + context.data.ringArray[ringIndex].startAngle + (((context.data.ringArray[ringIndex].sparsityFactor * context.data.ringArray[ringIndex].speed) / context.numberOfFrames) * context.currentFrame) * direction) % 360;
+    angle = await computeAngle(angle, context, direction, ringIndex);
 
     const pointOne = context.data.sequence[sequenceIndex] * context.data.ringArray[ringIndex].sequencePixelConstant;
     const pointTwo = context.data.sequence[sequenceIndex + 1] * context.data.ringArray[ringIndex].sequencePixelConstant;
@@ -23,7 +35,7 @@ const drawLine = async (angle, context, flipTwist, thickness, color, ringIndex, 
 
 async function drawBottomLayer(context, ringIndex) {
     const theAccentGaston = findValue(context.data.ringArray[ringIndex].accentRange.lower, context.data.ringArray[ringIndex].accentRange.upper, context.data.ringArray[ringIndex].featherTimes, context.numberOfFrames, context.currentFrame);
-    for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex <= context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
+    for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex < context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
         for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
             await drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
             await drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
@@ -35,7 +47,7 @@ async function drawBottomLayer(context, ringIndex) {
 }
 
 async function drawTopLayer(context, ringIndex) {
-    for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex <= context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
+    for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex < context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
         for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
             await drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
             await drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
