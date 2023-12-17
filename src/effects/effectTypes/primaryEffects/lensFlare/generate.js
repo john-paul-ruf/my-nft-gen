@@ -21,18 +21,18 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 30, upper: 60},
+    numberOfFlareRings: {lower: 10, upper: 20},
     flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
-    flareRingStroke: {lower: 1, upper: 1},
+    flareRingStroke: {lower: 2, upper: 6},
 
-    numberOfFlareRays: {lower: 50, upper: 100},
+    numberOfFlareRays: {lower: 10, upper: 20},
     flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 0.55},
-    flareRaysStroke: {lower: 1, upper: 1},
+    flareRaysStroke: {lower: 2, upper: 6},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best
-    blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 2}},
-    blurTimes: {lower: 2, upper: 6},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
+    blurTimes: {lower: 2, upper: 4},
 
     strategy: [/*'original',*/ 'color-bucket' /*, 'neutral-bucket'*/],
 

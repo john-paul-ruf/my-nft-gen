@@ -12,7 +12,7 @@ const config = {
     ampStroke: 0,
     ampThickness: 1,
     radius: [325],
-    startAngle: [210, 270],
+    startAngle: [270],
     ampLength: [/*20, 30, 40,*/ 50, 75, 100],
     ampRadius: [50, 75, 100],
     sparsityFactor: [3, 4, 5, 6,],
@@ -59,7 +59,7 @@ export const generate = () => {
         },
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         getInfo: () => {
-            return `${viewportEffect.name}: amp length:${data.ampLength}, sparsity:${data.sparsityFactor.toFixed(3)}`
+            return `${viewportEffect.name}: start angle ${data.startAngle}`
         }
     }
 

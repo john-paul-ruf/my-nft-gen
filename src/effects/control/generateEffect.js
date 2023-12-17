@@ -49,19 +49,19 @@ const primaryEffects = [
 
     invertedRayRingEffect, rayRingEffect,
 
+    lensFlareEffect,
+
     wireframeSpiralEffect,
+
+    encircledSpiralEffect,
 
     fuzzBandsEffect,
 
     layeredHexEffect, layeredRingsEffect,
 
-    encircledSpiralEffect,
-
     nthRingsEffect, eightEffect, fuzzyRippleEffect,
 
     ampEffect,
-
-    lensFlareEffect,
 
     scopesEffect,
 

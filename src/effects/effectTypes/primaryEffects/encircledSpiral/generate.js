@@ -18,7 +18,7 @@ const config = {
     sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
     minSequenceIndex: [13],
     numberOfSequenceElements: [2],
-    speed: {lower: 9, upper: 9},
+    speed: {lower: 1, upper: 1},
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     featherTimes: {lower: 2, upper: 4},
@@ -30,7 +30,7 @@ const getRingArray = (num) => {
     for (let i = 0; i < num; i++) {
         info.push({
             //startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
-            startAngle: i * 4, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
+            startAngle: (i + 1) * 4, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,
