@@ -30,7 +30,7 @@ const getRingArray = (num) => {
     for (let i = 0; i < num; i++) {
         info.push({
             //startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
-            startAngle: (i + 1) * 4, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
+            startAngle: i, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,
