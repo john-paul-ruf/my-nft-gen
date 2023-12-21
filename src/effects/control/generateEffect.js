@@ -53,9 +53,9 @@ const primaryEffects = [
 
     wireframeSpiralEffect,
 
-    encircledSpiralEffect,
-
     fuzzBandsEffect,
+
+    encircledSpiralEffect,
 
     layeredHexEffect, layeredRingsEffect,
 
