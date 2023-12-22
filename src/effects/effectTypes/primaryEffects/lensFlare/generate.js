@@ -9,7 +9,7 @@ const config = {
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 2, upper: 6},
 
-    elementOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.8, upper: 1}},
+    elementOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
     elementOpacityTimes: {lower: 2, upper: 6},
 
     elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
@@ -21,13 +21,13 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 10, upper: 20},
+    numberOfFlareRings: {lower: 100, upper: 200},
     flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
-    flareRingStroke: {lower: 2, upper: 6},
+    flareRingStroke: {lower: 1, upper: 1},
 
-    numberOfFlareRays: {lower: 10, upper: 20},
+    numberOfFlareRays: {lower: 100, upper: 200},
     flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 0.55},
-    flareRaysStroke: {lower: 2, upper: 6},
+    flareRaysStroke: {lower: 1, upper: 1},
 
     //no blur, it is bad
     //trying blur again - sharp: ok, jimp: not the best

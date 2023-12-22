@@ -49,8 +49,6 @@ const primaryEffects = [
 
     invertedRayRingEffect, rayRingEffect,
 
-    lensFlareEffect,
-
     wireframeSpiralEffect,
 
     fuzzBandsEffect,
@@ -68,6 +66,8 @@ const primaryEffects = [
     blinkOnEffect,
 
     gatesEffect,
+
+    lensFlareEffect,
 
     viewportEffect,
 

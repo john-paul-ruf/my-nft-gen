@@ -10,15 +10,15 @@ const config = {
     layerOpacity: 0.55,
     underLayerOpacity: 0.5,
     startAngle: {lower: 0, upper: 360},
-    numberOfRings: {lower: 10, upper: 10},
+    numberOfRings: {lower: 20, upper: 30},
     stroke: 1,
-    thickness: 3,
+    thickness: 1,
     sparsityFactor: [40],
     sequencePixelConstant: {lower: finalImageSize.shortestSide * 0.001, upper: finalImageSize.shortestSide * 0.001},
     sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
     minSequenceIndex: [10],
     numberOfSequenceElements: [5],
-    speed: {lower: 1, upper: 6},
+    speed: {lower: 1, upper: 3},
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     featherTimes: {lower: 2, upper: 4},
@@ -29,8 +29,8 @@ const getRingArray = (num) => {
 
     for (let i = 0; i < num; i++) {
         info.push({
-            //startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
-            startAngle: i, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
+            startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
+            //startAngle: i, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,
