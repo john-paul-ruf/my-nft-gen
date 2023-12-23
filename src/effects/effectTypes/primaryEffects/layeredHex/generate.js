@@ -1,10 +1,12 @@
 import {getRandomIntInclusive, randomNumber} from "../../../../core/math/random.js";
-import {getColorFromBucket, getFinalImageSize} from "../../../../core/GlobalSettings.js";
+import {getColorFromBucket, getFinalImageSize, getNeutralFromBucket} from "../../../../core/GlobalSettings.js";
 import {layeredHexEffect} from "./effect.js";
 
 const finalImageSize = getFinalImageSize();
 
 const config = {
+    invertLayers: true,
+
     thickness: 1,
     stroke: 1,
 
@@ -25,8 +27,11 @@ const config = {
     movementGaston: {lower: 1, upper: 6},
 
     initialNumberOfPoints: 4,
-    scaleByFactor: 1.1
+    scaleByFactor: 1.1,
 
+    accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+    blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+    featherTimes: {lower: 2, upper: 4},
 }
 
 const getHexIndexArray = (num) => {
@@ -34,16 +39,26 @@ const getHexIndexArray = (num) => {
 
     for (let i = 0; i <= num; i++) {
         info.push({
-            color: getColorFromBucket(),
+            color: getNeutralFromBucket(),
             outline: getColorFromBucket(),
-            outlineStrokeColor: getColorFromBucket(),
+
             opacity: {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)
             },
-            opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
+                        opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
             movementGaston: getRandomIntInclusive(config.movementGaston.lower, config.movementGaston.upper),
             radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
+
+            accentRange: {
+                lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),
+                upper: getRandomIntInclusive(config.accentRange.top.lower, config.accentRange.top.upper)
+            },
+            blurRange: {
+                lower: getRandomIntInclusive(config.blurRange.bottom.lower, config.blurRange.bottom.upper),
+                upper: getRandomIntInclusive(config.blurRange.top.lower, config.blurRange.top.upper)
+            },
+            featherTimes: getRandomIntInclusive(config.featherTimes.lower, config.featherTimes.upper),
         });
     }
 
@@ -54,6 +69,8 @@ export const generate = () => {
 
     const data =
         {
+            invertLayers: config.invertLayers,
+
             height: finalImageSize.height,
             width: finalImageSize.width,
             center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
