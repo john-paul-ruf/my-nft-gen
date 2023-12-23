@@ -8,23 +8,44 @@ import fs from "fs";
 
 //not hex but hey...
 const drawHexArray = async (context, array) => {
-    for (let i = 0; i < array.length; i++) {
-        const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
+    async function hex(i) {
+        return new Promise(async (innerResolve) => {
+            const tempFileName = getWorkingDirectory() + 'lens-flare-ring' + randomId() + '.png'
 
-        const pos = findPointByAngleAndCircle(context.data.center, angleGaston, array[i].offset)
+            const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
 
-        const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+            const pos = findPointByAngleAndCircle(context.data.center, angleGaston, array[i].offset)
 
-        await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
-        await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
+            const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+
+            await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
+            await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
+
+            await canvas.toFile(tempFileName);
+            const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+
+            fs.unlinkSync(tempFileName);
+            innerResolve(tempLayer);
+        });
     }
-}
-
-const drawRingArray = async (context, array) => {
 
     return new Promise(async (resolve) => {
+        const promiseArray = [];
 
-        async function rings(i) {
+        for (let i = 0; i < array.length; i++) {
+            promiseArray.push(hex(i));
+        }
+
+        //when all effect promises complete
+        Promise.all(promiseArray).then(async (layers) => {
+            resolve(layers); //we have completed a single frame
+        });
+    });
+}
+
+async function rings(i, array, context) {
+    return new Promise(async (innerResolve) => {
+        try {
             const tempFileName = getWorkingDirectory() + 'lens-flare-ring' + randomId() + '.png'
             const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
@@ -41,29 +62,35 @@ const drawRingArray = async (context, array) => {
 
             await tempLayer.blur(theBlurGaston);
             await tempLayer.adjustLayerOpacity(theOpacityGaston);
-            await context.layer.compositeLayerOver(tempLayer);
 
             fs.unlinkSync(tempFileName);
-        }
 
+            innerResolve(tempLayer);
+
+        } catch (e) {
+            console.log(e);
+        }
+    });
+}
+
+const drawRingArray = async (context, array) => {
+    return new Promise(async (resolve) => {
         const ringPromiseArray = [];
 
         for (let i = 0; i < array.length; i++) {
-            ringPromiseArray.push(rings(i));
+            ringPromiseArray.push(rings(i, array, context));
         }
 
         //when all effect promises complete
-        Promise.all(ringPromiseArray).then(() => {
-            //resolve process frame promise
-            resolve(); //we have completed a single frame
+        Promise.all(ringPromiseArray).then(async (layers) => {
+            resolve(layers); //we have completed a single frame
         });
     });
 }
 
-const drawRayArray = async (context, array) => {
-
-    return new Promise(async (resolve) => {
-        async function rays(i) {
+async function rays(i, array, context) {
+    return new Promise(async (innerResolve) => {
+        try {
             const tempFileName = getWorkingDirectory() + 'lens-flare-ray' + randomId() + '.png'
             const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
@@ -82,29 +109,51 @@ const drawRayArray = async (context, array) => {
 
             await tempLayer.blur(theBlurGaston);
             await tempLayer.adjustLayerOpacity(theOpacityGaston);
-            await context.layer.compositeLayerOver(tempLayer);
 
             fs.unlinkSync(tempFileName);
+
+            innerResolve(tempLayer);
+        } catch (e) {
+            console.log(e);
         }
 
+    });
+}
+
+const drawRayArray = async (context, array) => {
+    return new Promise(async (resolve) => {
         const promiseArray = [];
-
         for (let i = 0; i < array.length; i++) {
-            promiseArray.push(rays(i));
+            promiseArray.push(rays(i, array, context));
         }
-
         //when all effect promises complete
-        Promise.all(promiseArray).then(() => {
-            //resolve process frame promise
-            resolve(); //we have completed a single frame
+        Promise.all(promiseArray).then(async (layers) => {
+            resolve(layers); //we have completed a single frame
         });
     });
 }
 
 const createLensFlare = async (context) => {
-    await drawHexArray(context, context.data.hexArray);
-    await drawRingArray(context, context.data.ringArray);
-    await drawRayArray(context, context.data.rayArray);
+    return new Promise(async (resolve) => {
+
+        const promiseArray = [];
+
+        promiseArray.push(drawHexArray(context, context.data.hexArray));
+        promiseArray.push(drawRingArray(context, context.data.ringArray));
+        promiseArray.push(drawRayArray(context, context.data.rayArray));
+
+        //when all effect promises complete
+        Promise.all(promiseArray).then(async (layers) => {
+            for (let i = 0; i < layers.length; i++) {
+                if(layers[i].length > 0) {
+                    for (let inner = 0; inner < layers[i].length; inner++) {
+                        await context.layer.compositeLayerOver(layers[i][inner]);
+                    }
+                }
+            }
+            resolve();
+        });
+    });
 }
 
 

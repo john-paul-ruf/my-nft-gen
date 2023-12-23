@@ -18,7 +18,7 @@ const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
 class globalSettings {
     constructor() {
 
-        const availableColorSchemes = [/*NeonColorScheme.neons, */NeonColorScheme.blueNeons, NeonColorScheme.redNeons, NeonColorScheme.greenNeons];
+        const availableColorSchemes = [NeonColorScheme.neons, /* NeonColorScheme.blueNeons, NeonColorScheme.redNeons, NeonColorScheme.greenNeons */];
 
         this.colorScheme = NeonColorSchemeFactory.getColorScheme(getRandomFromArray(availableColorSchemes));
 

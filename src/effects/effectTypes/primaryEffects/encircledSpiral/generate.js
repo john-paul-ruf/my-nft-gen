@@ -10,7 +10,7 @@ const config = {
     layerOpacity: 0.55,
     underLayerOpacity: 0.5,
     startAngle: {lower: 0, upper: 360},
-    numberOfRings: {lower: 20, upper: 30},
+    numberOfRings: {lower: 5, upper: 10},
     stroke: 1,
     thickness: 1,
     sparsityFactor: [40],
@@ -29,8 +29,8 @@ const getRingArray = (num) => {
 
     for (let i = 0; i < num; i++) {
         info.push({
-            startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
-            //startAngle: i, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
+            //startAngle: getRandomIntInclusive(config.startAngle.lower, config.startAngle.upper),
+            startAngle: i, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
             speed: getRandomIntInclusive(config.speed.lower, config.speed.upper),
             stroke: config.stroke,
             thickness: config.thickness,

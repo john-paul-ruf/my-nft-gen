@@ -5,10 +5,8 @@ import {Canvas2dFactory} from "../../../../core/factory/canvas/Canvas2dFactory.j
 import fs from "fs";
 import {LayerFactory} from "../../../../core/factory/layer/LayerFactory.js";
 
-const createThoseFuzzyBands = async (context) => {
-
-    //draw with top, opacity
-    for (let i = 0; i < context.data.numberOfCircles; i++) {
+async function top(context, i) {
+    return new Promise(async (resolve) => {
         let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         //draw
@@ -20,11 +18,13 @@ const createThoseFuzzyBands = async (context) => {
         await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
         await tempLayer.toFile(context.names.layerNames[i]);
-    }
 
-    //draw underlay, blur, and opacity
-    for (let i = 0; i < context.data.numberOfCircles; i++) {
+        resolve();
+    });
+}
 
+async function bottom(context, i) {
+    return new Promise(async (resolve) => {
         let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         //draw underlay
@@ -43,9 +43,33 @@ const createThoseFuzzyBands = async (context) => {
         await underlayLayer.adjustLayerOpacity(theUnderLayerOpacityGaston);
 
         await underlayLayer.toFile(context.names.underlayNames[i]);
-    }
 
+        resolve();
+    });
+}
 
+function buildLayers(context) {
+    return new Promise(async (resolve) => {
+        const promiseArray = [];
+
+        //draw with top, opacity
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
+            promiseArray.push(top(context, i));
+        }
+
+        //draw underlay, blur, and opacity
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
+            promiseArray.push(await bottom(context, i));
+        }
+
+        Promise.all(promiseArray).then(() => {
+            resolve();
+        });
+    });
+}
+
+const createThoseFuzzyBands = async (context) => {
+    await buildLayers(context);
     //Combine top and bottom layers
     if (!context.data.invertLayers) {
         for (let i = 0; i < context.data.numberOfCircles; i++) {
