@@ -59,7 +59,7 @@ function buildLayers(context) {
 
         //draw underlay, blur, and opacity
         for (let i = 0; i < context.data.numberOfCircles; i++) {
-            promiseArray.push(await bottom(context, i));
+            promiseArray.push(bottom(context, i));
         }
 
         Promise.all(promiseArray).then(() => {

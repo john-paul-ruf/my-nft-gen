@@ -29,8 +29,8 @@ export const generate = () => {
         thickness: config.thickness,
         innerColor: getNeutralFromBucket(),
         outerColor: getColorFromBucket(),
-        length: 150,
-        lineStart: 200,
+        length: 200,
+        lineStart: 350,
         center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
         accentRange: {
             lower: getRandomIntInclusive(config.accentRange.bottom.lower, config.accentRange.bottom.upper),

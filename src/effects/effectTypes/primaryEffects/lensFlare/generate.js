@@ -21,11 +21,11 @@ const config = {
     angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
     angleGastonTimes: {lower: 1, upper: 6},
 
-    numberOfFlareRings: {lower: 100, upper: 200},
+    numberOfFlareRings: {lower: 50, upper: 100},
     flareRingsSizeRange: {lower: finalImageSize.shortestSide * 0.1, upper: finalImageSize.longestSide * 0.55},
     flareRingStroke: {lower: 1, upper: 1},
 
-    numberOfFlareRays: {lower: 100, upper: 200},
+    numberOfFlareRays: {lower: 50, upper: 100},
     flareRaysSizeRange: {lower: finalImageSize.longestSide * 0.4, upper: finalImageSize.longestSide * 0.55},
     flareRaysStroke: {lower: 1, upper: 1},
 

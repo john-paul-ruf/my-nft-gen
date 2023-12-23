@@ -16,18 +16,18 @@ const config = {
     indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
     indexOpacityTimes: {lower: 2, upper: 4},
 
-    radius: {lower: 40, upper: 60},
+    radius: {lower: 60, upper: 80},
     offsetRadius: {lower: 40, upper: 60},
 
     numberOfIndex: {lower: 10, upper: 20},
-    startIndex: {lower: 4, upper: 8},
+    startIndex: {lower: 10, upper: 12},
 
     startAngle: 15,
 
     movementGaston: {lower: 1, upper: 6},
 
-    initialNumberOfPoints: 4,
-    scaleByFactor: 1.1,
+    initialNumberOfPoints: 8,
+    scaleByFactor: 1.025,
 
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -46,7 +46,7 @@ const getHexIndexArray = (num) => {
                 lower: randomNumber(config.indexOpacityRange.bottom.lower, config.indexOpacityRange.bottom.upper),
                 upper: randomNumber(config.indexOpacityRange.top.lower, config.indexOpacityRange.top.upper)
             },
-                        opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
+            opacityTimes: getRandomIntInclusive(config.indexOpacityTimes.lower, config.indexOpacityTimes.upper),
             movementGaston: getRandomIntInclusive(config.movementGaston.lower, config.movementGaston.upper),
             radius: getRandomIntInclusive(config.radius.lower, config.radius.upper),
 
