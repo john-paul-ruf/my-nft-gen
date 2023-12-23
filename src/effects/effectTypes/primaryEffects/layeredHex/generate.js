@@ -17,7 +17,7 @@ const config = {
     indexOpacityTimes: {lower: 2, upper: 4},
 
     radius: {lower: 60, upper: 80},
-    offsetRadius: {lower: 40, upper: 60},
+    offsetRadius: {lower: 70, upper: 120},
 
     numberOfIndex: {lower: 10, upper: 20},
     startIndex: {lower: 10, upper: 12},
@@ -27,7 +27,7 @@ const config = {
     movementGaston: {lower: 1, upper: 6},
 
     initialNumberOfPoints: 8,
-    scaleByFactor: 1.025,
+    scaleByFactor: 1.125,
 
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
