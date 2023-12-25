@@ -25,10 +25,10 @@ export class LoopBuilder {
             frameInc: 1,
 
             //Number of frames in the final output
-            numberOfFrame: getRandomFromArray([1800, /*1800 * 2, 1800 * 3, 1800 * 4*/]),
+            numberOfFrame: getRandomFromArray([600, /*1800 * 2, 1800 * 3, 1800 * 4*/]),
 
             finalFileName: 'remix-sku' + randomId(),
-            fileOut: '/Users/jpr/Library/CloudStorag/OneDrive-Personal/_ZEN_/my-nft-output/' + this.finalFileName
+            fileOut: GlobalSettings.getWorkingDirectory() + this.finalFileName
         }
     }
 
@@ -69,7 +69,7 @@ export class LoopBuilder {
             ////////////////////////
             for (let f = 0; f < this.config.numberOfFrame; f = f + this.config.frameInc) {
                 await createSingleFrame(f, context);
-                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f, this.config.frameInc, this.config.numberOfFrame)}`);
+                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
             }
 
             ////////////////////////
