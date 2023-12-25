@@ -1,4 +1,3 @@
-import {getCanvasStrategy} from "../../GlobalSettings.js";
 import {NodeCanvasStrategy} from "./strategy/NodeCanvasStrategy.js";
 import {Canvas2d} from "./Canvas2d.js";
 
@@ -7,7 +6,7 @@ export class Canvas2dFactory {
     }
 
     static getNewCanvas = async (width, height) => {
-        switch (getCanvasStrategy()) {
+        switch ('node-canvas') {
             case 'node-canvas':
                 const canvas = new Canvas2d(new NodeCanvasStrategy())
                 await canvas.newCanvas(width, height);

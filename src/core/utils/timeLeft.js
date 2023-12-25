@@ -6,5 +6,5 @@ export const timeLeft = (startTime, frame, frameInc, numberOfFrames) => {
     let currentFrameCount = (frame / frameInc)
     let timePerFrame = rez / currentFrameCount;
     let timeLeft = (numberOfFrames - currentFrameCount) * timePerFrame;
-    timeToString(timeLeft);
+    return timeToString(timeLeft);
 }

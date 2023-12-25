@@ -3,6 +3,7 @@ import {getRandomIntExclusive, getRandomIntInclusive, randomNumber} from "../mat
 import palette from "google-palette";
 import ColorScheme from "color-scheme";
 import fs from "fs";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 --------------------------------
 Was I a good class?

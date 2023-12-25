@@ -1,4 +1,4 @@
-import {getColorSchemeInfo, getFinalImageSize, getLayerStrategy} from "../GlobalSettings.js";
+import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 
 //This function makes use of the newline character \n and spaces for formatting
 //https://stackoverflow.com/questions/1155678/what-is-the-javascript-string-newline-character
@@ -19,17 +19,16 @@ const getEffectInfo = (effectList) => {
     return results; //returns the result, which is appended to the info string.
 }
 
-const getColorInfo = () => {
-    return getColorSchemeInfo();
+const getColorInfo = (settings) => {
+    return settings.getColorSchemeInfo();
 }
 
 
-export const composeInfo = (config, effects, finalImageEffects) => {
+export const composeInfo = (config, effects, finalImageEffects, settings) => {
 
-
-    const finalImageSize = getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    return `**Title**: ${config.finalFileName}\n**Artist**: ${config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\n**Run**: ${config.runName}\n${getColorInfo()}**Image Size**: ${finalImageSize.width}x${finalImageSize.height} pixels\n**Number of Frames**: ${config.numberOfFrame}\n**Layer Strategy**: ${getLayerStrategy()}\n\n**Effects**: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
+    return `**Title**: ${config.finalFileName}\n**Artist**: ${config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\n**Run**: ${config.runName}\n${getColorInfo(settings)}**Image Size**: ${finalImageSize.width}x${finalImageSize.height} pixels\n**Number of Frames**: ${config.numberOfFrame}\n**Layer Strategy**: ${GlobalSettings.getLayerStrategy()}\n\n**Effects**: ${getEffectInfo(effects)}\n\nFinal Image Effects: ${getEffectInfo(finalImageEffects)}`
 
 }
