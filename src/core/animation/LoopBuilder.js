@@ -12,7 +12,7 @@ import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 export class LoopBuilder {
     constructor(settings) {
         this.settings = settings
-        this.finalFileName = 'remix-sku' + randomId();
+        this.finalFileName = settings.config.finalFileName;
         this.config = settings.config;
     }
 

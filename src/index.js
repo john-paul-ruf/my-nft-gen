@@ -10,21 +10,22 @@ const batchAmount = argv.hasOwnProperty('batchAmount') ? parseInt(argv.batchAmou
 
 if (batchAmount > 0) {
 
-    //My current settings
-    const bluePlateSpecial =
-        {
-            colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
-            neutrals: ['#FFFFFF'],
-            backgrounds: ['#000000',],
-            lights: ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
-            _INVOKER_: 'John Ruf',
-            runName: 'neon-dreams',
-            frameInc: 1,
-            numberOfFrame: 1800,
-            finalFileName: 'neon-dream' + randomId(),
-        }
-
     async function CreateLoop() {
+
+        //My current settings
+        const bluePlateSpecial =
+            {
+                colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
+                neutrals: ['#FFFFFF'],
+                backgrounds: ['#000000',],
+                lights: ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
+                _INVOKER_: 'John Ruf',
+                runName: 'neon-dreams',
+                frameInc: 1,
+                numberOfFrame: 1800,
+                finalFileName: 'neon-dream' + randomId(),
+            }
+
         const settings = new Settings(bluePlateSpecial);
         const loopBuilder = new LoopBuilder(settings);
         return loopBuilder.animate();
