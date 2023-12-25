@@ -2,7 +2,7 @@ import {animateBackgroundEffect} from "./effect.js";
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     return {
         width: finalImageSize.width,
@@ -11,7 +11,7 @@ export const generate = async (settings) => {
         color2: await settings.getNeutralFromBucket(),
         color3: await settings.getColorFromBucket(),
         getInfo: () => {
-            return
+            return 'animated-background'
         }
     };
 }

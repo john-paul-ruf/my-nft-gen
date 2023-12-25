@@ -2,7 +2,6 @@ import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import {imageOverlayEffect} from "./effect.js";
 import fs from "fs";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntExclusive} from "../../../core/math/random.js";
 
 

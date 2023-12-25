@@ -4,7 +4,6 @@ import {randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
-import {Settings} from "../../../core/Settings.js";
 
 const drawLine = async (y, pixelLine, context) => {
     for (let x = 0; x < context.data.width; x++) {

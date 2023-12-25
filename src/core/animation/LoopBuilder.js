@@ -1,4 +1,4 @@
-import {getRandomFromArray, randomId} from "../math/random.js";
+import {randomId} from "../math/random.js";
 import {generateFinalImageEffects, generatePrimaryEffects} from "../effect/generateEffect.js";
 import {ComposeInfo} from "../utils/composeInfo.js";
 import {createSingleFrame} from "./createSingleFrame.js";
@@ -8,7 +8,6 @@ import {writeToMp4} from "../output/writeToMp4.js";
 import {writeScreenCap} from "../output/writeScreenCap.js";
 import fs from "fs";
 import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
-import {animateBackgroundEffect} from "../../effects/primaryEffects/animateBackground/effect.js";
 
 export class LoopBuilder {
     constructor(settings) {
