@@ -8,7 +8,7 @@ const config = {
     invertLayers: true,
 
     thickness: 1,
-    stroke: 2,
+    stroke: 1,
 
     layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     layerOpacityTimes: {lower: 2, upper: 4},
