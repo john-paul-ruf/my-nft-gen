@@ -21,7 +21,7 @@ if (batchAmount > 0) {
             runName: 'neon-dreams',
             frameInc: 1,
             numberOfFrame: 1800,
-            finalFileName: randomId(),
+            finalFileName: 'neon-dream' + randomId(),
         }
 
     async function CreateLoop() {
