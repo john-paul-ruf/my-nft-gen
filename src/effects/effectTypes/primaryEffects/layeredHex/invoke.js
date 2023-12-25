@@ -19,7 +19,6 @@ async function DrawHexElement(arrayIndex, context, useAccentGaston) {
     const invert = (count % 2) > 0;
     const theAngleGaston = findOneWayValue(0, context.data.hexArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, invert);
 
-    const tempCanvasName = getWorkingDirectory() + 'layered-hex-temp' + randomId() + '.png'
     const tempCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
     for (let i = 1; i <= numberOfPoints; i++) {
@@ -57,13 +56,12 @@ const drawLayer = async (context, arrayIndex, useAccentGaston) => {
     });
 }
 
-const createLayers = async (context, layer) => {
+const createLayers = async (context) => {
 
     return new Promise(async (resolve) => {
 
         const promiseBottomArray = [];
         const promiseTopArray = [];
-        const promiseArray = [];
 
         for (let i = 0; i < context.data.hexArray.length; i++) {
             promiseBottomArray.push(drawLayer(context, i, true));
@@ -114,5 +112,5 @@ export const layeredHex = async (layer, data, currentFrame, numberOfFrames) => {
         layer: layer
     };
 
-    await createLayers(context, layer);
+    await createLayers(context);
 }
