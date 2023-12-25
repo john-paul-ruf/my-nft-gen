@@ -17,7 +17,7 @@ if (batchAmount > 0) {
             neutrals: ['#FFFFFF'],
             backgrounds: ['#000000',],
             lights: ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
-            _INVOKER: 'John Ruf',
+            _INVOKER_: 'John Ruf',
             runName: 'neon-dreams',
             frameInc: 1,
             numberOfFrame: 1800,
