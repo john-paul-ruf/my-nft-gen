@@ -6,9 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "vert": "node src/index.js --isHoz false",
-    "hoz": "node src/index.js",
-    "make-me-a-pretty": "node src/index.js --isHoz false"
+    "vert": "node src/index.js --isHoz false --batchAmount 2",
+    "hoz": "node src/index.js --batchAmount 2",
+    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 2"
   },
   "jest": {
     "collectCoverage": true,

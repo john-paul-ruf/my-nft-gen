@@ -1,6 +1,6 @@
 import {getRandomFromArray, randomId} from "../math/random.js";
 import {generateFinalImageEffects, generatePrimaryEffects} from "../effect/generateEffect.js";
-import {composeInfo} from "../utils/composeInfo.js";
+import {ComposeInfo} from "../utils/composeInfo.js";
 import {createSingleFrame} from "./createSingleFrame.js";
 import {timeLeft} from "../utils/timeLeft.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
@@ -14,22 +14,7 @@ export class LoopBuilder {
     constructor(settings) {
         this.settings = settings
         this.finalFileName = 'remix-sku' + randomId();
-
-        this.config = {
-
-            //for art card
-            _INVOKER_: 'John Ruf',
-            runName: 'neon-dreams',
-
-            //For testing, render every x frame.
-            frameInc: 1,
-
-            //Number of frames in the final output
-            numberOfFrame: getRandomFromArray([600, /*1800 * 2, 1800 * 3, 1800 * 4*/]),
-
-            finalFileName: 'remix-sku' + randomId(),
-            fileOut: GlobalSettings.getWorkingDirectory() + this.finalFileName
-        }
+        this.config = settings.config;
     }
 
     async animate() {
@@ -45,7 +30,7 @@ export class LoopBuilder {
 
                 backgroundColor: await this.settings.getBackgroundFromBucket(),
 
-                frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a gif
+                frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a MP4
 
                 //This determines the final image contents
                 //The effect array is super important
@@ -59,8 +44,10 @@ export class LoopBuilder {
                 await context.effects[i].init();
             }
 
+            this.composeInfo = new ComposeInfo({config: this.config, effects: context.effects, finalImageEffects: context.finalImageEffects, settings: this.settings});
+
             //For console info
-            console.log(composeInfo(this.config, context.effects, context.finalImageEffects, this.settings));
+            console.log(await this.composeInfo.composeInfo());
 
             ////////////////////////
             //ANIMATE - start here
@@ -75,7 +62,7 @@ export class LoopBuilder {
             ////////////////////////
             //WRITE TO FILE
             ////////////////////////
-            writeArtistCard(this.config, context.effects, context.finalImageEffects, this.settings);
+            await writeArtistCard(this.config, this.composeInfo);
             await writeToMp4(context.workingDirectory + this.config.finalFileName + '-frame-%d.png', this.config);
             await writeScreenCap(context.frameFilenames[0], this.config);
 
