@@ -18,7 +18,7 @@ const config = {
     sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
     minSequenceIndex: [12],
     numberOfSequenceElements: [3],
-    speed: {lower: 1, upper: 3},
+    speed: {lower: 3, upper: 3},
     accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
     blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
     featherTimes: {lower: 2, upper: 4},
