@@ -1,8 +1,8 @@
 import sharp from "sharp";
-import {getFinalImageSize, getWorkingDirectory} from "../../../GlobalSettings.js";
 import {randomId} from "../../../math/random.js";
 import fs from "fs";
 import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
+import {GlobalSettings} from "../../../GlobalSettings.js";
 
 export class SharpLayerStrategy {
     constructor() {
@@ -17,7 +17,7 @@ export class SharpLayerStrategy {
             }
         })
 
-        const filename = getWorkingDirectory() + 'blank-layer' + randomId() + '.png'
+        const filename = GlobalSettings.getWorkingDirectory() + 'blank-layer' + randomId() + '.png'
         await this.toFile(filename)
         await this.fromFile(filename)
         fs.unlinkSync(filename);
@@ -37,11 +37,11 @@ export class SharpLayerStrategy {
 
     async compositeLayerOver(layer, withResize = true) {
 
-        const finalImageSize = getFinalImageSize();
+        const finalImageSize = GlobalSettings.getFinalImageSize();
 
-        const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
-        const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
-        const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
+        const overlayFile = GlobalSettings.getWorkingDirectory() + 'overlay' + randomId() + '.png';
+        const targetFile = GlobalSettings.getWorkingDirectory() + 'target' + randomId() + '.png';
+        const compositeFile = GlobalSettings.getWorkingDirectory() + 'composite' + randomId() + '.png';
 
         if (withResize) {
             await layer.resize(finalImageSize.height, finalImageSize.width);
@@ -69,8 +69,8 @@ export class SharpLayerStrategy {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
         const meta = await this.getInfo();
 
-        const targetFile = getWorkingDirectory() + 'target' + randomId() + '.png';
-        const compositeFile = getWorkingDirectory() + 'composite' + randomId() + '.png';
+        const targetFile = GlobalSettings.getWorkingDirectory() + 'target' + randomId() + '.png';
+        const compositeFile = GlobalSettings.getWorkingDirectory() + 'composite' + randomId() + '.png';
 
         await this.toFile(targetFile);
 

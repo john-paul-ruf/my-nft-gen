@@ -28,7 +28,7 @@ export const writeToMp4 = async (fileSelector, config) => {
                     console.log("mp4 Finished");
                 })
                 .on('progress', (progress) => {
-                    console.log(progress);
+                    console.log(`${config.finalFileName} - rendering mp4 - ${progress.frames}`);
                 })
                 .on("error", (e) => {
                     reject();

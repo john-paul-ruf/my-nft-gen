@@ -1,7 +1,7 @@
 import Jimp from "jimp";
-import {getFinalImageSize, getWorkingDirectory} from "../../../GlobalSettings.js";
 import {randomId} from "../../../math/random.js";
 import fs from "fs";
+import {Settings as GlobalSettings} from "../../../Settings.js";
 
 export class JimpLayerStrategy {
     constructor() {
@@ -22,7 +22,7 @@ export class JimpLayerStrategy {
 
     async compositeLayerOver(layer, withResize = true) {
         const info = await layer.getInfo();
-        const finalImageSize = getFinalImageSize();
+        const finalImageSize = GlobalGlobalSettings.getFinalImageSize();
 
         const top = Math.ceil((info.height - this.internalRepresentation.bitmap.height) / 2);
         const left = Math.ceil((info.width - this.internalRepresentation.bitmap.width) / 2);
@@ -33,7 +33,7 @@ export class JimpLayerStrategy {
 
         layer.resize(finalImageSize.height, finalImageSize.width);
 
-        const overlayFile = getWorkingDirectory() + 'overlay' + randomId() + '.png';
+        const overlayFile = GlobalSettings.getWorkingDirectory() + 'overlay' + randomId() + '.png';
         await layer.toFile(overlayFile)
 
         const overlay = await Jimp.read(overlayFile);

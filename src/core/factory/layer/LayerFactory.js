@@ -1,7 +1,7 @@
-import {getLayerStrategy} from "../../GlobalSettings.js";
 import {JimpLayerStrategy} from "./strategy/JimpLayerStrategy.js";
 import {SharpLayerStrategy} from "./strategy/SharpLayerStrategy.js";
 import {Layer} from "./Layer.js";
+import {GlobalSettings} from "../../GlobalSettings.js";
 
 
 export class LayerFactory {
@@ -9,7 +9,7 @@ export class LayerFactory {
     }
 
     static getNewLayer = async (height, width, backgroundColor) => {
-        switch (getLayerStrategy()) {
+        switch (GlobalSettings.getLayerStrategy()) {
             case 'jimp':
                 const jimpLayer = new Layer(new JimpLayerStrategy())
                 await jimpLayer.newLayer(height, width, backgroundColor);
@@ -24,7 +24,7 @@ export class LayerFactory {
     }
 
     static getLayerFromFile = async filename => {
-        switch (getLayerStrategy()) {
+        switch (GlobalSettings.getLayerStrategy()) {
             case 'jimp':
                 const jimpLayer = new Layer(new JimpLayerStrategy())
                 await jimpLayer.fromFile(filename);
