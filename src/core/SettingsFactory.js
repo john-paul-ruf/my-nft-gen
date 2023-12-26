@@ -88,6 +88,7 @@ export class SettingsFactory {
                     runName: 'be-prepared-to-wait',
                     frameInc: 1,
                     numberOfFrame: 30,
+                    finalFileName: 'test-run' + randomId(),
                     allPrimaryEffects: [
                         {effect: animateBackgroundEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: hexEffect, effectChance: 100, ignoreAdditionalEffects: false},
