@@ -1,5 +1,3 @@
-import {animateBackgroundEffect} from "./effect.js";
-
 export const generate = async (settings) => {
 
     const finalImageSize = GlobalSettings.getFinalImageSize();
