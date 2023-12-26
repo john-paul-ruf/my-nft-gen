@@ -32,7 +32,7 @@ export const generate = async (settings) => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: await GlobalSettings.getFinalImageSize(),
+        innerColor: await settings.getNeutralFromBucket(),
         outerColor: await settings.getColorFromBucket(),
         smallRadius: getRandomFromArray(config.smallRadius),
         smallNumberOfRings: getRandomIntInclusive(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),
