@@ -9,8 +9,6 @@ export const threeDimensionalShapeEffect = {
     name: 'three-dimensional-shape',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
     requiresLayer: true,
-    ignoreAdditionalEffects: false,
 }
 

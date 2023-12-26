@@ -9,7 +9,5 @@ export const porousEffect = {
     name: 'porous.png',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
     requiresLayer: true,
-    ignoreAdditionalEffects: false,
 }

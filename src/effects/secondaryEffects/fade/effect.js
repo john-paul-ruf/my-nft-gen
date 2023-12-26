@@ -9,7 +9,6 @@ export const fadeEffect = {
     name: 'fade',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
     requiresLayer: false,
 }
 

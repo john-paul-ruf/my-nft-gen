@@ -9,7 +9,6 @@ export const blurEffect = {
     name: 'blur',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
     requiresLayer: false,
 }
 

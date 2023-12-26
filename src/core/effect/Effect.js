@@ -1,6 +1,3 @@
-import {applySecondaryEffects} from "./generateEffect.js";
-
-
 ///////////////////////////////////////////////////////////////
 /*
     This class handles all effects inside the animate function
@@ -16,17 +13,12 @@ import {applySecondaryEffects} from "./generateEffect.js";
 ///////////////////////////////////////////////////////////////
 export class Effect {
 
-    constructor(card, settings) {
+    constructor(card, settings, ignoreAdditionalEffects, additionalEffects) {
         this.invoke = card.effect.invoke; //the effect to call
         this.settings = settings;
-
-        this.additionalEffects = []
+        this.ignoreAdditionalEffects = ignoreAdditionalEffects;
+        this.additionalEffects = additionalEffects;
         this.card = card;
-        if (this.card.requiresLayer) {  //Does this effect qualify for additional effects?
-            if (!this.card.ignoreAdditionalEffects) {
-                this.additionalEffects = applySecondaryEffects()  //Then pile them on
-            }
-        }
     }
 
     async init() {
@@ -38,7 +30,7 @@ export class Effect {
         await this.invoke(layer, this.data, currentFrame, totalFrames) //execute the effect
         for (let i = 0; i < this.additionalEffects.length; i++) {
             //if any additional effects? call them as well.
-            if (!this.card.ignoreAdditionalEffects) {
+            if (!this.ignoreAdditionalEffects) {
                 await this.additionalEffects[i].invoke(layer, this.additionalEffects[i].data, currentFrame, totalFrames);
             }
         }

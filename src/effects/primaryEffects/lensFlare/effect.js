@@ -9,9 +9,7 @@ export const lensFlareEffect = {
     name: 'upgraded-lens-flare', //this will make it so slow...
     generateData: generate,
     effect: effect,
-    effectChance: 100,
     requiresLayer: true,
-    ignoreAdditionalEffects: false,
 }
 
 

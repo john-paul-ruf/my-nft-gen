@@ -1,6 +1,7 @@
 import ffmpegInstaller from "@ffmpeg-installer/ffmpeg";
 import ffprobe from "@ffprobe-installer/ffprobe";
 import ffmpeg from "fluent-ffmpeg";
+import {timeLeft} from "../utils/timeLeft.js";
 
 export const writeToMp4 = async (fileSelector, config) => {
 
@@ -28,7 +29,7 @@ export const writeToMp4 = async (fileSelector, config) => {
                     console.log("mp4 Finished");
                 })
                 .on('progress', (progress) => {
-                    console.log(progress);
+                    console.log(`${config.finalFileName} - rendering mp4 - ${progress.frames}`);
                 })
                 .on("error", (e) => {
                     reject();

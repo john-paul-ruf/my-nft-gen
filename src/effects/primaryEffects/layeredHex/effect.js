@@ -9,9 +9,7 @@ export const layeredHexEffect = {
     name: 'layered-hex-now-with-fuzz',
     generateData: generate,
     effect: effect,
-    effectChance: 100,
     requiresLayer: true,
-    ignoreAdditionalEffects: false,
 }
 
 

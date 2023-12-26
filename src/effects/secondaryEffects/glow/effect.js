@@ -9,7 +9,6 @@ export const glowEffect = {
     name: 'glow',
     generateData: generate,
     effect: effect,
-    effectChance: 0,
     requiresLayer: false,
 }
 

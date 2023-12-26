@@ -1,4 +1,3 @@
-import {generateFinalImageEffects, generatePrimaryEffects} from "../effect/generateEffect.js";
 import {ComposeInfo} from "../utils/composeInfo.js";
 import {timeLeft} from "../utils/timeLeft.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
@@ -7,19 +6,109 @@ import {writeScreenCap} from "../output/writeScreenCap.js";
 import fs from "fs";
 import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
+import {animateBackgroundEffect} from "../../effects/primaryEffects/animateBackground/effect.js";
+import {hexEffect} from "../../effects/primaryEffects/hex/effect.js";
+import {invertedRayRingEffect} from "../../effects/primaryEffects/invertedRayRing/effect.js";
+import {rayRingEffect} from "../../effects/primaryEffects/rayRing/effect.js";
+import {wireframeSpiralEffect} from "../../effects/primaryEffects/wireframeSpiral/effect.js";
+import {fuzzBandsEffect} from "../../effects/primaryEffects/fuzzBands/effect.js";
+import {encircledSpiralEffect} from "../../effects/primaryEffects/encircledSpiral/effect.js";
+import {layeredHexEffect} from "../../effects/primaryEffects/layeredHex/effect.js";
+import {layeredRingsEffect} from "../../effects/primaryEffects/layeredRings/effect.js";
+import {nthRingsEffect} from "../../effects/primaryEffects/nthRings/effect.js";
+import {eightEffect} from "../../effects/primaryEffects/eight/effect.js";
+import {fuzzyRippleEffect} from "../../effects/primaryEffects/fuzzyRipples/effect.js";
+import {ampEffect} from "../../effects/primaryEffects/amp/effect.js";
+import {scopesEffect} from "../../effects/primaryEffects/scopes/effect.js";
+import {blinkOnEffect} from "../../effects/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
+import {gatesEffect} from "../../effects/primaryEffects/gates/effect.js";
+import {lensFlareEffect} from "../../effects/primaryEffects/lensFlare/effect.js";
+import {viewportEffect} from "../../effects/primaryEffects/viewport/effect.js";
+import {threeDimensionalShapeEffect} from "../../effects/primaryEffects/threeDimensionalShape/effect.js";
+import {mappedFramesEffect} from "../../effects/primaryEffects/mappedFrames/effect.js";
+import {threeDimensionalRingsEffect} from "../../effects/primaryEffects/threeDeminsonalRings/effect.js";
+import {imageOverlayEffect} from "../../effects/primaryEffects/imageOverlay/effect.js";
+import {porousEffect} from "../../effects/primaryEffects/porous/effect.js";
+import {verticalScanLinesEffect} from "../../effects/primaryEffects/scanLines/effect.js";
+import {randomizeEffect} from "../../effects/secondaryEffects/randomize/effect.js";
+import {glowEffect} from "../../effects/secondaryEffects/glow/effect.js";
+import {fadeEffect} from "../../effects/secondaryEffects/fade/effect.js";
+import {singleLayerBlurEffect} from "../../effects/secondaryEffects/single-layer-blur/effect.js";
+import {singleLayerGlitchFractalEffect} from "../../effects/secondaryEffects/single-layer-glitch-fractal/effect.js";
+import {
+    singleLayerGlitchDrumrollHorizontalWaveEffect
+} from "../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/effect.js";
+import {blurEffect} from "../../effects/finalImageEffects/blur/effect.js";
+import {pixelateEffect} from "../../effects/finalImageEffects/pixelate/effect.js";
+import {glitchInverseEffect} from "../../effects/finalImageEffects/glitchInverse/effect.js";
+import {glitchFractalEffect} from "../../effects/finalImageEffects/glitchFractal/effect.js";
+import {
+    glitchDrumrollHorizontalWaveEffect
+} from "../../effects/finalImageEffects/glitchDrumrollHorizontalWave/effect.js";
+import {getRandomIntExclusive} from "../math/random.js";
+import {Effect} from "../effect/Effect.js";
 
 export class LoopBuilder {
     constructor(settings) {
         this.settings = settings
         this.finalFileName = settings.config.finalFileName;
         this.config = settings.config;
+
+        this.context = {
+            numberOfFrame: this.config.numberOfFrame,
+            finalImageSize: GlobalSettings.getFinalImageSize(),
+            workingDirectory: GlobalSettings.getWorkingDirectory(),
+            layerStrategy: GlobalSettings.getLayerStrategy(),
+
+            frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a MP4
+
+            //This determines the final image contents
+            //The effect array is super important
+            //Understanding effects is key to running this program.
+            effects: this.#generatePrimaryEffects(this.settings),
+            finalImageEffects: this.#generateFinalImageEffects(this.settings),
+            finalFileName: this.config.finalFileName,
+        }
+
+        //order in array represents layer order of final image
+        this.allPrimaryEffects = settings.allPrimaryEffects;
+        this.allSecondaryEffects = settings.allPrimaryEffects;
+        this.allFinalImageEffects = settings.allPrimaryEffects
+
+    }
+
+    #generateEffects(possibleEffectList) {
+        const effectList = [];
+
+        //For each effect in the possible effects list.
+        possibleEffectList.forEach(obj => {
+            const chance = getRandomIntExclusive(0, 100) //roll the dice
+            if (obj.effectChance > chance) { //if the roll was below the chance of hit
+                effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, this.#applySecondaryEffects()));
+            }
+        })
+
+        return effectList;
+    }
+
+    #generatePrimaryEffects() {
+        return this.#generateEffects(this.settings.allPrimaryEffects)
+    }
+
+    #applySecondaryEffects() {
+        return this.#generateEffects(this.settings.allSecondaryEffects)
+    }
+
+
+    #generateFinalImageEffects() {
+        return this.#generateEffects(this.settings.allFinalImageEffects)
     }
 
 
     //This function creates a new image (layer) for each main effect
     async #getLayers(w, h, context) {
         const extraLayers = [];
-        for (let i = 0; i < context.effects.length; i++) { //effect is found in the outermost layer of this function
+        for (let i = 0; i < this.context.effects.length; i++) { //effect is found in the outermost layer of this function
             extraLayers.push(await LayerFactory.getNewLayer(h, w, '#00000000'))
         }
         return extraLayers;
@@ -33,7 +122,7 @@ export class LoopBuilder {
 
             const mainLayeredEffects = []; //will be an array of promises
 
-            for (let i = 0; i < context.layers.length; i++) {
+            for (let i = 0; i < this.context.layers.length; i++) {
                 /////////////////////////////////////////////////////////////////////
                 // invokes one effect, which returns a promise
                 // In this promise
@@ -41,7 +130,7 @@ export class LoopBuilder {
                 //      main effect then awaits attached secondary effects in order
                 // effect promise is added to array
                 /////////////////////////////////////////////////////////////////////
-                mainLayeredEffects.push(context.effects[i].invokeEffect(context.layers[i], frameNumber, context.numberOfFrame));
+                mainLayeredEffects.push(this.context.effects[i].invokeEffect(this.context.layers[i], frameNumber, this.context.numberOfFrame));
             }
 
             //when all effect promises complete
@@ -66,8 +155,8 @@ export class LoopBuilder {
             ////////////////////////
             //get fresh files every loop
             ////////////////////////
-            const background = await LayerFactory.getNewLayer(context.finalImageSize.height, context.finalImageSize.width, context.backgroundColor);
-            context.layers = await this.#getLayers(context.finalImageSize.width, context.finalImageSize.height, context)
+            const background = await LayerFactory.getNewLayer(this.context.finalImageSize.height, this.context.finalImageSize.width, this.context.backgroundColor);
+            this.context.layers = await this.#getLayers(this.context.finalImageSize.width, this.context.finalImageSize.height, context)
 
             /////////////////////////////
             //run all effects for frame
@@ -79,24 +168,24 @@ export class LoopBuilder {
             //Secondary Magic:  this composites the layers into one image, in order they are in the layers array.
             //Last is on top
             ///////////////////////
-            for (let i = 0; i < context.layers.length; i++) {
-                await background.compositeLayerOver(context.layers[i]);
+            for (let i = 0; i < this.context.layers.length; i++) {
+                await background.compositeLayerOver(this.context.layers[i]);
             }
 
             ////////////////////////
             // apply final image effects one at a time
             ////////////////////////
-            for (let e = 0; e < context.finalImageEffects.length; e++) {
-                await context.finalImageEffects[e].invokeEffect(background, frameNumber, context.numberOfFrame);
+            for (let e = 0; e < this.context.finalImageEffects.length; e++) {
+                await this.context.finalImageEffects[e].invokeEffect(background, frameNumber, this.context.numberOfFrame);
             }
 
             //////////////////////
             // write to disk
             // still can run multiple instances at once
             /////////////////////
-            const filename = context.workingDirectory + context.finalFileName + '-frame-' + frameNumber.toString() + '.png';
+            const filename = this.context.workingDirectory + this.context.finalFileName + '-frame-' + frameNumber.toString() + '.png';
             await background.toFile(filename);
-            context.frameFilenames.push(filename);
+            this.context.frameFilenames.push(filename);
 
             resolve();
         });
@@ -105,39 +194,20 @@ export class LoopBuilder {
     async constructLoop() {
 
         return new Promise(async (resolve) => {
+
             this.config.startTime = new Date();
+            this.context.backgroundColor = await this.settings.getBackgroundFromBucket();
 
-            const context = {
-                numberOfFrame: this.config.numberOfFrame,
-                finalImageSize: GlobalSettings.getFinalImageSize(),
-                workingDirectory: GlobalSettings.getWorkingDirectory(),
-                layerStrategy: GlobalSettings.getLayerStrategy(),
-
-                backgroundColor: await this.settings.getBackgroundFromBucket(),
-
-                frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a MP4
-
-                //This determines the final image contents
-                //The effect array is super important
-                //Understanding effects is key to running this program.
-                effects: generatePrimaryEffects(this.settings),
-                finalImageEffects: generateFinalImageEffects(this.settings),
-                finalFileName: this.config.finalFileName,
-            }
-
-            for (let i = 0; i < context.effects.length; i++) {
-                await context.effects[i].init();
+            for (let i = 0; i < this.context.effects.length; i++) {
+                await this.context.effects[i].init();
             }
 
             this.composeInfo = new ComposeInfo({
                 config: this.config,
-                effects: context.effects,
-                finalImageEffects: context.finalImageEffects,
+                effects: this.context.effects,
+                finalImageEffects: this.context.finalImageEffects,
                 settings: this.settings
             });
-
-            //For console info
-            console.log(await this.composeInfo.composeInfo());
 
             ////////////////////////
             //ANIMATE - start here
@@ -145,7 +215,7 @@ export class LoopBuilder {
             //Here we create all the frames in order
             ////////////////////////
             for (let f = 0; f < this.config.numberOfFrame; f = f + this.config.frameInc) {
-                await this.#createSingleFrame(f, context);
+                await this.#createSingleFrame(f, this.context);
                 console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
             }
 
@@ -153,12 +223,12 @@ export class LoopBuilder {
             //WRITE TO FILE
             ////////////////////////
             await writeArtistCard(this.config, this.composeInfo);
-            await writeToMp4(context.workingDirectory + this.config.finalFileName + '-frame-%d.png', this.config);
-            await writeScreenCap(context.frameFilenames[0], this.config);
+            await writeToMp4(this.context.workingDirectory + this.config.finalFileName + '-frame-%d.png', this.config);
+            await writeScreenCap(this.context.frameFilenames[0], this.config);
 
-            for (let f = 0; f < context.frameFilenames.length; f++) {
+            for (let f = 0; f < this.context.frameFilenames.length; f++) {
                 //delete files
-                fs.unlinkSync(context.frameFilenames[f]);
+                fs.unlinkSync(this.context.frameFilenames[f]);
             }
 
             resolve();
