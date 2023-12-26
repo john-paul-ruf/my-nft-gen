@@ -13,7 +13,7 @@ export class Settings {
                     frameInc = 1,
                     numberOfFrame = 1800,
                     finalFileName = randomId(),
-                    fileOut = GlobalSettings.getWorkingDirectory() + this.finalFileName
+                    fileOut = GlobalSettings.getWorkingDirectory() + finalFileName
                 }) {
 
         this.colorScheme = colorScheme;
