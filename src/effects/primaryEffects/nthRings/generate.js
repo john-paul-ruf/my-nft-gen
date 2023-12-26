@@ -1,9 +1,10 @@
 import {getRandomFromArray, getRandomIntInclusive} from "../../../core/math/random.js";
 import {nthRings} from "./invoke.js";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const config = {
         invertLayers: true,
@@ -31,7 +32,7 @@ export const generate = async (settings) => {
         width: finalImageSize.width,
         stroke: config.stroke,
         thickness: config.thickness,
-        innerColor: await GlobalSettings.getFinalImageSize(),
+        innerColor: await settings.getNeutralFromBucket(),
         outerColor: await settings.getColorFromBucket(),
         smallRadius: getRandomFromArray(config.smallRadius),
         smallNumberOfRings: getRandomIntInclusive(config.smallNumberOfRings.lower, config.smallNumberOfRings.upper),

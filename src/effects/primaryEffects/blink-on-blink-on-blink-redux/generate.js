@@ -2,50 +2,10 @@ import {fileURLToPath} from "url";
 import path from "path";
 import {blinkOnEffect} from "./effect.js";
 import {getRandomIntInclusive} from "../../../core/math/random.js";
-
-const computeInitialInfo = (num) => {
-    const info = [];
-    for (let i = 0; i <= num; i++) {
-        const props = {
-            hue: getRandomIntInclusive(config.randomizeSpin.lower, config.randomizeSpin.upper),
-            red: getRandomIntInclusive(config.randomizeRed.lower, config.randomizeRed.upper),
-            green: getRandomIntInclusive(config.randomizeGreen.lower, config.randomizeGreen.upper),
-            blue: getRandomIntInclusive(config.randomizeBlue.lower, config.randomizeBlue.upper),
-        }
-
-        info.push({
-            initialRotation: getRandomIntInclusive(config.initialRotation.lower, config.initialRotation.upper),
-            rotationSpeedRange: getRandomIntInclusive(config.rotationSpeedRange.lower, config.rotationSpeedRange.upper),
-            counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
-            diameter: getRandomIntInclusive(config.diameterRange.lower, config.diameterRange.upper),
-            glowLowerRange: getRandomIntInclusive(config.glowLowerRange.lower, config.glowLowerRange.upper),
-            glowUpperRange: getRandomIntInclusive(config.glowUpperRange.lower, config.glowUpperRange.upper),
-            glowTimes: getRandomIntInclusive(config.glowTimes.lower, config.glowTimes.upper),
-            randomize: [
-                {
-                    apply: 'hue',
-                    params: [props.hue]
-                },
-                {
-                    apply: 'red',
-                    params: [props.red]
-                },
-                {
-                    apply: 'green',
-                    params: [props.green]
-                },
-                {
-                    apply: 'blue',
-                    params: [props.blue]
-                }
-            ]
-        });
-    }
-    return info;
-}
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 export const generate = async (settings) => {
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const config = {
         layerOpacity: 0.75,
@@ -70,6 +30,47 @@ export const generate = async (settings) => {
         getInfo: () => {
             return `${blinkOnEffect.name}: ${data.numberOfBlinks} blinks`
         }
+    }
+
+    const computeInitialInfo = (num) => {
+        const info = [];
+        for (let i = 0; i <= num; i++) {
+            const props = {
+                hue: getRandomIntInclusive(config.randomizeSpin.lower, config.randomizeSpin.upper),
+                red: getRandomIntInclusive(config.randomizeRed.lower, config.randomizeRed.upper),
+                green: getRandomIntInclusive(config.randomizeGreen.lower, config.randomizeGreen.upper),
+                blue: getRandomIntInclusive(config.randomizeBlue.lower, config.randomizeBlue.upper),
+            }
+
+            info.push({
+                initialRotation: getRandomIntInclusive(config.initialRotation.lower, config.initialRotation.upper),
+                rotationSpeedRange: getRandomIntInclusive(config.rotationSpeedRange.lower, config.rotationSpeedRange.upper),
+                counterClockwise: getRandomIntInclusive(config.counterClockwise.lower, config.counterClockwise.upper),
+                diameter: getRandomIntInclusive(config.diameterRange.lower, config.diameterRange.upper),
+                glowLowerRange: getRandomIntInclusive(config.glowLowerRange.lower, config.glowLowerRange.upper),
+                glowUpperRange: getRandomIntInclusive(config.glowUpperRange.lower, config.glowUpperRange.upper),
+                glowTimes: getRandomIntInclusive(config.glowTimes.lower, config.glowTimes.upper),
+                randomize: [
+                    {
+                        apply: 'hue',
+                        params: [props.hue]
+                    },
+                    {
+                        apply: 'red',
+                        params: [props.red]
+                    },
+                    {
+                        apply: 'green',
+                        params: [props.green]
+                    },
+                    {
+                        apply: 'blue',
+                        params: [props.blue]
+                    }
+                ]
+            });
+        }
+        return info;
     }
 
     data.blinkArray = computeInitialInfo(data.numberOfBlinks);

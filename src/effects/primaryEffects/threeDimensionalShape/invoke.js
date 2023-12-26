@@ -23,7 +23,7 @@ const draw = async (context, filename) => {
     });
 
 
-    const geometry = new THREE.IcosahedronBufferGeometry(10);
+    const geometry = new THREE.PolyhedronGeometry (20, 20);
 
     const material = new THREE.MeshPhongMaterial({
         color: hexToRgba(context.data.color),

@@ -1,11 +1,12 @@
 import {getRandomIntInclusive, randomNumber} from "../../../core/math/random.js";
 import {verticalScanLinesEffect} from "./effect.js";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const config = {
         lines: {lower: 2, upper: 4},

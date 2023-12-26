@@ -18,9 +18,9 @@ export const generate = async (settings) => {
         ringGap: randomNumber(config.ringGap.lower, config.ringGap.upper),
         rings: getRandomIntInclusive(config.rings.lower, config.rings.upper),
         ringRadius: randomNumber(config.ringRadius.lower, config.ringRadius.upper),
-        light1: settings.getLightFromBucket(),
-        light2: settings.getLightFromBucket(),
-        light3: settings.getLightFromBucket(),
+        light1: await settings.getLightFromBucket(),
+        light2: await settings.getLightFromBucket(),
+        light3: await settings.getLightFromBucket(),
         getInfo: () => {
             return `${threeDimensionalRingsEffect.name}: ${data.rings} rings`
         }

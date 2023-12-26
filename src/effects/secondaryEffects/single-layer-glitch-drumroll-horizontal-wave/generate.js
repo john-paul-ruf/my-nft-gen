@@ -1,5 +1,6 @@
 import {singleLayerGlitchDrumrollHorizontalWaveEffect} from "./effect.js";
 import {getRandomIntInclusive} from "../../../core/math/random.js";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 const config = {
     glitchChance: 100,
@@ -10,7 +11,7 @@ const config = {
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const getRoll = () => {
 

@@ -1,9 +1,10 @@
 import {getRandomIntInclusive, randomNumber} from "../../../core/math/random.js";
 import {layeredRingsEffect} from "./effect.js";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const config = {
         thickness: 4,

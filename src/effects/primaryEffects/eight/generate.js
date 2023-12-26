@@ -1,20 +1,21 @@
 import {getRandomIntInclusive} from "../../../core/math/random.js";
 import {eightEffect} from "./effect.js";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const config = {
         layerOpacity: 1,
         underLayerOpacity: 0.3,
         stroke: 1,
         thickness: 4,
-        smallRadius: {lower: settings.finalImageSize.longestSide * 0.10, upper: settings.finalImageSize.longestSide * 0.15},
+        smallRadius: {lower: finalImageSize.longestSide * 0.10, upper: finalImageSize.longestSide * 0.15},
         smallNumberOfRings: {lower: 12, upper: 16},
-        ripple: {lower: settings.finalImageSize.shortestSide * 0.05, upper: settings.finalImageSize.shortestSide * 0.10},
+        ripple: {lower: finalImageSize.shortestSide * 0.05, upper: finalImageSize.shortestSide * 0.10},
         times: {lower: 2, upper: 4},
-        smallerRingsGroupRadius: {lower: settings.finalImageSize.shortestSide * 0.25, upper: settings.finalImageSize.shortestSide * 0.30},
+        smallerRingsGroupRadius: {lower: finalImageSize.shortestSide * 0.25, upper: finalImageSize.shortestSide * 0.30},
         accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
         blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
         featherTimes: {lower: 2, upper: 4},

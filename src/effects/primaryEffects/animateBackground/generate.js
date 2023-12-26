@@ -1,3 +1,5 @@
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
+
 export const generate = async (settings) => {
 
     const finalImageSize = GlobalSettings.getFinalImageSize();

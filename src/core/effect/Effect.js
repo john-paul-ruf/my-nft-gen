@@ -24,6 +24,9 @@ export class Effect {
     async init() {
         //the effect, instantiated
         this.data = await this.card.generateData(this.settings);
+        for (let i = 0; i < this.additionalEffects.length; i++) {
+            await this.additionalEffects[i].init();
+        }
     }
 
     async invokeEffect(layer, currentFrame, totalFrames) {
