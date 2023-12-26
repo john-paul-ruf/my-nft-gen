@@ -74,9 +74,6 @@ export class SettingsFactory {
                     allSecondaryEffects: [
                         {effect: glowEffect, effectChance: 100, ignoreAdditionalEffects: false}
                     ],
-                    allFinalImageEffects: [
-                        {effect: glitchDrumrollHorizontalWaveEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                    ],
                 }
             case SettingsFactory.AvailableSettings.everythingBagel:
                 return {
