@@ -6,45 +6,6 @@ import {writeScreenCap} from "../output/writeScreenCap.js";
 import fs from "fs";
 import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
-import {animateBackgroundEffect} from "../../effects/primaryEffects/animateBackground/effect.js";
-import {hexEffect} from "../../effects/primaryEffects/hex/effect.js";
-import {invertedRayRingEffect} from "../../effects/primaryEffects/invertedRayRing/effect.js";
-import {rayRingEffect} from "../../effects/primaryEffects/rayRing/effect.js";
-import {wireframeSpiralEffect} from "../../effects/primaryEffects/wireframeSpiral/effect.js";
-import {fuzzBandsEffect} from "../../effects/primaryEffects/fuzzBands/effect.js";
-import {encircledSpiralEffect} from "../../effects/primaryEffects/encircledSpiral/effect.js";
-import {layeredHexEffect} from "../../effects/primaryEffects/layeredHex/effect.js";
-import {layeredRingsEffect} from "../../effects/primaryEffects/layeredRings/effect.js";
-import {nthRingsEffect} from "../../effects/primaryEffects/nthRings/effect.js";
-import {eightEffect} from "../../effects/primaryEffects/eight/effect.js";
-import {fuzzyRippleEffect} from "../../effects/primaryEffects/fuzzyRipples/effect.js";
-import {ampEffect} from "../../effects/primaryEffects/amp/effect.js";
-import {scopesEffect} from "../../effects/primaryEffects/scopes/effect.js";
-import {blinkOnEffect} from "../../effects/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
-import {gatesEffect} from "../../effects/primaryEffects/gates/effect.js";
-import {lensFlareEffect} from "../../effects/primaryEffects/lensFlare/effect.js";
-import {viewportEffect} from "../../effects/primaryEffects/viewport/effect.js";
-import {threeDimensionalShapeEffect} from "../../effects/primaryEffects/threeDimensionalShape/effect.js";
-import {mappedFramesEffect} from "../../effects/primaryEffects/mappedFrames/effect.js";
-import {threeDimensionalRingsEffect} from "../../effects/primaryEffects/threeDeminsonalRings/effect.js";
-import {imageOverlayEffect} from "../../effects/primaryEffects/imageOverlay/effect.js";
-import {porousEffect} from "../../effects/primaryEffects/porous/effect.js";
-import {verticalScanLinesEffect} from "../../effects/primaryEffects/scanLines/effect.js";
-import {randomizeEffect} from "../../effects/secondaryEffects/randomize/effect.js";
-import {glowEffect} from "../../effects/secondaryEffects/glow/effect.js";
-import {fadeEffect} from "../../effects/secondaryEffects/fade/effect.js";
-import {singleLayerBlurEffect} from "../../effects/secondaryEffects/single-layer-blur/effect.js";
-import {singleLayerGlitchFractalEffect} from "../../effects/secondaryEffects/single-layer-glitch-fractal/effect.js";
-import {
-    singleLayerGlitchDrumrollHorizontalWaveEffect
-} from "../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/effect.js";
-import {blurEffect} from "../../effects/finalImageEffects/blur/effect.js";
-import {pixelateEffect} from "../../effects/finalImageEffects/pixelate/effect.js";
-import {glitchInverseEffect} from "../../effects/finalImageEffects/glitchInverse/effect.js";
-import {glitchFractalEffect} from "../../effects/finalImageEffects/glitchFractal/effect.js";
-import {
-    glitchDrumrollHorizontalWaveEffect
-} from "../../effects/finalImageEffects/glitchDrumrollHorizontalWave/effect.js";
 import {getRandomIntExclusive} from "../math/random.js";
 import {Effect} from "../effect/Effect.js";
 
@@ -106,7 +67,7 @@ export class LoopBuilder {
 
 
     //This function creates a new image (layer) for each main effect
-    async #getLayers(w, h, context) {
+    async #getLayers(w, h) {
         const extraLayers = [];
         for (let i = 0; i < this.context.effects.length; i++) { //effect is found in the outermost layer of this function
             extraLayers.push(await LayerFactory.getNewLayer(h, w, '#00000000'))
@@ -117,7 +78,7 @@ export class LoopBuilder {
     /////////////////////////////
     //Process the main and secondary effects
     ////////////////////////////
-    async #processFrame(frameNumber, context) {
+    async #processFrame(frameNumber) {
         return new Promise(async (resolve) => {
 
             const mainLayeredEffects = []; //will be an array of promises

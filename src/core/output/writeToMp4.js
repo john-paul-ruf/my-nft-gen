@@ -1,7 +1,6 @@
 import ffmpegInstaller from "@ffmpeg-installer/ffmpeg";
 import ffprobe from "@ffprobe-installer/ffprobe";
 import ffmpeg from "fluent-ffmpeg";
-import {timeLeft} from "../utils/timeLeft.js";
 
 export const writeToMp4 = async (fileSelector, config) => {
 

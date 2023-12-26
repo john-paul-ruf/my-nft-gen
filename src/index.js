@@ -3,30 +3,12 @@ import {LoopBuilder} from "./core/animation/LoopBuilder.js";
 import {NeonColorScheme, NeonColorSchemeFactory} from "./core/color/NeonColorSchemeFactory.js";
 import parseArgs from "minimist";
 import {randomId} from "./core/math/random.js";
-import {animateBackgroundEffect} from "./effects/primaryEffects/animateBackground/effect.js";
-import {hexEffect} from "./effects/primaryEffects/hex/effect.js";
-import {invertedRayRingEffect} from "./effects/primaryEffects/invertedRayRing/effect.js";
-import {rayRingEffect} from "./effects/primaryEffects/rayRing/effect.js";
-import {wireframeSpiralEffect} from "./effects/primaryEffects/wireframeSpiral/effect.js";
 import {fuzzBandsEffect} from "./effects/primaryEffects/fuzzBands/effect.js";
 import {encircledSpiralEffect} from "./effects/primaryEffects/encircledSpiral/effect.js";
 import {layeredHexEffect} from "./effects/primaryEffects/layeredHex/effect.js";
-import {layeredRingsEffect} from "./effects/primaryEffects/layeredRings/effect.js";
-import {nthRingsEffect} from "./effects/primaryEffects/nthRings/effect.js";
-import {eightEffect} from "./effects/primaryEffects/eight/effect.js";
-import {fuzzyRippleEffect} from "./effects/primaryEffects/fuzzyRipples/effect.js";
 import {ampEffect} from "./effects/primaryEffects/amp/effect.js";
-import {scopesEffect} from "./effects/primaryEffects/scopes/effect.js";
-import {blinkOnEffect} from "./effects/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
-import {gatesEffect} from "./effects/primaryEffects/gates/effect.js";
 import {lensFlareEffect} from "./effects/primaryEffects/lensFlare/effect.js";
 import {viewportEffect} from "./effects/primaryEffects/viewport/effect.js";
-import {threeDimensionalShapeEffect} from "./effects/primaryEffects/threeDimensionalShape/effect.js";
-import {mappedFramesEffect} from "./effects/primaryEffects/mappedFrames/effect.js";
-import {threeDimensionalRingsEffect} from "./effects/primaryEffects/threeDeminsonalRings/effect.js";
-import {imageOverlayEffect} from "./effects/primaryEffects/imageOverlay/effect.js";
-import {porousEffect} from "./effects/primaryEffects/porous/effect.js";
-import {verticalScanLinesEffect} from "./effects/primaryEffects/scanLines/effect.js";
 
 //how many you want to print?
 const argv = parseArgs(process.argv)
