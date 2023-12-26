@@ -28,7 +28,7 @@ if (batchAmount > 0) {
 
         const settings = new Settings(bluePlateSpecial);
         const loopBuilder = new LoopBuilder(settings);
-        return loopBuilder.animate();
+        return loopBuilder.constructLoop();
     }
 
     const promiseArray = []

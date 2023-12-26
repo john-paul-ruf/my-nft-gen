@@ -19,7 +19,7 @@ export class Effect {
     constructor(card, settings) {
         this.invoke = card.effect.invoke; //the effect to call
         this.settings = settings;
-        //the effect, instantiated
+
         this.additionalEffects = []
         this.card = card;
         if (this.card.requiresLayer) {  //Does this effect qualify for additional effects?
@@ -30,6 +30,7 @@ export class Effect {
     }
 
     async init() {
+        //the effect, instantiated
         this.data = await this.card.generateData(this.settings);
     }
 
