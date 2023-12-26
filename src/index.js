@@ -14,7 +14,6 @@ if (batchAmount > 0) {
         // Try customizing the everythingBagel to see what
         // pretties you can create!
         ////////////////////////////////////////////////
-        //const settings = new Settings(bluePlateSpecial);
         const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.bluePlateSpecial}));
         const loopBuilder = new LoopBuilder(settings);
         return loopBuilder.constructLoop();
