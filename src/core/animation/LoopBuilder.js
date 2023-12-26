@@ -38,11 +38,11 @@ export class LoopBuilder {
 
     }
 
-    #generateEffects(possibleEffectList) {
+    #generatePrimaryEffects() {
         const effectList = [];
 
         //For each effect in the possible effects list.
-        possibleEffectList.forEach(obj => {
+        this.settings.allPrimaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
                 effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, this.#applySecondaryEffects()));
@@ -52,17 +52,32 @@ export class LoopBuilder {
         return effectList;
     }
 
-    #generatePrimaryEffects() {
-        return this.#generateEffects(this.settings.allPrimaryEffects)
-    }
-
     #applySecondaryEffects() {
-        return this.#generateEffects(this.settings.allSecondaryEffects)
+        const effectList = [];
+
+        //For each effect in the possible effects list.
+        this.settings.allSecondaryEffects.forEach(obj => {
+            const chance = getRandomIntExclusive(0, 100) //roll the dice
+            if (obj.effectChance > chance) { //if the roll was below the chance of hit
+                effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, []));
+            }
+        })
+        return effectList;
     }
 
 
     #generateFinalImageEffects() {
-        return this.#generateEffects(this.settings.allFinalImageEffects)
+        const effectList = [];
+
+        //For each effect in the possible effects list.
+        this.settings.allFinalImageEffects.forEach(obj => {
+            const chance = getRandomIntExclusive(0, 100) //roll the dice
+            if (obj.effectChance > chance) { //if the roll was below the chance of hit
+                effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, this.#applySecondaryEffects()));
+            }
+        })
+
+        return effectList;
     }
 
 
@@ -161,6 +176,10 @@ export class LoopBuilder {
 
             for (let i = 0; i < this.context.effects.length; i++) {
                 await this.context.effects[i].init();
+            }
+
+            for (let i = 0; i < this.context.finalImageEffects.length; i++) {
+                await this.context.finalImageEffects[i].init();
             }
 
             this.composeInfo = new ComposeInfo({

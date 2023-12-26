@@ -10,7 +10,7 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 
 const drawHexLine = async (angle, index, context) => {
 
-    const finalImageSize = GlobalGlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const loopCount = index + 1;
     const direction = loopCount % 2;

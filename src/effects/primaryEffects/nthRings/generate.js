@@ -1,9 +1,10 @@
 import {getRandomFromArray, getRandomIntInclusive} from "../../../core/math/random.js";
 import {nthRings} from "./invoke.js";
+import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 export const generate = async (settings) => {
 
-    const finalImageSize = await GlobalSettings.getFinalImageSize();
+    const finalImageSize = GlobalSettings.getFinalImageSize();
 
     const config = {
         invertLayers: true,

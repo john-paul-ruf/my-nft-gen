@@ -14,9 +14,9 @@ export const generate = async (settings) => {
         color: await settings.getColorFromBucket(),
         emissive: await settings.getColorFromBucket(),
         specular: await settings.getColorFromBucket(),
-        light1: settings.getLightFromBucket(),
-        light2: settings.getLightFromBucket(),
-        light3: settings.getLightFromBucket(),
+        light1: await settings.getLightFromBucket(),
+        light2: await settings.getLightFromBucket(),
+        light3: await settings.getLightFromBucket(),
         getInfo: () => {
             return `${threeDimensionalShapeEffect.name}: ${data.times} rotation speed`
         }
