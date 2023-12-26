@@ -48,7 +48,6 @@ export class SettingsFactory {
         everythingBagel: 'everything-bagel',
     }
 
-
     static getPresetSetting = async ({request = SettingsFactory.AvailableSettings.bluePlateSpecial}) => {
         switch (request) {
             case SettingsFactory.AvailableSettings.bluePlateSpecial:

@@ -90,7 +90,7 @@ export class Settings {
                         {effect: glitchFractalEffect, effectChance: 0, ignoreAdditionalEffects: false},
                         {effect: glitchDrumrollHorizontalWaveEffect, effectChance: 0, ignoreAdditionalEffects: false},
                     ],
-                    finalFileName = randomId(),
+                    finalFileName = 'nsv' + randomId(),
                     fileOut = GlobalSettings.getWorkingDirectory() + finalFileName,
                 }) {
 
