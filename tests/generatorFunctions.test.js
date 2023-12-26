@@ -24,7 +24,6 @@ import {threeDimensionalShapeEffect} from "../src/effects/primaryEffects/threeDi
 import {threeDimensionalRingsEffect} from "../src/effects/primaryEffects/threeDeminsonalRings/effect.js";
 import {invertedRayRingEffect} from "../src/effects/primaryEffects/invertedRayRing/effect.js";
 import {lensFlareEffect} from "../src/effects/primaryEffects/lensFlare/effect.js";
-import {resetGlobalSettings} from "../src/core/Settings.js";
 import {layeredHexEffect} from "../src/effects/primaryEffects/layeredHex/effect.js";
 import {layeredRingsEffect} from "../src/effects/primaryEffects/layeredRings/effect.js";
 import {encircledSpiralEffect} from "../src/effects/primaryEffects/encircledSpiral/effect.js";

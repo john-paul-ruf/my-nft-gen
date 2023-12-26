@@ -170,6 +170,8 @@ export class LoopBuilder {
                 settings: this.settings
             });
 
+            console.log(await this.composeInfo.composeInfo())
+
             ////////////////////////
             //ANIMATE - start here
             //Outer most layer of the function

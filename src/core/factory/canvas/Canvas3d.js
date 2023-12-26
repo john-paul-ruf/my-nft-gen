@@ -8,7 +8,6 @@ import {Canvas, Image} from "canvas";
 import EventEmitter from 'events';
 import createGLContext from 'gl';
 import fs from "fs";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 
 const _ctx = Symbol('ctx');
 

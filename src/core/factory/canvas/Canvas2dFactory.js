@@ -6,15 +6,8 @@ export class Canvas2dFactory {
     }
 
     static getNewCanvas = async (width, height) => {
-        switch ('node-canvas') {
-            case 'node-canvas':
-                const canvas = new Canvas2d(new NodeCanvasStrategy())
-                await canvas.newCanvas(width, height);
-                return canvas;
-            /*case 'node-p5':*/
-
-            default:
-                throw 'Not a valid layer strategy';
-        }
+        const canvas = new Canvas2d(new NodeCanvasStrategy())
+        await canvas.newCanvas(width, height);
+        return canvas;
     }
 }
