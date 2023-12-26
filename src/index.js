@@ -15,7 +15,7 @@ if (batchAmount > 0) {
         // pretties you can create!
         ////////////////////////////////////////////////
         //const settings = new Settings(bluePlateSpecial);
-        const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.everythingBagel}));
+        const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.bluePlateSpecial}));
         const loopBuilder = new LoopBuilder(settings);
         return loopBuilder.constructLoop();
     }
