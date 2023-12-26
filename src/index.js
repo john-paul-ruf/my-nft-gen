@@ -28,7 +28,7 @@ if (batchAmount > 0) {
                 _INVOKER_: 'John Ruf',
                 runName: 'neon-dreams',
                 frameInc: 1,
-                numberOfFrame: 30,
+                numberOfFrame: 1800,
                 finalFileName: 'neon-dream' + randomId(),
                 allPrimaryEffects: [
                     {effect: fuzzBandsEffect, effectChance: 100, ignoreAdditionalEffects: false},
