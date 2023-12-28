@@ -63,11 +63,11 @@ export class SettingsFactory {
                     finalFileName: 'neon-dream' + randomId(),
                     allPrimaryEffects: [
                         {effect: fuzzBandsEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: encircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: layeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: ampEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: scopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: lensFlareEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: encircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: layeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: viewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ],
                     allSecondaryEffects: [
