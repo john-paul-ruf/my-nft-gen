@@ -13,7 +13,7 @@ export const generate = async (settings) => {
         startAngle: {lower: 0, upper: 360},
         numberOfRings: {lower: 5, upper: 10},
         stroke: 1,
-        thickness: 1,
+        thickness: 2,
         sparsityFactor: [60],
         sequencePixelConstant: {lower: finalImageSize.shortestSide * 0.001, upper: finalImageSize.shortestSide * 0.001},
         sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
