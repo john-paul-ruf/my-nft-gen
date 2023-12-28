@@ -38,6 +38,7 @@ import {glitchInverseEffect} from "../effects/finalImageEffects/glitchInverse/ef
 import {glitchFractalEffect} from "../effects/finalImageEffects/glitchFractal/effect.js";
 import {glitchDrumrollHorizontalWaveEffect} from "../effects/finalImageEffects/glitchDrumrollHorizontalWave/effect.js";
 import {randomId} from "./math/random.js";
+import {ColorSchemeJsFactory} from "./color/ColorSchemeJsFactory.js";
 
 export class SettingsFactory {
     constructor() {
@@ -52,7 +53,8 @@ export class SettingsFactory {
         switch (request) {
             case SettingsFactory.AvailableSettings.bluePlateSpecial:
                 return {
-                    colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
+                    //colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
+                    colorScheme: ColorSchemeJsFactory.getColorSchemeJsColorScheme({}),
                     neutrals: ['#FFFFFF'],
                     backgrounds: ['#000000',],
                     lights: ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],

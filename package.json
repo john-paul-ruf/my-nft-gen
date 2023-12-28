@@ -30,6 +30,7 @@
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "canvas": "^2.11.2",
+    "color-scheme": "^1.0.1",
     "gl": "^6.0.2",
     "jimp": "^0.22.10",
     "minimist": "^1.2.8",
