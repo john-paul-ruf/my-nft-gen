@@ -11,7 +11,7 @@ export const generate = async (settings) => {
         layerOpacity: 0.55,
         underLayerOpacity: 0.5,
         startAngle: {lower: 0, upper: 360},
-        numberOfRings: {lower: 5, upper: 10},
+        numberOfRings: {lower: 20, upper: 20},
         stroke: 1,
         thickness: 2,
         sparsityFactor: [60],
