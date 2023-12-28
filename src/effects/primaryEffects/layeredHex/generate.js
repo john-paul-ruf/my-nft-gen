@@ -28,7 +28,7 @@ export const generate = async (settings) => {
 
         movementGaston: {lower: 1, upper: 6},
 
-        initialNumberOfPoints: 8,
+        initialNumberOfPoints: 6,
         scaleByFactor: 1.125,
 
         accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
