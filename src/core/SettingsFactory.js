@@ -66,7 +66,7 @@ export class SettingsFactory {
                         {effect: ampEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: layeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: scopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: lensFlareEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: lensFlareEffect, effectChance: 0, ignoreAdditionalEffects: false},
                         {effect: encircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: viewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ],

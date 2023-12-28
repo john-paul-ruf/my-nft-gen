@@ -11,7 +11,7 @@ export const generate = async (settings) => {
         layerOpacity: 1,
         underLayerOpacity: 0.8,
         stroke: 2,
-        thickness: 10,
+        thickness: 18,
         ampStroke: 0,
         ampThickness: 1,
         radius: [350],
