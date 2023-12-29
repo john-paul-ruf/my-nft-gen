@@ -7,7 +7,6 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import fs from "fs";
 import {Settings} from "../../../core/Settings.js";
-import {Ray} from "three";
 
 export class RayRingInvertedEffect extends LayerEffect {
 

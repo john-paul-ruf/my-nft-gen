@@ -46,7 +46,6 @@ import {GlitchInverseEffect} from "../effects/finalImageEffects/glitchInverse/Gl
 import {
     GlitchDrumrollHorizontalWaveEffect
 } from "../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
-import {LayerEffect} from "../effects/LayerEffect.js";
 import {LayerEffectFromJSON} from "../effects/LayerEffectFromJSON.js";
 
 export class Settings {

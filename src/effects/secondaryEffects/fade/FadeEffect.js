@@ -1,5 +1,5 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
+import {getRandomIntInclusive, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
 

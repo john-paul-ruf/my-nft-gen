@@ -6,8 +6,6 @@ import {writeScreenCap} from "../output/writeScreenCap.js";
 import fs from "fs";
 import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
-import {getRandomIntExclusive} from "../math/random.js";
-import {Effect} from "../effect/Effect.js";
 
 export class LoopBuilder {
     constructor(settings) {
