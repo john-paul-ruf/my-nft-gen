@@ -2,6 +2,8 @@ import {Settings} from "./core/Settings.js";
 import {LoopBuilder} from "./core/animation/LoopBuilder.js";
 import parseArgs from "minimist";
 import {SettingsFactory} from "./core/SettingsFactory.js";
+import {GlobalSettings} from "./core/GlobalSettings.js";
+import fs from "fs";
 
 //how many you want to print?
 const argv = parseArgs(process.argv)
@@ -15,6 +17,7 @@ if (batchAmount > 0) {
         // pretties you can create!
         ////////////////////////////////////////////////
         const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.bluePlateSpecial}));
+        //const settings = Settings.from(JSON.parse(fs.readFileSync(GlobalSettings.getWorkingDirectory() + 'test-settings.txt')))
         const loopBuilder = new LoopBuilder(settings);
         return loopBuilder.constructLoop();
     }

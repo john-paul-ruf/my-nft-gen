@@ -20,71 +20,15 @@ export class LoopBuilder {
             finalImageSize: GlobalSettings.getFinalImageSize(),
             workingDirectory: GlobalSettings.getWorkingDirectory(),
             layerStrategy: GlobalSettings.getLayerStrategy(),
-
             frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a MP4
-
-            //This determines the final image contents
-            //The effect array is super important
-            //Understanding effects is key to running this program.
-            effects: this.#generatePrimaryEffects(this.settings),
-            finalImageEffects: this.#generateFinalImageEffects(this.settings),
             finalFileName: this.config.finalFileName,
         }
-
-        //order in array represents layer order of final image
-        this.allPrimaryEffects = settings.allPrimaryEffects;
-        this.allSecondaryEffects = settings.allPrimaryEffects;
-        this.allFinalImageEffects = settings.allPrimaryEffects
-
     }
-
-    #generatePrimaryEffects() {
-        const effectList = [];
-
-        //For each effect in the possible effects list.
-        this.settings.allPrimaryEffects.forEach(obj => {
-            const chance = getRandomIntExclusive(0, 100) //roll the dice
-            if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, this.#applySecondaryEffects()));
-            }
-        })
-
-        return effectList;
-    }
-
-    #applySecondaryEffects() {
-        const effectList = [];
-
-        //For each effect in the possible effects list.
-        this.settings.allSecondaryEffects.forEach(obj => {
-            const chance = getRandomIntExclusive(0, 100) //roll the dice
-            if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, []));
-            }
-        })
-        return effectList;
-    }
-
-
-    #generateFinalImageEffects() {
-        const effectList = [];
-
-        //For each effect in the possible effects list.
-        this.settings.allFinalImageEffects.forEach(obj => {
-            const chance = getRandomIntExclusive(0, 100) //roll the dice
-            if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new Effect(obj.effect, this.settings, obj.ignoreAdditionalEffects, this.#applySecondaryEffects()));
-            }
-        })
-
-        return effectList;
-    }
-
 
     //This function creates a new image (layer) for each main effect
     async #getLayers(w, h) {
         const extraLayers = [];
-        for (let i = 0; i < this.context.effects.length; i++) { //effect is found in the outermost layer of this function
+        for (let i = 0; i < this.settings.effects.length; i++) { //effect is found in the outermost layer of this function
             extraLayers.push(await LayerFactory.getNewLayer(h, w, '#00000000'))
         }
         return extraLayers;
@@ -106,7 +50,7 @@ export class LoopBuilder {
                 //      main effect then awaits attached secondary effects in order
                 // effect promise is added to array
                 /////////////////////////////////////////////////////////////////////
-                mainLayeredEffects.push(this.context.effects[i].invokeEffect(this.context.layers[i], frameNumber, this.context.numberOfFrame));
+                mainLayeredEffects.push(this.settings.effects[i].invoke(this.context.layers[i], frameNumber, this.context.numberOfFrame));
             }
 
             //when all effect promises complete
@@ -151,8 +95,8 @@ export class LoopBuilder {
             ////////////////////////
             // apply final image effects one at a time
             ////////////////////////
-            for (let e = 0; e < this.context.finalImageEffects.length; e++) {
-                await this.context.finalImageEffects[e].invokeEffect(background, frameNumber, this.context.numberOfFrame);
+            for (let e = 0; e < this.settings.finalImageEffects.length; e++) {
+                await this.settings.finalImageEffects[e].invoke(background, frameNumber, this.context.numberOfFrame);
             }
 
             //////////////////////
@@ -167,25 +111,24 @@ export class LoopBuilder {
         });
     }
 
+    #writeSettingsInfo() {
+        fs.writeFileSync(this.settings.config.fileOut + '-settings.json' , JSON.stringify(this.settings));
+    }
+
     async constructLoop() {
 
         return new Promise(async (resolve) => {
 
+            this.#writeSettingsInfo();
+
             this.config.startTime = new Date();
             this.context.backgroundColor = await this.settings.getBackgroundFromBucket();
-
-            for (let i = 0; i < this.context.effects.length; i++) {
-                await this.context.effects[i].init();
-            }
-
-            for (let i = 0; i < this.context.finalImageEffects.length; i++) {
-                await this.context.finalImageEffects[i].init();
-            }
+            await this.settings.init();
 
             this.composeInfo = new ComposeInfo({
                 config: this.config,
-                effects: this.context.effects,
-                finalImageEffects: this.context.finalImageEffects,
+                effects: this.settings.effects,
+                finalImageEffects: this.settings.finalImageEffects,
                 settings: this.settings
             });
 

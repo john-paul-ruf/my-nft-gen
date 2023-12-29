@@ -1,5 +1,5 @@
-import {ColorScheme} from "./ColorScheme.js";
-import {ColorScheme as ColorSchemeJS} from "color-scheme"
+import {ColorScheme as internalColorScheme} from "./ColorScheme.js";
+import ColorScheme from "color-scheme"
 import {getRandomIntExclusive, randomNumber} from "../math/random.js";
 
 export class ColorSchemeJsFactory {
@@ -35,7 +35,7 @@ export class ColorSchemeJsFactory {
         this.hue = hue;
         this.distance = distance;
 
-        const bucket = new ColorSchemeJS();
+        const bucket = new ColorScheme();
 
         this.colorBucket = bucket.from_hue(this.hue)
             .scheme(this.scheme)
@@ -44,7 +44,7 @@ export class ColorSchemeJsFactory {
             .add_complement(true)
             .colors();
 
-        return new ColorScheme({
+        return new internalColorScheme({
             colorBucket: this.colorBucket,
             colorSchemeInfo: () => {
                 const schemeInfo = {

@@ -1,44 +1,52 @@
 import {ColorScheme} from "./color/ColorScheme.js";
 import {NeonColorScheme, NeonColorSchemeFactory} from "./color/NeonColorSchemeFactory.js";
-import {animateBackgroundEffect} from "../effects/primaryEffects/animateBackground/effect.js";
-import {hexEffect} from "../effects/primaryEffects/hex/effect.js";
-import {invertedRayRingEffect} from "../effects/primaryEffects/invertedRayRing/effect.js";
-import {rayRingEffect} from "../effects/primaryEffects/rayRing/effect.js";
-import {wireframeSpiralEffect} from "../effects/primaryEffects/wireframeSpiral/effect.js";
-import {fuzzBandsEffect} from "../effects/primaryEffects/fuzzBands/effect.js";
-import {encircledSpiralEffect} from "../effects/primaryEffects/encircledSpiral/effect.js";
-import {layeredHexEffect} from "../effects/primaryEffects/layeredHex/effect.js";
-import {layeredRingsEffect} from "../effects/primaryEffects/layeredRings/effect.js";
-import {nthRingsEffect} from "../effects/primaryEffects/nthRings/effect.js";
-import {eightEffect} from "../effects/primaryEffects/eight/effect.js";
-import {fuzzyRippleEffect} from "../effects/primaryEffects/fuzzyRipples/effect.js";
-import {ampEffect} from "../effects/primaryEffects/amp/effect.js";
-import {scopesEffect} from "../effects/primaryEffects/scopes/effect.js";
-import {blinkOnEffect} from "../effects/primaryEffects/blink-on-blink-on-blink-redux/effect.js";
-import {gatesEffect} from "../effects/primaryEffects/gates/effect.js";
-import {lensFlareEffect} from "../effects/primaryEffects/lensFlare/effect.js";
-import {viewportEffect} from "../effects/primaryEffects/viewport/effect.js";
-import {threeDimensionalShapeEffect} from "../effects/primaryEffects/threeDimensionalShape/effect.js";
-import {mappedFramesEffect} from "../effects/primaryEffects/mappedFrames/effect.js";
-import {threeDimensionalRingsEffect} from "../effects/primaryEffects/threeDeminsonalRings/effect.js";
-import {imageOverlayEffect} from "../effects/primaryEffects/imageOverlay/effect.js";
-import {porousEffect} from "../effects/primaryEffects/porous/effect.js";
-import {verticalScanLinesEffect} from "../effects/primaryEffects/scanLines/effect.js";
-import {randomizeEffect} from "../effects/secondaryEffects/randomize/effect.js";
-import {glowEffect} from "../effects/secondaryEffects/glow/effect.js";
-import {fadeEffect} from "../effects/secondaryEffects/fade/effect.js";
-import {singleLayerBlurEffect} from "../effects/secondaryEffects/single-layer-blur/effect.js";
-import {singleLayerGlitchFractalEffect} from "../effects/secondaryEffects/single-layer-glitch-fractal/effect.js";
+import {RayRingInvertedEffect} from "../effects/primaryEffects/rayRingInverted/RayRingInverted.js";
+import {GlitchFractalEffect} from "../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js";
+import {HexEffect} from "../effects/primaryEffects/hex/HexEffect.js";
+import {AnimateBackgroundEffect} from "../effects/primaryEffects/animateBackground/AnimateBackgroundEffect.js";
+import {RayRingEffect} from "../effects/primaryEffects/rayRing/RayRingEffect.js";
+import {WireFrameSpiralEffect} from "../effects/primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js";
+import {FuzzyBandEffect} from "../effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js";
+import {EncircledSpiralEffect} from "../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
+import {LayeredHexEffect} from "../effects/primaryEffects/layeredHex/LayeredHexEffect.js";
+import {LayeredRingEffect} from "../effects/primaryEffects/layeredRings/LayeredRingEffect.js";
+import {EightEffect} from "../effects/primaryEffects/eight/EightEffect.js";
+import {FuzzyRipplesEffect} from "../effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
+import {NthRingsEffect} from "../effects/primaryEffects/nthRings/NthRingsEffect.js";
+import {AmpEffect} from "../effects/primaryEffects/amp/AmpEffect.js";
+import {ScopesEffect} from "../effects/primaryEffects/scopes/ScopesEffect.js";
+import {BlinkOnEffect} from "../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkEffect.js";
+import {GatesEffect} from "../effects/primaryEffects/gates/GatesEffect.js";
+import {LensFlareEffect} from "../effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {ViewportEffect} from "../effects/primaryEffects/viewport/ViewportEffect.js";
 import {
-    singleLayerGlitchDrumrollHorizontalWaveEffect
-} from "../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/effect.js";
-import {blurEffect} from "../effects/finalImageEffects/blur/effect.js";
-import {pixelateEffect} from "../effects/finalImageEffects/pixelate/effect.js";
-import {glitchInverseEffect} from "../effects/finalImageEffects/glitchInverse/effect.js";
-import {glitchFractalEffect} from "../effects/finalImageEffects/glitchFractal/effect.js";
-import {glitchDrumrollHorizontalWaveEffect} from "../effects/finalImageEffects/glitchDrumrollHorizontalWave/effect.js";
-import {randomId} from "./math/random.js";
+    ThreeDimensionalShapeEffect
+} from "../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js";
+import {MappedFramesEffect} from "../effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
+import {
+    ThreeDimensionalRingsEffect
+} from "../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js";
+import {PorousEffect} from "../effects/primaryEffects/porous/PorousEffect.js";
+import {ImageOverlayEffect} from "../effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
+import {ScanLinesEffect} from "../effects/primaryEffects/scanLines/ScanLinesEffect.js";
+import {
+    SingleLayerGlitchDrumrollHorizontalWaveEffect
+} from "../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
+import {
+    SingleLayerGlitchFractalEffect
+} from "../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js";
+import {SingleLayerBlurEffect} from "../effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js";
+import {FadeEffect} from "../effects/secondaryEffects/fade/FadeEffect.js";
+import {GlowEffect} from "../effects/secondaryEffects/glow/GlowEffect.js";
+import {RandomizeEffect} from "../effects/secondaryEffects/randomize/RandomizeEffect.js";
+import {BlurEffect} from "../effects/finalImageEffects/blur/BlurEffect.js";
+import {PixelateEffect} from "../effects/finalImageEffects/pixelate/PixelateEffect.js";
+import {GlitchInverseEffect} from "../effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js";
+import {
+    GlitchDrumrollHorizontalWaveEffect
+} from "../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
 import {ColorSchemeJsFactory} from "./color/ColorSchemeJsFactory.js";
+import {randomId} from "./math/random.js";
 
 export class SettingsFactory {
     constructor() {
@@ -64,16 +72,16 @@ export class SettingsFactory {
                     numberOfFrame: 1800,
                     finalFileName: 'neon-dream' + randomId(),
                     allPrimaryEffects: [
-                        {effect: fuzzBandsEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: ampEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: layeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: scopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: lensFlareEffect, effectChance: 0, ignoreAdditionalEffects: false},
-                        {effect: encircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: viewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: FuzzyBandEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: AmpEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: LayeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ScopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: LensFlareEffect, effectChance: 0, ignoreAdditionalEffects: false},
+                        {effect: EncircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ViewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ],
                     allSecondaryEffects: [
-                        {effect: glowEffect, effectChance: 100, ignoreAdditionalEffects: false}
+                        {effect: GlowEffect, effectChance: 100, ignoreAdditionalEffects: false}
                     ],
                 }
             case SettingsFactory.AvailableSettings.everythingBagel:
@@ -88,49 +96,49 @@ export class SettingsFactory {
                     numberOfFrame: 30,
                     finalFileName: 'test-run' + randomId(),
                     allPrimaryEffects: [
-                        {effect: animateBackgroundEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: hexEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: invertedRayRingEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: rayRingEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: wireframeSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: fuzzBandsEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: encircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: layeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: layeredRingsEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: nthRingsEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: eightEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: fuzzyRippleEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: ampEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: scopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: blinkOnEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: gatesEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: lensFlareEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: viewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: threeDimensionalShapeEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: mappedFramesEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: threeDimensionalRingsEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: imageOverlayEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: porousEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: verticalScanLinesEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: AnimateBackgroundEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: HexEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: RayRingInvertedEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: RayRingEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: WireFrameSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: FuzzyBandEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: EncircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: LayeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: LayeredRingEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: NthRingsEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: EightEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: FuzzyRipplesEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: AmpEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ScopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: BlinkOnEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: GatesEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: LensFlareEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ViewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ThreeDimensionalShapeEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: MappedFramesEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ThreeDimensionalRingsEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ImageOverlayEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: PorousEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: ScanLinesEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ],
                     allSecondaryEffects: [
-                        {effect: randomizeEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: glowEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: fadeEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: singleLayerBlurEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: singleLayerGlitchFractalEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: RandomizeEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: GlowEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: FadeEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: SingleLayerBlurEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: SingleLayerGlitchFractalEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {
-                            effect: singleLayerGlitchDrumrollHorizontalWaveEffect,
+                            effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
                             effectChance: 100,
                             ignoreAdditionalEffects: false
                         },
                     ],
                     allFinalImageEffects: [
-                        {effect: blurEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: pixelateEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: glitchInverseEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: glitchFractalEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: glitchDrumrollHorizontalWaveEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: BlurEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: PixelateEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: GlitchInverseEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: GlitchFractalEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: GlitchDrumrollHorizontalWaveEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ]
                 };
             default:
