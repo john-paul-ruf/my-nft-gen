@@ -7,20 +7,29 @@ export class SingleLayerBlurEffect extends LayerEffect {
 
     static _name_ = 'single-layer-blur';
 
+    static _config_ = {
+        lowerRange: {lower: 0, upper: 0},
+        upperRange: {lower: 2, upper: 6},
+        times: {lower: 2, upper: 9},
+        glitchChance: 100,
+    }
+
     constructor({
                     name = SingleLayerBlurEffect._name_,
                     requiresLayer = false,
-                    config = {
-                        lowerRange: {lower: 0, upper: 0},
-                        upperRange: {lower: 2, upper: 6},
-                        times: {lower: 2, upper: 9},
-                        glitchChance: 100,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = SingleLayerBlurEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

@@ -10,19 +10,28 @@ export class GlowEffect extends LayerEffect {
 
     static _name_ = 'glow';
 
+    static _config_ =  {
+        lowerRange: {lower: -18, upper: -0},
+        upperRange: {lower: 0, upper: 18},
+        times: {lower: 2, upper: 6},
+    }
+
     constructor({
                     name = GlowEffect._name_,
                     requiresLayer = false,
-                    config = {
-                        lowerRange: {lower: -18, upper: -0},
-                        upperRange: {lower: 0, upper: 18},
-                        times: {lower: 2, upper: 6},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = GlowEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

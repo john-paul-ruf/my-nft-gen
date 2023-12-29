@@ -10,20 +10,29 @@ export class PixelateEffect extends LayerEffect {
 
     static _name_ = 'pixelate';
 
+    static _config_= {
+        lowerRange: {lower: 0, upper: 0},
+        upperRange: {lower: 3, upper: 6},
+        times: {lower: 1, upper: 3},
+        glitchChance: 80,
+    };
+
     constructor({
                     name = PixelateEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        lowerRange: {lower: 0, upper: 0},
-                        upperRange: {lower: 3, upper: 6},
-                        times: {lower: 1, upper: 3},
-                        glitchChance: 80,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = PixelateEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

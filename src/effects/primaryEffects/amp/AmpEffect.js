@@ -12,26 +12,35 @@ export class AmpEffect extends LayerEffect {
 
     static _name_ = 'amp';
 
+    static _config_  = {
+        invertLayers: true,
+        layerOpacity: 0.55,
+        underLayerOpacity: 0.5,
+        sparsityFactor: [1, 2, 3,],
+        stroke: 1,
+        thickness: 1,
+        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+        featherTimes: {lower: 2, upper: 4},
+        speed: {lower: 24, upper: 36},
+    }
+
     constructor({
                     name = AmpEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        invertLayers: true,
-                        layerOpacity: 0.55,
-                        underLayerOpacity: 0.5,
-                        sparsityFactor: [1, 2, 3,],
-                        stroke: 1,
-                        thickness: 1,
-                        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-                        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                        featherTimes: {lower: 2, upper: 4},
-                        speed: {lower: 24, upper: 36},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = AmpEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

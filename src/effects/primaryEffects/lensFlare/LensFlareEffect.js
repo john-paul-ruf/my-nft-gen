@@ -12,80 +12,89 @@ export class LensFlareEffect extends LayerEffect {
 
     static _name_ = 'upgraded-lens-flare';
 
+    static _config_ = {
+        layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+        layerOpacityTimes: {lower: 2, upper: 6},
+
+        elementOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
+        elementOpacityTimes: {lower: 2, upper: 6},
+
+        elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
+        elementGastonTimes: {lower: 2, upper: 6},
+
+        numberOfFlareHex: {lower: 0, upper: 0},
+        flareHexSizeRange: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.015,
+            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.025
+        },
+
+        angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
+        angleGastonTimes: {lower: 1, upper: 6},
+
+        numberOfFlareRings: {lower: 10, upper: 20},
+        flareRingsSizeRange: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.1,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.55
+        },
+        flareRingStroke: {lower: 1, upper: 1},
+
+        numberOfFlareRays: {lower: 20, upper: 30},
+        flareRaysSizeRange: {
+            lower: GlobalSettings.getFinalImageSize().longestSide * 0.4,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.55
+        },
+        flareRaysStroke: {lower: 1, upper: 1},
+
+        //no blur, it is bad
+        //trying blur again - sharp: ok, jimp: not the best
+        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
+        blurTimes: {lower: 2, upper: 4},
+
+        strategy: ['original', 'color-bucket', 'neutral-bucket'],
+
+        flareColors: [
+            '#d5fecc',
+            '#acff99',
+            '#83ff66',
+            '#5aff33',
+            '#31ff00',
+            '#9db0ff',
+            '#ec9dff',
+            '#ffec9d',
+            '#ffbb9d',
+            '#ff9daf',
+        ],
+
+        getFlareColor: (strategy, settings, config) => {
+            switch (strategy) {
+                case 'original':
+                    return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
+                case 'color-bucket':
+                    return settings.getColorFromBucket();
+                case 'neutral-bucket':
+                    return settings.getNeutralFromBucket();
+                default:
+                    return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
+            }
+        }
+    };
+
     constructor({
                     name = LensFlareEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                        layerOpacityTimes: {lower: 2, upper: 6},
-
-                        elementOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
-                        elementOpacityTimes: {lower: 2, upper: 6},
-
-                        elementGastonRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
-                        elementGastonTimes: {lower: 2, upper: 6},
-
-                        numberOfFlareHex: {lower: 0, upper: 0},
-                        flareHexSizeRange: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.015,
-                            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.025
-                        },
-
-                        angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-                        angleGastonTimes: {lower: 1, upper: 6},
-
-                        numberOfFlareRings: {lower: 50, upper: 100},
-                        flareRingsSizeRange: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.1,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.55
-                        },
-                        flareRingStroke: {lower: 1, upper: 1},
-
-                        numberOfFlareRays: {lower: 50, upper: 100},
-                        flareRaysSizeRange: {
-                            lower: GlobalSettings.getFinalImageSize().longestSide * 0.4,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.55
-                        },
-                        flareRaysStroke: {lower: 1, upper: 1},
-
-                        //no blur, it is bad
-                        //trying blur again - sharp: ok, jimp: not the best
-                        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
-                        blurTimes: {lower: 2, upper: 4},
-
-                        strategy: ['original', 'color-bucket', 'neutral-bucket'],
-
-                        flareColors: [
-                            '#d5fecc',
-                            '#acff99',
-                            '#83ff66',
-                            '#5aff33',
-                            '#31ff00',
-                            '#9db0ff',
-                            '#ec9dff',
-                            '#ffec9d',
-                            '#ffbb9d',
-                            '#ff9daf',
-                        ],
-
-                        getFlareColor: (strategy, settings) => {
-                            switch (strategy) {
-                                case 'original':
-                                    return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
-                                case 'color-bucket':
-                                    return settings.getColorFromBucket();
-                                case 'neutral-bucket':
-                                    return settings.getNeutralFromBucket();
-                                default:
-                                    return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
-                            }
-                        }
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = LensFlareEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 
@@ -295,14 +304,14 @@ export class LensFlareEffect extends LayerEffect {
             };
 
 
-        const getFlareHexArray =  (num, strategy) => {
+        const getFlareHexArray = (num, strategy) => {
             const info = [];
 
             for (let i = 0; i < num; i++) {
                 info.push({
                     size: getRandomIntInclusive(this.config.flareHexSizeRange.lower, this.config.flareHexSizeRange.upper),
-                    color:  this.config.getFlareColor(strategy, settings),
-                    strokeColor: this.config.getFlareColor(strategy, settings),
+                    color: this.config.getFlareColor(strategy, settings, this.config),
+                    strokeColor: this.config.getFlareColor(strategy, settings, this.config),
                     sides: getRandomIntInclusive(6, 6), //ended up with hex...
                     angle: getRandomIntInclusive(0, 360),
                     offset: getRandomIntInclusive(GlobalSettings.getFinalImageSize().width * 0.15, GlobalSettings.getFinalImageSize().width * 0.15),
@@ -324,7 +333,7 @@ export class LensFlareEffect extends LayerEffect {
                 info.push({
                     size: getRandomIntInclusive(this.config.flareRingsSizeRange.lower, this.config.flareRingsSizeRange.upper),
                     stroke: getRandomIntInclusive(this.config.flareRingStroke.lower, this.config.flareRingStroke.upper),
-                    color: this.config.getFlareColor(strategy, settings),
+                    color: this.config.getFlareColor(strategy, settings, this.config),
                     opacity: {
                         lower: randomNumber(this.config.elementOpacityRange.bottom.lower, this.config.elementOpacityRange.bottom.upper),
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper)
@@ -356,7 +365,7 @@ export class LensFlareEffect extends LayerEffect {
                     size: getRandomIntInclusive(this.config.flareRaysSizeRange.lower, this.config.flareRaysSizeRange.upper),
                     stroke: getRandomIntInclusive(this.config.flareRaysStroke.lower, this.config.flareRaysStroke.upper),
                     angle: getRandomIntInclusive(0, 360),
-                    color: this.config.getFlareColor(strategy, settings),
+                    color: this.config.getFlareColor(strategy, settings, this.config),
                     opacity: {
                         lower: randomNumber(this.config.elementOpacityRange.bottom.lower, this.config.elementOpacityRange.bottom.upper),
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper)

@@ -9,18 +9,27 @@ export class SingleLayerGlitchFractalEffect extends LayerEffect {
 
     static _name_ = 'single-layer-glitch-fractal';
 
+    static _config_  = {
+        theRandom: {lower: 12, upper: 12},
+        glitchChance: 100,
+    }
+
     constructor({
                     name = SingleLayerGlitchFractalEffect._name_,
                     requiresLayer = false,
-                    config = {
-                        theRandom: {lower: 12, upper: 12},
-                        glitchChance: 100,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = SingleLayerGlitchFractalEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

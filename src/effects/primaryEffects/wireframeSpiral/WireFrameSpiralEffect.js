@@ -12,31 +12,40 @@ export class WireFrameSpiralEffect extends LayerEffect {
 
     static _name_ = 'wireframe-spiral';
 
+    static _config_ = {
+        layerOpacity: 0.4,
+        underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.35}, top: {lower: 0.4, upper: 0.45}},
+        underLayerOpacityTimes: {lower: 1, upper: 6},
+        startTwistCount: {lower: 1, upper: 2},
+        stroke: [0],
+        thickness: [1, 2, 3],
+        sparsityFactor: [30, 36, 40, 45, 60],
+        speed: {lower: 4, upper: 8},
+        counterClockwise: {lower: 0, upper: 1},
+        unitLength: {lower: 2, upper: 6},
+        unitLengthChangeConstant: [2, 4, 8],
+        radiusConstant: [50, 75, 150],
+        accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 0, upper: 0}},
+        blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+        featherTimes: {lower: 0, upper: 0},
+    }
+
     constructor({
                     name = WireFrameSpiralEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        layerOpacity: 0.4,
-                        underLayerOpacityRange: {bottom: {lower: 0.3, upper: 0.35}, top: {lower: 0.4, upper: 0.45}},
-                        underLayerOpacityTimes: {lower: 1, upper: 6},
-                        startTwistCount: {lower: 1, upper: 2},
-                        stroke: [0],
-                        thickness: [1, 2, 3],
-                        sparsityFactor: [30, 36, 40, 45, 60],
-                        speed: {lower: 4, upper: 8},
-                        counterClockwise: {lower: 0, upper: 1},
-                        unitLength: {lower: 2, upper: 6},
-                        unitLengthChangeConstant: [2, 4, 8],
-                        radiusConstant: [50, 75, 150],
-                        accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 0, upper: 0}},
-                        blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-                        featherTimes: {lower: 0, upper: 0},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = WireFrameSpiralEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

@@ -13,23 +13,32 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
 
     static _name_ = 'three-dimensional-rings';
 
+    static _config_  = {
+        rings: {lower: 10, upper: 15},
+        ringRadius: {lower: 0.1, upper: 0.2},
+        ringGap: {lower: 5, upper: 10},
+        radiusConstant: 50,
+        times: {lower: 1, upper: 6},
+        height: {lower: 5, upper: 10},
+        ringOpacity: {lower: 0.3, upper: 0.5},
+    }
+
     constructor({
                     name = ThreeDimensionalRingsEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        rings: {lower: 10, upper: 15},
-                        ringRadius: {lower: 0.1, upper: 0.2},
-                        ringGap: {lower: 5, upper: 10},
-                        radiusConstant: 50,
-                        times: {lower: 1, upper: 6},
-                        height: {lower: 5, upper: 10},
-                        ringOpacity: {lower: 0.3, upper: 0.5},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = ThreeDimensionalRingsEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

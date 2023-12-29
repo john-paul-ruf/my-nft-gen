@@ -7,19 +7,28 @@ import {Settings} from "../../../core/Settings.js";
 
 export class PorousEffect extends LayerEffect {
 
-    static name = 'porous.png';
+    static _name_ = 'porous.png';
+
+    static _config_ = {
+        layerOpacity: 0.5,
+    }
 
     constructor({
                     name = PorousEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        layerOpacity: 0.5,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = PorousEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 
