@@ -9,17 +9,26 @@ export class GlitchInverseEffect extends LayerEffect {
 
     static _name_ = 'glitch-inverse';
 
+    static _config_= {
+        glitchChance: 100,
+    }
+
     constructor({
                     name = GlitchInverseEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        glitchChance: 100,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = GlitchInverseEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

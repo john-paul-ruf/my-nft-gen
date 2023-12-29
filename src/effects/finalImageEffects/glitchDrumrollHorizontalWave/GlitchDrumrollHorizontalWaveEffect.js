@@ -10,20 +10,29 @@ export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
     static _name_ = 'glitch-drumroll-horizontal-wave';
 
+    static _config_= {
+        glitchChance: 100,
+        glitchOffset: {lower: 40, upper: 80},
+        glitchOffsetTimes: {lower: 1, upper: 3},
+        cosineFactor: {lower: 2, upper: 6},
+    }
+
     constructor({
                     name = GlitchDrumrollHorizontalWaveEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        glitchChance: 100,
-                        glitchOffset: {lower: 40, upper: 80},
-                        glitchOffsetTimes: {lower: 1, upper: 3},
-                        cosineFactor: {lower: 2, upper: 6},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = GlitchDrumrollHorizontalWaveEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

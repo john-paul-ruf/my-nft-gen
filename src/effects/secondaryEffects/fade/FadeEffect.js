@@ -7,19 +7,28 @@ export class FadeEffect extends LayerEffect {
 
     static _name_ = 'fade';
 
+    static _config_ = {
+        lowerRange: {lower: 0.6, upper: 0.8},
+        upperRange: {lower: 0.95, upper: 1},
+        times: {lower: 2, upper: 4},
+    }
+
     constructor({
                     name = FadeEffect._name_,
                     requiresLayer = false,
-                    config = {
-                        lowerRange: {lower: 0.6, upper: 0.8},
-                        upperRange: {lower: 0.95, upper: 1},
-                        times: {lower: 2, upper: 4},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config =FadeEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

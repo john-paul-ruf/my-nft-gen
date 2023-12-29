@@ -13,37 +13,47 @@ export class EightEffect extends LayerEffect {
 
     static _name_ = 'eight'
 
+    static _config_ = {
+        layerOpacity: 1,
+        underLayerOpacity: 0.3,
+        stroke: 1,
+        thickness: 4,
+        smallRadius: {
+            lower: GlobalSettings.getFinalImageSize().longestSide * 0.10,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.15
+        },
+        smallNumberOfRings: {lower: 12, upper: 16},
+        ripple: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.05,
+            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.10
+        },
+        times: {lower: 2, upper: 4},
+        smallerRingsGroupRadius: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.25,
+            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.30
+        },
+        accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
+        blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
+        featherTimes: {lower: 2, upper: 4},
+    }
+
+
     constructor({
                     name = EightEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        layerOpacity: 1,
-                        underLayerOpacity: 0.3,
-                        stroke: 1,
-                        thickness: 4,
-                        smallRadius: {
-                            lower: GlobalSettings.getFinalImageSize().longestSide * 0.10,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.15
-                        },
-                        smallNumberOfRings: {lower: 12, upper: 16},
-                        ripple: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.05,
-                            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.10
-                        },
-                        times: {lower: 2, upper: 4},
-                        smallerRingsGroupRadius: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.25,
-                            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.30
-                        },
-                        accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-                        blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
-                        featherTimes: {lower: 2, upper: 4},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = EightEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

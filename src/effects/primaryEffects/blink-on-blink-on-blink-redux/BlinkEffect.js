@@ -14,32 +14,41 @@ export class BlinkOnEffect extends LayerEffect {
 
     static _name_ = 'blink-on-blink-on-blink-redux'
 
+    static _config_ = {
+        layerOpacity: 0.75,
+        numberOfBlinks: {lower: 1, upper: 2},
+        initialRotation: {lower: 0, upper: 360},
+        rotationSpeedRange: {lower: 1, upper: 2},
+        counterClockwise: {lower: 0, upper: 1},
+        diameterRange: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.25,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.8
+        },
+        glowLowerRange: {lower: -128, upper: -64},
+        glowUpperRange: {lower: 64, upper: 128},
+        glowTimes: {lower: 2, upper: 4},
+        randomizeSpin: {lower: -64, upper: 64},
+        randomizeRed: {lower: -64, upper: 64},
+        randomizeBlue: {lower: -64, upper: 64},
+        randomizeGreen: {lower: -64, upper: 64}
+    }
+
     constructor({
                     name = BlinkOnEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        layerOpacity: 0.75,
-                        numberOfBlinks: {lower: 1, upper: 2},
-                        initialRotation: {lower: 0, upper: 360},
-                        rotationSpeedRange: {lower: 1, upper: 2},
-                        counterClockwise: {lower: 0, upper: 1},
-                        diameterRange: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.25,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.8
-                        },
-                        glowLowerRange: {lower: -128, upper: -64},
-                        glowUpperRange: {lower: 64, upper: 128},
-                        glowTimes: {lower: 2, upper: 4},
-                        randomizeSpin: {lower: -64, upper: 64},
-                        randomizeRed: {lower: -64, upper: 64},
-                        randomizeBlue: {lower: -64, upper: 64},
-                        randomizeGreen: {lower: -64, upper: 64}
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = BlinkOnEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

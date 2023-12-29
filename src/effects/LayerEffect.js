@@ -5,11 +5,10 @@ export class LayerEffect {
                     name = 'base-effect',
                     requiresLayer = false,
                     config = {},
-
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
         this.name = name;
         this.requiresLayer = requiresLayer;
         this.config = config;

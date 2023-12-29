@@ -11,23 +11,32 @@ export class ScanLinesEffect extends LayerEffect {
 
     static _name_ = 'scan lines';
 
+    static _config_  = {
+        lines: {lower: 2, upper: 4},
+        minlength: {lower: 30, upper: 40},
+        maxlength: {lower: 80, upper: 100},
+        times: {lower: 4, upper: 8},
+        alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+        alphaTimes: {lower: 4, upper: 8},
+        loopTimes: {lower: 1, upper: 2},
+    }
+
     constructor({
                     name = ScanLinesEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        lines: {lower: 2, upper: 4},
-                        minlength: {lower: 30, upper: 40},
-                        maxlength: {lower: 80, upper: 100},
-                        times: {lower: 4, upper: 8},
-                        alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
-                        alphaTimes: {lower: 4, upper: 8},
-                        loopTimes: {lower: 1, upper: 2},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = ScanLinesEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

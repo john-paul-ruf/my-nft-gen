@@ -53,12 +53,37 @@ export class SettingsFactory {
     }
 
     static AvailableSettings = {
+        experimental: 'experimental',
         bluePlateSpecial: 'blue-plate-special',
         everythingBagel: 'everything-bagel',
     }
 
     static getPresetSetting = async ({request = SettingsFactory.AvailableSettings.bluePlateSpecial}) => {
         switch (request) {
+            case SettingsFactory.AvailableSettings.experimental:
+
+                FuzzyBandEffect._config_.circles.lower = 20;
+                FuzzyBandEffect._config_.circles.upper = 25;
+
+                LensFlareEffect._config_.numberOfFlareRays.lower = 11;
+                LensFlareEffect._config_.numberOfFlareRays.upper = 11;
+
+                return {
+                    colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
+                    //colorScheme: ColorSchemeJsFactory.getColorSchemeJsColorScheme({}),
+                    neutrals: ['#FFFFFF'],
+                    backgrounds: ['#000000',],
+                    lights: ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
+                    _INVOKER_: 'John Ruf',
+                    runName: 'neon-dreams',
+                    frameInc: 1,
+                    numberOfFrame: 1800,
+                    finalFileName: 'neon-dream' + randomId(),
+                    allPrimaryEffects: [
+                        {effect: LensFlareEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: FuzzyBandEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                    ],
+                }
             case SettingsFactory.AvailableSettings.bluePlateSpecial:
                 return {
                     colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
@@ -91,7 +116,7 @@ export class SettingsFactory {
                     _INVOKER_: 'the guy who never tests enough',
                     runName: 'be-prepared-to-wait',
                     frameInc: 1,
-                    numberOfFrame: 30,
+                    numberOfFrame: 1,
                     finalFileName: 'test-run' + randomId(),
                     allPrimaryEffects: [
                         {effect: AnimateBackgroundEffect, effectChance: 100, ignoreAdditionalEffects: false},

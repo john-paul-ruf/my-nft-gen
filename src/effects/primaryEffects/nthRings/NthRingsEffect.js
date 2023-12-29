@@ -13,30 +13,39 @@ export class NthRingsEffect extends LayerEffect {
 
     static _name_ = 'nth-rings';
 
+    static _config_ = {
+        invertLayers: true,
+        totalRingCount: {lower: 12, upper: 16},
+        layerOpacity: 0.5,
+        underLayerOpacity: 0.4,
+        stroke: 2,
+        thickness: 2,
+        smallRadius: [GlobalSettings.getFinalImageSize().longestSide * 0.10, GlobalSettings.getFinalImageSize().longestSide * 0.1/*5, finalImageSize.longestSide * 0.2*/],
+        smallNumberOfRings: {lower: 8, upper: 12},
+        ripple: [GlobalSettings.getFinalImageSize().shortestSide * 0.05, GlobalSettings.getFinalImageSize().shortestSide * 0.10,/* finalImageSize.shortestSide * 0.15, finalImageSize.shortestSide * 0.20*/],
+        times: {lower: 2, upper: 4},
+        smallerRingsGroupRadius: [GlobalSettings.getFinalImageSize().shortestSide * 0.45, GlobalSettings.getFinalImageSize().shortestSide * 0.50, GlobalSettings.getFinalImageSize().shortestSide * 0.55,],
+        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 5}},
+        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
+        featherTimes: {lower: 2, upper: 4},
+    }
+
     constructor({
                     name = NthRingsEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        invertLayers: true,
-                        totalRingCount: {lower: 12, upper: 16},
-                        layerOpacity: 0.5,
-                        underLayerOpacity: 0.4,
-                        stroke: 2,
-                        thickness: 2,
-                        smallRadius: [GlobalSettings.getFinalImageSize().longestSide * 0.10, GlobalSettings.getFinalImageSize().longestSide * 0.1/*5, finalImageSize.longestSide * 0.2*/],
-                        smallNumberOfRings: {lower: 8, upper: 12},
-                        ripple: [GlobalSettings.getFinalImageSize().shortestSide * 0.05, GlobalSettings.getFinalImageSize().shortestSide * 0.10,/* finalImageSize.shortestSide * 0.15, finalImageSize.shortestSide * 0.20*/],
-                        times: {lower: 2, upper: 4},
-                        smallerRingsGroupRadius: [GlobalSettings.getFinalImageSize().shortestSide * 0.45, GlobalSettings.getFinalImageSize().shortestSide * 0.50, GlobalSettings.getFinalImageSize().shortestSide * 0.55,],
-                        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 5}},
-                        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
-                        featherTimes: {lower: 2, upper: 4},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = NthRingsEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

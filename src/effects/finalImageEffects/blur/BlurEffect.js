@@ -7,20 +7,29 @@ export class BlurEffect extends LayerEffect {
 
     static _name_ = 'blur';
 
+    static _config = {
+        lowerRange: {lower: 0, upper: 0},
+        upperRange: {lower: 4, upper: 8},
+        times: {lower: 2, upper: 6},
+        glitchChance: 100,
+    }
+
     constructor({
                     name = BlurEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        lowerRange: {lower: 0, upper: 0},
-                        upperRange: {lower: 4, upper: 8},
-                        times: {lower: 2, upper: 6},
-                        glitchChance: 100,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = BlurEffect._config,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

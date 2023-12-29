@@ -13,18 +13,27 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
 
     static _name_ = 'three-dimensional-shape';
 
+    static _config_ = {
+        times: {lower: 1, upper: 2},
+        counterClockwise: {lower: 0, upper: 1},
+    }
+
     constructor({
                     name = ThreeDimensionalShapeEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        times: {lower: 1, upper: 2},
-                        counterClockwise: {lower: 0, upper: 1},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = ThreeDimensionalShapeEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

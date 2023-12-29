@@ -11,31 +11,40 @@ export class FuzzyBandEffect extends LayerEffect {
 
     static _name_ = 'fuzz-bands-mark-two';
 
+    static _config_  = {
+        invertLayers: true,
+        layerOpacity: 1,
+        underLayerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
+        underLayerOpacityTimes: {lower: 2, upper: 6},
+        circles: {lower: 6, upper: 10},
+        stroke: 0,
+        thickness: 4,
+        radius: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.10,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.45
+        },
+        accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
+        blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
+        featherTimes: {lower: 2, upper: 6},
+    }
+
     constructor({
                     name = FuzzyBandEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        invertLayers: true,
-                        layerOpacity: 1,
-                        underLayerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
-                        underLayerOpacityTimes: {lower: 2, upper: 6},
-                        circles: {lower: 6, upper: 10},
-                        stroke: 0,
-                        thickness: 4,
-                        radius: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.10,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.45
-                        },
-                        accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
-                        blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
-                        featherTimes: {lower: 2, upper: 6},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})
+                    config = FuzzyBandEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }
     ) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings);
     }
 

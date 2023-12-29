@@ -9,20 +9,29 @@ export class RandomizeEffect extends LayerEffect {
 
     static _name_ = 'randomize';
 
+    static _config_ = {
+        spin: {lower: -8, upper: 8},
+        red: {lower: -8, upper: 8},
+        blue: {lower: -8, upper: 8},
+        green: {lower: -8, upper: 8}
+    }
+
     constructor({
                     name = RandomizeEffect._name_,
                     requiresLayer = false,
-                    config = {
-                        spin: {lower: -8, upper: 8},
-                        red: {lower: -8, upper: 8},
-                        blue: {lower: -8, upper: 8},
-                        green: {lower: -8, upper: 8}
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = RandomizeEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

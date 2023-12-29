@@ -12,18 +12,27 @@ export class MappedFramesEffect extends LayerEffect {
 
     static _name_ = 'mapped-frames';
 
+    static _config_  = {
+        folderName: '/mappedFrames/',
+        layerOpacity: 1,
+    }
+
     constructor({
                     name = MappedFramesEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        folderName: '/mappedFrames/',
-                        layerOpacity: 1,
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = MappedFramesEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

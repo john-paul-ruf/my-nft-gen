@@ -12,35 +12,44 @@ export class EncircledSpiralEffect extends LayerEffect {
 
     static _name_ = 'encircled-spiral-round-2'
 
+    static _config_  = {
+        invertLayers: true,
+        layerOpacity: 0.55,
+        underLayerOpacity: 0.5,
+        startAngle: {lower: 0, upper: 360},
+        numberOfRings: {lower: 20, upper: 20},
+        stroke: 1,
+        thickness: 2,
+        sparsityFactor: [60],
+        sequencePixelConstant: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.001,
+            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.001
+        },
+        sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
+        minSequenceIndex: [12],
+        numberOfSequenceElements: [3],
+        speed: {lower: 2, upper: 2},
+        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+        featherTimes: {lower: 2, upper: 4},
+    }
+
     constructor({
                     name = EncircledSpiralEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        invertLayers: true,
-                        layerOpacity: 0.55,
-                        underLayerOpacity: 0.5,
-                        startAngle: {lower: 0, upper: 360},
-                        numberOfRings: {lower: 20, upper: 20},
-                        stroke: 1,
-                        thickness: 2,
-                        sparsityFactor: [60],
-                        sequencePixelConstant: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.001,
-                            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.001
-                        },
-                        sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-                        minSequenceIndex: [12],
-                        numberOfSequenceElements: [3],
-                        speed: {lower: 2, upper: 2},
-                        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-                        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                        featherTimes: {lower: 2, upper: 4},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = EncircledSpiralEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

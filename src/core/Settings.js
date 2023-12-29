@@ -163,7 +163,7 @@ export class Settings {
         this.allPrimaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({}, this.#applySecondaryEffects(), obj.ignoreAdditionalEffects, this));
+                effectList.push(new obj.effect({ additionalEffects: this.#applySecondaryEffects(), ignoreAdditionalEffects: obj.ignoreAdditionalEffects, settings: this}));
             }
         })
 
@@ -177,7 +177,7 @@ export class Settings {
         this.allSecondaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({}, [], obj.ignoreAdditionalEffects, this));
+                effectList.push(new obj.effect({ additionalEffects: [], ignoreAdditionalEffects: obj.ignoreAdditionalEffects, settings: this}));
             }
         })
         return effectList;
@@ -191,7 +191,7 @@ export class Settings {
         this.allFinalImageEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({}, this.#applySecondaryEffects(), obj.ignoreAdditionalEffects, this));
+                effectList.push(new obj.effect({ additionalEffects: this.#applySecondaryEffects(), ignoreAdditionalEffects: obj.ignoreAdditionalEffects, settings: this}));
             }
         })
 

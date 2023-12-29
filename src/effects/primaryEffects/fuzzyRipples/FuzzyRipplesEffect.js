@@ -13,43 +13,52 @@ export class FuzzyRipplesEffect extends LayerEffect {
 
     static _name_ = 'fuzzy-ripples';
 
+    static _config_  = {
+        invertLayers: true,
+        layerOpacity: 1,
+        underLayerOpacity: 0.8,
+        stroke: 1,
+        thickness: 2,
+        largeRadius: {
+            lower: GlobalSettings.getFinalImageSize().longestSide * 0.15,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.15
+        },
+        smallRadius: {
+            lower: GlobalSettings.getFinalImageSize().longestSide * 0.25,
+            upper: GlobalSettings.getFinalImageSize().longestSide * 0.25
+        },
+        largeNumberOfRings: {lower: 8, upper: 8},
+        smallNumberOfRings: {lower: 8, upper: 8},
+        ripple: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.10,
+            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.10
+        },
+        times: {lower: 2, upper: 4},
+        smallerRingsGroupRadius: {
+            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.3,
+            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.3
+        },
+        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+        featherTimes: {lower: 2, upper: 4},
+    }
+
     constructor({
                     name = FuzzyRipplesEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        invertLayers: true,
-                        layerOpacity: 1,
-                        underLayerOpacity: 0.8,
-                        stroke: 1,
-                        thickness: 2,
-                        largeRadius: {
-                            lower: GlobalSettings.getFinalImageSize().longestSide * 0.15,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.15
-                        },
-                        smallRadius: {
-                            lower: GlobalSettings.getFinalImageSize().longestSide * 0.25,
-                            upper: GlobalSettings.getFinalImageSize().longestSide * 0.25
-                        },
-                        largeNumberOfRings: {lower: 8, upper: 8},
-                        smallNumberOfRings: {lower: 8, upper: 8},
-                        ripple: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.10,
-                            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.10
-                        },
-                        times: {lower: 2, upper: 4},
-                        smallerRingsGroupRadius: {
-                            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.3,
-                            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.3
-                        },
-                        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-                        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                        featherTimes: {lower: 2, upper: 4},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = FuzzyRipplesEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 

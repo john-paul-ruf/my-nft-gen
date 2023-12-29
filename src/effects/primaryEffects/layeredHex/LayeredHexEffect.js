@@ -13,43 +13,52 @@ export class LayeredHexEffect extends LayerEffect {
 
     static _name_ = 'layered-hex-now-with-fuzz';
 
+    static _config_= {
+        invertLayers: true,
+
+        thickness: 1,
+        stroke: 1,
+
+        layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+        layerOpacityTimes: {lower: 2, upper: 4},
+
+        indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
+        indexOpacityTimes: {lower: 2, upper: 4},
+
+        radius: {lower: 60, upper: 80},
+        offsetRadius: {lower: 70, upper: 120},
+
+        numberOfIndex: {lower: 10, upper: 20},
+        startIndex: {lower: 10, upper: 12},
+
+        startAngle: 15,
+
+        movementGaston: {lower: 1, upper: 6},
+
+        initialNumberOfPoints: 12,
+        scaleByFactor: 1.125,
+
+        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+        featherTimes: {lower: 2, upper: 4},
+    }
+
     constructor({
                     name = LayeredHexEffect._name_,
                     requiresLayer = true,
-                    config = {
-                        invertLayers: true,
-
-                        thickness: 1,
-                        stroke: 1,
-
-                        layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                        layerOpacityTimes: {lower: 2, upper: 4},
-
-                        indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
-                        indexOpacityTimes: {lower: 2, upper: 4},
-
-                        radius: {lower: 60, upper: 80},
-                        offsetRadius: {lower: 70, upper: 120},
-
-                        numberOfIndex: {lower: 10, upper: 20},
-                        startIndex: {lower: 10, upper: 12},
-
-                        startAngle: 15,
-
-                        movementGaston: {lower: 1, upper: 6},
-
-                        initialNumberOfPoints: 12,
-                        scaleByFactor: 1.125,
-
-                        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-                        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                        featherTimes: {lower: 2, upper: 4},
-                    }
-                },
-                additionalEffects = [],
-                ignoreAdditionalEffects = false,
-                settings = new Settings({})) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+                    config = LayeredHexEffect._config_,
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({})
+                }) {
+        super({
+            name: name,
+            requiresLayer: requiresLayer,
+            config: config,
+            additionalEffects: additionalEffects,
+            ignoreAdditionalEffects: ignoreAdditionalEffects,
+            settings: settings
+        });
         this.#generate(settings)
     }
 
