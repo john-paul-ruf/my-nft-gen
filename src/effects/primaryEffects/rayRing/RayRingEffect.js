@@ -115,7 +115,7 @@ export class RayRingEffect extends LayerEffect {
             data: this.data
         }
 
-        await this.#processDrawFunction(draw, context);
+        await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
         fs.unlinkSync(context.drawing);

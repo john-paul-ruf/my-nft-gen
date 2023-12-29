@@ -55,7 +55,7 @@ export class ScanLinesEffect extends LayerEffect {
             data: this.data,
         }
 
-        for (let i = 0; i < data.lineInfo.length; i++) {
+        for (let i = 0; i < this.data.lineInfo.length; i++) {
             let y = this.#computeY(context, numberOfFrames, currentFrame, i, this.data.lineInfo[i].loopTimes);
             await this.#drawLine(y, this.data.lineInfo[i].pixelLine, context)
         }
@@ -116,7 +116,7 @@ export class ScanLinesEffect extends LayerEffect {
 
         data.lineInfo = computeInitialLineInfo(data.numberOfLines, data.height, data.width);
 
-        return data;
+        this.data = data;
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {

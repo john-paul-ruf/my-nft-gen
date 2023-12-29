@@ -149,7 +149,7 @@ export class LayeredRingEffect extends LayerEffect {
 
         data.ringArray = await getRingsIndexArray(data.numberOfIndex);
 
-        return data;
+        this.data = data;
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {

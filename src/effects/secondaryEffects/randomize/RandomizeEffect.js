@@ -47,8 +47,8 @@ export class RandomizeEffect extends LayerEffect {
             blue: getRandomIntInclusive(this.config.blue.lower, this.config.blue.upper),
         }
 
-        return {
-
+        this.data =  {
+            props: props,
             randomize: [
                 {
                     apply: 'hue',
@@ -75,6 +75,6 @@ export class RandomizeEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: hue: ${this.props.hue}, red: ${this.props.red}, green: ${this.props.green}, blue: ${this.props.blue}`
+        return `${this.name}: hue: ${this.data.props.hue}, red: ${this.data.props.red}, green: ${this.data.props.green}, blue: ${this.data.props.blue}`
     }
 }

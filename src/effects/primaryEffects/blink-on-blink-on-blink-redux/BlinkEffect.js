@@ -129,8 +129,8 @@ export class BlinkOnEffect extends LayerEffect {
 super.generate(settings);
 
         const data = {
-            blinkFile: path.join(fileURLToPath(import.meta.url).replace('generate.js', '') + 'blink.png'),
-            layerOpacity: this.this.config.layerOpacity,
+            blinkFile: path.join(fileURLToPath(import.meta.url).replace('BlinkEffect.js', '') + 'blink.png'),
+            layerOpacity: this.config.layerOpacity,
             numberOfBlinks: getRandomIntInclusive(this.config.numberOfBlinks.lower, this.config.numberOfBlinks.upper),
         }
 

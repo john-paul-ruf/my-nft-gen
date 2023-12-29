@@ -30,7 +30,7 @@ export class PorousEffect extends LayerEffect {
         super.generate(settings);
 
         this.data = {
-            filename: path.join(fileURLToPath(import.meta.url).replace('generate.js', '') + 'porous.png'),
+            filename: path.join(fileURLToPath(import.meta.url).replace('PorousEffect.js', '') + 'porous.png'),
             layerOpacity: this.config.layerOpacity,
         }
     }

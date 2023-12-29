@@ -184,7 +184,7 @@ export class HexEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            theAccentGaston: findValue(this.this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
+            theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             drawing: GlobalSettings.getWorkingDirectory() + 'hex' + randomId() + '.png',
             underlayName: GlobalSettings.getWorkingDirectory() + 'hex-under' + randomId() + '.png',
@@ -204,7 +204,7 @@ export class HexEffect extends LayerEffect {
 super.generate(settings);
 
         this.data = {
-            numberOfHex: this.this.config.numberOfHex,
+            numberOfHex: this.config.numberOfHex,
             strategy: this.config.strategy[getRandomIntExclusive(0, this.config.strategy.length)],
             overlayStrategy: this.config.overlayStrategy[getRandomIntExclusive(0, this.config.overlayStrategy.length)],
             layerOpacity: this.config.layerOpacity,

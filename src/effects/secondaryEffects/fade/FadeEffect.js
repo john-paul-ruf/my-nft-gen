@@ -28,7 +28,7 @@ export class FadeEffect extends LayerEffect {
 
 
         super.generate(settings);
-        const data =
+        this.data =
             {
                 lower: randomNumber(this.config.lowerRange.lower, this.config.lowerRange.upper),
                 upper: randomNumber(this.config.upperRange.lower, this.config.upperRange.upper),

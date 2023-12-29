@@ -381,7 +381,7 @@ export class LensFlareEffect extends LayerEffect {
         data.ringArray = await getFlareRingArray(data.numberOfFlareRings, data.strategy);
         data.rayArray = await getFlareRayArray(data.numberOfFlareRays, data.strategy);
 
-        return data;
+        this.data = data;
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {

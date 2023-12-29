@@ -108,7 +108,7 @@ export class WireFrameSpiralEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            theAccentGaston: findValue(this.this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
+            theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             theUnitLengthGaston: findValue(0, this.data.unitLengthChangeConstant, 1, numberOfFrames, currentFrame),
             theUnderLayerOpacityGaston: findValue(this.data.underLayerOpacityRange.lower, this.data.underLayerOpacityRange.upper, this.data.underLayerOpacityTimes, numberOfFrames, currentFrame),

@@ -16,7 +16,7 @@ if (batchAmount > 0) {
         // Try customizing the everythingBagel to see what
         // pretties you can create!
         ////////////////////////////////////////////////
-        const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.bluePlateSpecial}));
+        const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.everythingBagel}));
         //const settings = Settings.from(JSON.parse(fs.readFileSync(GlobalSettings.getWorkingDirectory() + 'test-settings.txt')))
         const loopBuilder = new LoopBuilder(settings);
         return loopBuilder.constructLoop();

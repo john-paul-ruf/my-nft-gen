@@ -42,7 +42,7 @@ export class MappedFramesEffect extends LayerEffect {
     }
 
     async #extractFrame(context) {
-        const frames = this.#getAllFilesInDirectory(context.data.mappedFramesFolder)
+        const frames = await this.#getAllFilesInDirectory(context.data.mappedFramesFolder)
         const index = Math.floor(mapNumberToRange(context.currentFrame, 0, context.numberOfFrames, 0, frames.length - 1));
 
         return this.#copyFile(frames[index], context.filename);

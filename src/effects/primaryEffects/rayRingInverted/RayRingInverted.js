@@ -101,17 +101,17 @@ export class RayRingInvertedEffect extends LayerEffect {
         await this.#draw(context, context.drawing);
     }
 
-    async #invertedRayRing(layer, data, currentFrame, numberOfFrames) {
+    async #invertedRayRing(layer, currentFrame, numberOfFrames) {
 
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
             useAccentGaston: true,
-            theBlurGaston: Math.ceil(findValue(data.blurRange.lower, data.blurRange.upper, data.featherTimes, numberOfFrames, currentFrame)),
+            theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             drawing: GlobalSettings.getWorkingDirectory() + 'inverted-ray-ring' + randomId() + '.png',
             underlayName: GlobalSettings.getWorkingDirectory() + 'inverted-ray-ring-underlay' + randomId() + '.png',
-            canvas: await Canvas2dFactory.getNewCanvas(data.width, data.height),
-            data: data
+            canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
+            data: this.data
         }
 
         await this.#processDrawFunction(context);
