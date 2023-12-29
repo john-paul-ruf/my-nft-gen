@@ -51,7 +51,7 @@ export class ColorSchemeJsFactory {
                     scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance
                 };
 
-                return `Color Strategy: color-scheme\nHue: ${schemeInfo.hue}\nScheme: ${schemeInfo.scheme}\nVariation: ${schemeInfo.variations}\nDistance: ${schemeInfo.distance.toFixed(2)}\n`
+                return `**Color Strategy**:\n* color-scheme\n* Hue: ${schemeInfo.hue}\n* Scheme: ${schemeInfo.scheme}\n* Variation: ${schemeInfo.variations}\n* Distance: ${schemeInfo.distance.toFixed(2)}\n`
             }
         });
     }
