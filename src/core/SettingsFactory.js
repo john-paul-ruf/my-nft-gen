@@ -61,8 +61,8 @@ export class SettingsFactory {
         switch (request) {
             case SettingsFactory.AvailableSettings.bluePlateSpecial:
                 return {
-                    //colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
-                    colorScheme: ColorSchemeJsFactory.getColorSchemeJsColorScheme({}),
+                    colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
+                    //colorScheme: ColorSchemeJsFactory.getColorSchemeJsColorScheme({}),
                     neutrals: ['#FFFFFF'],
                     backgrounds: ['#000000',],
                     lights: ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
@@ -73,15 +73,13 @@ export class SettingsFactory {
                     finalFileName: 'neon-dream' + randomId(),
                     allPrimaryEffects: [
                         {effect: FuzzyBandEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: AmpEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: LayeredHexEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: ScopesEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                        {effect: LensFlareEffect, effectChance: 0, ignoreAdditionalEffects: false},
-                        {effect: EncircledSpiralEffect, effectChance: 100, ignoreAdditionalEffects: false},
+                        {effect: NthRingsEffect, effectChance: 50, ignoreAdditionalEffects: false},
+                        {effect: AmpEffect, effectChance: 50, ignoreAdditionalEffects: false},
+                        {effect: LayeredHexEffect, effectChance: 50, ignoreAdditionalEffects: false},
+                        {effect: ScopesEffect, effectChance: 50, ignoreAdditionalEffects: false},
+                        {effect: EncircledSpiralEffect, effectChance: 50, ignoreAdditionalEffects: false},
                         {effect: ViewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
-                    ],
-                    allSecondaryEffects: [
-                        {effect: GlowEffect, effectChance: 100, ignoreAdditionalEffects: false}
+                        {effect: ImageOverlayEffect, effectChance: 50, ignoreAdditionalEffects: false},
                     ],
                 }
             case SettingsFactory.AvailableSettings.everythingBagel:

@@ -8,7 +8,7 @@
     "test": "jest",
     "vert": "node src/index.js --isHoz false --batchAmount 1",
     "hoz": "node src/index.js --batchAmount 1",
-    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 1"
+    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 3"
   },
   "jest": {
     "collectCoverage": true,

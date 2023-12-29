@@ -17,7 +17,7 @@ export class ImageOverlayEffect extends LayerEffect {
                     config = {
                         folderName: '/imageOverlay/',
                         layerOpacity: [0.95],
-                        buffer: [1000]
+                        buffer: [555]
                     }
                 },
                 additionalEffects = [],
