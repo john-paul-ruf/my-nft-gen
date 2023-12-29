@@ -44,15 +44,13 @@ export class ColorSchemeJsFactory {
             .add_complement(true)
             .colors();
 
+        const schemeInfo = {
+            scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance
+        };
+
         return new internalColorScheme({
             colorBucket: this.colorBucket,
-            colorSchemeInfo: () => {
-                const schemeInfo = {
-                    scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance
-                };
-
-                return `**Color Strategy**:\n* color-scheme\n* Hue: ${schemeInfo.hue}\n* Scheme: ${schemeInfo.scheme}\n* Variation: ${schemeInfo.variations}\n* Distance: ${schemeInfo.distance.toFixed(2)}\n`
-            }
+            colorSchemeInfo: `**Color Strategy**:\n* color-scheme\n* Hue: ${schemeInfo.hue}\n* Scheme: ${schemeInfo.scheme}\n* Variation: ${schemeInfo.variations}\n* Distance: ${schemeInfo.distance.toFixed(2)}\n`
         });
     }
 
