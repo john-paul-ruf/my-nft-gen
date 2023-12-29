@@ -15,15 +15,14 @@ export class Effect {
 
     constructor(card, settings, ignoreAdditionalEffects, additionalEffects) {
         this.invoke = card.effect.invoke; //the effect to call
-        this.settings = settings;
         this.ignoreAdditionalEffects = ignoreAdditionalEffects;
         this.additionalEffects = additionalEffects;
         this.card = card;
     }
 
-    async init() {
+    async init(settings) {
         //the effect, instantiated
-        this.data = await this.card.generateData(this.settings);
+        this.data = await this.card.generateData(settings);
         for (let i = 0; i < this.additionalEffects.length; i++) {
             await this.additionalEffects[i].init();
         }

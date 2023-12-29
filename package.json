@@ -6,9 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "vert": "node src/index.js --isHoz false --batchAmount 2",
-    "hoz": "node src/index.js --batchAmount 2",
-    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 2"
+    "vert": "node src/index.js --isHoz false --batchAmount 1",
+    "hoz": "node src/index.js --batchAmount 1",
+    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 1"
   },
   "jest": {
     "collectCoverage": true,
@@ -30,11 +30,12 @@
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "canvas": "^2.11.2",
+    "color-scheme": "^1.0.1",
     "gl": "^6.0.2",
     "jimp": "^0.22.10",
     "minimist": "^1.2.8",
     "npm": "^10.2.4",
-    "sharp": "^0.31.3",
+    "sharp": "^0.33.1",
     "three": "^0.158.0"
   },
   "devDependencies": {

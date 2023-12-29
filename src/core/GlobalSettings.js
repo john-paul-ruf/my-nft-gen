@@ -14,6 +14,13 @@ const isHoz = argv.hasOwnProperty('isHoz') ? argv.isHoz === 'true' : true;
 const finalImageHeight = isHoz ? shortestSideInPixels : longestSideInPixels;
 const finalImageWidth = isHoz ? longestSideInPixels : shortestSideInPixels;
 
+const finalSize =  {
+    width: finalImageWidth,
+    height: finalImageHeight,
+    longestSide: finalImageHeight > finalImageWidth ? finalImageHeight : finalImageWidth,
+    shortestSide: finalImageHeight > finalImageWidth ? finalImageWidth : finalImageHeight,
+};
+
 const workingDirectory = `src/img/working/`;
 
 const layerStrategy = getRandomIntInclusive(1, 1) === 0 ? 'jimp' : 'sharp'
@@ -28,12 +35,7 @@ export class GlobalSettings {
     };
 
     static getFinalImageSize()  {
-        return {
-            width: finalImageWidth,
-            height: finalImageHeight,
-            longestSide: finalImageHeight > finalImageWidth ? finalImageHeight : finalImageWidth,
-            shortestSide: finalImageHeight > finalImageWidth ? finalImageWidth : finalImageHeight,
-        }
+        return finalSize;
     };
 
     static getLayerStrategy()  {
