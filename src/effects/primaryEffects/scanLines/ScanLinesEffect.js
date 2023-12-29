@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findValue} from "../../../core/math/findValue.js";
@@ -66,7 +65,7 @@ export class ScanLinesEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'scan-lines' + randomId() + '.png',
+            drawing: this.workingDirectory + 'scan-lines' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         }
@@ -85,8 +84,8 @@ export class ScanLinesEffect extends LayerEffect {
     #generate(settings) {
         const data = {
             numberOfLines: getRandomIntInclusive(this.config.lines.lower, this.config.lines.upper),
-            height: (GlobalSettings.getFinalImageSize().height * 1.5),
-            width: (GlobalSettings.getFinalImageSize().width * 1.5),
+            height: (this.finalSize.height * 1.5),
+            width: (this.finalSize.width * 1.5),
             color: settings.getColorFromBucket(),
         }
 

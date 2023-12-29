@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import path from "path";
 import {fileURLToPath} from "url";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
@@ -34,8 +33,8 @@ export class PorousEffect extends LayerEffect {
 
 
     async #porousOverlay(layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(this.data.filename);
-        const finalSize = GlobalSettings.getFinalImageSize();
+        let tempLayer = await LayerFactory.getLayerFromFile(this.data.filename, this.fileConfig);
+        const finalSize = this.finalSize;
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
         await tempLayer.resize(finalSize.height, finalSize.width);
         await layer.compositeLayerOver(tempLayer)

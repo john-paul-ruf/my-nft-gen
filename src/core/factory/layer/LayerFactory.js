@@ -1,21 +1,28 @@
-import {JimpLayerStrategy} from "./strategy/JimpLayerStrategy.js";
 import {SharpLayerStrategy} from "./strategy/SharpLayerStrategy.js";
 import {Layer} from "./Layer.js";
-import {GlobalSettings} from "../../GlobalSettings.js";
 
 
 export class LayerFactory {
     constructor() {
     }
 
-    static getNewLayer = async (height, width, backgroundColor) => {
-        switch (GlobalSettings.getLayerStrategy()) {
-            case 'jimp':
-                const jimpLayer = new Layer(new JimpLayerStrategy())
-                await jimpLayer.newLayer(height, width, backgroundColor);
-                return jimpLayer;
+    static getNewLayer = async (
+        height,
+        width,
+        backgroundColor,
+        config = {
+            finalImageSize: {
+                width: 0,
+                height: 0,
+                longestSide: 0,
+                shortestSide: 0
+            },
+            workingDirectory: null,
+            layerStrategy: 'sharp'
+        }) => {
+        switch (config.layerStrategy) {
             case 'sharp':
-                const sharpLayer = new Layer(new SharpLayerStrategy())
+                const sharpLayer = new Layer(new SharpLayerStrategy(config))
                 await sharpLayer.newLayer(height, width, backgroundColor);
                 return sharpLayer;
             default:
@@ -23,14 +30,19 @@ export class LayerFactory {
         }
     }
 
-    static getLayerFromFile = async filename => {
-        switch (GlobalSettings.getLayerStrategy()) {
-            case 'jimp':
-                const jimpLayer = new Layer(new JimpLayerStrategy())
-                await jimpLayer.fromFile(filename);
-                return jimpLayer;
+    static getLayerFromFile = async (filename, config = {
+        finalImageSize: {
+            width: 0,
+            height: 0,
+            longestSide: 0,
+            shortestSide: 0
+        },
+        workingDirectory: null,
+        layerStrategy: 'sharp'
+    }) => {
+        switch (config.layerStrategy) {
             case 'sharp':
-                const sharpLayer = new Layer(new SharpLayerStrategy())
+                const sharpLayer = new Layer(new SharpLayerStrategy(config))
                 await sharpLayer.fromFile(filename);
                 return sharpLayer;
             default:

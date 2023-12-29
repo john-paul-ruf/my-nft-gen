@@ -2,7 +2,6 @@ import {LayerEffect} from "../../LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
@@ -20,23 +19,23 @@ export class FuzzyRipplesEffect extends LayerEffect {
         stroke: 1,
         thickness: 2,
         largeRadius: {
-            lower: GlobalSettings.getFinalImageSize().longestSide * 0.15,
-            upper: GlobalSettings.getFinalImageSize().longestSide * 0.15
+            lower: (finalSize) => finalSize.longestSide * 0.15,
+            upper: (finalSize) => finalSize.longestSide * 0.15
         },
         smallRadius: {
-            lower: GlobalSettings.getFinalImageSize().longestSide * 0.25,
-            upper: GlobalSettings.getFinalImageSize().longestSide * 0.25
+            lower: (finalSize) => finalSize.longestSide * 0.25,
+            upper: (finalSize) => finalSize.longestSide * 0.25
         },
         largeNumberOfRings: {lower: 8, upper: 8},
         smallNumberOfRings: {lower: 8, upper: 8},
         ripple: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.10,
-            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.10
+            lower: (finalSize) => finalSize.shortestSide * 0.10,
+            upper: (finalSize) => finalSize.shortestSide * 0.10
         },
         times: {lower: 2, upper: 4},
         smallerRingsGroupRadius: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.3,
-            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.3
+            lower: (finalSize) => finalSize.shortestSide * 0.3,
+            upper: (finalSize) => finalSize.shortestSide * 0.3
         },
         accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
         blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -144,8 +143,8 @@ export class FuzzyRipplesEffect extends LayerEffect {
 
         await this.#draw(context, context.drawing);
 
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -170,8 +169,8 @@ export class FuzzyRipplesEffect extends LayerEffect {
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             theAngleGaston: findOneWayValue(0, 0, numberOfFrames, currentFrame),
-            drawing: GlobalSettings.getWorkingDirectory() + 'fuzzy-ripples' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'fuzzy-ripples-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'fuzzy-ripples' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'fuzzy-ripples-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         }
@@ -188,20 +187,20 @@ export class FuzzyRipplesEffect extends LayerEffect {
             invertLayers: this.config.invertLayers,
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
+            height: this.finalSize.height,
+            width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
             innerColor: settings.getNeutralFromBucket(),
             outerColor: settings.getColorFromBucket(),
-            largeRadius: getRandomIntInclusive(this.config.largeRadius.lower, this.config.largeRadius.upper),
-            smallRadius: getRandomIntInclusive(this.config.smallRadius.lower, this.config.smallRadius.upper),
+            largeRadius: getRandomIntInclusive(this.config.largeRadius.lower(this.finalSize), this.config.largeRadius.upper(this.finalSize)),
+            smallRadius: getRandomIntInclusive(this.config.smallRadius.lower(this.finalSize), this.config.smallRadius.upper(this.finalSize)),
             largeNumberOfRings: getRandomIntInclusive(this.config.largeNumberOfRings.lower, this.config.largeNumberOfRings.upper),
             smallNumberOfRings: getRandomIntInclusive(this.config.smallNumberOfRings.lower, this.config.smallNumberOfRings.upper),
-            ripple: getRandomIntInclusive(this.config.ripple.lower, this.config.ripple.upper),
-            smallerRingsGroupRadius: getRandomIntInclusive(this.config.smallerRingsGroupRadius.lower, this.config.smallerRingsGroupRadius.upper),
+            ripple: getRandomIntInclusive(this.config.ripple.lower(this.finalSize), this.config.ripple.upper(this.finalSize)),
+            smallerRingsGroupRadius: getRandomIntInclusive(this.config.smallerRingsGroupRadius.lower(this.finalSize), this.config.smallerRingsGroupRadius.upper(this.finalSize)),
             times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)

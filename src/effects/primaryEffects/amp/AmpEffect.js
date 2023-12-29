@@ -2,7 +2,6 @@ import {LayerEffect} from "../../LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
@@ -83,8 +82,8 @@ export class AmpEffect extends LayerEffect {
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -115,8 +114,8 @@ export class AmpEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'amp' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'amp-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'amp' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'amp-underlay' + randomId() + '.png',
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
@@ -131,7 +130,7 @@ export class AmpEffect extends LayerEffect {
     }
 
     #generate(settings) {
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.finalSize;
 
         this.data = {
             invertLayers: this.config.invertLayers,

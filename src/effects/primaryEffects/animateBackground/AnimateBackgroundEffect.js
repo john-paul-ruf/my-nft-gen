@@ -1,5 +1,5 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
+
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
@@ -30,7 +30,7 @@ export class AnimateBackgroundEffect extends LayerEffect {
 
 
     async #animateBackground(layer) {
-        const filename = GlobalSettings.getWorkingDirectory() + 'static' + randomId() + '.png';
+        const filename = this.workingDirectory + 'static' + randomId() + '.png';
 
         const jimpImage = new Jimp(this.data.width, this.data.height);
 
@@ -57,7 +57,7 @@ export class AnimateBackgroundEffect extends LayerEffect {
     }
 
     #generate(settings) {
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.finalSize;
         this.data = {
             width: finalImageSize.width,
             height: finalImageSize.height,

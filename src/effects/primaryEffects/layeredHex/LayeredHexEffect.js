@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../core/math/drawingMath.js";
@@ -98,10 +97,10 @@ export class LayeredHexEffect extends LayerEffect {
     async #drawLayer(context, arrayIndex, useAccentGaston) {
         return new Promise(async (innerResolve) => {
             try {
-                const tempFileName = GlobalSettings.getWorkingDirectory() + 'layered-hex-element' + randomId() + '.png'
+                const tempFileName = this.workingDirectory + 'layered-hex-element' + randomId() + '.png'
                 const {element, tempCanvas} = await this.#drawHexElement(arrayIndex, context, useAccentGaston);
                 await tempCanvas.toFile(tempFileName)
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
                 const theBlurGaston = Math.ceil(findValue(element.blurRange.lower, element.blurRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame))
                 await tempLayer.blur(theBlurGaston);
                 fs.unlinkSync(tempFileName);
@@ -162,8 +161,8 @@ export class LayeredHexEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            top: GlobalSettings.getWorkingDirectory() + 'layered-hex-top' + randomId() + '.png',
-            bottom: GlobalSettings.getWorkingDirectory() + 'layered-hex-bottom' + randomId() + '.png',
+            top: this.workingDirectory + 'layered-hex-top' + randomId() + '.png',
+            bottom: this.workingDirectory + 'layered-hex-bottom' + randomId() + '.png',
             data: this.data,
             layer: layer
         };
@@ -177,11 +176,11 @@ export class LayeredHexEffect extends LayerEffect {
             {
                 invertLayers: this.config.invertLayers,
 
-                height: GlobalSettings.getFinalImageSize().height,
-                width: GlobalSettings.getFinalImageSize().width,
+                height: this.finalSize.height,
+                width: this.finalSize.width,
                 center: {
-                    x: GlobalSettings.getFinalImageSize().width / 2,
-                    y: GlobalSettings.getFinalImageSize().height / 2
+                    x: this.finalSize.width / 2,
+                    y: this.finalSize.height / 2
                 },
 
                 startAngle: this.config.startAngle,

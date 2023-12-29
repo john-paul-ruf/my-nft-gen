@@ -1,5 +1,5 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
+
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
@@ -55,7 +55,7 @@ export class ScopesEffect extends LayerEffect {
 
         const scaleBy = (context.data.scaleFactor * loopCount);
         const radius = context.data.radiusFactor * scaleBy;
-        const gapRadius = ((GlobalSettings.getFinalImageSize().height * .05) + radius + (context.data.gapFactor * scaleBy) * loopCount)
+        const gapRadius = ((this.finalSize.height * .05) + radius + (context.data.gapFactor * scaleBy) * loopCount)
         const pos = findPointByAngleAndCircle(context.data.center, angle, gapRadius)
 
         await context.canvas.drawFilledPolygon2d(radius, pos, 6, theRotateGaston, color, theAlphaGaston)
@@ -72,14 +72,14 @@ export class ScopesEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'scopes' + randomId() + '.png',
+            drawing: this.workingDirectory + 'scopes' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data
         }
 
         await this.#draw(context, context.drawing);
 
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
 
         await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
@@ -91,13 +91,13 @@ export class ScopesEffect extends LayerEffect {
     #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
+            height: this.finalSize.height,
+            width: this.finalSize.width,
             sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
             gapFactor: randomNumber(this.config.gapFactor.lower, this.config.gapFactor.upper),
             radiusFactor: randomNumber(this.config.radiusFactor.lower, this.config.radiusFactor.upper),
             scaleFactor: this.config.scaleFactor,
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
         }
 
         const getHexLine = (sparsityFactor, info, i) => {

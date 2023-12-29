@@ -13,6 +13,11 @@ export class LayerEffect {
         this.requiresLayer = requiresLayer;
         this.config = config;
 
+        this.layerStrategy = settings.layerStrategy;
+        this.finalSize = settings.finalSize;
+        this.workingDirectory = settings.workingDirectory;
+        this.fileConfig = settings.fileConfig;
+
         if(!ignoreAdditionalEffects) {
             this.additionalEffects = additionalEffects;
         }

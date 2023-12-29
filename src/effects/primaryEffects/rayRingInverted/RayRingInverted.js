@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
@@ -94,8 +93,8 @@ export class RayRingInvertedEffect extends LayerEffect {
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -124,8 +123,8 @@ export class RayRingInvertedEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             useAccentGaston: true,
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            drawing: GlobalSettings.getWorkingDirectory() + 'inverted-ray-ring' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'inverted-ray-ring-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'inverted-ray-ring' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'inverted-ray-ring-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data
         }
@@ -143,15 +142,15 @@ export class RayRingInvertedEffect extends LayerEffect {
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
             numberOfCircles: getRandomIntInclusive(this.config.circles.lower, this.config.circles.upper),
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
+            height: this.finalSize.height,
+            width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
             rayStroke: this.config.rayStroke,
             rayThickness: this.config.rayThickness,
             innerColor: settings.getColorFromBucket(),
             scaleFactor: this.config.scaleFactor,
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
             blurRange: {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper)

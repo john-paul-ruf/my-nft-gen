@@ -1,6 +1,5 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntExclusive,} from "../../../core/math/random.js";
 import fs from "fs";
 import {fileURLToPath} from "url";
@@ -37,8 +36,8 @@ export class ImageOverlayEffect extends LayerEffect {
     }
 
     async #imageOverlay(layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(this.data.imageOverlay);
-        const finalSize = GlobalSettings.getFinalImageSize();
+        let tempLayer = await LayerFactory.getLayerFromFile(this.data.imageOverlay, this.fileConfig);
+        const finalSize = this.finalSize;
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
         await layer.compositeLayerOver(tempLayer, false)

@@ -2,7 +2,6 @@ import {LayerEffect} from "../../LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
@@ -71,8 +70,8 @@ export class GatesEffect extends LayerEffect {
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -101,8 +100,8 @@ export class GatesEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             useAccentGaston: true,
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            drawing: GlobalSettings.getWorkingDirectory() + 'gate' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'gate-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'gate' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'gate-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         }
@@ -120,11 +119,11 @@ export class GatesEffect extends LayerEffect {
             underLayerOpacity: this.config.underLayerOpacity,
             numberOfGates: getRandomIntInclusive(this.config.gates.lower, this.config.gates.upper),
             numberOfSides: getRandomIntInclusive(this.config.numberOfSides.lower, this.config.numberOfSides.upper),
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
+            height: this.finalSize.height,
+            width: this.finalSize.width,
             thickness: this.config.thickness,
             stroke: this.config.stroke,
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
             blurRange: {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper)
@@ -135,7 +134,7 @@ export class GatesEffect extends LayerEffect {
             const info = [];
             for (let i = 0; i <= num; i++) {
                 info.push({
-                    radius: getRandomIntExclusive(GlobalSettings.getFinalImageSize().shortestSide * 0.05, GlobalSettings.getFinalImageSize().shortestSide * 0.48),
+                    radius: getRandomIntExclusive(this.finalSize.shortestSide * 0.05, this.finalSize.shortestSide * 0.48),
                     color: settings.getColorFromBucket(),
                     innerColor: settings.getNeutralFromBucket(),
                     accentRange: {

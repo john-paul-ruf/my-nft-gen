@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
@@ -44,8 +43,8 @@ export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
         const offsetGaston = Math.floor(findValue(0, this.data.glitchOffset, this.data.glitchOffsetTimes, totalFrames, currentFrame)) * 4;
 
-        const finalImageSize = GlobalSettings.getFinalImageSize();
-        const filename = GlobalSettings.getWorkingDirectory() + 'glitch-drumroll' + randomId() + '.png';
+        const finalImageSize = this.finalSize;
+        const filename = this.workingDirectory + 'glitch-drumroll' + randomId() + '.png';
 
         await layer.toFile(filename)
 
@@ -91,7 +90,7 @@ export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
             const results = [];
 
-            for (let x = 0; x < GlobalSettings.getFinalImageSize().width; x++) {
+            for (let x = 0; x < this.finalSize.width; x++) {
                 results.push(Math.random());
             }
             return results;

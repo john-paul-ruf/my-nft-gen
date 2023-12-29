@@ -1,9 +1,9 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class SingleLayerGlitchFractalEffect extends LayerEffect {
 
@@ -38,7 +38,7 @@ export class SingleLayerGlitchFractalEffect extends LayerEffect {
 
         const theGlitch = getRandomIntInclusive(0, 100);
         if (theGlitch <= this.data.glitchChance) {
-            const filename = GlobalSettings.getWorkingDirectory() + 'fractal' + randomId() + '_underlay.png';
+            const filename = this.workingDirectory + 'fractal' + randomId() + '_underlay.png';
 
             await layer.toFile(filename);
 
@@ -55,7 +55,7 @@ export class SingleLayerGlitchFractalEffect extends LayerEffect {
 
             await underlay.writeAsync(filename)
 
-            const compositeLayer = await LayerFactory.getLayerFromFile(filename);
+            const compositeLayer = await LayerFactory.getLayerFromFile(filename, this.fileConfig);
 
             await compositeLayer.adjustLayerOpacity(0.9);
 

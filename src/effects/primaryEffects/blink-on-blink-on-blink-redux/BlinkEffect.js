@@ -1,7 +1,6 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
@@ -21,8 +20,8 @@ export class BlinkOnEffect extends LayerEffect {
         rotationSpeedRange: {lower: 1, upper: 2},
         counterClockwise: {lower: 0, upper: 1},
         diameterRange: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.25,
-            upper: GlobalSettings.getFinalImageSize().longestSide * 0.8
+            lower: (finalSize) => finalSize.shortestSide * 0.25,
+            upper: (finalSize) => finalSize.longestSide * 0.8
         },
         glowLowerRange: {lower: -128, upper: -64},
         glowUpperRange: {lower: 64, upper: 128},
@@ -54,7 +53,7 @@ export class BlinkOnEffect extends LayerEffect {
 
 
     async #randomize(layer, data, index) {
-        const filename = GlobalSettings.getWorkingDirectory() + 'randomize-blink' + randomId() + '.png';
+        const filename = this.workingDirectory + 'randomize-blink' + randomId() + '.png';
 
         await layer.toFile(filename);
 
@@ -70,7 +69,7 @@ export class BlinkOnEffect extends LayerEffect {
     }
 
     async #glowAnimated(layer, data, currentFrame, totalFrames, index) {
-        const filename = GlobalSettings.getWorkingDirectory() + 'glow-blink' + randomId() + '.png';
+        const filename =this.workingDirectory + 'glow-blink' + randomId() + '.png';
 
         await layer.toFile(filename);
 
@@ -88,13 +87,13 @@ export class BlinkOnEffect extends LayerEffect {
 
     async #blinkinate(data, currentFrame, totalFrames, index) {
         const scale = 1.1;
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.finalSize;
         const blink = data.blinkArray[index];
-        const fileName = GlobalSettings.getWorkingDirectory() + 'blink-in-action' + randomId() + '.png';
-        const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile);
+        const fileName = this.workingDirectory + 'blink-in-action' + randomId() + '.png';
+        const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
         await tempLayer.resize(blink.diameter, blink.diameter);
 
-        const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide * scale, finalImageSize.longestSide * scale, '#00000000');
+        const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide * scale, finalImageSize.longestSide * scale, '#00000000', this.settings.fileConfig);
         await fullSizedLayer.compositeLayerOver(tempLayer, false);
 
         await fullSizedLayer.toFile(fileName);
@@ -131,7 +130,7 @@ export class BlinkOnEffect extends LayerEffect {
         }
 
         for (let file of filenames) {
-            await layer.compositeLayerOver(await LayerFactory.getLayerFromFile(file));
+            await layer.compositeLayerOver(await LayerFactory.getLayerFromFile(file, this.fileConfig));
         }
 
         await layer.adjustLayerOpacity(this.data.layerOpacity);
@@ -162,7 +161,7 @@ export class BlinkOnEffect extends LayerEffect {
                     initialRotation: getRandomIntInclusive(this.config.initialRotation.lower, this.config.initialRotation.upper),
                     rotationSpeedRange: getRandomIntInclusive(this.config.rotationSpeedRange.lower, this.config.rotationSpeedRange.upper),
                     counterClockwise: getRandomIntInclusive(this.config.counterClockwise.lower, this.config.counterClockwise.upper),
-                    diameter: getRandomIntInclusive(this.config.diameterRange.lower, this.config.diameterRange.upper),
+                    diameter: getRandomIntInclusive(this.config.diameterRange.lower(this.finalSize), this.config.diameterRange.upper(this.finalSize)),
                     glowLowerRange: getRandomIntInclusive(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
                     glowUpperRange: getRandomIntInclusive(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
                     glowTimes: getRandomIntInclusive(this.config.glowTimes.lower, this.config.glowTimes.upper),

@@ -1,7 +1,6 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
@@ -22,8 +21,8 @@ export class EncircledSpiralEffect extends LayerEffect {
         thickness: 2,
         sparsityFactor: [60],
         sequencePixelConstant: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.001,
-            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.001
+            lower: (finalSize) => finalSize.shortestSide * 0.001,
+            upper: (finalSize) => finalSize.shortestSide * 0.001
         },
         sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
         minSequenceIndex: [12],
@@ -114,7 +113,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawBottomLayer(context, i);
                 await context.canvas.toFile(filename)
-                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing);
+                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
                 const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
                 await bottomLayer.blur(theBlurGaston);
                 await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
@@ -124,7 +123,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawTopLayer(context, i);
                 await context.canvas.toFile(filename)
-                const topLayer = await LayerFactory.getLayerFromFile(context.drawing);
+                const topLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
                 await topLayer.adjustLayerOpacity(context.data.layerOpacity);
                 await context.layer.compositeLayerOver(topLayer);
             } else {
@@ -133,7 +132,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawTopLayer(context, i);
                 await context.canvas.toFile(filename)
-                const topLayer = await LayerFactory.getLayerFromFile(context.drawing);
+                const topLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
                 await topLayer.adjustLayerOpacity(context.data.layerOpacity);
                 await context.layer.compositeLayerOver(topLayer);
 
@@ -141,7 +140,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawBottomLayer(context, i);
                 await context.canvas.toFile(filename)
-                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing);
+                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
                 const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
                 await bottomLayer.blur(theBlurGaston);
                 await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
@@ -161,8 +160,8 @@ export class EncircledSpiralEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'encircled-spiral' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'encircled-spiral-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'encircled-spiral' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'encircled-spiral-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
             layer: layer,
@@ -181,9 +180,9 @@ export class EncircledSpiralEffect extends LayerEffect {
             numberOfRings: getRandomIntInclusive(this.config.numberOfRings.lower, this.config.numberOfRings.upper),
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            height: this.finalSize.height,
+            width: this.finalSize.width,
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
         }
 
         const getRingArray = (num) => {
@@ -199,7 +198,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                     sequence: getRandomFromArray(this.config.minSequenceIndex),
                     minSequenceIndex: getRandomFromArray(this.config.minSequenceIndex),
                     numberOfSequenceElements: getRandomFromArray(this.config.numberOfSequenceElements),
-                    sequencePixelConstant: randomNumber(this.config.sequencePixelConstant.lower, this.config.sequencePixelConstant.upper),
+                    sequencePixelConstant: randomNumber(this.config.sequencePixelConstant.lower(this.finalSize), this.config.sequencePixelConstant.upper(this.finalSize)),
                     sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
                     innerColor: settings.getNeutralFromBucket(),
                     outerColor: settings.getColorFromBucket(),

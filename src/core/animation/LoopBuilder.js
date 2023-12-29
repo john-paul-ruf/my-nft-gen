@@ -4,7 +4,6 @@ import {writeArtistCard} from "../output/writeArtistCard.js";
 import {writeToMp4} from "../output/writeToMp4.js";
 import {writeScreenCap} from "../output/writeScreenCap.js";
 import fs from "fs";
-import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
 
 export class LoopBuilder {
@@ -15,9 +14,9 @@ export class LoopBuilder {
 
         this.context = {
             numberOfFrame: this.config.numberOfFrame,
-            finalImageSize: GlobalSettings.getFinalImageSize(),
-            workingDirectory: GlobalSettings.getWorkingDirectory(),
-            layerStrategy: GlobalSettings.getLayerStrategy(),
+            finalImageSize: settings.finalSize,
+            workingDirectory: settings.workingDirectory,
+            layerStrategy: settings.fileConfig.layerStrategy,
             frameFilenames: [], //will be a collection of png images filenames that in the end gets converted to a MP4
             finalFileName: this.config.finalFileName,
         }
@@ -27,7 +26,11 @@ export class LoopBuilder {
     async #getLayers(w, h) {
         const extraLayers = [];
         for (let i = 0; i < this.settings.effects.length; i++) { //effect is found in the outermost layer of this function
-            extraLayers.push(await LayerFactory.getNewLayer(h, w, '#00000000'))
+            extraLayers.push(await LayerFactory.getNewLayer(
+                h,
+                w,
+                '#00000000',
+                this.settings.fileConfig));
         }
         return extraLayers;
     }
@@ -73,7 +76,7 @@ export class LoopBuilder {
             ////////////////////////
             //get fresh files every loop
             ////////////////////////
-            const background = await LayerFactory.getNewLayer(this.context.finalImageSize.height, this.context.finalImageSize.width, this.context.backgroundColor);
+            const background = await LayerFactory.getNewLayer(this.context.finalImageSize.height, this.context.finalImageSize.width, this.context.backgroundColor, this.settings.fileConfig);
             this.context.layers = await this.#getLayers(this.context.finalImageSize.width, this.context.finalImageSize.height, context)
 
             /////////////////////////////

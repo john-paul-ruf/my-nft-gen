@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import * as THREE from "three";
@@ -39,7 +38,7 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
 
 
     async #draw(context, filename) {
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.finalSize;
 
         const width = finalImageSize.width, height = finalImageSize.height;
 
@@ -109,7 +108,7 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
             data: this.data,
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'three-dimensional-shape' + randomId() + '.png'
+            drawing: this.workingDirectory + 'three-dimensional-shape' + randomId() + '.png'
         }
 
         await this.#draw(context, context.drawing)

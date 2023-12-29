@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntExclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import {fileURLToPath} from "url";
@@ -70,17 +69,17 @@ export class MappedFramesEffect extends LayerEffect {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
             data: this.data,
-            filename: GlobalSettings.getWorkingDirectory() + 'mapped-frame' + randomId() + '.png',
+            filename: this.workingDirectory + 'mapped-frame' + randomId() + '.png',
 
         }
 
         await this.#extractFrame(context);
 
-        let tempLayer = await LayerFactory.getLayerFromFile(context.filename);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.filename, this.fileConfig);
 
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
 
-        const finalSize = GlobalSettings.getFinalImageSize();
+        const finalSize = this.finalSize;
         await tempLayer.resize(finalSize.height, finalSize.width);
         await layer.compositeLayerOver(tempLayer);
 

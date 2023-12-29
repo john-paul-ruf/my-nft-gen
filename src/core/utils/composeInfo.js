@@ -1,4 +1,3 @@
-import {GlobalSettings as GlobalSettings} from "../GlobalSettings.js";
 
 export class ComposeInfo {
     constructor({
@@ -35,10 +34,10 @@ export class ComposeInfo {
     }
 
     async composeInfo() {
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.settings.finalSize;
 
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-        return `**Title**: ${this.config.finalFileName}\n**Artist**: ${this.config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\n**Run**: ${this.config.runName}\n${await this.#getColorInfo(this.settings)}**Image Size**: ${finalImageSize.width}x${finalImageSize.height} pixels\n**Number of Frames**: ${this.config.numberOfFrame}\n**Layer Strategy**: ${GlobalSettings.getLayerStrategy()}\n\n**Effects**: ${this.#getEffectInfo(this.effects)}\n\nFinal Image Effects: ${this.#getEffectInfo(this.finalImageEffects)}`
+        return `**Title**: ${this.config.finalFileName}\n**Artist**: ${this.config._INVOKER_}\n[source code](https://github.com/john-paul-ruf/my-nft-gen)\n\n**Run**: ${this.config.runName}\n${await this.#getColorInfo(this.settings)}**Image Size**: ${finalImageSize.width}x${finalImageSize.height} pixels\n**Number of Frames**: ${this.config.numberOfFrame}\n**Layer Strategy**: ${this.settings.layerStrategy}\n\n**Effects**: ${this.#getEffectInfo(this.effects)}\n\nFinal Image Effects: ${this.#getEffectInfo(this.finalImageEffects)}`
     }
 
 }

@@ -3,7 +3,6 @@ import {LoopBuilder} from "./core/animation/LoopBuilder.js";
 import parseArgs from "minimist";
 import {SettingsFactory} from "./core/SettingsFactory.js";
 import fs from "fs";
-import {GlobalSettings} from "./core/GlobalSettings.js";
 
 //how many you want to print?
 const argv = parseArgs(process.argv)
