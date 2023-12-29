@@ -25,9 +25,7 @@ export class NeonColorSchemeFactory {
                             '#00FF00',
                             '#0000FF',
                         ],
-                    colorSchemeInfo: () => {
-                        return `**Color Strategy**: ${NeonColorScheme.neons}\n`
-                    }
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.neons}\n`,
                 });
             case NeonColorScheme.redNeons:
                 return new ColorScheme({
@@ -38,9 +36,7 @@ export class NeonColorSchemeFactory {
                             '#FF00FF',
                             '#FF0000',
                         ],
-                    getColorSchemeInfo: () => {
-                        return `**Color Strategy**: ${NeonColorScheme.redNeons}\n`
-                    }
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.redNeons}\n`,
                 });
             case NeonColorScheme.blueNeons:
                 return new ColorScheme({
@@ -51,9 +47,7 @@ export class NeonColorSchemeFactory {
                             '#00FFFF',
                             '#0000FF',
                         ],
-                    colorSchemeInfo: () => {
-                        return `**Color Strategy**: ${NeonColorScheme.blueNeons}\n`
-                    }
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.blueNeons}\n`,
                 });
             case NeonColorScheme.greenNeons:
                 return new ColorScheme({
@@ -64,9 +58,7 @@ export class NeonColorSchemeFactory {
                             '#00FFFF',
                             '#00FF00',
                         ],
-                    colorSchemeInfo: () => {
-                        return `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`
-                    }
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
                 });
 
             default:

@@ -3,7 +3,7 @@ import {getRandomIntExclusive} from "../math/random.js";
 export class ColorScheme {
     constructor({
                     colorBucket = [],
-                    colorSchemeInfo = () => 'Please define a color scheme'
+                    colorSchemeInfo = 'Please define a color scheme'
                 }) {
 
         this.colorBucket = colorBucket;
@@ -16,6 +16,6 @@ export class ColorScheme {
     }
 
     getColorSchemeInfo() {
-        return this.colorSchemeInfo();
+        return this.colorSchemeInfo;
     }
 }

@@ -2,6 +2,8 @@ import {Settings} from "./core/Settings.js";
 import {LoopBuilder} from "./core/animation/LoopBuilder.js";
 import parseArgs from "minimist";
 import {SettingsFactory} from "./core/SettingsFactory.js";
+import fs from "fs";
+import {GlobalSettings} from "./core/GlobalSettings.js";
 
 //how many you want to print?
 const argv = parseArgs(process.argv)
@@ -14,13 +16,13 @@ if (batchAmount > 0) {
         // Try customizing the everythingBagel to see what
         // pretties you can create!
         ////////////////////////////////////////////////
-        const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.bluePlateSpecial}));
+        const settings = await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.bluePlateSpecial});
 
         //For testing, output is unknown
-        //const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.experimental}));
+        //const settings = await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.experimental});
 
         //For testing, output is gross
-       // const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.everythingBagel}));
+        //const settings = await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.everythingBagel});
 
         //Program now outputs a json file on loop start
         //This json file can be loaded again in case of failure to recreate the loop

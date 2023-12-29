@@ -47,6 +47,7 @@ import {
 } from "../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
 import {ColorSchemeJsFactory} from "./color/ColorSchemeJsFactory.js";
 import {randomId} from "./math/random.js";
+import {Settings} from "./Settings.js";
 
 export class SettingsFactory {
     constructor() {
@@ -68,7 +69,7 @@ export class SettingsFactory {
                 LensFlareEffect._config_.numberOfFlareRays.lower = 11;
                 LensFlareEffect._config_.numberOfFlareRays.upper = 11;
 
-                return {
+                return new Settings({
                     colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
                     //colorScheme: ColorSchemeJsFactory.getColorSchemeJsColorScheme({}),
                     neutrals: ['#FFFFFF'],
@@ -83,9 +84,9 @@ export class SettingsFactory {
                         {effect: LensFlareEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: FuzzyBandEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ],
-                }
+                });
             case SettingsFactory.AvailableSettings.bluePlateSpecial:
-                return {
+                return new Settings({
                     colorScheme: NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons),
                     //colorScheme: ColorSchemeJsFactory.getColorSchemeJsColorScheme({}),
                     neutrals: ['#FFFFFF'],
@@ -106,9 +107,9 @@ export class SettingsFactory {
                         {effect: ViewportEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: ImageOverlayEffect, effectChance: 50, ignoreAdditionalEffects: false},
                     ],
-                }
+                });
             case SettingsFactory.AvailableSettings.everythingBagel:
-                return {
+                return new Settings({
                     colorScheme: new ColorScheme(NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons)),
                     neutrals: ['#FFFFFF'],
                     backgrounds: ['#000000',],
@@ -163,7 +164,7 @@ export class SettingsFactory {
                         {effect: GlitchFractalEffect, effectChance: 100, ignoreAdditionalEffects: false},
                         {effect: GlitchDrumrollHorizontalWaveEffect, effectChance: 100, ignoreAdditionalEffects: false},
                     ]
-                };
+                });
             default:
                 throw 'Not a valid settings enum';
         }
