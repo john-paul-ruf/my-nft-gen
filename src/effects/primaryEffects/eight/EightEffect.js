@@ -7,10 +7,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class EightEffect extends LayerEffect {
+
+    static _name_ = 'eight'
+
     constructor({
-                    name = 'eight',
+                    name = EightEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 1,
@@ -37,8 +41,10 @@ export class EightEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
 
 
@@ -109,10 +115,7 @@ export class EightEffect extends LayerEffect {
         fs.unlinkSync(context.underlayName);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,

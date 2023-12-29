@@ -1,10 +1,14 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {getRandomIntInclusive} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class SingleLayerBlurEffect extends LayerEffect {
+
+    static _name_ = 'single-layer-blur';
+
     constructor({
-                    name = 'animated-background',
+                    name = SingleLayerBlurEffect._name_,
                     requiresLayer = false,
                     config = {
                         lowerRange: {lower: 0, upper: 0},
@@ -14,9 +18,12 @@ export class SingleLayerBlurEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #blur(layer, currentFrame, totalFrames) {
         const theGlitch = getRandomIntInclusive(0, 100);
@@ -28,10 +35,7 @@ export class SingleLayerBlurEffect extends LayerEffect {
         }
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data =
             {
                 glitchChance: this.config.glitchChance,

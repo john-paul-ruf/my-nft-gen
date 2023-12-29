@@ -3,19 +3,26 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
+import {Settings} from "../../../core/Settings.js";
 
 export class GlitchInverseEffect extends LayerEffect {
+
+    static _name_ = 'glitch-inverse';
+
     constructor({
-                    name = 'glitch-inverse',
+                    name = GlitchInverseEffect._name_,
                     requiresLayer = true,
                     config = {
                         glitchChance: 100,
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #glitchInverse(layer) {
 
@@ -37,11 +44,8 @@ export class GlitchInverseEffect extends LayerEffect {
         }
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
-        return {
+    #generate(settings) {
+        this.data = {
             glitchChance: this.config.glitchChance,
         };
     }

@@ -5,10 +5,14 @@ import fs from "fs";
 import {findValue} from "../../../core/math/findValue.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class ScanLinesEffect extends LayerEffect {
+
+    static _name_ = 'scan lines';
+
     constructor({
-                    name = 'scan lines',
+                    name = ScanLinesEffect._name_,
                     requiresLayer = true,
                     config = {
                         lines: {lower: 2, upper: 4},
@@ -21,9 +25,12 @@ export class ScanLinesEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawLine(y, pixelLine, context) {
         for (let x = 0; x < context.data.width; x++) {
@@ -66,15 +73,12 @@ export class ScanLinesEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             numberOfLines: getRandomIntInclusive(this.config.lines.lower, this.config.lines.upper),
             height: (GlobalSettings.getFinalImageSize().height * 1.5),
             width: (GlobalSettings.getFinalImageSize().width * 1.5),
-            color: await settings.getColorFromBucket(),
+            color: settings.getColorFromBucket(),
         }
 
         const getPixelTrailLength = () => {

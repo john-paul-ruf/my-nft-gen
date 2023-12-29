@@ -6,10 +6,14 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
+import {Settings} from "../../../core/Settings.js";
 
 export class GatesEffect extends LayerEffect {
+
+    static _name_ = 'gates';
+
     constructor({
-                    name = 'gates',
+                    name = GatesEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 1,
@@ -24,8 +28,10 @@ export class GatesEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
 
     async #drawUnderlay(context, filename) {
@@ -99,10 +105,7 @@ export class GatesEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
@@ -119,7 +122,7 @@ export class GatesEffect extends LayerEffect {
             },
         };
 
-        const computeInitialInfo = async (num) => {
+        const computeInitialInfo = (num) => {
             const info = [];
             for (let i = 0; i <= num; i++) {
                 info.push({
@@ -137,7 +140,7 @@ export class GatesEffect extends LayerEffect {
             return info;
         }
 
-        data.gates = await computeInitialInfo(data.numberOfGates);
+        data.gates = computeInitialInfo(data.numberOfGates);
 
         this.data = data;
     }

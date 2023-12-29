@@ -4,10 +4,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
+
+    static _name_ = 'glitch-drumroll-horizontal-wave';
+
     constructor({
-                    name = 'glitch-drumroll-horizontal-wave',
+                    name = GlitchDrumrollHorizontalWaveEffect._name_,
                     requiresLayer = true,
                     config = {
                         glitchChance: 100,
@@ -17,10 +21,13 @@ export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
-    async #glitchDrumrollHorizontalWave (layer, currentFrame, totalFrames) {
+
+    async #glitchDrumrollHorizontalWave(layer, currentFrame, totalFrames) {
         /////////////////////
         // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
         /////////////////////
@@ -70,10 +77,7 @@ export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
         fs.unlinkSync(filename);
     }
 
-    async generate(settings) {
-
-super.generate(settings);
-
+    #generate(settings) {
         const getRoll = () => {
 
             const results = [];

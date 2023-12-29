@@ -7,10 +7,14 @@ import {findValue} from "../../../core/math/findValue.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class LayeredHexEffect extends LayerEffect {
+
+    static _name_ = 'layered-hex-now-with-fuzz';
+
     constructor({
-                    name = 'layered-hex-now-with-fuzz',
+                    name = LayeredHexEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -43,8 +47,10 @@ export class LayeredHexEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
 
 
@@ -157,10 +163,7 @@ export class LayeredHexEffect extends LayerEffect {
     }
 
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data =
             {
                 invertLayers: this.config.invertLayers,
@@ -196,7 +199,7 @@ export class LayeredHexEffect extends LayerEffect {
             };
 
 
-        const getHexIndexArray = async (num) => {
+        const getHexIndexArray = (num) => {
             const info = [];
 
             for (let i = 0; i <= num; i++) {
@@ -227,7 +230,7 @@ export class LayeredHexEffect extends LayerEffect {
             return info;
         }
 
-        data.hexArray = await getHexIndexArray(data.numberOfIndex);
+        data.hexArray = getHexIndexArray(data.numberOfIndex);
 
         this.data = data;
     }

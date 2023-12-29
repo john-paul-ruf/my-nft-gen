@@ -4,10 +4,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import Jimp from "jimp";
 import fs from "fs";
+import {Settings} from "../../../core/Settings.js";
 
 export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
+
+    static _name_ = 'single-layer-glitch-drumroll-horizontal-wave';
+
     constructor({
-                    name = 'single-layer-glitch-drumroll-horizontal-wave',
+                    name = SingleLayerGlitchDrumrollHorizontalWaveEffect._name_,
                     requiresLayer = false,
                     config = {
                         glitchChance: 100,
@@ -17,9 +21,12 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #glitchDrumrollHorizontalWave(layer, currentFrame, totalFrames) {
         /////////////////////
@@ -72,9 +79,7 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
     }
 
 
-    async generate(settings) {
-
-        super.generate(settings);
+    #generate(settings) {
 
         const finalImageSize = GlobalSettings.getFinalImageSize();
 

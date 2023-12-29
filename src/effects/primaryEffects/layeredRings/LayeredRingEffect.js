@@ -7,10 +7,14 @@ import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class LayeredRingEffect extends LayerEffect {
+
+    static _name_ = 'layered-rings';
+
     constructor({
-                    name = 'layered-rings',
+                    name = LayeredRingEffect._name_,
                     requiresLayer = true,
                     config = {
                         thickness: 4,
@@ -37,9 +41,12 @@ export class LayeredRingEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawHexLayer(context, arrayIndex, layer) {
 
@@ -94,10 +101,7 @@ export class LayeredRingEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data =
             {
                 height: GlobalSettings.getFinalImageSize().height,
@@ -127,7 +131,7 @@ export class LayeredRingEffect extends LayerEffect {
             };
 
 
-        const getRingsIndexArray = async (num) => {
+        const getRingsIndexArray = (num) => {
             const info = [];
 
             for (let i = 0; i <= num; i++) {
@@ -147,7 +151,7 @@ export class LayeredRingEffect extends LayerEffect {
             return info;
         }
 
-        data.ringArray = await getRingsIndexArray(data.numberOfIndex);
+        data.ringArray = getRingsIndexArray(data.numberOfIndex);
 
         this.data = data;
     }

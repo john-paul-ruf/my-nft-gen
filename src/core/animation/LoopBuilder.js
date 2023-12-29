@@ -123,7 +123,6 @@ export class LoopBuilder {
 
             this.config.startTime = new Date();
             this.context.backgroundColor = await this.settings.getBackgroundFromBucket();
-            await this.settings.init();
 
             this.composeInfo = new ComposeInfo({
                 config: this.config,

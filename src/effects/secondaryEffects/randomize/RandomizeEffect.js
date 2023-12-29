@@ -3,10 +3,14 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
+import {Settings} from "../../../core/Settings.js";
 
 export class RandomizeEffect extends LayerEffect {
+
+    static _name_ = 'randomize';
+
     constructor({
-                    name = 'randomize',
+                    name = RandomizeEffect._name_,
                     requiresLayer = false,
                     config = {
                         spin: {lower: -8, upper: 8},
@@ -16,9 +20,12 @@ export class RandomizeEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #randomize(layer) {
         const filename = GlobalSettings.getWorkingDirectory() + 'randomize' + randomId() + '.png';
@@ -36,10 +43,7 @@ export class RandomizeEffect extends LayerEffect {
         fs.unlinkSync(filename)
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const props = {
             hue: getRandomIntInclusive(this.config.spin.lower, this.config.spin.upper),
             red: getRandomIntInclusive(this.config.red.lower, this.config.red.upper),
@@ -47,7 +51,7 @@ export class RandomizeEffect extends LayerEffect {
             blue: getRandomIntInclusive(this.config.blue.lower, this.config.blue.upper),
         }
 
-        this.data =  {
+        this.data = {
             props: props,
             randomize: [
                 {

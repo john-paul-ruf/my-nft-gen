@@ -5,10 +5,14 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class FuzzyBandEffect extends LayerEffect {
+
+    static _name_ = 'fuzz-bands-mark-two';
+
     constructor({
-                    name = 'fuzz-bands-mark-two',
+                    name = FuzzyBandEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -28,8 +32,11 @@ export class FuzzyBandEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})
+    ) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings);
     }
 
 
@@ -159,10 +166,7 @@ export class FuzzyBandEffect extends LayerEffect {
         await this.#createThoseFuzzyBands(context);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             invertLayers: this.config.invertLayers,
             layerOpacity: this.config.layerOpacity,
@@ -174,7 +178,7 @@ export class FuzzyBandEffect extends LayerEffect {
             center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
         }
 
-        const computeInitialInfo = async (num) => {
+        const computeInitialInfo = (num) => {
             const info = [];
             for (let i = 0; i <= num; i++) {
                 info.push({
@@ -200,7 +204,7 @@ export class FuzzyBandEffect extends LayerEffect {
             return info;
         }
 
-        data.circles = await computeInitialInfo(data.numberOfCircles);
+        data.circles = computeInitialInfo(data.numberOfCircles);
 
         this.data = data;
     }

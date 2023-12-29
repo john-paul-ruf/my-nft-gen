@@ -6,10 +6,14 @@ import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class LensFlareEffect extends LayerEffect {
+
+    static _name_ = 'upgraded-lens-flare';
+
     constructor({
-                    name = 'upgraded-lens-flare',
+                    name = LensFlareEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -64,14 +68,14 @@ export class LensFlareEffect extends LayerEffect {
                             '#ff9daf',
                         ],
 
-                        getFlareColor: async (strategy, settings) => {
+                        getFlareColor: (strategy, settings) => {
                             switch (strategy) {
                                 case 'original':
                                     return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
                                 case 'color-bucket':
-                                    return await settings.getColorFromBucket();
+                                    return settings.getColorFromBucket();
                                 case 'neutral-bucket':
-                                    return await settings.getNeutralFromBucket();
+                                    return settings.getNeutralFromBucket();
                                 default:
                                     return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
                             }
@@ -79,9 +83,12 @@ export class LensFlareEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawHexArray(context, array) {
         async function hex(i) {
@@ -248,10 +255,7 @@ export class LensFlareEffect extends LayerEffect {
         await layer.adjustLayerOpacity(theOpacityGaston);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data =
             {
                 height: GlobalSettings.getFinalImageSize().height,
@@ -291,14 +295,14 @@ export class LensFlareEffect extends LayerEffect {
             };
 
 
-        const getFlareHexArray = async (num, strategy) => {
+        const getFlareHexArray =  (num, strategy) => {
             const info = [];
 
             for (let i = 0; i < num; i++) {
                 info.push({
                     size: getRandomIntInclusive(this.config.flareHexSizeRange.lower, this.config.flareHexSizeRange.upper),
-                    color: await this.config.getFlareColor(strategy, settings),
-                    strokeColor: await this.config.getFlareColor(strategy, settings),
+                    color:  this.config.getFlareColor(strategy, settings),
+                    strokeColor: this.config.getFlareColor(strategy, settings),
                     sides: getRandomIntInclusive(6, 6), //ended up with hex...
                     angle: getRandomIntInclusive(0, 360),
                     offset: getRandomIntInclusive(GlobalSettings.getFinalImageSize().width * 0.15, GlobalSettings.getFinalImageSize().width * 0.15),
@@ -313,14 +317,14 @@ export class LensFlareEffect extends LayerEffect {
             return info;
         }
 
-        const getFlareRingArray = async (num, strategy) => {
+        const getFlareRingArray = (num, strategy) => {
             const info = [];
 
             for (let i = 0; i <= num; i++) {
                 info.push({
                     size: getRandomIntInclusive(this.config.flareRingsSizeRange.lower, this.config.flareRingsSizeRange.upper),
                     stroke: getRandomIntInclusive(this.config.flareRingStroke.lower, this.config.flareRingStroke.upper),
-                    color: await this.config.getFlareColor(strategy, settings),
+                    color: this.config.getFlareColor(strategy, settings),
                     opacity: {
                         lower: randomNumber(this.config.elementOpacityRange.bottom.lower, this.config.elementOpacityRange.bottom.upper),
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper)
@@ -344,7 +348,7 @@ export class LensFlareEffect extends LayerEffect {
             return info;
         }
 
-        const getFlareRayArray = async (num, strategy) => {
+        const getFlareRayArray = (num, strategy) => {
             const info = [];
 
             for (let i = 0; i <= num; i++) {
@@ -352,7 +356,7 @@ export class LensFlareEffect extends LayerEffect {
                     size: getRandomIntInclusive(this.config.flareRaysSizeRange.lower, this.config.flareRaysSizeRange.upper),
                     stroke: getRandomIntInclusive(this.config.flareRaysStroke.lower, this.config.flareRaysStroke.upper),
                     angle: getRandomIntInclusive(0, 360),
-                    color: await this.config.getFlareColor(strategy, settings),
+                    color: this.config.getFlareColor(strategy, settings),
                     opacity: {
                         lower: randomNumber(this.config.elementOpacityRange.bottom.lower, this.config.elementOpacityRange.bottom.upper),
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper)
@@ -377,9 +381,9 @@ export class LensFlareEffect extends LayerEffect {
             return info;
         }
 
-        data.hexArray = await getFlareHexArray(data.numberOfFlareHex, data.strategy);
-        data.ringArray = await getFlareRingArray(data.numberOfFlareRings, data.strategy);
-        data.rayArray = await getFlareRayArray(data.numberOfFlareRays, data.strategy);
+        data.hexArray = getFlareHexArray(data.numberOfFlareHex, data.strategy);
+        data.ringArray = getFlareRingArray(data.numberOfFlareRings, data.strategy);
+        data.rayArray = getFlareRayArray(data.numberOfFlareRays, data.strategy);
 
         this.data = data;
     }

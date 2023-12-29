@@ -7,10 +7,14 @@ import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import fs from "fs";
+import {Settings} from "../../../core/Settings.js";
 
 export class NthRingsEffect extends LayerEffect {
+
+    static _name_ = 'nth-rings';
+
     constructor({
-                    name = 'animated-background',
+                    name = NthRingsEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -30,9 +34,12 @@ export class NthRingsEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawRing(pos, radius, innerColor, outerColor, context) {
         const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -128,10 +135,7 @@ export class NthRingsEffect extends LayerEffect {
         fs.unlinkSync(context.underlayName);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             invertLayers: this.config.invertLayers,
             totalRingCount: getRandomIntInclusive(this.config.totalRingCount.lower, this.config.totalRingCount.upper),
@@ -141,8 +145,8 @@ export class NthRingsEffect extends LayerEffect {
             width: GlobalSettings.getFinalImageSize().width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            innerColor: await settings.getNeutralFromBucket(),
-            outerColor: await settings.getColorFromBucket(),
+            innerColor: settings.getNeutralFromBucket(),
+            outerColor: settings.getColorFromBucket(),
             smallRadius: getRandomFromArray(this.config.smallRadius),
             smallNumberOfRings: getRandomIntInclusive(this.config.smallNumberOfRings.lower, this.config.smallNumberOfRings.upper),
             ripple: getRandomFromArray(this.config.ripple),

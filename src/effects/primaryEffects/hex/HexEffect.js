@@ -13,10 +13,14 @@ import {
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class HexEffect extends LayerEffect {
+
+    static _name_ = 'hex';
+
     constructor({
-                    name = 'hex',
+                    name = HexEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 1,
@@ -33,11 +37,15 @@ export class HexEffect extends LayerEffect {
                         numberOfHex: 12,
                         strategy: ['static', 'angle', 'rotate'],
                         overlayStrategy: ['flat', 'overlay'],
-                    }},
+                    }
+                },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawHexLine(angle, index, context) {
 
@@ -199,10 +207,7 @@ export class HexEffect extends LayerEffect {
         fs.unlinkSync(context.underlayName);
     }
 
-    async generate(settings) {
-
-super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             numberOfHex: this.config.numberOfHex,
             strategy: this.config.strategy[getRandomIntExclusive(0, this.config.strategy.length)],

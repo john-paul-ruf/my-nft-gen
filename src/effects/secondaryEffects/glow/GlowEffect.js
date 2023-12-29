@@ -4,10 +4,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class GlowEffect extends LayerEffect {
+
+    static _name_ = 'glow';
+
     constructor({
-                    name = 'glow',
+                    name = GlowEffect._name_,
                     requiresLayer = false,
                     config = {
                         lowerRange: {lower: -18, upper: -0},
@@ -16,9 +20,12 @@ export class GlowEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #glowAnimated(layer, currentFrame, totalFrames) {
         const filename = GlobalSettings.getWorkingDirectory() + 'glow' + randomId() + '.png';
@@ -37,10 +44,7 @@ export class GlowEffect extends LayerEffect {
         fs.unlinkSync(filename)
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
             upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),

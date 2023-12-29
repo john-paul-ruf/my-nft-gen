@@ -7,10 +7,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class FuzzyRipplesEffect extends LayerEffect {
+
+    static _name_ = 'fuzzy-ripples';
+
     constructor({
-                    name = 'fuzzy-ripples',
+                    name = FuzzyRipplesEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -43,9 +47,12 @@ export class FuzzyRipplesEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawRing(pos, radius, weight, color, context) {
         const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -167,10 +174,7 @@ export class FuzzyRipplesEffect extends LayerEffect {
     }
 
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             invertLayers: this.config.invertLayers,
             layerOpacity: this.config.layerOpacity,

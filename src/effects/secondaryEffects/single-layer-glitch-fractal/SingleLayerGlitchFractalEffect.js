@@ -6,8 +6,11 @@ import Jimp from "jimp";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 
 export class SingleLayerGlitchFractalEffect extends LayerEffect {
+
+    static _name_ = 'single-layer-glitch-fractal';
+
     constructor({
-                    name = 'single-layer-glitch-fractal',
+                    name = SingleLayerGlitchFractalEffect._name_,
                     requiresLayer = false,
                     config = {
                         theRandom: {lower: 12, upper: 12},
@@ -15,9 +18,12 @@ export class SingleLayerGlitchFractalEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #glitchFractal(layer) {
 
@@ -50,10 +56,7 @@ export class SingleLayerGlitchFractalEffect extends LayerEffect {
         }
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             glitchChance: this.config.glitchChance,
             theRandom: getRandomIntInclusive(this.config.theRandom.lower, this.config.theRandom.upper),

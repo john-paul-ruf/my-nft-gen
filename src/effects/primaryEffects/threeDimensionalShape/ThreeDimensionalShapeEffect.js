@@ -7,10 +7,14 @@ import {Canvas3d} from "../../../core/factory/canvas/Canvas3d.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {degreesToRadians} from "../../../core/math/drawingMath.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class ThreeDimensionalShapeEffect extends LayerEffect {
+
+    static _name_ = 'three-dimensional-shape';
+
     constructor({
-                    name = 'three-dimensional-shape',
+                    name = ThreeDimensionalShapeEffect._name_,
                     requiresLayer = true,
                     config = {
                         times: {lower: 1, upper: 2},
@@ -18,9 +22,12 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #draw(context, filename) {
         const finalImageSize = GlobalSettings.getFinalImageSize();
@@ -103,10 +110,7 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
             counterClockwise: getRandomIntInclusive(this.config.counterClockwise.lower, this.config.counterClockwise.upper),

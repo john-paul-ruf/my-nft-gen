@@ -6,10 +6,15 @@ import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import fs from "fs";
+import {Settings} from "../../../core/Settings.js";
+import {Ray} from "three";
 
 export class RayRingInvertedEffect extends LayerEffect {
+
+    static _name_ = 'ray-rings (inverted)';
+
     constructor({
-                    name = 'ray-rings (inverted)',
+                    name = RayRingInvertedEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 0.25,
@@ -32,9 +37,12 @@ export class RayRingInvertedEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawRayRingInstance(withAccentGaston, i, context) {
         const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
@@ -122,10 +130,7 @@ export class RayRingInvertedEffect extends LayerEffect {
 
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
@@ -136,7 +141,7 @@ export class RayRingInvertedEffect extends LayerEffect {
             thickness: this.config.thickness,
             rayStroke: this.config.rayStroke,
             rayThickness: this.config.rayThickness,
-            innerColor: await settings.getColorFromBucket(),
+            innerColor: settings.getColorFromBucket(),
             scaleFactor: this.config.scaleFactor,
             center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
             blurRange: {
@@ -148,7 +153,7 @@ export class RayRingInvertedEffect extends LayerEffect {
             }
         }
 
-        const getRays = async (sparsityFactor) => {
+        const getRays = (sparsityFactor) => {
             const rays = [];
 
             for (let i = 0; i < 360; i = i + sparsityFactor) {
@@ -163,7 +168,7 @@ export class RayRingInvertedEffect extends LayerEffect {
             return rays;
         }
 
-        const computeInitialInfo = async (num) => {
+        const computeInitialInfo = (num) => {
             const info = [];
             for (let i = 0; i <= num; i++) {
                 info.push({
@@ -181,13 +186,13 @@ export class RayRingInvertedEffect extends LayerEffect {
             }
 
             for (let c = 0; c < info.length; c++) {
-                info[c].rays = await getRays(info[c].sparsityFactor);
+                info[c].rays = getRays(info[c].sparsityFactor);
             }
 
             return info;
         }
 
-        data.circles = await computeInitialInfo(data.numberOfCircles);
+        data.circles = computeInitialInfo(data.numberOfCircles);
 
         this.data = data;
     }

@@ -17,7 +17,7 @@ if (batchAmount > 0) {
         // pretties you can create!
         ////////////////////////////////////////////////
         const settings = new Settings(await SettingsFactory.getPresetSetting({request: SettingsFactory.AvailableSettings.everythingBagel}));
-        //const settings = Settings.from(JSON.parse(fs.readFileSync(GlobalSettings.getWorkingDirectory() + 'test-settings.txt')))
+//        const settings = Settings.from(JSON.parse(fs.readFileSync(GlobalSettings.getWorkingDirectory() + '_test-settings.json')))
         const loopBuilder = new LoopBuilder(settings);
         return loopBuilder.constructLoop();
     }

@@ -4,10 +4,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class GlitchFractalEffect extends LayerEffect {
+
+    static _name_ = 'glitch-fractal';
+
     constructor({
-                    name = 'glitch-fractal',
+                    name = GlitchFractalEffect._name_,
                     requiresLayer = true,
                     config = {
                         theRandom: {lower: 5, upper: 10},
@@ -15,9 +19,12 @@ export class GlitchFractalEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #glitchFractal(layer) {
 
@@ -50,10 +57,7 @@ export class GlitchFractalEffect extends LayerEffect {
         }
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             glitchChance: this.config.glitchChance,
             theRandom: getRandomIntInclusive(this.config.theRandom.lower, this.config.theRandom.upper),

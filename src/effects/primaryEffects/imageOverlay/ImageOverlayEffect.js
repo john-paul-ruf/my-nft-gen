@@ -1,23 +1,30 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {GlobalSettings} from "../../../core/GlobalSettings.js";
-import {getRandomFromArray, getRandomIntExclusive, } from "../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntExclusive,} from "../../../core/math/random.js";
 import fs from "fs";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
+import {Settings} from "../../../core/Settings.js";
 
 export class ImageOverlayEffect extends LayerEffect {
+
+    static _name_ = 'image-overlay';
+
     constructor({
-                    name = 'animated-background',
+                    name = ImageOverlayEffect._name_,
                     requiresLayer = true,
                     config = {
                         folderName: '/imageOverlay/',
                         layerOpacity: [0.95],
                         buffer: [1000]
-                    }},
+                    }
+                },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
 
     async #imageOverlay(layer) {
@@ -28,10 +35,7 @@ export class ImageOverlayEffect extends LayerEffect {
         await layer.compositeLayerOver(tempLayer, false)
     }
 
-    async generate(settings) {
-
-super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: getRandomFromArray(this.config.layerOpacity),
             buffer: getRandomFromArray(this.config.buffer),

@@ -8,20 +8,13 @@ export class LayerEffect {
 
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false
-    ) {
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
         this.name = name;
         this.requiresLayer = requiresLayer;
         this.config = config;
-        this.data = {};
         this.additionalEffects = additionalEffects;
         this.ignoreAdditionalEffects = ignoreAdditionalEffects;
-    }
-
-    generate(settings) {
-        for (let i = 0; i < this.additionalEffects.length; i++) {
-            this.additionalEffects[i].generate(settings);
-        }
     }
 
     async invoke(layer, currentFrame, totalFrames) {

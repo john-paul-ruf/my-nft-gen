@@ -46,12 +46,27 @@ import {GlitchInverseEffect} from "../effects/finalImageEffects/glitchInverse/Gl
 import {
     GlitchDrumrollHorizontalWaveEffect
 } from "../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
+import {LayerEffect} from "../effects/LayerEffect.js";
+import {LayerEffectFromJSON} from "../effects/LayerEffectFromJSON.js";
 
 export class Settings {
 
-    static from(json){
-        return Object.assign(new Settings({}), json);
+    static from(json) {
+        const settings = Object.assign(new Settings({}), json);
+
+        settings.colorScheme =  Object.assign(new ColorScheme({}), settings.colorScheme);
+
+        for (let i = 0; i < settings.effects.length; i++) {
+            settings.effects[i] = LayerEffectFromJSON.from(settings.effects[i])
+        }
+
+        for (let i = 0; i < settings.finalImageEffects.length; i++) {
+            settings.finalImageEffects[i] = LayerEffectFromJSON.from(settings.finalImageEffects[i])
+        }
+
+        return settings;
     }
+
 
     constructor({
                     colorScheme = new ColorScheme({}),
@@ -149,7 +164,7 @@ export class Settings {
         this.allPrimaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({}, this.#applySecondaryEffects(), obj.ignoreAdditionalEffects));
+                effectList.push(new obj.effect({}, this.#applySecondaryEffects(), obj.ignoreAdditionalEffects, this));
             }
         })
 
@@ -163,7 +178,7 @@ export class Settings {
         this.allSecondaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({}, [], obj.ignoreAdditionalEffects));
+                effectList.push(new obj.effect({}, [], obj.ignoreAdditionalEffects, this));
             }
         })
         return effectList;
@@ -177,21 +192,11 @@ export class Settings {
         this.allFinalImageEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({}, this.#applySecondaryEffects(), obj.ignoreAdditionalEffects));
+                effectList.push(new obj.effect({}, this.#applySecondaryEffects(), obj.ignoreAdditionalEffects, this));
             }
         })
 
         return effectList;
-    }
-
-    async init() {
-        for (let i = 0; i < this.effects.length; i++) {
-            await this.effects[i].generate(this);
-        }
-
-        for (let i = 0; i < this.finalImageEffects.length; i++) {
-            await this.finalImageEffects[i].generate(this);
-        }
     }
 
     getColorFromBucket() {

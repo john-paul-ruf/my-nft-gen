@@ -1,10 +1,14 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class FadeEffect extends LayerEffect {
+
+    static _name_ = 'fade';
+
     constructor({
-                    name = 'fade',
+                    name = FadeEffect._name_,
                     requiresLayer = false,
                     config = {
                         lowerRange: {lower: 0.6, upper: 0.8},
@@ -13,8 +17,10 @@ export class FadeEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
 
     async #fadeAnimated(layer, currentFrame, totalFrames) {
@@ -22,12 +28,7 @@ export class FadeEffect extends LayerEffect {
         await layer.adjustLayerOpacity(opacity);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
-
-        super.generate(settings);
+    #generate(settings) {
         this.data =
             {
                 lower: randomNumber(this.config.lowerRange.lower, this.config.lowerRange.upper),

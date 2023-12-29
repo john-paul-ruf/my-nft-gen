@@ -6,10 +6,14 @@ import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {findValue} from "../../../core/math/findValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class WireFrameSpiralEffect extends LayerEffect {
+
+    static _name_ = 'wireframe-spiral';
+
     constructor({
-                    name = 'wireframe-spiral',
+                    name = WireFrameSpiralEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 0.4,
@@ -27,13 +31,17 @@ export class WireFrameSpiralEffect extends LayerEffect {
                         accentRange: {bottom: {lower: 0, upper: 1}, top: {lower: 0, upper: 0}},
                         blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
                         featherTimes: {lower: 0, upper: 0},
-                    }},
+                    }
+                },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
 
-    async #drawLine(angle, loopControl, context, flipTwist, thickness, color){
+
+    async #drawLine(angle, loopControl, context, flipTwist, thickness, color) {
         angle = angle + (((context.data.sparsityFactor * context.data.speed) / context.numberOfFrames) * context.currentFrame) * context.data.direction;
 
         const start = findPointByAngleAndCircle(context.data.center, angle, loopControl.n2 + context.data.radiusConstant)
@@ -68,12 +76,12 @@ export class WireFrameSpiralEffect extends LayerEffect {
         }
     }
 
-    async #drawUnderlay(context, filename){
+    async #drawUnderlay(context, filename) {
         await this.#spiral(context, context.data.thickness + context.data.stroke + context.theAccentGaston, context.data.outerColor);
         await context.canvas.toFile(filename)
     }
 
-    async #draw(context, filename){
+    async #draw(context, filename) {
         await this.#spiral(context, context.data.thickness, context.data.innerColor);
         await context.canvas.toFile(filename)
     }
@@ -93,7 +101,7 @@ export class WireFrameSpiralEffect extends LayerEffect {
 
     }
 
-    async #processDrawFunction(context){
+    async #processDrawFunction(context) {
 
         await this.#drawUnderlay(context, context.underlayName);
 
@@ -125,10 +133,7 @@ export class WireFrameSpiralEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
             underLayerOpacityRange: {
@@ -145,9 +150,12 @@ export class WireFrameSpiralEffect extends LayerEffect {
             unitLength: getRandomIntInclusive(this.config.unitLength.lower, this.config.unitLength.upper),
             unitLengthChangeConstant: getRandomFromArray(this.config.unitLengthChangeConstant),
             sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
-            innerColor: await settings.getColorFromBucket(),
-            outerColor: await settings.getColorFromBucket(),
-            center: {x: GlobalSettings.getFinalImageSize().width * 2 / 2, y: GlobalSettings.getFinalImageSize().height * 2 / 2},
+            innerColor: settings.getColorFromBucket(),
+            outerColor: settings.getColorFromBucket(),
+            center: {
+                x: GlobalSettings.getFinalImageSize().width * 2 / 2,
+                y: GlobalSettings.getFinalImageSize().height * 2 / 2
+            },
             speed: getRandomIntInclusive(this.config.speed.lower, this.config.speed.upper),
             counterClockwise: getRandomIntInclusive(this.config.counterClockwise.lower, this.config.counterClockwise.upper),
             radiusConstant: getRandomFromArray(this.config.radiusConstant),

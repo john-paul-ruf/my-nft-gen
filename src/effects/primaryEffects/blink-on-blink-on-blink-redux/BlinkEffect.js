@@ -8,10 +8,14 @@ import fs from "fs";
 import Jimp from "jimp";
 import path from "path";
 import {fileURLToPath} from "url";
+import {Settings} from "../../../core/Settings.js";
 
 export class BlinkOnEffect extends LayerEffect {
+
+    static _name_ = 'blink-on-blink-on-blink-redux'
+
     constructor({
-                    name = 'blink-on-blink-on-blink-redux',
+                    name = BlinkOnEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 0.75,
@@ -30,11 +34,15 @@ export class BlinkOnEffect extends LayerEffect {
                         randomizeRed: {lower: -64, upper: 64},
                         randomizeBlue: {lower: -64, upper: 64},
                         randomizeGreen: {lower: -64, upper: 64}
-                    }},
+                    }
+                },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #randomize(layer, data, index) {
         const filename = GlobalSettings.getWorkingDirectory() + 'randomize-blink' + randomId() + '.png';
@@ -124,10 +132,7 @@ export class BlinkOnEffect extends LayerEffect {
         }
     }
 
-    async generate(settings) {
-
-super.generate(settings);
-
+    #generate(settings) {
         const data = {
             blinkFile: path.join(fileURLToPath(import.meta.url).replace('BlinkEffect.js', '') + 'blink.png'),
             layerOpacity: this.config.layerOpacity,

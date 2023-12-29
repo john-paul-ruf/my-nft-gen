@@ -6,10 +6,14 @@ import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import {mapNumberToRange} from "../../../core/math/mapNumberToRange.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class MappedFramesEffect extends LayerEffect {
+
+    static _name_ = 'mapped-frames';
+
     constructor({
-                    name = 'mapped-frames',
+                    name = MappedFramesEffect._name_,
                     requiresLayer = true,
                     config = {
                         folderName: '/mappedFrames/',
@@ -17,9 +21,12 @@ export class MappedFramesEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #copyFile(filename, destinationFilename) {
         return new Promise((resolve) => {
@@ -71,10 +78,7 @@ export class MappedFramesEffect extends LayerEffect {
         fs.unlinkSync(context.filename);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
         }

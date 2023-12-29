@@ -6,10 +6,14 @@ import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from 
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class EncircledSpiralEffect extends LayerEffect {
+
+    static _name_ = 'encircled-spiral-round-2'
+
     constructor({
-                    name = 'encircled-spiral-round-2',
+                    name = EncircledSpiralEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -34,9 +38,12 @@ export class EncircledSpiralEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #computeAngle(angle, context, direction, ringIndex) {
         const spindleStartAngle = angle + context.data.ringArray[ringIndex].startAngle;
@@ -158,10 +165,7 @@ export class EncircledSpiralEffect extends LayerEffect {
     }
 
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             invertLayers: this.config.invertLayers,
             sequence: this.config.sequence,
@@ -173,7 +177,7 @@ export class EncircledSpiralEffect extends LayerEffect {
             center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
         }
 
-        const getRingArray = async (num) => {
+        const getRingArray = (num) => {
             const info = [];
 
             for (let i = 0; i < num; i++) {
@@ -205,7 +209,7 @@ export class EncircledSpiralEffect extends LayerEffect {
             return info;
         }
 
-        data.ringArray = await getRingArray(data.numberOfRings);
+        data.ringArray = getRingArray(data.numberOfRings);
 
         this.data = data;
     }

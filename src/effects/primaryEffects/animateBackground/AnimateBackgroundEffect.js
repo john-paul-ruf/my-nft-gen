@@ -3,17 +3,24 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
+import {Settings} from "../../../core/Settings.js";
 
 export class AnimateBackgroundEffect extends LayerEffect {
+
+    static _name_ = 'animated-background'
+
     constructor({
-                    name = 'animated-background',
+                    name = AnimateBackgroundEffect._name_,
                     requiresLayer = true,
                     config = {},
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #animateBackground(layer) {
         const filename = GlobalSettings.getWorkingDirectory() + 'static' + randomId() + '.png';
@@ -42,10 +49,7 @@ export class AnimateBackgroundEffect extends LayerEffect {
         fs.unlinkSync(filename);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const finalImageSize = GlobalSettings.getFinalImageSize();
         this.data = {
             width: finalImageSize.width,

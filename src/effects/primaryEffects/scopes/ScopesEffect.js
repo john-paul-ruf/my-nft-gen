@@ -7,10 +7,14 @@ import {findValue} from "../../../core/math/findValue.js";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class ScopesEffect extends LayerEffect {
+
+    static _name_ = 'scopes';
+
     constructor({
-                    name = 'scopes',
+                    name = ScopesEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 1,
@@ -25,9 +29,12 @@ export class ScopesEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawHexLine(angle, index, color, alphaRange, alphaTimes, rotationTimes, context) {
         const loopCount = index + 1;
@@ -72,10 +79,7 @@ export class ScopesEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
             height: GlobalSettings.getFinalImageSize().height,
@@ -87,7 +91,7 @@ export class ScopesEffect extends LayerEffect {
             center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
         }
 
-        const getHexLine = async (sparsityFactor, info, i) => {
+        const getHexLine = (sparsityFactor, info, i) => {
             for (let a = 0; a < 360; a = a + sparsityFactor) {
                 info.push({
                     loopCount: i + 1,
@@ -98,20 +102,20 @@ export class ScopesEffect extends LayerEffect {
                     },
                     alphaTimes: getRandomIntInclusive(this.config.alphaTimes.lower, this.config.alphaTimes.upper),
                     rotationTimes: getRandomIntInclusive(this.config.rotationTimes.lower, this.config.rotationTimes.upper),
-                    color: await settings.getColorFromBucket(),
+                    color: settings.getColorFromBucket(),
                 });
             }
         }
 
-        const computeInitialInfo = async (sparsityFactor) => {
+        const computeInitialInfo = (sparsityFactor) => {
             const info = [];
             for (let i = 0; i < this.config.numberOfScopesInALine; i++) {
-                await getHexLine(sparsityFactor, info, i);
+                getHexLine(sparsityFactor, info, i);
             }
             return info;
         }
 
-        data.scopes = await computeInitialInfo(data.sparsityFactor);
+        data.scopes = computeInitialInfo(data.sparsityFactor);
 
         this.data = data;
     }

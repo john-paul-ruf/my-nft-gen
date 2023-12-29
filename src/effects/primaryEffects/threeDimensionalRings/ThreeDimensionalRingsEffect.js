@@ -7,10 +7,14 @@ import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {degreesToRadians} from "../../../core/math/drawingMath.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import fs from "fs";
+import {Settings} from "../../../core/Settings.js";
 
 export class ThreeDimensionalRingsEffect extends LayerEffect {
+
+    static _name_ = 'three-dimensional-rings';
+
     constructor({
-                    name = 'three-dimensional-rings',
+                    name = ThreeDimensionalRingsEffect._name_,
                     requiresLayer = true,
                     config = {
                         rings: {lower: 10, upper: 15},
@@ -23,9 +27,12 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #draw(context, filename) {
         const finalImageSize = GlobalSettings.getFinalImageSize();
@@ -117,23 +124,20 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
         fs.unlinkSync(context.drawing);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             radiusConstant: this.config.radiusConstant,
             ringGap: randomNumber(this.config.ringGap.lower, this.config.ringGap.upper),
             rings: getRandomIntInclusive(this.config.rings.lower, this.config.rings.upper),
             ringRadius: randomNumber(this.config.ringRadius.lower, this.config.ringRadius.upper),
-            light1: await settings.getLightFromBucket(),
-            light2: await settings.getLightFromBucket(),
-            light3: await settings.getLightFromBucket(),
+            light1: settings.getLightFromBucket(),
+            light2: settings.getLightFromBucket(),
+            light3: settings.getLightFromBucket(),
         }
 
-        const computeInitialInfo = async (rings) => {
+        const computeInitialInfo = (rings) => {
             const info = [];
-            const color = await settings.getColorFromBucket();
+            const color = settings.getColorFromBucket();
             for (let i = 0; i <= rings; i++) {
                 info.push({
                     times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
@@ -148,7 +152,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
             return info;
         }
 
-        data.ringsInstances = await computeInitialInfo(data.rings);
+        data.ringsInstances = computeInitialInfo(data.rings);
 
         this.data = data;
     }

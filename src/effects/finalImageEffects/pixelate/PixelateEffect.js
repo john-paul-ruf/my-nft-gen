@@ -4,10 +4,14 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class PixelateEffect extends LayerEffect {
+
+    static _name_ = 'pixelate';
+
     constructor({
-                    name = 'pixelate',
+                    name = PixelateEffect._name_,
                     requiresLayer = true,
                     config = {
                         lowerRange: {lower: 0, upper: 0},
@@ -17,9 +21,12 @@ export class PixelateEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #pixelate(layer, currentFrame, totalFrames) {
         const theGlitch = getRandomIntInclusive(0, 100);
@@ -44,10 +51,7 @@ export class PixelateEffect extends LayerEffect {
         }
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data =
             {
                 glitchChance: this.config.glitchChance,

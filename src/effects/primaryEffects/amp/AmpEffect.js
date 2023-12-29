@@ -6,10 +6,14 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
+import {Settings} from "../../../core/Settings.js";
 
 export class AmpEffect extends LayerEffect {
+
+    static _name_ = 'amp';
+
     constructor({
-                    name = 'amp',
+                    name = AmpEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -25,9 +29,12 @@ export class AmpEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawUnderlay(context, filename) {
         const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
@@ -114,10 +121,7 @@ export class AmpEffect extends LayerEffect {
         fs.unlinkSync(context.underlayName);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const finalImageSize = GlobalSettings.getFinalImageSize();
 
         this.data = {

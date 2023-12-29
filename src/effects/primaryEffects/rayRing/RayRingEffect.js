@@ -6,10 +6,14 @@ import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class RayRingEffect extends LayerEffect {
+
+    static _name_ = 'ray-rings';
+
     constructor({
-                    name = 'ray-rings',
+                    name = RayRingEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 1,
@@ -33,9 +37,12 @@ export class RayRingEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #drawRayRingInstance(withAccentGaston, i, context) {
         const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
@@ -123,10 +130,7 @@ export class RayRingEffect extends LayerEffect {
 
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
@@ -137,7 +141,7 @@ export class RayRingEffect extends LayerEffect {
             thickness: this.config.thickness,
             rayStroke: this.config.rayStroke,
             rayThickness: this.config.rayThickness,
-            innerColor: await settings.getColorFromBucket(),
+            innerColor: settings.getColorFromBucket(),
             scaleFactor: this.config.scaleFactor,
             center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
             blurRange: {
@@ -148,7 +152,7 @@ export class RayRingEffect extends LayerEffect {
             }
         }
 
-        const getRays = async (sparsityFactor) => {
+        const getRays = (sparsityFactor) => {
             const rays = [];
 
             for (let i = 0; i < 360; i = i + sparsityFactor) {
@@ -163,13 +167,13 @@ export class RayRingEffect extends LayerEffect {
             return rays;
         }
 
-        const computeInitialInfo = async (num) => {
+        const computeInitialInfo = (num) => {
             const info = [];
             for (let i = 0; i <= num; i++) {
                 info.push({
                     radius: this.config.radiusInitial + (this.config.radiusGap * (i + 1)),
-                    color: await settings.getNeutralFromBucket(),
-                    outerColor: await settings.getColorFromBucket(),
+                    color: settings.getNeutralFromBucket(),
+                    outerColor: settings.getColorFromBucket(),
                     featherTimes: getRandomIntInclusive(this.config.featherTimes.lower, this.config.featherTimes.upper),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
@@ -181,13 +185,13 @@ export class RayRingEffect extends LayerEffect {
             }
 
             for (let c = 0; c < info.length; c++) {
-                info[c].rays = await getRays(info[c].sparsityFactor);
+                info[c].rays = getRays(info[c].sparsityFactor);
             }
 
             return info;
         }
 
-        data.circles = await computeInitialInfo(data.numberOfCircles);
+        data.circles = computeInitialInfo(data.numberOfCircles);
 
         this.data = data;
     }

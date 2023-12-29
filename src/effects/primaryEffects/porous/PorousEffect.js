@@ -3,19 +3,26 @@ import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import path from "path";
 import {fileURLToPath} from "url";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class PorousEffect extends LayerEffect {
+
+    static name = 'porous.png';
+
     constructor({
-                    name = 'porous.png',
+                    name = PorousEffect._name_,
                     requiresLayer = true,
                     config = {
                         layerOpacity: 0.5,
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #porousOverlay(layer) {
         let tempLayer = await LayerFactory.getLayerFromFile(this.data.filename);
@@ -25,10 +32,7 @@ export class PorousEffect extends LayerEffect {
         await layer.compositeLayerOver(tempLayer)
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             filename: path.join(fileURLToPath(import.meta.url).replace('PorousEffect.js', '') + 'porous.png'),
             layerOpacity: this.config.layerOpacity,

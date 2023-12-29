@@ -5,10 +5,14 @@ import fs from "fs";
 import {findValue} from "../../../core/math/findValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
+import {Settings} from "../../../core/Settings.js";
 
 export class ViewportEffect extends LayerEffect {
+
+    static _name_ = 'viewport';
+
     constructor({
-                    name = 'viewport',
+                    name = ViewportEffect._name_,
                     requiresLayer = true,
                     config = {
                         invertLayers: true,
@@ -31,9 +35,12 @@ export class ViewportEffect extends LayerEffect {
                     }
                 },
                 additionalEffects = [],
-                ignoreAdditionalEffects = false) {
-        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects);
+                ignoreAdditionalEffects = false,
+                settings = new Settings({})) {
+        super({name: name, requiresLayer: requiresLayer, config: config}, additionalEffects, ignoreAdditionalEffects, settings);
+        this.#generate(settings)
     }
+
 
     async #draw(context, filename) {
         const thePolyGaston = findValue(context.data.radius, context.data.radius + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
@@ -91,10 +98,7 @@ export class ViewportEffect extends LayerEffect {
         fs.unlinkSync(context.underlayName);
     }
 
-    async generate(settings) {
-
-        super.generate(settings);
-
+    #generate(settings) {
         this.data = {
             invertLayers: this.config.invertLayers,
             layerOpacity: this.config.layerOpacity,
