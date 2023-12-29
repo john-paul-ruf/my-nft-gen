@@ -13,7 +13,14 @@ export class LayerEffect {
         this.name = name;
         this.requiresLayer = requiresLayer;
         this.config = config;
-        this.additionalEffects = additionalEffects;
+
+        if(!ignoreAdditionalEffects) {
+            this.additionalEffects = additionalEffects;
+        }
+        else{
+            this.additionalEffects = [];
+        }
+
         this.ignoreAdditionalEffects = ignoreAdditionalEffects;
     }
 
