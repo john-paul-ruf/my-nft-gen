@@ -198,7 +198,7 @@ export class LoopBuilder {
                 fs.unlinkSync(this.context.frameFilenames[f]);
             }
 
-            resolve();
+            resolve(this.settings);
         });
     }
 }

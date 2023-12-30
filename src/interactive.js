@@ -56,7 +56,7 @@ const mainMenu = () => {
 
                             let batchAmount = 0;
 
-                            switch (answers.HowMany) {
+                            switch (answers.howMany) {
                                 case HowMany.One:
                                     batchAmount = 1;
                                     break;
@@ -129,11 +129,38 @@ const mainMenu = () => {
                     return loopBuilder.constructPreview();
                 }
 
-                    const previewArray = []
-                    previewArray.push(CreatePreview());
-                    Promise.all(previewArray).then(() => {
-                        mainMenu();
+                    CreatePreview().then((data) => {
+                        inquirer.prompt([
+                            {
+                                type: 'list',
+                                name: `processLoop`,
+                                message: `Create full loop for ${data.config.finalFileName}-settings.json`,
+                                choices: [
+                                    'Yes',
+                                    'No'
+                                ]
+                            },
+                        ])
+                            .then(answers => {
+                                switch (answers.processLoop) {
+                                    case 'Yes':
+
+                                    async function CreateLoop() {
+                                        const settings = Settings.from(JSON.parse(fs.readFileSync(workingDirectory + data.config.finalFileName + '-settings.json')))
+                                        const loopBuilder = new LoopBuilder(settings);
+                                        return loopBuilder.constructLoop();
+                                    }
+
+                                        CreateLoop().then(() => mainMenu());
+                                        break;
+                                    case 'No':
+                                        mainMenu();
+                                        break;
+                                }
+
+                            })
                     });
+
                     break;
             }
         });
