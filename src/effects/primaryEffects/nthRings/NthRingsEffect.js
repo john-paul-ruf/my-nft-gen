@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
@@ -20,11 +19,11 @@ export class NthRingsEffect extends LayerEffect {
         underLayerOpacity: 0.4,
         stroke: 2,
         thickness: 2,
-        smallRadius: [GlobalSettings.getFinalImageSize().longestSide * 0.10, GlobalSettings.getFinalImageSize().longestSide * 0.1/*5, finalImageSize.longestSide * 0.2*/],
+        smallRadius: [(finalSize) => finalSize.longestSide * 0.10, (finalSize) => finalSize.longestSide * 0.1],
         smallNumberOfRings: {lower: 8, upper: 12},
-        ripple: [GlobalSettings.getFinalImageSize().shortestSide * 0.05, GlobalSettings.getFinalImageSize().shortestSide * 0.10,/* finalImageSize.shortestSide * 0.15, finalImageSize.shortestSide * 0.20*/],
+        ripple: [(finalSize) => finalSize.shortestSide * 0.05, (finalSize) => finalSize.shortestSide * 0.10,],
         times: {lower: 2, upper: 4},
-        smallerRingsGroupRadius: [GlobalSettings.getFinalImageSize().shortestSide * 0.45, GlobalSettings.getFinalImageSize().shortestSide * 0.50, GlobalSettings.getFinalImageSize().shortestSide * 0.55,],
+        smallerRingsGroupRadius: [(finalSize) => finalSize.shortestSide * 0.45, (finalSize) => finalSize.shortestSide * 0.50, (finalSize) => finalSize.shortestSide * 0.55,],
         accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 5}},
         blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 2, upper: 4}},
         featherTimes: {lower: 2, upper: 4},
@@ -97,8 +96,8 @@ export class NthRingsEffect extends LayerEffect {
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -131,8 +130,8 @@ export class NthRingsEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            drawing: GlobalSettings.getWorkingDirectory() + 'nth-rings' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'nth-rings-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'nth-rings' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'nth-rings-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         }
@@ -150,18 +149,18 @@ export class NthRingsEffect extends LayerEffect {
             totalRingCount: getRandomIntInclusive(this.config.totalRingCount.lower, this.config.totalRingCount.upper),
             layerOpacity: this.config.layerOpacity,
             underLayerOpacity: this.config.underLayerOpacity,
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
+            height: this.finalSize.height,
+            width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
             innerColor: settings.getNeutralFromBucket(),
             outerColor: settings.getColorFromBucket(),
-            smallRadius: getRandomFromArray(this.config.smallRadius),
+            smallRadius: getRandomFromArray(this.config.smallRadius)(this.finalSize),
             smallNumberOfRings: getRandomIntInclusive(this.config.smallNumberOfRings.lower, this.config.smallNumberOfRings.upper),
-            ripple: getRandomFromArray(this.config.ripple),
-            smallerRingsGroupRadius: getRandomFromArray(this.config.smallerRingsGroupRadius),
+            ripple: getRandomFromArray(this.config.ripple)(this.finalSize),
+            smallerRingsGroupRadius: getRandomFromArray(this.config.smallerRingsGroupRadius)(this.finalSize),
             times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)

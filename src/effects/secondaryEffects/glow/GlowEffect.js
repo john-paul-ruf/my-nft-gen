@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
@@ -37,7 +36,7 @@ export class GlowEffect extends LayerEffect {
 
 
     async #glowAnimated(layer, currentFrame, totalFrames) {
-        const filename = GlobalSettings.getWorkingDirectory() + 'glow' + randomId() + '.png';
+        const filename = this.workingDirectory + 'glow' + randomId() + '.png';
 
         await layer.toFile(filename);
 

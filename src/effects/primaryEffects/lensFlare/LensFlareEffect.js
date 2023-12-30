@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
@@ -24,8 +23,8 @@ export class LensFlareEffect extends LayerEffect {
 
         numberOfFlareHex: {lower: 0, upper: 0},
         flareHexSizeRange: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.015,
-            upper: GlobalSettings.getFinalImageSize().shortestSide * 0.025
+            lower: (finalSize) => finalSize.shortestSide * 0.015,
+            upper: (finalSize) => finalSize.shortestSide * 0.025
         },
 
         angleRangeFlareHex: {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
@@ -33,15 +32,15 @@ export class LensFlareEffect extends LayerEffect {
 
         numberOfFlareRings: {lower: 10, upper: 20},
         flareRingsSizeRange: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.1,
-            upper: GlobalSettings.getFinalImageSize().longestSide * 0.55
+            lower: (finalSize) => finalSize.shortestSide * 0.1,
+            upper: (finalSize) => finalSize.longestSide * 0.55
         },
         flareRingStroke: {lower: 1, upper: 1},
 
         numberOfFlareRays: {lower: 20, upper: 30},
         flareRaysSizeRange: {
-            lower: GlobalSettings.getFinalImageSize().longestSide * 0.4,
-            upper: GlobalSettings.getFinalImageSize().longestSide * 0.55
+            lower: (finalSize) => finalSize.longestSide * 0.4,
+            upper: (finalSize) => finalSize.longestSide * 0.55
         },
         flareRaysStroke: {lower: 1, upper: 1},
 
@@ -102,7 +101,7 @@ export class LensFlareEffect extends LayerEffect {
     async #drawHexArray(context, array) {
         async function hex(i) {
             return new Promise(async (innerResolve) => {
-                const tempFileName = GlobalSettings.getWorkingDirectory() + 'lens-flare-ring' + randomId() + '.png'
+                const tempFileName = this.workingDirectory + 'lens-flare-ring' + randomId() + '.png'
 
                 const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
 
@@ -114,7 +113,7 @@ export class LensFlareEffect extends LayerEffect {
                 await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
 
                 await context.canvas.toFile(tempFileName);
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
                 fs.unlinkSync(tempFileName);
                 innerResolve(tempLayer);
@@ -138,7 +137,7 @@ export class LensFlareEffect extends LayerEffect {
     async #rings(i, array, context) {
         return new Promise(async (innerResolve) => {
             try {
-                const tempFileName = GlobalSettings.getWorkingDirectory() + 'lens-flare-ring' + randomId() + '.png'
+                const tempFileName = this.workingDirectory + 'lens-flare-ring' + randomId() + '.png'
                 const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
                 const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
@@ -150,7 +149,7 @@ export class LensFlareEffect extends LayerEffect {
 
                 await canvas.toFile(tempFileName);
 
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
                 await tempLayer.blur(theBlurGaston);
                 await tempLayer.adjustLayerOpacity(theOpacityGaston);
@@ -183,7 +182,7 @@ export class LensFlareEffect extends LayerEffect {
     async #rays(i, array, context) {
         return new Promise(async (innerResolve) => {
             try {
-                const tempFileName = GlobalSettings.getWorkingDirectory() + 'lens-flare-ray' + randomId() + '.png'
+                const tempFileName = this.workingDirectory + 'lens-flare-ray' + randomId() + '.png'
                 const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
                 const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
@@ -197,7 +196,7 @@ export class LensFlareEffect extends LayerEffect {
                 await canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
                 await canvas.toFile(tempFileName);
 
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName);
+                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
                 await tempLayer.blur(theBlurGaston);
                 await tempLayer.adjustLayerOpacity(theOpacityGaston);
@@ -267,11 +266,11 @@ export class LensFlareEffect extends LayerEffect {
     #generate(settings) {
         const data =
             {
-                height: GlobalSettings.getFinalImageSize().height,
-                width: GlobalSettings.getFinalImageSize().width,
+                height: this.finalSize.height,
+                width: this.finalSize.width,
                 center: {
-                    x: GlobalSettings.getFinalImageSize().width / 2,
-                    y: GlobalSettings.getFinalImageSize().height / 2
+                    x: this.finalSize.width / 2,
+                    y: this.finalSize.height / 2
                 },
 
                 numberOfFlareHex: getRandomIntInclusive(this.config.numberOfFlareHex.lower, this.config.numberOfFlareHex.upper),
@@ -314,7 +313,7 @@ export class LensFlareEffect extends LayerEffect {
                     strokeColor: this.config.getFlareColor(strategy, settings, this.config),
                     sides: getRandomIntInclusive(6, 6), //ended up with hex...
                     angle: getRandomIntInclusive(0, 360),
-                    offset: getRandomIntInclusive(GlobalSettings.getFinalImageSize().width * 0.15, GlobalSettings.getFinalImageSize().width * 0.15),
+                    offset: getRandomIntInclusive(this.finalSize.width * 0.15, this.finalSize.width * 0.15),
                     opacity: {
                         lower: randomNumber(this.config.elementOpacityRange.bottom.lower, this.config.elementOpacityRange.bottom.upper),
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper)
@@ -371,7 +370,7 @@ export class LensFlareEffect extends LayerEffect {
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper)
                     },
                     opacityTimes: getRandomIntInclusive(this.config.elementOpacityTimes.lower, this.config.elementOpacityTimes.upper),
-                    offset: getRandomIntInclusive(GlobalSettings.getFinalImageSize().width * 0.15, GlobalSettings.getFinalImageSize().width * 0.25,),
+                    offset: getRandomIntInclusive(this.finalSize.width * 0.15, this.finalSize.width * 0.25,),
                     gastonRange: {
                         lower: randomNumber(this.config.elementGastonRange.bottom.lower, this.config.elementGastonRange.bottom.upper),
                         upper: randomNumber(this.config.elementGastonRange.top.lower, this.config.elementGastonRange.top.upper)

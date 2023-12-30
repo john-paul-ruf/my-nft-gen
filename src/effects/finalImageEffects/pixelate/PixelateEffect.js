@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
@@ -40,7 +39,7 @@ export class PixelateEffect extends LayerEffect {
     async #pixelate(layer, currentFrame, totalFrames) {
         const theGlitch = getRandomIntInclusive(0, 100);
         if (theGlitch <= this.data.glitchChance) {
-            const filename = GlobalSettings.getWorkingDirectory() + 'pixelate' + randomId() + '.png';
+            const filename = this.workingDirectory + 'pixelate' + randomId() + '.png';
 
             await layer.toFile(filename);
 

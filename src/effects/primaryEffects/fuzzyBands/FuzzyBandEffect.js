@@ -1,7 +1,6 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
@@ -20,8 +19,8 @@ export class FuzzyBandEffect extends LayerEffect {
         stroke: 0,
         thickness: 4,
         radius: {
-            lower: GlobalSettings.getFinalImageSize().shortestSide * 0.10,
-            upper: GlobalSettings.getFinalImageSize().longestSide * 0.45
+            lower: (finalSize) => finalSize.shortestSide * 0.10,
+            upper: (finalSize) => finalSize.longestSide * 0.45
         },
         accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
         blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
@@ -58,7 +57,7 @@ export class FuzzyBandEffect extends LayerEffect {
             await canvas.toFile(context.names.layerNames[i]);
 
             //opacity
-            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
             await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
             await tempLayer.toFile(context.names.layerNames[i]);
@@ -76,7 +75,7 @@ export class FuzzyBandEffect extends LayerEffect {
             await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
             await canvas.toFile(context.names.underlayNames[i]);
 
-            let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
+            let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
 
             //blur
             const theBlurGaston = Math.ceil(findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame));
@@ -86,7 +85,7 @@ export class FuzzyBandEffect extends LayerEffect {
             const theUnderLayerOpacityGaston = findValue(context.data.circles[i].underLayerOpacityRange.lower, context.data.circles[i].underLayerOpacityRange.upper, context.data.circles[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
             await underlayLayer.adjustLayerOpacity(theUnderLayerOpacityGaston);
 
-            await underlayLayer.toFile(context.names.underlayNames[i]);
+            await underlayLayer.toFile(context.names.underlayNames[i], this.fileConfig);
 
             resolve();
         });
@@ -117,26 +116,26 @@ export class FuzzyBandEffect extends LayerEffect {
         //Combine top and bottom layers
         if (!context.data.invertLayers) {
             for (let i = 0; i < context.data.numberOfCircles; i++) {
-                let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
+                let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempUnderlay);
                 fs.unlinkSync(context.names.underlayNames[i]);
             }
 
             for (let i = 0; i < context.data.numberOfCircles; i++) {
-                let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+                let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempLayer);
                 fs.unlinkSync(context.names.layerNames[i]);
             }
 
         } else {
             for (let i = 0; i < context.data.numberOfCircles; i++) {
-                let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i]);
+                let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempLayer);
                 fs.unlinkSync(context.names.layerNames[i]);
             }
 
             for (let i = 0; i < context.data.numberOfCircles; i++) {
-                let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i]);
+                let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempUnderlay);
                 fs.unlinkSync(context.names.underlayNames[i]);
             }
@@ -153,9 +152,9 @@ export class FuzzyBandEffect extends LayerEffect {
 
 
             for (let index = 0; index < data.numberOfCircles; index++) {
-                layerNames.push(GlobalSettings.getWorkingDirectory() + 'fuzz' + randomId() + '-layer-' + index.toString() + '.png')
-                underlayNames.push(GlobalSettings.getWorkingDirectory() + 'fuzz' + randomId() + '-layer-underlay-' + index.toString() + '.png')
-                compositeNames.push(GlobalSettings.getWorkingDirectory() + 'fuzz' + randomId() + '-layer-comp-' + index.toString() + '.png')
+                layerNames.push(this.workingDirectory + 'fuzz' + randomId() + '-layer-' + index.toString() + '.png')
+                underlayNames.push(this.workingDirectory + 'fuzz' + randomId() + '-layer-underlay-' + index.toString() + '.png')
+                compositeNames.push(this.workingDirectory + 'fuzz' + randomId() + '-layer-comp-' + index.toString() + '.png')
             }
 
             return {
@@ -180,18 +179,18 @@ export class FuzzyBandEffect extends LayerEffect {
             invertLayers: this.config.invertLayers,
             layerOpacity: this.config.layerOpacity,
             numberOfCircles: getRandomIntInclusive(this.config.circles.lower, this.config.circles.upper),
-            height: GlobalSettings.getFinalImageSize().height,
-            width: GlobalSettings.getFinalImageSize().width,
+            height: this.finalSize.height,
+            width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            center: {x: GlobalSettings.getFinalImageSize().width / 2, y: GlobalSettings.getFinalImageSize().height / 2},
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
         }
 
         const computeInitialInfo = (num) => {
             const info = [];
             for (let i = 0; i <= num; i++) {
                 info.push({
-                    radius: getRandomIntInclusive(this.config.radius.lower, this.config.radius.upper),
+                    radius: getRandomIntInclusive(this.config.radius.lower(this.finalSize), this.config.radius.upper(this.finalSize)),
                     color: settings.getColorFromBucket(),
                     innerColor: settings.getNeutralFromBucket(),
                     accentRange: {

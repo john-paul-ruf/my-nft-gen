@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
@@ -37,7 +36,7 @@ export class RandomizeEffect extends LayerEffect {
 
 
     async #randomize(layer) {
-        const filename = GlobalSettings.getWorkingDirectory() + 'randomize' + randomId() + '.png';
+        const filename = this.workingDirectory + 'randomize' + randomId() + '.png';
 
         await layer.toFile(filename);
 

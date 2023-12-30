@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../core/math/drawingMath.js";
@@ -94,14 +93,14 @@ export class LayeredRingEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'layered-ring' + randomId() + '.png',
+            drawing: this.workingDirectory + 'layered-ring' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data
         };
 
         await this.#createLayers(context);
 
-        let drawingLayer = await LayerFactory.getLayerFromFile(context.drawing);
+        let drawingLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
 
         const theOpacityGaston = findValue(this.data.layerOpacityRange.lower, this.data.layerOpacityRange.upper, this.data.layerOpacityTimes, numberOfFrames, currentFrame)
         await drawingLayer.adjustLayerOpacity(theOpacityGaston); //gaston this later
@@ -113,11 +112,11 @@ export class LayeredRingEffect extends LayerEffect {
     #generate(settings) {
         const data =
             {
-                height: GlobalSettings.getFinalImageSize().height,
-                width: GlobalSettings.getFinalImageSize().width,
+                height: this.finalSize.height,
+                width: this.finalSize.width,
                 center: {
-                    x: GlobalSettings.getFinalImageSize().width / 2,
-                    y: GlobalSettings.getFinalImageSize().height / 2
+                    x: this.finalSize.width / 2,
+                    y: this.finalSize.height / 2
                 },
 
                 startAngle: this.config.startAngle,

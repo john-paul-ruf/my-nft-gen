@@ -1,5 +1,4 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
@@ -97,8 +96,8 @@ export class WireFrameSpiralEffect extends LayerEffect {
 
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName);
+        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
         await underlayLayer.adjustLayerOpacity(context.theUnderLayerOpacityGaston);
@@ -129,8 +128,8 @@ export class WireFrameSpiralEffect extends LayerEffect {
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             theUnitLengthGaston: findValue(0, this.data.unitLengthChangeConstant, 1, numberOfFrames, currentFrame),
             theUnderLayerOpacityGaston: findValue(this.data.underLayerOpacityRange.lower, this.data.underLayerOpacityRange.upper, this.data.underLayerOpacityTimes, numberOfFrames, currentFrame),
-            drawing: GlobalSettings.getWorkingDirectory() + 'wireframe-spiral' + randomId() + '.png',
-            underlayName: GlobalSettings.getWorkingDirectory() + 'wireframe-spiral-underlay' + randomId() + '.png',
+            drawing: this.workingDirectory + 'wireframe-spiral' + randomId() + '.png',
+            underlayName: this.workingDirectory + 'wireframe-spiral-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         }
@@ -151,9 +150,9 @@ export class WireFrameSpiralEffect extends LayerEffect {
             },
             underLayerOpacityTimes: getRandomIntInclusive(this.config.underLayerOpacityTimes.lower, this.config.underLayerOpacityTimes.upper),
             startTwistCount: getRandomIntInclusive(this.config.startTwistCount.lower, this.config.startTwistCount.upper),
-            drawHeight: GlobalSettings.getFinalImageSize().height * 4,
-            height: GlobalSettings.getFinalImageSize().height * 2,
-            width: GlobalSettings.getFinalImageSize().width * 2,
+            drawHeight: this.finalSize.height * 4,
+            height: this.finalSize.height * 2,
+            width: this.finalSize.width * 2,
             stroke: getRandomFromArray(this.config.stroke),
             thickness: getRandomFromArray(this.config.thickness),
             unitLength: getRandomIntInclusive(this.config.unitLength.lower, this.config.unitLength.upper),
@@ -162,8 +161,8 @@ export class WireFrameSpiralEffect extends LayerEffect {
             innerColor: settings.getColorFromBucket(),
             outerColor: settings.getColorFromBucket(),
             center: {
-                x: GlobalSettings.getFinalImageSize().width * 2 / 2,
-                y: GlobalSettings.getFinalImageSize().height * 2 / 2
+                x: this.finalSize.width * 2 / 2,
+                y: this.finalSize.height * 2 / 2
             },
             speed: getRandomIntInclusive(this.config.speed.lower, this.config.speed.upper),
             counterClockwise: getRandomIntInclusive(this.config.counterClockwise.lower, this.config.counterClockwise.upper),

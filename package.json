@@ -8,7 +8,8 @@
     "test": "jest",
     "vert": "node src/index.js --isHoz false --batchAmount 1",
     "hoz": "node src/index.js --batchAmount 1",
-    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 1"
+    "make-me-a-pretty": "node src/index.js --isHoz false --batchAmount 1",
+    "interactive": "node src/interactive.js"
   },
   "jest": {
     "collectCoverage": true,
@@ -32,6 +33,7 @@
     "canvas": "^2.11.2",
     "color-scheme": "^1.0.1",
     "gl": "^6.0.2",
+    "inquirer": "^9.2.12",
     "jimp": "^0.22.10",
     "minimist": "^1.2.8",
     "npm": "^10.2.4",

@@ -1,6 +1,5 @@
 import {LayerEffect} from "../../LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import {GlobalSettings} from "../../../core/GlobalSettings.js";
 import * as THREE from "three";
 import {Canvas3d} from "../../../core/factory/canvas/Canvas3d.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
@@ -44,7 +43,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
 
 
     async #draw(context, filename) {
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.finalSize;
 
         const center = new THREE.Object3D();
         center.position.set(0, 0, 0);
@@ -123,7 +122,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
             data: this.data,
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            drawing: GlobalSettings.getWorkingDirectory() + 'three-dimensional-rings' + randomId() + '.png'
+            drawing: this.workingDirectory + 'three-dimensional-rings' + randomId() + '.png'
         }
 
         await this.#draw(context, context.drawing)

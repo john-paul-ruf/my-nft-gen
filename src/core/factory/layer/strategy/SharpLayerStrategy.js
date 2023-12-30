@@ -2,12 +2,21 @@ import sharp from "sharp";
 import {randomId} from "../../../math/random.js";
 import fs from "fs";
 import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
-import {GlobalSettings} from "../../../GlobalSettings.js";
 
 export class SharpLayerStrategy {
-    constructor() {
+    constructor({
+                    finalImageSize = {
+                        width: 0,
+                        height: 0,
+                        longestSide: 0,
+                        shortestSide: 0
+                    },
+                    workingDirectory = null
+                }) {
         this.internalRepresentation = null;
         this.fileBuffer = null;
+        this.finalImageSize = finalImageSize;
+        this.workingDirectory = workingDirectory;
     }
 
     async newLayer(height, width, backgroundColor) {
@@ -17,7 +26,7 @@ export class SharpLayerStrategy {
             }
         })
 
-        const filename = GlobalSettings.getWorkingDirectory() + 'blank-layer' + randomId() + '.png'
+        const filename = this.workingDirectory + 'blank-layer' + randomId() + '.png'
         await this.toFile(filename)
         await this.fromFile(filename)
         fs.unlinkSync(filename);
@@ -37,11 +46,11 @@ export class SharpLayerStrategy {
 
     async compositeLayerOver(layer, withResize = true) {
 
-        const finalImageSize = GlobalSettings.getFinalImageSize();
+        const finalImageSize = this.finalImageSize;
 
-        const overlayFile = GlobalSettings.getWorkingDirectory() + 'overlay' + randomId() + '.png';
-        const targetFile = GlobalSettings.getWorkingDirectory() + 'target' + randomId() + '.png';
-        const compositeFile = GlobalSettings.getWorkingDirectory() + 'composite' + randomId() + '.png';
+        const overlayFile = this.workingDirectory + 'overlay' + randomId() + '.png';
+        const targetFile = this.workingDirectory + 'target' + randomId() + '.png';
+        const compositeFile = this.workingDirectory + 'composite' + randomId() + '.png';
 
         if (withResize) {
             await layer.resize(finalImageSize.height, finalImageSize.width);
@@ -69,8 +78,8 @@ export class SharpLayerStrategy {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
         const meta = await this.getInfo();
 
-        const targetFile = GlobalSettings.getWorkingDirectory() + 'target' + randomId() + '.png';
-        const compositeFile = GlobalSettings.getWorkingDirectory() + 'composite' + randomId() + '.png';
+        const targetFile = this.workingDirectory + 'target' + randomId() + '.png';
+        const compositeFile = this.workingDirectory + 'composite' + randomId() + '.png';
 
         await this.toFile(targetFile);
 

@@ -1,6 +1,5 @@
 import {getRandomIntExclusive, randomId} from "./math/random.js";
 import {ColorScheme} from "./color/ColorScheme.js";
-import {GlobalSettings} from "./GlobalSettings.js";
 import {RayRingInvertedEffect} from "../effects/primaryEffects/rayRingInverted/RayRingInverted.js";
 import {GlitchFractalEffect} from "../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js";
 import {HexEffect} from "../effects/primaryEffects/hex/HexEffect.js";
@@ -53,7 +52,7 @@ export class Settings {
     static from(json) {
         const settings = Object.assign(new Settings({}), json);
 
-        settings.colorScheme =  Object.assign(new ColorScheme({}), settings.colorScheme);
+        settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme);
 
         for (let i = 0; i < settings.effects.length; i++) {
             settings.effects[i] = LayerEffectFromJSON.from(settings.effects[i])
@@ -66,7 +65,6 @@ export class Settings {
         return settings;
     }
 
-
     constructor({
                     colorScheme = new ColorScheme({}),
                     neutrals = ['#FFFFFF'],
@@ -76,6 +74,11 @@ export class Settings {
                     runName = 'null-space-void',
                     frameInc = 1,
                     numberOfFrame = 1800,
+                    longestSideInPixels = 1920,
+                    shortestSideInPixels = 1080,
+                    isHorizontal = false,
+                    workingDirectory = `src/img/working/`,
+                    layerStrategy = 'sharp', //jimp no longer supported
                     allPrimaryEffects = [
                         {effect: AnimateBackgroundEffect, effectChance: 0, ignoreAdditionalEffects: false},
                         {effect: HexEffect, effectChance: 0, ignoreAdditionalEffects: false},
@@ -122,10 +125,28 @@ export class Settings {
                         {effect: GlitchDrumrollHorizontalWaveEffect, effectChance: 0, ignoreAdditionalEffects: false},
                     ],
                     finalFileName = 'nsv' + randomId(),
-                    fileOut = GlobalSettings.getWorkingDirectory() + finalFileName,
+                    fileOut =workingDirectory + finalFileName,
                 }) {
 
         this.colorScheme = colorScheme;
+
+        const finalImageHeight = isHorizontal ? shortestSideInPixels : longestSideInPixels;
+        const finalImageWidth = isHorizontal ? longestSideInPixels : shortestSideInPixels;
+
+        this.finalSize =  {
+            width: finalImageWidth,
+            height: finalImageHeight,
+            longestSide: finalImageHeight > finalImageWidth ? finalImageHeight : finalImageWidth,
+            shortestSide: finalImageHeight > finalImageWidth ? finalImageWidth : finalImageHeight,
+        }
+
+        this.workingDirectory = `src/img/working/`;
+
+        this.fileConfig = {
+            finalImageSize: this.finalSize,
+            workingDirectory: this.workingDirectory,
+            layerStrategy: layerStrategy
+        };
 
         //For 2D palettes
         this.neutrals = neutrals;
@@ -163,7 +184,11 @@ export class Settings {
         this.allPrimaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({ additionalEffects: this.#applySecondaryEffects(), ignoreAdditionalEffects: obj.ignoreAdditionalEffects, settings: this}));
+                effectList.push(new obj.effect({
+                    additionalEffects: this.#applySecondaryEffects(),
+                    ignoreAdditionalEffects: obj.ignoreAdditionalEffects,
+                    settings: this
+                }));
             }
         })
 
@@ -177,7 +202,11 @@ export class Settings {
         this.allSecondaryEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({ additionalEffects: [], ignoreAdditionalEffects: obj.ignoreAdditionalEffects, settings: this}));
+                effectList.push(new obj.effect({
+                    additionalEffects: [],
+                    ignoreAdditionalEffects: obj.ignoreAdditionalEffects,
+                    settings: this
+                }));
             }
         })
         return effectList;
@@ -191,7 +220,11 @@ export class Settings {
         this.allFinalImageEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
             if (obj.effectChance > chance) { //if the roll was below the chance of hit
-                effectList.push(new obj.effect({ additionalEffects: this.#applySecondaryEffects(), ignoreAdditionalEffects: obj.ignoreAdditionalEffects, settings: this}));
+                effectList.push(new obj.effect({
+                    additionalEffects: this.#applySecondaryEffects(),
+                    ignoreAdditionalEffects: obj.ignoreAdditionalEffects,
+                    settings: this
+                }));
             }
         })
 
