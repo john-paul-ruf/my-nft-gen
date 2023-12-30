@@ -56,7 +56,7 @@ const mainMenu = () => {
 
                             let batchAmount = 0;
 
-                            switch (answers.HowMany) {
+                            switch (answers.howMany) {
                                 case HowMany.One:
                                     batchAmount = 1;
                                     break;
@@ -144,12 +144,14 @@ const mainMenu = () => {
                             .then(answers => {
                                 switch (answers.processLoop) {
                                     case 'Yes':
+
                                     async function CreateLoop() {
                                         const settings = Settings.from(JSON.parse(fs.readFileSync(workingDirectory + data.config.finalFileName + '-settings.json')))
                                         const loopBuilder = new LoopBuilder(settings);
                                         return loopBuilder.constructLoop();
                                     }
-                                        CreateLoop().then((obj) => mainMenu());
+
+                                        CreateLoop().then(() => mainMenu());
                                         break;
                                     case 'No':
                                         mainMenu();
