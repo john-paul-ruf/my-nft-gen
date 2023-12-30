@@ -13,7 +13,8 @@ const mainMenu = () => {
         Gen: 'Generate Random Loop',
         Preview: 'Generate Screen Cap and Settings',
         Load: 'Load From File',
-        EverythingBagelTest: 'Test All Effects At Once (not recommended)'
+        EverythingBagelTest: 'Test All Effects At Once (not recommended)',
+        Exit: 'Exit'
     }
 
     const HowMany = {
@@ -32,13 +33,15 @@ const mainMenu = () => {
                 InitialActions.Preview,
                 InitialActions.Load,
                 InitialActions.EverythingBagelTest,
-
+                InitialActions.Exit
             ]
         },
     ])
         .then(answers => {
 
             switch (answers.initialAction) {
+                case InitialActions.Exit:
+                        return;
                 case InitialActions.Gen:
                     inquirer.prompt([
                         {
