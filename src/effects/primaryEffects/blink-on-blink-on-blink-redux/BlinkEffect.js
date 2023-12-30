@@ -93,7 +93,7 @@ export class BlinkOnEffect extends LayerEffect {
         const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
         await tempLayer.resize(blink.diameter, blink.diameter);
 
-        const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide * scale, finalImageSize.longestSide * scale, '#00000000', this.settings.fileConfig);
+        const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide * scale, finalImageSize.longestSide * scale, '#00000000', this.fileConfig);
         await fullSizedLayer.compositeLayerOver(tempLayer, false);
 
         await fullSizedLayer.toFile(fileName);

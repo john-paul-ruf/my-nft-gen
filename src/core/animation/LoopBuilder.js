@@ -159,4 +159,46 @@ export class LoopBuilder {
             resolve();
         });
     }
+
+    async constructPreview() {
+
+        return new Promise(async (resolve) => {
+
+            this.#writeSettingsInfo();
+
+            this.config.startTime = new Date();
+            this.context.backgroundColor = await this.settings.getBackgroundFromBucket();
+
+            this.composeInfo = new ComposeInfo({
+                config: this.config,
+                effects: this.settings.effects,
+                finalImageEffects: this.settings.finalImageEffects,
+                settings: this.settings
+            });
+
+            console.log(await this.composeInfo.composeInfo())
+
+            ////////////////////////
+            //ANIMATE - start here
+            //Outer most layer of the function
+            //Here we create all the frames in order
+            ////////////////////////
+            for (let f = 0; f < 1; f = f + this.config.frameInc) {
+                await this.#createSingleFrame(f, this.context);
+                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
+            }
+
+            ////////////////////////
+            //WRITE TO FILE
+            ////////////////////////
+            await writeScreenCap(this.context.frameFilenames[0], this.config);
+
+            for (let f = 0; f < this.context.frameFilenames.length; f++) {
+                //delete files
+                fs.unlinkSync(this.context.frameFilenames[f]);
+            }
+
+            resolve();
+        });
+    }
 }
