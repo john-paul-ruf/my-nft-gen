@@ -5,25 +5,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {Settings} from "../../../core/Settings.js";
+import {ScanLinesConfig} from "./ScanLinesConfig.js";
 
 export class ScanLinesEffect extends LayerEffect {
 
     static _name_ = 'scan lines';
 
-    static _config_  = {
-        lines: {lower: 2, upper: 4},
-        minlength: {lower: 30, upper: 40},
-        maxlength: {lower: 80, upper: 100},
-        times: {lower: 4, upper: 8},
-        alphaRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
-        alphaTimes: {lower: 4, upper: 8},
-        loopTimes: {lower: 1, upper: 2},
-    }
-
     constructor({
                     name = ScanLinesEffect._name_,
                     requiresLayer = true,
-                    config = ScanLinesEffect._config_,
+                    config = new ScanLinesConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

@@ -2,22 +2,16 @@ import {LayerEffect} from "../../LayerEffect.js";
 import {getRandomIntInclusive} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
+import {SingleLayerBlurConfig} from "./SingleLayerBlurConfig.js";
 
 export class SingleLayerBlurEffect extends LayerEffect {
 
     static _name_ = 'single-layer-blur';
 
-    static _config_ = {
-        lowerRange: {lower: 0, upper: 0},
-        upperRange: {lower: 2, upper: 6},
-        times: {lower: 2, upper: 9},
-        glitchChance: 100,
-    }
-
     constructor({
                     name = SingleLayerBlurEffect._name_,
                     requiresLayer = false,
-                    config = SingleLayerBlurEffect._config_,
+                    config = new SingleLayerBlurConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

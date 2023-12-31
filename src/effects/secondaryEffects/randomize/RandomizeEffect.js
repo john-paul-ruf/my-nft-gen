@@ -3,22 +3,16 @@ import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {Settings} from "../../../core/Settings.js";
+import {RandomizeConfig} from "./RandomizeConfig.js";
 
 export class RandomizeEffect extends LayerEffect {
 
     static _name_ = 'randomize';
 
-    static _config_ = {
-        spin: {lower: -8, upper: 8},
-        red: {lower: -8, upper: 8},
-        blue: {lower: -8, upper: 8},
-        green: {lower: -8, upper: 8}
-    }
-
     constructor({
                     name = RandomizeEffect._name_,
                     requiresLayer = false,
-                    config = RandomizeEffect._config_,
+                    config = new RandomizeConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

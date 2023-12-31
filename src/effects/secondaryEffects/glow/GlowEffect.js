@@ -4,21 +4,16 @@ import fs from "fs";
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
+import {GlowConfig} from "./GlowConfig.js";
 
 export class GlowEffect extends LayerEffect {
 
     static _name_ = 'glow';
 
-    static _config_ =  {
-        lowerRange: {lower: -18, upper: -0},
-        upperRange: {lower: 0, upper: 18},
-        times: {lower: 2, upper: 6},
-    }
-
     constructor({
                     name = GlowEffect._name_,
                     requiresLayer = false,
-                    config = GlowEffect._config_,
+                    config = new GlowConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

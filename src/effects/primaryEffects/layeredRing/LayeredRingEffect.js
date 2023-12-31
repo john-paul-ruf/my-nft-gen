@@ -7,39 +7,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Settings} from "../../../core/Settings.js";
+import {LayeredRingConfig} from "./LayeredRingConfig.js";
 
 export class LayeredRingEffect extends LayerEffect {
 
     static _name_ = 'layered-rings';
 
-    static _config_ =  {
-        thickness: 4,
-        stroke: 0,
-
-        layerOpacityRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-        layerOpacityTimes: {lower: 2, upper: 4},
-
-        indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
-        indexOpacityTimes: {lower: 2, upper: 4},
-
-        radius: {lower: 40, upper: 60},
-        offsetRadius: {lower: 30, upper: 60},
-
-        numberOfIndex: {lower: 20, upper: 40},
-        startIndex: {lower: 8, upper: 12},
-
-        startAngle: 0,
-
-        movementGaston: {lower: 1, upper: 12},
-
-        initialNumberOfPoints: 4,
-        scaleByFactor: 1.1
-    };
-
     constructor({
                     name = LayeredRingEffect._name_,
                     requiresLayer = true,
-                    config = LayeredRingEffect._config_,
+                    config = new LayeredRingConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})
@@ -54,7 +31,6 @@ export class LayeredRingEffect extends LayerEffect {
         });
         this.#generate(settings)
     }
-
 
     async #drawHexLayer(context, arrayIndex, layer) {
 

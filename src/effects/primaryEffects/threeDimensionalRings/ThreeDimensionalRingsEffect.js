@@ -7,25 +7,16 @@ import {degreesToRadians} from "../../../core/math/drawingMath.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import fs from "fs";
 import {Settings} from "../../../core/Settings.js";
+import {ThreeDimensionalRingsConfig} from "./ThreeDimensionalRingsConfig.js";
 
 export class ThreeDimensionalRingsEffect extends LayerEffect {
 
     static _name_ = 'three-dimensional-rings';
 
-    static _config_  = {
-        rings: {lower: 10, upper: 15},
-        ringRadius: {lower: 0.1, upper: 0.2},
-        ringGap: {lower: 5, upper: 10},
-        radiusConstant: 50,
-        times: {lower: 1, upper: 6},
-        height: {lower: 5, upper: 10},
-        ringOpacity: {lower: 0.3, upper: 0.5},
-    }
-
     constructor({
                     name = ThreeDimensionalRingsEffect._name_,
                     requiresLayer = true,
-                    config = ThreeDimensionalRingsEffect._config_,
+                    config = new ThreeDimensionalRingsConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

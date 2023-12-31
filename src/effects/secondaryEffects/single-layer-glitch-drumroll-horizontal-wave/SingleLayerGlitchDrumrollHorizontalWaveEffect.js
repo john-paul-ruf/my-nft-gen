@@ -4,22 +4,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import Jimp from "jimp";
 import fs from "fs";
 import {Settings} from "../../../core/Settings.js";
+import {SingleLayerGlitchDrumrollHorizontalWaveConfig} from "./SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
 
 export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
     static _name_ = 'single-layer-glitch-drumroll-horizontal-wave';
 
-    static _config_ = {
-        glitchChance: 100,
-        glitchOffset: {lower: 40, upper: 80},
-        glitchOffsetTimes: {lower: 1, upper: 3},
-        cosineFactor: {lower: 2, upper: 6}
-    };
-
     constructor({
                     name = SingleLayerGlitchDrumrollHorizontalWaveEffect._name_,
                     requiresLayer = false,
-                    config = SingleLayerGlitchDrumrollHorizontalWaveEffect._config_,
+                    config = new SingleLayerGlitchDrumrollHorizontalWaveConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

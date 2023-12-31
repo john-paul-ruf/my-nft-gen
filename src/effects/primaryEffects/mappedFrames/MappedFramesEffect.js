@@ -6,20 +6,16 @@ import path, {dirname} from "path";
 import {mapNumberToRange} from "../../../core/math/mapNumberToRange.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Settings} from "../../../core/Settings.js";
+import {MappedFramesConfig} from "./MappedFramesConfig.js";
 
 export class MappedFramesEffect extends LayerEffect {
 
     static _name_ = 'mapped-frames';
 
-    static _config_  = {
-        folderName: '/mappedFrames/',
-        layerOpacity: 1,
-    }
-
     constructor({
                     name = MappedFramesEffect._name_,
                     requiresLayer = true,
-                    config = MappedFramesEffect._config_,
+                    config = new MappedFramesConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

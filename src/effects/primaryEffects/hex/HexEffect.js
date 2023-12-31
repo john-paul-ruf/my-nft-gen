@@ -13,32 +13,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
+import {HexConfig} from "./HexConfig.js";
 
 export class HexEffect extends LayerEffect {
 
     static _name_ = 'hex';
 
-    static _config_ = {
-        layerOpacity: 1,
-        underLayerOpacity: 0.8,
-        sparsityFactor: [12, 15, 18,/* 20, 24, 30, 36*/],
-        gapFactor: {lower: 3, upper: 6},
-        radiusFactor: {lower: 1, upper: 3},
-        accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0.75, upper: 1.5}},
-        blurRange: {bottom: {lower: 0, upper: 1}, top: {lower: 2, upper: 3}},
-        featherTimes: {lower: 2, upper: 4},
-        stroke: 1,
-        thickness: 0.5,
-        scaleFactor: 0.5,
-        numberOfHex: 12,
-        strategy: ['static', 'angle', 'rotate'],
-        overlayStrategy: ['flat', 'overlay'],
-    }
-
     constructor({
                     name = HexEffect._name_,
                     requiresLayer = true,
-                    config = HexEffect._config_,
+                    config =new HexConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

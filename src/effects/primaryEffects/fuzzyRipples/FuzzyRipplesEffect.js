@@ -7,45 +7,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
+import {FuzzyRipplesConfig} from "./FuzzyRipplesConfig.js";
 
 export class FuzzyRipplesEffect extends LayerEffect {
 
     static _name_ = 'fuzzy-ripples';
 
-    static _config_  = {
-        invertLayers: true,
-        layerOpacity: 1,
-        underLayerOpacity: 0.8,
-        stroke: 1,
-        thickness: 2,
-        largeRadius: {
-            lower: (finalSize) => finalSize.longestSide * 0.15,
-            upper: (finalSize) => finalSize.longestSide * 0.15
-        },
-        smallRadius: {
-            lower: (finalSize) => finalSize.longestSide * 0.25,
-            upper: (finalSize) => finalSize.longestSide * 0.25
-        },
-        largeNumberOfRings: {lower: 8, upper: 8},
-        smallNumberOfRings: {lower: 8, upper: 8},
-        ripple: {
-            lower: (finalSize) => finalSize.shortestSide * 0.10,
-            upper: (finalSize) => finalSize.shortestSide * 0.10
-        },
-        times: {lower: 2, upper: 4},
-        smallerRingsGroupRadius: {
-            lower: (finalSize) => finalSize.shortestSide * 0.3,
-            upper: (finalSize) => finalSize.shortestSide * 0.3
-        },
-        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-        featherTimes: {lower: 2, upper: 4},
-    }
-
     constructor({
                     name = FuzzyRipplesEffect._name_,
                     requiresLayer = true,
-                    config = FuzzyRipplesEffect._config_,
+                    config = new FuzzyRipplesConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

@@ -1,6 +1,6 @@
 import {getRandomIntExclusive, randomId} from "./math/random.js";
 import {ColorScheme} from "./color/ColorScheme.js";
-import {RayRingInvertedEffect} from "../effects/primaryEffects/rayRingInverted/RayRingInverted.js";
+import {RayRingInvertedEffect} from "../effects/primaryEffects/rayRingInverted/RayRingInvertedEffect.js";
 import {GlitchFractalEffect} from "../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js";
 import {HexEffect} from "../effects/primaryEffects/hex/HexEffect.js";
 import {AnimateBackgroundEffect} from "../effects/primaryEffects/animateBackground/AnimateBackgroundEffect.js";
@@ -9,7 +9,7 @@ import {WireFrameSpiralEffect} from "../effects/primaryEffects/wireframeSpiral/W
 import {FuzzyBandEffect} from "../effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js";
 import {EncircledSpiralEffect} from "../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
 import {LayeredHexEffect} from "../effects/primaryEffects/layeredHex/LayeredHexEffect.js";
-import {LayeredRingEffect} from "../effects/primaryEffects/layeredRings/LayeredRingEffect.js";
+import {LayeredRingEffect} from "../effects/primaryEffects/layeredRing/LayeredRingEffect.js";
 import {EightEffect} from "../effects/primaryEffects/eight/EightEffect.js";
 import {FuzzyRipplesEffect} from "../effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
 import {NthRingsEffect} from "../effects/primaryEffects/nthRings/NthRingsEffect.js";

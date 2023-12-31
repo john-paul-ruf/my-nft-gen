@@ -5,21 +5,16 @@ import fs from "fs";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import {Settings} from "../../../core/Settings.js";
+import {ImageOverlayConfig} from "./ImageOverlayConfig.js";
 
 export class ImageOverlayEffect extends LayerEffect {
 
     static _name_ = 'image-overlay';
 
-    static _config_ = {
-        folderName: '/imageOverlay/',
-        layerOpacity: [0.95],
-        buffer: [555]
-    }
-
     constructor({
                     name = ImageOverlayEffect._name_,
                     requiresLayer = true,
-                    config = ImageOverlayEffect._config_,
+                    config = new ImageOverlayConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})
