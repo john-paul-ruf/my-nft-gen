@@ -5,6 +5,12 @@ import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
 import {ColorScheme} from "./core/color/ColorScheme.js";
 import {FadeEffect} from "./effects/secondaryEffects/fade/FadeEffect.js";
 import {FadeConfig} from "./effects/secondaryEffects/fade/FadeConfig.js";
+import {
+    GlitchDrumrollHorizontalWaveEffect
+} from "./effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
+import {
+    GlitchDrumrollHorizontalWaveConfig
+} from "./effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveConfig.js";
 
 const myTestProject = new Project({
     artist: 'Test Artist',
@@ -58,6 +64,17 @@ await myTestProject.addPrimaryEffect({layerConfig: new LayerConfig({
         }),
         defaultEffectConfig: AmpConfig
     })});
+
+await myTestProject.addFinalEffect({layerConfig: new LayerConfig({
+        effect: GlitchDrumrollHorizontalWaveEffect,
+        percentChance: 100,
+        currentEffectConfig: new GlitchDrumrollHorizontalWaveConfig({
+
+        }),
+        defaultEffectConfig: GlitchDrumrollHorizontalWaveConfig
+    })});
+
+
 
 await myTestProject.generateRandomLoop();
 
