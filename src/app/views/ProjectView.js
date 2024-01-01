@@ -39,17 +39,17 @@ export class ProjectView {
         const twiPrimary = new QTreeWidgetItem();
         twiPrimary.setText(0,'Primary');
 
-        for(let i = 0; i < this.menu.project.selectedPrimaryEffectConfigs; i++){
+        for(let i = 0; i < this.menu.project.selectedPrimaryEffectConfigs.length; i++){
             const item = new QTreeWidgetItem(twiPrimary);
-            item.setText(0,this.menu.project.selectedPrimaryEffectConfigs.effect._name_);
+            item.setText(0,this.menu.project.selectedPrimaryEffectConfigs[i].name);
         }
 
         const twiFinal = new QTreeWidgetItem();
         twiFinal.setText(0, 'Final');
 
-        for(let i = 0; i < this.menu.project.selectedFinalEffectConfigs; i++){
+        for(let i = 0; i < this.menu.project.selectedFinalEffectConfigs.length; i++){
             const item = new QTreeWidgetItem(twiFinal);
-            item.setText(0,this.menu.project.selectedFinalEffectConfigs.effect._name_);
+            item.setText(0,this.menu.project.selectedFinalEffectConfigs[i].effect._name_);
         }
 
         const twEffects = new QTreeWidget();
@@ -64,7 +64,7 @@ export class ProjectView {
         });
 
         const btnRemoveLayer = new QPushButton();
-        btnRemoveLayer.setText('Add New Layer');
+        btnRemoveLayer.setText('Remove Layer');
         btnRemoveLayer.setObjectName(`btnAddLayer`);
         btnRemoveLayer.addEventListener('clicked', () => {
             this.menu.changeView(new LayerPickerView(this.menu).getView(this));
@@ -72,7 +72,7 @@ export class ProjectView {
 
 
         this.layout.addWidget(lblArtist, 0, 0, 1,1, AlignmentFlag.AlignRight);
-        this.layout.addWidget(txtArtist, 0, 1, 3, 1, AlignmentFlag.AlignLeft);
+        this.layout.addWidget(txtArtist, 0, 1, 1, 1, AlignmentFlag.AlignLeft);
 
         this.layout.addWidget(lblProjectName, 1, 0, 1,1, AlignmentFlag.AlignRight);
         this.layout.addWidget(txtProjectName, 1, 1, 1, 1, AlignmentFlag.AlignLeft);

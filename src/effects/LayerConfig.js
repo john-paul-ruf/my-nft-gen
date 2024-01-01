@@ -3,6 +3,7 @@ import {EffectConfig} from "./EffectConfig.js";
 
 export class LayerConfig {
     constructor({
+                    name = 'base-config',
                     effect = LayerEffect,
                     percentChance = 0,
                     ignoreSecondaryEffects = false,
@@ -10,6 +11,7 @@ export class LayerConfig {
                     defaultEffectConfig = EffectConfig,
                     possibleSecondaryEffects = []
                 }) {
+        this.name = name;
         this.effect = effect;
         this.percentChance = percentChance;
         this.ignoreSecondaryEffects = ignoreSecondaryEffects;

@@ -134,7 +134,7 @@ export class LayerConfigFactory {
         Pixelate: 'Pixelate'
     }
 
-    static getFinalEffect = async ({type = LayerConfigFactory.FinalEffect.Default}) => {
+    static getFinalEffect = ({type = LayerConfigFactory.FinalEffect.Default}) => {
         switch (type) {
             case LayerConfigFactory.FinalEffect.Blur:
                 return new LayerConfig({
@@ -173,7 +173,7 @@ export class LayerConfigFactory {
         }
     }
 
-    static getSecondaryEffect = async ({type = LayerConfigFactory.SecondaryEffect.Default}) => {
+    static getSecondaryEffect = ({type = LayerConfigFactory.SecondaryEffect.Default}) => {
         switch (type) {
             case LayerConfigFactory.SecondaryEffect.Fade:
                 return new LayerConfig({
@@ -218,10 +218,11 @@ export class LayerConfigFactory {
         }
     }
 
-    static getPrimaryEffect = async ({type = LayerConfigFactory.PrimaryEffect.Default}) => {
+    static getPrimaryEffect = ({type = LayerConfigFactory.PrimaryEffect.Default}) => {
         switch (type) {
             case LayerConfigFactory.PrimaryEffect.Amp:
                 return new LayerConfig({
+                    name: LayerConfigFactory.PrimaryEffect.Amp,
                     effect: AmpEffect,
                     currentEffectConfig: new AmpConfig({}),
                     defaultEffectConfig: AmpConfig,
@@ -252,6 +253,7 @@ export class LayerConfigFactory {
                 });
             case LayerConfigFactory.PrimaryEffect.FuzzyBands:
                 return new LayerConfig({
+                    name: LayerConfigFactory.PrimaryEffect.FuzzyBands,
                     effect: FuzzyBandEffect,
                     currentEffectConfig: new FuzzyBandConfig({}),
                     defaultEffectConfig: FuzzyBandConfig,
@@ -354,6 +356,7 @@ export class LayerConfigFactory {
                 });
             case LayerConfigFactory.PrimaryEffect.Viewport:
                 return new LayerConfig({
+                    name: LayerConfigFactory.PrimaryEffect.Viewport,
                     effect: ViewportEffect,
                     currentEffectConfig: new ViewportConfig({}),
                     defaultEffectConfig: ViewportConfig,

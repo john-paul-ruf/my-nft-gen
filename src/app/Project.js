@@ -35,19 +35,19 @@ export class Project {
         this.selectedFinalEffectConfigs = [];
     }
 
-    async addPrimaryEffect({layerConfig = new LayerConfig({})}) {
+    addPrimaryEffect({layerConfig = new LayerConfig({})}) {
         this.selectedPrimaryEffectConfigs.push(layerConfig);
     }
 
-    async removePrimaryEffect(layerConfig) {
+    removePrimaryEffect(layerConfig) {
         this.selectedPrimaryEffectConfigs.push(layerConfig);
     }
 
-    async addFinalEffect({layerConfig = new LayerConfig({})}) {
+    addFinalEffect({layerConfig = new LayerConfig({})}) {
         this.selectedFinalEffectConfigs.push(layerConfig);
     }
 
-    async removeFinalEffect(layerConfig) {
+    removeFinalEffect(layerConfig) {
         this.selectedFinalEffectConfigs.push(layerConfig);
     }
 
