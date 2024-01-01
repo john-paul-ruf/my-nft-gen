@@ -36,7 +36,6 @@ export class Settings {
                     workingDirectory = `src/img/working/`,
                     layerStrategy = 'sharp', //jimp no longer supported
                     allPrimaryEffects = [new LayerConfig({})],
-                    allSecondaryEffects = [new LayerConfig({})],
                     allFinalImageEffects = [new LayerConfig({})],
                     finalFileName = 'nsv' + randomId(),
                     fileOut = workingDirectory + finalFileName,
@@ -81,7 +80,6 @@ export class Settings {
         }
 
         this.allPrimaryEffects = allPrimaryEffects;
-        this.allSecondaryEffects = allSecondaryEffects;
         this.allFinalImageEffects = allFinalImageEffects;
 
         //This determines the final image contents

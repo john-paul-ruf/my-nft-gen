@@ -67,7 +67,6 @@ export class Project {
                 isHorizontal: this.isHorizontal,
                 workingDirectory: this.projectDirectory,
                 allPrimaryEffects: this.selectedPrimaryEffectConfigs,
-                allSecondaryEffects: this.selectedSecondaryEffectConfigs,
                 allFinalImageEffects: this.selectedFinalEffectConfigs
             }));
         return loopBuilder.constructLoop();
