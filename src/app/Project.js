@@ -2,6 +2,7 @@ import {Settings} from "../core/Settings.js";
 import {ColorScheme} from "../core/color/ColorScheme.js";
 import {LayerConfig} from "../effects/LayerConfig.js";
 import {LoopBuilder} from "../core/animation/LoopBuilder.js";
+import {randomId} from "../core/math/random.js";
 
 export class Project {
 
@@ -59,6 +60,7 @@ export class Project {
                 lights: this.lights,
                 _INVOKER_: this.artist,
                 runName: this.projectName,
+                finalFileName: this.projectName + randomId(),
                 numberOfFrame: this.numberOfFrame,
                 longestSideInPixels: this.longestSideInPixels,
                 shortestSideInPixels: this.shortestSideInPixels,
