@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "app": "node src/app.js"
+    "app": "qode --inspect ./src/app.js"
   },
   "jest": {
     "collectCoverage": true,
@@ -27,6 +27,7 @@
   "dependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
+    "@nodegui/nodegui": "^0.63.0",
     "canvas": "^2.11.2",
     "color-scheme": "^1.0.1",
     "gl": "^6.0.2",
@@ -35,7 +36,8 @@
     "minimist": "^1.2.8",
     "npm": "^10.2.4",
     "sharp": "^0.33.1",
-    "three": "^0.158.0"
+    "three": "^0.158.0",
+    "webpack": "^5.89.0"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
