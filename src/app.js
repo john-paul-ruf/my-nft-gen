@@ -3,6 +3,8 @@ import {LayerConfig} from "./effects/LayerConfig.js";
 import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
 import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
 import {ColorScheme} from "./core/color/ColorScheme.js";
+import {FadeEffect} from "./effects/secondaryEffects/fade/FadeEffect.js";
+import {FadeConfig} from "./effects/secondaryEffects/fade/FadeConfig.js";
 
 const myTestProject = new Project({
     artist: 'Test Artist',
@@ -34,7 +36,15 @@ await myTestProject.addPrimaryEffect({layerConfig: new LayerConfig({
             length:50,
             sparsityFactor: [1]
         }),
-        defaultEffectConfig: AmpConfig
+        defaultEffectConfig: AmpConfig,
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: FadeEffect,
+                percentChance: 100,
+                currentEffectConfig: new FadeConfig({}),
+                defaultEffectConfig: FadeConfig
+            })
+        ]
     })});
 
 

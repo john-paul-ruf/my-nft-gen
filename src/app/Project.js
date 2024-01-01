@@ -31,7 +31,6 @@ export class Project {
         this.projectDirectory = projectDirectory;
 
         this.selectedPrimaryEffectConfigs = [];
-        this.selectedSecondaryEffectConfigs = [];
         this.selectedFinalEffectConfigs = [];
     }
 
@@ -41,14 +40,6 @@ export class Project {
 
     async removePrimaryEffect(layerConfig) {
         this.selectedPrimaryEffectConfigs.push(layerConfig);
-    }
-
-    async addSecondaryEffect({layerConfig = new LayerConfig({})}) {
-        this.selectedSecondaryEffectConfigs.push(layerConfig);
-    }
-
-    async removeSecondaryEffect(layerConfig) {
-        this.selectedSecondaryEffectConfigs.push(layerConfig);
     }
 
     async addFinalEffect({layerConfig = new LayerConfig({})}) {

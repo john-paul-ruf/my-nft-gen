@@ -100,7 +100,7 @@ export class Settings {
             if (obj.percentChance > chance) { //if the roll was below the chance of hit
                 effectList.push(new obj.effect({
                     config: obj.currentEffectConfig,
-                    additionalEffects: this.#applySecondaryEffects(),
+                    additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
                     ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this
                 }));
@@ -110,16 +110,17 @@ export class Settings {
         return effectList;
     }
 
-    #applySecondaryEffects() {
+    #applySecondaryEffects(possibleEffects) {
         const effectList = [];
 
         //For each effect in the possible effects list.
-        this.allSecondaryEffects.forEach(obj => {
+        possibleEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
-            if (obj.effectChance > chance) { //if the roll was below the chance of hit
+            if (obj.percentChance > chance) { //if the roll was below the chance of hit
                 effectList.push(new obj.effect({
+                    config: obj.currentEffectConfig,
                     additionalEffects: [],
-                    ignoreAdditionalEffects: obj.ignoreAdditionalEffects,
+                    ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this
                 }));
             }
@@ -134,10 +135,11 @@ export class Settings {
         //For each effect in the possible effects list.
         this.allFinalImageEffects.forEach(obj => {
             const chance = getRandomIntExclusive(0, 100) //roll the dice
-            if (obj.effectChance > chance) { //if the roll was below the chance of hit
+            if (obj.percentChance > chance) { //if the roll was below the chance of hit
                 effectList.push(new obj.effect({
-                    additionalEffects: this.#applySecondaryEffects(),
-                    ignoreAdditionalEffects: obj.ignoreAdditionalEffects,
+                    config: obj.currentEffectConfig,
+                    additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
+                    ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this
                 }));
             }
