@@ -5,9 +5,13 @@ import {
     FlexLayout,
 } from "@nodegui/nodegui";
 import {MainView} from "../views/MainView.js";
+import {Project} from "../Project.js";
 
 export class MainMenu {
     constructor() {
+
+        this.project = new Project({});
+
         this.win = new QMainWindow();
         this.win.setFixedSize(640, 480);
 
