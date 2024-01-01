@@ -13,6 +13,8 @@ export class AmpConfig extends EffectConfig {
             blurRange= {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
             featherTimes= {lower: 2, upper: 4},
             speed= {lower: 24, upper: 36},
+            length= 200,
+            lineStart= 350,
         }
     ) {
         super();
@@ -26,5 +28,7 @@ export class AmpConfig extends EffectConfig {
         this.blurRange = blurRange;
         this.featherTimes = featherTimes;
         this.speed = speed;
+        this.length = length;
+        this.lineStart = lineStart;
     }
 }

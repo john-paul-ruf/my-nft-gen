@@ -131,8 +131,8 @@ export class AmpEffect extends LayerEffect {
             thickness: this.config.thickness,
             innerColor: settings.getNeutralFromBucket(),
             outerColor: settings.getColorFromBucket(),
-            length: 200,
-            lineStart: 350,
+            length: this.config.length,
+            lineStart: this.config.lineStart,
             center: {x: finalImageSize.width / 2, y: finalImageSize.height / 2},
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
