@@ -1,5 +1,4 @@
-import {currentEffectConfig} from "./currentEffectConfig.js";
-import {LayerEffect} from "./LayerEffect.js";
+import {Settings} from "../core/Settings.js";
 import {LayerConfig} from "./LayerConfig.js";
 import {AmpConfig} from "./primaryEffects/amp/AmpConfig.js";
 import {AmpEffect} from "./primaryEffects/amp/AmpEffect.js";

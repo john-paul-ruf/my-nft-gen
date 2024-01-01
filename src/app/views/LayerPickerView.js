@@ -4,6 +4,7 @@ import {
     QWidget,
     FlexLayout,
 } from "@nodegui/nodegui";
+import {LayerConfigFactory} from "../../effects/LayerConfigFactory.js";
 
 export class LayerPickerView {
     constructor(menu) {
