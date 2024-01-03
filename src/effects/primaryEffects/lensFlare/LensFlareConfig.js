@@ -1,4 +1,4 @@
-import {EffectConfig} from "../../EffectConfig.js";
+import {EffectConfig} from "../../../core/layer/EffectConfig.js";
 import {getRandomIntExclusive} from "../../../core/math/random.js";
 
 export class LensFlareConfig extends EffectConfig {

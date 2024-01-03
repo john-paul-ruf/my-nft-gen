@@ -1,41 +1,41 @@
-import {BlurEffect} from "./finalImageEffects/blur/BlurEffect.js";
+import {BlurEffect} from "../../effects/finalImageEffects/blur/BlurEffect.js";
 import {
     SingleLayerGlitchDrumrollHorizontalWaveEffect
-} from "./secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
-import {GlitchFractalEffect} from "./finalImageEffects/glitchFractal/GlitchFractalEffect.js";
-import {GlitchInverseEffect} from "./finalImageEffects/glitchInverse/GlitchInverseEffect.js";
-import {PixelateEffect} from "./finalImageEffects/pixelate/PixelateEffect.js";
-import {AmpEffect} from "./primaryEffects/amp/AmpEffect.js";
-import {AnimateBackgroundEffect} from "./primaryEffects/animateBackground/AnimateBackgroundEffect.js";
-import {BlinkOnEffect} from "./primaryEffects/blink-on-blink-on-blink-redux/BlinkEffect.js";
-import {EightEffect} from "./primaryEffects/eight/EightEffect.js";
-import {EncircledSpiralEffect} from "./primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
-import {FuzzyBandEffect} from "./primaryEffects/fuzzyBands/FuzzyBandEffect.js";
-import {FuzzyRipplesEffect} from "./primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
-import {GatesEffect} from "./primaryEffects/gates/GatesEffect.js";
-import {HexEffect} from "./primaryEffects/hex/HexEffect.js";
-import {ImageOverlayEffect} from "./primaryEffects/imageOverlay/ImageOverlayEffect.js";
-import {LayeredHexEffect} from "./primaryEffects/layeredHex/LayeredHexEffect.js";
-import {LayeredRingEffect} from "./primaryEffects/layeredRing/LayeredRingEffect.js";
-import {LensFlareEffect} from "./primaryEffects/lensFlare/LensFlareEffect.js";
-import {MappedFramesEffect} from "./primaryEffects/mappedFrames/MappedFramesEffect.js";
-import {NthRingsEffect} from "./primaryEffects/nthRings/NthRingsEffect.js";
-import {PorousEffect} from "./primaryEffects/porous/PorousEffect.js";
-import {RayRingEffect} from "./primaryEffects/rayRing/RayRingEffect.js";
-import {RayRingInvertedEffect} from "./primaryEffects/rayRingInverted/RayRingInvertedEffect.js";
-import {ScanLinesEffect} from "./primaryEffects/scanLines/ScanLinesEffect.js";
-import {ScopesEffect} from "./primaryEffects/scopes/ScopesEffect.js";
-import {ThreeDimensionalRingsEffect} from "./primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js";
-import {ThreeDimensionalShapeEffect} from "./primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js";
-import {ViewportEffect} from "./primaryEffects/viewport/ViewportEffect.js";
-import {WireFrameSpiralEffect} from "./primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js";
-import {FadeEffect} from "./secondaryEffects/fade/FadeEffect.js";
-import {GlowEffect} from "./secondaryEffects/glow/GlowEffect.js";
-import {RandomizeEffect} from "./secondaryEffects/randomize/RandomizeEffect.js";
-import {SingleLayerBlurEffect} from "./secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js";
+} from "../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
+import {GlitchFractalEffect} from "../../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js";
+import {GlitchInverseEffect} from "../../effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js";
+import {PixelateEffect} from "../../effects/finalImageEffects/pixelate/PixelateEffect.js";
+import {AmpEffect} from "../../effects/primaryEffects/amp/AmpEffect.js";
+import {AnimateBackgroundEffect} from "../../effects/primaryEffects/animateBackground/AnimateBackgroundEffect.js";
+import {BlinkOnEffect} from "../../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkEffect.js";
+import {EightEffect} from "../../effects/primaryEffects/eight/EightEffect.js";
+import {EncircledSpiralEffect} from "../../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
+import {FuzzyBandEffect} from "../../effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js";
+import {FuzzyRipplesEffect} from "../../effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
+import {GatesEffect} from "../../effects/primaryEffects/gates/GatesEffect.js";
+import {HexEffect} from "../../effects/primaryEffects/hex/HexEffect.js";
+import {ImageOverlayEffect} from "../../effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
+import {LayeredHexEffect} from "../../effects/primaryEffects/layeredHex/LayeredHexEffect.js";
+import {LayeredRingEffect} from "../../effects/primaryEffects/layeredRing/LayeredRingEffect.js";
+import {LensFlareEffect} from "../../effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {MappedFramesEffect} from "../../effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
+import {NthRingsEffect} from "../../effects/primaryEffects/nthRings/NthRingsEffect.js";
+import {PorousEffect} from "../../effects/primaryEffects/porous/PorousEffect.js";
+import {RayRingEffect} from "../../effects/primaryEffects/rayRing/RayRingEffect.js";
+import {RayRingInvertedEffect} from "../../effects/primaryEffects/rayRingInverted/RayRingInvertedEffect.js";
+import {ScanLinesEffect} from "../../effects/primaryEffects/scanLines/ScanLinesEffect.js";
+import {ScopesEffect} from "../../effects/primaryEffects/scopes/ScopesEffect.js";
+import {ThreeDimensionalRingsEffect} from "../../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js";
+import {ThreeDimensionalShapeEffect} from "../../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js";
+import {ViewportEffect} from "../../effects/primaryEffects/viewport/ViewportEffect.js";
+import {WireFrameSpiralEffect} from "../../effects/primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js";
+import {FadeEffect} from "../../effects/secondaryEffects/fade/FadeEffect.js";
+import {GlowEffect} from "../../effects/secondaryEffects/glow/GlowEffect.js";
+import {RandomizeEffect} from "../../effects/secondaryEffects/randomize/RandomizeEffect.js";
+import {SingleLayerBlurEffect} from "../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js";
 import {
     SingleLayerGlitchFractalEffect
-} from "./secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js";
+} from "../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js";
 import {LayerEffect} from "./LayerEffect.js";
 
 export class LayerEffectFromJSON {

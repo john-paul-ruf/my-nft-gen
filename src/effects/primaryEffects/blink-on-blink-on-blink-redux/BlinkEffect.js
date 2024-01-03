@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";

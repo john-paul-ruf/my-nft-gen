@@ -1,7 +1,7 @@
 import {getRandomIntExclusive, randomId} from "./math/random.js";
 import {ColorScheme} from "./color/ColorScheme.js";
-import {LayerEffectFromJSON} from "../effects/LayerEffectFromJSON.js";
-import {LayerConfig} from "../effects/LayerConfig.js";
+import {LayerEffectFromJSON} from "./layer/LayerEffectFromJSON.js";
+import {LayerConfig} from "./layer/LayerConfig.js";
 
 export class Settings {
 

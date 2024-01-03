@@ -1,4 +1,4 @@
-import {EffectConfig} from "../../EffectConfig.js";
+import {EffectConfig} from "../../../core/layer/EffectConfig.js";
 
 export class EightConfig extends EffectConfig {
     constructor(

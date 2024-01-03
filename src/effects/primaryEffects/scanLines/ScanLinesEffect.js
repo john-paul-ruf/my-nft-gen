@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findValue} from "../../../core/math/findValue.js";

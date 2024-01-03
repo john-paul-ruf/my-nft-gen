@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";

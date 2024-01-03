@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import fs from "fs";
 import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../core/math/drawingMath.js";
@@ -89,11 +89,11 @@ export class LayeredHexEffect extends LayerEffect {
             const promiseBottomArray = [];
             const promiseTopArray = [];
 
-            for (let i = 0; i < context.data.hexArray.length; i++) {
+            for (let i = context.data.startIndex; i < context.data.hexArray.length; i++) {
                 promiseBottomArray.push(this.#drawLayer(context, i, true));
             }
 
-            for (let i = 0; i < context.data.hexArray.length; i++) {
+            for (let i = context.data.startIndex; i < context.data.hexArray.length; i++) {
                 promiseTopArray.push(this.#drawLayer(context, i, false));
             }
 

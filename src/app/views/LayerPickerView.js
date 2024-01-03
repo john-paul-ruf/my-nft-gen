@@ -1,7 +1,7 @@
 import {
     QPushButton, QWidget, QGridLayout, QLabel, AlignmentFlag, QComboBox, QTextEdit, QLineEdit,
 } from "@nodegui/nodegui";
-import {LayerConfigFactory} from "../../effects/LayerConfigFactory.js";
+import {LayerConfigFactory} from "../../core/layer/LayerConfigFactory.js";
 import {ProjectView} from "./ProjectView.js";
 
 export class LayerPickerView {

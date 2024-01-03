@@ -1,87 +1,87 @@
-import {Settings} from "../core/Settings.js";
+import {Settings} from "../Settings.js";
 import {LayerConfig} from "./LayerConfig.js";
-import {AmpConfig} from "./primaryEffects/amp/AmpConfig.js";
-import {AmpEffect} from "./primaryEffects/amp/AmpEffect.js";
-import {AnimateBackgroundEffect} from "./primaryEffects/animateBackground/AnimateBackgroundEffect.js";
-import {AnimateBackgroundConfig} from "./primaryEffects/animateBackground/AnimateBackgroundConfig.js";
-import {BlinkOnEffect} from "./primaryEffects/blink-on-blink-on-blink-redux/BlinkEffect.js";
-import {BlinkConfig} from "./primaryEffects/blink-on-blink-on-blink-redux/BlinkConfig.js";
-import {EightEffect} from "./primaryEffects/eight/EightEffect.js";
-import {EncircledSpiralEffect} from "./primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
-import {EncircledSpiralConfig} from "./primaryEffects/encircledSpiral/EncircledSpiralConfig.js";
-import {FuzzyBandEffect} from "./primaryEffects/fuzzyBands/FuzzyBandEffect.js";
-import {FuzzyBandConfig} from "./primaryEffects/fuzzyBands/FuzzyBandConfig.js";
-import {FuzzyRipplesEffect} from "./primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
-import {FuzzyRipplesConfig} from "./primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js";
-import {GatesEffect} from "./primaryEffects/gates/GatesEffect.js";
-import {GatesConfig} from "./primaryEffects/gates/GatesConfig.js";
-import {HexEffect} from "./primaryEffects/hex/HexEffect.js";
-import {HexConfig} from "./primaryEffects/hex/HexConfig.js";
-import {ImageOverlayEffect} from "./primaryEffects/imageOverlay/ImageOverlayEffect.js";
-import {ImageOverlayConfig} from "./primaryEffects/imageOverlay/ImageOverlayConfig.js";
-import {LayeredHexEffect} from "./primaryEffects/layeredHex/LayeredHexEffect.js";
-import {LayeredHexConfig} from "./primaryEffects/layeredHex/LayeredHexConfig.js";
-import {LayeredRingEffect} from "./primaryEffects/layeredRing/LayeredRingEffect.js";
-import {LayeredRingConfig} from "./primaryEffects/layeredRing/LayeredRingConfig.js";
-import {WireframeSpiralConfig} from "./primaryEffects/wireframeSpiral/WireframeSpiralConfig.js";
-import {WireFrameSpiralEffect} from "./primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js";
-import {ViewportConfig} from "./primaryEffects/viewport/ViewportConfig.js";
-import {ViewportEffect} from "./primaryEffects/viewport/ViewportEffect.js";
-import {ThreeDimensionalShapeConfig} from "./primaryEffects/threeDimensionalShape/ThreeDimensionalShapeConfig.js";
-import {ThreeDimensionalShapeEffect} from "./primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js";
-import {ThreeDimensionalRingsConfig} from "./primaryEffects/threeDimensionalRings/ThreeDimensionalRingsConfig.js";
-import {ThreeDimensionalRingsEffect} from "./primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js";
-import {ScopesConfig} from "./primaryEffects/scopes/ScopesConfig.js";
-import {ScopesEffect} from "./primaryEffects/scopes/ScopesEffect.js";
-import {ScanLinesConfig} from "./primaryEffects/scanLines/ScanLinesConfig.js";
-import {ScanLinesEffect} from "./primaryEffects/scanLines/ScanLinesEffect.js";
-import {RayRingInvertedConfig} from "./primaryEffects/rayRingInverted/RayRingInvertedConfig.js";
-import {RayRingInvertedEffect} from "./primaryEffects/rayRingInverted/RayRingInvertedEffect.js";
-import {RayRingConfig} from "./primaryEffects/rayRing/RayRingConfig.js";
-import {RayRingEffect} from "./primaryEffects/rayRing/RayRingEffect.js";
-import {PorousConfig} from "./primaryEffects/porous/PorousConfig.js";
-import {PorousEffect} from "./primaryEffects/porous/PorousEffect.js";
-import {NthRingsConfig} from "./primaryEffects/nthRings/NthRingsConfig.js";
-import {NthRingsEffect} from "./primaryEffects/nthRings/NthRingsEffect.js";
-import {MappedFramesConfig} from "./primaryEffects/mappedFrames/MappedFramesConfig.js";
-import {MappedFramesEffect} from "./primaryEffects/mappedFrames/MappedFramesEffect.js";
-import {LensFlareConfig} from "./primaryEffects/lensFlare/LensFlareConfig.js";
-import {LensFlareEffect} from "./primaryEffects/lensFlare/LensFlareEffect.js";
-import {FadeEffect} from "./secondaryEffects/fade/FadeEffect.js";
-import {FadeConfig} from "./secondaryEffects/fade/FadeConfig.js";
-import {GlowEffect} from "./secondaryEffects/glow/GlowEffect.js";
-import {GlowConfig} from "./secondaryEffects/glow/GlowConfig.js";
-import {RandomizeEffect} from "./secondaryEffects/randomize/RandomizeEffect.js";
-import {RandomizeConfig} from "./secondaryEffects/randomize/RandomizeConfig.js";
-import {SingleLayerBlurEffect} from "./secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js";
-import {SingleLayerBlurConfig} from "./secondaryEffects/single-layer-blur/SingleLayerBlurConfig.js";
+import {AmpConfig} from "../../effects/primaryEffects/amp/AmpConfig.js";
+import {AmpEffect} from "../../effects/primaryEffects/amp/AmpEffect.js";
+import {AnimateBackgroundEffect} from "../../effects/primaryEffects/animateBackground/AnimateBackgroundEffect.js";
+import {AnimateBackgroundConfig} from "../../effects/primaryEffects/animateBackground/AnimateBackgroundConfig.js";
+import {BlinkOnEffect} from "../../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkEffect.js";
+import {BlinkConfig} from "../../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkConfig.js";
+import {EightEffect} from "../../effects/primaryEffects/eight/EightEffect.js";
+import {EncircledSpiralEffect} from "../../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
+import {EncircledSpiralConfig} from "../../effects/primaryEffects/encircledSpiral/EncircledSpiralConfig.js";
+import {FuzzyBandEffect} from "../../effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js";
+import {FuzzyBandConfig} from "../../effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js";
+import {FuzzyRipplesEffect} from "../../effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
+import {FuzzyRipplesConfig} from "../../effects/primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js";
+import {GatesEffect} from "../../effects/primaryEffects/gates/GatesEffect.js";
+import {GatesConfig} from "../../effects/primaryEffects/gates/GatesConfig.js";
+import {HexEffect} from "../../effects/primaryEffects/hex/HexEffect.js";
+import {HexConfig} from "../../effects/primaryEffects/hex/HexConfig.js";
+import {ImageOverlayEffect} from "../../effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
+import {ImageOverlayConfig} from "../../effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
+import {LayeredHexEffect} from "../../effects/primaryEffects/layeredHex/LayeredHexEffect.js";
+import {LayeredHexConfig} from "../../effects/primaryEffects/layeredHex/LayeredHexConfig.js";
+import {LayeredRingEffect} from "../../effects/primaryEffects/layeredRing/LayeredRingEffect.js";
+import {LayeredRingConfig} from "../../effects/primaryEffects/layeredRing/LayeredRingConfig.js";
+import {WireframeSpiralConfig} from "../../effects/primaryEffects/wireframeSpiral/WireframeSpiralConfig.js";
+import {WireFrameSpiralEffect} from "../../effects/primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js";
+import {ViewportConfig} from "../../effects/primaryEffects/viewport/ViewportConfig.js";
+import {ViewportEffect} from "../../effects/primaryEffects/viewport/ViewportEffect.js";
+import {ThreeDimensionalShapeConfig} from "../../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeConfig.js";
+import {ThreeDimensionalShapeEffect} from "../../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js";
+import {ThreeDimensionalRingsConfig} from "../../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsConfig.js";
+import {ThreeDimensionalRingsEffect} from "../../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js";
+import {ScopesConfig} from "../../effects/primaryEffects/scopes/ScopesConfig.js";
+import {ScopesEffect} from "../../effects/primaryEffects/scopes/ScopesEffect.js";
+import {ScanLinesConfig} from "../../effects/primaryEffects/scanLines/ScanLinesConfig.js";
+import {ScanLinesEffect} from "../../effects/primaryEffects/scanLines/ScanLinesEffect.js";
+import {RayRingInvertedConfig} from "../../effects/primaryEffects/rayRingInverted/RayRingInvertedConfig.js";
+import {RayRingInvertedEffect} from "../../effects/primaryEffects/rayRingInverted/RayRingInvertedEffect.js";
+import {RayRingConfig} from "../../effects/primaryEffects/rayRing/RayRingConfig.js";
+import {RayRingEffect} from "../../effects/primaryEffects/rayRing/RayRingEffect.js";
+import {PorousConfig} from "../../effects/primaryEffects/porous/PorousConfig.js";
+import {PorousEffect} from "../../effects/primaryEffects/porous/PorousEffect.js";
+import {NthRingsConfig} from "../../effects/primaryEffects/nthRings/NthRingsConfig.js";
+import {NthRingsEffect} from "../../effects/primaryEffects/nthRings/NthRingsEffect.js";
+import {MappedFramesConfig} from "../../effects/primaryEffects/mappedFrames/MappedFramesConfig.js";
+import {MappedFramesEffect} from "../../effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
+import {LensFlareConfig} from "../../effects/primaryEffects/lensFlare/LensFlareConfig.js";
+import {LensFlareEffect} from "../../effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {FadeEffect} from "../../effects/secondaryEffects/fade/FadeEffect.js";
+import {FadeConfig} from "../../effects/secondaryEffects/fade/FadeConfig.js";
+import {GlowEffect} from "../../effects/secondaryEffects/glow/GlowEffect.js";
+import {GlowConfig} from "../../effects/secondaryEffects/glow/GlowConfig.js";
+import {RandomizeEffect} from "../../effects/secondaryEffects/randomize/RandomizeEffect.js";
+import {RandomizeConfig} from "../../effects/secondaryEffects/randomize/RandomizeConfig.js";
+import {SingleLayerBlurEffect} from "../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js";
+import {SingleLayerBlurConfig} from "../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurConfig.js";
 import {
     SingleLayerGlitchDrumrollHorizontalWaveEffect
-} from "./secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
+} from "../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
 import {
     SingleLayerGlitchDrumrollHorizontalWaveConfig
-} from "./secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
+} from "../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
 import {
     SingleLayerGlitchFractalEffect
-} from "./secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js";
+} from "../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js";
 import {
     SingleLayerGlitchFractalConfig
-} from "./secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractal.js";
-import {PixelateEffect} from "./finalImageEffects/pixelate/PixelateEffect.js";
-import {PixelateConfig} from "./finalImageEffects/pixelate/PixelateConfig.js";
-import {GlitchInverseEffect} from "./finalImageEffects/glitchInverse/GlitchInverseEffect.js";
-import {GlitchInverseConfig} from "./finalImageEffects/glitchInverse/GlitchInverseConfig.js";
-import {GlitchFractalEffect} from "./finalImageEffects/glitchFractal/GlitchFractalEffect.js";
-import {GlitchFractalConfig} from "./finalImageEffects/glitchFractal/GlitchFractalConfig.js";
+} from "../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractal.js";
+import {PixelateEffect} from "../../effects/finalImageEffects/pixelate/PixelateEffect.js";
+import {PixelateConfig} from "../../effects/finalImageEffects/pixelate/PixelateConfig.js";
+import {GlitchInverseEffect} from "../../effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js";
+import {GlitchInverseConfig} from "../../effects/finalImageEffects/glitchInverse/GlitchInverseConfig.js";
+import {GlitchFractalEffect} from "../../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js";
+import {GlitchFractalConfig} from "../../effects/finalImageEffects/glitchFractal/GlitchFractalConfig.js";
 import {
     GlitchDrumrollHorizontalWaveEffect
-} from "./finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
+} from "../../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js";
 import {
     GlitchDrumrollHorizontalWaveConfig
-} from "./finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveConfig.js";
-import {BlurEffect} from "./finalImageEffects/blur/BlurEffect.js";
-import {BlurConfig} from "./finalImageEffects/blur/BlurConfig.js";
-import {EightConfig} from "./primaryEffects/eight/EightConfig.js";
+} from "../../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveConfig.js";
+import {BlurEffect} from "../../effects/finalImageEffects/blur/BlurEffect.js";
+import {BlurConfig} from "../../effects/finalImageEffects/blur/BlurConfig.js";
+import {EightConfig} from "../../effects/primaryEffects/eight/EightConfig.js";
 
 export class LayerConfigFactory {
     constructor() {

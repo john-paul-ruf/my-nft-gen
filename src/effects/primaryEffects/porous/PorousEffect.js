@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import path from "path";
 import {fileURLToPath} from "url";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";

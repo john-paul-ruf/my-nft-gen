@@ -1,4 +1,4 @@
-import {Settings} from "../core/Settings.js";
+import {Settings} from "../Settings.js";
 
 export class LayerEffect {
     constructor({

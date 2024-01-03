@@ -1,6 +1,6 @@
 import {Settings} from "../core/Settings.js";
 import {ColorScheme} from "../core/color/ColorScheme.js";
-import {LayerConfig} from "../effects/LayerConfig.js";
+import {LayerConfig} from "../core/layer/LayerConfig.js";
 import {LoopBuilder} from "../core/animation/LoopBuilder.js";
 import {randomId} from "../core/math/random.js";
 
