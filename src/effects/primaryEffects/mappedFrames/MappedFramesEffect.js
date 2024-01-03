@@ -1,5 +1,5 @@
 import {LayerEffect} from "../../LayerEffect.js";
-import {getRandomIntExclusive, randomId} from "../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntExclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
@@ -76,8 +76,8 @@ export class MappedFramesEffect extends LayerEffect {
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
 
         const finalSize = this.finalSize;
-        await tempLayer.resize(finalSize.height, finalSize.width);
-        await layer.compositeLayerOver(tempLayer);
+        await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
+        await layer.compositeLayerOver(tempLayer, false);
 
         fs.unlinkSync(context.filename);
     }
@@ -85,6 +85,7 @@ export class MappedFramesEffect extends LayerEffect {
     #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
+            buffer:getRandomFromArray(this.config.buffer),
         }
 
         const getMappedFramesFolder = () => {
