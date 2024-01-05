@@ -18,10 +18,6 @@ import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexCo
 import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
 import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
 
-const ampLineStart = 400;
-const ampLength = 200;
-const ampOuterColor = '#FF00FF'
-
 const myTestProject = new Project({
     artist: 'John Ruf',
     projectName: 'the-advance',
@@ -44,7 +40,38 @@ await myTestProject.addPrimaryEffect({
                 upper: (finalSize) => finalSize.longestSide * 0.65
             }
         }),
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: GlowEffect,
+                percentChance: 100,
+                currentEffectConfig: new GlowConfig(
+                    {
+                        lowerRange: {lower: -16, upper: -8},
+                        upperRange: {lower: 8, upper: 16},
+                        times: {lower: 4, upper: 4},
+                    }
+                ),
+                defaultEffectConfig: GlowConfig
+            })
+        ],
         defaultEffectConfig: FuzzyBandConfig
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: AmpEffect,
+        percentChance: 100,
+        currentEffectConfig: new AmpConfig({
+            layerOpacity: 1,
+            thickness: 2,
+            lineStart: 700,
+            length: 150,
+            sparsityFactor: [1],
+            center: {x: 1080 / 2, y: 1920 / 2},
+            speed: {lower: 20, upper: 20},
+        }),
+        defaultEffectConfig: AmpConfig,
     })
 });
 
@@ -53,90 +80,46 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            thickness: 5,
+            thickness: 8,
             stroke: 2,
             initialNumberOfPoints: 4,
             scaleByFactor: 1.25,
             radius: {lower: 60, upper: 100},
             offsetRadius: {lower: 120, upper: 130},
             startIndex: {lower: 2, upper: 2},
+            accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 10, upper: 20}},
+            blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
+            featherTimes: {lower: 2, upper: 4},
         }),
         defaultEffectConfig: LayeredHexConfig
     })
 });
 
-
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new AmpConfig({
-            lineStart: ampLineStart,
-            length: ampLength,
-            sparsityFactor: [1],
-            center: {x: -300, y: 1920 / 2},
-            outerColor: ampOuterColor,
+            layerOpacity: 1,
+            thickness: 3,
+            lineStart: 400,
+            length: 150,
+            sparsityFactor: [4],
+            center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
         }),
         defaultEffectConfig: AmpConfig,
     })
 });
 
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 0,
-        currentEffectConfig: new AmpConfig({
-            lineStart: ampLineStart,
-            length: ampLength,
-            sparsityFactor: [1],
-            center: {x: 1380, y: 1920 / 2},
-            outerColor: ampOuterColor,
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 0,
-        currentEffectConfig: new AmpConfig({
-            lineStart: ampLineStart,
-            length: ampLength,
-            sparsityFactor: [1],
-            center: {x: 1080 / 2, y: -300},
-            outerColor: ampOuterColor,
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 0,
-        currentEffectConfig: new AmpConfig({
-            lineStart: ampLineStart,
-            length: ampLength,
-            sparsityFactor: [1],
-            center: {x: 1080 / 2, y: 2220},
-            outerColor: ampOuterColor,
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: EncircledSpiralEffect,
         percentChance: 100,
         currentEffectConfig: new EncircledSpiralConfig({
             invertLayers: false,
-            layerOpacity: 0.75,
-            underLayerOpacity: 0.75,
+            layerOpacity: 1,
+            underLayerOpacity: 0.50,
             thickness: 5,
             numberOfRings: {lower: 10, upper: 10}
         }),
@@ -149,12 +132,12 @@ await myTestProject.addPrimaryEffect({
         effect: AmpEffect,
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
-            thickness: 3,
-            lineStart: 100,
-            length: 225,
+            layerOpacity: 1,
+            thickness: 4,
+            lineStart: 125,
+            length: 200,
             sparsityFactor: [8],
             center: {x: 1080 / 2, y: 1920 / 2},
-            outerColor: '#FF0000',
             speed: {lower: 20, upper: 20},
         }),
         defaultEffectConfig: AmpConfig,
@@ -179,7 +162,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new ViewportConfig({
             invertLayers: false,
-            underLayerOpacity: 0.75,
+            underLayerOpacity: 0.5,
             thickness: 20,
             stroke: 5,
             layerOpacity: 0.5,
@@ -205,7 +188,7 @@ await myTestProject.addPrimaryEffect({
                     {
                         lowerRange: {lower: -128, upper: -64},
                         upperRange: {lower: 64, upper: 128},
-                        times: {lower: 4, upper: 6},
+                        times: {lower: 4, upper:4},
                     }
                 ),
                 defaultEffectConfig: GlowConfig
