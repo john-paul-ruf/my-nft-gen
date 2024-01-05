@@ -1,43 +1,39 @@
 import {EffectConfig} from "../../../core/layer/EffectConfig.js";
 import {getRandomIntExclusive} from "../../../core/math/random.js";
+import {DynamicRange} from "../../../core/layer/configType/DynamicRange.js";
+import {PercentageRange} from "../../../core/layer/configType/PercentageRange.js";
+import {PercentageShortestSide} from "../../../core/layer/configType/PercentageShortestSide.js";
+import {PercentageLongestSide} from "../../../core/layer/configType/PercentageLongestSide.js";
+import {Range} from "../../../core/layer/configType/Range.js";
 
 export class LensFlareConfig extends EffectConfig {
     constructor(
         {
-            layerOpacityRange = {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-            layerOpacityTimes = {lower: 2, upper: 6},
+            layerOpacityRange = new DynamicRange(new Range(1,1), new Range(1,1)),
+            layerOpacityTimes = new Range(2,6),
 
-            elementOpacityRange = {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.8, upper: 1}},
-            elementOpacityTimes = {lower: 2, upper: 6},
+            elementOpacityRange = new DynamicRange(new Range(0.5,0.6), new Range(0.8,1)),
+            elementOpacityTimes = new Range(2,6),
 
-            elementGastonRange = {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 30}},
-            elementGastonTimes = {lower: 2, upper: 6},
+            elementGastonRange = new DynamicRange(new Range(5,10), new Range(15,30)),
+            elementGastonTimes =  new Range(2,6),
 
-            numberOfFlareHex = {lower: 0, upper: 0},
-            flareHexSizeRange = {
-                lower: (finalSize) => finalSize.shortestSide * 0.015,
-                upper: (finalSize) => finalSize.shortestSide * 0.025
-            },
+            numberOfFlareHex =  new Range(0,0),
+            flareHexSizeRange = new PercentageRange(new PercentageShortestSide(0.015), new PercentageShortestSide(0.025)),
 
-            angleRangeFlareHex = {bottom: {lower: 1, upper: 2}, top: {lower: 4, upper: 6}},
-            angleGastonTimes = {lower: 1, upper: 6},
+            angleRangeFlareHex = new DynamicRange(new Range(1,2), new Range(4,6)),
+            angleGastonTimes =  new Range(1,6),
 
-            numberOfFlareRings = {lower: 10, upper: 20},
-            flareRingsSizeRange = {
-                lower: (finalSize) => finalSize.shortestSide * 0.1,
-                upper: (finalSize) => finalSize.longestSide * 0.55
-            },
-            flareRingStroke = {lower: 1, upper: 1},
+            numberOfFlareRings = new Range(10,20),
+            flareRingsSizeRange  = new PercentageRange(new PercentageShortestSide(0.1), new PercentageLongestSide(0.55)),
+            flareRingStroke =  new Range(1,1),
 
-            numberOfFlareRays = {lower: 20, upper: 30},
-            flareRaysSizeRange = {
-                lower: (finalSize) => finalSize.longestSide * 0.4,
-                upper: (finalSize) => finalSize.longestSide * 0.55
-            },
-            flareRaysStroke = {lower: 1, upper: 1},
+            numberOfFlareRays = new Range(20,30),
+            flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(0.55)),
+            flareRaysStroke = new Range(1,1),
 
-            blurRange = {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
-            blurTimes = {lower: 2, upper: 4},
+            blurRange =  new DynamicRange(new Range(1,1), new Range(3,3)),
+            blurTimes =new Range(1,1),
 
             strategy = ['original', 'color-bucket', 'neutral-bucket'],
 

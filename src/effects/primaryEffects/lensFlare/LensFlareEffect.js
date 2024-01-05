@@ -242,7 +242,7 @@ export class LensFlareEffect extends LayerEffect {
 
             for (let i = 0; i < num; i++) {
                 info.push({
-                    size: getRandomIntInclusive(this.config.flareHexSizeRange.lower, this.config.flareHexSizeRange.upper),
+                    size: getRandomIntInclusive(this.config.flareHexSizeRange.lower(this.finalSize), this.config.flareHexSizeRange.upper(this.finalSize)),
                     color: this.config.getFlareColor(strategy, settings, this.config),
                     strokeColor: this.config.getFlareColor(strategy, settings, this.config),
                     sides: getRandomIntInclusive(6, 6), //ended up with hex...
@@ -264,7 +264,7 @@ export class LensFlareEffect extends LayerEffect {
 
             for (let i = 0; i <= num; i++) {
                 info.push({
-                    size: getRandomIntInclusive(this.config.flareRingsSizeRange.lower, this.config.flareRingsSizeRange.upper),
+                    size: getRandomIntInclusive(this.config.flareRingsSizeRange.lower(this.finalSize), this.config.flareRingsSizeRange.upper(this.finalSize)),
                     stroke: getRandomIntInclusive(this.config.flareRingStroke.lower, this.config.flareRingStroke.upper),
                     color: this.config.getFlareColor(strategy, settings, this.config),
                     opacity: {
@@ -295,7 +295,7 @@ export class LensFlareEffect extends LayerEffect {
 
             for (let i = 0; i <= num; i++) {
                 info.push({
-                    size: getRandomIntInclusive(this.config.flareRaysSizeRange.lower, this.config.flareRaysSizeRange.upper),
+                    size: getRandomIntInclusive(this.config.flareRaysSizeRange.lower(this.finalSize), this.config.flareRaysSizeRange.upper(this.finalSize)),
                     stroke: getRandomIntInclusive(this.config.flareRaysStroke.lower, this.config.flareRaysStroke.upper),
                     angle: getRandomIntInclusive(0, 360),
                     color: this.config.getFlareColor(strategy, settings, this.config),

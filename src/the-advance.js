@@ -17,6 +17,8 @@ import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEf
 import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
 import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
 import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
+import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -26,6 +28,31 @@ const myTestProject = new Project({
 });
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LensFlareEffect,
+        percentChance: 100,
+        currentEffectConfig: new LensFlareConfig({
+            strategy: ['color-bucket']
+        }),
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: GlowEffect,
+                percentChance: 100,
+                currentEffectConfig: new GlowConfig(
+                    {
+                        lowerRange: {lower: -16, upper: -8},
+                        upperRange: {lower: 8, upper: 16},
+                        times: {lower: 4, upper: 4},
+                    }
+                ),
+                defaultEffectConfig: GlowConfig
+            })
+        ],
+        defaultEffectConfig: LensFlareConfig
+    })
+});
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
