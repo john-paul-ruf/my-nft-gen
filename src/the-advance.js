@@ -19,6 +19,7 @@ import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
 import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
 import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffect.js";
 import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
+import {Range} from "./core/layer/configType/Range.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -31,31 +32,6 @@ myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorSchem
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: LensFlareEffect,
-        percentChance: 100,
-        currentEffectConfig: new LensFlareConfig({
-            strategy: ['color-bucket']
-        }),
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: GlowEffect,
-                percentChance: 100,
-                currentEffectConfig: new GlowConfig(
-                    {
-                        lowerRange: {lower: -16, upper: -8},
-                        upperRange: {lower: 8, upper: 16},
-                        times: {lower: 4, upper: 4},
-                    }
-                ),
-                defaultEffectConfig: GlowConfig
-            })
-        ],
-        defaultEffectConfig: LensFlareConfig
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: FuzzyBandEffect,
         percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
@@ -63,8 +39,8 @@ await myTestProject.addPrimaryEffect({
             thickness: 24,
             circles: {lower: 10, upper: 10},
             radius: {
-                lower: (finalSize) => finalSize.shortestSide * 0.10,
-                upper: (finalSize) => finalSize.longestSide * 0.65
+                lower: (finalSize) => finalSize.shortestSide * 0.25,
+                upper: (finalSize) => finalSize.longestSide * 0.55
             }
         }),
         possibleSecondaryEffects: [
@@ -88,9 +64,9 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new AmpConfig({
-            layerOpacity: 1,
+            layerOpacity: 0.5,
             thickness: 4,
             lineStart: 200,
             length: 200,
@@ -105,9 +81,9 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new AmpConfig({
-            layerOpacity: 1,
+            layerOpacity: 0.5,
             thickness: 2,
             lineStart: 700,
             length: 150,
@@ -124,7 +100,7 @@ await myTestProject.addPrimaryEffect({
         effect: AmpEffect,
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
-            layerOpacity: 1,
+            layerOpacity:0.5,
             thickness: 3,
             lineStart: 450,
             length: 200,
@@ -139,7 +115,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: LayeredHexEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new LayeredHexConfig({
             thickness: 6,
             stroke: 1,
@@ -181,6 +157,34 @@ await myTestProject.addPrimaryEffect({
         defaultEffectConfig: ScopesConfig
     })
 });
+
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LensFlareEffect,
+        percentChance: 100,
+        currentEffectConfig: new LensFlareConfig({
+            strategy: ['color-bucket'],
+            flareRaysStroke: new Range(3,3),
+        }),
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: GlowEffect,
+                percentChance: 100,
+                currentEffectConfig: new GlowConfig(
+                    {
+                        lowerRange: {lower: -32, upper: -8},
+                        upperRange: {lower: 8, upper: 32},
+                        times: {lower: 8, upper: 8},
+                    }
+                ),
+                defaultEffectConfig: GlowConfig
+            })
+        ],
+        defaultEffectConfig: LensFlareConfig
+    })
+});
+
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({

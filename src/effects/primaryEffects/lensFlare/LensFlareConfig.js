@@ -29,7 +29,7 @@ export class LensFlareConfig extends EffectConfig {
             flareRingStroke =  new Range(1,1),
 
             numberOfFlareRays = new Range(20,30),
-            flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(0.55)),
+            flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(1)),
             flareRaysStroke = new Range(1,1),
 
             blurRange =  new DynamicRange(new Range(1,1), new Range(3,3)),
