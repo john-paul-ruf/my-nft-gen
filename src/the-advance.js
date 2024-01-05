@@ -64,10 +64,44 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 1,
+            thickness: 4,
+            lineStart: 200,
+            length: 200,
+            sparsityFactor: [4],
+            center: {x: 1080 / 2, y: 1920 / 2},
+            speed: {lower: 20, upper: 20},
+        }),
+        defaultEffectConfig: AmpConfig,
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: AmpEffect,
+        percentChance: 100,
+        currentEffectConfig: new AmpConfig({
+            layerOpacity: 1,
             thickness: 2,
             lineStart: 700,
             length: 150,
-            sparsityFactor: [1],
+            sparsityFactor: [2],
+            center: {x: 1080 / 2, y: 1920 / 2},
+            speed: {lower: 20, upper: 20},
+        }),
+        defaultEffectConfig: AmpConfig,
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: AmpEffect,
+        percentChance: 100,
+        currentEffectConfig: new AmpConfig({
+            layerOpacity: 1,
+            thickness: 3,
+            lineStart: 450,
+            length: 200,
+            sparsityFactor: [3],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
         }),
@@ -80,12 +114,12 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            thickness: 8,
-            stroke: 2,
+            thickness: 6,
+            stroke: 1,
             initialNumberOfPoints: 4,
-            scaleByFactor: 1.25,
-            radius: {lower: 60, upper: 100},
-            offsetRadius: {lower: 120, upper: 130},
+            scaleByFactor: 1.15,
+            radius: {lower: 40, upper: 60},
+            offsetRadius: {lower: 50, upper: 80},
             startIndex: {lower: 2, upper: 2},
             accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 10, upper: 20}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
@@ -97,25 +131,8 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 100,
-        currentEffectConfig: new AmpConfig({
-            layerOpacity: 1,
-            thickness: 3,
-            lineStart: 400,
-            length: 150,
-            sparsityFactor: [4],
-            center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: EncircledSpiralEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new EncircledSpiralConfig({
             invertLayers: false,
             layerOpacity: 1,
@@ -129,30 +146,38 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 100,
-        currentEffectConfig: new AmpConfig({
-            layerOpacity: 1,
-            thickness: 4,
-            lineStart: 125,
-            length: 200,
-            sparsityFactor: [8],
-            center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
-
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: ScopesEffect,
         percentChance: 100,
         currentEffectConfig: new ScopesConfig({
             layerOpacity: 1
         }),
         defaultEffectConfig: ScopesConfig
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: MappedFramesEffect,
+        percentChance: 100,
+        currentEffectConfig: new MappedFramesConfig({
+            layerOpacity: 0.85,
+            buffer:[600]
+        }),
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: GlowEffect,
+                percentChance: 100,
+                currentEffectConfig: new GlowConfig(
+                    {
+                        lowerRange: {lower: -16, upper: -8},
+                        upperRange: {lower: 8, upper: 16},
+                        times: {lower: 4, upper:4},
+                    }
+                ),
+                defaultEffectConfig: GlowConfig
+            })
+        ],
+        defaultEffectConfig: MappedFramesConfig
     })
 });
 
@@ -173,34 +198,9 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: MappedFramesEffect,
-        percentChance: 100,
-        currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.85
-        }),
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: GlowEffect,
-                percentChance: 100,
-                currentEffectConfig: new GlowConfig(
-                    {
-                        lowerRange: {lower: -128, upper: -64},
-                        upperRange: {lower: 64, upper: 128},
-                        times: {lower: 4, upper:4},
-                    }
-                ),
-                defaultEffectConfig: GlowConfig
-            })
-        ],
-        defaultEffectConfig: MappedFramesConfig
-    })
-});
 
 
 await myTestProject.generateRandomLoop();
-
 
 
 
