@@ -175,8 +175,8 @@ export class FuzzyBandEffect extends LayerEffect {
             for (let i = 0; i <= num; i++) {
                 info.push({
                     radius: getRandomIntInclusive(this.config.radius.lower(this.finalSize), this.config.radius.upper(this.finalSize)),
-                    color: settings.getColorFromBucket(),
-                    innerColor: settings.getNeutralFromBucket(),
+                    color: this.config.color.getColor(settings),
+                    innerColor: this.config.innerColor.getColor(settings),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)

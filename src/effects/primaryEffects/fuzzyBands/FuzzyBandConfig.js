@@ -1,8 +1,11 @@
 import {EffectConfig} from "../../../core/layer/EffectConfig.js";
+import {ColorPicker} from "../../../core/layer/configType/ColorPicker.js";
 
 export class FuzzyBandConfig extends EffectConfig {
     constructor(
         {
+            color = new ColorPicker(),
+            innerColor= new ColorPicker(),
             invertLayers = true,
             layerOpacity = 1,
             underLayerOpacityRange = {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
@@ -31,5 +34,7 @@ export class FuzzyBandConfig extends EffectConfig {
         this.accentRange = accentRange;
         this.blurRange = blurRange;
         this.featherTimes = featherTimes;
+        this.color = color;
+        this.innerColor = innerColor;
     }
 }

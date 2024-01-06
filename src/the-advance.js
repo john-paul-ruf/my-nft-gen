@@ -20,6 +20,7 @@ import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
 import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffect.js";
 import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
 import {Range} from "./core/layer/configType/Range.js";
+import {ColorPicker} from "./core/layer/configType/ColorPicker.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -35,6 +36,8 @@ await myTestProject.addPrimaryEffect({
         effect: FuzzyBandEffect,
         percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
+            color: new ColorPicker(),
+            innerColor: new ColorPicker(ColorPicker.SelectionType.neutralBucket),
             invertLayers: true,
             thickness: 12,
             circles: {lower: 10, upper: 10},
