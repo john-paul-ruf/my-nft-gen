@@ -54,9 +54,12 @@ export class MappedFramesEffect extends LayerEffect {
 
     async #extractFrame(context) {
         const frames = await this.#getAllFilesInDirectory(context.data.mappedFramesFolder)
-        const index = Math.floor(mapNumberToRange(context.currentFrame, 0, context.numberOfFrames, 0, frames.length - 1));
 
-        return this.#copyFile(frames[index], context.filename);
+        const sequenceMax = Math.floor(context.numberOfFrames / context.data.loopTimes);
+        const currentSequence = context.currentFrame % sequenceMax;
+        const frameIndex = Math.floor(mapNumberToRange(currentSequence, 0, sequenceMax, 0, frames.length - 1));
+
+        return this.#copyFile(frames[frameIndex], context.filename);
     }
 
     async #mappedFrames(layer, currentFrame, numberOfFrames) {
@@ -85,7 +88,9 @@ export class MappedFramesEffect extends LayerEffect {
     #generate(settings) {
         const data = {
             layerOpacity: this.config.layerOpacity,
-            buffer:getRandomFromArray(this.config.buffer),
+            buffer: getRandomFromArray(this.config.buffer),
+            loopTimes: this.config.loopTimes,
+            randomize: this.config.randomize,
         }
 
         const getMappedFramesFolder = () => {

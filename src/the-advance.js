@@ -28,7 +28,7 @@ const myTestProject = new Project({
     neutrals: ['#000000']
 });
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.redNeons);
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -100,7 +100,7 @@ await myTestProject.addPrimaryEffect({
         effect: AmpEffect,
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
-            layerOpacity:0.5,
+            layerOpacity: 0.5,
             thickness: 3,
             lineStart: 450,
             length: 200,
@@ -124,7 +124,7 @@ await myTestProject.addPrimaryEffect({
             radius: {lower: 40, upper: 60},
             offsetRadius: {lower: 50, upper: 80},
             startIndex: {lower: 2, upper: 2},
-            accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
+            accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
             featherTimes: {lower: 2, upper: 4},
         }),
@@ -142,7 +142,7 @@ await myTestProject.addPrimaryEffect({
             underLayerOpacity: 0.50,
             thickness: 5,
             numberOfRings: {lower: 10, upper: 10},
-            accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
+            accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
             featherTimes: {lower: 2, upper: 4},
         }),
@@ -168,7 +168,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new LensFlareConfig({
             strategy: ['color-bucket'],
-            flareRaysStroke: new Range(3,3),
+            flareRaysStroke: new Range(3, 3),
         }),
         possibleSecondaryEffects: [
             new LayerConfig({
@@ -195,21 +195,11 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
             layerOpacity: 0.85,
-            buffer:[600]
+            buffer: [400],
+            loopTimes: 20
         }),
         possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: GlowEffect,
-                percentChance: 100,
-                currentEffectConfig: new GlowConfig(
-                    {
-                        lowerRange: {lower: -16, upper: -8},
-                        upperRange: {lower: 8, upper: 16},
-                        times: {lower: 4, upper:4},
-                    }
-                ),
-                defaultEffectConfig: GlowConfig
-            })
+
         ],
         defaultEffectConfig: MappedFramesConfig
     })
@@ -231,7 +221,6 @@ await myTestProject.addPrimaryEffect({
         defaultEffectConfig: ViewportConfig
     })
 });
-
 
 
 await myTestProject.generateRandomLoop();
