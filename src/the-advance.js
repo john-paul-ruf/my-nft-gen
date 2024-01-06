@@ -28,15 +28,15 @@ const myTestProject = new Project({
     neutrals: ['#000000']
 });
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: FuzzyBandEffect,
         percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
-            invertLayers: false,
-            thickness: 24,
+            invertLayers: true,
+            thickness: 12,
             circles: {lower: 10, upper: 10},
             radius: {
                 lower: (finalSize) => finalSize.shortestSide * 0.25,
@@ -115,16 +115,16 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: LayeredHexEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            thickness: 6,
+            thickness: 2,
             stroke: 1,
             initialNumberOfPoints: 4,
             scaleByFactor: 1.15,
             radius: {lower: 40, upper: 60},
             offsetRadius: {lower: 50, upper: 80},
             startIndex: {lower: 2, upper: 2},
-            accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 10, upper: 20}},
+            accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
             featherTimes: {lower: 2, upper: 4},
         }),
@@ -135,13 +135,16 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: EncircledSpiralEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new EncircledSpiralConfig({
-            invertLayers: false,
+            invertLayers: true,
             layerOpacity: 1,
             underLayerOpacity: 0.50,
             thickness: 5,
-            numberOfRings: {lower: 10, upper: 10}
+            numberOfRings: {lower: 10, upper: 10},
+            accentRange:{bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
+            blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
+            featherTimes: {lower: 2, upper: 4},
         }),
         defaultEffectConfig: EncircledSpiralConfig
     })
@@ -217,13 +220,13 @@ await myTestProject.addPrimaryEffect({
         effect: ViewportEffect,
         percentChance: 100,
         currentEffectConfig: new ViewportConfig({
-            invertLayers: false,
+            invertLayers: true,
             underLayerOpacity: 0.5,
-            thickness: 20,
-            stroke: 5,
+            thickness: 26,
+            stroke: 6,
             layerOpacity: 0.5,
             amplitude: {lower: 50, upper: 50},
-            ampRadius: {lower: 300, upper: 300}
+            radius: [500]
         }),
         defaultEffectConfig: ViewportConfig
     })
