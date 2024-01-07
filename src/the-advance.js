@@ -40,7 +40,8 @@ myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorSchem
 const color = myTestProject.colorScheme.getColorFromBucket();
 const points = [];
 const smallGroupRadius = 0.3;
-const innerRadius = 0.25
+const innerRadius = 0.40
+const ripple = 0.05
 const radius = (innerRadius/2) * myTestProject.longestSideInPixels;
 const increment = 360 / 6;
 for (let i = 0; i < 360; i = i + increment) {
@@ -63,7 +64,8 @@ for (let i = 0; i < points.length; i++) {
                 layerOpacity: 0.75,
                 underLayerOpacity: 0.55,
                 largeRadius: new PercentageRange(new PercentageLongestSide(innerRadius), new PercentageLongestSide(innerRadius)),
-                smallRadius: new PercentageRange(new PercentageLongestSide(smallGroupRadius), new PercentageLongestSide(smallGroupRadius))
+                smallRadius: new PercentageRange(new PercentageLongestSide(smallGroupRadius), new PercentageLongestSide(smallGroupRadius)),
+                ripple: new PercentageRange(new PercentageLongestSide(ripple), new PercentageLongestSide(ripple))
             }),
             defaultEffectConfig: FuzzyRipplesConfig
         })
