@@ -21,12 +21,12 @@ import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffec
 import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
 import {Range} from "./core/layer/configType/Range.js";
 import {ColorPicker} from "./core/layer/configType/ColorPicker.js";
-import {
-    SingleLayerGlitchDrumrollHorizontalWaveEffect
-} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
-import {
-    SingleLayerGlitchDrumrollHorizontalWaveConfig
-} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
+import {findPointByAngleAndCircle} from "./core/math/drawingMath.js";
+import {Point2D} from "./core/layer/configType/Point2D.js";
+import {FuzzyRipplesEffect} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
+import {FuzzyRipplesConfig} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js";
+import {PercentageRange} from "./core/layer/configType/PercentageRange.js";
+import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -36,6 +36,39 @@ const myTestProject = new Project({
 });
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+
+const color = myTestProject.colorScheme.getColorFromBucket();
+const points = [];
+const smallGroupRadius = 0.3;
+const innerRadius = 0.25
+const radius = (innerRadius/2) * myTestProject.longestSideInPixels;
+const increment = 360 / 6;
+for (let i = 0; i < 360; i = i + increment) {
+    points.push(findPointByAngleAndCircle(new Point2D(myTestProject.shortestSideInPixels / 2, myTestProject.longestSideInPixels / 2), ((increment + 1) * i + 30) % 360, radius));
+}
+
+for (let i = 0; i < points.length; i++) {
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: FuzzyRipplesEffect,
+            percentChance: 100,
+            currentEffectConfig: new FuzzyRipplesConfig({
+                outerColor: new ColorPicker(ColorPicker.SelectionType.color, color),
+                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+                thickness: 1,
+                stroke: 1,
+                center: points[i],
+                largeNumberOfRings: new Range(4, 4,),
+                smallNumberOfRings: new Range(4, 4,),
+                layerOpacity: 0.75,
+                underLayerOpacity: 0.55,
+                largeRadius: new PercentageRange(new PercentageLongestSide(innerRadius), new PercentageLongestSide(innerRadius)),
+                smallRadius: new PercentageRange(new PercentageLongestSide(smallGroupRadius), new PercentageLongestSide(smallGroupRadius))
+            }),
+            defaultEffectConfig: FuzzyRipplesConfig
+        })
+    });
+}
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -52,20 +85,6 @@ await myTestProject.addPrimaryEffect({
                 upper: (finalSize) => finalSize.longestSide * 0.55
             }
         }),
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: GlowEffect,
-                percentChance: 100,
-                currentEffectConfig: new GlowConfig(
-                    {
-                        lowerRange: {lower: -16, upper: -8},
-                        upperRange: {lower: 8, upper: 16},
-                        times: {lower: 4, upper: 4},
-                    }
-                ),
-                defaultEffectConfig: GlowConfig
-            })
-        ],
         defaultEffectConfig: FuzzyBandConfig
     })
 });
@@ -73,24 +92,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 0,
-        currentEffectConfig: new AmpConfig({
-            layerOpacity: 0.5,
-            thickness: 4,
-            lineStart: 200,
-            length: 200,
-            sparsityFactor: [4],
-            center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.5,
             thickness: 2,
@@ -106,119 +108,12 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: AmpEffect,
-        percentChance: 100,
-        currentEffectConfig: new AmpConfig({
-            layerOpacity: 0.5,
-            thickness: 3,
-            lineStart: 450,
-            length: 200,
-            sparsityFactor: [3],
-            center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 20, upper: 20},
-        }),
-        defaultEffectConfig: AmpConfig,
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: LayeredHexEffect,
-        percentChance: 100,
-        currentEffectConfig: new LayeredHexConfig({
-            thickness: 2,
-            stroke: 1,
-            initialNumberOfPoints: 4,
-            scaleByFactor: 1.15,
-            radius: {lower: 40, upper: 60},
-            offsetRadius: {lower: 50, upper: 80},
-            startIndex: {lower: 2, upper: 2},
-            accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
-            blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
-            featherTimes: {lower: 2, upper: 4},
-        }),
-        defaultEffectConfig: LayeredHexConfig
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: EncircledSpiralEffect,
-        percentChance: 100,
-        currentEffectConfig: new EncircledSpiralConfig({
-            invertLayers: true,
-            layerOpacity: 1,
-            underLayerOpacity: 0.50,
-            thickness: 5,
-            numberOfRings: {lower: 10, upper: 10},
-            accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 5, upper: 10}},
-            blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 3}},
-            featherTimes: {lower: 2, upper: 4},
-        }),
-        defaultEffectConfig: EncircledSpiralConfig
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: ScopesEffect,
         percentChance: 100,
         currentEffectConfig: new ScopesConfig({
             layerOpacity: 1
         }),
         defaultEffectConfig: ScopesConfig
-    })
-});
-
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: LensFlareEffect,
-        percentChance: 100,
-        currentEffectConfig: new LensFlareConfig({
-            strategy: ['color-bucket'],
-            flareRaysStroke: new Range(3, 3),
-        }),
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: GlowEffect,
-                percentChance: 100,
-                currentEffectConfig: new GlowConfig(
-                    {
-                        lowerRange: {lower: -32, upper: -8},
-                        upperRange: {lower: 8, upper: 32},
-                        times: {lower: 8, upper: 8},
-                    }
-                ),
-                defaultEffectConfig: GlowConfig
-            })
-        ],
-        defaultEffectConfig: LensFlareConfig
-    })
-});
-
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: MappedFramesEffect,
-        percentChance: 100,
-        currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.85,
-            buffer: [600],
-            loopTimes: 20
-        }),
-        defaultEffectConfig: MappedFramesConfig,
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
-                percentChance: 100,
-                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
-
-                    }
-                ),
-                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig
-            })
-        ],
     })
 });
 
@@ -235,18 +130,7 @@ await myTestProject.addPrimaryEffect({
             amplitude: {lower: 50, upper: 50},
             radius: [500]
         }),
-        defaultEffectConfig: ViewportConfig,
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
-                percentChance: 0,
-                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
-
-                    }
-                ),
-                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig
-            })
-        ],
+        defaultEffectConfig: ViewportConfig
     })
 });
 

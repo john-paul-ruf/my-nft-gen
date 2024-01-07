@@ -162,8 +162,8 @@ export class FuzzyRipplesEffect extends LayerEffect {
             width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            innerColor: settings.getNeutralFromBucket(),
-            outerColor: settings.getColorFromBucket(),
+            innerColor: this.config.innerColor.getColor(settings),
+            outerColor: this.config.outerColor.getColor(settings),
             largeRadius: getRandomIntInclusive(this.config.largeRadius.lower(this.finalSize), this.config.largeRadius.upper(this.finalSize)),
             smallRadius: getRandomIntInclusive(this.config.smallRadius.lower(this.finalSize), this.config.smallRadius.upper(this.finalSize)),
             largeNumberOfRings: getRandomIntInclusive(this.config.largeNumberOfRings.lower, this.config.largeNumberOfRings.upper),
@@ -171,7 +171,7 @@ export class FuzzyRipplesEffect extends LayerEffect {
             ripple: getRandomIntInclusive(this.config.ripple.lower(this.finalSize), this.config.ripple.upper(this.finalSize)),
             smallerRingsGroupRadius: getRandomIntInclusive(this.config.smallerRingsGroupRadius.lower(this.finalSize), this.config.smallerRingsGroupRadius.upper(this.finalSize)),
             times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
+            center: this.config.center,
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)
