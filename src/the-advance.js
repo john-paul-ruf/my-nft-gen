@@ -65,7 +65,8 @@ for (let i = 0; i < points.length; i++) {
                 underLayerOpacity: 0.55,
                 largeRadius: new PercentageRange(new PercentageLongestSide(innerRadius), new PercentageLongestSide(innerRadius)),
                 smallRadius: new PercentageRange(new PercentageLongestSide(smallGroupRadius), new PercentageLongestSide(smallGroupRadius)),
-                ripple: new PercentageRange(new PercentageLongestSide(ripple), new PercentageLongestSide(ripple))
+                ripple: new PercentageRange(new PercentageLongestSide(ripple), new PercentageLongestSide(ripple)),
+                times: new Range(3,3),
             }),
             defaultEffectConfig: FuzzyRipplesConfig
         })

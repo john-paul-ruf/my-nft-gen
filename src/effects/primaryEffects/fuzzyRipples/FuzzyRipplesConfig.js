@@ -10,9 +10,10 @@ export class FuzzyRipplesConfig extends EffectConfig {
             underLayerOpacity = 0.8,
             stroke = 1,
             thickness = 2,
-            center= new Point2D(1080/2,1920/2),
-            innerColor= new ColorPicker(),
-            outerColor= new ColorPicker(),
+            center = new Point2D(1080 / 2, 1920 / 2),
+            innerColor = new ColorPicker(),
+            outerColor = new ColorPicker(),
+            speed = 1,
             largeRadius = {
                 lower: (finalSize) => finalSize.longestSide * 0.15,
                 upper: (finalSize) => finalSize.longestSide * 0.15
@@ -56,5 +57,6 @@ export class FuzzyRipplesConfig extends EffectConfig {
         this.innerColor = innerColor;
         this.outerColor = outerColor
         this.center = center;
+        this.speed = speed;
     }
 }
