@@ -21,6 +21,12 @@ import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffec
 import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
 import {Range} from "./core/layer/configType/Range.js";
 import {ColorPicker} from "./core/layer/configType/ColorPicker.js";
+import {
+    SingleLayerGlitchDrumrollHorizontalWaveEffect
+} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
+import {
+    SingleLayerGlitchDrumrollHorizontalWaveConfig
+} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -29,7 +35,7 @@ const myTestProject = new Project({
     neutrals: ['#000000']
 });
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.redNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -198,13 +204,21 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
             layerOpacity: 0.85,
-            buffer: [400],
+            buffer: [555],
             loopTimes: 20
         }),
+        defaultEffectConfig: MappedFramesConfig,
         possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                percentChance: 100,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
 
+                    }
+                ),
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig
+            })
         ],
-        defaultEffectConfig: MappedFramesConfig
     })
 });
 
@@ -221,7 +235,18 @@ await myTestProject.addPrimaryEffect({
             amplitude: {lower: 50, upper: 50},
             radius: [500]
         }),
-        defaultEffectConfig: ViewportConfig
+        defaultEffectConfig: ViewportConfig,
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                percentChance: 50,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
+
+                    }
+                ),
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig
+            })
+        ],
     })
 });
 
