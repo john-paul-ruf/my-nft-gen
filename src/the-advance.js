@@ -204,7 +204,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
             layerOpacity: 0.85,
-            buffer: [555],
+            buffer: [600],
             loopTimes: 20
         }),
         defaultEffectConfig: MappedFramesConfig,
@@ -239,7 +239,7 @@ await myTestProject.addPrimaryEffect({
         possibleSecondaryEffects: [
             new LayerConfig({
                 effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
-                percentChance: 50,
+                percentChance: 0,
                 currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
 
                     }
