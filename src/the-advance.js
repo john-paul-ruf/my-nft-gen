@@ -43,12 +43,15 @@ const myTestProject = new Project({
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
 
+
+
 const color = myTestProject.colorScheme.getColorFromBucket();
 const points = [];
-const smallGroupRadius = 0.3;
-const innerRadius = 0.35
+const smallGroupRadius = 0.18;
+const innerRadius = 0.18;
+const hexRadius = 0.27;
 const ripple = 0.05
-const radius = (innerRadius/2) * myTestProject.longestSideInPixels;
+const radius = 0.3 * myTestProject.longestSideInPixels;
 const increment = 360 / 6;
 for (let i = 0; i < 360; i = i + increment) {
     points.push(findPointByAngleAndCircle(new Point2D(myTestProject.shortestSideInPixels / 2, myTestProject.longestSideInPixels / 2), ((increment + 1) * i + 30) % 360, radius));
@@ -65,14 +68,15 @@ for (let i = 0; i < points.length; i++) {
                 thickness: 1,
                 stroke: 2,
                 center: points[i],
-                largeNumberOfRings: new Range(0, 0,),
+                largeNumberOfRings: new Range(8, 8,),
                 smallNumberOfRings: new Range(8, 8,),
                 layerOpacity: 0.75,
                 underLayerOpacity: 0.55,
                 largeRadius: new PercentageRange(new PercentageLongestSide(innerRadius), new PercentageLongestSide(innerRadius)),
                 smallRadius: new PercentageRange(new PercentageLongestSide(smallGroupRadius), new PercentageLongestSide(smallGroupRadius)),
+                smallerRingsGroupRadius: new PercentageRange(new PercentageLongestSide(hexRadius), new PercentageLongestSide(hexRadius)),
                 ripple: new PercentageRange(new PercentageLongestSide(ripple), new PercentageLongestSide(ripple)),
-                times: new Range(3,3),
+                times: new Range(3, 3),
             }),
             defaultEffectConfig: FuzzyRipplesConfig
         })
@@ -105,8 +109,8 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.5,
             thickness: 2,
-            lineStart: 700,
-            length: 150,
+            lineStart: 500,
+            length: 350,
             sparsityFactor: [2],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
@@ -114,6 +118,7 @@ await myTestProject.addPrimaryEffect({
         defaultEffectConfig: AmpConfig,
     })
 });
+
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -123,6 +128,19 @@ await myTestProject.addPrimaryEffect({
             layerOpacity: 1
         }),
         defaultEffectConfig: ScopesConfig
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: MappedFramesEffect,
+        percentChance: 100,
+        currentEffectConfig: new MappedFramesConfig({
+            layerOpacity: 0.85,
+            buffer: [250],
+            loopTimes: 20,
+        }),
+        defaultEffectConfig: MappedFramesConfig
     })
 });
 
@@ -140,15 +158,15 @@ await myTestProject.addPrimaryEffect({
             radius: [500]
         }),
         defaultEffectConfig: ViewportConfig,
-        possibleSecondaryEffects:[
+        possibleSecondaryEffects: [
             new LayerConfig(({
                 effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
-                percentChance: 100,
+                percentChance: 0,
                 defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
                 currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
-                    glitchOffset: new Range(120,120),
-                    glitchOffsetTimes: new Range(1,1),
-                    cosineFactor: new Range(8,8)
+                    glitchOffset: new Range(120, 120),
+                    glitchOffsetTimes: new Range(1, 1),
+                    cosineFactor: new Range(8, 8)
                 })
             }))
         ]
