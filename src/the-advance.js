@@ -27,6 +27,12 @@ import {FuzzyRipplesEffect} from "./effects/primaryEffects/fuzzyRipples/FuzzyRip
 import {FuzzyRipplesConfig} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js";
 import {PercentageRange} from "./core/layer/configType/PercentageRange.js";
 import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
+import {
+    SingleLayerGlitchDrumrollHorizontalWaveEffect
+} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
+import {
+    SingleLayerGlitchDrumrollHorizontalWaveConfig
+} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -35,12 +41,12 @@ const myTestProject = new Project({
     neutrals: ['#000000']
 });
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
 
 const color = myTestProject.colorScheme.getColorFromBucket();
 const points = [];
 const smallGroupRadius = 0.3;
-const innerRadius = 0.40
+const innerRadius = 0.35
 const ripple = 0.05
 const radius = (innerRadius/2) * myTestProject.longestSideInPixels;
 const increment = 360 / 6;
@@ -57,10 +63,10 @@ for (let i = 0; i < points.length; i++) {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.color, color),
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
                 thickness: 1,
-                stroke: 1,
+                stroke: 2,
                 center: points[i],
-                largeNumberOfRings: new Range(4, 4,),
-                smallNumberOfRings: new Range(4, 4,),
+                largeNumberOfRings: new Range(0, 0,),
+                smallNumberOfRings: new Range(8, 8,),
                 layerOpacity: 0.75,
                 underLayerOpacity: 0.55,
                 largeRadius: new PercentageRange(new PercentageLongestSide(innerRadius), new PercentageLongestSide(innerRadius)),
@@ -133,7 +139,19 @@ await myTestProject.addPrimaryEffect({
             amplitude: {lower: 50, upper: 50},
             radius: [500]
         }),
-        defaultEffectConfig: ViewportConfig
+        defaultEffectConfig: ViewportConfig,
+        possibleSecondaryEffects:[
+            new LayerConfig(({
+                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                percentChance: 100,
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
+                    glitchOffset: new Range(120,120),
+                    glitchOffsetTimes: new Range(1,1),
+                    cosineFactor: new Range(8,8)
+                })
+            }))
+        ]
     })
 });
 
