@@ -41,11 +41,12 @@ const myTestProject = new Project({
     neutrals: ['#000000']
 });
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
 
 
 
-/*const color = myTestProject.colorScheme.getColorFromBucket();
+/*
+const color = myTestProject.colorScheme.getColorFromBucket();
 const points = [];
 const smallGroupRadius = 0.18;
 const innerRadius = 0.18;
@@ -53,6 +54,7 @@ const hexRadius = 0.27;
 const ripple = 0.05
 const radius = 0.3 * myTestProject.longestSideInPixels;
 const increment = 360 / 6;
+
 for (let i = 0; i < 360; i = i + increment) {
     points.push(findPointByAngleAndCircle(new Point2D(myTestProject.shortestSideInPixels / 2, myTestProject.longestSideInPixels / 2), ((increment + 1) * i + 30) % 360, radius));
 }
@@ -102,6 +104,35 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+
+const smallGroupRadius = 0.18;
+const innerRadius = 0.18;
+const hexRadius = 0.27;
+const ripple = 0.05
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: FuzzyRipplesEffect,
+        percentChance: 100,
+        currentEffectConfig: new FuzzyRipplesConfig({
+            innerColor: new ColorPicker(ColorPicker.SelectionType.neutralBucket),
+            thickness: 4,
+            stroke: 2,
+            largeNumberOfRings: new Range(8, 8,),
+            smallNumberOfRings: new Range(8, 8,),
+            layerOpacity: 0.75,
+            underLayerOpacity: 0.55,
+            largeRadius: new PercentageRange(new PercentageLongestSide(innerRadius), new PercentageLongestSide(innerRadius)),
+            smallRadius: new PercentageRange(new PercentageLongestSide(smallGroupRadius), new PercentageLongestSide(smallGroupRadius)),
+            smallerRingsGroupRadius: new PercentageRange(new PercentageLongestSide(hexRadius), new PercentageLongestSide(hexRadius)),
+            ripple: new PercentageRange(new PercentageLongestSide(ripple), new PercentageLongestSide(ripple)),
+            times: new Range(3, 3),
+        }),
+        defaultEffectConfig: FuzzyRipplesConfig
+    })
+});
+
+
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
@@ -133,10 +164,10 @@ for (let i = 0; i < points.length; i++) {
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: EncircledSpiralEffect,
-            percentChance: 100,
+            percentChance: 0,
             currentEffectConfig: new EncircledSpiralConfig({
                 center: points[i],
-                numberOfRings: new Range(8,8),
+                numberOfRings: new Range(2,2),
                 minSequenceIndex: [5],
                 numberOfSequenceElements: [5],
                 sequencePixelConstant: new PercentageRange(new PercentageLongestSide(percentPixel), new PercentageLongestSide(percentPixel)),
@@ -167,14 +198,27 @@ await myTestProject.addPrimaryEffect({
             buffer: [250],
             loopTimes: 20,
         }),
-        defaultEffectConfig: MappedFramesConfig
+        defaultEffectConfig: MappedFramesConfig,
+        possibleSecondaryEffects: [
+            new LayerConfig(({
+                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                percentChance: 100,
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
+                    glitchChance:50,
+                    glitchOffset: new Range(75, 125),
+                    glitchOffsetTimes: new Range(1, 1),
+                    cosineFactor: new Range(4, 4)
+                })
+            }))
+        ]
     })
 });
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ViewportEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
             underLayerOpacity: 0.5,
@@ -204,7 +248,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ViewportEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
             underLayerOpacity: 0.5,
@@ -230,7 +274,18 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
-await myTestProject.generateRandomLoop();
+
+const promiseArray = [];
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+promiseArray.push(myTestProject.generateRandomLoop());
+
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
+promiseArray.push(myTestProject.generateRandomLoop());
+
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+promiseArray.push(myTestProject.generateRandomLoop());
+
+Promise.all(promiseArray);
 
 
 
