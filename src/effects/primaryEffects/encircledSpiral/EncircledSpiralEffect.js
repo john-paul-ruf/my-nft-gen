@@ -161,7 +161,7 @@ export class EncircledSpiralEffect extends LayerEffect {
             underLayerOpacity: this.config.underLayerOpacity,
             height: this.finalSize.height,
             width: this.finalSize.width,
-            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
+            center: this.config.center,
         }
 
         const getRingArray = (num) => {

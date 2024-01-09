@@ -45,7 +45,7 @@ myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorSchem
 
 
 
-const color = myTestProject.colorScheme.getColorFromBucket();
+/*const color = myTestProject.colorScheme.getColorFromBucket();
 const points = [];
 const smallGroupRadius = 0.18;
 const innerRadius = 0.18;
@@ -81,7 +81,7 @@ for (let i = 0; i < points.length; i++) {
             defaultEffectConfig: FuzzyRipplesConfig
         })
     });
-}
+}*/
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -109,8 +109,8 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.5,
             thickness: 2,
-            lineStart: 500,
-            length: 350,
+            lineStart: 150,
+            length: 175,
             sparsityFactor: [2],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
@@ -119,6 +119,33 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+
+const points = [];
+const radius = 0.25 * myTestProject.longestSideInPixels;
+const increment = 360 / 6;
+const percentPixel = 0.005;
+
+for (let i = 0; i < 360; i = i + increment) {
+    points.push(findPointByAngleAndCircle(new Point2D(myTestProject.shortestSideInPixels / 2, myTestProject.longestSideInPixels / 2), ((increment + 1) * i + 30) % 360, radius));
+}
+
+for (let i = 0; i < points.length; i++) {
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: EncircledSpiralEffect,
+            percentChance: 100,
+            currentEffectConfig: new EncircledSpiralConfig({
+                center: points[i],
+                numberOfRings: new Range(8,8),
+                minSequenceIndex: [5],
+                numberOfSequenceElements: [5],
+                sequencePixelConstant: new PercentageRange(new PercentageLongestSide(percentPixel), new PercentageLongestSide(percentPixel)),
+                sparsityFactor: [40]
+            }),
+            defaultEffectConfig: EncircledSpiralConfig
+        })
+    });
+}
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -154,8 +181,8 @@ await myTestProject.addPrimaryEffect({
             thickness: 26,
             stroke: 6,
             layerOpacity: 0.5,
-            amplitude: {lower: 50, upper: 50},
-            radius: [500]
+            amplitude: {lower: 0, upper: 0},
+            radius: [150]
         }),
         defaultEffectConfig: ViewportConfig,
         possibleSecondaryEffects: [
@@ -173,6 +200,35 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: ViewportEffect,
+        percentChance: 100,
+        currentEffectConfig: new ViewportConfig({
+            invertLayers: true,
+            underLayerOpacity: 0.5,
+            thickness: 26,
+            stroke: 6,
+            layerOpacity: 0.5,
+            amplitude: {lower: 150, upper: 150},
+            radius: [150]
+        }),
+        defaultEffectConfig: ViewportConfig,
+        possibleSecondaryEffects: [
+            new LayerConfig(({
+                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                percentChance: 0,
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
+                    glitchOffset: new Range(120, 120),
+                    glitchOffsetTimes: new Range(1, 1),
+                    cosineFactor: new Range(8, 8)
+                })
+            }))
+        ]
+    })
+});
 
 await myTestProject.generateRandomLoop();
 
