@@ -43,6 +43,21 @@ const myTestProject = new Project({
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
 
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: EncircledSpiralEffect,
+        percentChance: 100,
+        currentEffectConfig: new EncircledSpiralConfig({
+            center: new Point2D(1080/2,1920/2),
+            numberOfRings: new Range(44,44),
+            minSequenceIndex: [5],
+            numberOfSequenceElements: [8],
+            sequencePixelConstant: new PercentageRange(new PercentageLongestSide(0.005), new PercentageLongestSide(0.005)),
+            sparsityFactor: [24]
+        }),
+        defaultEffectConfig: EncircledSpiralConfig
+    })
+});
 
 
 /*
@@ -91,10 +106,10 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
             color: new ColorPicker(),
-            innerColor: new ColorPicker(ColorPicker.SelectionType.neutralBucket),
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
             invertLayers: true,
-            thickness: 12,
-            circles: {lower: 10, upper: 10},
+            thickness: 2,
+            circles: {lower: 21, upper: 21},
             radius: {
                 lower: (finalSize) => finalSize.shortestSide * 0.25,
                 upper: (finalSize) => finalSize.longestSide * 0.55
@@ -113,7 +128,7 @@ const ripple = 0.05
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: FuzzyRipplesEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new FuzzyRipplesConfig({
             innerColor: new ColorPicker(ColorPicker.SelectionType.neutralBucket),
             thickness: 4,
@@ -141,7 +156,41 @@ await myTestProject.addPrimaryEffect({
             layerOpacity: 0.5,
             thickness: 2,
             lineStart: 150,
-            length: 175,
+            length: 100,
+            sparsityFactor: [2],
+            center: {x: 1080 / 2, y: 1920 / 2},
+            speed: {lower: 20, upper: 20},
+        }),
+        defaultEffectConfig: AmpConfig,
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: AmpEffect,
+        percentChance: 100,
+        currentEffectConfig: new AmpConfig({
+            layerOpacity: 0.5,
+            thickness: 2,
+            lineStart: 300,
+            length: 100,
+            sparsityFactor: [2],
+            center: {x: 1080 / 2, y: 1920 / 2},
+            speed: {lower: 20, upper: 20},
+        }),
+        defaultEffectConfig: AmpConfig,
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: AmpEffect,
+        percentChance: 100,
+        currentEffectConfig: new AmpConfig({
+            layerOpacity: 0.5,
+            thickness: 2,
+            lineStart: 450,
+            length: 100,
             sparsityFactor: [2],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
@@ -191,34 +240,8 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: MappedFramesEffect,
-        percentChance: 100,
-        currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.85,
-            buffer: [250],
-            loopTimes: 20,
-        }),
-        defaultEffectConfig: MappedFramesConfig,
-        possibleSecondaryEffects: [
-            new LayerConfig(({
-                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
-                percentChance: 100,
-                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
-                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
-                    glitchChance:50,
-                    glitchOffset: new Range(75, 125),
-                    glitchOffsetTimes: new Range(1, 1),
-                    cosineFactor: new Range(4, 4)
-                })
-            }))
-        ]
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: ViewportEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
             underLayerOpacity: 0.5,
@@ -244,18 +267,46 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: MappedFramesEffect,
+        percentChance: 100,
+        currentEffectConfig: new MappedFramesConfig({
+            layerOpacity: 0.85,
+            buffer: [200],
+            loopTimes: 10,
+        }),
+        defaultEffectConfig: MappedFramesConfig,
+        possibleSecondaryEffects: [
+            new LayerConfig(({
+                effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                percentChance: 0,
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({
+                    glitchChance:100,
+                    glitchOffset: new Range(75, 125),
+                    glitchOffsetTimes: new Range(1, 1),
+                    cosineFactor: new Range(4, 4)
+                })
+            }))
+        ]
+    })
+});
+
+
+
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ViewportEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
             underLayerOpacity: 0.5,
             thickness: 26,
             stroke: 6,
             layerOpacity: 0.5,
-            amplitude: {lower: 150, upper: 150},
+            amplitude: {lower: 250, upper: 250},
             radius: [150]
         }),
         defaultEffectConfig: ViewportConfig,
@@ -276,7 +327,7 @@ await myTestProject.addPrimaryEffect({
 
 
 const promiseArray = [];
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
