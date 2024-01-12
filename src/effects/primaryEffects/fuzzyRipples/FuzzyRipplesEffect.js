@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
@@ -7,45 +7,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
+import {FuzzyRipplesConfig} from "./FuzzyRipplesConfig.js";
 
 export class FuzzyRipplesEffect extends LayerEffect {
 
     static _name_ = 'fuzzy-ripples';
 
-    static _config_  = {
-        invertLayers: true,
-        layerOpacity: 1,
-        underLayerOpacity: 0.8,
-        stroke: 1,
-        thickness: 2,
-        largeRadius: {
-            lower: (finalSize) => finalSize.longestSide * 0.15,
-            upper: (finalSize) => finalSize.longestSide * 0.15
-        },
-        smallRadius: {
-            lower: (finalSize) => finalSize.longestSide * 0.25,
-            upper: (finalSize) => finalSize.longestSide * 0.25
-        },
-        largeNumberOfRings: {lower: 8, upper: 8},
-        smallNumberOfRings: {lower: 8, upper: 8},
-        ripple: {
-            lower: (finalSize) => finalSize.shortestSide * 0.10,
-            upper: (finalSize) => finalSize.shortestSide * 0.10
-        },
-        times: {lower: 2, upper: 4},
-        smallerRingsGroupRadius: {
-            lower: (finalSize) => finalSize.shortestSide * 0.3,
-            upper: (finalSize) => finalSize.shortestSide * 0.3
-        },
-        accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-        blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-        featherTimes: {lower: 2, upper: 4},
-    }
-
     constructor({
                     name = FuzzyRipplesEffect._name_,
                     requiresLayer = true,
-                    config = FuzzyRipplesEffect._config_,
+                    config = new FuzzyRipplesConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})
@@ -168,7 +139,7 @@ export class FuzzyRipplesEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            theAngleGaston: findOneWayValue(0, 0, numberOfFrames, currentFrame),
+            theAngleGaston: findOneWayValue(0, this.data.speed * 60, numberOfFrames, currentFrame),
             drawing: this.workingDirectory + 'fuzzy-ripples' + randomId() + '.png',
             underlayName: this.workingDirectory + 'fuzzy-ripples-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
@@ -191,8 +162,9 @@ export class FuzzyRipplesEffect extends LayerEffect {
             width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            innerColor: settings.getNeutralFromBucket(),
-            outerColor: settings.getColorFromBucket(),
+            innerColor: this.config.innerColor.getColor(settings),
+            outerColor: this.config.outerColor.getColor(settings),
+            speed: this.config.speed,
             largeRadius: getRandomIntInclusive(this.config.largeRadius.lower(this.finalSize), this.config.largeRadius.upper(this.finalSize)),
             smallRadius: getRandomIntInclusive(this.config.smallRadius.lower(this.finalSize), this.config.smallRadius.upper(this.finalSize)),
             largeNumberOfRings: getRandomIntInclusive(this.config.largeNumberOfRings.lower, this.config.largeNumberOfRings.upper),
@@ -200,7 +172,7 @@ export class FuzzyRipplesEffect extends LayerEffect {
             ripple: getRandomIntInclusive(this.config.ripple.lower(this.finalSize), this.config.ripple.upper(this.finalSize)),
             smallerRingsGroupRadius: getRandomIntInclusive(this.config.smallerRingsGroupRadius.lower(this.finalSize), this.config.smallerRingsGroupRadius.upper(this.finalSize)),
             times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
+            center: this.config.center,
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)

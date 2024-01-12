@@ -3,21 +3,17 @@ import fs from "fs";
 import Jimp from "jimp";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Settings} from "../../../core/Settings.js";
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
+import {GlitchFractalConfig} from "./GlitchFractalConfig.js";
 
 export class GlitchFractalEffect extends LayerEffect {
 
     static _name_ = 'glitch-fractal';
 
-    static _config_ = {
-        theRandom: {lower: 5, upper: 10},
-        glitchChance: 100,
-    }
-
     constructor({
                     name = GlitchFractalEffect._name_,
                     requiresLayer = true,
-                    config = GlitchFractalEffect._config_,
+                    config = new GlitchFractalConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

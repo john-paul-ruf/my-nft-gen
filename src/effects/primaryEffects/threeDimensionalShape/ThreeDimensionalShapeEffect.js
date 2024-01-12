@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import * as THREE from "three";
@@ -7,20 +7,16 @@ import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {degreesToRadians} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
+import {ThreeDimensionalShapeConfig} from "./ThreeDimensionalShapeConfig.js";
 
 export class ThreeDimensionalShapeEffect extends LayerEffect {
 
     static _name_ = 'three-dimensional-shape';
 
-    static _config_ = {
-        times: {lower: 1, upper: 2},
-        counterClockwise: {lower: 0, upper: 1},
-    }
-
     constructor({
                     name = ThreeDimensionalShapeEffect._name_,
                     requiresLayer = true,
-                    config = ThreeDimensionalShapeEffect._config_,
+                    config = new ThreeDimensionalShapeConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

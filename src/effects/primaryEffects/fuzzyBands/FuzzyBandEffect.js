@@ -1,36 +1,20 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {Settings} from "../../../core/Settings.js";
+import {FuzzyBandConfig} from "./FuzzyBandConfig.js";
 
 export class FuzzyBandEffect extends LayerEffect {
 
     static _name_ = 'fuzz-bands-mark-two';
 
-    static _config_  = {
-        invertLayers: true,
-        layerOpacity: 1,
-        underLayerOpacityRange: {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
-        underLayerOpacityTimes: {lower: 2, upper: 6},
-        circles: {lower: 6, upper: 10},
-        stroke: 0,
-        thickness: 4,
-        radius: {
-            lower: (finalSize) => finalSize.shortestSide * 0.10,
-            upper: (finalSize) => finalSize.longestSide * 0.45
-        },
-        accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
-        blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
-        featherTimes: {lower: 2, upper: 6},
-    }
-
     constructor({
                     name = FuzzyBandEffect._name_,
                     requiresLayer = true,
-                    config = FuzzyBandEffect._config_,
+                    config = new FuzzyBandConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})
@@ -191,8 +175,8 @@ export class FuzzyBandEffect extends LayerEffect {
             for (let i = 0; i <= num; i++) {
                 info.push({
                     radius: getRandomIntInclusive(this.config.radius.lower(this.finalSize), this.config.radius.upper(this.finalSize)),
-                    color: settings.getColorFromBucket(),
-                    innerColor: settings.getNeutralFromBucket(),
+                    color: this.config.color.getColor(settings),
+                    innerColor: this.config.innerColor.getColor(settings),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)

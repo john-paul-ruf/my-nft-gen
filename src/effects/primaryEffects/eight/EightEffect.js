@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
@@ -7,40 +7,16 @@ import {findValue} from "../../../core/math/findValue.js";
 import fs from "fs";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
+import {EightConfig} from "./EightConfig.js";
 
 export class EightEffect extends LayerEffect {
 
     static _name_ = 'eight'
 
-    static _config_ = {
-        layerOpacity: 1,
-        underLayerOpacity: 0.3,
-        stroke: 1,
-        thickness: 4,
-        smallRadius: {
-            lower: (finalSize) => finalSize.longestSide * 0.10,
-            upper: (finalSize) => finalSize.longestSide * 0.15
-        },
-        smallNumberOfRings: {lower: 12, upper: 16},
-        ripple: {
-            lower: (finalSize) => finalSize.shortestSide * 0.05,
-            upper: (finalSize) => finalSize.shortestSide * 0.10
-        },
-        times: {lower: 2, upper: 4},
-        smallerRingsGroupRadius: {
-            lower: (finalSize) => finalSize.shortestSide * 0.25,
-            upper: (finalSize) => finalSize.shortestSide * 0.30
-        },
-        accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 4, upper: 8}},
-        blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 1, upper: 1}},
-        featherTimes: {lower: 2, upper: 4},
-    }
-
-
     constructor({
                     name = EightEffect._name_,
                     requiresLayer = true,
-                    config = EightEffect._config_,
+                    config = new EightConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

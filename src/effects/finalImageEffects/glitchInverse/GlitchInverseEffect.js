@@ -1,21 +1,18 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {Settings} from "../../../core/Settings.js";
+import {GlitchInverseConfig} from "./GlitchInverseConfig.js";
 
 export class GlitchInverseEffect extends LayerEffect {
 
     static _name_ = 'glitch-inverse';
 
-    static _config_= {
-        glitchChance: 100,
-    }
-
     constructor({
                     name = GlitchInverseEffect._name_,
                     requiresLayer = true,
-                    config = GlitchInverseEffect._config_,
+                    config = new GlitchInverseConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

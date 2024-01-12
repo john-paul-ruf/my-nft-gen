@@ -1,9 +1,10 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {Settings} from "../../../core/Settings.js";
+import {AnimateBackgroundConfig} from "./AnimateBackgroundConfig.js";
 
 export class AnimateBackgroundEffect extends LayerEffect {
 
@@ -12,7 +13,7 @@ export class AnimateBackgroundEffect extends LayerEffect {
     constructor({
                     name = AnimateBackgroundEffect._name_,
                     requiresLayer = true,
-                    config = {},
+                    config = new AnimateBackgroundConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

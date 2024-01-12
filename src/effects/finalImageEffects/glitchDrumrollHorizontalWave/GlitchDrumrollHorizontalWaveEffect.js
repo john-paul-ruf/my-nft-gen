@@ -1,25 +1,19 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
+import {GlitchDrumrollHorizontalWaveConfig} from "./GlitchDrumrollHorizontalWaveConfig.js";
 
 export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
     static _name_ = 'glitch-drumroll-horizontal-wave';
 
-    static _config_= {
-        glitchChance: 100,
-        glitchOffset: {lower: 40, upper: 80},
-        glitchOffsetTimes: {lower: 1, upper: 3},
-        cosineFactor: {lower: 2, upper: 6},
-    }
-
     constructor({
                     name = GlitchDrumrollHorizontalWaveEffect._name_,
                     requiresLayer = true,
-                    config = GlitchDrumrollHorizontalWaveEffect._config_,
+                    config = new GlitchDrumrollHorizontalWaveConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

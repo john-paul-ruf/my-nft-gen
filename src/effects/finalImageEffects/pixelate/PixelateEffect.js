@@ -1,25 +1,19 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
+import {PixelateConfig} from "./PixelateConfig.js";
 
 export class PixelateEffect extends LayerEffect {
 
     static _name_ = 'pixelate';
 
-    static _config_= {
-        lowerRange: {lower: 0, upper: 0},
-        upperRange: {lower: 3, upper: 6},
-        times: {lower: 1, upper: 3},
-        glitchChance: 80,
-    };
-
     constructor({
                     name = PixelateEffect._name_,
                     requiresLayer = true,
-                    config = PixelateEffect._config_,
+                    config = new PixelateConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

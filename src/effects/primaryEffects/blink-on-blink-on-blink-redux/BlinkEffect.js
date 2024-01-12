@@ -1,4 +1,4 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
@@ -8,34 +8,16 @@ import Jimp from "jimp";
 import path from "path";
 import {fileURLToPath} from "url";
 import {Settings} from "../../../core/Settings.js";
+import {BlinkConfig} from "./BlinkConfig.js";
 
 export class BlinkOnEffect extends LayerEffect {
 
     static _name_ = 'blink-on-blink-on-blink-redux'
 
-    static _config_ = {
-        layerOpacity: 0.75,
-        numberOfBlinks: {lower: 1, upper: 2},
-        initialRotation: {lower: 0, upper: 360},
-        rotationSpeedRange: {lower: 1, upper: 2},
-        counterClockwise: {lower: 0, upper: 1},
-        diameterRange: {
-            lower: (finalSize) => finalSize.shortestSide * 0.25,
-            upper: (finalSize) => finalSize.longestSide * 0.8
-        },
-        glowLowerRange: {lower: -128, upper: -64},
-        glowUpperRange: {lower: 64, upper: 128},
-        glowTimes: {lower: 2, upper: 4},
-        randomizeSpin: {lower: -64, upper: 64},
-        randomizeRed: {lower: -64, upper: 64},
-        randomizeBlue: {lower: -64, upper: 64},
-        randomizeGreen: {lower: -64, upper: 64}
-    }
-
     constructor({
                     name = BlinkOnEffect._name_,
                     requiresLayer = true,
-                    config = BlinkOnEffect._config_,
+                    config = new BlinkConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

@@ -1,22 +1,17 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
+import {FadeConfig} from "./FadeConfig.js";
 
 export class FadeEffect extends LayerEffect {
 
     static _name_ = 'fade';
 
-    static _config_ = {
-        lowerRange: {lower: 0.6, upper: 0.8},
-        upperRange: {lower: 0.95, upper: 1},
-        times: {lower: 2, upper: 4},
-    }
-
     constructor({
                     name = FadeEffect._name_,
                     requiresLayer = false,
-                    config =FadeEffect._config_,
+                    config = new FadeConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

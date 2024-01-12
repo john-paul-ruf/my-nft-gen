@@ -1,21 +1,18 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import path from "path";
 import {fileURLToPath} from "url";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Settings} from "../../../core/Settings.js";
+import {PorousConfig} from "./PorousConfig.js";
 
 export class PorousEffect extends LayerEffect {
 
     static _name_ = 'porous.png';
 
-    static _config_ = {
-        layerOpacity: 0.5,
-    }
-
     constructor({
                     name = PorousEffect._name_,
                     requiresLayer = true,
-                    config = PorousEffect._config_,
+                    config = new PorousConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

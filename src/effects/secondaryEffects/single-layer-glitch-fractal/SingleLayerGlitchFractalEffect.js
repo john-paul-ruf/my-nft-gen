@@ -1,23 +1,19 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import fs from "fs";
 import Jimp from "jimp";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Settings} from "../../../core/Settings.js";
+import {SingleLayerGlitchFractalConfig} from "./SingleLayerGlitchFractal.js";
 
 export class SingleLayerGlitchFractalEffect extends LayerEffect {
 
     static _name_ = 'single-layer-glitch-fractal';
 
-    static _config_  = {
-        theRandom: {lower: 12, upper: 12},
-        glitchChance: 100,
-    }
-
     constructor({
                     name = SingleLayerGlitchFractalEffect._name_,
                     requiresLayer = false,
-                    config = SingleLayerGlitchFractalEffect._config_,
+                    config = new SingleLayerGlitchFractalConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})

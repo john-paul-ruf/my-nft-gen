@@ -1,23 +1,17 @@
-import {LayerEffect} from "../../LayerEffect.js";
+import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
+import {BlurConfig} from "./BlurConfig.js";
 
 export class BlurEffect extends LayerEffect {
 
     static _name_ = 'blur';
 
-    static _config = {
-        lowerRange: {lower: 0, upper: 0},
-        upperRange: {lower: 4, upper: 8},
-        times: {lower: 2, upper: 6},
-        glitchChance: 100,
-    }
-
     constructor({
                     name = BlurEffect._name_,
                     requiresLayer = true,
-                    config = BlurEffect._config,
+                    config = new BlurConfig({}),
                     additionalEffects = [],
                     ignoreAdditionalEffects = false,
                     settings = new Settings({})
