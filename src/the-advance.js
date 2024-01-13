@@ -46,7 +46,7 @@ myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorSchem
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: EncircledSpiralEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new EncircledSpiralConfig({
             center: new Point2D(1080/2,1920/2),
             numberOfRings: new Range(44,44),
@@ -109,7 +109,7 @@ await myTestProject.addPrimaryEffect({
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
             invertLayers: true,
             thickness: 2,
-            circles: {lower: 21, upper: 21},
+            circles: {lower: 15, upper: 15},
             radius: {
                 lower: (finalSize) => finalSize.shortestSide * 0.25,
                 upper: (finalSize) => finalSize.longestSide * 0.55
@@ -157,7 +157,7 @@ await myTestProject.addPrimaryEffect({
             thickness: 2,
             lineStart: 150,
             length: 100,
-            sparsityFactor: [2],
+            sparsityFactor: [3],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
         }),
@@ -176,7 +176,7 @@ await myTestProject.addPrimaryEffect({
             length: 100,
             sparsityFactor: [2],
             center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 20, upper: 20},
+            speed: {lower: 40, upper: 40},
         }),
         defaultEffectConfig: AmpConfig,
     })
@@ -190,10 +190,10 @@ await myTestProject.addPrimaryEffect({
             layerOpacity: 0.5,
             thickness: 2,
             lineStart: 450,
-            length: 100,
-            sparsityFactor: [2],
+            length: 150,
+            sparsityFactor: [1],
             center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 20, upper: 20},
+            speed: {lower: 60, upper: 60},
         }),
         defaultEffectConfig: AmpConfig,
     })
@@ -249,7 +249,7 @@ await myTestProject.addPrimaryEffect({
             stroke: 6,
             layerOpacity: 0.5,
             amplitude: {lower: 0, upper: 0},
-            radius: [150]
+            radius: [225]
         }),
         defaultEffectConfig: ViewportConfig,
         possibleSecondaryEffects: [
@@ -274,7 +274,7 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new MappedFramesConfig({
             layerOpacity: 0.85,
             buffer: [200],
-            loopTimes: 10,
+            loopTimes: 50,
         }),
         defaultEffectConfig: MappedFramesConfig,
         possibleSecondaryEffects: [
