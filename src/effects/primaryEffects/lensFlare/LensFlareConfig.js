@@ -25,7 +25,7 @@ export class LensFlareConfig extends EffectConfig {
             angleGastonTimes =  new Range(1,6),
 
             numberOfFlareRings = new Range(10,20),
-            flareRingsSizeRange  = new PercentageRange(new PercentageShortestSide(0.1), new PercentageLongestSide(0.55)),
+            flareRingsSizeRange  = new PercentageRange(new PercentageShortestSide(0.25), new PercentageLongestSide(0.75)),
             flareRingStroke =  new Range(1,1),
 
             numberOfFlareRays = new Range(20,30),

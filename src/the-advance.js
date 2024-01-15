@@ -100,10 +100,24 @@ for (let i = 0; i < points.length; i++) {
     });
 }*/
 
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LensFlareEffect,
+        percentChance: 100,
+        currentEffectConfig: new LensFlareConfig({
+            numberOfFlareRings: new Range(100,150),
+            numberOfFlareRays: new Range(100,150),
+            strategy:['color-bucket']
+        }),
+        defaultEffectConfig: LensFlareConfig
+    })
+});
+
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: FuzzyBandEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new FuzzyBandConfig({
             color: new ColorPicker(),
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
@@ -273,8 +287,8 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
             layerOpacity: 0.85,
-            buffer: [200],
-            loopTimes: 50,
+            buffer: [0],
+            loopTimes: 100,
         }),
         defaultEffectConfig: MappedFramesConfig,
         possibleSecondaryEffects: [
