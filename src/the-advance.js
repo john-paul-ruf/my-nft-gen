@@ -46,14 +46,15 @@ myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorSchem
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: EncircledSpiralEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new EncircledSpiralConfig({
             center: new Point2D(1080/2,1920/2),
-            numberOfRings: new Range(44,44),
-            minSequenceIndex: [5],
-            numberOfSequenceElements: [8],
+            numberOfRings: new Range(2,2),
+            minSequenceIndex: [8],
+            numberOfSequenceElements: [3],
             sequencePixelConstant: new PercentageRange(new PercentageLongestSide(0.005), new PercentageLongestSide(0.005)),
-            sparsityFactor: [24]
+            sparsityFactor: [18],
+
         }),
         defaultEffectConfig: EncircledSpiralConfig
     })
@@ -104,10 +105,10 @@ for (let i = 0; i < points.length; i++) {
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: LensFlareEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new LensFlareConfig({
-            numberOfFlareRings: new Range(100,150),
-            numberOfFlareRays: new Range(100,150),
+            numberOfFlareRings: new Range(25,50),
+            numberOfFlareRays: new Range(50,75),
             strategy:['color-bucket']
         }),
         defaultEffectConfig: LensFlareConfig
@@ -165,10 +166,11 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new AmpConfig({
-            layerOpacity: 0.5,
-            thickness: 2,
+            layerOpacity: 0.25,
+            underLayerOpacity:0.25,
+            thickness: 1,
             lineStart: 150,
             length: 100,
             sparsityFactor: [3],
@@ -184,13 +186,15 @@ await myTestProject.addPrimaryEffect({
         effect: AmpEffect,
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
-            layerOpacity: 0.5,
-            thickness: 2,
+            layerOpacity: 0.25,
+            underLayerOpacity:0.25,
+            thickness: 1,
             lineStart: 300,
             length: 100,
             sparsityFactor: [2],
             center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 40, upper: 40},
+            speed: {lower: 120, upper: 120},
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
         }),
         defaultEffectConfig: AmpConfig,
     })
@@ -201,13 +205,15 @@ await myTestProject.addPrimaryEffect({
         effect: AmpEffect,
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
-            layerOpacity: 0.5,
-            thickness: 2,
+            layerOpacity: 0.25,
+            underLayerOpacity:0.25,
+            thickness: 1,
             lineStart: 450,
             length: 150,
-            sparsityFactor: [1],
+            sparsityFactor: [2],
             center: {x: 1080 / 2, y: 1920 / 2},
-            speed: {lower: 60, upper: 60},
+            speed: {lower: 120, upper: 120},
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
         }),
         defaultEffectConfig: AmpConfig,
     })
@@ -286,9 +292,9 @@ await myTestProject.addPrimaryEffect({
         effect: MappedFramesEffect,
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.85,
+            layerOpacity: 0.95,
             buffer: [0],
-            loopTimes: 100,
+            loopTimes: 15,
         }),
         defaultEffectConfig: MappedFramesConfig,
         possibleSecondaryEffects: [

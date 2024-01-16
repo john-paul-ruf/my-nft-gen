@@ -179,7 +179,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                     numberOfSequenceElements: getRandomFromArray(this.config.numberOfSequenceElements),
                     sequencePixelConstant: randomNumber(this.config.sequencePixelConstant.lower(this.finalSize), this.config.sequencePixelConstant.upper(this.finalSize)),
                     sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
-                    innerColor: settings.getNeutralFromBucket(),
+                    innerColor: '#ffffff',
                     outerColor: settings.getColorFromBucket(),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
