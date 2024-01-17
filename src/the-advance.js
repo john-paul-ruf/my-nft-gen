@@ -33,6 +33,8 @@ import {
 import {
     SingleLayerGlitchDrumrollHorizontalWaveConfig
 } from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
+import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
+import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -60,6 +62,17 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LayeredHexEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredHexConfig({
+            radius: new Range(40,60),
+            offsetRadius: new Range(45,55),
+        }),
+        defaultEffectConfig: LayeredHexConfig
+    })
+});
 
 /*
 const color = myTestProject.colorScheme.getColorFromBucket();
@@ -287,14 +300,26 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: ImageOverlayEffect,
+        percentChance: 100,
+        currentEffectConfig: new ImageOverlayConfig({
+            layerOpacity: [0.75],
+            buffer: [50],
+        }),
+    })
+});
+
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: MappedFramesEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.95,
+            layerOpacity: 0.75,
             buffer: [0],
-            loopTimes: 15,
+            loopTimes: 10,
         }),
         defaultEffectConfig: MappedFramesConfig,
         possibleSecondaryEffects: [
