@@ -51,7 +51,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new EncircledSpiralConfig({
             center: new Point2D(1080/2,1920/2),
-            numberOfRings: new Range(2,2),
+            numberOfRings: new Range(4,4),
             minSequenceIndex: [8],
             numberOfSequenceElements: [3],
             sequencePixelConstant: new PercentageRange(new PercentageLongestSide(0.005), new PercentageLongestSide(0.005)),
@@ -68,7 +68,11 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
             radius: new Range(40,60),
-            offsetRadius: new Range(45,55),
+            offsetRadius: new Range(60,70),
+            stroke:8,
+            invertLayers: false,
+            startIndex: new Range(12,12),
+            numberOfIndex: new Range(15,17)
         }),
         defaultEffectConfig: LayeredHexConfig
     })
@@ -131,13 +135,13 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: FuzzyBandEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
             color: new ColorPicker(),
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
             invertLayers: true,
             thickness: 2,
-            circles: {lower: 15, upper: 15},
+            circles: {lower: 8, upper: 8},
             radius: {
                 lower: (finalSize) => finalSize.shortestSide * 0.25,
                 upper: (finalSize) => finalSize.longestSide * 0.55
@@ -179,7 +183,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
             underLayerOpacity:0.25,
