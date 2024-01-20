@@ -183,7 +183,7 @@ export class LayeredHexEffect extends LayerEffect {
 
             for (let i = 0; i <= num; i++) {
                 info.push({
-                    color: settings.getNeutralFromBucket(),
+                    color: '#00000000',
                     outline: settings.getColorFromBucket(),
 
                     opacity: {
