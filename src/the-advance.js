@@ -308,7 +308,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ImageOverlayEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new ImageOverlayConfig({
             layerOpacity: [0.75],
             buffer: [50],
@@ -319,7 +319,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: MappedFramesEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
             layerOpacity: 0.75,
             buffer: [0],
