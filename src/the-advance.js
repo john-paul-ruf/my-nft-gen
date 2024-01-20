@@ -281,7 +281,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
-            underLayerOpacity: 0.5,
+            underLayerOpacity: 0.95,
             thickness: 26,
             stroke: 6,
             layerOpacity: 0.5,
@@ -321,7 +321,7 @@ await myTestProject.addPrimaryEffect({
         effect: MappedFramesEffect,
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.75,
+            layerOpacity: 0.95,
             buffer: [0],
             loopTimes: 10,
         }),
@@ -351,7 +351,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
-            underLayerOpacity: 0.5,
+            underLayerOpacity: 0.95,
             thickness: 26,
             stroke: 6,
             layerOpacity: 0.5,
