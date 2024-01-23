@@ -17,13 +17,14 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
-                            /*'#FFFFFF',*/
+                            '#FFFFFF',
                             '#FFFF00',
                             '#FF00FF',
                             '#00FFFF',
                             '#FF0000',
                             '#00FF00',
                             '#0000FF',
+                            '#000000'
                         ],
                     colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.neons}\n`,
                 });
@@ -31,10 +32,11 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
-                            /*'#FFFFFF',*/
+                            '#FFFFFF',
                             '#FFFF00',
                             '#FF00FF',
                             '#FF0000',
+                            '#000000'
                         ],
                     colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.redNeons}\n`,
                 });
@@ -42,10 +44,11 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
-                            /*'#FFFFFF',*/
+                            '#FFFFFF',
                             '#FF00FF',
                             '#00FFFF',
                             '#0000FF',
+                            '#000000'
                         ],
                     colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.blueNeons}\n`,
                 });
@@ -53,10 +56,11 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
-                            /*'#FFFFFF',*/
+                            '#FFFFFF',
                             '#FFFF00',
                             '#00FFFF',
                             '#00FF00',
+                            '#000000'
                         ],
                     colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
                 });

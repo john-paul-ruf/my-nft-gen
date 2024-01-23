@@ -96,7 +96,7 @@ export class ViewportEffect extends LayerEffect {
             width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            innerColor: settings.getNeutralFromBucket(),
+            innerColor: '#FFFFFF',
             radius: getRandomFromArray(this.config.radius),
             startAngle: getRandomFromArray(this.config.startAngle),
             ampStroke: this.config.ampStroke,
