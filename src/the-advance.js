@@ -124,7 +124,7 @@ await myTestProject.addPrimaryEffect({
             thickness: 1,
             lineStart: 150,
             length: 100,
-            sparsityFactor: [3],
+            sparsityFactor: [1],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
         }),
@@ -142,7 +142,7 @@ await myTestProject.addPrimaryEffect({
             thickness: 1,
             lineStart: 300,
             length: 100,
-            sparsityFactor: [2],
+            sparsityFactor: [1],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 120, upper: 120},
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
@@ -161,7 +161,7 @@ await myTestProject.addPrimaryEffect({
             thickness: 1,
             lineStart: 450,
             length: 250,
-            sparsityFactor: [2],
+            sparsityFactor: [1],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 120, upper: 120},
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
@@ -244,10 +244,10 @@ const promiseArray = [];
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
 Promise.all(promiseArray);
