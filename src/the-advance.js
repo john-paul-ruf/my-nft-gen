@@ -105,8 +105,8 @@ await myTestProject.addPrimaryEffect({
         effect: LensFlareEffect,
         percentChance: 100,
         currentEffectConfig: new LensFlareConfig({
-            numberOfFlareRings: new Range(25,50),
-            numberOfFlareRays: new Range(50,75),
+            numberOfFlareRings: new Range(50,10),
+            numberOfFlareRays: new Range(75,150),
             strategy:['color-bucket']
         }),
         defaultEffectConfig: LensFlareConfig
@@ -207,7 +207,7 @@ await myTestProject.addPrimaryEffect({
         effect: MappedFramesEffect,
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.50,
+            layerOpacity: 0.75,
             buffer: [0],
             loopTimes: 60,
         }),
@@ -244,10 +244,10 @@ const promiseArray = [];
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
 Promise.all(promiseArray);
