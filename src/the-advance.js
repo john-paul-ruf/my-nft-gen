@@ -40,8 +40,8 @@ const myTestProject = new Project({
     artist: 'John Ruf',
     projectName: 'the-advance',
     projectDirectory: "src/the-advance/",
-    neutrals: ['#DDDDDD','#EEEEEE','#FFFFFF'],
-    backgrounds: ['#111111','#222222','#333333']
+    neutrals: ['#bbbbbb','#cccccc','#dddddd'],
+    backgrounds: ['#000000']
 });
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
@@ -71,11 +71,11 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new EncircledSpiralConfig({
             center: new Point2D(1080/2,1920/2),
-            numberOfRings: new Range(4,4),
-            minSequenceIndex: [8],
-            numberOfSequenceElements: [4],
+            numberOfRings: new Range(10,10),
+            minSequenceIndex: [10],
+            numberOfSequenceElements: [2],
             sequencePixelConstant: new PercentageRange(new PercentageLongestSide(0.005), new PercentageLongestSide(0.005)),
-            sparsityFactor: [12],
+            sparsityFactor: [45],
 
         }),
         defaultEffectConfig: EncircledSpiralConfig
@@ -84,26 +84,8 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: LayeredHexEffect,
-        percentChance: 100,
-        currentEffectConfig: new LayeredHexConfig({
-            radius: new Range(20,30),
-            offsetRadius: new Range(60,70),
-            stroke:1,
-            invertLayers: false,
-            startIndex: new Range(6,8),
-            numberOfIndex: new Range(11,18),
-            movementGaston: new Range(4,8),
-            initialNumberOfPoints:4,
-        }),
-        defaultEffectConfig: LayeredHexConfig
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: LensFlareEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new LensFlareConfig({
             numberOfFlareRings: new Range(50,10),
             numberOfFlareRays: new Range(75,150),
@@ -113,11 +95,10 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
-
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
             underLayerOpacity:0.25,
@@ -131,6 +112,7 @@ await myTestProject.addPrimaryEffect({
         defaultEffectConfig: AmpConfig,
     })
 });
+
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -170,7 +152,6 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
-
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ScopesEffect,
@@ -182,10 +163,29 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LayeredHexEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredHexConfig({
+            radius: new Range(40,60),
+            offsetRadius: new Range(80,90),
+            stroke:1,
+            invertLayers: false,
+            startIndex: new Range(2,4),
+            numberOfIndex: new Range(10,12),
+            movementGaston: new Range(8,12),
+            initialNumberOfPoints:4,
+        }),
+        defaultEffectConfig: LayeredHexConfig
+    })
+});
+
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ViewportEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
             underLayerOpacity: 0.95,
@@ -207,9 +207,9 @@ await myTestProject.addPrimaryEffect({
         effect: MappedFramesEffect,
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 0.75,
+            layerOpacity: 1,
             buffer: [0],
-            loopTimes: 60,
+            loopTimes: 120,
         }),
         defaultEffectConfig: MappedFramesConfig,
         possibleSecondaryEffects: [
@@ -223,7 +223,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ViewportEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new ViewportConfig({
             invertLayers: true,
             underLayerOpacity: 0.95,
