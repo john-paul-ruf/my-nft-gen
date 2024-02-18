@@ -40,8 +40,8 @@ const myTestProject = new Project({
     artist: 'John Ruf',
     projectName: 'the-advance',
     projectDirectory: "src/the-advance/",
-    neutrals: ['#bbbbbb','#cccccc','#dddddd'],
-    backgrounds: ['#000000']
+    neutrals: ['#888888', '#999999', '#aaaaaa'],
+    backgrounds: ['#222222']
 });
 
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
@@ -68,10 +68,10 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: EncircledSpiralEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new EncircledSpiralConfig({
-            center: new Point2D(1080/2,1920/2),
-            numberOfRings: new Range(10,10),
+            center: new Point2D(1080 / 2, 1920 / 2),
+            numberOfRings: new Range(10, 10),
             minSequenceIndex: [10],
             numberOfSequenceElements: [2],
             sequencePixelConstant: new PercentageRange(new PercentageLongestSide(0.005), new PercentageLongestSide(0.005)),
@@ -85,11 +85,11 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: LensFlareEffect,
-        percentChance: 0,
+        percentChance: 100,
         currentEffectConfig: new LensFlareConfig({
-            numberOfFlareRings: new Range(50,10),
-            numberOfFlareRays: new Range(75,150),
-            strategy:['color-bucket']
+            numberOfFlareRings: new Range(50, 10),
+            numberOfFlareRays: new Range(75, 150),
+            strategy: ['color-bucket']
         }),
         defaultEffectConfig: LensFlareConfig
     })
@@ -101,7 +101,7 @@ await myTestProject.addPrimaryEffect({
         percentChance: 0,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
-            underLayerOpacity:0.25,
+            underLayerOpacity: 0.25,
             thickness: 1,
             lineStart: 150,
             length: 100,
@@ -117,11 +117,11 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: AmpEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
-            underLayerOpacity:0.25,
-            thickness: 1,
+            underLayerOpacity: 0.25,
+            thickness: 2,
             lineStart: 300,
             length: 100,
             sparsityFactor: [1],
@@ -139,8 +139,8 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
-            underLayerOpacity:0.25,
-            thickness: 1,
+            underLayerOpacity: 0.25,
+            thickness: 3,
             lineStart: 450,
             length: 250,
             sparsityFactor: [1],
@@ -157,7 +157,9 @@ await myTestProject.addPrimaryEffect({
         effect: ScopesEffect,
         percentChance: 100,
         currentEffectConfig: new ScopesConfig({
-            layerOpacity: 1
+            layerOpacity: 1,
+            sparsityFactor: [3, 4, 5],
+            radiusFactor: new Range(0.2, 0.3),
         }),
         defaultEffectConfig: ScopesConfig
     })
@@ -169,14 +171,14 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            radius: new Range(40,60),
-            offsetRadius: new Range(80,90),
-            stroke:1,
+            radius: new Range(40, 60),
+            offsetRadius: new Range(80, 90),
+            stroke: 1,
             invertLayers: false,
-            startIndex: new Range(2,4),
-            numberOfIndex: new Range(10,12),
-            movementGaston: new Range(8,12),
-            initialNumberOfPoints:4,
+            startIndex: new Range(2, 4),
+            numberOfIndex: new Range(10, 12),
+            movementGaston: new Range(8, 12),
+            initialNumberOfPoints: 8,
         }),
         defaultEffectConfig: LayeredHexConfig
     })
@@ -196,9 +198,7 @@ await myTestProject.addPrimaryEffect({
             radius: [300]
         }),
         defaultEffectConfig: ViewportConfig,
-        possibleSecondaryEffects: [
-
-        ]
+        possibleSecondaryEffects: []
     })
 });
 
@@ -207,18 +207,27 @@ await myTestProject.addPrimaryEffect({
         effect: MappedFramesEffect,
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
-            layerOpacity: 1,
+            layerOpacity: .6,
             buffer: [0],
-            loopTimes: 120,
+            loopTimes: 12,
         }),
         defaultEffectConfig: MappedFramesConfig,
-        possibleSecondaryEffects: [
-        ]
+        possibleSecondaryEffects: []
     })
 });
 
-
-
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: ImageOverlayEffect,
+        percentChance: 0,
+        currentEffectConfig: new ImageOverlayConfig({
+            layerOpacity: [1],
+            buffer: [1],
+        }),
+        defaultEffectConfig: ImageOverlayConfig,
+        possibleSecondaryEffects: []
+    })
+});
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
@@ -234,8 +243,7 @@ await myTestProject.addPrimaryEffect({
             radius: [300]
         }),
         defaultEffectConfig: ViewportConfig,
-        possibleSecondaryEffects: [
-        ]
+        possibleSecondaryEffects: []
     })
 });
 
