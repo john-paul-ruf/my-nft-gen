@@ -89,9 +89,9 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new LayeredRingConfig({
             radius:{lower: 30, upper: 40},
-            offsetRadius: {lower: 25, upper: 25},
+            offsetRadius: {lower: 40, upper: 40},
             numberOfIndex: {lower: 20, upper: 20},
-            startIndex: {lower: 12, upper: 12},
+            startIndex: {lower: 15, upper: 15},
             initialNumberOfPoints: 10,
             scaleByFactor: 1.1,
         }),
