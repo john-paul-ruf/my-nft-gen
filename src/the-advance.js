@@ -85,6 +85,36 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
+        effect: LayeredRingEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredRingConfig({
+            radius:{lower: 30, upper: 40},
+            offsetRadius: {lower: 25, upper: 25},
+            numberOfIndex: {lower: 20, upper: 20},
+            startIndex: {lower: 12, upper: 12},
+            initialNumberOfPoints: 10,
+            scaleByFactor: 1.1,
+        }),
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LayeredHexEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredHexConfig({
+            radius:{lower: 20, upper: 40},
+            offsetRadius: {lower: 40, upper: 40},
+            numberOfIndex: {lower: 15, upper: 15},
+            startIndex: {lower: 10, upper: 10},
+            initialNumberOfPoints: 8,
+            scaleByFactor: 1.1,
+        }),
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
         effect: AmpEffect,
         percentChance: 100,
         currentEffectConfig: new AmpConfig({
@@ -117,36 +147,6 @@ await myTestProject.addPrimaryEffect({
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
         }),
         defaultEffectConfig: AmpConfig,
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: LayeredRingEffect,
-        percentChance: 100,
-        currentEffectConfig: new LayeredRingConfig({
-            radius:{lower: 30, upper: 40},
-            offsetRadius: {lower: 40, upper: 40},
-            numberOfIndex: {lower: 18, upper: 18},
-            startIndex: {lower: 12, upper: 12},
-            initialNumberOfPoints: 10,
-            scaleByFactor: 1.1,
-        }),
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: LayeredHexEffect,
-        percentChance: 100,
-        currentEffectConfig: new LayeredHexConfig({
-            radius:{lower: 20, upper: 40},
-            offsetRadius: {lower: 40, upper: 40},
-            numberOfIndex: {lower: 15, upper: 15},
-            startIndex: {lower: 10, upper: 10},
-            initialNumberOfPoints: 8,
-            scaleByFactor: 1.1,
-        }),
     })
 });
 
