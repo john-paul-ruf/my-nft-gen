@@ -50,14 +50,17 @@ const myTestProject = new Project({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: ScopesEffect,
-        percentChance: 0,
-        currentEffectConfig: new ScopesConfig({
-            layerOpacity: 1,
-            sparsityFactor: [3, 4, 5],
-            radiusFactor: new Range(0.3, 0.4),
+        effect: LayeredHexEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredHexConfig({
+            layerOpacity: 0.25,
+            radius: {lower: 30, upper: 40},
+            offsetRadius: {lower: 40, upper: 40},
+            numberOfIndex: {lower: 20, upper: 20},
+            startIndex: {lower: 17, upper: 17},
+            initialNumberOfPoints: 10,
+            scaleByFactor: 1.1,
         }),
-        defaultEffectConfig: ScopesConfig
     })
 });
 
@@ -66,16 +69,17 @@ await myTestProject.addPrimaryEffect({
         effect: FuzzyBandEffect,
         percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
+            layerOpacity: 0.75,
             color: new ColorPicker(),
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
             invertLayers: true,
             thickness: 1,
-            circles: {lower: 15, upper: 15},
+            circles: {lower: 10, upper: 10},
             radius: {
                 lower: (finalSize) => finalSize.shortestSide * 0.1,
                 upper: (finalSize) => finalSize.longestSide * 0.55
             },
-            accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 50, upper: 150}},
+            accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 35, upper: 75}},
             blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
             featherTimes: {lower: 8, upper: 8},
         }),
@@ -85,25 +89,11 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: LayeredRingEffect,
-        percentChance: 100,
-        currentEffectConfig: new LayeredRingConfig({
-            radius:{lower: 30, upper: 40},
-            offsetRadius: {lower: 40, upper: 40},
-            numberOfIndex: {lower: 20, upper: 20},
-            startIndex: {lower: 15, upper: 15},
-            initialNumberOfPoints: 10,
-            scaleByFactor: 1.1,
-        }),
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            radius:{lower: 20, upper: 40},
+            layerOpacity: 0.5,
+            radius: {lower: 20, upper: 40},
             offsetRadius: {lower: 40, upper: 40},
             numberOfIndex: {lower: 15, upper: 15},
             startIndex: {lower: 10, upper: 10},
@@ -156,7 +146,8 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            radius:{lower: 10, upper: 25},
+            layerOpacity: 0.75,
+            radius: {lower: 10, upper: 25},
             offsetRadius: {lower: 20, upper: 20},
             numberOfIndex: {lower: 10, upper: 10},
             startIndex: {lower: 5, upper: 5},
@@ -168,43 +159,20 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: ImageOverlayEffect,
-        percentChance: 0,
-        currentEffectConfig: new ImageOverlayConfig({
-            folderName: '/imageOverlay/test/',
-            layerOpacity: [1],
-            buffer: [0],
-        }),
-        possibleSecondaryEffects: [
-            new LayerConfig({
-                effect:  GlowEffect,
-                percentChance:100,
-                currentEffectConfig: new GlowConfig({
-                    lowerRange: new Range(-24,-24),
-                    upperRange: new Range(24,24),
-                    times: new Range(8,8)
-                })
-            })
-        ]
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
         effect: LensFlareEffect,
         percentChance: 100,
         currentEffectConfig: new LensFlareConfig({
-            numberOfFlareRings: new Range(50,50),
-            numberOfFlareRays: new Range(100,100),
+            numberOfFlareRings: new Range(30, 30),
+            numberOfFlareRays: new Range(75, 75),
         }),
         possibleSecondaryEffects: [
             new LayerConfig({
-                effect:  GlowEffect,
-                percentChance:100,
+                effect: GlowEffect,
+                percentChance: 100,
                 currentEffectConfig: new GlowConfig({
-                    lowerRange: new Range(-24,-24),
-                    upperRange: new Range(24,24),
-                    times: new Range(8,8)
+                    lowerRange: new Range(-24, -24),
+                    upperRange: new Range(24, 24),
+                    times: new Range(8, 8)
                 })
             })
         ]
