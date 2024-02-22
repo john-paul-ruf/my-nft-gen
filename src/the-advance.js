@@ -35,13 +35,30 @@ import {
 } from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
 import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
 import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
+import {HexConfig} from "./effects/primaryEffects/hex/HexConfig.js";
+import {HexEffect} from "./effects/primaryEffects/hex/HexEffect.js";
+import {LayeredRingEffect} from "./effects/primaryEffects/layeredRing/LayeredRingEffect.js";
+import {LayeredRingConfig} from "./effects/primaryEffects/layeredRing/LayeredRingConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
     projectName: 'the-advance',
     projectDirectory: "src/the-advance/",
-    neutrals: ['#bbbbbb', '#cccccc', '#dddddd'],
+    neutrals: ['#FFFFFF'],
     backgrounds: ['#000000']
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: ScopesEffect,
+        percentChance: 0,
+        currentEffectConfig: new ScopesConfig({
+            layerOpacity: 1,
+            sparsityFactor: [3, 4, 5],
+            radiusFactor: new Range(0.3, 0.4),
+        }),
+        defaultEffectConfig: ScopesConfig
+    })
 });
 
 await myTestProject.addPrimaryEffect({
@@ -52,31 +69,17 @@ await myTestProject.addPrimaryEffect({
             color: new ColorPicker(),
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
             invertLayers: true,
-            thickness: 2,
-            circles: {lower: 5, upper: 5},
+            thickness: 1,
+            circles: {lower: 15, upper: 15},
             radius: {
-                lower: (finalSize) => finalSize.shortestSide * 0.25,
+                lower: (finalSize) => finalSize.shortestSide * 0.1,
                 upper: (finalSize) => finalSize.longestSide * 0.55
-            }
+            },
+            accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 50, upper: 150}},
+            blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
+            featherTimes: {lower: 8, upper: 8},
         }),
         defaultEffectConfig: FuzzyBandConfig
-    })
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: EncircledSpiralEffect,
-        percentChance: 100,
-        currentEffectConfig: new EncircledSpiralConfig({
-            center: new Point2D(1080 / 2, 1920 / 2),
-            numberOfRings: new Range(8, 8),
-            minSequenceIndex: [10],
-            numberOfSequenceElements: [2],
-            sequencePixelConstant: new PercentageRange(new PercentageLongestSide(0.005), new PercentageLongestSide(0.005)),
-            sparsityFactor: [45],
-
-        }),
-        defaultEffectConfig: EncircledSpiralConfig
     })
 });
 
@@ -88,9 +91,9 @@ await myTestProject.addPrimaryEffect({
             layerOpacity: 0.25,
             underLayerOpacity: 0.25,
             thickness: 1,
-            lineStart: 225,
+            lineStart: 300,
             length: 100,
-            sparsityFactor: [1],
+            sparsityFactor: [3],
             center: {x: 1080 / 2, y: 1920 / 2},
             speed: {lower: 20, upper: 20},
         }),
@@ -119,12 +122,16 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: ScopesEffect,
+        effect: LayeredRingEffect,
         percentChance: 100,
-        currentEffectConfig: new ScopesConfig({
-            layerOpacity: 1
+        currentEffectConfig: new LayeredRingConfig({
+            radius:{lower: 35, upper: 35},
+            offsetRadius: {lower: 40, upper: 40},
+            numberOfIndex: {lower: 18, upper: 18},
+            startIndex: {lower: 12, upper: 12},
+            initialNumberOfPoints: 10,
+            scaleByFactor: 1.1,
         }),
-        defaultEffectConfig: ScopesConfig
     })
 });
 
@@ -133,16 +140,29 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            radius: new Range(40, 60),
-            offsetRadius: new Range(80, 90),
-            stroke: 1,
-            invertLayers: false,
-            startIndex: new Range(2, 4),
-            numberOfIndex: new Range(10, 12),
-            movementGaston: new Range(8, 12),
-            initialNumberOfPoints: 4,
+            radius:{lower: 35, upper: 35},
+            offsetRadius: {lower: 40, upper: 40},
+            numberOfIndex: {lower: 15, upper: 15},
+            startIndex: {lower: 10, upper: 10},
+            initialNumberOfPoints: 8,
+            scaleByFactor: 1.1,
         }),
-        defaultEffectConfig: LayeredHexConfig
+    })
+});
+
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LayeredHexEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredHexConfig({
+            radius:{lower: 18, upper: 18},
+            offsetRadius: {lower: 20, upper: 20},
+            numberOfIndex: {lower: 10, upper: 10},
+            startIndex: {lower: 5, upper: 5},
+            initialNumberOfPoints: 6,
+            scaleByFactor: 1.1,
+        }),
     })
 });
 
@@ -151,10 +171,32 @@ await myTestProject.addPrimaryEffect({
         effect: ImageOverlayEffect,
         percentChance: 100,
         currentEffectConfig: new ImageOverlayConfig({
+            folderName: '/imageOverlay/test/',
             layerOpacity: [1],
-            buffer: [600],
+            buffer: [0],
         }),
-        defaultEffectConfig: LayeredHexConfig,
+        possibleSecondaryEffects: [
+            new LayerConfig({
+                effect:  GlowEffect,
+                percentChance:100,
+                currentEffectConfig: new GlowConfig({
+                    lowerRange: new Range(-24,-24),
+                    upperRange: new Range(24,24),
+                    times: new Range(8,8)
+                })
+            })
+        ]
+    })
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LensFlareEffect,
+        percentChance: 100,
+        currentEffectConfig: new LensFlareConfig({
+            numberOfFlareRings: new Range(50,50),
+            numberOfFlareRays: new Range(100,100),
+        }),
         possibleSecondaryEffects: [
             new LayerConfig({
                 effect:  GlowEffect,
@@ -171,6 +213,9 @@ await myTestProject.addPrimaryEffect({
 
 const promiseArray = [];
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+
+promiseArray.push(myTestProject.generateRandomLoop());
+promiseArray.push(myTestProject.generateRandomLoop());
 promiseArray.push(myTestProject.generateRandomLoop());
 
 Promise.all(promiseArray);

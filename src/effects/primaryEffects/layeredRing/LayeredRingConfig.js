@@ -12,18 +12,18 @@ export class LayeredRingConfig extends EffectConfig {
             indexOpacityRange= {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
             indexOpacityTimes= {lower: 2, upper: 4},
 
-            radius={lower: 40, upper: 60},
-            offsetRadius= {lower: 30, upper: 60},
+            radius={lower: 20, upper: 30},
+            offsetRadius= {lower: 20, upper: 40},
 
-            numberOfIndex= {lower: 20, upper: 40},
+            numberOfIndex= {lower: 5, upper: 20},
             startIndex= {lower: 8, upper: 12},
 
             startAngle= 0,
 
-            movementGaston= {lower: 1, upper: 12},
+            movementGaston= {lower: 1, upper: 6},
 
             initialNumberOfPoints= 4,
-            scaleByFactor= 1.1
+            scaleByFactor= 1.2
         }
     ) {
         super();

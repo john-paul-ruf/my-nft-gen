@@ -32,8 +32,8 @@ export class LensFlareConfig extends EffectConfig {
             flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(1)),
             flareRaysStroke = new Range(1,1),
 
-            blurRange =  new DynamicRange(new Range(1,1), new Range(3,3)),
-            blurTimes =new Range(1,1),
+            blurRange =  new DynamicRange(new Range(0,0), new Range(0,0)),
+            blurTimes =new Range(0,0),
 
             strategy = ['original', 'color-bucket', 'neutral-bucket'],
 
