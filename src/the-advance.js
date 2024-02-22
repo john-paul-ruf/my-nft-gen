@@ -125,7 +125,7 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredRingEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredRingConfig({
-            radius:{lower: 35, upper: 35},
+            radius:{lower: 30, upper: 40},
             offsetRadius: {lower: 40, upper: 40},
             numberOfIndex: {lower: 18, upper: 18},
             startIndex: {lower: 12, upper: 12},
@@ -140,7 +140,7 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            radius:{lower: 35, upper: 35},
+            radius:{lower: 20, upper: 40},
             offsetRadius: {lower: 40, upper: 40},
             numberOfIndex: {lower: 15, upper: 15},
             startIndex: {lower: 10, upper: 10},
@@ -156,7 +156,7 @@ await myTestProject.addPrimaryEffect({
         effect: LayeredHexEffect,
         percentChance: 100,
         currentEffectConfig: new LayeredHexConfig({
-            radius:{lower: 18, upper: 18},
+            radius:{lower: 10, upper: 25},
             offsetRadius: {lower: 20, upper: 20},
             numberOfIndex: {lower: 10, upper: 10},
             startIndex: {lower: 5, upper: 5},
@@ -169,7 +169,7 @@ await myTestProject.addPrimaryEffect({
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: ImageOverlayEffect,
-        percentChance: 100,
+        percentChance: 0,
         currentEffectConfig: new ImageOverlayConfig({
             folderName: '/imageOverlay/test/',
             layerOpacity: [1],
