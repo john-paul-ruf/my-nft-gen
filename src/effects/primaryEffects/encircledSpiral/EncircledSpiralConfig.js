@@ -1,5 +1,6 @@
 import {EffectConfig} from "../../../core/layer/EffectConfig.js";
 import {Point2D} from "../../../core/layer/configType/Point2D.js";
+import {ColorPicker} from "../../../core/layer/configType/ColorPicker.js";
 
 export class EncircledSpiralConfig extends EffectConfig {
     constructor(
@@ -23,7 +24,9 @@ export class EncircledSpiralConfig extends EffectConfig {
             accentRange = {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
             blurRange = {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
             featherTimes = {lower: 2, upper: 4},
-            center = new Point2D(1080/2,1920)
+            center = new Point2D(1080/2,1920),
+            innerColor = new ColorPicker(ColorPicker.SelectionType.neutralBucket),
+            outerColor = new ColorPicker(ColorPicker.SelectionType.colorBucket),
         }
     ) {
         super();
@@ -44,5 +47,7 @@ export class EncircledSpiralConfig extends EffectConfig {
         this.blurRange = blurRange;
         this.featherTimes = featherTimes;
         this.center = center;
+        this.innerColor = innerColor;
+        this.outerColor = outerColor;
     }
 }

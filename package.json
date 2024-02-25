@@ -8,6 +8,7 @@
     "test": "jest",
     "app": "qode --inspect ./src/app.js",
     "the-advance": "node ./src/the-advance.js",
+    "the-lantern": "node ./src/the-lantern.js",
     "make-me-a-pretty": "node ./src/the-advance.js"
   },
   "jest": {
