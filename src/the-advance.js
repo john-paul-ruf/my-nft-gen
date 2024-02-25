@@ -58,7 +58,7 @@ await myTestProject.addPrimaryEffect({
             color: new ColorPicker(),
             innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
             invertLayers: true,
-            thickness: 1,
+            thickness: thickness,
             circles: {lower: 10, upper: 10},
             radius: {
                 lower: (finalSize) => finalSize.shortestSide * 0.1,
@@ -105,7 +105,7 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
             underLayerOpacity: 0.25,
-            thickness: 1,
+            thickness: thickness,
             lineStart: 300,
             length: 100,
             sparsityFactor: [2],
@@ -149,7 +149,7 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new AmpConfig({
             layerOpacity: 0.25,
             underLayerOpacity: 0.25,
-            thickness: 1,
+            thickness: thickness,
             lineStart: 450,
             length: 250,
             sparsityFactor: [1],
@@ -171,7 +171,7 @@ await myTestProject.addPrimaryEffect({
             layerOpacityTimes: {lower: 1, upper: 2},
             indexOpacityRange: {bottom: {lower: 0.5, upper: 0.6}, top: {lower: 0.7, upper: 0.8}},
             indexOpacityTimes: {lower: 1, upper: 2},
-            thickness: 1,
+            thickness: thickness,
             stroke: 1,
             radius: {lower: 10, upper: 25},
             offsetRadius: {lower: 20, upper: 20},

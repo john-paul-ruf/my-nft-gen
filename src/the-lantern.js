@@ -8,6 +8,11 @@ import {EncircledSpiralEffect} from "./effects/primaryEffects/encircledSpiral/En
 import {EncircledSpiralConfig} from "./effects/primaryEffects/encircledSpiral/EncircledSpiralConfig.js";
 import {Point2D} from "./core/layer/configType/Point2D.js";
 import {Color} from "three";
+import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEffect.js";
+import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
+import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
+import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
+import {Range} from "./core/layer/configType/Range.js";
 
 const promiseArray = [];
 
@@ -23,15 +28,18 @@ const createLantern = async (color) =>{
 
     const length = 1080/7;
     const seq= 5;
-    const sparsity = 36;
+    const sparsity = 30;
     const minSeq = 7
+    const stroke = 1;
+    const thickness = 1;
+    const numberOfRings = new Range(4,4);
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: FuzzyBandEffect,
             percentChance: 100,
             currentEffectConfig: new FuzzyBandConfig({
-                layerOpacity: 0.1,
+                layerOpacity: 0.25,
                 underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
                 underLayerOpacityTimes: {lower: 2, upper: 6},
                 color: new ColorPicker(),
@@ -43,11 +51,38 @@ const createLantern = async (color) =>{
                     lower: (finalSize) => finalSize.shortestSide * 0.1,
                     upper: (finalSize) => finalSize.longestSide * 0.55
                 },
-                accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 35, upper: 75}},
+                accentRange: {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
                 blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
                 featherTimes: {lower: 8, upper: 8},
             }),
             defaultEffectConfig: FuzzyBandConfig
+        })
+    });
+
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: LayeredHexEffect,
+            percentChance: 100,
+            currentEffectConfig: new LayeredHexConfig({
+                layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+                layerOpacityTimes: {lower: 4, upper: 8},
+                indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
+                indexOpacityTimes: {lower: 4, upper: 8},
+                thickness: 1,
+                stroke: 1,
+                layerOpacity: 0.25,
+                radius: {lower: 35, upper: 55},
+                offsetRadius: {lower: 50, upper: 60},
+                numberOfIndex: {lower: 15, upper: 15},
+                startIndex: {lower: 10, upper: 10},
+                initialNumberOfPoints: 12,
+                scaleByFactor: 1.1,
+                movementGaston: {lower: 10, upper: 20},
+                accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+                blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+                featherTimes: {lower: 4, upper: 8},
+            }),
         })
     });
 
@@ -62,9 +97,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -95,9 +130,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -127,9 +162,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -159,9 +194,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -192,9 +227,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -224,9 +259,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -246,7 +281,7 @@ const createLantern = async (color) =>{
         })
     });
 
-    await myTestProject.addPrimaryEffect({
+    /*await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: EncircledSpiralEffect,
             percentChance: 100,
@@ -256,9 +291,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -276,7 +311,7 @@ const createLantern = async (color) =>{
             }),
             defaultEffectConfig: EncircledSpiralConfig
         })
-    });
+    });*/
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
@@ -288,9 +323,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -320,9 +355,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -353,9 +388,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -385,9 +420,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -417,9 +452,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -450,9 +485,9 @@ const createLantern = async (color) =>{
                 layerOpacity: 0.55,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: {lower: 2, upper: 2},
-                stroke: 1,
-                thickness: 2,
+                numberOfRings: numberOfRings,
+                stroke: stroke,
+                thickness: thickness,
                 sparsityFactor: [sparsity],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
@@ -467,6 +502,20 @@ const createLantern = async (color) =>{
                 featherTimes: {lower: 2, upper: 4},
                 //center
                 center: new Point2D((1080/2),(1920/2)-(2*length)),
+            }),
+            defaultEffectConfig: EncircledSpiralConfig
+        })
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: ImageOverlayEffect,
+            percentChance: 100,
+            currentEffectConfig: new ImageOverlayConfig({
+                //folderName: '/image-store/generated/robot-spider/',
+                folderName: '/image-store/generated/eyes/',
+                buffer: [400],
+                layerOpacity: [0.75]
             }),
             defaultEffectConfig: EncircledSpiralConfig
         })
