@@ -12,6 +12,8 @@ import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexCo
 import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
 import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
 import {Range} from "./core/layer/configType/Range.js";
+import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
+import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
 
 const promiseArray = [];
 
@@ -23,7 +25,7 @@ async function addSpiral(myTestProject, color, numberOfRings, stroke, thickness,
             currentEffectConfig: new EncircledSpiralConfig({
                 outerColor: color,
                 invertLayers: true,
-                layerOpacity: 0.55,
+                layerOpacity: 0.5,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
                 numberOfRings: numberOfRings,
@@ -64,8 +66,8 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
     const sparsity = 45;
     const minSeq = 7
     const stroke = 1;
-    const thickness = 2;
-    const numberOfRings = new Range(4, 4);
+    const thickness = 0;
+    const numberOfRings = new Range(8, 8);
     myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
 
@@ -121,6 +123,24 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
         })
     });
 
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: AmpEffect,
+            percentChance: 100,
+            currentEffectConfig: new AmpConfig({
+                layerOpacity: 0.25,
+                underLayerOpacity: 0.25,
+                thickness: thickness,
+                lineStart: 550,
+                length: 100,
+                sparsityFactor: [1],
+                center: {x: 1080 / 2, y: 1920 / 2},
+                speed: {lower: 120, upper: 120},
+                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
+            }),
+            defaultEffectConfig: AmpConfig,
+        })
+    });
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
@@ -136,15 +156,29 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
                 layerOpacity: 0.25,
                 radius: {lower: 5, upper: 15},
                 offsetRadius: {lower: 30, upper: 30},
-                numberOfIndex: {lower: 20, upper: 20},
-                startIndex: {lower: 12, upper: 12},
-                initialNumberOfPoints: 25,
+                numberOfIndex: {lower: 25, upper: 25},
+                startIndex: {lower: 15, upper: 15},
+                initialNumberOfPoints: 10,
                 scaleByFactor: 1.1,
                 movementGaston: {lower: 30, upper: 40},
                 accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                featherTimes: {lower: 4, upper: 8},
+                featherTimes: {lower: 8, upper: 16},
             }),
+        })
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: ImageOverlayEffect,
+            percentChance: 0,
+            currentEffectConfig: new ImageOverlayConfig({
+                //folderName: '/image-store/generated/robot-spider/',
+                folderName: '/image-store/generated/eyes/',
+                buffer: [500],
+                layerOpacity: [0.75]
+            }),
+            defaultEffectConfig: EncircledSpiralConfig
         })
     });
 
@@ -163,40 +197,28 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
     await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + length, (1920 / 2)));
     await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (length)));
 
-
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: ImageOverlayEffect,
-            percentChance: 100,
-            currentEffectConfig: new ImageOverlayConfig({
-                //folderName: '/image-store/generated/robot-spider/',
-                folderName: '/image-store/generated/eyes/',
-                buffer: [50],
-                layerOpacity: [0.75]
-            }),
-            defaultEffectConfig: EncircledSpiralConfig
-        })
-    });
-
     promiseArray.push(myTestProject.generateRandomLoop());
 }
 
+
+const colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons)
+
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, '#00FF00'),
-    new ColorPicker(ColorPicker.SelectionType.color, '#FFFF00'),
-    new ColorPicker(ColorPicker.SelectionType.color, '#FF0000')
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket())
 );
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, '#0000FF'),
-    new ColorPicker(ColorPicker.SelectionType.color, '#00FF00'),
-    new ColorPicker(ColorPicker.SelectionType.color, '#FFFF00')
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket())
 );
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, '#FF0000'),
-    new ColorPicker(ColorPicker.SelectionType.color, '#00FF00'),
-    new ColorPicker(ColorPicker.SelectionType.color, '#0000FF')
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket())
 );
 
 Promise.all(promiseArray);

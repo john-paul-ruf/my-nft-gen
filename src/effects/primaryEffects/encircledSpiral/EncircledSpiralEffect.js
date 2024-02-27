@@ -64,9 +64,6 @@ export class EncircledSpiralEffect extends LayerEffect {
             for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
                 await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
                 await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
-
-                await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
-                await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
             }
         }
     }
@@ -74,9 +71,6 @@ export class EncircledSpiralEffect extends LayerEffect {
     async #drawTopLayer(context, ringIndex) {
         for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex < context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
             for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
-                await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
-                await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
-
                 await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
                 await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
             }
