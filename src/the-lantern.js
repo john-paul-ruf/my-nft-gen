@@ -63,8 +63,8 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
     const seq = 5;
     const sparsity = 45;
     const minSeq = 7
-    const stroke = 2;
-    const thickness = 1;
+    const stroke = 1;
+    const thickness = 2;
     const numberOfRings = new Range(4, 4);
     myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
@@ -140,7 +140,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
                 startIndex: {lower: 12, upper: 12},
                 initialNumberOfPoints: 25,
                 scaleByFactor: 1.1,
-                movementGaston: {lower: 10, upper: 20},
+                movementGaston: {lower: 30, upper: 40},
                 accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
                 featherTimes: {lower: 4, upper: 8},
