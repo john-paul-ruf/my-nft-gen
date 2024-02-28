@@ -63,11 +63,11 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
 
     const length = 1080 / 7;
     const seq = 5;
-    const sparsity = 45;
+    const sparsity = 60;
     const minSeq = 7
     const stroke = 1;
     const thickness = 0;
-    const numberOfRings = new Range(8, 8);
+    const numberOfRings = new Range(4, 4);
     myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
 
@@ -76,7 +76,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
             effect: FuzzyBandEffect,
             percentChance: 100,
             currentEffectConfig: new FuzzyBandConfig({
-                layerOpacity: 0.40,
+                layerOpacity: 0.70,
                 underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
                 underLayerOpacityTimes: {lower: 2, upper: 6},
                 color: new ColorPicker(),
@@ -88,7 +88,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
                     lower: (finalSize) => finalSize.shortestSide * 0.1,
                     upper: (finalSize) => finalSize.longestSide * 0.55
                 },
-                accentRange: {bottom: {lower: 4, upper: 8}, top: {lower: 12, upper: 18}},
+                accentRange: {bottom: {lower: 4, upper: 8}, top: {lower: 12, upper: 25}},
                 blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 4, upper: 8}},
                 featherTimes: {lower: 2, upper: 8},
             }),
@@ -106,9 +106,9 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
                 layerOpacityTimes: {lower: 4, upper: 8},
                 indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 indexOpacityTimes: {lower: 4, upper: 8},
-                thickness: 1,
+                thickness: 0,
                 stroke: 1,
-                layerOpacity: 0.25,
+                layerOpacity: 0.5,
                 radius: {lower: 40, upper: 80},
                 offsetRadius: {lower: 50, upper: 60},
                 numberOfIndex: {lower: 15, upper: 15},
@@ -128,7 +128,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
             effect: AmpEffect,
             percentChance: 100,
             currentEffectConfig: new AmpConfig({
-                layerOpacity: 0.25,
+                layerOpacity: 0.5,
                 underLayerOpacity: 0.25,
                 thickness: thickness,
                 lineStart: 550,
@@ -151,14 +151,14 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
                 layerOpacityTimes: {lower: 4, upper: 8},
                 indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 indexOpacityTimes: {lower: 4, upper: 8},
-                thickness: 1,
+                thickness: 0,
                 stroke: 1,
-                layerOpacity: 0.25,
+                layerOpacity: 0.50,
                 radius: {lower: 5, upper: 15},
-                offsetRadius: {lower: 30, upper: 30},
+                offsetRadius: {lower: 20, upper: 20},
                 numberOfIndex: {lower: 25, upper: 25},
                 startIndex: {lower: 15, upper: 15},
-                initialNumberOfPoints: 10,
+                initialNumberOfPoints: 8,
                 scaleByFactor: 1.1,
                 movementGaston: {lower: 30, upper: 40},
                 accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
