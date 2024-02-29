@@ -24,8 +24,9 @@ async function addSpiral(myTestProject, color, numberOfRings, stroke, thickness,
             percentChance: 100,
             currentEffectConfig: new EncircledSpiralConfig({
                 outerColor: color,
-                invertLayers: true,
-                layerOpacity: 0.5,
+                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#000000'),
+                invertLayers: false,
+                layerOpacity: 1,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
                 numberOfRings: numberOfRings,
@@ -63,11 +64,11 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
 
     const length = 1080 / 7;
     const seq = 5;
-    const sparsity = 60;
+    const sparsity = 30;
     const minSeq = 7
     const stroke = 1;
-    const thickness = 0;
-    const numberOfRings = new Range(4, 4);
+    const thickness = 8;
+    const numberOfRings = new Range(2, 2);
     myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
 
@@ -182,6 +183,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
         })
     });
 
+    //Underlay
     await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (2 * length)));
     await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (2 * length), (1920 / 2)));
     await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (2 * length), (1920 / 2)));
@@ -196,6 +198,22 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
     await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - length, (1920 / 2)));
     await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + length, (1920 / 2)));
     await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (length)));
+
+    //overlay
+    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (2 * length)));
+    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (2 * length), (1920 / 2)));
+    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (2 * length), (1920 / 2)));
+    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (2 * length)));
+
+    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)));
+    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)));
+
+    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - length, (1920 / 2)));
+    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + length, (1920 / 2)));
+    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (length)));
 
     promiseArray.push(myTestProject.generateRandomLoop());
 }
