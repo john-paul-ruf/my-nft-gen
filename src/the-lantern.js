@@ -38,9 +38,9 @@ async function addSpiral(myTestProject, color, point) {
                     upper: (finalSize) => finalSize.shortestSide * 0.001
                 },
                 sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-                minSequenceIndex: [11],
+                minSequenceIndex: [10],
                 numberOfSequenceElements: [2],
-                speed: {lower: 4, upper: 4},
+                speed: {lower: 5, upper: 5},
                 accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
                 featherTimes: {lower: 1, upper: 1},
