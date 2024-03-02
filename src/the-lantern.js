@@ -17,7 +17,7 @@ import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
 
 const promiseArray = [];
 
-async function addSpiral(myTestProject, color, numberOfRings, stroke, thickness, sparsity, minSeq, seq, point, layerOpacity, underlayOpacity) {
+async function addSpiral(myTestProject, color, point) {
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: EncircledSpiralEffect,
@@ -25,24 +25,24 @@ async function addSpiral(myTestProject, color, numberOfRings, stroke, thickness,
             currentEffectConfig: new EncircledSpiralConfig({
                 outerColor: color,
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
-                invertLayers: false,
-                layerOpacity: layerOpacity,
-                underLayerOpacity: underlayOpacity,
+                invertLayers: true,
+                layerOpacity: 1,
+                underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: numberOfRings,
-                stroke: stroke,
-                thickness: thickness,
-                sparsityFactor: [sparsity],
+                numberOfRings: new Range(2, 2),
+                stroke: 1,
+                thickness: 1,
+                sparsityFactor: [20],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
                     upper: (finalSize) => finalSize.shortestSide * 0.001
                 },
                 sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-                minSequenceIndex: [minSeq],
-                numberOfSequenceElements: [seq],
+                minSequenceIndex: [5],
+                numberOfSequenceElements: [7],
                 speed: {lower: 4, upper: 4},
                 accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 3, upper: 3}},
+                blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
                 featherTimes: {lower: 1, upper: 1},
                 //center
                 center: point,
@@ -52,7 +52,7 @@ async function addSpiral(myTestProject, color, numberOfRings, stroke, thickness,
     });
 }
 
-const createLantern = async (crossColor, squareColor, outlierColor) => {
+const createLantern = async (crossColor, squareColor, outlierColor, colorScheme) => {
 
     const myTestProject = new Project({
         artist: 'John Ruf',
@@ -63,13 +63,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
     });
 
     const length = 1080 / 7;
-    const seq = 5;
-    const sparsity = 30;
-    const minSeq = 7
-    const stroke = 1;
-    const thickness = 1;
-    const numberOfRings = new Range(2, 2);
-    myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+    myTestProject.colorScheme = colorScheme;
 
 
     await myTestProject.addPrimaryEffect({
@@ -84,7 +78,7 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
                 invertLayers: true,
                 thickness: 1,
-                stroke:1,
+                stroke: 1,
                 circles: {lower: 8, upper: 8},
                 radius: {
                     lower: (finalSize) => finalSize.shortestSide * 0.3,
@@ -170,60 +164,57 @@ const createLantern = async (crossColor, squareColor, outlierColor) => {
         })
     });
 
-    //Underlay
-    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (2 * length)),1,0);
-    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (2 * length), (1920 / 2)),1,0);
-    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (2 * length), (1920 / 2)),1,0);
-    await addSpiral(myTestProject, outlierColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (2 * length)),1,0);
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) + (2 * length)));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) - (2 * length), (1920 / 2)));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) + (2 * length), (1920 / 2)));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) - (2 * length)));
 
-    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)),1,0);
-    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)),1,0);
-    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)),1,0);
-    await addSpiral(myTestProject, squareColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)),1,0);
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)));
 
-    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (length)),1,0);
-    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - length, (1920 / 2)),1,0);
-    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + length, (1920 / 2)),1,0);
-    await addSpiral(myTestProject, crossColor, numberOfRings, 0, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (length)),1,0);
-
-    //overlay
-    await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (2 * length)),0,0.5);
-    await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (2 * length), (1920 / 2)),0,0.5);
-    await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (2 * length), (1920 / 2)),0,0.5);
-    await addSpiral(myTestProject, outlierColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (2 * length)),0,0.5);
-
-    await addSpiral(myTestProject, squareColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)),0,0.5);
-    await addSpiral(myTestProject, squareColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)),0,0.5);
-    await addSpiral(myTestProject, squareColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)),0,0.5);
-    await addSpiral(myTestProject, squareColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)),0,0.5);
-
-    await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) + (length)),0,0.5);
-    await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) - length, (1920 / 2)),0,0.5);
-    await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2) + length, (1920 / 2)),0,0.5);
-    await addSpiral(myTestProject, crossColor, numberOfRings, stroke, thickness, sparsity, minSeq, seq, new Point2D((1080 / 2), (1920 / 2) - (length)),0,0.5);
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) - length, (1920 / 2)));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) + length, (1920 / 2)));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) - (length)));
 
     promiseArray.push(myTestProject.generateRandomLoop());
 }
 
 
-const colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons)
+const neons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
+const redNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.redNeons);
+const greenNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
+const blueNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket())
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    neons,
 );
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket())
+    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
+    redNeons,
 );
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, colorScheme.getColorFromBucket())
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    greenNeons,
 );
+
+await createLantern(
+    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
+    blueNeons,
+);
+
 
 Promise.all(promiseArray);

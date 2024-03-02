@@ -50,11 +50,9 @@ export class NeonColorSchemeFactory {
                 return new ColorScheme({
                     colorBucket:
                         [
-                            '#FFFFFF',
                             '#FFFF00',
                             '#00FFFF',
                             '#00FF00',
-                            '#000000'
                         ],
                     colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
                 });
