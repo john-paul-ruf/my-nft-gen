@@ -38,8 +38,8 @@ async function addSpiral(myTestProject, color, point) {
                     upper: (finalSize) => finalSize.shortestSide * 0.001
                 },
                 sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-                minSequenceIndex: [5],
-                numberOfSequenceElements: [7],
+                minSequenceIndex: [11],
+                numberOfSequenceElements: [2],
                 speed: {lower: 4, upper: 4},
                 accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -65,35 +65,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
     const length = 1080 / 7;
     myTestProject.colorScheme = colorScheme;
 
-
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: FuzzyBandEffect,
-            percentChance: 100,
-            currentEffectConfig: new FuzzyBandConfig({
-                layerOpacity: 0.70,
-                underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
-                underLayerOpacityTimes: {lower: 2, upper: 6},
-                color: new ColorPicker(),
-                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
-                invertLayers: true,
-                thickness: 1,
-                stroke: 1,
-                circles: {lower: 8, upper: 8},
-                radius: {
-                    lower: (finalSize) => finalSize.shortestSide * 0.3,
-                    upper: (finalSize) => finalSize.shortestSide * 0.8
-                },
-                accentRange: {bottom: {lower: 10, upper: 15}, top: {lower: 30, upper: 45}},
-                blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 4, upper: 8}},
-                featherTimes: {lower: 2, upper: 8},
-            }),
-            defaultEffectConfig: FuzzyBandConfig
-        })
-    });
-
-
-    await myTestProject.addPrimaryEffect({
+   await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: LayeredHexEffect,
             percentChance: 100,
@@ -161,6 +133,32 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
                 featherTimes: {lower: 8, upper: 16},
             }),
+        })
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: FuzzyBandEffect,
+            percentChance: 100,
+            currentEffectConfig: new FuzzyBandConfig({
+                layerOpacity: 0.70,
+                underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
+                underLayerOpacityTimes: {lower: 2, upper: 6},
+                color: new ColorPicker(),
+                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+                invertLayers: true,
+                thickness: 1,
+                stroke: 1,
+                circles: {lower: 8, upper: 8},
+                radius: {
+                    lower: (finalSize) => finalSize.shortestSide * 0.3,
+                    upper: (finalSize) => finalSize.shortestSide * 0.8
+                },
+                accentRange: {bottom: {lower: 10, upper: 15}, top: {lower: 30, upper: 45}},
+                blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 4, upper: 8}},
+                featherTimes: {lower: 2, upper: 8},
+            }),
+            defaultEffectConfig: FuzzyBandConfig
         })
     });
 
