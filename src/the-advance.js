@@ -199,7 +199,7 @@ promiseArray.push(myTestProject.generateRandomLoop());
 promiseArray.push(myTestProject.generateRandomLoop());
 promiseArray.push(myTestProject.generateRandomLoop());
 
-Promise.all(promiseArray);
+await Promise.all(promiseArray);
 
 
 
