@@ -32,7 +32,7 @@ async function addSpiral(myTestProject, color, point) {
                 numberOfRings: new Range(2, 2),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [20],
+                sparsityFactor: [45],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
                     upper: (finalSize) => finalSize.shortestSide * 0.001
