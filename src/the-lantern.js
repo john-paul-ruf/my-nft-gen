@@ -213,4 +213,4 @@ await createLantern(
 );
 
 
-Promise.all(promiseArray);
+await Promise.all(promiseArray);
