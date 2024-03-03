@@ -3,16 +3,8 @@ import {LayerConfig} from "./core/layer/LayerConfig.js";
 import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
 import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
 import {NeonColorScheme, NeonColorSchemeFactory} from "./core/color/NeonColorSchemeFactory.js";
-import {ScopesEffect} from "./effects/primaryEffects/scopes/ScopesEffect.js";
-import {ScopesConfig} from "./effects/primaryEffects/scopes/ScopesConfig.js";
 import {FuzzyBandEffect} from "./effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js";
 import {FuzzyBandConfig} from "./effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js";
-import {EncircledSpiralEffect} from "./effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
-import {EncircledSpiralConfig} from "./effects/primaryEffects/encircledSpiral/EncircledSpiralConfig.js";
-import {ViewportEffect} from "./effects/primaryEffects/viewport/ViewportEffect.js";
-import {ViewportConfig} from "./effects/primaryEffects/viewport/ViewportConfig.js";
-import {MappedFramesEffect} from "./effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
-import {MappedFramesConfig} from "./effects/primaryEffects/mappedFrames/MappedFramesConfig.js";
 import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEffect.js";
 import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
 import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
@@ -21,24 +13,6 @@ import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffec
 import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
 import {Range} from "./core/layer/configType/Range.js";
 import {ColorPicker} from "./core/layer/configType/ColorPicker.js";
-import {findPointByAngleAndCircle} from "./core/math/drawingMath.js";
-import {Point2D} from "./core/layer/configType/Point2D.js";
-import {FuzzyRipplesEffect} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
-import {FuzzyRipplesConfig} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js";
-import {PercentageRange} from "./core/layer/configType/PercentageRange.js";
-import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
-import {
-    SingleLayerGlitchDrumrollHorizontalWaveEffect
-} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js";
-import {
-    SingleLayerGlitchDrumrollHorizontalWaveConfig
-} from "./effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
-import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
-import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
-import {HexConfig} from "./effects/primaryEffects/hex/HexConfig.js";
-import {HexEffect} from "./effects/primaryEffects/hex/HexEffect.js";
-import {LayeredRingEffect} from "./effects/primaryEffects/layeredRing/LayeredRingEffect.js";
-import {LayeredRingConfig} from "./effects/primaryEffects/layeredRing/LayeredRingConfig.js";
 import {DynamicRange} from "./core/layer/configType/DynamicRange.js";
 
 const myTestProject = new Project({

@@ -9,8 +9,6 @@ import {EncircledSpiralConfig} from "./effects/primaryEffects/encircledSpiral/En
 import {Point2D} from "./core/layer/configType/Point2D.js";
 import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEffect.js";
 import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
-import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
-import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
 import {Range} from "./core/layer/configType/Range.js";
 import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
 import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
