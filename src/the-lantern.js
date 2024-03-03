@@ -38,9 +38,9 @@ async function addSpiral(myTestProject, color, point) {
                     upper: (finalSize) => finalSize.shortestSide * 0.001
                 },
                 sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
-                minSequenceIndex: [10],
-                numberOfSequenceElements: [2],
-                speed: {lower: 5, upper: 5},
+                minSequenceIndex: [9],
+                numberOfSequenceElements: [3],
+                speed: {lower: 3, upper: 3},
                 accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
                 featherTimes: {lower: 1, upper: 1},
@@ -86,7 +86,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 movementGaston: {lower: 10, upper: 20},
                 accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                featherTimes: {lower: 4, upper: 8},
+                featherTimes: {lower: 2, upper: 6},
             }),
         })
     });
@@ -103,7 +103,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 length: 100,
                 sparsityFactor: [1],
                 center: {x: 1080 / 2, y: 1920 / 2},
-                speed: {lower: 120, upper: 120},
+                speed: {lower: 60, upper: 60},
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
             }),
             defaultEffectConfig: AmpConfig,
@@ -128,10 +128,10 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 startIndex: {lower: 14, upper: 14},
                 initialNumberOfPoints: 8,
                 scaleByFactor: 1.1,
-                movementGaston: {lower: 30, upper: 40},
+                movementGaston: {lower: 5, upper: 10},
                 accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
                 blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                featherTimes: {lower: 8, upper: 16},
+                featherTimes: {lower: 2, upper: 6},
             }),
         })
     });
@@ -156,7 +156,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 },
                 accentRange: {bottom: {lower: 10, upper: 15}, top: {lower: 30, upper: 45}},
                 blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 4, upper: 8}},
-                featherTimes: {lower: 2, upper: 8},
+                featherTimes: {lower: 2, upper: 6},
             }),
             defaultEffectConfig: FuzzyBandConfig
         })
