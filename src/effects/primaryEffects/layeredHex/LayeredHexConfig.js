@@ -14,18 +14,18 @@ export class LayeredHexConfig extends EffectConfig {
             indexOpacityRange= {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.9, upper: 1}},
             indexOpacityTimes= {lower: 2, upper: 4},
 
-            radius= {lower: 60, upper: 80},
-            offsetRadius= {lower: 70, upper: 120},
+            radius={lower: 10, upper: 20},
+            offsetRadius= {lower: 15, upper: 30},
 
-            numberOfIndex= {lower: 10, upper: 20},
-            startIndex= {lower: 10, upper: 12},
+            numberOfIndex= {lower: 10, upper: 30},
+            startIndex= {lower: 8, upper: 12},
 
             startAngle= 15,
 
             movementGaston= {lower: 1, upper: 6},
 
             initialNumberOfPoints= 12,
-            scaleByFactor= 1.125,
+            scaleByFactor= 1.3,
 
             accentRange= {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
             blurRange= {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},

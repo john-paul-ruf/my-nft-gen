@@ -64,9 +64,6 @@ export class EncircledSpiralEffect extends LayerEffect {
             for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
                 await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
                 await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
-
-                await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
-                await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
             }
         }
     }
@@ -74,11 +71,8 @@ export class EncircledSpiralEffect extends LayerEffect {
     async #drawTopLayer(context, ringIndex) {
         for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex < context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
             for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
-                await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
-                await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
-
-                await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
-                await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
+                await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
+                await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
             }
         }
     }
@@ -179,8 +173,8 @@ export class EncircledSpiralEffect extends LayerEffect {
                     numberOfSequenceElements: getRandomFromArray(this.config.numberOfSequenceElements),
                     sequencePixelConstant: randomNumber(this.config.sequencePixelConstant.lower(this.finalSize), this.config.sequencePixelConstant.upper(this.finalSize)),
                     sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
-                    innerColor: settings.getNeutralFromBucket(),
-                    outerColor: settings.getColorFromBucket(),
+                    innerColor: this.config.innerColor?.getColor(settings) ?? settings.getNeutralFromBucket(),
+                    outerColor: this.config.outerColor?.getColor(settings) ?? settings.getColorFromBucket(),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)

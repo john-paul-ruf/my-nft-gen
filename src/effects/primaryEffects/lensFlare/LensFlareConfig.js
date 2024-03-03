@@ -25,15 +25,15 @@ export class LensFlareConfig extends EffectConfig {
             angleGastonTimes =  new Range(1,6),
 
             numberOfFlareRings = new Range(10,20),
-            flareRingsSizeRange  = new PercentageRange(new PercentageShortestSide(0.1), new PercentageLongestSide(0.55)),
+            flareRingsSizeRange  = new PercentageRange(new PercentageShortestSide(0.25), new PercentageLongestSide(0.75)),
             flareRingStroke =  new Range(1,1),
 
             numberOfFlareRays = new Range(20,30),
             flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(1)),
             flareRaysStroke = new Range(1,1),
 
-            blurRange =  new DynamicRange(new Range(1,1), new Range(3,3)),
-            blurTimes =new Range(1,1),
+            blurRange =  new DynamicRange(new Range(0,0), new Range(0,0)),
+            blurTimes =new Range(0,0),
 
             strategy = ['original', 'color-bucket', 'neutral-bucket'],
 
