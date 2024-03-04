@@ -30,7 +30,7 @@ async function addSpiral(myTestProject, color, point) {
                 numberOfRings: new Range(2, 2),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [45],
+                sparsityFactor: [30],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
                     upper: (finalSize) => finalSize.shortestSide * 0.001
@@ -121,9 +121,9 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 stroke: 1,
                 layerOpacity: 0.75,
                 radius: {lower: 5, upper: 15},
-                offsetRadius: {lower: 20, upper: 20},
-                numberOfIndex: {lower: 22, upper: 22},
-                startIndex: {lower: 14, upper: 14},
+                offsetRadius: {lower: 25, upper: 25},
+                numberOfIndex: {lower: 30, upper: 30},
+                startIndex: {lower: 20, upper: 20},
                 initialNumberOfPoints: 8,
                 scaleByFactor: 1.1,
                 movementGaston: {lower: 5, upper: 10},
