@@ -12,22 +12,22 @@ import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexCo
 import {Range} from "./core/layer/configType/Range.js";
 import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
 import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
+import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
+import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
 
 const promiseArray = [];
 
 async function addSpiral(myTestProject, color, point) {
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: EncircledSpiralEffect,
-            percentChance: 100,
-            currentEffectConfig: new EncircledSpiralConfig({
+            effect: EncircledSpiralEffect, percentChance: 100, currentEffectConfig: new EncircledSpiralConfig({
                 outerColor: color,
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
                 invertLayers: true,
-                layerOpacity: 1,
+                layerOpacity: 0.7,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: new Range(2, 2),
+                numberOfRings: new Range(6, 6),
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [30],
@@ -40,14 +40,23 @@ async function addSpiral(myTestProject, color, point) {
                 numberOfSequenceElements: [3],
                 speed: {lower: 3, upper: 3},
                 accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-                blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                featherTimes: {lower: 1, upper: 1},
-                //center
+                blurRange: {bottom: {lower: 2, upper: 2}, top: {lower: 2, upper: 2}},
+                featherTimes: {lower: 1, upper: 1}, //center
                 center: point,
-            }),
-            defaultEffectConfig: EncircledSpiralConfig
+            }), defaultEffectConfig: EncircledSpiralConfig, possibleSecondaryEffects: [
+                new LayerConfig({
+                    effect: GlowEffect,
+                    percentChance: 100,
+                    currentEffectConfig: new GlowConfig({
+                        lowerRange: {lower: -6, upper: -6},
+                        upperRange: {lower: 6, upper: 6},
+                        times: {lower: 4, upper: 4},
+                    }),
+                })
+            ]
         })
-    });
+    })
+    ;
 }
 
 const createLantern = async (crossColor, squareColor, outlierColor, colorScheme) => {
@@ -63,11 +72,9 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
     const length = 1080 / 7;
     myTestProject.colorScheme = colorScheme;
 
-   await myTestProject.addPrimaryEffect({
+    await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: LayeredHexEffect,
-            percentChance: 100,
-            currentEffectConfig: new LayeredHexConfig({
+            effect: LayeredHexEffect, percentChance: 100, currentEffectConfig: new LayeredHexConfig({
                 layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 layerOpacityTimes: {lower: 4, upper: 8},
                 indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
@@ -76,8 +83,8 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 stroke: 1,
                 layerOpacity: 0.75,
                 radius: {lower: 40, upper: 80},
-                offsetRadius: {lower: 50, upper: 60},
-                numberOfIndex: {lower: 15, upper: 15},
+                offsetRadius: {lower: 45, upper: 65},
+                numberOfIndex: {lower: 10, upper: 20},
                 startIndex: {lower: 8, upper: 10},
                 initialNumberOfPoints: 10,
                 scaleByFactor: 1.1,
@@ -91,28 +98,23 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: AmpEffect,
-            percentChance: 100,
-            currentEffectConfig: new AmpConfig({
+            effect: AmpEffect, percentChance: 100, currentEffectConfig: new AmpConfig({
                 layerOpacity: 0.5,
                 underLayerOpacity: 0.25,
                 thickness: 1,
-                lineStart: 550,
-                length: 100,
+                lineStart: 425,
+                length: 75,
                 sparsityFactor: [1],
                 center: {x: 1080 / 2, y: 1920 / 2},
                 speed: {lower: 60, upper: 60},
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
-            }),
-            defaultEffectConfig: AmpConfig,
+            }), defaultEffectConfig: AmpConfig,
         })
     });
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: LayeredHexEffect,
-            percentChance: 100,
-            currentEffectConfig: new LayeredHexConfig({
+            effect: LayeredHexEffect, percentChance: 100, currentEffectConfig: new LayeredHexConfig({
                 layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 layerOpacityTimes: {lower: 4, upper: 8},
                 indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
@@ -120,8 +122,8 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 thickness: 1,
                 stroke: 1,
                 layerOpacity: 0.75,
-                radius: {lower: 5, upper: 15},
-                offsetRadius: {lower: 25, upper: 25},
+                radius: {lower: 10, upper: 25},
+                offsetRadius: {lower: 20, upper: 30},
                 numberOfIndex: {lower: 30, upper: 30},
                 startIndex: {lower: 20, upper: 20},
                 initialNumberOfPoints: 8,
@@ -136,9 +138,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: FuzzyBandEffect,
-            percentChance: 100,
-            currentEffectConfig: new FuzzyBandConfig({
+            effect: FuzzyBandEffect, percentChance: 100, currentEffectConfig: new FuzzyBandConfig({
                 layerOpacity: 0.70,
                 underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
                 underLayerOpacityTimes: {lower: 2, upper: 6},
@@ -147,16 +147,15 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 invertLayers: true,
                 thickness: 1,
                 stroke: 1,
-                circles: {lower: 8, upper: 8},
+                circles: {lower: 10, upper: 10},
                 radius: {
-                    lower: (finalSize) => finalSize.shortestSide * 0.3,
-                    upper: (finalSize) => finalSize.shortestSide * 0.8
+                    lower: (finalSize) => finalSize.shortestSide * 0.4,
+                    upper: (finalSize) => finalSize.shortestSide * 0.6
                 },
                 accentRange: {bottom: {lower: 10, upper: 15}, top: {lower: 30, upper: 45}},
-                blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 4, upper: 8}},
+                blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
                 featherTimes: {lower: 2, upper: 6},
-            }),
-            defaultEffectConfig: FuzzyBandConfig
+            }), defaultEffectConfig: FuzzyBandConfig
         })
     });
 
@@ -183,7 +182,10 @@ const neons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 const redNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.redNeons);
 const greenNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
 const blueNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+const primaryNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.primaryNeons);
+const secondaryNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.secondaryNeons);
 
+/*
 await createLantern(
     new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
     new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
@@ -211,6 +213,10 @@ await createLantern(
     new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
     blueNeons,
 );
+*/
 
+await createLantern(new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()), new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()), new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()), primaryNeons,);
+
+await createLantern(new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()), new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()), new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()), secondaryNeons,);
 
 await Promise.all(promiseArray);
