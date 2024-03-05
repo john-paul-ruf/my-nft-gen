@@ -66,7 +66,7 @@ export class NeonColorSchemeFactory {
                             '#00FF00',
                             '#0000FF',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.primaryNeons}\n`,
                 });
             case NeonColorScheme.secondaryNeons:
                 return new ColorScheme({
@@ -76,7 +76,7 @@ export class NeonColorSchemeFactory {
                             '#00FFFF',
                             '#FF00FF',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.secondaryNeons}\n`,
                 });
             default:
                 throw 'Not a color scheme';
