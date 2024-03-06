@@ -29,7 +29,7 @@ async function addSpiral(myTestProject, color, point) {
                 layerOpacity: 0.7,
                 underLayerOpacity: 0.5,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: new Range(6, 6),
+                numberOfRings: new Range(8, 8),
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [30],
@@ -138,12 +138,44 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
         })
     });
 
+    //outliers
+
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) + (2 * length)));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) - (2 * length), (1920 / 2)));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) + (2 * length), (1920 / 2)));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) - (2 * length)));
+    //square
+
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)));
+    //cross
+/*
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) + (length)));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) - length, (1920 / 2)));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) + length, (1920 / 2)));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) - (length)));*/
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: MappedFramesEffect,
+            percentChance: 100,
+            currentEffectConfig: new MappedFramesConfig({
+                folderName: '/mappedFrames/',
+                layerOpacity: [1.0],
+                buffer: [750],
+                loopTimes: 30,
+            }), defaultEffectConfig: MappedFramesConfig
+        })
+    });
+
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: FuzzyBandEffect, percentChance: 100, currentEffectConfig: new FuzzyBandConfig({
                 layerOpacity: 0.70,
-                underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
-                underLayerOpacityTimes: {lower: 2, upper: 6},
+                underLayerOpacityRange: {bottom: {lower: 0.4, upper: 0.4}, top: {lower: 0.4, upper: 0.4}},
+                underLayerOpacityTimes: {lower: 1, upper: 1},
                 color: new ColorPicker(),
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
                 invertLayers: true,
@@ -160,37 +192,6 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
             }), defaultEffectConfig: FuzzyBandConfig
         })
     });
-
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: MappedFramesEffect,
-            percentChance: 100,
-            currentEffectConfig: new MappedFramesConfig({
-                folderName: '/mappedFrames/',
-                layerOpacity: [1.0],
-                buffer: [750],
-                loopTimes: 20,
-            }), defaultEffectConfig: MappedFramesConfig
-        })
-    });
-    //outliers
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) + (2 * length)));
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) - (2 * length), (1920 / 2)));
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) + (2 * length), (1920 / 2)));
-
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) - (2 * length)));
-    //square
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)));
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)));
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)));
-
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)));
-    //cross
-
-    /*await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) + (length)));
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) - length, (1920 / 2)));
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) + length, (1920 / 2)));
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) - (length)));*/
 
     promiseArray.push(myTestProject.generateRandomLoop());
 }
