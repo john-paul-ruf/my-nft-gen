@@ -76,6 +76,29 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
+            effect: FuzzyBandEffect, percentChance: 100, currentEffectConfig: new FuzzyBandConfig({
+                layerOpacity: 0.70,
+                underLayerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+                underLayerOpacityTimes: {lower: 2, upper: 8},
+                color: new ColorPicker(),
+                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+                invertLayers: true,
+                thickness: 1,
+                stroke: 1,
+                circles: {lower: 18, upper: 18},
+                radius: {
+                    lower: (finalSize) => finalSize.shortestSide * 0.5,
+                    upper: (finalSize) => finalSize.longestSide * 0.5
+                },
+                accentRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 20}},
+                blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
+                featherTimes: {lower: 2, upper: 6},
+            }), defaultEffectConfig: FuzzyBandConfig
+        })
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
             effect: LayeredHexEffect, percentChance: 100, currentEffectConfig: new LayeredHexConfig({
                 layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 layerOpacityTimes: {lower: 4, upper: 8},
@@ -138,29 +161,6 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
         })
     });
 
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: FuzzyBandEffect, percentChance: 100, currentEffectConfig: new FuzzyBandConfig({
-                layerOpacity: 0.70,
-                underLayerOpacityRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.3, upper: 0.4}},
-                underLayerOpacityTimes: {lower: 2, upper: 6},
-                color: new ColorPicker(),
-                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
-                invertLayers: true,
-                thickness: 1,
-                stroke: 1,
-                circles: {lower: 24, upper: 24},
-                radius: {
-                    lower: (finalSize) => finalSize.shortestSide * 0.5,
-                    upper: (finalSize) => finalSize.longestSide * 0.5
-                },
-                accentRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 20}},
-                blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
-                featherTimes: {lower: 2, upper: 6},
-            }), defaultEffectConfig: FuzzyBandConfig
-        })
-    });
-
 
     //heart
     await addSpiral(myTestProject, heartColor, new Point2D((1080 / 2), (1920 / 2)), new Range(8,8));
@@ -207,45 +207,20 @@ await createLantern(
     neons,
 );
 
-/*
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    redNeons,
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    neons,
 );
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    greenNeons,
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    neons,
 );
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    blueNeons,
-);
-*/
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, primaryNeons.getColorFromBucket()),
-    primaryNeons
-);
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, secondaryNeons.getColorFromBucket()),
-    secondaryNeons,);
 
 await Promise.all(promiseArray);
