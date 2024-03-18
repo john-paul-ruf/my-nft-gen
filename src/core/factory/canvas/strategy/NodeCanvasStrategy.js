@@ -192,4 +192,64 @@ export class NodeCanvasStrategy {
             this.context.closePath();
         }
     }
+
+    async drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
+
+        this.context.beginPath();
+
+        this.context.lineWidth = outerStroke + innerStroke;
+        this.context.strokeStyle = hexToRgba(outerColor, alpha);
+
+        this.context.moveTo(path[0].x, path[0].y);
+
+        for (let index = 0; index < path.length; index++) {
+            this.context.lineTo(path[index].x, path[index].y)
+        }
+
+        this.context.stroke();
+        this.context.closePath();
+
+        if (innerStroke > 0) {
+            this.context.beginPath();
+
+            this.context.lineWidth = innerStroke;
+            this.context.strokeStyle = hexToRgba(innerColor, alpha);
+
+            this.context.moveTo(path[0].x, path[0].y);
+
+            for (let index = 0; index < path.length; index++) {
+                this.context.lineTo(path[index].x, path[index].y)
+            }
+
+            this.context.stroke();
+            this.context.closePath();
+        }
+    }
+
+    async drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
+
+        this.context.beginPath();
+
+        this.context.lineWidth = outerStroke + innerStroke;
+        this.context.strokeStyle = hexToRgba(outerColor, alpha);
+
+        this.context.moveTo(startPoint.x, startPoint.y);
+        this.context.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
+
+        this.context.stroke();
+        this.context.closePath();
+
+        if (innerStroke > 0) {
+            this.context.beginPath();
+
+            this.context.lineWidth = innerStroke;
+            this.context.strokeStyle = hexToRgba(innerColor, alpha);
+
+            this.context.moveTo(startPoint.x, startPoint.y);
+            this.context.quadraticCurveTo(controlPoint.x,controlPoint.y, endPoint.x, endPoint.y);
+
+            this.context.stroke();
+            this.context.closePath();
+        }
+    }
 }
