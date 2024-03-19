@@ -174,11 +174,11 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
             currentEffectConfig: new LensFlareConfig({
                 numberOfFlareRings: new Range(10,20),
                 flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.5), new PercentageLongestSide(0.75)),
-                flareRingStroke:  new Range(1,1),
+                flareRingStroke:  new Range(2,4),
 
                 numberOfFlareRays: new Range(20,40),
                 flareRaysSizeRange: new PercentageRange(new PercentageShortestSide(0.55), new PercentageLongestSide(1)),
-                flareRaysStroke: new Range(1,3),
+                flareRaysStroke: new Range(2,4),
 
                 strategy: ['color-bucket'],
                 layerOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
