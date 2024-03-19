@@ -16,6 +16,12 @@ import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
 import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
 import {MappedFramesEffect} from "./effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
 import {MappedFramesConfig} from "./effects/primaryEffects/mappedFrames/MappedFramesConfig.js";
+import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
+import {DynamicRange} from "./core/layer/configType/DynamicRange.js";
+import {PercentageRange} from "./core/layer/configType/PercentageRange.js";
+import {PercentageShortestSide} from "./core/layer/configType/PercentageShortestSide.js";
+import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
 
 const promiseArray = [];
 
@@ -29,10 +35,10 @@ async function addSpiral(myTestProject, color, point, speed) {
                 layerOpacity: 0.5,
                 underLayerOpacity: 0.4,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: new Range(8, 8),
+                numberOfRings: new Range(4, 4),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [45],
+                sparsityFactor: [30],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
                     upper: (finalSize) => finalSize.shortestSide * 0.001
@@ -74,7 +80,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
     const length = 1080 / 7;
     myTestProject.colorScheme = colorScheme;
 
-    await myTestProject.addPrimaryEffect({
+   await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: FuzzyBandEffect, percentChance: 100, currentEffectConfig: new FuzzyBandConfig({
                 layerOpacity: 0.70,
@@ -85,7 +91,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
                 invertLayers: true,
                 thickness: 1,
                 stroke: 1,
-                circles: {lower: 18, upper: 18},
+                circles: {lower: 8, upper: 8},
                 radius: {
                     lower: (finalSize) => finalSize.shortestSide * 0.5,
                     upper: (finalSize) => finalSize.longestSide * 0.5
@@ -161,6 +167,34 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
         })
     });
 
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: LensFlareEffect,
+            percentChance: 100,
+            currentEffectConfig: new LensFlareConfig({
+                numberOfFlareRings: new Range(10,20),
+                flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.5), new PercentageLongestSide(0.75)),
+                flareRingStroke:  new Range(1,1),
+
+                numberOfFlareRays: new Range(20,40),
+                flareRaysSizeRange: new PercentageRange(new PercentageShortestSide(0.55), new PercentageLongestSide(1)),
+                flareRaysStroke: new Range(1,3),
+
+                strategy: ['color-bucket'],
+                layerOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
+                layerOpacityTimes: new Range(4,8),
+
+                elementOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
+                elementOpacityTimes: new Range(6,12),
+
+                elementGastonRange: new DynamicRange(new Range(10,20), new Range(30,60)),
+                elementGastonTimes:  new Range(4,8),
+            }),
+            possibleSecondaryEffects: [
+
+            ]
+        })
+    });
 
     //heart
     await addSpiral(myTestProject, heartColor, new Point2D((1080 / 2), (1920 / 2)), new Range(8,8));

@@ -2,7 +2,7 @@ import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {findValue} from "../../../core/math/findValue.js";
-import { promises as fs } from 'fs'
+import {promises as fs} from 'fs'
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {Settings} from "../../../core/Settings.js";
 import {FuzzyBandConfig} from "./FuzzyBandConfig.js";
@@ -33,66 +33,50 @@ export class FuzzyBandEffect extends LayerEffect {
 
 
     async #top(context, i) {
-        return new Promise(async (resolve) => {
-            let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-            //draw
-            await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, context.data.stroke, context.data.circles[i].color)
-            await canvas.toFile(context.names.layerNames[i]);
+        //draw
+        await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, context.data.stroke, context.data.circles[i].color)
+        await canvas.toFile(context.names.layerNames[i]);
 
-            //opacity
-            let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
-            await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+        //opacity
+        let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
+        await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
-            await tempLayer.toFile(context.names.layerNames[i]);
-
-            resolve();
-        });
+        await tempLayer.toFile(context.names.layerNames[i]);
     }
 
     async #bottom(context, i) {
-        return new Promise(async (resolve) => {
-            let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        let canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-            //draw underlay
-            const theAccentGaston = findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame);
-            await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
-            await canvas.toFile(context.names.underlayNames[i]);
+        //draw underlay
+        const theAccentGaston = findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame);
+        await canvas.drawRing2d(context.data.center, context.data.circles[i].radius, context.data.thickness, context.data.circles[i].innerColor, (context.data.stroke + theAccentGaston), context.data.circles[i].color)
+        await canvas.toFile(context.names.underlayNames[i]);
 
-            let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
+        let underlayLayer = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
 
-            //blur
-            const theBlurGaston = Math.ceil(findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame));
-            await underlayLayer.blur(theBlurGaston);
+        //blur
+        const theBlurGaston = Math.ceil(findValue(context.data.circles[i].blurRange.lower, context.data.circles[i].blurRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame));
+        await underlayLayer.blur(theBlurGaston);
 
-            //opacity
-            const theUnderLayerOpacityGaston = findValue(context.data.circles[i].underLayerOpacityRange.lower, context.data.circles[i].underLayerOpacityRange.upper, context.data.circles[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
-            await underlayLayer.adjustLayerOpacity(theUnderLayerOpacityGaston);
+        //opacity
+        const theUnderLayerOpacityGaston = findValue(context.data.circles[i].underLayerOpacityRange.lower, context.data.circles[i].underLayerOpacityRange.upper, context.data.circles[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
+        await underlayLayer.adjustLayerOpacity(theUnderLayerOpacityGaston);
 
-            await underlayLayer.toFile(context.names.underlayNames[i], this.fileConfig);
-
-            resolve();
-        });
+        await underlayLayer.toFile(context.names.underlayNames[i], this.fileConfig);
     }
 
-    #buildLayers(context) {
-        return new Promise(async (resolve) => {
-            const promiseArray = [];
+    async #buildLayers(context) {
+        //draw with top, opacity
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
+            await this.#top(context, i);
+        }
 
-            //draw with top, opacity
-            for (let i = 0; i < context.data.numberOfCircles; i++) {
-                promiseArray.push(this.#top(context, i));
-            }
-
-            //draw underlay, blur, and opacity
-            for (let i = 0; i < context.data.numberOfCircles; i++) {
-                promiseArray.push(this.#bottom(context, i));
-            }
-
-            Promise.all(promiseArray).then(() => {
-                resolve();
-            });
-        });
+        //draw underlay, blur, and opacity
+        for (let i = 0; i < context.data.numberOfCircles; i++) {
+            await this.#bottom(context, i);
+        }
     }
 
     async #createThoseFuzzyBands(context) {
