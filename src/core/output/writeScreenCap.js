@@ -1,4 +1,4 @@
-import fs from "fs";
+import { promises as fs } from 'fs'
 
 export const writeScreenCap = async (filename, config) => {
     return new Promise((resolve) => {

@@ -1,7 +1,11 @@
 import sharp from "sharp";
 import {randomId} from "../../../math/random.js";
-import fs from "fs";
+import { Readable } from "stream";
+import { pipeline } from 'node:stream/promises';
+import { promises as fs, createWriteStream } from 'fs'
 import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
+import { promisify } from 'util';
+
 
 export class SharpLayerStrategy {
     constructor({
@@ -29,19 +33,23 @@ export class SharpLayerStrategy {
         const filename = this.workingDirectory + 'blank-layer' + randomId() + '.png'
         await this.toFile(filename)
         await this.fromFile(filename)
-        fs.unlinkSync(filename);
+        await fs.unlink(filename);
     }
 
     async fromFile(filename) {
-        this.fileBuffer = fs.readFileSync(filename);
+        this.fileBuffer = await fs.readFile(filename);
         this.internalRepresentation = sharp(this.fileBuffer);
     }
 
     async toFile(filename) {
         const buffer = await this.internalRepresentation.png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: true})
-        fs.writeFileSync(filename, Buffer.from(buffer.data));
+        }).toBuffer({resolveWithObject: false});
+
+        const readableStream = Readable.from(buffer);
+        const writableStream = createWriteStream(filename);
+
+        await pipeline(readableStream, writableStream)
     }
 
     async compositeLayerOver(layer, withResize = true) {
@@ -63,15 +71,18 @@ export class SharpLayerStrategy {
             input: overlayFile
         }]).png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: true});
+        }).toBuffer({resolveWithObject: false});
 
-        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+        const readableStream = Readable.from(buffer);
+        const writableStream = createWriteStream(compositeFile);
+
+        await pipeline(readableStream, writableStream)
 
         await this.fromFile(compositeFile);
 
-        fs.unlinkSync(overlayFile);
-        fs.unlinkSync(targetFile);
-        fs.unlinkSync(compositeFile);
+        await fs.unlink(overlayFile);
+        await fs.unlink(targetFile);
+        await fs.unlink(compositeFile);
     }
 
     async adjustLayerOpacity(opacity) {
@@ -89,14 +100,17 @@ export class SharpLayerStrategy {
             }, blend: 'dest-in'
         }]).png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: true});
+        }).toBuffer({resolveWithObject: false});
 
-        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+        const readableStream = Readable.from(buffer);
+        const writableStream = createWriteStream(compositeFile);
+
+        await pipeline(readableStream, writableStream)
 
         await this.fromFile(compositeFile);
 
-        fs.unlinkSync(targetFile);
-        fs.unlinkSync(compositeFile);
+        await fs.unlink(targetFile);
+        await fs.unlink(compositeFile);
     }
 
     async blur(byPixels) {

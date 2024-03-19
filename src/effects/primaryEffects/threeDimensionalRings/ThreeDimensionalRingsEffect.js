@@ -5,7 +5,7 @@ import {Canvas3d} from "../../../core/factory/canvas/Canvas3d.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {degreesToRadians} from "../../../core/math/drawingMath.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {Settings} from "../../../core/Settings.js";
 import {ThreeDimensionalRingsConfig} from "./ThreeDimensionalRingsConfig.js";
 
@@ -120,7 +120,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
 
         await layer.fromFile(context.drawing);
 
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {

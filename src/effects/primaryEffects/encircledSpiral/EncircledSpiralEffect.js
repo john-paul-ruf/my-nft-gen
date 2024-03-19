@@ -3,7 +3,7 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import {promises as fs} from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {EncircledSpiralConfig} from "./EncircledSpiralConfig.js";
@@ -142,7 +142,7 @@ export class EncircledSpiralEffect extends LayerEffect {
 
         await this.#processDrawFunction(context);
 
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.drawing);
     }
 
 

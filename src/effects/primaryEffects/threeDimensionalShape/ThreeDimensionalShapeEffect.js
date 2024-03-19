@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import * as THREE from "three";
 import {Canvas3d} from "../../../core/factory/canvas/Canvas3d.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
@@ -111,7 +111,7 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
 
         await layer.fromFile(context.drawing);
 
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {

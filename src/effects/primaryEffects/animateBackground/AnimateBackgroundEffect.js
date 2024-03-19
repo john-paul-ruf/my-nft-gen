@@ -1,7 +1,7 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import Jimp from "jimp";
 import {Settings} from "../../../core/Settings.js";
 import {AnimateBackgroundConfig} from "./AnimateBackgroundConfig.js";
@@ -54,7 +54,7 @@ export class AnimateBackgroundEffect extends LayerEffect {
 
         await layer.blur(1)
 
-        fs.unlinkSync(filename);
+        await fs.unlink(filename);
     }
 
     #generate(settings) {

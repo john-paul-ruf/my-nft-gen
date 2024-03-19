@@ -3,7 +3,7 @@ import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {Settings} from "../../../core/Settings.js";
 import {RayRingConfig} from "./RayRingConfig.js";
@@ -113,8 +113,8 @@ export class RayRingEffect extends LayerEffect {
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
-        fs.unlinkSync(context.drawing);
-        fs.unlinkSync(context.underlayName);
+        await fs.unlink(context.drawing);
+        await fs.unlink(context.underlayName);
 
     }
 

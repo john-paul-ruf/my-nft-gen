@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import Jimp from "jimp";
 import {findValue} from "../../../core/math/findValue.js";
 import {Settings} from "../../../core/Settings.js";
@@ -49,7 +49,7 @@ export class PixelateEffect extends LayerEffect {
 
             await layer.fromFile(filename);
 
-            fs.unlinkSync(filename);
+            await fs.unlink(filename);
         }
     }
 

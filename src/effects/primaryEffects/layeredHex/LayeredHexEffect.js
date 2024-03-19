@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import fs from "fs";
+import {promises as fs} from 'fs'
 import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../core/math/drawingMath.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
@@ -66,65 +66,56 @@ export class LayeredHexEffect extends LayerEffect {
     }
 
     async #drawLayer(context, arrayIndex, useAccentGaston) {
-        return new Promise(async (innerResolve) => {
-            try {
-                const tempFileName = this.workingDirectory + 'layered-hex-element' + randomId() + '.png'
-                const {element, tempCanvas} = await this.#drawHexElement(arrayIndex, context, useAccentGaston);
-                await tempCanvas.toFile(tempFileName)
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
-                const theBlurGaston = Math.ceil(findValue(element.blurRange.lower, element.blurRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame))
-                await tempLayer.blur(theBlurGaston);
-                fs.unlinkSync(tempFileName);
-                innerResolve(tempLayer);
-            } catch (e) {
-                console.log(e);
-            }
-        });
+        const tempFileName = this.workingDirectory + 'layered-hex-element' + randomId() + '.png'
+        const {element, tempCanvas} = await this.#drawHexElement(arrayIndex, context, useAccentGaston);
+        await tempCanvas.toFile(tempFileName)
+        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
+        const theBlurGaston = Math.ceil(findValue(element.blurRange.lower, element.blurRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame))
+        await tempLayer.blur(theBlurGaston);
+        await fs.unlink(tempFileName);
+        return tempLayer;
     }
 
     async #createLayers(context) {
 
-        return new Promise(async (resolve) => {
+        const topLayers =[];
 
-            const promiseBottomArray = [];
-            const promiseTopArray = [];
+        for (let i = context.data.startIndex; i < context.data.hexArray.length; i++) {
+            topLayers.push(await this.#drawLayer(context, i, true));
+        }
 
-            for (let i = context.data.startIndex; i < context.data.hexArray.length; i++) {
-                promiseBottomArray.push(this.#drawLayer(context, i, true));
-            }
+        const bottomLayers =[];
 
-            for (let i = context.data.startIndex; i < context.data.hexArray.length; i++) {
-                promiseTopArray.push(this.#drawLayer(context, i, false));
-            }
+        for (let i = context.data.startIndex; i < context.data.hexArray.length; i++) {
+            bottomLayers.push(await this.#drawLayer(context, i, false));
+        }
 
-            //when all effect promises complete
-            Promise.all([Promise.all(promiseBottomArray), Promise.all(promiseTopArray)]).then(async (layers) => {
+        const theOpacityGaston = findValue(context.data.layerOpacityRange.lower, context.data.layerOpacityRange.upper, context.data.layerOpacityTimes, context.numberOfFrames, context.currentFrame)
 
-                const theOpacityGaston = findValue(context.data.layerOpacityRange.lower, context.data.layerOpacityRange.upper, context.data.layerOpacityTimes, context.numberOfFrames, context.currentFrame)
 
-                if (!context.data.invertLayers) {
-                    for (let i = 0; i < layers.length; i++) {
-                        if (layers[i].length > 0) {
-                            for (let inner = 0; inner < layers[i].length; inner++) {
-                                await layers[i][inner].adjustLayerOpacity(theOpacityGaston);
-                                await context.layer.compositeLayerOver(layers[i][inner]);
-                            }
-                        }
-                    }
-                } else {
-                    for (let i = layers.length - 1; i >= 0; i--) {
-                        if (layers[i].length > 0) {
-                            for (let inner = 0; inner < layers[i].length; inner++) {
-                                await layers[i][inner].adjustLayerOpacity(theOpacityGaston);
-                                await context.layer.compositeLayerOver(layers[i][inner]);
-                            }
-                        }
+        const layers =[];
+        layers.push(topLayers);
+        layers.push(bottomLayers);
+
+        if (!context.data.invertLayers) {
+            for (let i = 0; i < layers.length; i++) {
+                if (layers[i].length > 0) {
+                    for (let inner = 0; inner < layers[i].length; inner++) {
+                        await layers[i][inner].adjustLayerOpacity(theOpacityGaston);
+                        await context.layer.compositeLayerOver(layers[i][inner]);
                     }
                 }
-                resolve();
-            });
-        });
-
+            }
+        } else {
+            for (let i = layers.length - 1; i >= 0; i--) {
+                if (layers[i].length > 0) {
+                    for (let inner = 0; inner < layers[i].length; inner++) {
+                        await layers[i][inner].adjustLayerOpacity(theOpacityGaston);
+                        await context.layer.compositeLayerOver(layers[i][inner]);
+                    }
+                }
+            }
+        }
     }
 
 

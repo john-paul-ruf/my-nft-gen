@@ -10,7 +10,7 @@ import {
     randomNumber
 } from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {HexConfig} from "./HexConfig.js";
@@ -195,8 +195,8 @@ export class HexEffect extends LayerEffect {
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
-        fs.unlinkSync(context.drawing);
-        fs.unlinkSync(context.underlayName);
+        await fs.unlink(context.drawing);
+        await fs.unlink(context.underlayName);
     }
 
     #generate(settings) {

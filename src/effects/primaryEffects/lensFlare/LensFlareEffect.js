@@ -3,7 +3,7 @@ import {getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber} fr
 import {findValue} from "../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import fs from "fs";
+import {promises as fs} from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {LensFlareConfig} from "./LensFlareConfig.js";
@@ -34,151 +34,117 @@ export class LensFlareEffect extends LayerEffect {
 
     async #drawHexArray(context, array) {
         async function hex(i) {
-            return new Promise(async (innerResolve) => {
-                const tempFileName = this.workingDirectory + 'lens-flare-ring' + randomId() + '.png'
+            const tempFileName = this.workingDirectory + 'lens-flare-ring' + randomId() + '.png'
 
-                const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
+            const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
 
-                const pos = findPointByAngleAndCircle(context.data.center, angleGaston, array[i].offset)
+            const pos = findPointByAngleAndCircle(context.data.center, angleGaston, array[i].offset)
 
-                const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+            const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
 
-                await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
-                await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
+            await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
+            await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
 
-                await context.canvas.toFile(tempFileName);
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
+            await context.canvas.toFile(tempFileName);
+            const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
-                fs.unlinkSync(tempFileName);
-                innerResolve(tempLayer);
-            });
+            await fs.unlink(tempFileName);
+            return tempLayer
         }
 
-        return new Promise(async (resolve) => {
-            const promiseArray = [];
+        const hexArray = [];
 
-            for (let i = 0; i < array.length; i++) {
-                promiseArray.push(hex(i));
-            }
+        for (let i = 0; i < array.length; i++) {
+            hexArray.push(await hex(i));
+        }
 
-            //when all effect promises complete
-            Promise.all(promiseArray).then(async (layers) => {
-                resolve(layers); //we have completed a single frame
-            });
-        });
+        return hexArray;
     }
 
     async #rings(i, array, context) {
-        return new Promise(async (innerResolve) => {
-            try {
-                const tempFileName = this.workingDirectory + 'lens-flare-ring' + randomId() + '.png'
-                const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        const tempFileName = this.workingDirectory + 'lens-flare-ring' + randomId() + '.png'
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-                const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
-                const theRadiusGaston = findValue(array[i].size + array[i].gastonRange.lower, array[i].size + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
-                const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
+        const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theRadiusGaston = findValue(array[i].size + array[i].gastonRange.lower, array[i].size + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
 
 
-                await canvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+        await canvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
 
-                await canvas.toFile(tempFileName);
+        await canvas.toFile(tempFileName);
 
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
+        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
-                await tempLayer.blur(theBlurGaston);
-                await tempLayer.adjustLayerOpacity(theOpacityGaston);
+        await tempLayer.blur(theBlurGaston);
+        await tempLayer.adjustLayerOpacity(theOpacityGaston);
 
-                fs.unlinkSync(tempFileName);
+        await fs.unlink(tempFileName);
 
-                innerResolve(tempLayer);
-
-            } catch (e) {
-                console.log(e);
-            }
-        });
+        return tempLayer;
     }
 
     async #drawRingArray(context, array) {
-        return new Promise(async (resolve) => {
-            const ringPromiseArray = [];
+        const ringArray = [];
 
-            for (let i = 0; i < array.length; i++) {
-                ringPromiseArray.push(this.#rings(i, array, context));
-            }
+        for (let i = 0; i < array.length; i++) {
+            ringArray.push(await this.#rings(i, array, context));
+        }
 
-            //when all effect promises complete
-            Promise.all(ringPromiseArray).then(async (layers) => {
-                resolve(layers); //we have completed a single frame
-            });
-        });
+        return ringArray;
     }
 
     async #rays(i, array, context) {
-        return new Promise(async (innerResolve) => {
-            try {
-                const tempFileName = this.workingDirectory + 'lens-flare-ray' + randomId() + '.png'
-                const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        const tempFileName = this.workingDirectory + 'lens-flare-ray' + randomId() + '.png'
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-                const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
-                const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
+        const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame)
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
 
-                const theAngleGaston = findValue(array[i].angle + array[i].gastonRange.lower, array[i].angle + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
+        const theAngleGaston = findValue(array[i].angle + array[i].gastonRange.lower, array[i].angle + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert)
 
-                const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
-                const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
+        const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
+        const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
-                await canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
-                await canvas.toFile(tempFileName);
+        await canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
+        await canvas.toFile(tempFileName);
 
-                const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
+        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
-                await tempLayer.blur(theBlurGaston);
-                await tempLayer.adjustLayerOpacity(theOpacityGaston);
+        await tempLayer.blur(theBlurGaston);
+        await tempLayer.adjustLayerOpacity(theOpacityGaston);
 
-                fs.unlinkSync(tempFileName);
+        await fs.unlink(tempFileName);
 
-                innerResolve(tempLayer);
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
+        return tempLayer;
     }
 
     async #drawRayArray(context, array) {
-        return new Promise(async (resolve) => {
-            const promiseArray = [];
-            for (let i = 0; i < array.length; i++) {
-                promiseArray.push(this.#rays(i, array, context));
-            }
-            //when all effect promises complete
-            Promise.all(promiseArray).then(async (layers) => {
-                resolve(layers); //we have completed a single frame
-            });
-        });
+        const rayArray = [];
+
+        for (let i = 0; i < array.length; i++) {
+            rayArray.push(await this.#rays(i, array, context));
+        }
+
+        return rayArray;
     }
 
     async #createLensFlare(context) {
-        return new Promise(async (resolve) => {
 
-            const promiseArray = [];
+        const layerArray = [];
 
-            promiseArray.push(this.#drawHexArray(context, context.data.hexArray));
-            promiseArray.push(this.#drawRingArray(context, context.data.ringArray));
-            promiseArray.push(this.#drawRayArray(context, context.data.rayArray));
+        layerArray.push(await this.#drawHexArray(context, context.data.hexArray));
+        layerArray.push(await this.#drawRingArray(context, context.data.ringArray));
+        layerArray.push(await this.#drawRayArray(context, context.data.rayArray));
 
-            //when all effect promises complete
-            Promise.all(promiseArray).then(async (layers) => {
-                for (let i = 0; i < layers.length; i++) {
-                    if (layers[i].length > 0) {
-                        for (let inner = 0; inner < layers[i].length; inner++) {
-                            await context.layer.compositeLayerOver(layers[i][inner]);
-                        }
-                    }
+        //when all effect promises complete
+        for (let i = 0; i < layerArray.length; i++) {
+            if (layerArray[i].length > 0) {
+                for (let inner = 0; inner < layerArray[i].length; inner++) {
+                    await context.layer.compositeLayerOver(layerArray[i][inner]);
                 }
-                resolve();
-            });
-        });
+            }
+        }
     }
 
 

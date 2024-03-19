@@ -1,7 +1,7 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {getRandomFromArray, getRandomIntExclusive,} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import {Settings} from "../../../core/Settings.js";

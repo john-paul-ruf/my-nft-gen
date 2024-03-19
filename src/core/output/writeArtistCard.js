@@ -1,4 +1,4 @@
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {timeToString} from "../utils/timeToString.js";
 
 export const writeArtistCard = async (config, composeInfo) => {

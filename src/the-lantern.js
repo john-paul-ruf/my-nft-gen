@@ -12,25 +12,33 @@ import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexCo
 import {Range} from "./core/layer/configType/Range.js";
 import {AmpEffect} from "./effects/primaryEffects/amp/AmpEffect.js";
 import {AmpConfig} from "./effects/primaryEffects/amp/AmpConfig.js";
+import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
+import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
+import {MappedFramesEffect} from "./effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
+import {MappedFramesConfig} from "./effects/primaryEffects/mappedFrames/MappedFramesConfig.js";
+import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
+import {DynamicRange} from "./core/layer/configType/DynamicRange.js";
+import {PercentageRange} from "./core/layer/configType/PercentageRange.js";
+import {PercentageShortestSide} from "./core/layer/configType/PercentageShortestSide.js";
+import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
 
 const promiseArray = [];
 
-async function addSpiral(myTestProject, color, point) {
+async function addSpiral(myTestProject, color, point, speed) {
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: EncircledSpiralEffect,
-            percentChance: 100,
-            currentEffectConfig: new EncircledSpiralConfig({
+            effect: EncircledSpiralEffect, percentChance: 100, currentEffectConfig: new EncircledSpiralConfig({
                 outerColor: color,
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
                 invertLayers: true,
-                layerOpacity: 1,
-                underLayerOpacity: 0.5,
+                layerOpacity: 0.5,
+                underLayerOpacity: 0.4,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: new Range(2, 2),
+                numberOfRings: new Range(4, 4),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [45],
+                sparsityFactor: [30],
                 sequencePixelConstant: {
                     lower: (finalSize) => finalSize.shortestSide * 0.001,
                     upper: (finalSize) => finalSize.shortestSide * 0.001
@@ -38,19 +46,28 @@ async function addSpiral(myTestProject, color, point) {
                 sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
                 minSequenceIndex: [9],
                 numberOfSequenceElements: [3],
-                speed: {lower: 3, upper: 3},
+                speed: speed,
                 accentRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
-                blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                featherTimes: {lower: 1, upper: 1},
-                //center
+                blurRange: {bottom: {lower: 0, upper: 0}, top: {lower: 0, upper: 0}},
+                featherTimes: {lower: 0, upper: 0}, //center
                 center: point,
-            }),
-            defaultEffectConfig: EncircledSpiralConfig
+            }), defaultEffectConfig: EncircledSpiralConfig, possibleSecondaryEffects: [
+                /*new LayerConfig({
+                    effect: GlowEffect,
+                    percentChance: 100,
+                    currentEffectConfig: new GlowConfig({
+                        lowerRange: {lower: -32, upper: -32},
+                        upperRange: {lower: 32, upper: 32},
+                        times: {lower: 1, upper: 1},
+                    }),
+                })*/
+            ]
         })
-    });
+    })
+    ;
 }
 
-const createLantern = async (crossColor, squareColor, outlierColor, colorScheme) => {
+const createLantern = async (crossColor, squareColor, outlierColor, heartColor, colorScheme) => {
 
     const myTestProject = new Project({
         artist: 'John Ruf',
@@ -65,19 +82,40 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
 
    await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: LayeredHexEffect,
-            percentChance: 100,
-            currentEffectConfig: new LayeredHexConfig({
+            effect: FuzzyBandEffect, percentChance: 100, currentEffectConfig: new FuzzyBandConfig({
+                layerOpacity: 0.70,
+                underLayerOpacityRange: {bottom: {lower: 0.4, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+                underLayerOpacityTimes: {lower: 2, upper: 8},
+                color: new ColorPicker(),
+                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+                invertLayers: true,
+                thickness: 1,
+                stroke: 1,
+                circles: {lower: 8, upper: 8},
+                radius: {
+                    lower: (finalSize) => finalSize.shortestSide * 0.5,
+                    upper: (finalSize) => finalSize.longestSide * 0.5
+                },
+                accentRange: {bottom: {lower: 5, upper: 10}, top: {lower: 15, upper: 20}},
+                blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
+                featherTimes: {lower: 2, upper: 6},
+            }), defaultEffectConfig: FuzzyBandConfig
+        })
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: LayeredHexEffect, percentChance: 100, currentEffectConfig: new LayeredHexConfig({
                 layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 layerOpacityTimes: {lower: 4, upper: 8},
                 indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 indexOpacityTimes: {lower: 4, upper: 8},
-                thickness: 1,
-                stroke: 1,
+                thickness: 2,
+                stroke: 3,
                 layerOpacity: 0.75,
-                radius: {lower: 40, upper: 80},
-                offsetRadius: {lower: 50, upper: 60},
-                numberOfIndex: {lower: 15, upper: 15},
+                radius: {lower: 30, upper: 60},
+                offsetRadius: {lower: 45, upper: 65},
+                numberOfIndex: {lower: 12, upper: 14},
                 startIndex: {lower: 8, upper: 10},
                 initialNumberOfPoints: 10,
                 scaleByFactor: 1.1,
@@ -91,28 +129,23 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: AmpEffect,
-            percentChance: 100,
-            currentEffectConfig: new AmpConfig({
+            effect: AmpEffect, percentChance: 100, currentEffectConfig: new AmpConfig({
                 layerOpacity: 0.5,
                 underLayerOpacity: 0.25,
                 thickness: 1,
-                lineStart: 550,
-                length: 100,
+                lineStart: 375,
+                length: 125,
                 sparsityFactor: [1],
                 center: {x: 1080 / 2, y: 1920 / 2},
                 speed: {lower: 60, upper: 60},
                 innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
-            }),
-            defaultEffectConfig: AmpConfig,
+            }), defaultEffectConfig: AmpConfig,
         })
     });
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: LayeredHexEffect,
-            percentChance: 100,
-            currentEffectConfig: new LayeredHexConfig({
+            effect: LayeredHexEffect, percentChance: 100, currentEffectConfig: new LayeredHexConfig({
                 layerOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
                 layerOpacityTimes: {lower: 4, upper: 8},
                 indexOpacityRange: {bottom: {lower: 0.3, upper: 0.4}, top: {lower: 0.5, upper: 0.6}},
@@ -120,10 +153,10 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
                 thickness: 1,
                 stroke: 1,
                 layerOpacity: 0.75,
-                radius: {lower: 5, upper: 15},
-                offsetRadius: {lower: 20, upper: 20},
-                numberOfIndex: {lower: 22, upper: 22},
-                startIndex: {lower: 14, upper: 14},
+                radius: {lower: 10, upper: 25},
+                offsetRadius: {lower: 30, upper: 35},
+                numberOfIndex: {lower: 18, upper: 20},
+                startIndex: {lower: 13, upper: 16},
                 initialNumberOfPoints: 8,
                 scaleByFactor: 1.1,
                 movementGaston: {lower: 5, upper: 10},
@@ -136,44 +169,57 @@ const createLantern = async (crossColor, squareColor, outlierColor, colorScheme)
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: FuzzyBandEffect,
+            effect: LensFlareEffect,
             percentChance: 100,
-            currentEffectConfig: new FuzzyBandConfig({
-                layerOpacity: 0.70,
-                underLayerOpacityRange: {bottom: {lower: 0.1, upper: 0.2}, top: {lower: 0.3, upper: 0.4}},
-                underLayerOpacityTimes: {lower: 2, upper: 6},
-                color: new ColorPicker(),
-                innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
-                invertLayers: true,
-                thickness: 1,
-                stroke: 1,
-                circles: {lower: 8, upper: 8},
-                radius: {
-                    lower: (finalSize) => finalSize.shortestSide * 0.3,
-                    upper: (finalSize) => finalSize.shortestSide * 0.8
-                },
-                accentRange: {bottom: {lower: 10, upper: 15}, top: {lower: 30, upper: 45}},
-                blurRange: {bottom: {lower: 1, upper: 3}, top: {lower: 4, upper: 8}},
-                featherTimes: {lower: 2, upper: 6},
+            currentEffectConfig: new LensFlareConfig({
+                numberOfFlareRings: new Range(10,20),
+                flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.5), new PercentageLongestSide(0.75)),
+                flareRingStroke:  new Range(2,4),
+
+                numberOfFlareRays: new Range(20,40),
+                flareRaysSizeRange: new PercentageRange(new PercentageShortestSide(0.55), new PercentageLongestSide(1)),
+                flareRaysStroke: new Range(2,4),
+
+                strategy: ['color-bucket'],
+                layerOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
+                layerOpacityTimes: new Range(4,8),
+
+                elementOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
+                elementOpacityTimes: new Range(6,12),
+
+                elementGastonRange: new DynamicRange(new Range(10,20), new Range(30,60)),
+                elementGastonTimes:  new Range(4,8),
             }),
-            defaultEffectConfig: FuzzyBandConfig
+            possibleSecondaryEffects: [
+
+            ]
         })
     });
 
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) + (2 * length)));
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) - (2 * length), (1920 / 2)));
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) + (2 * length), (1920 / 2)));
-    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) - (2 * length)));
+    //heart
+    await addSpiral(myTestProject, heartColor, new Point2D((1080 / 2), (1920 / 2)), new Range(8,8));
 
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)));
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)));
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)));
-    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)));
+    //cross
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) + (length)), new Range(6,6));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) - length, (1920 / 2)), new Range(6,6));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) + length, (1920 / 2)), new Range(6,6));
+    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) - (length)), new Range(6,6));
 
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) + (length)));
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) - length, (1920 / 2)));
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2) + length, (1920 / 2)));
-    await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) - (length)));
+    //square
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) + (length)), new Range(4,4));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) + (length)), new Range(4,4));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) - (length), (1920 / 2) - (length)), new Range(4,4));
+    await addSpiral(myTestProject, squareColor, new Point2D((1080 / 2) + (length), (1920 / 2) - (length)), new Range(4,4));
+
+    //outliers
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) + (2 * length)), new Range(2,2));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) - (2 * length), (1920 / 2)), new Range(2,2));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) + (2 * length), (1920 / 2)), new Range(2,2));
+    await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) - (2 * length)), new Range(2,2));
+
+
+
+
 
     promiseArray.push(myTestProject.generateRandomLoop());
 }
@@ -183,33 +229,16 @@ const neons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 const redNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.redNeons);
 const greenNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
 const blueNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+const primaryNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.primaryNeons);
+const secondaryNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.secondaryNeons);
+
 
 await createLantern(
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
     new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
     new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
     new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
     neons,
-);
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, redNeons.getColorFromBucket()),
-    redNeons,
-);
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    greenNeons,
-);
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, blueNeons.getColorFromBucket()),
-    blueNeons,
 );
 
 
