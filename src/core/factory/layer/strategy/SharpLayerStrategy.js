@@ -1,7 +1,11 @@
 import sharp from "sharp";
 import {randomId} from "../../../math/random.js";
-import { promises as fs } from 'fs'
+import { Readable } from "stream";
+import { pipeline } from 'node:stream/promises';
+import { promises as fs, createWriteStream } from 'fs'
 import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
+import { promisify } from 'util';
+
 
 export class SharpLayerStrategy {
     constructor({
@@ -40,9 +44,12 @@ export class SharpLayerStrategy {
     async toFile(filename) {
         const buffer = await this.internalRepresentation.png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: true})
-        await fs.writeFile(filename, Buffer.from(buffer.data));
+        }).toBuffer({resolveWithObject: false});
 
+        const readableStream = Readable.from(buffer);
+        const writableStream = createWriteStream(filename);
+
+        await pipeline(readableStream, writableStream)
     }
 
     async compositeLayerOver(layer, withResize = true) {
@@ -64,9 +71,12 @@ export class SharpLayerStrategy {
             input: overlayFile
         }]).png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: true});
+        }).toBuffer({resolveWithObject: false});
 
-        await fs.writeFile(compositeFile, Buffer.from(buffer.data));
+        const readableStream = Readable.from(buffer);
+        const writableStream = createWriteStream(compositeFile);
+
+        await pipeline(readableStream, writableStream)
 
         await this.fromFile(compositeFile);
 
@@ -90,9 +100,12 @@ export class SharpLayerStrategy {
             }, blend: 'dest-in'
         }]).png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: true});
+        }).toBuffer({resolveWithObject: false});
 
-        await fs.writeFile(compositeFile, Buffer.from(buffer.data));
+        const readableStream = Readable.from(buffer);
+        const writableStream = createWriteStream(compositeFile);
+
+        await pipeline(readableStream, writableStream)
 
         await this.fromFile(compositeFile);
 
