@@ -3,7 +3,7 @@ import {timeLeft} from "../utils/timeLeft.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
 import {writeToMp4} from "../output/writeToMp4.js";
 import {writeScreenCap} from "../output/writeScreenCap.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
 
 export class LoopBuilder {
@@ -112,15 +112,15 @@ export class LoopBuilder {
         });
     }
 
-    #writeSettingsInfo() {
-        fs.writeFileSync(this.settings.config.fileOut + '-settings.json' , JSON.stringify(this.settings));
+   async #writeSettingsInfo() {
+        await fs.writeFile(this.settings.config.fileOut + '-settings.json' , JSON.stringify(this.settings));
     }
 
     async constructLoop() {
 
         return new Promise(async (resolve) => {
 
-            this.#writeSettingsInfo();
+            await this.#writeSettingsInfo();
 
             this.config.startTime = new Date();
             this.context.backgroundColor = await this.settings.getBackgroundFromBucket();
@@ -153,7 +153,7 @@ export class LoopBuilder {
 
             for (let f = 0; f < this.context.frameFilenames.length; f++) {
                 //delete files
-                fs.unlinkSync(this.context.frameFilenames[f]);
+                await fs.unlink(this.context.frameFilenames[f]);
             }
 
             resolve();
@@ -195,7 +195,7 @@ export class LoopBuilder {
 
             for (let f = 0; f < this.context.frameFilenames.length; f++) {
                 //delete files
-                fs.unlinkSync(this.context.frameFilenames[f]);
+                await fs.unlink(this.context.frameFilenames[f]);
             }
 
             resolve(this.settings);

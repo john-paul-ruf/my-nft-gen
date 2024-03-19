@@ -4,7 +4,7 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {getRandomIntExclusive, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {Settings} from "../../../core/Settings.js";
 import {GatesConfig} from "./GatesConfig.js";
 
@@ -98,8 +98,8 @@ export class GatesEffect extends LayerEffect {
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
-        fs.unlinkSync(context.underlayName);
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.underlayName);
+        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {

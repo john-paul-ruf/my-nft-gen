@@ -4,7 +4,7 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {FuzzyRipplesConfig} from "./FuzzyRipplesConfig.js";
@@ -148,8 +148,8 @@ export class FuzzyRipplesEffect extends LayerEffect {
 
         await this.#compositeImage(context, layer);
 
-        fs.unlinkSync(context.drawing);
-        fs.unlinkSync(context.underlayName);
+        await fs.unlink(context.drawing);
+        await fs.unlink(context.underlayName);
     }
 
 

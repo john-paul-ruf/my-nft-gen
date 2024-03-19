@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import Jimp from "jimp";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Settings} from "../../../core/Settings.js";
@@ -57,7 +57,7 @@ export class SingleLayerGlitchFractalEffect extends LayerEffect {
 
             await layer.compositeLayerOver(compositeLayer);
 
-            fs.unlinkSync(filename);
+            await fs.unlink(filename);
         }
     }
 

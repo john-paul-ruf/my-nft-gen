@@ -2,7 +2,7 @@ import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import Jimp from "jimp";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {Settings} from "../../../core/Settings.js";
 import {SingleLayerGlitchDrumrollHorizontalWaveConfig} from "./SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
 
@@ -77,7 +77,7 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
         await layer.fromFile(filename);
 
-        fs.unlinkSync(filename);
+        await fs.unlink(filename);
     }
 
 

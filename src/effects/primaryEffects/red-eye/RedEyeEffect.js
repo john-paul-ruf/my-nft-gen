@@ -3,7 +3,7 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {RedEyeConfig} from "./RedEyeConfig.js";
@@ -98,8 +98,8 @@ export class RedEyeEffect extends LayerEffect {
             }
 
 
-            fs.unlinkSync(context.underlayName);
-            /*  fs.unlinkSync(context.overlayName);*/
+            await fs.unlink(context.underlayName);
+            /*  await fs.unlink(context.overlayName);*/
         }
     }
 

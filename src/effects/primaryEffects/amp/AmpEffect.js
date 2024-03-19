@@ -4,7 +4,7 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {Settings} from "../../../core/Settings.js";
 import {AmpConfig} from "./AmpConfig.js";
 
@@ -113,8 +113,8 @@ export class AmpEffect extends LayerEffect {
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
-        fs.unlinkSync(context.drawing);
-        fs.unlinkSync(context.underlayName);
+        await fs.unlink(context.drawing);
+        await fs.unlink(context.underlayName);
     }
 
     #generate(settings) {

@@ -1,5 +1,5 @@
 import {createCanvas} from "canvas";
-import fs from "fs";
+import fs from 'fs'
 import {degreesToRadians, findPointByAngleAndCircle} from "../../../math/drawingMath.js";
 import {hexToRgba} from "../../../utils/hexToRgba.js";
 
@@ -19,10 +19,15 @@ export class NodeCanvasStrategy {
     }
 
     async toFile(filename) {
-        const buffer = this.canvas.toBuffer('image/png', {
-            compressionLevel: 0, filters: this.canvas.PNG_NO_FILTERS, palette: new Uint8ClampedArray(37 * 4),
+
+        return new Promise(async (resolve) => {
+            const out = fs.createWriteStream(filename)
+            const stream = this.canvas.createPNGStream({
+                compressionLevel: 0, filters: this.canvas.PNG_NO_FILTERS, palette: new Uint8ClampedArray(37 * 4),
+            });
+            stream.pipe(out);
+            out.on('finish', () => resolve());
         });
-        fs.writeFileSync(filename, buffer);
     }
 
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
@@ -246,7 +251,7 @@ export class NodeCanvasStrategy {
             this.context.strokeStyle = hexToRgba(innerColor, alpha);
 
             this.context.moveTo(startPoint.x, startPoint.y);
-            this.context.quadraticCurveTo(controlPoint.x,controlPoint.y, endPoint.x, endPoint.y);
+            this.context.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
 
             this.context.stroke();
             this.context.closePath();

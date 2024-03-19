@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findValue} from "../../../core/math/findValue.js";
 import {hexToRgba} from "../../../core/utils/hexToRgba.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
@@ -69,7 +69,7 @@ export class ScanLinesEffect extends LayerEffect {
         await context.canvas.toFile(context.drawing);
         await layer.fromFile(context.drawing)
 
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {

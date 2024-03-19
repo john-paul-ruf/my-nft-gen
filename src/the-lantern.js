@@ -207,20 +207,5 @@ await createLantern(
     neons,
 );
 
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    neons,
-);
-
-await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    neons,
-);
 
 await Promise.all(promiseArray);

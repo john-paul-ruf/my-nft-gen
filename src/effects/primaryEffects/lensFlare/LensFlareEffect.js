@@ -3,7 +3,7 @@ import {getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber} fr
 import {findValue} from "../../../core/math/findValue.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {LensFlareConfig} from "./LensFlareConfig.js";
@@ -49,7 +49,7 @@ export class LensFlareEffect extends LayerEffect {
                 await context.canvas.toFile(tempFileName);
                 const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
 
-                fs.unlinkSync(tempFileName);
+                await fs.unlink(tempFileName);
                 innerResolve(tempLayer);
             });
         }
@@ -88,7 +88,7 @@ export class LensFlareEffect extends LayerEffect {
                 await tempLayer.blur(theBlurGaston);
                 await tempLayer.adjustLayerOpacity(theOpacityGaston);
 
-                fs.unlinkSync(tempFileName);
+                await fs.unlink(tempFileName);
 
                 innerResolve(tempLayer);
 
@@ -135,7 +135,7 @@ export class LensFlareEffect extends LayerEffect {
                 await tempLayer.blur(theBlurGaston);
                 await tempLayer.adjustLayerOpacity(theOpacityGaston);
 
-                fs.unlinkSync(tempFileName);
+                await fs.unlink(tempFileName);
 
                 innerResolve(tempLayer);
             } catch (e) {

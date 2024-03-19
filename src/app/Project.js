@@ -3,7 +3,7 @@ import {ColorScheme} from "../core/color/ColorScheme.js";
 import {LayerConfig} from "../core/layer/LayerConfig.js";
 import {LoopBuilder} from "../core/animation/LoopBuilder.js";
 import {randomId} from "../core/math/random.js";
-import fs from "fs";
+import {promises as fs} from 'fs'
 
 export class Project {
 
@@ -57,9 +57,7 @@ export class Project {
         const finalFinalName = this.projectName + randomId();
         const workingDirectory = `${this.projectDirectory}/${finalFinalName}/`;
 
-        if (!fs.existsSync(workingDirectory)) {
-            fs.mkdirSync(workingDirectory, {recursive: true});
-        }
+        await fs.mkdir(workingDirectory, {recursive: true});
 
         const loopBuilder = new LoopBuilder(
             new Settings({

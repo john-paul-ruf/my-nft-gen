@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../core/math/drawingMath.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {findValue} from "../../../core/math/findValue.js";
@@ -82,7 +82,7 @@ export class LayeredRingEffect extends LayerEffect {
         await drawingLayer.adjustLayerOpacity(theOpacityGaston); //gaston this later
 
         await layer.compositeLayerOver(drawingLayer);
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {

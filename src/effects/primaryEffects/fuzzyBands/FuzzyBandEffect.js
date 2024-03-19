@@ -2,7 +2,7 @@ import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {Settings} from "../../../core/Settings.js";
 import {FuzzyBandConfig} from "./FuzzyBandConfig.js";
@@ -102,26 +102,26 @@ export class FuzzyBandEffect extends LayerEffect {
             for (let i = 0; i < context.data.numberOfCircles; i++) {
                 let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempUnderlay);
-                fs.unlinkSync(context.names.underlayNames[i]);
+                await fs.unlink(context.names.underlayNames[i]);
             }
 
             for (let i = 0; i < context.data.numberOfCircles; i++) {
                 let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempLayer);
-                fs.unlinkSync(context.names.layerNames[i]);
+                await fs.unlink(context.names.layerNames[i]);
             }
 
         } else {
             for (let i = 0; i < context.data.numberOfCircles; i++) {
                 let tempLayer = await LayerFactory.getLayerFromFile(context.names.layerNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempLayer);
-                fs.unlinkSync(context.names.layerNames[i]);
+                await fs.unlink(context.names.layerNames[i]);
             }
 
             for (let i = 0; i < context.data.numberOfCircles; i++) {
                 let tempUnderlay = await LayerFactory.getLayerFromFile(context.names.underlayNames[i], this.fileConfig);
                 await context.layer.compositeLayerOver(tempUnderlay);
-                fs.unlinkSync(context.names.underlayNames[i]);
+                await fs.unlink(context.names.underlayNames[i]);
             }
         }
 

@@ -1,7 +1,7 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
@@ -74,7 +74,7 @@ export class ScopesEffect extends LayerEffect {
 
         await layer.compositeLayerOver(tempLayer)
 
-        fs.unlinkSync(context.drawing);
+        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {

@@ -3,7 +3,7 @@ import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import Jimp from "jimp";
 import path from "path";
 import {fileURLToPath} from "url";
@@ -47,7 +47,7 @@ export class BlinkOnEffect extends LayerEffect {
 
         await layer.fromFile(filename);
 
-        fs.unlinkSync(filename)
+        await fs.unlink(filename)
     }
 
     async #glowAnimated(layer, data, currentFrame, totalFrames, index) {
@@ -64,7 +64,7 @@ export class BlinkOnEffect extends LayerEffect {
 
         await layer.fromFile(filename);
 
-        fs.unlinkSync(filename)
+        await fs.unlink(filename)
     }
 
     async #blinkinate(data, currentFrame, totalFrames, index) {
@@ -118,7 +118,7 @@ export class BlinkOnEffect extends LayerEffect {
         await layer.adjustLayerOpacity(this.data.layerOpacity);
 
         for (let file of filenames) {
-            fs.unlinkSync(file)
+            await fs.unlink(file)
         }
     }
 

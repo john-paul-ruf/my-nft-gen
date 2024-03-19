@@ -5,7 +5,7 @@ import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {Settings} from "../../../core/Settings.js";
 import {NthRingsConfig} from "./NthRingsConfig.js";
 
@@ -123,8 +123,8 @@ export class NthRingsEffect extends LayerEffect {
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
-        fs.unlinkSync(context.drawing);
-        fs.unlinkSync(context.underlayName);
+        await fs.unlink(context.drawing);
+        await fs.unlink(context.underlayName);
     }
 
     #generate(settings) {

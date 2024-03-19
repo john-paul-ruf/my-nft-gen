@@ -7,7 +7,7 @@
 import {Canvas, Image} from "canvas";
 import EventEmitter from 'events';
 import createGLContext from 'gl';
-import fs from "fs";
+import { promises as fs } from 'fs'
 
 const _ctx = Symbol('ctx');
 

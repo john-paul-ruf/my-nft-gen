@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import {randomId} from "../../../math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
 
 export class SharpLayerStrategy {
@@ -29,11 +29,11 @@ export class SharpLayerStrategy {
         const filename = this.workingDirectory + 'blank-layer' + randomId() + '.png'
         await this.toFile(filename)
         await this.fromFile(filename)
-        fs.unlinkSync(filename);
+        await fs.unlink(filename);
     }
 
     async fromFile(filename) {
-        this.fileBuffer = fs.readFileSync(filename);
+        this.fileBuffer = await fs.readFile(filename);
         this.internalRepresentation = sharp(this.fileBuffer);
     }
 
@@ -41,7 +41,8 @@ export class SharpLayerStrategy {
         const buffer = await this.internalRepresentation.png({
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: true})
-        fs.writeFileSync(filename, Buffer.from(buffer.data));
+        await fs.writeFile(filename, Buffer.from(buffer.data));
+
     }
 
     async compositeLayerOver(layer, withResize = true) {
@@ -65,13 +66,13 @@ export class SharpLayerStrategy {
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: true});
 
-        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+        await fs.writeFile(compositeFile, Buffer.from(buffer.data));
 
         await this.fromFile(compositeFile);
 
-        fs.unlinkSync(overlayFile);
-        fs.unlinkSync(targetFile);
-        fs.unlinkSync(compositeFile);
+        await fs.unlink(overlayFile);
+        await fs.unlink(targetFile);
+        await fs.unlink(compositeFile);
     }
 
     async adjustLayerOpacity(opacity) {
@@ -91,12 +92,12 @@ export class SharpLayerStrategy {
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: true});
 
-        fs.writeFileSync(compositeFile, Buffer.from(buffer.data));
+        await fs.writeFile(compositeFile, Buffer.from(buffer.data));
 
         await this.fromFile(compositeFile);
 
-        fs.unlinkSync(targetFile);
-        fs.unlinkSync(compositeFile);
+        await fs.unlink(targetFile);
+        await fs.unlink(compositeFile);
     }
 
     async blur(byPixels) {

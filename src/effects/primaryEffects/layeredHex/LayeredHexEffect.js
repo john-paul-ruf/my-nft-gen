@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import fs from "fs";
+import { promises as fs } from 'fs'
 import {findPointByAngleAndCircle, getPointsForLayerAndDensity} from "../../../core/math/drawingMath.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
@@ -74,7 +74,7 @@ export class LayeredHexEffect extends LayerEffect {
                 const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
                 const theBlurGaston = Math.ceil(findValue(element.blurRange.lower, element.blurRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame))
                 await tempLayer.blur(theBlurGaston);
-                fs.unlinkSync(tempFileName);
+                await fs.unlink(tempFileName);
                 innerResolve(tempLayer);
             } catch (e) {
                 console.log(e);
