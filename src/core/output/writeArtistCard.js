@@ -8,5 +8,5 @@ export const writeArtistCard = async (config, composeInfo) => {
 
     console.log(await composeInfo.composeInfo());
 
-    fs.writeFileSync(config.fileOut + '.txt', await composeInfo.composeInfo(), 'utf-8');
+    fs.writeFile(config.fileOut + '.txt', await composeInfo.composeInfo(), 'utf-8');
 }
