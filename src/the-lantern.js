@@ -35,7 +35,7 @@ async function addSpiral(myTestProject, color, point, speed) {
                 layerOpacity: 0.5,
                 underLayerOpacity: 0.4,
                 startAngle: {lower: 0, upper: 360},
-                numberOfRings: new Range(4, 4),
+                numberOfRings: new Range(8, 8),
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [30],
@@ -182,13 +182,13 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
 
                 strategy: ['color-bucket'],
                 layerOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
-                layerOpacityTimes: new Range(4,8),
+                layerOpacityTimes: new Range(2,8),
 
                 elementOpacityRange: new DynamicRange(new Range(0.4,0.5), new Range(0.6,0.7)),
-                elementOpacityTimes: new Range(6,12),
+                elementOpacityTimes: new Range(2,8),
 
-                elementGastonRange: new DynamicRange(new Range(10,20), new Range(30,60)),
-                elementGastonTimes:  new Range(4,8),
+                elementGastonRange: new DynamicRange(new Range(5,10), new Range(15,20)),
+                elementGastonTimes:  new Range(2,8),
             }),
             possibleSecondaryEffects: [
 
@@ -234,12 +234,29 @@ const secondaryNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.sec
 
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
-    greenNeons,
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, '#FF0000'),
+    neons,
 );
+
+await createLantern(
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, '#FF0000'),
+    neons,
+);
+
+await createLantern(
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, '#FF0000'),
+    neons,
+);
+
 
 
 await Promise.all(promiseArray);
