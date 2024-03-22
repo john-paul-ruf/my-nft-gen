@@ -196,8 +196,7 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
         })
     });
 
-    //heart
-    await addSpiral(myTestProject, heartColor, new Point2D((1080 / 2), (1920 / 2)), new Range(8,8));
+
 
     //cross
     await addSpiral(myTestProject, crossColor, new Point2D((1080 / 2), (1920 / 2) + (length)), new Range(6,6));
@@ -217,7 +216,8 @@ const createLantern = async (crossColor, squareColor, outlierColor, heartColor, 
     await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2) + (2 * length), (1920 / 2)), new Range(2,2));
     await addSpiral(myTestProject, outlierColor, new Point2D((1080 / 2), (1920 / 2) - (2 * length)), new Range(2,2));
 
-
+    //heart
+    await addSpiral(myTestProject, heartColor, new Point2D((1080 / 2), (1920 / 2)), new Range(8,8));
 
 
 
@@ -234,11 +234,11 @@ const secondaryNeons = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.sec
 
 
 await createLantern(
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    new ColorPicker(ColorPicker.SelectionType.color, neons.getColorFromBucket()),
-    neons,
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    new ColorPicker(ColorPicker.SelectionType.color, greenNeons.getColorFromBucket()),
+    greenNeons,
 );
 
 
