@@ -18,7 +18,7 @@ const myTestProject = new Project({
     projectDirectory: "src/red-eye/",
     neutrals: ['#FFFFFF'],
     backgrounds: ['#000000'],
-    numberOfFrame: 1800,
+    numberOfFrame: 240,
 });
 
 await myTestProject.addPrimaryEffect({
