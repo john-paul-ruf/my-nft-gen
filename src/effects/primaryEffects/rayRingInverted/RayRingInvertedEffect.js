@@ -35,7 +35,7 @@ export class RayRingInvertedEffect extends LayerEffect {
     async #drawRayRingInstance(withAccentGaston, i, context) {
         const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
         const invertTheRayGaston = (i + 1) % 2;
-        const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor * context.data.circles[i].speed, context.numberOfFrames, context.currentFrame);
+        const theRayGaston = findOneWayValue(0, context.data.circles[i].sparsityFactor * context.data.circles[i].speed, 1, context.numberOfFrames, context.currentFrame);
 
         await context.canvas.drawRing2d(
             context.data.center,

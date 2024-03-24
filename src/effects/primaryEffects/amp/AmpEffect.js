@@ -33,7 +33,7 @@ export class AmpEffect extends LayerEffect {
 
 
     async #drawUnderlay(context, filename) {
-        const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
+        const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, 1, context.numberOfFrames, context.currentFrame);
         for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
             await context.canvas.drawRay2d(
                 context.data.center,
@@ -51,7 +51,7 @@ export class AmpEffect extends LayerEffect {
     }
 
     async #draw(context, filename) {
-        const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, context.numberOfFrames, context.currentFrame);
+        const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, 1, context.numberOfFrames, context.currentFrame);
 
         for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
             await context.canvas.drawRay2d(

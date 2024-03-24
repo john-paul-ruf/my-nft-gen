@@ -72,7 +72,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
             mesh.rotation.x = degreesToRadians(90);
             mesh.rotation.z = degreesToRadians(context.data.ringsInstances[i].initialRotation);
 
-            const theRotateGaston = findOneWayValue(0, 180 * context.data.ringsInstances[i].times, context.numberOfFrames, context.currentFrame);
+            const theRotateGaston = findOneWayValue(0, 180 * context.data.ringsInstances[i].times, 1, context.numberOfFrames, context.currentFrame);
 
             if ((i + 1) % 2 === 0) {
                 mesh.rotation.z += degreesToRadians(theRotateGaston);

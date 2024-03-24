@@ -85,9 +85,9 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
 
         camera.position.z = 100;
 
-        const theXGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
-        const theYGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
-        const theZGaston = findOneWayValue(0, 360 * context.data.times, context.numberOfFrames, context.currentFrame);
+        const theXGaston = findOneWayValue(0, 360 * context.data.times, 1, context.numberOfFrames, context.currentFrame);
+        const theYGaston = findOneWayValue(0, 360 * context.data.times, 1, context.numberOfFrames, context.currentFrame);
+        const theZGaston = findOneWayValue(0, 360 * context.data.times, 1, context.numberOfFrames, context.currentFrame);
 
         mesh.rotation.x += degreesToRadians(theXGaston);
         mesh.rotation.y += degreesToRadians(theYGaston);

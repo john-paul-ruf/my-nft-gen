@@ -40,7 +40,7 @@ export class LayeredRingEffect extends LayerEffect {
         const element = context.data.ringArray[arrayIndex];
 
         const invert = (layer % 2) > 0;
-        const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, invert)
+        const theAngleGaston = findOneWayValue(0, context.data.ringArray[arrayIndex].movementGaston * startingAngle, 1, context.numberOfFrames, context.currentFrame, invert)
 
         for (let i = 1; i <= numberOfPoints; i++) {
 

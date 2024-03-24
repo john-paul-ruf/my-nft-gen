@@ -39,7 +39,7 @@ export class ScopesEffect extends LayerEffect {
         const direction = loopCount % 2;
         const invert = direction <= 0;
 
-        const theRotateGaston = findOneWayValue(angle, angle + (360 * rotationTimes), context.numberOfFrames, context.currentFrame, invert);
+        const theRotateGaston = findOneWayValue(angle, angle + (360 * rotationTimes), 1, context.numberOfFrames, context.currentFrame, invert);
         const theAlphaGaston = findValue(alphaRange.lower, alphaRange.upper, alphaTimes, context.numberOfFrames, context.currentFrame);
 
         const scaleBy = (context.data.scaleFactor * loopCount);

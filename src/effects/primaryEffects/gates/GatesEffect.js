@@ -38,7 +38,7 @@ export class GatesEffect extends LayerEffect {
             const loopCount = i + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
-            const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
+            const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, 1, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
             const theAccentGaston = context.useAccentGaston ? findValue(context.data.gates[i].accentRange.lower, context.data.gates[i].accentRange.upper, context.data.gates[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
             await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].color, context.data.stroke + theAccentGaston, context.data.gates[i].color)
         }
@@ -51,7 +51,7 @@ export class GatesEffect extends LayerEffect {
             const loopCount = i + 1;
             const direction = loopCount % 2;
             const invert = direction <= 0;
-            const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
+            const theAngleGaston = (findOneWayValue(0, 360 / context.data.numberOfSides, 1, context.numberOfFrames, context.currentFrame, invert) + context.data.gates[i].startingAngle) % 360;
             await context.canvas.drawPolygon2d(context.data.gates[i].radius, context.data.center, context.data.numberOfSides, theAngleGaston, context.data.thickness, context.data.gates[i].innerColor, 0, context.data.gates[i].innerColor)
         }
 

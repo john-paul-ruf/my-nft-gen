@@ -7,8 +7,8 @@ test('findOneWayValue: begin and end match', () => {
 
     const totalFrame = 100;
 
-    const beginValue = Math.floor(findOneWayValue(min, max, totalFrame, 0));
-    const endValue = Math.floor(findOneWayValue(min, max, totalFrame, totalFrame));
+    const beginValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, 0));
+    const endValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, totalFrame));
 
     expect(beginValue).toBe(min);
     expect(endValue).toBe(max);
@@ -22,8 +22,8 @@ test('findOneWayValue: begin and end match, inverted', () => {
 
     const totalFrame = 100;
 
-    const beginValue = Math.floor(findOneWayValue(min, max, totalFrame, 0, true));
-    const endValue = Math.floor(findOneWayValue(min, max, totalFrame, totalFrame, true));
+    const beginValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, 0, true));
+    const endValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, totalFrame, true));
 
     expect(beginValue).toBe(max);
     expect(endValue).toBe(min);
@@ -37,7 +37,7 @@ test('findOneWayValue: midpoint match', () => {
 
     const totalFrame = 100;
 
-    const midPointValue = Math.floor(findOneWayValue(min, max, totalFrame, totalFrame / 2));
+    const midPointValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, totalFrame / 2));
 
     expect(midPointValue).toBe(10);
 });
@@ -49,7 +49,7 @@ test('findOneWayValue: midpoint match, inverted', () => {
 
     const totalFrame = 100;
 
-    const midPointValue = Math.floor(findOneWayValue(min, max, totalFrame, totalFrame / 2, true));
+    const midPointValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, totalFrame / 2, true));
 
     expect(midPointValue).toBe(10);
 });
@@ -61,7 +61,7 @@ test('findOneWayValue: left quarter match', () => {
 
     const totalFrame = 100;
 
-    const midPointValue = Math.floor(findOneWayValue(min, max, totalFrame, 25));
+    const midPointValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, 25));
 
     expect(midPointValue).toBe(5);
 });
@@ -73,7 +73,7 @@ test('findOneWayValue: left quarter match, inverted', () => {
 
     const totalFrame = 100;
 
-    const midPointValue = Math.floor(findOneWayValue(min, max, totalFrame, 25, true));
+    const midPointValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, 25, true));
 
     expect(midPointValue).toBe(15);
 });
@@ -86,7 +86,7 @@ test('findOneWayValue: right quarter match', () => {
 
     const totalFrame = 100;
 
-    const midPointValue = Math.floor(findOneWayValue(min, max, totalFrame, 75));
+    const midPointValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, 75));
 
     expect(midPointValue).toBe(15);
 });
@@ -98,7 +98,7 @@ test('findOneWayValue: right match, inverted', () => {
 
     const totalFrame = 100;
 
-    const midPointValue = Math.floor(findOneWayValue(min, max, totalFrame, 75, true));
+    const midPointValue = Math.floor(findOneWayValue(min, max, 1, totalFrame, 75, true));
 
     expect(midPointValue).toBe(5);
 });

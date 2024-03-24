@@ -8,8 +8,8 @@ import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {RedEyeConfig} from "./RedEyeConfig.js";
 import {distanceBetweenTwoPoints} from "../../../core/math/distanceBetweenTwoPoints.js";
-import {findPointBetweenPointsByDistance} from "../../../core/math/findPointBetweenPointsByDistance.js";
 import {findPointByDistanceBetweenTwoPoints} from "../../../core/math/findPointByDistanceBetweenTwoPoints.js";
+import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
 
 export class RedEyeEffect extends LayerEffect {
 
@@ -34,70 +34,80 @@ export class RedEyeEffect extends LayerEffect {
         this.#generate(settings)
     }
 
-    async #drawNextSegment(context, canvas, isUnderlay, point1, point2, lineStartGaston, lineEndGaston, totalPathLength, currentLineDistance)
-    {
+    async #drawNextSegment(context, canvas, isUnderlay, point1, point2, lineStartGaston, lineEndGaston, totalPathLength, currentLineDistance) {
         const stageLength = distanceBetweenTwoPoints(point1, point2);
         let lineFinished = false;
 
-        //Line has already started
-        if (lineStartGaston <= totalPathLength) {
-            //Line will end after this point
-            if (lineEndGaston > totalPathLength + stageLength) {
-                await canvas.drawLine2d(
-                    point1,
-                    point2,
-                    context.data.thickness,
-                    context.data.innerColor,
-                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                    context.data.outerColor);
+        if (lineStartGaston <= totalPathLength
+            && lineEndGaston >= totalPathLength + stageLength) {
+            ///////////////////////////////////////////////////
+            //line already start and ends after this segment
+            ///////////////////////////////////////////////////
+            await canvas.drawLine2d(
+                point1,
+                point2,
+                context.data.thickness,
+                context.data.innerColor,
+                context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                context.data.outerColor);
+            currentLineDistance += stageLength;
 
-                currentLineDistance += stageLength;
-            } else {
-                //line ends here
-                await canvas.drawLine2d(
-                    point1,
-                    findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - currentLineDistance),
-                    context.data.thickness,
-                    context.data.innerColor,
-                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                    context.data.outerColor);
+        } else if (lineStartGaston <= totalPathLength
+            && lineEndGaston <= totalPathLength + stageLength) {
+            ///////////////////////////////////////////////////
+            //line already started and ends in this segment
+            ///////////////////////////////////////////////////
+            await canvas.drawLine2d(
+                point1,
+                findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - totalPathLength),
+                context.data.thickness,
+                context.data.innerColor,
+                context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                context.data.outerColor);
 
-                lineFinished = true;
-            }
+            lineFinished = true;
+        } else if (lineStartGaston >= totalPathLength
+            && lineStartGaston <= totalPathLength + stageLength
+            && lineEndGaston >= totalPathLength + stageLength) {
+            ///////////////////////////////////////////////////
+            //line starts in this segment and ends after this segment
+            ///////////////////////////////////////////////////
+            const newDistance = lineStartGaston - totalPathLength;
+            await canvas.drawLine2d(
+                findPointByDistanceBetweenTwoPoints(point1, point2, newDistance),
+                point2,
+                context.data.thickness,
+                context.data.innerColor,
+                context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                context.data.outerColor);
+
+            currentLineDistance += newDistance;
+        } else if (lineStartGaston >= totalPathLength
+            && lineStartGaston <= totalPathLength + stageLength
+            && lineEndGaston <= totalPathLength + stageLength) {
+            ///////////////////////////////////////////////////
+            //line starts and ends in this segment
+            ///////////////////////////////////////////////////
+            const newDistance = lineStartGaston - totalPathLength;
+            await canvas.drawLine2d(
+                findPointByDistanceBetweenTwoPoints(point1, point2, newDistance),
+                findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - totalPathLength),
+                context.data.thickness,
+                context.data.innerColor,
+                context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                context.data.outerColor);
+
+            lineFinished = true;
         }
 
-        //Line starts between these two points
-        if (lineStartGaston > totalPathLength && lineStartGaston < totalPathLength + stageLength) {
-            //Line will end after this point
-            if (lineEndGaston > totalPathLength + stageLength) {
-                await canvas.drawLine2d(
-                    findPointByDistanceBetweenTwoPoints(point1, point2, stageLength - lineStartGaston),
-                    point2,
-                    context.data.thickness,
-                    context.data.innerColor,
-                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                    context.data.outerColor);
-
-                currentLineDistance = stageLength - lineStartGaston;
-            } else {
-                //line ends here
-                await canvas.drawLine2d(
-                    findPointByDistanceBetweenTwoPoints(point1, point2, totalPathLength + lineStartGaston),
-                    findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - currentLineDistance),
-                    context.data.thickness,
-                    context.data.innerColor,
-                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                    context.data.outerColor);
-
-                lineFinished = true;
-            }
+        return {
+            totalPathLength: totalPathLength + stageLength,
+            lineFinished: lineFinished,
+            currentLineDistance: currentLineDistance
         }
-
-        return {totalPathLength: totalPathLength + stageLength, lineFinished: lineFinished, currentLineDistance: currentLineDistance }
     }
 
     async #drawRedEye(context, pathIndex, isUnderlay) {
-
 
         const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
@@ -108,7 +118,7 @@ export class RedEyeEffect extends LayerEffect {
 
             const node = context.data.pathsArray[pathIndex].path[i]
 
-            const lineStartGaston = findValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
+            const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
             const lineEndGaston = lineStartGaston + context.data.lineLength;
 
             let results = await this.#drawNextSegment(
@@ -126,7 +136,7 @@ export class RedEyeEffect extends LayerEffect {
             totalPathLength = results.totalPathLength;
             currentLineDistance = results.currentLineDistance;
 
-            if(results.lineFinished){
+            if (results.lineFinished) {
                 break;
             }
 
@@ -145,7 +155,7 @@ export class RedEyeEffect extends LayerEffect {
             totalPathLength = results.totalPathLength;
             currentLineDistance = results.currentLineDistance;
 
-            if(results.lineFinished){
+            if (results.lineFinished) {
                 break;
             }
         }
@@ -302,7 +312,7 @@ export class RedEyeEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.sparsityFactor} rays`
+        return `${this.name}: ${this.data.sparsityFactor} sparsity factor`
     }
 
 
