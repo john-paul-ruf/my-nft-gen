@@ -38,7 +38,7 @@ await myTestProject.addPrimaryEffect({
             innerRadius: 200,
             outerRadius: 700,
             possibleJumpRangeInPixels: {lower: 10, upper: 30},
-            lineLength: {lower: 100, upper: 100},
+            lineLength: {lower: 200, upper: 200},
             numberOfLoops: {lower: 1, upper: 1},
             accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -47,7 +47,7 @@ await myTestProject.addPrimaryEffect({
     })
 });
 
-/*await myTestProject.addPrimaryEffect({
+await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
         effect: RedEyeEffect,
         percentChance: 100,
@@ -64,7 +64,7 @@ await myTestProject.addPrimaryEffect({
             innerRadius: 175,
             outerRadius: 600,
             possibleJumpRangeInPixels: {lower: 10, upper: 30},
-            lineLength: {lower: 50, upper: 75},
+            lineLength: {lower: 150, upper: 150},
             numberOfLoops: {lower: 2, upper: 2},
             accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -90,7 +90,7 @@ await myTestProject.addPrimaryEffect({
             innerRadius: 150,
             outerRadius: 500,
             possibleJumpRangeInPixels: {lower: 10, upper: 30},
-            lineLength: {lower: 25, upper: 50},
+            lineLength: {lower: 100, upper: 100},
             numberOfLoops: {lower: 4, upper: 4},
             accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
             blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
@@ -190,7 +190,7 @@ await myTestProject.addPrimaryEffect({
             loopTimes: 20,
         })
     })
-});*/
+});
 
 
 const promiseArray = [];
