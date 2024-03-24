@@ -1,7 +1,7 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
+import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
 import {promises as fs} from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
@@ -113,50 +113,55 @@ export class RedEyeEffect extends LayerEffect {
 
         let totalPathLength = 0;
         let currentLineDistance = 0;
+        let lineFinished = false
 
-        for (let i = 0; i < context.data.pathsArray[pathIndex].path.length; i++) {
+        while (!lineFinished) {
+            for (let i = 0; i < context.data.pathsArray[pathIndex].path.length; i++) {
 
-            const node = context.data.pathsArray[pathIndex].path[i]
+                const node = context.data.pathsArray[pathIndex].path[i]
 
-            const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
-            const lineEndGaston = lineStartGaston + context.data.lineLength;
+                const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength + context.data.lineLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
+                const lineEndGaston = lineStartGaston + context.data.lineLength;
 
-            let results = await this.#drawNextSegment(
-                context,
-                canvas,
-                isUnderlay,
-                node.linePoint1.point,
-                node.linePoint2.point,
-                lineStartGaston,
-                lineEndGaston,
-                totalPathLength,
-                currentLineDistance
-            );
+                let results = await this.#drawNextSegment(
+                    context,
+                    canvas,
+                    isUnderlay,
+                    node.linePoint1.point,
+                    node.linePoint2.point,
+                    lineStartGaston,
+                    lineEndGaston,
+                    totalPathLength,
+                    currentLineDistance
+                );
 
-            totalPathLength = results.totalPathLength;
-            currentLineDistance = results.currentLineDistance;
+                totalPathLength = results.totalPathLength;
+                currentLineDistance = results.currentLineDistance;
+                lineFinished = results.lineFinished;
 
-            if (results.lineFinished) {
-                break;
-            }
+                if (lineFinished) {
+                    break;
+                }
 
-            results = await this.#drawNextSegment(
-                context,
-                canvas,
-                isUnderlay,
-                node.linePoint2.point,
-                node.arcPoint.point,
-                lineStartGaston,
-                lineEndGaston,
-                totalPathLength,
-                currentLineDistance
-            );
+                results = await this.#drawNextSegment(
+                    context,
+                    canvas,
+                    isUnderlay,
+                    node.linePoint2.point,
+                    node.arcPoint.point,
+                    lineStartGaston,
+                    lineEndGaston,
+                    totalPathLength,
+                    currentLineDistance
+                );
 
-            totalPathLength = results.totalPathLength;
-            currentLineDistance = results.currentLineDistance;
+                totalPathLength = results.totalPathLength;
+                currentLineDistance = results.currentLineDistance;
+                lineFinished = results.lineFinished;
 
-            if (results.lineFinished) {
-                break;
+                if (lineFinished) {
+                    break;
+                }
             }
         }
 
@@ -170,6 +175,7 @@ export class RedEyeEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             overlayName: this.workingDirectory + 'red-eye' + randomId() + '.png',
             underlayName: this.workingDirectory + 'red-eye-underlay' + randomId() + '.png',
+            theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             data: this.data,
             layer: layer,
         }

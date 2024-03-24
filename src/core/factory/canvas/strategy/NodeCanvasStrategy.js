@@ -173,6 +173,8 @@ export class NodeCanvasStrategy {
 
     async drawLine2d(start, end, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
 
+        this.context.lineJoin = "round";
+
         this.context.beginPath();
 
         this.context.lineWidth = outerStroke + innerStroke;
