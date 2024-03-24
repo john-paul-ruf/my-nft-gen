@@ -16,9 +16,7 @@ export class RedEyeConfig extends EffectConfig {
             sparsityFactor = [12],
             innerRadius = 75,
             outerRadius = 450,
-            numberOfSegments = 20,
-            possibleJumpRange= {lower: 1, upper: 3},
-            possibleSideBuffer= {lower: 2, upper: 10},
+            possibleJumpRangeInPixels= {lower: 10, upper: 30},
             lineLength= {lower: 50, upper: 75},
             numberOfLoops = {lower: 1, upper: 1},
             accentRange = {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
@@ -38,9 +36,7 @@ export class RedEyeConfig extends EffectConfig {
             this.sparsityFactor = sparsityFactor;
             this.innerRadius = innerRadius;
             this.outerRadius = outerRadius;
-            this.numberOfSegments = numberOfSegments;
-            this.possibleJumpRange= possibleJumpRange;
-            this.possibleSideBuffer= possibleSideBuffer;
+            this.possibleJumpRangeInPixels= possibleJumpRangeInPixels;
             this.lineLength = lineLength;
             this.numberOfLoops = numberOfLoops;
             this.accentRange =accentRange;

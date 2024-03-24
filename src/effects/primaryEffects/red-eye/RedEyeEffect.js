@@ -3,12 +3,13 @@ import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
 import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
 import {findValue} from "../../../core/math/findValue.js";
-import { promises as fs } from 'fs'
+import {promises as fs} from 'fs'
 import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
 import {Settings} from "../../../core/Settings.js";
 import {RedEyeConfig} from "./RedEyeConfig.js";
 import {distanceBetweenTwoPoints} from "../../../core/math/distanceBetweenTwoPoints.js";
 import {findPointBetweenPointsByDistance} from "../../../core/math/findPointBetweenPointsByDistance.js";
+import {findPointByDistanceBetweenTwoPoints} from "../../../core/math/findPointByDistanceBetweenTwoPoints.js";
 
 export class RedEyeEffect extends LayerEffect {
 
@@ -33,31 +34,123 @@ export class RedEyeEffect extends LayerEffect {
         this.#generate(settings)
     }
 
-    async #drawRedEye(context, pathIndex) {
+    async #drawNextSegment(context, canvas, isUnderlay, point1, point2, lineStartGaston, lineEndGaston, totalPathLength, currentLineDistance)
+    {
+        const stageLength = distanceBetweenTwoPoints(point1, point2);
+        let lineFinished = false;
 
-        const underlay = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+        //Line has already started
+        if (lineStartGaston <= totalPathLength) {
+            //Line will end after this point
+            if (lineEndGaston > totalPathLength + stageLength) {
+                await canvas.drawLine2d(
+                    point1,
+                    point2,
+                    context.data.thickness,
+                    context.data.innerColor,
+                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                    context.data.outerColor);
 
-        for (let i = 0; i < context.data.pathsArray[pathIndex].path.length; i++) {
-            const node = context.data.pathsArray[pathIndex].path[i];
-            await underlay.drawLine2d(
-                node.linePoint1.point,
-                node.linePoint2.point,
-                context.data.thickness,
-                context.data.innerColor,
-                context.data.thickness + context.data.stroke,
-                context.data.outerColor);
+                currentLineDistance += stageLength;
+            } else {
+                //line ends here
+                await canvas.drawLine2d(
+                    point1,
+                    findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - currentLineDistance),
+                    context.data.thickness,
+                    context.data.innerColor,
+                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                    context.data.outerColor);
 
-            await underlay.drawQuadraticCurveTo2d(
-                node.linePoint2.point,
-                node.midPoint,
-                node.arcPoint.point,
-                context.data.thickness,
-                context.data.innerColor,
-                context.data.thickness + context.data.stroke,
-                context.data.outerColor);
+                lineFinished = true;
+            }
         }
 
-        await underlay.toFile(context.underlayName)
+        //Line starts between these two points
+        if (lineStartGaston > totalPathLength && lineStartGaston < totalPathLength + stageLength) {
+            //Line will end after this point
+            if (lineEndGaston > totalPathLength + stageLength) {
+                await canvas.drawLine2d(
+                    findPointByDistanceBetweenTwoPoints(point1, point2, stageLength - lineStartGaston),
+                    point2,
+                    context.data.thickness,
+                    context.data.innerColor,
+                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                    context.data.outerColor);
+
+                currentLineDistance = stageLength - lineStartGaston;
+            } else {
+                //line ends here
+                await canvas.drawLine2d(
+                    findPointByDistanceBetweenTwoPoints(point1, point2, totalPathLength + lineStartGaston),
+                    findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - currentLineDistance),
+                    context.data.thickness,
+                    context.data.innerColor,
+                    context.data.thickness + isUnderlay ? context.data.stroke : 0,
+                    context.data.outerColor);
+
+                lineFinished = true;
+            }
+        }
+
+        return {totalPathLength: totalPathLength + stageLength, lineFinished: lineFinished, currentLineDistance: currentLineDistance }
+    }
+
+    async #drawRedEye(context, pathIndex, isUnderlay) {
+
+
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+        let totalPathLength = 0;
+        let currentLineDistance = 0;
+
+        for (let i = 0; i < context.data.pathsArray[pathIndex].path.length; i++) {
+
+            const node = context.data.pathsArray[pathIndex].path[i]
+
+            const lineStartGaston = findValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
+            const lineEndGaston = lineStartGaston + context.data.lineLength;
+
+            let results = await this.#drawNextSegment(
+                context,
+                canvas,
+                isUnderlay,
+                node.linePoint1.point,
+                node.linePoint2.point,
+                lineStartGaston,
+                lineEndGaston,
+                totalPathLength,
+                currentLineDistance
+            );
+
+            totalPathLength = results.totalPathLength;
+            currentLineDistance = results.currentLineDistance;
+
+            if(results.lineFinished){
+                break;
+            }
+
+            results = await this.#drawNextSegment(
+                context,
+                canvas,
+                isUnderlay,
+                node.linePoint2.point,
+                node.arcPoint.point,
+                lineStartGaston,
+                lineEndGaston,
+                totalPathLength,
+                currentLineDistance
+            );
+
+            totalPathLength = results.totalPathLength;
+            currentLineDistance = results.currentLineDistance;
+
+            if(results.lineFinished){
+                break;
+            }
+        }
+
+        return canvas;
     }
 
     async #redEye(layer, currentFrame, numberOfFrames) {
@@ -73,33 +166,30 @@ export class RedEyeEffect extends LayerEffect {
 
         for (let i = 0; i < context.data.pathsArray.length; i++) {
             //underlay
-
-            await this.#drawRedEye(context, i)
-
+            const underlay = await this.#drawRedEye(context, i, true)
+            await underlay.toFile(context.underlayName);
             const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
             const theBlurGaston = Math.ceil(findValue(context.data.blurRange.lower, context.data.blurRange.upper, context.data.featherTimes, context.numberOfFrames, context.currentFrame))
             await underlayLayer.blur(theBlurGaston);
             await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
 
             //layer
-            /*
-            const overlay = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-            await overlay.drawPath2d(this.#subsetPath(, findValue(0, context.data.pathsArray[i].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame), context.data.pathsArray[i].lineLength), context.data.thickness, context.data.innerColor, context.data.thickness, context.data.innerColor);
+            const overlay = await this.#drawRedEye(context, i, false)
             await overlay.toFile(context.overlayName);
             const overlayLayer = await LayerFactory.getLayerFromFile(context.overlayName, this.fileConfig);
             await overlayLayer.adjustLayerOpacity(context.data.layerOpacity);
-*/
+
+
             if (!context.data.invertLayers) {
                 await context.layer.compositeLayerOver(underlayLayer);
-                //await context.layer.compositeLayerOver(overlayLayer);
+                await context.layer.compositeLayerOver(overlayLayer);
             } else {
-                // await context.layer.compositeLayerOver(overlayLayer);
+                await context.layer.compositeLayerOver(overlayLayer);
                 await context.layer.compositeLayerOver(underlayLayer);
             }
 
-
             await fs.unlink(context.underlayName);
-            /*  await fs.unlink(context.overlayName);*/
+            await fs.unlink(context.overlayName);
         }
     }
 
@@ -120,6 +210,7 @@ export class RedEyeEffect extends LayerEffect {
             innerRadius: this.config.innerRadius,
             outerRadius: this.config.outerRadius,
             numberOfSegments: this.config.numberOfSegments,
+            lineLength: getRandomIntInclusive(this.config.lineLength.lower, this.config.lineLength.upper),
             numberOfLoops: getRandomIntInclusive(this.config.numberOfLoops.lower, this.config.numberOfLoops.upper),
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
@@ -136,50 +227,38 @@ export class RedEyeEffect extends LayerEffect {
 
             const endAngle = startAngle + data.sparsityFactor;
             const midPoint = startAngle + (data.sparsityFactor / 2);
-
-            const pixelConstant = (data.outerRadius - data.innerRadius) / data.numberOfSegments;
-
             const pathArray = [];
-            let totalJumpCount = 0;
-
             let angle = endAngle;
+            let currentLength = data.innerRadius;
 
-            for (let i = 0; i < data.numberOfSegments; i++) {
-
+            while (currentLength < data.outerRadius) {
 
                 const linePoint1 = {
-                    point: findPointByAngleAndCircle(data.center, angle, data.innerRadius + (pixelConstant * totalJumpCount)),
+                    point: findPointByAngleAndCircle(data.center, angle, currentLength),
                     angle: angle,
-                    radius: data.innerRadius + (pixelConstant * totalJumpCount)
+                    radius: currentLength
                 }
 
-                totalJumpCount += getRandomIntInclusive(this.config.possibleJumpRange.lower, this.config.possibleJumpRange.upper);
+                currentLength += getRandomIntInclusive(this.config.possibleJumpRangeInPixels.lower, this.config.possibleJumpRangeInPixels.upper);
 
                 const linePoint2 = {
-                    point: findPointByAngleAndCircle(data.center, angle, data.innerRadius + (pixelConstant * totalJumpCount)),
+                    point: findPointByAngleAndCircle(data.center, angle, currentLength),
                     angle: angle,
-                    radius: data.innerRadius + (pixelConstant * totalJumpCount)
+                    radius: currentLength
                 }
 
-               const buffer = i % 2 === 0
-                    ? -1 * getRandomIntInclusive(this.config.possibleSideBuffer.lower, this.config.possibleSideBuffer.upper)
-                    : getRandomIntInclusive(this.config.possibleSideBuffer.lower, this.config.possibleSideBuffer.upper);
-
-                angle = i % 2 === 0 ? startAngle : endAngle;
-
-                angle = angle + buffer;
+                angle = getRandomIntInclusive(startAngle, endAngle);
 
                 const arcPoint = {
-                    point: findPointByAngleAndCircle(data.center, angle, data.innerRadius + (pixelConstant * totalJumpCount)),
+                    point: findPointByAngleAndCircle(data.center, angle, currentLength),
                     angle: angle,
-                    radius: data.innerRadius + (pixelConstant * totalJumpCount)
+                    radius: currentLength
                 }
 
                 const node = {
                     linePoint1: linePoint1,
                     linePoint2: linePoint2,
                     arcPoint: arcPoint,
-                    midPoint:findPointByAngleAndCircle(data.center, midPoint , data.innerRadius + (pixelConstant * totalJumpCount + (pixelConstant/24))),
                 }
                 pathArray.push(node);
             }
@@ -194,7 +273,8 @@ export class RedEyeEffect extends LayerEffect {
             const getPathLength = (path) => {
                 let totalPathLength = 0
                 for (let i = 0; i < path.length - 1; i++) {
-                    totalPathLength += distanceBetweenTwoPoints(path[i], path[i + 1])
+                    totalPathLength += distanceBetweenTwoPoints(path[i].linePoint1.point, path[i].linePoint2.point);
+                    totalPathLength += distanceBetweenTwoPoints(path[i].linePoint2.point, path[i].arcPoint.point);
                 }
                 return totalPathLength;
             }
