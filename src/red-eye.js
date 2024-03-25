@@ -40,8 +40,8 @@ await myTestProject.addPrimaryEffect({
                 lower: (finalSize) => finalSize.shortestSide * 0.15,
                 upper: (finalSize) => finalSize.longestSide * 0.5
             },
-            accentRange: {bottom: {lower: 2, upper: 6}, top: {lower: 8, upper: 14}},
-            blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
+            accentRange: {bottom: {lower: 8, upper: 8}, top: {lower: 14, upper: 14}},
+            blurRange: {bottom: {lower: 6, upper: 6}, top: {lower: 12, upper: 12}},
             featherTimes: {lower: 2, upper: 8},
         }),
         defaultEffectConfig: FuzzyBandConfig
@@ -55,44 +55,14 @@ await myTestProject.addPrimaryEffect({
         percentChance: 100,
         currentEffectConfig: new MappedFramesConfig({
             folderName: '/mappedFrames/',
-            layerOpacity: [0.90],
-            buffer: [555],
-            loopTimes: 20,
+            layerOpacity: [0.85],
+            buffer: [600],
+            loopTimes: 15,
         })
     })
 });
 
-const viewportCount = getRandomFromArray([4, 5, 6])
-
-for (let i = 0; i < viewportCount; i++) {
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: ViewportEffect,
-            percentChance: 100,
-            currentEffectConfig: new ViewportConfig({
-                invertLayers: true,
-                layerOpacity: 0.7,
-                underLayerOpacity: 0.7,
-                stroke: 1,
-                thickness: 1,
-                ampStroke: 0,
-                ampThickness: 0,
-                radius: [150, 200, 250, 300, 350, 400, 450],
-                startAngle: [270],
-                ampLength: [50, 75, 100, 125, 150, 175, 200],
-                ampRadius: [50, 75, 100, 125, 150, 175, 200],
-                sparsityFactor: [3, 4, 5, 6,],
-                amplitude: {lower: 50, upper: 450},
-                times: {lower: 2, upper: 8},
-                accentRange: {bottom: {lower: 2, upper: 6}, top: {lower: 8, upper: 14}},
-                blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
-                featherTimes: {lower: 2, upper: 8},
-            })
-        })
-    });
-}
-
-const redEyeCount = getRandomFromArray([4, 5, 6])
+const redEyeCount = getRandomFromArray([8])
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -108,14 +78,14 @@ for (let i = 0; i < redEyeCount; i++) {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [10, 12, 15],
+                sparsityFactor: [6, 8, 9, 10, 12, 15],
                 innerRadius: getRandomFromArray([150, 175, 200, 250]),
                 outerRadius: getRandomFromArray([500, 550, 600, 650, 700]),
                 possibleJumpRangeInPixels: {lower: 10, upper: 40},
-                lineLength: {lower: 100, upper: 300},
-                numberOfLoops: {lower: 1, upper: 8},
-                accentRange: {bottom: {lower: 2, upper: 6}, top: {lower: 8, upper: 14}},
-                blurRange: {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
+                lineLength: {lower: 25, upper: 50},
+                numberOfLoops: {lower: 1, upper: 5},
+                accentRange: {bottom: {lower: 8, upper: 8}, top: {lower: 14, upper: 14}},
+                blurRange: {bottom: {lower: 6, upper: 6}, top: {lower: 12, upper: 12}},
                 featherTimes: {lower: 2, upper: 8},
             })
         })
