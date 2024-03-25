@@ -48,8 +48,9 @@ export class RedEyeEffect extends LayerEffect {
                 point2,
                 context.data.thickness,
                 context.data.innerColor,
-                context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                context.data.outerColor);
+                isUnderlay ? context.data.stroke + context.theAccentGaston : 0,
+                isUnderlay ? context.data.outerColor : context.data.innerColor
+            );
             currentLineDistance += stageLength;
 
         } else if (lineStartGaston <= totalPathLength
@@ -62,8 +63,9 @@ export class RedEyeEffect extends LayerEffect {
                 findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - totalPathLength),
                 context.data.thickness,
                 context.data.innerColor,
-                context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                context.data.outerColor);
+                isUnderlay ? context.data.stroke + context.theAccentGaston : 0,
+                isUnderlay ? context.data.outerColor : context.data.innerColor
+            );
 
             lineFinished = true;
         } else if (lineStartGaston >= totalPathLength
@@ -78,8 +80,9 @@ export class RedEyeEffect extends LayerEffect {
                 point2,
                 context.data.thickness,
                 context.data.innerColor,
-                context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                context.data.outerColor);
+                isUnderlay ? context.data.stroke + context.theAccentGaston : 0,
+                isUnderlay ? context.data.outerColor : context.data.innerColor
+            );
 
             currentLineDistance += newDistance;
         } else if (lineStartGaston >= totalPathLength
@@ -94,8 +97,9 @@ export class RedEyeEffect extends LayerEffect {
                 findPointByDistanceBetweenTwoPoints(point1, point2, lineEndGaston - totalPathLength),
                 context.data.thickness,
                 context.data.innerColor,
-                context.data.thickness + isUnderlay ? context.data.stroke : 0,
-                context.data.outerColor);
+                isUnderlay ? context.data.stroke + context.theAccentGaston : 0,
+                isUnderlay ? context.data.outerColor : context.data.innerColor
+            );
 
             lineFinished = true;
         }
@@ -173,39 +177,43 @@ export class RedEyeEffect extends LayerEffect {
         const context = {
             currentFrame: currentFrame,
             numberOfFrames: numberOfFrames,
-            overlayName: this.workingDirectory + 'red-eye' + randomId() + '.png',
-            underlayName: this.workingDirectory + 'red-eye-underlay' + randomId() + '.png',
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
+            theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             data: this.data,
             layer: layer,
         }
 
         for (let i = 0; i < context.data.pathsArray.length; i++) {
+
+            const overlayName =  this.workingDirectory + 'red-eye' + randomId() + '.png';
+            const underlayName= this.workingDirectory + 'red-eye-underlay' + randomId() + '.png';
+
             //underlay
             const underlay = await this.#drawRedEye(context, i, true)
-            await underlay.toFile(context.underlayName);
-            const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
-            const theBlurGaston = Math.ceil(findValue(context.data.blurRange.lower, context.data.blurRange.upper, context.data.featherTimes, context.numberOfFrames, context.currentFrame))
-            await underlayLayer.blur(theBlurGaston);
-            await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+            await underlay.toFile(underlayName);
 
             //layer
             const overlay = await this.#drawRedEye(context, i, false)
-            await overlay.toFile(context.overlayName);
-            const overlayLayer = await LayerFactory.getLayerFromFile(context.overlayName, this.fileConfig);
-            await overlayLayer.adjustLayerOpacity(context.data.layerOpacity);
+            await overlay.toFile(overlayName);
 
+            let tempLayer = await LayerFactory.getLayerFromFile(overlayName, this.fileConfig);
+            let underlayLayer = await LayerFactory.getLayerFromFile(underlayName, this.fileConfig);
+
+            await underlayLayer.blur(context.theBlurGaston);
+
+            await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
+            await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
 
             if (!context.data.invertLayers) {
-                await context.layer.compositeLayerOver(underlayLayer);
-                await context.layer.compositeLayerOver(overlayLayer);
+                await layer.compositeLayerOver(underlayLayer);
+                await layer.compositeLayerOver(tempLayer);
             } else {
-                await context.layer.compositeLayerOver(overlayLayer);
-                await context.layer.compositeLayerOver(underlayLayer);
+                await layer.compositeLayerOver(tempLayer);
+                await layer.compositeLayerOver(underlayLayer);
             }
 
-            await fs.unlink(context.underlayName);
-            await fs.unlink(context.overlayName);
+            await fs.unlink(underlayName);
+            await fs.unlink(overlayName);
         }
     }
 
