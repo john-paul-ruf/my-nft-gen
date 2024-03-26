@@ -9,7 +9,7 @@ import {MappedFramesEffect} from "./effects/primaryEffects/mappedFrames/MappedFr
 import {MappedFramesConfig} from "./effects/primaryEffects/mappedFrames/MappedFramesConfig.js";
 import {FuzzyBandEffect} from "./effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js";
 import {FuzzyBandConfig} from "./effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js";
-import {getRandomFromArray} from "./core/math/random.js";
+import {getRandomFromArray, getRandomIntInclusive} from "./core/math/random.js";
 import {ViewportEffect} from "./effects/primaryEffects/viewport/ViewportEffect.js";
 import {ViewportConfig} from "./effects/primaryEffects/viewport/ViewportConfig.js";
 
@@ -40,8 +40,8 @@ await myTestProject.addPrimaryEffect({
                 lower: (finalSize) => finalSize.shortestSide * 0.15,
                 upper: (finalSize) => finalSize.longestSide * 0.5
             },
-            accentRange: {bottom: {lower: 8, upper: 8}, top: {lower: 14, upper: 14}},
-            blurRange: {bottom: {lower: 6, upper: 6}, top: {lower: 12, upper: 12}},
+            accentRange: {bottom: {lower: 14, upper: 14}, top: {lower: 20, upper: 20}},
+            blurRange: {bottom: {lower: 10, upper: 10}, top: {lower: 14, upper: 14}},
             featherTimes: {lower: 2, upper: 8},
         }),
         defaultEffectConfig: FuzzyBandConfig
@@ -79,13 +79,13 @@ for (let i = 0; i < redEyeCount; i++) {
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [6, 8, 9, 10, 12, 15],
-                innerRadius: getRandomFromArray([150, 175, 200, 250]),
-                outerRadius: getRandomFromArray([500, 550, 600, 650, 700]),
-                possibleJumpRangeInPixels: {lower: 10, upper: 40},
-                lineLength: {lower: 25, upper: 50},
+                innerRadius: getRandomIntInclusive(150,350),
+                outerRadius: getRandomIntInclusive(450,650),
+                possibleJumpRangeInPixels: {lower: 10, upper: 30},
+                lineLength: {lower: 75, upper: 150},
                 numberOfLoops: {lower: 1, upper: 5},
-                accentRange: {bottom: {lower: 8, upper: 8}, top: {lower: 14, upper: 14}},
-                blurRange: {bottom: {lower: 6, upper: 6}, top: {lower: 12, upper: 12}},
+                accentRange: {bottom: {lower: 4, upper: 4}, top: {lower: 8, upper: 8}},
+                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 6, upper: 6}},
                 featherTimes: {lower: 2, upper: 8},
             })
         })

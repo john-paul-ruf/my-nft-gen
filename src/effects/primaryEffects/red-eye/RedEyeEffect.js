@@ -124,7 +124,7 @@ export class RedEyeEffect extends LayerEffect {
 
                 const node = context.data.pathsArray[pathIndex].path[i]
 
-                const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength + context.data.lineLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
+                const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
                 const lineEndGaston = lineStartGaston + context.data.lineLength;
 
                 let results = await this.#drawNextSegment(
