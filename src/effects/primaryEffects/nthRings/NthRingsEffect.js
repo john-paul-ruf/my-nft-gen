@@ -48,7 +48,7 @@ export class NthRingsEffect extends LayerEffect {
 
         const angle = (360 / context.data.totalRingCount);
 
-        const theAngleGaston = findOneWayValue(0, angle, context.numberOfFrames, context.currentFrame)
+        const theAngleGaston = findOneWayValue(0, angle, 1, context.numberOfFrames, context.currentFrame)
 
         for (let i = 0; i < 360; i += angle) {
             await this.#drawRings(
@@ -66,7 +66,7 @@ export class NthRingsEffect extends LayerEffect {
 
         const angle = (360 / context.data.totalRingCount);
 
-        const theAngleGaston = findOneWayValue(0, angle, context.numberOfFrames, context.currentFrame)
+        const theAngleGaston = findOneWayValue(0, angle, 1, context.numberOfFrames, context.currentFrame)
 
         for (let i = 0; i < 360; i += angle) {
             await this.#drawRings(

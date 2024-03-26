@@ -43,7 +43,7 @@ export class LayeredHexEffect extends LayerEffect {
         const theAccentGaston = findValue(element.accentRange.lower, element.accentRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame);
 
         const invert = (count % 2) > 0;
-        const theAngleGaston = findOneWayValue(0, context.data.hexArray[arrayIndex].movementGaston * startingAngle, context.numberOfFrames, context.currentFrame, invert);
+        const theAngleGaston = findOneWayValue(0, context.data.hexArray[arrayIndex].movementGaston * startingAngle, 1, context.numberOfFrames, context.currentFrame, invert);
 
         const tempCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 

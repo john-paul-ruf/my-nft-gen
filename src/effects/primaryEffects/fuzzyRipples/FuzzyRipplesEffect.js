@@ -139,7 +139,7 @@ export class FuzzyRipplesEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            theAngleGaston: findOneWayValue(0, this.data.speed * 60, numberOfFrames, currentFrame),
+            theAngleGaston: findOneWayValue(0, this.data.speed * 60, 1, numberOfFrames, currentFrame),
             drawing: this.workingDirectory + 'fuzzy-ripples' + randomId() + '.png',
             underlayName: this.workingDirectory + 'fuzzy-ripples-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),

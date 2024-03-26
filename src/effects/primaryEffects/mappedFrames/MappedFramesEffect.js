@@ -1,6 +1,6 @@
 import {LayerEffect} from "../../../core/layer/LayerEffect.js";
 import {getRandomFromArray, getRandomIntExclusive, randomId} from "../../../core/math/random.js";
-import { promises as fs } from 'fs'
+import fs from 'fs'
 import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import {mapNumberToRange} from "../../../core/math/mapNumberToRange.js";
@@ -82,7 +82,7 @@ export class MappedFramesEffect extends LayerEffect {
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
         await layer.compositeLayerOver(tempLayer, false);
 
-        await fs.unlink(context.filename);
+        await fs.unlinkSync(context.filename);
     }
 
     #generate(settings) {

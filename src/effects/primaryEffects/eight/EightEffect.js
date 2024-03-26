@@ -86,7 +86,7 @@ export class EightEffect extends LayerEffect {
             numberOfFrames: numberOfFrames,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            theAngleGaston: findOneWayValue(0, 45, numberOfFrames, currentFrame),
+            theAngleGaston: findOneWayValue(0, 45, 1, numberOfFrames, currentFrame),
             drawing: this.workingDirectory + 'eight' + randomId() + '.png',
             underlayName: this.workingDirectory + 'eight-underlay' + randomId() + '.png',
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),

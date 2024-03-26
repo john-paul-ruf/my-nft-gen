@@ -47,8 +47,8 @@ export class HexEffect extends LayerEffect {
         const direction = loopCount % 2;
         const invert = direction <= 0;
 
-        const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
-        const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, context.numberOfFrames, context.currentFrame, invert)
+        const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, 1, context.numberOfFrames, context.currentFrame, invert);
+        const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, 1, context.numberOfFrames, context.currentFrame, invert)
 
         const scaleBy = (context.data.scaleFactor * loopCount);
         const radius = context.data.radiusFactor * scaleBy;
@@ -76,8 +76,8 @@ export class HexEffect extends LayerEffect {
         const direction = loopCount % 2;
         const invert = direction <= 0;
 
-        const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
-        const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, context.numberOfFrames, context.currentFrame, invert)
+        const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, 1, context.numberOfFrames, context.currentFrame, invert);
+        const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, 1, context.numberOfFrames, context.currentFrame, invert)
 
         const scaleBy = (context.data.scaleFactor * loopCount);
         const radius = context.data.radiusFactor * scaleBy;
@@ -105,8 +105,8 @@ export class HexEffect extends LayerEffect {
         const direction = loopCount % 2;
         const invert = direction <= 0;
 
-        const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, context.numberOfFrames, context.currentFrame, invert);
-        const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, context.numberOfFrames, context.currentFrame, invert)
+        const theAngleGaston = findOneWayValue(angle + 30, angle + 30 + context.data.sparsityFactor, 1, context.numberOfFrames, context.currentFrame, invert);
+        const theRotateGaston = findOneWayValue(theAngleGaston, theAngleGaston + 360, 1, context.numberOfFrames, context.currentFrame, invert)
 
         const scaleBy = (context.data.scaleFactor * loopCount);
         const radius = context.data.radiusFactor * scaleBy;
