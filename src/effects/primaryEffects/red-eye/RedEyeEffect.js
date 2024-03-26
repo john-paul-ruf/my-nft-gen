@@ -118,14 +118,13 @@ export class RedEyeEffect extends LayerEffect {
         let totalPathLength = 0;
         let currentLineDistance = 0;
         let lineFinished = false
+        const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
+        const lineEndGaston = lineStartGaston + context.data.pathsArray[pathIndex].lineLength;
 
         while (!lineFinished) {
             for (let i = 0; i < context.data.pathsArray[pathIndex].path.length; i++) {
 
                 const node = context.data.pathsArray[pathIndex].path[i]
-
-                const lineStartGaston = findOneWayValue(0, context.data.pathsArray[pathIndex].pathLength, context.data.numberOfLoops, context.numberOfFrames, context.currentFrame);
-                const lineEndGaston = lineStartGaston + context.data.lineLength;
 
                 let results = await this.#drawNextSegment(
                     context,
@@ -185,8 +184,8 @@ export class RedEyeEffect extends LayerEffect {
 
         for (let i = 0; i < context.data.pathsArray.length; i++) {
 
-            const overlayName =  this.workingDirectory + 'red-eye' + randomId() + '.png';
-            const underlayName= this.workingDirectory + 'red-eye-underlay' + randomId() + '.png';
+            const overlayName = this.workingDirectory + 'red-eye' + randomId() + '.png';
+            const underlayName = this.workingDirectory + 'red-eye-underlay' + randomId() + '.png';
 
             //underlay
             const underlay = await this.#drawRedEye(context, i, true)
@@ -233,8 +232,6 @@ export class RedEyeEffect extends LayerEffect {
             sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
             innerRadius: this.config.innerRadius,
             outerRadius: this.config.outerRadius,
-            numberOfSegments: this.config.numberOfSegments,
-            lineLength: getRandomIntInclusive(this.config.lineLength.lower, this.config.lineLength.upper),
             numberOfLoops: getRandomIntInclusive(this.config.numberOfLoops.lower, this.config.numberOfLoops.upper),
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
@@ -296,7 +293,7 @@ export class RedEyeEffect extends LayerEffect {
 
             const getPathLength = (path) => {
                 let totalPathLength = 0
-                for (let i = 0; i < path.length - 1; i++) {
+                for (let i = 0; i < path.length; i++) {
                     totalPathLength += distanceBetweenTwoPoints(path[i].linePoint1.point, path[i].linePoint2.point);
                     totalPathLength += distanceBetweenTwoPoints(path[i].linePoint2.point, path[i].arcPoint.point);
                 }
