@@ -56,13 +56,13 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new MappedFramesConfig({
             folderName: '/mappedFrames/',
             layerOpacity: [0.85],
-            buffer: [600],
+            buffer: [50],
             loopTimes: 15,
         })
     })
 });
 
-const redEyeCount = getRandomFromArray([8])
+let redEyeCount = getRandomFromArray([4])
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -78,9 +78,9 @@ for (let i = 0; i < redEyeCount; i++) {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [9, 10, 12, 15],
-                innerRadius: getRandomIntInclusive(150,350),
-                outerRadius: getRandomIntInclusive(450,650),
+                sparsityFactor: [6, 8, 9, 10, 12],
+                innerRadius: getRandomIntInclusive(250,300),
+                outerRadius: getRandomIntInclusive(400,500),
                 possibleJumpRangeInPixels: {lower: 10, upper: 30},
                 lineLength: {lower: 75, upper: 150},
                 numberOfLoops: {lower: 1, upper: 8},
@@ -92,6 +92,65 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
+redEyeCount = getRandomFromArray([4])
+
+for (let i = 0; i < redEyeCount; i++) {
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: RedEyeEffect,
+            percentChance: 100,
+            currentEffectConfig: new RedEyeConfig({
+                invertLayers: true,
+                layerOpacity: 0.7,
+                underLayerOpacity: 0.5,
+                center: new Point2D(1080 / 2, 1920 / 2),
+                innerColor: new ColorPicker(ColorPicker.SelectionType.neutralBucket),
+                outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
+                stroke: 1,
+                thickness: 1,
+                sparsityFactor: [6, 8, 9, 10, 12],
+                innerRadius: getRandomIntInclusive(350,400),
+                outerRadius: getRandomIntInclusive(500,700),
+                possibleJumpRangeInPixels: {lower: 10, upper: 30},
+                lineLength: {lower: 75, upper: 150},
+                numberOfLoops: {lower: 1, upper: 8},
+                accentRange: {bottom: {lower: 4, upper: 4}, top: {lower: 8, upper: 8}},
+                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 6, upper: 6}},
+                featherTimes: {lower: 2, upper: 8},
+            })
+        })
+    });
+}
+
+redEyeCount = getRandomFromArray([4])
+
+for (let i = 0; i < redEyeCount; i++) {
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: RedEyeEffect,
+            percentChance: 100,
+            currentEffectConfig: new RedEyeConfig({
+                invertLayers: true,
+                layerOpacity: 0.7,
+                underLayerOpacity: 0.5,
+                center: new Point2D(1080 / 2, 1920 / 2),
+                innerColor: new ColorPicker(ColorPicker.SelectionType.neutralBucket),
+                outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
+                stroke: 1,
+                thickness: 1,
+                sparsityFactor: [6, 8, 9, 10, 12],
+                innerRadius: getRandomIntInclusive(450,500),
+                outerRadius: getRandomIntInclusive(600,900),
+                possibleJumpRangeInPixels: {lower: 10, upper: 30},
+                lineLength: {lower: 75, upper: 150},
+                numberOfLoops: {lower: 1, upper: 8},
+                accentRange: {bottom: {lower: 4, upper: 4}, top: {lower: 8, upper: 8}},
+                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 6, upper: 6}},
+                featherTimes: {lower: 2, upper: 8},
+            })
+        })
+    });
+}
 const promiseArray = [];
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
