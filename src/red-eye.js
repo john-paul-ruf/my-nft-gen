@@ -12,6 +12,8 @@ import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandCo
 import { getRandomFromArray, getRandomIntInclusive } from './core/math/random.js';
 import { ViewportEffect } from './effects/primaryEffects/viewport/ViewportEffect.js';
 import { ViewportConfig } from './effects/primaryEffects/viewport/ViewportConfig.js';
+import {ScanLinesEffect} from "./effects/primaryEffects/scanLines/ScanLinesEffect.js";
+import {ScanLinesConfig} from "./effects/primaryEffects/scanLines/ScanLinesConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -20,6 +22,23 @@ const myTestProject = new Project({
     neutrals: ['#FFFFFF'],
     backgrounds: ['#000000'],
     numberOfFrame: 1800,
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: ScanLinesEffect,
+        percentChance: 100,
+        currentEffectConfig: new ScanLinesConfig({
+                lines: {lower: 6, upper: 8},
+                minlength: {lower: 20, upper: 30},
+                maxlength: {lower: 40, upper: 55},
+                times: {lower: 4, upper: 8},
+                alphaRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
+                alphaTimes: {lower: 2, upper: 8},
+                loopTimes: {lower: 1, upper: 3},
+            }
+        ),
+    }),
 });
 
 await myTestProject.addPrimaryEffect({
@@ -61,7 +80,7 @@ await myTestProject.addPrimaryEffect({
     }),
 });
 
-let redEyeCount = getRandomFromArray([4]);
+let redEyeCount = getRandomFromArray([8]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -91,7 +110,7 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-redEyeCount = getRandomFromArray([4]);
+redEyeCount = getRandomFromArray([6]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({

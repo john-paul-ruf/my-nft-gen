@@ -59,14 +59,13 @@ export class ScanLinesEffect extends LayerEffect {
         };
 
         for (let i = 0; i < this.data.lineInfo.length; i++) {
-            const y = this.#computeY(context, numberOfFrames, currentFrame, i, this.data.lineInfo[i].loopTimes);
+            const y = await this.#computeY(context, numberOfFrames, currentFrame, i, this.data.lineInfo[i].loopTimes);
             await this.#drawLine(y, this.data.lineInfo[i].pixelLine, context);
         }
 
-        await context.canvas.toFile(context.drawing);
-        await layer.fromFile(context.drawing);
+        const newLayer = await context.canvas.convertToLayer();
 
-        await fs.unlink(context.drawing);
+        await layer.compositeLayerOver(newLayer);
     }
 
     #generate(settings) {
