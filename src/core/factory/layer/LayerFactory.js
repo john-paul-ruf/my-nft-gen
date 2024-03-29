@@ -49,4 +49,24 @@ export class LayerFactory {
                 throw 'Not a valid layer strategy';
         }
     }
+
+    static getLayerFromBuffer = async (buffer, config = {
+        finalImageSize: {
+            width: 0,
+            height: 0,
+            longestSide: 0,
+            shortestSide: 0
+        },
+        workingDirectory: null,
+        layerStrategy: 'sharp'
+    }) => {
+        switch (config.layerStrategy) {
+            case 'sharp':
+                const sharpLayer = new Layer(new SharpLayerStrategy(config))
+                await sharpLayer.fromBuffer(buffer);
+                return sharpLayer;
+            default:
+                throw 'Not a valid layer strategy';
+        }
+    }
 }

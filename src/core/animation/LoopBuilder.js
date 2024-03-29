@@ -3,7 +3,7 @@ import {timeLeft} from "../utils/timeLeft.js";
 import {writeArtistCard} from "../output/writeArtistCard.js";
 import {writeToMp4} from "../output/writeToMp4.js";
 import {writeScreenCap} from "../output/writeScreenCap.js";
-import { promises as fs } from 'fs'
+import fs from "fs";
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
 
 export class LoopBuilder {
@@ -113,10 +113,18 @@ export class LoopBuilder {
     }
 
    async #writeSettingsInfo() {
-        await fs.writeFile(this.settings.config.fileOut + '-settings.json' , JSON.stringify(this.settings));
+        await fs.promises.writeFile(this.settings.config.fileOut + '-settings.json' , JSON.stringify(this.settings));
     }
 
     async constructLoop() {
+
+        const checkFileExists = async (filepath) =>{
+            return new Promise((resolve, reject) => {
+                fs.access(filepath, fs.constants.F_OK, error => {
+                    resolve(!error);
+                });
+            });
+        }
 
         return new Promise(async (resolve) => {
 
@@ -140,8 +148,10 @@ export class LoopBuilder {
             //Here we create all the frames in order
             ////////////////////////
             for (let f = 0; f < this.config.numberOfFrame; f = f + this.config.frameInc) {
-                await this.#createSingleFrame(f, this.context);
-                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
+                if (!await checkFileExists(this.context.workingDirectory + this.context.finalFileName + '-frame-' + f.toString() + '.png')) {
+                    await this.#createSingleFrame(f, this.context);
+                    console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
+                }
             }
 
             ////////////////////////
@@ -153,7 +163,7 @@ export class LoopBuilder {
 
             for (let f = 0; f < this.context.frameFilenames.length; f++) {
                 //delete files
-                await fs.unlink(this.context.frameFilenames[f]);
+                await fs.promises.unlink(this.context.frameFilenames[f]);
             }
 
             resolve();

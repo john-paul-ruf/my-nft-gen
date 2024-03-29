@@ -1,10 +1,12 @@
 import sharp from "sharp";
 import {randomId} from "../../../math/random.js";
-import { Readable } from "stream";
-import { pipeline } from 'node:stream/promises';
-import { promises as fs, createWriteStream } from 'fs'
+import {Readable} from "stream";
+import {pipeline} from 'node:stream/promises';
+import {promises as fs, createWriteStream} from 'fs'
 import {mapNumberToRange} from "../../../math/mapNumberToRange.js";
-import { promisify } from 'util';
+import {promisify} from 'util';
+import {Layer} from "../Layer.js";
+import {LayerFactory} from "../LayerFactory.js";
 
 
 export class SharpLayerStrategy {
@@ -38,7 +40,17 @@ export class SharpLayerStrategy {
 
     async fromFile(filename) {
         this.fileBuffer = await fs.readFile(filename);
-        this.internalRepresentation = sharp(this.fileBuffer);
+        this.internalRepresentation = await sharp(this.fileBuffer);
+    }
+
+    async fromBuffer(buffer) {
+        this.internalRepresentation = await sharp(buffer);
+    }
+
+    async toBuffer() {
+        return await this.internalRepresentation.png({
+            compressionLevel: 0, force: true,
+        }).toBuffer({resolveWithObject: false});
     }
 
     async toFile(filename) {
@@ -56,61 +68,46 @@ export class SharpLayerStrategy {
 
         const finalImageSize = this.finalImageSize;
 
-        const overlayFile = this.workingDirectory + 'overlay' + randomId() + '.png';
-        const targetFile = this.workingDirectory + 'target' + randomId() + '.png';
-        const compositeFile = this.workingDirectory + 'composite' + randomId() + '.png';
 
-        if (withResize) {
+        const currentInfo = await this.getInfo();
+        const layerInfo = await layer.getInfo();
+
+        if (currentInfo.height > finalImageSize.height ||
+            currentInfo.width > finalImageSize.width) {
+            await this.resize(finalImageSize.height, finalImageSize.width);
+        }
+
+        if (layerInfo.height > finalImageSize.height ||
+            layerInfo.width > finalImageSize.width) {
             await layer.resize(finalImageSize.height, finalImageSize.width);
         }
 
-        await layer.toFile(overlayFile)
-        await this.toFile(targetFile);
+        const inputBuffer = await layer.toBuffer();
 
-        const buffer = await sharp(targetFile).composite([{
-            input: overlayFile
-        }]).png({
+        await this.fromBuffer(await sharp(await this.toBuffer()).png({
             compressionLevel: 0, force: true,
-        }).toBuffer({resolveWithObject: false});
+        }).composite([{
+            input: inputBuffer,
+        }]).png({compressionLevel: 0, force: true})
+            .toBuffer());
 
-        const readableStream = Readable.from(buffer);
-        const writableStream = createWriteStream(compositeFile);
-
-        await pipeline(readableStream, writableStream)
-
-        await this.fromFile(compositeFile);
-
-        await fs.unlink(overlayFile);
-        await fs.unlink(targetFile);
-        await fs.unlink(compositeFile);
     }
 
     async adjustLayerOpacity(opacity) {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
-        const meta = await this.getInfo();
 
-        const targetFile = this.workingDirectory + 'target' + randomId() + '.png';
-        const compositeFile = this.workingDirectory + 'composite' + randomId() + '.png';
-
-        await this.toFile(targetFile);
-
-        const buffer = await sharp(targetFile).composite([{
-            input: Buffer.alloc(meta.width * meta.height * 4, newOpacity), raw: {
-                width: meta.width, height: meta.height, channels: 4
+        const info = await this.getInfo();
+        const buffer = await sharp(await this.toBuffer()).png({
+            compressionLevel: 0, force: true,
+        }).composite([{
+            input: Buffer.alloc(info.width * info.height * 4, newOpacity), raw: {
+                width: info.width, height: info.height, channels: 4
             }, blend: 'dest-in'
         }]).png({
             compressionLevel: 0, force: true,
         }).toBuffer({resolveWithObject: false});
 
-        const readableStream = Readable.from(buffer);
-        const writableStream = createWriteStream(compositeFile);
-
-        await pipeline(readableStream, writableStream)
-
-        await this.fromFile(compositeFile);
-
-        await fs.unlink(targetFile);
-        await fs.unlink(compositeFile);
+        await this.fromBuffer(buffer);
     }
 
     async blur(byPixels) {
@@ -138,6 +135,10 @@ export class SharpLayerStrategy {
     }
 
     async getInfo() {
-        return await this.internalRepresentation.metadata()
+        const {info} = await this.internalRepresentation.png({
+            compressionLevel: 0, force: true,
+        }).toBuffer({resolveWithObject: true});
+
+        return info;
     }
 }

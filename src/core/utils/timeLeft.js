@@ -1,10 +1,10 @@
-import {timeToString} from "./timeToString.js";
+import { timeToString } from './timeToString.js'
 
 export const timeLeft = (startTime, frame, frameInc, numberOfFrames) => {
-    let currentTime = new Date();
-    let rez = currentTime.getTime() - startTime.getTime();
-    let currentFrameCount = (frame / frameInc)
-    let timePerFrame = rez / currentFrameCount;
-    let timeLeft = (numberOfFrames - currentFrameCount) * timePerFrame;
-    return timeToString(timeLeft);
+  const currentTime = new Date()
+  const rez = currentTime.getTime() - startTime.getTime()
+  const currentFrameCount = (frame / frameInc)
+  const timePerFrame = rez / currentFrameCount
+  const timeLeft = (numberOfFrames - currentFrameCount) * timePerFrame
+  return timeToString(timeLeft)
 }

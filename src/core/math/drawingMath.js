@@ -1,23 +1,22 @@
-//I probably stole this from stack overflow long ago
+// I probably stole this from stack overflow long ago
 export const findPointByAngleAndCircle = (pos, angle, radius) => {
-    let x = pos.x + radius * Math.cos(degreesToRadians(angle));
-    let y = pos.y + radius * Math.sin(degreesToRadians(angle));
-    return {x: x, y: y};
+  const x = pos.x + radius * Math.cos(degreesToRadians(angle))
+  const y = pos.y + radius * Math.sin(degreesToRadians(angle))
+  return { x, y }
 }
 
 export const getPointsForLayerAndDensity = (initialNumberOfPoints, scaleByFactor, iteration) => {
+  let numberOfPoints = initialNumberOfPoints
 
-    let numberOfPoints = initialNumberOfPoints;
+  for (let i = 0; i < iteration; i++) {
+    numberOfPoints = numberOfPoints * scaleByFactor
+  }
 
-    for (let i = 0; i < iteration; i++) {
-        numberOfPoints = numberOfPoints * scaleByFactor;
-    }
-
-    return Math.floor(numberOfPoints);
+  return Math.floor(numberOfPoints)
 }
 
-//See comment on method above
+// See comment on method above
 export const degreesToRadians = (degrees) => {
-    let pi = Math.PI;
-    return degrees * (pi / 180);
+  const pi = Math.PI
+  return degrees * (pi / 180)
 }

@@ -26,6 +26,10 @@ export class Canvas2d {
         await this.strategy.toFile(filename);
     }
 
+    async convertToLayer() {
+        return this.strategy.convertToLayer();
+    }
+
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha) {
         await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha);
     }

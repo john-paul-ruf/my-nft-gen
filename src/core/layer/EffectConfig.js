@@ -1,9 +1,5 @@
 export class EffectConfig {
-    constructor() {
-
-    }
-
-    validate() {
-        //todo add yup validation to each child config
-    }
+  validate () {
+    // todo add yup validation to each child config
+  }
 }

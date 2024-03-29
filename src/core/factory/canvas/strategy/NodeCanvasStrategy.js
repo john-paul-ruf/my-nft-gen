@@ -2,6 +2,8 @@ import {createCanvas} from "canvas";
 import fs from 'fs'
 import {degreesToRadians, findPointByAngleAndCircle} from "../../../math/drawingMath.js";
 import {hexToRgba} from "../../../utils/hexToRgba.js";
+import {Layer} from "../../layer/Layer.js";
+import {LayerFactory} from "../../layer/LayerFactory.js";
 
 export class NodeCanvasStrategy {
     constructor() {
@@ -28,6 +30,12 @@ export class NodeCanvasStrategy {
             stream.pipe(out);
             out.on('finish', () => resolve());
         });
+    }o
+
+    async convertToLayer(){
+        return await LayerFactory.getLayerFromBuffer(this.canvas.toBuffer('image/png', {
+            compressionLevel: 0, filters: this.canvas.PNG_NO_FILTERS, palette: new Uint8ClampedArray(37 * 4),
+        }));
     }
 
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {

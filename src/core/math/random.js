@@ -1,28 +1,28 @@
-//I stole this code of the net
+// I stole this code of the net
 export const getRandomIntExclusive = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
 }
 
 export const getRandomIntInclusive = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-//inspired
+// inspired
 export const getRandomFromArray = (array) => {
-    return array[getRandomIntExclusive(0, array.length)];
+  return array[getRandomIntExclusive(0, array.length)]
 }
 
-//Same
+// Same
 export const randomNumber = (min, max) => {
-    return Math.random() * (max - min) + min;
+  return Math.random() * (max - min) + min
 }
 
-//Same
+// Same
 export const randomId = () => {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
-    return '-' + Math.random().toString(36).substring(2, 9);
-};
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return '-' + Math.random().toString(36).substring(2, 9)
+}

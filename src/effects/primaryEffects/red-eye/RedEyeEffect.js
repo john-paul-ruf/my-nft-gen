@@ -187,32 +187,25 @@ export class RedEyeEffect extends LayerEffect {
             const overlayName = this.workingDirectory + 'red-eye' + randomId() + '.png';
             const underlayName = this.workingDirectory + 'red-eye-underlay' + randomId() + '.png';
 
-            //underlay
-            const underlay = await this.#drawRedEye(context, i, true)
-            await underlay.toFile(underlayName);
+            const underlayCanvas = await this.#drawRedEye(context, i, true);
+            const underlayLayer = await underlayCanvas.convertToLayer();
 
             //layer
-            const overlay = await this.#drawRedEye(context, i, false)
-            await overlay.toFile(overlayName);
-
-            let tempLayer = await LayerFactory.getLayerFromFile(overlayName, this.fileConfig);
-            let underlayLayer = await LayerFactory.getLayerFromFile(underlayName, this.fileConfig);
+            const layerCanvas = await this.#drawRedEye(context, i, false);
+            const topLayer = await layerCanvas.convertToLayer();
 
             await underlayLayer.blur(context.theBlurGaston);
 
             await underlayLayer.adjustLayerOpacity(context.data.underLayerOpacity);
-            await tempLayer.adjustLayerOpacity(context.data.layerOpacity);
+            await topLayer.adjustLayerOpacity(context.data.layerOpacity);
 
             if (!context.data.invertLayers) {
                 await layer.compositeLayerOver(underlayLayer);
-                await layer.compositeLayerOver(tempLayer);
+                await layer.compositeLayerOver(topLayer);
             } else {
-                await layer.compositeLayerOver(tempLayer);
+                await layer.compositeLayerOver(topLayer);
                 await layer.compositeLayerOver(underlayLayer);
             }
-
-            await fs.unlink(underlayName);
-            await fs.unlink(overlayName);
         }
     }
 
