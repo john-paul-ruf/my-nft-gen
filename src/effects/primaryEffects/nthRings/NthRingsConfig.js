@@ -1,7 +1,7 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class NthRingsConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       invertLayers = true,
       totalRingCount = { lower: 12, upper: 16 },
@@ -16,23 +16,23 @@ export class NthRingsConfig extends EffectConfig {
       smallerRingsGroupRadius = [(finalSize) => finalSize.shortestSide * 0.45, (finalSize) => finalSize.shortestSide * 0.50, (finalSize) => finalSize.shortestSide * 0.55],
       accentRange = { bottom: { lower: 1, upper: 1 }, top: { lower: 3, upper: 5 } },
       blurRange = { bottom: { lower: 1, upper: 1 }, top: { lower: 2, upper: 4 } },
-      featherTimes = { lower: 2, upper: 4 }
-    }
+      featherTimes = { lower: 2, upper: 4 },
+    },
   ) {
-    super()
-    this.invertLayers = invertLayers
-    this.totalRingCount = totalRingCount
-    this.layerOpacity = layerOpacity
-    this.underLayerOpacity = underLayerOpacity
-    this.stroke = stroke
-    this.thickness = thickness
-    this.smallRadius = smallRadius
-    this.smallNumberOfRings = smallNumberOfRings
-    this.ripple = ripple
-    this.times = times
-    this.smallerRingsGroupRadius = smallerRingsGroupRadius
-    this.accentRange = accentRange
-    this.blurRange = blurRange
-    this.featherTimes = featherTimes
+    super();
+    this.invertLayers = invertLayers;
+    this.totalRingCount = totalRingCount;
+    this.layerOpacity = layerOpacity;
+    this.underLayerOpacity = underLayerOpacity;
+    this.stroke = stroke;
+    this.thickness = thickness;
+    this.smallRadius = smallRadius;
+    this.smallNumberOfRings = smallNumberOfRings;
+    this.ripple = ripple;
+    this.times = times;
+    this.smallerRingsGroupRadius = smallerRingsGroupRadius;
+    this.accentRange = accentRange;
+    this.blurRange = blurRange;
+    this.featherTimes = featherTimes;
   }
 }

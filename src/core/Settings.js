@@ -1,26 +1,26 @@
-import { getRandomIntExclusive, randomId } from './math/random.js'
-import { ColorScheme } from './color/ColorScheme.js'
-import { LayerEffectFromJSON } from './layer/LayerEffectFromJSON.js'
-import { LayerConfig } from './layer/LayerConfig.js'
+import { getRandomIntExclusive, randomId } from './math/random.js';
+import { ColorScheme } from './color/ColorScheme.js';
+import { LayerEffectFromJSON } from './layer/LayerEffectFromJSON.js';
+import { LayerConfig } from './layer/LayerConfig.js';
 
 export class Settings {
-  static from (json) {
-    const settings = Object.assign(new Settings({}), json)
+  static from(json) {
+    const settings = Object.assign(new Settings({}), json);
 
-    settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme)
+    settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme);
 
     for (let i = 0; i < settings.effects.length; i++) {
-      settings.effects[i] = LayerEffectFromJSON.from(settings.effects[i])
+      settings.effects[i] = LayerEffectFromJSON.from(settings.effects[i]);
     }
 
     for (let i = 0; i < settings.finalImageEffects.length; i++) {
-      settings.finalImageEffects[i] = LayerEffectFromJSON.from(settings.finalImageEffects[i])
+      settings.finalImageEffects[i] = LayerEffectFromJSON.from(settings.finalImageEffects[i]);
     }
 
-    return settings
+    return settings;
   }
 
-  constructor ({
+  constructor({
     colorScheme = new ColorScheme({}),
     neutrals = ['#FFFFFF'],
     backgrounds = ['#000000'],
@@ -36,37 +36,37 @@ export class Settings {
     layerStrategy = 'sharp', // jimp no longer supported
     allPrimaryEffects = [new LayerConfig({})],
     allFinalImageEffects = [new LayerConfig({})],
-    finalFileName = 'nsv' + randomId(),
-    fileOut = workingDirectory + finalFileName
+    finalFileName = `nsv${randomId()}`,
+    fileOut = workingDirectory + finalFileName,
   }) {
-    this.colorScheme = colorScheme
+    this.colorScheme = colorScheme;
 
-    const finalImageHeight = isHorizontal ? shortestSideInPixels : longestSideInPixels
-    const finalImageWidth = isHorizontal ? longestSideInPixels : shortestSideInPixels
+    const finalImageHeight = isHorizontal ? shortestSideInPixels : longestSideInPixels;
+    const finalImageWidth = isHorizontal ? longestSideInPixels : shortestSideInPixels;
 
     this.finalSize = {
       width: finalImageWidth,
       height: finalImageHeight,
       longestSide: finalImageHeight > finalImageWidth ? finalImageHeight : finalImageWidth,
-      shortestSide: finalImageHeight > finalImageWidth ? finalImageWidth : finalImageHeight
-    }
+      shortestSide: finalImageHeight > finalImageWidth ? finalImageWidth : finalImageHeight,
+    };
 
-    this.workingDirectory = workingDirectory
+    this.workingDirectory = workingDirectory;
 
     this.fileConfig = {
       finalImageSize: this.finalSize,
       workingDirectory: this.workingDirectory,
-      layerStrategy
-    }
+      layerStrategy,
+    };
 
     // For 2D palettes
-    this.neutrals = neutrals
+    this.neutrals = neutrals;
 
     // For 2D palettes
-    this.backgrounds = backgrounds
+    this.backgrounds = backgrounds;
 
     // for three-dimensional lighting
-    this.lights = lights
+    this.lights = lights;
 
     this.config = {
       _INVOKER_,
@@ -74,92 +74,92 @@ export class Settings {
       frameInc,
       numberOfFrame,
       finalFileName,
-      fileOut
-    }
+      fileOut,
+    };
 
-    this.allPrimaryEffects = allPrimaryEffects
-    this.allFinalImageEffects = allFinalImageEffects
+    this.allPrimaryEffects = allPrimaryEffects;
+    this.allFinalImageEffects = allFinalImageEffects;
 
     // This determines the final image contents
     // The effect array is super important
     // Understanding effects is key to running this program.
-    this.effects = this.#generatePrimaryEffects(this)
-    this.finalImageEffects = this.#generateFinalImageEffects(this)
+    this.effects = this.#generatePrimaryEffects(this);
+    this.finalImageEffects = this.#generateFinalImageEffects(this);
   }
 
-  #generatePrimaryEffects () {
-    const effectList = []
+  #generatePrimaryEffects() {
+    const effectList = [];
 
     // For each effect in the possible effects list.
-    this.allPrimaryEffects.forEach(obj => {
-      const chance = getRandomIntExclusive(0, 100) // roll the dice
+    this.allPrimaryEffects.forEach((obj) => {
+      const chance = getRandomIntExclusive(0, 100); // roll the dice
       if (obj.percentChance > chance) { // if the roll was below the chance of hit
         effectList.push(new obj.Effect({
           config: obj.currentEffectConfig,
           additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
           ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
-          settings: this
-        }))
+          settings: this,
+        }));
       }
-    })
+    });
 
-    return effectList
+    return effectList;
   }
 
-  #applySecondaryEffects (possibleEffects) {
-    const effectList = []
+  #applySecondaryEffects(possibleEffects) {
+    const effectList = [];
 
     // For each effect in the possible effects list.
-    possibleEffects.forEach(obj => {
-      const chance = getRandomIntExclusive(0, 100) // roll the dice
+    possibleEffects.forEach((obj) => {
+      const chance = getRandomIntExclusive(0, 100); // roll the dice
       if (obj.percentChance > chance) { // if the roll was below the chance of hit
         effectList.push(new obj.Effect({
           config: obj.currentEffectConfig,
           additionalEffects: [],
           ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
-          settings: this
-        }))
+          settings: this,
+        }));
       }
-    })
-    return effectList
+    });
+    return effectList;
   }
 
-  #generateFinalImageEffects () {
-    const effectList = []
+  #generateFinalImageEffects() {
+    const effectList = [];
 
     // For each effect in the possible effects list.
-    this.allFinalImageEffects.forEach(obj => {
-      const chance = getRandomIntExclusive(0, 100) // roll the dice
+    this.allFinalImageEffects.forEach((obj) => {
+      const chance = getRandomIntExclusive(0, 100); // roll the dice
       if (obj.percentChance > chance) { // if the roll was below the chance of hit
         effectList.push(new obj.Effect({
           config: obj.currentEffectConfig,
           additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
           ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
-          settings: this
-        }))
+          settings: this,
+        }));
       }
-    })
+    });
 
-    return effectList
+    return effectList;
   }
 
-  getColorFromBucket () {
-    return this.colorScheme.getColorFromBucket()
+  getColorFromBucket() {
+    return this.colorScheme.getColorFromBucket();
   }
 
-  getNeutralFromBucket () {
-    return this.neutrals[getRandomIntExclusive(0, this.neutrals.length)]
+  getNeutralFromBucket() {
+    return this.neutrals[getRandomIntExclusive(0, this.neutrals.length)];
   }
 
-  getBackgroundFromBucket () {
-    return this.backgrounds[getRandomIntExclusive(0, this.backgrounds.length)]
+  getBackgroundFromBucket() {
+    return this.backgrounds[getRandomIntExclusive(0, this.backgrounds.length)];
   }
 
-  getLightFromBucket () {
-    return this.lights[getRandomIntExclusive(0, this.lights.length)]
+  getLightFromBucket() {
+    return this.lights[getRandomIntExclusive(0, this.lights.length)];
   }
 
-  async getColorSchemeInfo () {
-    return this.colorScheme.getColorSchemeInfo()
+  async getColorSchemeInfo() {
+    return this.colorScheme.getColorSchemeInfo();
   }
 }

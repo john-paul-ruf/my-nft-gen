@@ -1,7 +1,7 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class AmpConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       invertLayers = true,
       layerOpacity = 0.55,
@@ -17,24 +17,24 @@ export class AmpConfig extends EffectConfig {
       lineStart = 350,
       center = { x: 1080 / 2, y: 1920 / 2 },
       innerColor = null,
-      outerColor = null
-    }
+      outerColor = null,
+    },
   ) {
-    super()
-    this.invertLayers = invertLayers
-    this.layerOpacity = layerOpacity
-    this.underLayerOpacity = underLayerOpacity
-    this.sparsityFactor = sparsityFactor
-    this.stroke = stroke
-    this.thickness = thickness
-    this.accentRange = accentRange
-    this.blurRange = blurRange
-    this.featherTimes = featherTimes
-    this.speed = speed
-    this.length = length
-    this.lineStart = lineStart
-    this.center = center
-    this.innerColor = innerColor
-    this.outerColor = outerColor
+    super();
+    this.invertLayers = invertLayers;
+    this.layerOpacity = layerOpacity;
+    this.underLayerOpacity = underLayerOpacity;
+    this.sparsityFactor = sparsityFactor;
+    this.stroke = stroke;
+    this.thickness = thickness;
+    this.accentRange = accentRange;
+    this.blurRange = blurRange;
+    this.featherTimes = featherTimes;
+    this.speed = speed;
+    this.length = length;
+    this.lineStart = lineStart;
+    this.center = center;
+    this.innerColor = innerColor;
+    this.outerColor = outerColor;
   }
 }

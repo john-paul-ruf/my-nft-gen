@@ -1,19 +1,19 @@
-import { getRandomIntExclusive } from '../math/random.js'
+import { getRandomIntExclusive } from '../math/random.js';
 
 export class ColorScheme {
-  constructor ({
+  constructor({
     colorBucket = [],
-    colorSchemeInfo = 'Please define a color scheme'
+    colorSchemeInfo = 'Please define a color scheme',
   }) {
-    this.colorBucket = colorBucket
-    this.colorSchemeInfo = colorSchemeInfo
+    this.colorBucket = colorBucket;
+    this.colorSchemeInfo = colorSchemeInfo;
   }
 
-  getColorFromBucket () {
-    return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)]
+  getColorFromBucket() {
+    return this.colorBucket[getRandomIntExclusive(0, this.colorBucket.length)];
   }
 
-  getColorSchemeInfo () {
-    return this.colorSchemeInfo
+  getColorSchemeInfo() {
+    return this.colorSchemeInfo;
   }
 }

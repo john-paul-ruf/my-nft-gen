@@ -1,7 +1,7 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class LayeredRingConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       thickness = 4,
       stroke = 0,
@@ -23,23 +23,23 @@ export class LayeredRingConfig extends EffectConfig {
       movementGaston = { lower: 1, upper: 6 },
 
       initialNumberOfPoints = 4,
-      scaleByFactor = 1.2
-    }
+      scaleByFactor = 1.2,
+    },
   ) {
-    super()
-    this.thickness = thickness
-    this.stroke = stroke
-    this.layerOpacityRange = layerOpacityRange
-    this.layerOpacityTimes = layerOpacityTimes
-    this.indexOpacityRange = indexOpacityRange
-    this.indexOpacityTimes = indexOpacityTimes
-    this.radius = radius
-    this.offsetRadius = offsetRadius
-    this.numberOfIndex = numberOfIndex
-    this.startIndex = startIndex
-    this.startAngle = startAngle
-    this.movementGaston = movementGaston
-    this.initialNumberOfPoints = initialNumberOfPoints
-    this.scaleByFactor = scaleByFactor
+    super();
+    this.thickness = thickness;
+    this.stroke = stroke;
+    this.layerOpacityRange = layerOpacityRange;
+    this.layerOpacityTimes = layerOpacityTimes;
+    this.indexOpacityRange = indexOpacityRange;
+    this.indexOpacityTimes = indexOpacityTimes;
+    this.radius = radius;
+    this.offsetRadius = offsetRadius;
+    this.numberOfIndex = numberOfIndex;
+    this.startIndex = startIndex;
+    this.startAngle = startAngle;
+    this.movementGaston = movementGaston;
+    this.initialNumberOfPoints = initialNumberOfPoints;
+    this.scaleByFactor = scaleByFactor;
   }
 }

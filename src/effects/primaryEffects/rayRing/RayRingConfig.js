@@ -1,7 +1,7 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class RayRingConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       layerOpacity = 1,
       underLayerOpacity = 0.8,
@@ -20,27 +20,27 @@ export class RayRingConfig extends EffectConfig {
       lengthRange = { bottom: { lower: 5, upper: 15 }, top: { lower: 20, upper: 50 } }, // when spin enabled, length must be at 0 or glitches the loop
       lengthTimes = { lower: 2, upper: 6 },
       sparsityFactor = [1, 2, 3],
-      speed = { lower: 0, upper: 0 }
-    }
+      speed = { lower: 0, upper: 0 },
+    },
   ) {
-    super()
-    this.layerOpacity = layerOpacity
-    this.underLayerOpacity = underLayerOpacity
-    this.circles = circles
-    this.radiusInitial = radiusInitial
-    this.radiusGap = radiusGap
-    this.stroke = stroke
-    this.thickness = thickness
-    this.rayStroke = rayStroke
-    this.rayThickness = rayThickness
-    this.scaleFactor = scaleFactor
-    this.densityFactor = densityFactor
-    this.accentRange = accentRange
-    this.blurRange = blurRange
-    this.featherTimes = featherTimes
-    this.lengthRange = lengthRange
-    this.lengthTimes = lengthTimes
-    this.sparsityFactor = sparsityFactor
-    this.speed = speed
+    super();
+    this.layerOpacity = layerOpacity;
+    this.underLayerOpacity = underLayerOpacity;
+    this.circles = circles;
+    this.radiusInitial = radiusInitial;
+    this.radiusGap = radiusGap;
+    this.stroke = stroke;
+    this.thickness = thickness;
+    this.rayStroke = rayStroke;
+    this.rayThickness = rayThickness;
+    this.scaleFactor = scaleFactor;
+    this.densityFactor = densityFactor;
+    this.accentRange = accentRange;
+    this.blurRange = blurRange;
+    this.featherTimes = featherTimes;
+    this.lengthRange = lengthRange;
+    this.lengthTimes = lengthTimes;
+    this.sparsityFactor = sparsityFactor;
+    this.speed = speed;
   }
 }

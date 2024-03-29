@@ -1,7 +1,7 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class LayeredHexConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       invertLayers = true,
 
@@ -29,27 +29,27 @@ export class LayeredHexConfig extends EffectConfig {
 
       accentRange = { bottom: { lower: 1, upper: 1 }, top: { lower: 3, upper: 6 } },
       blurRange = { bottom: { lower: 1, upper: 1 }, top: { lower: 1, upper: 1 } },
-      featherTimes = { lower: 2, upper: 4 }
-    }
+      featherTimes = { lower: 2, upper: 4 },
+    },
   ) {
-    super()
-    this.invertLayers = invertLayers
-    this.thickness = thickness
-    this.stroke = stroke
-    this.layerOpacityRange = layerOpacityRange
-    this.layerOpacityTimes = layerOpacityTimes
-    this.indexOpacityRange = indexOpacityRange
-    this.indexOpacityTimes = indexOpacityTimes
-    this.radius = radius
-    this.offsetRadius = offsetRadius
-    this.numberOfIndex = numberOfIndex
-    this.startIndex = startIndex
-    this.startAngle = startAngle
-    this.movementGaston = movementGaston
-    this.initialNumberOfPoints = initialNumberOfPoints
-    this.scaleByFactor = scaleByFactor
-    this.accentRange = accentRange
-    this.blurRange = blurRange
-    this.featherTimes = featherTimes
+    super();
+    this.invertLayers = invertLayers;
+    this.thickness = thickness;
+    this.stroke = stroke;
+    this.layerOpacityRange = layerOpacityRange;
+    this.layerOpacityTimes = layerOpacityTimes;
+    this.indexOpacityRange = indexOpacityRange;
+    this.indexOpacityTimes = indexOpacityTimes;
+    this.radius = radius;
+    this.offsetRadius = offsetRadius;
+    this.numberOfIndex = numberOfIndex;
+    this.startIndex = startIndex;
+    this.startAngle = startAngle;
+    this.movementGaston = movementGaston;
+    this.initialNumberOfPoints = initialNumberOfPoints;
+    this.scaleByFactor = scaleByFactor;
+    this.accentRange = accentRange;
+    this.blurRange = blurRange;
+    this.featherTimes = featherTimes;
   }
 }

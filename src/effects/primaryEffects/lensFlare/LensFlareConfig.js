@@ -1,13 +1,13 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
-import { getRandomIntExclusive } from '../../../core/math/random.js'
-import { DynamicRange } from '../../../core/layer/configType/DynamicRange.js'
-import { PercentageRange } from '../../../core/layer/configType/PercentageRange.js'
-import { PercentageShortestSide } from '../../../core/layer/configType/PercentageShortestSide.js'
-import { PercentageLongestSide } from '../../../core/layer/configType/PercentageLongestSide.js'
-import { Range } from '../../../core/layer/configType/Range.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
+import { getRandomIntExclusive } from '../../../core/math/random.js';
+import { DynamicRange } from '../../../core/layer/configType/DynamicRange.js';
+import { PercentageRange } from '../../../core/layer/configType/PercentageRange.js';
+import { PercentageShortestSide } from '../../../core/layer/configType/PercentageShortestSide.js';
+import { PercentageLongestSide } from '../../../core/layer/configType/PercentageLongestSide.js';
+import { Range } from '../../../core/layer/configType/Range.js';
 
 export class LensFlareConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       layerOpacityRange = new DynamicRange(new Range(1, 1), new Range(1, 1)),
       layerOpacityTimes = new Range(2, 6),
@@ -47,44 +47,44 @@ export class LensFlareConfig extends EffectConfig {
         '#ec9dff',
         '#ffec9d',
         '#ffbb9d',
-        '#ff9daf'
+        '#ff9daf',
       ],
 
       getFlareColor = (strategy, settings, config) => {
         switch (strategy) {
           case 'original':
-            return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)]
+            return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
           case 'color-bucket':
-            return settings.getColorFromBucket()
+            return settings.getColorFromBucket();
           case 'neutral-bucket':
-            return settings.getNeutralFromBucket()
+            return settings.getNeutralFromBucket();
           default:
-            return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)]
+            return config.flareColors[getRandomIntExclusive(0, config.flareColors.length)];
         }
-      }
-    }
+      },
+    },
   ) {
-    super()
-    this.layerOpacityRange = layerOpacityRange
-    this.layerOpacityTimes = layerOpacityTimes
-    this.elementOpacityRange = elementOpacityRange
-    this.elementOpacityTimes = elementOpacityTimes
-    this.elementGastonRange = elementGastonRange
-    this.elementGastonTimes = elementGastonTimes
-    this.numberOfFlareHex = numberOfFlareHex
-    this.flareHexSizeRange = flareHexSizeRange
-    this.angleRangeFlareHex = angleRangeFlareHex
-    this.angleGastonTimes = angleGastonTimes
-    this.numberOfFlareRings = numberOfFlareRings
-    this.flareRingsSizeRange = flareRingsSizeRange
-    this.flareRingStroke = flareRingStroke
-    this.numberOfFlareRays = numberOfFlareRays
-    this.flareRaysSizeRange = flareRaysSizeRange
-    this.flareRaysStroke = flareRaysStroke
-    this.blurRange = blurRange
-    this.blurTimes = blurTimes
-    this.strategy = strategy
-    this.flareColors = flareColors
-    this.getFlareColor = getFlareColor
+    super();
+    this.layerOpacityRange = layerOpacityRange;
+    this.layerOpacityTimes = layerOpacityTimes;
+    this.elementOpacityRange = elementOpacityRange;
+    this.elementOpacityTimes = elementOpacityTimes;
+    this.elementGastonRange = elementGastonRange;
+    this.elementGastonTimes = elementGastonTimes;
+    this.numberOfFlareHex = numberOfFlareHex;
+    this.flareHexSizeRange = flareHexSizeRange;
+    this.angleRangeFlareHex = angleRangeFlareHex;
+    this.angleGastonTimes = angleGastonTimes;
+    this.numberOfFlareRings = numberOfFlareRings;
+    this.flareRingsSizeRange = flareRingsSizeRange;
+    this.flareRingStroke = flareRingStroke;
+    this.numberOfFlareRays = numberOfFlareRays;
+    this.flareRaysSizeRange = flareRaysSizeRange;
+    this.flareRaysStroke = flareRaysStroke;
+    this.blurRange = blurRange;
+    this.blurTimes = blurTimes;
+    this.strategy = strategy;
+    this.flareColors = flareColors;
+    this.getFlareColor = getFlareColor;
   }
 }

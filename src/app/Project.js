@@ -1,12 +1,12 @@
-import { Settings } from '../core/Settings.js'
-import { ColorScheme } from '../core/color/ColorScheme.js'
-import { LayerConfig } from '../core/layer/LayerConfig.js'
-import { LoopBuilder } from '../core/animation/LoopBuilder.js'
-import { randomId } from '../core/math/random.js'
-import { promises as fs } from 'fs'
+import { promises as fs } from 'fs';
+import { Settings } from '../core/Settings.js';
+import { ColorScheme } from '../core/color/ColorScheme.js';
+import { LayerConfig } from '../core/layer/LayerConfig.js';
+import { LoopBuilder } from '../core/animation/LoopBuilder.js';
+import { randomId } from '../core/math/random.js';
 
 export class Project {
-  constructor ({
+  constructor({
     artist = 'unknown',
     projectName = 'new-project',
     colorScheme = new ColorScheme({}),
@@ -17,45 +17,45 @@ export class Project {
     longestSideInPixels = 1920,
     shortestSideInPixels = 1080,
     isHorizontal = false,
-    projectDirectory = 'src/projects/'
+    projectDirectory = 'src/projects/',
   }) {
-    this.projectName = projectName
-    this.artist = artist
-    this.colorScheme = colorScheme
-    this.neutrals = neutrals
-    this.backgrounds = backgrounds
-    this.lights = lights
-    this.numberOfFrame = numberOfFrame
-    this.longestSideInPixels = longestSideInPixels
-    this.shortestSideInPixels = shortestSideInPixels
-    this.isHorizontal = isHorizontal
-    this.projectDirectory = projectDirectory
+    this.projectName = projectName;
+    this.artist = artist;
+    this.colorScheme = colorScheme;
+    this.neutrals = neutrals;
+    this.backgrounds = backgrounds;
+    this.lights = lights;
+    this.numberOfFrame = numberOfFrame;
+    this.longestSideInPixels = longestSideInPixels;
+    this.shortestSideInPixels = shortestSideInPixels;
+    this.isHorizontal = isHorizontal;
+    this.projectDirectory = projectDirectory;
 
-    this.selectedPrimaryEffectConfigs = []
-    this.selectedFinalEffectConfigs = []
+    this.selectedPrimaryEffectConfigs = [];
+    this.selectedFinalEffectConfigs = [];
   }
 
-  addPrimaryEffect ({ layerConfig = new LayerConfig({}) }) {
-    this.selectedPrimaryEffectConfigs.push(layerConfig)
+  addPrimaryEffect({ layerConfig = new LayerConfig({}) }) {
+    this.selectedPrimaryEffectConfigs.push(layerConfig);
   }
 
-  removePrimaryEffect (layerConfig) {
-    this.selectedPrimaryEffectConfigs.push(layerConfig)
+  removePrimaryEffect(layerConfig) {
+    this.selectedPrimaryEffectConfigs.push(layerConfig);
   }
 
-  addFinalEffect ({ layerConfig = new LayerConfig({}) }) {
-    this.selectedFinalEffectConfigs.push(layerConfig)
+  addFinalEffect({ layerConfig = new LayerConfig({}) }) {
+    this.selectedFinalEffectConfigs.push(layerConfig);
   }
 
-  removeFinalEffect (layerConfig) {
-    this.selectedFinalEffectConfigs.push(layerConfig)
+  removeFinalEffect(layerConfig) {
+    this.selectedFinalEffectConfigs.push(layerConfig);
   }
 
-  async generateRandomLoop () {
-    const finalFinalName = this.projectName + randomId()
-    const workingDirectory = `${this.projectDirectory}/${finalFinalName}/`
+  async generateRandomLoop() {
+    const finalFinalName = this.projectName + randomId();
+    const workingDirectory = `${this.projectDirectory}/${finalFinalName}/`;
 
-    await fs.mkdir(workingDirectory, { recursive: true })
+    await fs.mkdir(workingDirectory, { recursive: true });
 
     const loopBuilder = new LoopBuilder(
       new Settings({
@@ -72,8 +72,9 @@ export class Project {
         isHorizontal: this.isHorizontal,
         workingDirectory,
         allPrimaryEffects: this.selectedPrimaryEffectConfigs,
-        allFinalImageEffects: this.selectedFinalEffectConfigs
-      }))
-    return loopBuilder.constructLoop()
+        allFinalImageEffects: this.selectedFinalEffectConfigs,
+      }),
+    );
+    return loopBuilder.constructLoop();
   }
 }

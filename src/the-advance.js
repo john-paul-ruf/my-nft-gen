@@ -1,27 +1,27 @@
-import { Project } from './app/Project.js'
-import { LayerConfig } from './core/layer/LayerConfig.js'
-import { AmpConfig } from './effects/primaryEffects/amp/AmpConfig.js'
-import { AmpEffect } from './effects/primaryEffects/amp/AmpEffect.js'
-import { NeonColorScheme, NeonColorSchemeFactory } from './core/color/NeonColorSchemeFactory.js'
-import { FuzzyBandEffect } from './effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js'
-import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js'
-import { LayeredHexEffect } from './effects/primaryEffects/layeredHex/LayeredHexEffect.js'
-import { LayeredHexConfig } from './effects/primaryEffects/layeredHex/LayeredHexConfig.js'
-import { GlowEffect } from './effects/secondaryEffects/glow/GlowEffect.js'
-import { GlowConfig } from './effects/secondaryEffects/glow/GlowConfig.js'
-import { LensFlareEffect } from './effects/primaryEffects/lensFlare/LensFlareEffect.js'
-import { LensFlareConfig } from './effects/primaryEffects/lensFlare/LensFlareConfig.js'
-import { Range } from './core/layer/configType/Range.js'
-import { ColorPicker } from './core/layer/configType/ColorPicker.js'
-import { DynamicRange } from './core/layer/configType/DynamicRange.js'
+import { Project } from './app/Project.js';
+import { LayerConfig } from './core/layer/LayerConfig.js';
+import { AmpConfig } from './effects/primaryEffects/amp/AmpConfig.js';
+import { AmpEffect } from './effects/primaryEffects/amp/AmpEffect.js';
+import { NeonColorScheme, NeonColorSchemeFactory } from './core/color/NeonColorSchemeFactory.js';
+import { FuzzyBandEffect } from './effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
+import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js';
+import { LayeredHexEffect } from './effects/primaryEffects/layeredHex/LayeredHexEffect.js';
+import { LayeredHexConfig } from './effects/primaryEffects/layeredHex/LayeredHexConfig.js';
+import { GlowEffect } from './effects/secondaryEffects/glow/GlowEffect.js';
+import { GlowConfig } from './effects/secondaryEffects/glow/GlowConfig.js';
+import { LensFlareEffect } from './effects/primaryEffects/lensFlare/LensFlareEffect.js';
+import { LensFlareConfig } from './effects/primaryEffects/lensFlare/LensFlareConfig.js';
+import { Range } from './core/layer/configType/Range.js';
+import { ColorPicker } from './core/layer/configType/ColorPicker.js';
+import { DynamicRange } from './core/layer/configType/DynamicRange.js';
 
 const myTestProject = new Project({
   artist: 'John Ruf',
   projectName: 'the-advance',
   projectDirectory: 'src/the-advance/',
   neutrals: ['#FFFFFF'],
-  backgrounds: ['#000000']
-})
+  backgrounds: ['#000000'],
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -36,15 +36,15 @@ await myTestProject.addPrimaryEffect({
       circles: { lower: 10, upper: 10 },
       radius: {
         lower: (finalSize) => finalSize.shortestSide * 0.1,
-        upper: (finalSize) => finalSize.longestSide * 0.55
+        upper: (finalSize) => finalSize.longestSide * 0.55,
       },
       accentRange: { bottom: { lower: 6, upper: 12 }, top: { lower: 35, upper: 75 } },
       blurRange: { bottom: { lower: 1, upper: 3 }, top: { lower: 8, upper: 12 } },
-      featherTimes: { lower: 8, upper: 8 }
+      featherTimes: { lower: 8, upper: 8 },
     }),
-    defaultEffectConfig: FuzzyBandConfig
-  })
-})
+    defaultEffectConfig: FuzzyBandConfig,
+  }),
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -67,10 +67,10 @@ await myTestProject.addPrimaryEffect({
       movementGaston: { lower: 10, upper: 20 },
       accentRange: { bottom: { lower: 1, upper: 1 }, top: { lower: 3, upper: 6 } },
       blurRange: { bottom: { lower: 1, upper: 1 }, top: { lower: 1, upper: 1 } },
-      featherTimes: { lower: 4, upper: 8 }
-    })
-  })
-})
+      featherTimes: { lower: 4, upper: 8 },
+    }),
+  }),
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -84,11 +84,11 @@ await myTestProject.addPrimaryEffect({
       length: 100,
       sparsityFactor: [2],
       center: { x: 1080 / 2, y: 1920 / 2 },
-      speed: { lower: 20, upper: 20 }
+      speed: { lower: 20, upper: 20 },
     }),
-    defaultEffectConfig: AmpConfig
-  })
-})
+    defaultEffectConfig: AmpConfig,
+  }),
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -111,10 +111,10 @@ await myTestProject.addPrimaryEffect({
       movementGaston: { lower: 8, upper: 12 },
       accentRange: { bottom: { lower: 1, upper: 1 }, top: { lower: 2, upper: 3 } },
       blurRange: { bottom: { lower: 1, upper: 1 }, top: { lower: 1, upper: 1 } },
-      featherTimes: { lower: 2, upper: 4 }
-    })
-  })
-})
+      featherTimes: { lower: 2, upper: 4 },
+    }),
+  }),
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -129,11 +129,11 @@ await myTestProject.addPrimaryEffect({
       sparsityFactor: [1],
       center: { x: 1080 / 2, y: 1920 / 2 },
       speed: { lower: 120, upper: 120 },
-      innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF')
+      innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
     }),
-    defaultEffectConfig: AmpConfig
-  })
-})
+    defaultEffectConfig: AmpConfig,
+  }),
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -155,10 +155,10 @@ await myTestProject.addPrimaryEffect({
       movementGaston: { lower: 1, upper: 4 },
       accentRange: { bottom: { lower: 0, upper: 0 }, top: { lower: 0, upper: 0 } },
       blurRange: { bottom: { lower: 0, upper: 0 }, top: { lower: 0, upper: 0 } },
-      featherTimes: { lower: 0, upper: 0 }
-    })
-  })
-})
+      featherTimes: { lower: 0, upper: 0 },
+    }),
+  }),
+});
 
 await myTestProject.addPrimaryEffect({
   layerConfig: new LayerConfig({
@@ -175,7 +175,7 @@ await myTestProject.addPrimaryEffect({
       elementOpacityTimes: new Range(6, 12),
 
       elementGastonRange: new DynamicRange(new Range(10, 20), new Range(30, 60)),
-      elementGastonTimes: new Range(4, 8)
+      elementGastonTimes: new Range(4, 8),
     }),
     possibleSecondaryEffects: [
       new LayerConfig({
@@ -184,18 +184,18 @@ await myTestProject.addPrimaryEffect({
         currentEffectConfig: new GlowConfig({
           lowerRange: new Range(-24, -24),
           upperRange: new Range(24, 24),
-          times: new Range(8, 8)
-        })
-      })
-    ]
-  })
-})
+          times: new Range(8, 8),
+        }),
+      }),
+    ],
+  }),
+});
 
-const promiseArray = []
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons)
+const promiseArray = [];
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
-promiseArray.push(myTestProject.generateRandomLoop())
-promiseArray.push(myTestProject.generateRandomLoop())
-promiseArray.push(myTestProject.generateRandomLoop())
+promiseArray.push(myTestProject.generateRandomLoop());
+promiseArray.push(myTestProject.generateRandomLoop());
+promiseArray.push(myTestProject.generateRandomLoop());
 
-await Promise.all(promiseArray)
+await Promise.all(promiseArray);

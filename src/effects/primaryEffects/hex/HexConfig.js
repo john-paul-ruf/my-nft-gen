@@ -1,7 +1,7 @@
-import { EffectConfig } from '../../../core/layer/EffectConfig.js'
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class HexConfig extends EffectConfig {
-  constructor (
+  constructor(
     {
       layerOpacity = 1,
       underLayerOpacity = 0.8,
@@ -16,23 +16,23 @@ export class HexConfig extends EffectConfig {
       scaleFactor = 0.5,
       numberOfHex = 12,
       strategy = ['static', 'angle', 'rotate'],
-      overlayStrategy = ['flat', 'overlay']
-    }
+      overlayStrategy = ['flat', 'overlay'],
+    },
   ) {
-    super()
-    this.layerOpacity = layerOpacity
-    this.underLayerOpacity = underLayerOpacity
-    this.sparsityFactor = sparsityFactor
-    this.gapFactor = gapFactor
-    this.radiusFactor = radiusFactor
-    this.accentRange = accentRange
-    this.blurRange = blurRange
-    this.featherTimes = featherTimes
-    this.stroke = stroke
-    this.thickness = thickness
-    this.scaleFactor = scaleFactor
-    this.numberOfHex = numberOfHex
-    this.strategy = strategy
-    this.overlayStrategy = overlayStrategy
+    super();
+    this.layerOpacity = layerOpacity;
+    this.underLayerOpacity = underLayerOpacity;
+    this.sparsityFactor = sparsityFactor;
+    this.gapFactor = gapFactor;
+    this.radiusFactor = radiusFactor;
+    this.accentRange = accentRange;
+    this.blurRange = blurRange;
+    this.featherTimes = featherTimes;
+    this.stroke = stroke;
+    this.thickness = thickness;
+    this.scaleFactor = scaleFactor;
+    this.numberOfHex = numberOfHex;
+    this.strategy = strategy;
+    this.overlayStrategy = overlayStrategy;
   }
 }
