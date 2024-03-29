@@ -1,9 +1,9 @@
 export class Layer {
-  constructor(strategy) {
-    this.strategy = strategy;
-  }
+    constructor(strategy) {
+        this.strategy = strategy;
+    }
 
-  /** *
+    /** *
      *
      * Replaces current layer with a new layer with background color
      *
@@ -12,45 +12,45 @@ export class Layer {
      * @param backgroundColor - Layer background color
      * @returns {Promise<void>}
      */
-  async newLayer(height, width, backgroundColor) {
-    await this.strategy.newLayer(height, width, backgroundColor);
-  }
+    async newLayer(height, width, backgroundColor) {
+        await this.strategy.newLayer(height, width, backgroundColor);
+    }
 
-  /** *
+    /** *
      *
      * Replaces current layer with image from file
      *
      * @param filename
      * @returns {Promise<void>}
      */
-  async fromFile(filename) {
-    await this.strategy.fromFile(filename);
-  }
+    async fromFile(filename) {
+        await this.strategy.fromFile(filename);
+    }
 
-  /** *
+    /** *
      *
      * write contents of current layer to file
      *
      * @param filename
      * @returns {Promise<void>}
      */
-  async toFile(filename) {
-    await this.strategy.toFile(filename);
-  }
+    async toFile(filename) {
+        await this.strategy.toFile(filename);
+    }
 
-  async fromBuffer(buffer) {
-    await this.strategy.fromBuffer(buffer);
-  }
+    async fromBuffer(buffer) {
+        await this.strategy.fromBuffer(buffer);
+    }
 
-  async toBuffer() {
-    return await this.strategy.toBuffer();
-  }
+    async toBuffer() {
+        return await this.strategy.toBuffer();
+    }
 
-  async convertToLayer(buffer) {
-    return this.strategy.fromBuffer(buffer);
-  }
+    async convertToLayer(buffer) {
+        return this.strategy.fromBuffer(buffer);
+    }
 
-  /** *
+    /** *
      *
      * replaces current layer with a composite of input layer over current layer
      *
@@ -58,44 +58,44 @@ export class Layer {
      * @returns {Promise<void>}
      */
 
-  async compositeLayerOver(layer, withResize = true) {
-    await this.strategy.compositeLayerOver(layer, withResize);
-  }
+    async compositeLayerOver(layer, withResize = true) {
+        await this.strategy.compositeLayerOver(layer, withResize);
+    }
 
-  /** *
+    /** *
      *
      * Blurs current layer
      *
      * @param byPixels
      * @returns {Promise<void>}
      */
-  async blur(byPixels) {
-    await this.strategy.blur(byPixels);
-  }
+    async blur(byPixels) {
+        await this.strategy.blur(byPixels);
+    }
 
-  /** *
+    /** *
      *
      * changes current the opacity of the current layer
      *
      * @param opacity
      * @returns {Promise<void>}
      */
-  async adjustLayerOpacity(opacity) {
-    await this.strategy.adjustLayerOpacity(opacity);
-  }
+    async adjustLayerOpacity(opacity) {
+        await this.strategy.adjustLayerOpacity(opacity);
+    }
 
-  /** *
+    /** *
      *
      * Rotates current layer
      *
      * @param angle
      * @returns {Promise<void>}
      */
-  async rotate(angle) {
-    await this.strategy.rotate(angle);
-  }
+    async rotate(angle) {
+        await this.strategy.rotate(angle);
+    }
 
-  /** **
+    /** **
      *
      * Resizes current layer
      *
@@ -103,11 +103,11 @@ export class Layer {
      * @param width
      * @returns {Promise<void>}
      */
-  async resize(height, width) {
-    await this.strategy.resize(height, width);
-  }
+    async resize(height, width) {
+        await this.strategy.resize(height, width);
+    }
 
-  /** **
+    /** **
      *
      * Crops current layer
      * @param left
@@ -116,17 +116,17 @@ export class Layer {
      * @param width
      * @returns {Promise<void>}
      */
-  async crop(left, top, width, height) {
-    await this.strategy.crop(left, top, width, height);
-  }
+    async crop(left, top, width, height) {
+        await this.strategy.crop(left, top, width, height);
+    }
 
-  /** **
+    /** **
      *
      * Gets info about current layer
      *
      * @returns {Promise<void>}
      */
-  async getInfo() {
-    return await this.strategy.getInfo();
-  }
+    async getInfo() {
+        return await this.strategy.getInfo();
+    }
 }

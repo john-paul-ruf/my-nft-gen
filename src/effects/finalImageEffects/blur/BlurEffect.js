@@ -5,52 +5,52 @@ import { Settings } from '../../../core/Settings.js';
 import { BlurConfig } from './BlurConfig.js';
 
 export class BlurEffect extends LayerEffect {
-  static _name_ = 'blur';
+    static _name_ = 'blur';
 
-  constructor({
-    name = BlurEffect._name_,
-    requiresLayer = true,
-    config = new BlurConfig({}),
-    additionalEffects = [],
-    ignoreAdditionalEffects = false,
-    settings = new Settings({}),
-  }) {
-    super({
-      name,
-      requiresLayer,
-      config,
-      additionalEffects,
-      ignoreAdditionalEffects,
-      settings,
-    });
-    this.#generate(settings);
-  }
-
-  async #blur(layer, currentFrame, totalFrames) {
-    const theGlitch = getRandomIntInclusive(0, 100);
-    if (theGlitch <= this.data.glitchChance) {
-      const blurGaston = Math.floor(findValue(this.data.lower, this.data.upper, this.data.times, totalFrames, currentFrame));
-      if (blurGaston > 0) {
-        await layer.blur(blurGaston);
-      }
+    constructor({
+        name = BlurEffect._name_,
+        requiresLayer = true,
+        config = new BlurConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
+        super({
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
+        });
+        this.#generate(settings);
     }
-  }
 
-  #generate(settings) {
-    this.data = {
-      glitchChance: this.config.glitchChance,
-      lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
-      upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),
-      times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-    };
-  }
+    async #blur(layer, currentFrame, totalFrames) {
+        const theGlitch = getRandomIntInclusive(0, 100);
+        if (theGlitch <= this.data.glitchChance) {
+            const blurGaston = Math.floor(findValue(this.data.lower, this.data.upper, this.data.times, totalFrames, currentFrame));
+            if (blurGaston > 0) {
+                await layer.blur(blurGaston);
+            }
+        }
+    }
 
-  async invoke(layer, currentFrame, numberOfFrames) {
-    await this.#blur(layer, currentFrame, numberOfFrames);
-    await super.invoke(layer, currentFrame, numberOfFrames);
-  }
+    #generate(settings) {
+        this.data = {
+            glitchChance: this.config.glitchChance,
+            lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
+            upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),
+            times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
+        };
+    }
 
-  getInfo() {
-    return `${this.name}: ${this.data.glitchChance} chance, ${this.data.times} times, ${this.data.lower} to ${this.data.upper}`;
-  }
+    async invoke(layer, currentFrame, numberOfFrames) {
+        await this.#blur(layer, currentFrame, numberOfFrames);
+        await super.invoke(layer, currentFrame, numberOfFrames);
+    }
+
+    getInfo() {
+        return `${this.name}: ${this.data.glitchChance} chance, ${this.data.times} times, ${this.data.lower} to ${this.data.upper}`;
+    }
 }

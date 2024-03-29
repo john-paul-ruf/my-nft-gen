@@ -1,9 +1,9 @@
 export class Canvas2d {
-  constructor(strategy) {
-    this.strategy = strategy;
-  }
+    constructor(strategy) {
+        this.strategy = strategy;
+    }
 
-  /** *
+    /** *
      *
      * replaces current canvas with new canvas
      *
@@ -11,58 +11,58 @@ export class Canvas2d {
      * @param height
      * @returns {Promise<void>}
      */
-  async newCanvas(width, height) {
-    await this.strategy.newCanvas(width, height);
-  }
+    async newCanvas(width, height) {
+        await this.strategy.newCanvas(width, height);
+    }
 
-  /** *
+    /** *
      *
      * replaces current canvas with image from file
      *
      * @param filename
      * @returns {Promise<void>}
      */
-  async toFile(filename) {
-    await this.strategy.toFile(filename);
-  }
+    async toFile(filename) {
+        await this.strategy.toFile(filename);
+    }
 
-  async convertToLayer() {
-    return this.strategy.convertToLayer();
-  }
+    async convertToLayer() {
+        return this.strategy.convertToLayer();
+    }
 
-  async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha) {
-    await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha);
-  }
+    async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha) {
+        await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha);
+    }
 
-  async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
-    await this.strategy.drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor);
-  }
+    async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
+        await this.strategy.drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor);
+    }
 
-  async drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor) {
-    await this.strategy.drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor);
-  }
+    async drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor) {
+        await this.strategy.drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor);
+    }
 
-  async drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor, alpha) {
-    await this.strategy.drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor, alpha);
-  }
+    async drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor, alpha) {
+        await this.strategy.drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor, alpha);
+    }
 
-  async drawGradientLine2d(startPos, endPos, stroke, startColor, endColor) {
-    await this.strategy.drawGradientLine2d(startPos, endPos, stroke, startColor, endColor);
-  }
+    async drawGradientLine2d(startPos, endPos, stroke, startColor, endColor) {
+        await this.strategy.drawGradientLine2d(startPos, endPos, stroke, startColor, endColor);
+    }
 
-  async drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor, alpha) {
-    await this.strategy.drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor, alpha);
-  }
+    async drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor, alpha) {
+        await this.strategy.drawLine2d(startPos, endPos, innerStroke, innerColor, outerStroke, outerColor, alpha);
+    }
 
-  async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
-    await this.strategy.drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha);
-  }
+    async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
+        await this.strategy.drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha);
+    }
 
-  async drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha) {
-    await this.strategy.drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha);
-  }
+    async drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha) {
+        await this.strategy.drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha);
+    }
 
-  async drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor) {
-    await this.strategy.drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor);
-  }
+    async drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor) {
+        await this.strategy.drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor);
+    }
 }

@@ -55,16 +55,16 @@ import { RandomizeConfig } from '../../effects/secondaryEffects/randomize/Random
 import { SingleLayerBlurEffect } from '../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js';
 import { SingleLayerBlurConfig } from '../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurConfig.js';
 import {
-  SingleLayerGlitchDrumrollHorizontalWaveEffect,
+    SingleLayerGlitchDrumrollHorizontalWaveEffect,
 } from '../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js';
 import {
-  SingleLayerGlitchDrumrollHorizontalWaveConfig,
+    SingleLayerGlitchDrumrollHorizontalWaveConfig,
 } from '../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveConfig.js';
 import {
-  SingleLayerGlitchFractalEffect,
+    SingleLayerGlitchFractalEffect,
 } from '../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js';
 import {
-  SingleLayerGlitchFractalConfig,
+    SingleLayerGlitchFractalConfig,
 } from '../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractal.js';
 import { PixelateEffect } from '../../effects/finalImageEffects/pixelate/PixelateEffect.js';
 import { PixelateConfig } from '../../effects/finalImageEffects/pixelate/PixelateConfig.js';
@@ -73,300 +73,300 @@ import { GlitchInverseConfig } from '../../effects/finalImageEffects/glitchInver
 import { GlitchFractalEffect } from '../../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js';
 import { GlitchFractalConfig } from '../../effects/finalImageEffects/glitchFractal/GlitchFractalConfig.js';
 import {
-  GlitchDrumrollHorizontalWaveEffect,
+    GlitchDrumrollHorizontalWaveEffect,
 } from '../../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js';
 import {
-  GlitchDrumrollHorizontalWaveConfig,
+    GlitchDrumrollHorizontalWaveConfig,
 } from '../../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveConfig.js';
 import { BlurEffect } from '../../effects/finalImageEffects/blur/BlurEffect.js';
 import { BlurConfig } from '../../effects/finalImageEffects/blur/BlurConfig.js';
 import { EightConfig } from '../../effects/primaryEffects/eight/EightConfig.js';
 
 export class LayerConfigFactory {
-  static PrimaryEffect = {
-    Default: '',
-    Amp: 'Amp',
-    AnimateBackground: 'Animate Background',
-    BlinkOn: 'Blink On',
-    Eight: 'Eight',
-    EncircledSpiral: 'Encircled Spiral',
-    FuzzyBands: 'Fuzzy Bands',
-    FuzzyRipples: 'Fuzzy Ripples',
-    Gates: 'Gates',
-    Hex: 'Hex',
-    ImageOverlay: 'Image Overlay',
-    LayeredHex: 'Layered Hex',
-    LayeredRing: 'Layered Ring',
-    LensFlare: 'Lens Flare',
-    MappedFrames: 'Mapped Frames',
-    NthRings: 'Nth Rings',
-    Porous: 'Porous',
-    RayRing: 'RayRing',
-    RayRingInverted: 'RayRingInverted',
-    ScanLines: 'Scan Lines',
-    Scopes: 'Scopes',
-    ThreeDimensionalRings: '3D Rings',
-    ThreeDimensionalShape: '3D Shape',
-    Viewport: 'Viewport',
-    WireframeSpiral: 'Wireframe Spiral',
-  };
+    static PrimaryEffect = {
+        Default: '',
+        Amp: 'Amp',
+        AnimateBackground: 'Animate Background',
+        BlinkOn: 'Blink On',
+        Eight: 'Eight',
+        EncircledSpiral: 'Encircled Spiral',
+        FuzzyBands: 'Fuzzy Bands',
+        FuzzyRipples: 'Fuzzy Ripples',
+        Gates: 'Gates',
+        Hex: 'Hex',
+        ImageOverlay: 'Image Overlay',
+        LayeredHex: 'Layered Hex',
+        LayeredRing: 'Layered Ring',
+        LensFlare: 'Lens Flare',
+        MappedFrames: 'Mapped Frames',
+        NthRings: 'Nth Rings',
+        Porous: 'Porous',
+        RayRing: 'RayRing',
+        RayRingInverted: 'RayRingInverted',
+        ScanLines: 'Scan Lines',
+        Scopes: 'Scopes',
+        ThreeDimensionalRings: '3D Rings',
+        ThreeDimensionalShape: '3D Shape',
+        Viewport: 'Viewport',
+        WireframeSpiral: 'Wireframe Spiral',
+    };
 
-  static SecondaryEffect = {
-    Default: '',
-    Fade: 'Fade',
-    Glow: 'Glow',
-    Randomize: 'Randomize',
-    SingleLayerBlur: 'Single Layer Blur',
-    SingleLayerGlitchDrumrollHorizontalWave: 'Single Layer Glitch Drumroll Horizontal Wave',
-    SingleLayerGlitchFractal: 'Single Layer Glitch Fractal',
-  };
+    static SecondaryEffect = {
+        Default: '',
+        Fade: 'Fade',
+        Glow: 'Glow',
+        Randomize: 'Randomize',
+        SingleLayerBlur: 'Single Layer Blur',
+        SingleLayerGlitchDrumrollHorizontalWave: 'Single Layer Glitch Drumroll Horizontal Wave',
+        SingleLayerGlitchFractal: 'Single Layer Glitch Fractal',
+    };
 
-  static FinalEffect = {
-    Default: '',
-    Blur: 'Blur',
-    GlitchDrumrollHorizontalWave: 'Glitch Drumroll Horizontal Wave',
-    GlitchFractal: 'Glitch Fractal',
-    GlitchInverse: 'Glitch Inverse',
-    Pixelate: 'Pixelate',
-  };
+    static FinalEffect = {
+        Default: '',
+        Blur: 'Blur',
+        GlitchDrumrollHorizontalWave: 'Glitch Drumroll Horizontal Wave',
+        GlitchFractal: 'Glitch Fractal',
+        GlitchInverse: 'Glitch Inverse',
+        Pixelate: 'Pixelate',
+    };
 
-  static getFinalEffect = ({ type = LayerConfigFactory.FinalEffect.Default }) => {
-    switch (type) {
-      case LayerConfigFactory.FinalEffect.Blur:
-        return new LayerConfig({
-          Effect: BlurEffect,
-          currentEffectConfig: new BlurConfig({}),
-          defaultEffectConfig: BlurConfig,
-        });
-      case LayerConfigFactory.FinalEffect.GlitchDrumrollHorizontalWave:
-        return new LayerConfig({
-          Effect: GlitchDrumrollHorizontalWaveEffect,
-          currentEffectConfig: new GlitchDrumrollHorizontalWaveConfig({}),
-          defaultEffectConfig: GlitchDrumrollHorizontalWaveConfig,
-        });
-      case LayerConfigFactory.FinalEffect.GlitchFractal:
-        return new LayerConfig({
-          Effect: GlitchFractalEffect,
-          currentEffectConfig: new GlitchFractalConfig({}),
-          defaultEffectConfig: GlitchFractalConfig,
-        });
-      case LayerConfigFactory.FinalEffect.GlitchInverse:
-        return new LayerConfig({
-          Effect: GlitchInverseEffect,
-          currentEffectConfig: new GlitchInverseConfig({}),
-          defaultEffectConfig: GlitchInverseConfig,
-        });
-      case LayerConfigFactory.FinalEffect.Pixelate:
-        return new LayerConfig({
-          Effect: PixelateEffect,
-          currentEffectConfig: new PixelateConfig({}),
-          defaultEffectConfig: PixelateConfig,
-        });
-      case LayerConfigFactory.FinalEffect.Default:
-        return new LayerConfig({});
-      default:
-        throw new Error('Not a valid type');
-    }
-  };
+    static getFinalEffect = ({ type = LayerConfigFactory.FinalEffect.Default }) => {
+        switch (type) {
+        case LayerConfigFactory.FinalEffect.Blur:
+            return new LayerConfig({
+                Effect: BlurEffect,
+                currentEffectConfig: new BlurConfig({}),
+                defaultEffectConfig: BlurConfig,
+            });
+        case LayerConfigFactory.FinalEffect.GlitchDrumrollHorizontalWave:
+            return new LayerConfig({
+                Effect: GlitchDrumrollHorizontalWaveEffect,
+                currentEffectConfig: new GlitchDrumrollHorizontalWaveConfig({}),
+                defaultEffectConfig: GlitchDrumrollHorizontalWaveConfig,
+            });
+        case LayerConfigFactory.FinalEffect.GlitchFractal:
+            return new LayerConfig({
+                Effect: GlitchFractalEffect,
+                currentEffectConfig: new GlitchFractalConfig({}),
+                defaultEffectConfig: GlitchFractalConfig,
+            });
+        case LayerConfigFactory.FinalEffect.GlitchInverse:
+            return new LayerConfig({
+                Effect: GlitchInverseEffect,
+                currentEffectConfig: new GlitchInverseConfig({}),
+                defaultEffectConfig: GlitchInverseConfig,
+            });
+        case LayerConfigFactory.FinalEffect.Pixelate:
+            return new LayerConfig({
+                Effect: PixelateEffect,
+                currentEffectConfig: new PixelateConfig({}),
+                defaultEffectConfig: PixelateConfig,
+            });
+        case LayerConfigFactory.FinalEffect.Default:
+            return new LayerConfig({});
+        default:
+            throw new Error('Not a valid type');
+        }
+    };
 
-  static getSecondaryEffect = ({ type = LayerConfigFactory.SecondaryEffect.Default }) => {
-    switch (type) {
-      case LayerConfigFactory.SecondaryEffect.Fade:
-        return new LayerConfig({
-          Effect: FadeEffect,
-          currentEffectConfig: new FadeConfig({}),
-          defaultEffectConfig: FadeConfig,
-        });
-      case LayerConfigFactory.SecondaryEffect.Glow:
-        return new LayerConfig({
-          Effect: GlowEffect,
-          currentEffectConfig: new GlowConfig({}),
-          defaultEffectConfig: GlowConfig,
-        });
-      case LayerConfigFactory.SecondaryEffect.Randomize:
-        return new LayerConfig({
-          Effect: RandomizeEffect,
-          currentEffectConfig: new RandomizeConfig({}),
-          defaultEffectConfig: RandomizeConfig,
-        });
-      case LayerConfigFactory.SecondaryEffect.SingleLayerBlur:
-        return new LayerConfig({
-          Effect: SingleLayerBlurEffect,
-          currentEffectConfig: new SingleLayerBlurConfig({}),
-          defaultEffectConfig: SingleLayerBlurConfig,
-        });
-      case LayerConfigFactory.SecondaryEffect.SingleLayerGlitchDrumrollHorizontalWave:
-        return new LayerConfig({
-          Effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
-          currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({}),
-          defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
-        });
-      case LayerConfigFactory.SecondaryEffect.SingleLayerGlitchFractal:
-        return new LayerConfig({
-          Effect: SingleLayerGlitchFractalEffect,
-          currentEffectConfig: new SingleLayerGlitchFractalConfig({}),
-          defaultEffectConfig: SingleLayerGlitchFractalConfig,
-        });
-      case LayerConfigFactory.SecondaryEffect.Default:
-        return new LayerConfig({});
-      default:
-        throw new Error('Not a valid type');
-    }
-  };
+    static getSecondaryEffect = ({ type = LayerConfigFactory.SecondaryEffect.Default }) => {
+        switch (type) {
+        case LayerConfigFactory.SecondaryEffect.Fade:
+            return new LayerConfig({
+                Effect: FadeEffect,
+                currentEffectConfig: new FadeConfig({}),
+                defaultEffectConfig: FadeConfig,
+            });
+        case LayerConfigFactory.SecondaryEffect.Glow:
+            return new LayerConfig({
+                Effect: GlowEffect,
+                currentEffectConfig: new GlowConfig({}),
+                defaultEffectConfig: GlowConfig,
+            });
+        case LayerConfigFactory.SecondaryEffect.Randomize:
+            return new LayerConfig({
+                Effect: RandomizeEffect,
+                currentEffectConfig: new RandomizeConfig({}),
+                defaultEffectConfig: RandomizeConfig,
+            });
+        case LayerConfigFactory.SecondaryEffect.SingleLayerBlur:
+            return new LayerConfig({
+                Effect: SingleLayerBlurEffect,
+                currentEffectConfig: new SingleLayerBlurConfig({}),
+                defaultEffectConfig: SingleLayerBlurConfig,
+            });
+        case LayerConfigFactory.SecondaryEffect.SingleLayerGlitchDrumrollHorizontalWave:
+            return new LayerConfig({
+                Effect: SingleLayerGlitchDrumrollHorizontalWaveEffect,
+                currentEffectConfig: new SingleLayerGlitchDrumrollHorizontalWaveConfig({}),
+                defaultEffectConfig: SingleLayerGlitchDrumrollHorizontalWaveConfig,
+            });
+        case LayerConfigFactory.SecondaryEffect.SingleLayerGlitchFractal:
+            return new LayerConfig({
+                Effect: SingleLayerGlitchFractalEffect,
+                currentEffectConfig: new SingleLayerGlitchFractalConfig({}),
+                defaultEffectConfig: SingleLayerGlitchFractalConfig,
+            });
+        case LayerConfigFactory.SecondaryEffect.Default:
+            return new LayerConfig({});
+        default:
+            throw new Error('Not a valid type');
+        }
+    };
 
-  static getPrimaryEffect = ({ type = LayerConfigFactory.PrimaryEffect.Default }) => {
-    switch (type) {
-      case LayerConfigFactory.PrimaryEffect.Amp:
-        return new LayerConfig({
-          name: LayerConfigFactory.PrimaryEffect.Amp,
-          Effect: AmpEffect,
-          currentEffectConfig: new AmpConfig({}),
-          defaultEffectConfig: AmpConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.AnimateBackground:
-        return new LayerConfig({
-          Effect: AnimateBackgroundEffect,
-          currentEffectConfig: new AnimateBackgroundConfig({}),
-          defaultEffectConfig: AnimateBackgroundConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.BlinkOn:
-        return new LayerConfig({
-          Effect: BlinkOnEffect,
-          currentEffectConfig: new BlinkConfig({}),
-          defaultEffectConfig: BlinkConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Eight:
-        return new LayerConfig({
-          Effect: EightEffect,
-          currentEffectConfig: new EightConfig({}),
-          defaultEffectConfig: EightConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.EncircledSpiral:
-        return new LayerConfig({
-          Effect: EncircledSpiralEffect,
-          currentEffectConfig: new EncircledSpiralConfig({}),
-          defaultEffectConfig: EncircledSpiralConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.FuzzyBands:
-        return new LayerConfig({
-          name: LayerConfigFactory.PrimaryEffect.FuzzyBands,
-          Effect: FuzzyBandEffect,
-          currentEffectConfig: new FuzzyBandConfig({}),
-          defaultEffectConfig: FuzzyBandConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.FuzzyRipples:
-        return new LayerConfig({
-          Effect: FuzzyRipplesEffect,
-          currentEffectConfig: new FuzzyRipplesConfig({}),
-          defaultEffectConfig: FuzzyRipplesConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Gates:
-        return new LayerConfig({
-          Effect: GatesEffect,
-          currentEffectConfig: new GatesConfig({}),
-          defaultEffectConfig: GatesConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Hex:
-        return new LayerConfig({
-          Effect: HexEffect,
-          currentEffectConfig: new HexConfig({}),
-          defaultEffectConfig: HexConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.ImageOverlay:
-        return new LayerConfig({
-          Effect: ImageOverlayEffect,
-          currentEffectConfig: new ImageOverlayConfig({}),
-          defaultEffectConfig: ImageOverlayConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.LayeredHex:
-        return new LayerConfig({
-          Effect: LayeredHexEffect,
-          currentEffectConfig: new LayeredHexConfig({}),
-          defaultEffectConfig: LayeredHexConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.LayeredRing:
-        return new LayerConfig({
-          Effect: LayeredRingEffect,
-          currentEffectConfig: new LayeredRingConfig({}),
-          defaultEffectConfig: LayeredRingConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.LensFlare:
-        return new LayerConfig({
-          Effect: LensFlareEffect,
-          currentEffectConfig: new LensFlareConfig({}),
-          defaultEffectConfig: LensFlareConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.MappedFrames:
-        return new LayerConfig({
-          Effect: MappedFramesEffect,
-          currentEffectConfig: new MappedFramesConfig({}),
-          defaultEffectConfig: MappedFramesConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.NthRings:
-        return new LayerConfig({
-          Effect: NthRingsEffect,
-          currentEffectConfig: new NthRingsConfig({}),
-          defaultEffectConfig: NthRingsConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Porous:
-        return new LayerConfig({
-          Effect: PorousEffect,
-          currentEffectConfig: new PorousConfig({}),
-          defaultEffectConfig: PorousConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.RayRing:
-        return new LayerConfig({
-          Effect: RayRingEffect,
-          currentEffectConfig: new RayRingConfig({}),
-          defaultEffectConfig: RayRingConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.RayRingInverted:
-        return new LayerConfig({
-          Effect: RayRingInvertedEffect,
-          currentEffectConfig: new RayRingInvertedConfig({}),
-          defaultEffectConfig: RayRingInvertedConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.ScanLines:
-        return new LayerConfig({
-          Effect: ScanLinesEffect,
-          currentEffectConfig: new ScanLinesConfig({}),
-          defaultEffectConfig: ScanLinesConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Scopes:
-        return new LayerConfig({
-          Effect: ScopesEffect,
-          currentEffectConfig: new ScopesConfig({}),
-          defaultEffectConfig: ScopesConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.ThreeDimensionalRings:
-        return new LayerConfig({
-          Effect: ThreeDimensionalRingsEffect,
-          currentEffectConfig: new ThreeDimensionalRingsConfig({}),
-          defaultEffectConfig: ThreeDimensionalRingsConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.ThreeDimensionalShape:
-        return new LayerConfig({
-          Effect: ThreeDimensionalShapeEffect,
-          currentEffectConfig: new ThreeDimensionalShapeConfig({}),
-          defaultEffectConfig: ThreeDimensionalShapeConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Viewport:
-        return new LayerConfig({
-          name: LayerConfigFactory.PrimaryEffect.Viewport,
-          Effect: ViewportEffect,
-          currentEffectConfig: new ViewportConfig({}),
-          defaultEffectConfig: ViewportConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.WireframeSpiral:
-        return new LayerConfig({
-          Effect: WireFrameSpiralEffect,
-          currentEffectConfig: new WireframeSpiralConfig({}),
-          defaultEffectConfig: WireframeSpiralConfig,
-        });
-      case LayerConfigFactory.PrimaryEffect.Default:
-        return new LayerConfig({});
-      default:
-        throw new Error('Not a valid type');
-    }
-  };
+    static getPrimaryEffect = ({ type = LayerConfigFactory.PrimaryEffect.Default }) => {
+        switch (type) {
+        case LayerConfigFactory.PrimaryEffect.Amp:
+            return new LayerConfig({
+                name: LayerConfigFactory.PrimaryEffect.Amp,
+                Effect: AmpEffect,
+                currentEffectConfig: new AmpConfig({}),
+                defaultEffectConfig: AmpConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.AnimateBackground:
+            return new LayerConfig({
+                Effect: AnimateBackgroundEffect,
+                currentEffectConfig: new AnimateBackgroundConfig({}),
+                defaultEffectConfig: AnimateBackgroundConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.BlinkOn:
+            return new LayerConfig({
+                Effect: BlinkOnEffect,
+                currentEffectConfig: new BlinkConfig({}),
+                defaultEffectConfig: BlinkConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Eight:
+            return new LayerConfig({
+                Effect: EightEffect,
+                currentEffectConfig: new EightConfig({}),
+                defaultEffectConfig: EightConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.EncircledSpiral:
+            return new LayerConfig({
+                Effect: EncircledSpiralEffect,
+                currentEffectConfig: new EncircledSpiralConfig({}),
+                defaultEffectConfig: EncircledSpiralConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.FuzzyBands:
+            return new LayerConfig({
+                name: LayerConfigFactory.PrimaryEffect.FuzzyBands,
+                Effect: FuzzyBandEffect,
+                currentEffectConfig: new FuzzyBandConfig({}),
+                defaultEffectConfig: FuzzyBandConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.FuzzyRipples:
+            return new LayerConfig({
+                Effect: FuzzyRipplesEffect,
+                currentEffectConfig: new FuzzyRipplesConfig({}),
+                defaultEffectConfig: FuzzyRipplesConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Gates:
+            return new LayerConfig({
+                Effect: GatesEffect,
+                currentEffectConfig: new GatesConfig({}),
+                defaultEffectConfig: GatesConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Hex:
+            return new LayerConfig({
+                Effect: HexEffect,
+                currentEffectConfig: new HexConfig({}),
+                defaultEffectConfig: HexConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.ImageOverlay:
+            return new LayerConfig({
+                Effect: ImageOverlayEffect,
+                currentEffectConfig: new ImageOverlayConfig({}),
+                defaultEffectConfig: ImageOverlayConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.LayeredHex:
+            return new LayerConfig({
+                Effect: LayeredHexEffect,
+                currentEffectConfig: new LayeredHexConfig({}),
+                defaultEffectConfig: LayeredHexConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.LayeredRing:
+            return new LayerConfig({
+                Effect: LayeredRingEffect,
+                currentEffectConfig: new LayeredRingConfig({}),
+                defaultEffectConfig: LayeredRingConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.LensFlare:
+            return new LayerConfig({
+                Effect: LensFlareEffect,
+                currentEffectConfig: new LensFlareConfig({}),
+                defaultEffectConfig: LensFlareConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.MappedFrames:
+            return new LayerConfig({
+                Effect: MappedFramesEffect,
+                currentEffectConfig: new MappedFramesConfig({}),
+                defaultEffectConfig: MappedFramesConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.NthRings:
+            return new LayerConfig({
+                Effect: NthRingsEffect,
+                currentEffectConfig: new NthRingsConfig({}),
+                defaultEffectConfig: NthRingsConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Porous:
+            return new LayerConfig({
+                Effect: PorousEffect,
+                currentEffectConfig: new PorousConfig({}),
+                defaultEffectConfig: PorousConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.RayRing:
+            return new LayerConfig({
+                Effect: RayRingEffect,
+                currentEffectConfig: new RayRingConfig({}),
+                defaultEffectConfig: RayRingConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.RayRingInverted:
+            return new LayerConfig({
+                Effect: RayRingInvertedEffect,
+                currentEffectConfig: new RayRingInvertedConfig({}),
+                defaultEffectConfig: RayRingInvertedConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.ScanLines:
+            return new LayerConfig({
+                Effect: ScanLinesEffect,
+                currentEffectConfig: new ScanLinesConfig({}),
+                defaultEffectConfig: ScanLinesConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Scopes:
+            return new LayerConfig({
+                Effect: ScopesEffect,
+                currentEffectConfig: new ScopesConfig({}),
+                defaultEffectConfig: ScopesConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.ThreeDimensionalRings:
+            return new LayerConfig({
+                Effect: ThreeDimensionalRingsEffect,
+                currentEffectConfig: new ThreeDimensionalRingsConfig({}),
+                defaultEffectConfig: ThreeDimensionalRingsConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.ThreeDimensionalShape:
+            return new LayerConfig({
+                Effect: ThreeDimensionalShapeEffect,
+                currentEffectConfig: new ThreeDimensionalShapeConfig({}),
+                defaultEffectConfig: ThreeDimensionalShapeConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Viewport:
+            return new LayerConfig({
+                name: LayerConfigFactory.PrimaryEffect.Viewport,
+                Effect: ViewportEffect,
+                currentEffectConfig: new ViewportConfig({}),
+                defaultEffectConfig: ViewportConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.WireframeSpiral:
+            return new LayerConfig({
+                Effect: WireFrameSpiralEffect,
+                currentEffectConfig: new WireframeSpiralConfig({}),
+                defaultEffectConfig: WireframeSpiralConfig,
+            });
+        case LayerConfigFactory.PrimaryEffect.Default:
+            return new LayerConfig({});
+        default:
+            throw new Error('Not a valid type');
+        }
+    };
 }
