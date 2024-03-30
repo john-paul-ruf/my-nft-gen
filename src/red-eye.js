@@ -10,6 +10,9 @@ import { MappedFramesConfig } from './effects/primaryEffects/mappedFrames/Mapped
 import { FuzzyBandEffect } from './effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
 import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js';
 import { getRandomFromArray, getRandomIntInclusive } from './core/math/random.js';
+import {EncircledSpiralEffect} from "./effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js";
+import {EncircledSpiralConfig} from "./effects/primaryEffects/encircledSpiral/EncircledSpiralConfig.js";
+import {Range} from "./core/layer/configType/Range.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -22,14 +25,97 @@ const myTestProject = new Project({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: MappedFramesEffect,
+        effect: EncircledSpiralEffect,
         percentChance: 100,
-        currentEffectConfig: new MappedFramesConfig({
-            folderName: '/mappedFrames/',
-            layerOpacity: [0.85],
-            buffer: [50],
-            loopTimes: 15,
+        currentEffectConfig: new EncircledSpiralConfig({
+            outerColor: new ColorPicker(),
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+            invertLayers: true,
+            layerOpacity: 0.5,
+            underLayerOpacity: 0.4,
+            startAngle: { lower: 0, upper: 360 },
+            numberOfRings: new Range(4, 4),
+            stroke: 1,
+            thickness: 1,
+            sparsityFactor: [30],
+            sequencePixelConstant: {
+                lower: (finalSize) => finalSize.shortestSide * 0.001,
+                upper: (finalSize) => finalSize.shortestSide * 0.001,
+            },
+            sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
+            minSequenceIndex: [9],
+            numberOfSequenceElements: [4],
+            speed: new Range(4, 4),
+            accentRange: { bottom: { lower: 4, upper: 4 }, top: { lower: 8, upper: 8 } },
+            blurRange: { bottom: { lower: 3, upper: 3 }, top: { lower: 6, upper: 6 } },
+            featherTimes: { lower: 2, upper: 8 },
+            center: new Point2D((1080 / 2), (1920 / 2)),
         }),
+        defaultEffectConfig: EncircledSpiralConfig,
+    }),
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: EncircledSpiralEffect,
+        percentChance: 100,
+        currentEffectConfig: new EncircledSpiralConfig({
+            outerColor: new ColorPicker(),
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+            invertLayers: true,
+            layerOpacity: 0.5,
+            underLayerOpacity: 0.4,
+            startAngle: { lower: 0, upper: 360 },
+            numberOfRings: new Range(4, 4),
+            stroke: 1,
+            thickness: 1,
+            sparsityFactor: [30],
+            sequencePixelConstant: {
+                lower: (finalSize) => finalSize.shortestSide * 0.001,
+                upper: (finalSize) => finalSize.shortestSide * 0.001,
+            },
+            sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
+            minSequenceIndex: [9],
+            numberOfSequenceElements: [4],
+            speed: new Range(6, 6),
+            accentRange: { bottom: { lower: 4, upper: 4 }, top: { lower: 8, upper: 8 } },
+            blurRange: { bottom: { lower: 3, upper: 3 }, top: { lower: 6, upper: 6 } },
+            featherTimes: { lower: 2, upper: 8 },
+            center: new Point2D((1080 / 2), (1920 / 2)),
+        }),
+        defaultEffectConfig: EncircledSpiralConfig,
+    }),
+});
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: EncircledSpiralEffect,
+        percentChance: 100,
+        currentEffectConfig: new EncircledSpiralConfig({
+            outerColor: new ColorPicker(),
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+            invertLayers: true,
+            layerOpacity: 0.5,
+            underLayerOpacity: 0.4,
+            startAngle: { lower: 0, upper: 360 },
+            numberOfRings: new Range(4, 4),
+            stroke: 1,
+            thickness: 1,
+            sparsityFactor: [30],
+            sequencePixelConstant: {
+                lower: (finalSize) => finalSize.shortestSide * 0.001,
+                upper: (finalSize) => finalSize.shortestSide * 0.001,
+            },
+            sequence: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181],
+            minSequenceIndex: [9],
+            numberOfSequenceElements: [4],
+            speed: new Range(8, 8),
+            accentRange: { bottom: { lower: 4, upper: 4 }, top: { lower: 8, upper: 8 } },
+            blurRange: { bottom: { lower: 3, upper: 3 }, top: { lower: 6, upper: 6 } },
+            featherTimes: { lower: 2, upper: 8 },
+            center: new Point2D((1080 / 2), (1920 / 2)),
+        }),
+        defaultEffectConfig: EncircledSpiralConfig,
     }),
 });
 

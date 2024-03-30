@@ -82,8 +82,7 @@ export class EncircledSpiralEffect extends LayerEffect {
                 // bottom layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawBottomLayer(context, i);
-                await context.canvas.toFile(filename);
-                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+                const bottomLayer = await context.canvas.convertToLayer();
                 const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame));
                 await bottomLayer.blur(theBlurGaston);
                 await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
@@ -92,24 +91,21 @@ export class EncircledSpiralEffect extends LayerEffect {
                 // top Layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawTopLayer(context, i);
-                await context.canvas.toFile(filename);
-                const topLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+                const topLayer = await context.canvas.convertToLayer();
                 await topLayer.adjustLayerOpacity(context.data.layerOpacity);
                 await context.layer.compositeLayerOver(topLayer);
             } else {
                 // top Layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawTopLayer(context, i);
-                await context.canvas.toFile(filename);
-                const topLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+                const topLayer = await context.canvas.convertToLayer();
                 await topLayer.adjustLayerOpacity(context.data.layerOpacity);
                 await context.layer.compositeLayerOver(topLayer);
 
                 // bottom layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawBottomLayer(context, i);
-                await context.canvas.toFile(filename);
-                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+                const bottomLayer = await context.canvas.convertToLayer();
                 const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame));
                 await bottomLayer.blur(theBlurGaston);
                 await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
@@ -132,10 +128,7 @@ export class EncircledSpiralEffect extends LayerEffect {
             data: this.data,
             layer,
         };
-
         await this.#processDrawFunction(context);
-
-        await fs.unlink(context.drawing);
     }
 
     #generate(settings) {
