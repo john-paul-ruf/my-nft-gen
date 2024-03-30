@@ -26,13 +26,21 @@ export class Project {
         this.backgrounds = backgrounds;
         this.lights = lights;
         this.numberOfFrame = numberOfFrame;
-        this.longestSideInPixels = longestSideInPixels;
-        this.shortestSideInPixels = shortestSideInPixels;
+        this.internalLongestSideInPixels = longestSideInPixels;
+        this.internalShortestSideInPixels = shortestSideInPixels;
         this.isHorizontal = isHorizontal;
         this.projectDirectory = projectDirectory;
 
         this.selectedPrimaryEffectConfigs = [];
         this.selectedFinalEffectConfigs = [];
+    }
+
+    get shortestSideInPixels() {
+        return this.internalShortestSideInPixels;
+    }
+
+    get longestSideInPixels() {
+        return this.internalLongestSideInPixels;
     }
 
     addPrimaryEffect({ layerConfig = new LayerConfig({}) }) {

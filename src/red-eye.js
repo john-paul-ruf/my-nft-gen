@@ -10,10 +10,6 @@ import { MappedFramesConfig } from './effects/primaryEffects/mappedFrames/Mapped
 import { FuzzyBandEffect } from './effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
 import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js';
 import { getRandomFromArray, getRandomIntInclusive } from './core/math/random.js';
-import { ViewportEffect } from './effects/primaryEffects/viewport/ViewportEffect.js';
-import { ViewportConfig } from './effects/primaryEffects/viewport/ViewportConfig.js';
-import {ScanLinesEffect} from "./effects/primaryEffects/scanLines/ScanLinesEffect.js";
-import {ScanLinesConfig} from "./effects/primaryEffects/scanLines/ScanLinesConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -22,49 +18,6 @@ const myTestProject = new Project({
     neutrals: ['#FFFFFF'],
     backgrounds: ['#000000'],
     numberOfFrame: 1800,
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: ScanLinesEffect,
-        percentChance: 100,
-        currentEffectConfig: new ScanLinesConfig({
-                lines: {lower: 6, upper: 8},
-                minlength: {lower: 20, upper: 30},
-                maxlength: {lower: 40, upper: 55},
-                times: {lower: 4, upper: 8},
-                alphaRange: {bottom: {lower: 0.2, upper: 0.3}, top: {lower: 0.4, upper: 0.5}},
-                alphaTimes: {lower: 2, upper: 8},
-                loopTimes: {lower: 1, upper: 3},
-            }
-        ),
-    }),
-});
-
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: FuzzyBandEffect,
-        percentChance: 100,
-        currentEffectConfig: new FuzzyBandConfig({
-            layerOpacity: 0.70,
-            underLayerOpacityRange: { bottom: { lower: 0.4, upper: 0.5 }, top: { lower: 0.6, upper: 0.7 } },
-            underLayerOpacityTimes: { lower: 2, upper: 8 },
-            color: new ColorPicker(),
-            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
-            invertLayers: true,
-            thickness: 1,
-            stroke: 1,
-            circles: { lower: 12, upper: 12 },
-            radius: {
-                lower: (finalSize) => finalSize.shortestSide * 0.15,
-                upper: (finalSize) => finalSize.longestSide * 0.5,
-            },
-            accentRange: { bottom: { lower: 20, upper: 20 }, top: { lower: 28, upper: 28 } },
-            blurRange: { bottom: { lower: 10, upper: 10 }, top: { lower: 14, upper: 14 } },
-            featherTimes: { lower: 2, upper: 8 },
-        }),
-        defaultEffectConfig: FuzzyBandConfig,
-    }),
 });
 
 await myTestProject.addPrimaryEffect({
@@ -97,8 +50,8 @@ for (let i = 0; i < redEyeCount; i++) {
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [6, 8, 9, 10, 12],
-                innerRadius: getRandomIntInclusive(250, 300),
-                outerRadius: getRandomIntInclusive(400, 500),
+                innerRadius: getRandomIntInclusive(myTestProject.shortestSide * 0.20, myTestProject.shortestSide * 0.30),
+                outerRadius: getRandomIntInclusive(myTestProject.shortestSide * 0.40, myTestProject.shortestSide * 0.50),
                 possibleJumpRangeInPixels: { lower: 10, upper: 30 },
                 lineLength: { lower: 75, upper: 150 },
                 numberOfLoops: { lower: 1, upper: 8 },
@@ -110,7 +63,7 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-redEyeCount = getRandomFromArray([6]);
+redEyeCount = getRandomFromArray([10]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -127,8 +80,8 @@ for (let i = 0; i < redEyeCount; i++) {
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [6, 8, 9, 10, 12],
-                innerRadius: getRandomIntInclusive(350, 400),
-                outerRadius: getRandomIntInclusive(500, 600),
+                innerRadius: getRandomIntInclusive(myTestProject.shortestSide * 0.30, myTestProject.shortestSide * 0.40),
+                outerRadius: getRandomIntInclusive(myTestProject.shortestSide * 0.50, myTestProject.shortestSide * 0.60),
                 possibleJumpRangeInPixels: { lower: 10, upper: 30 },
                 lineLength: { lower: 75, upper: 150 },
                 numberOfLoops: { lower: 1, upper: 8 },
@@ -140,7 +93,7 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-redEyeCount = getRandomFromArray([4]);
+redEyeCount = getRandomFromArray([12]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -157,8 +110,8 @@ for (let i = 0; i < redEyeCount; i++) {
                 stroke: 1,
                 thickness: 1,
                 sparsityFactor: [6, 8, 9, 10, 12],
-                innerRadius: getRandomIntInclusive(600, 800),
-                outerRadius: getRandomIntInclusive(1000, 1200),
+                innerRadius: getRandomIntInclusive(myTestProject.shortestSide * 0.40, myTestProject.shortestSide * 0.50),
+                outerRadius: getRandomIntInclusive(myTestProject.shortestSide * 0.60, myTestProject.shortestSide * 0.70),
                 possibleJumpRangeInPixels: { lower: 10, upper: 30 },
                 lineLength: { lower: 75, upper: 150 },
                 numberOfLoops: { lower: 1, upper: 8 },
@@ -169,6 +122,33 @@ for (let i = 0; i < redEyeCount; i++) {
         }),
     });
 }
+
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: FuzzyBandEffect,
+        percentChance: 100,
+        currentEffectConfig: new FuzzyBandConfig({
+            layerOpacity: 0.70,
+            underLayerOpacityRange: { bottom: { lower: 0.4, upper: 0.5 }, top: { lower: 0.6, upper: 0.7 } },
+            underLayerOpacityTimes: { lower: 2, upper: 8 },
+            color: new ColorPicker(),
+            innerColor: new ColorPicker(ColorPicker.SelectionType.color, '#FFFFFF'),
+            invertLayers: true,
+            thickness: 1,
+            stroke: 1,
+            circles: { lower: 12, upper: 12 },
+            radius: {
+                lower: (finalSize) => finalSize.shortestSide * 0.15,
+                upper: (finalSize) => finalSize.longestSide * 0.5,
+            },
+            accentRange: { bottom: { lower: 20, upper: 20 }, top: { lower: 28, upper: 28 } },
+            blurRange: { bottom: { lower: 10, upper: 10 }, top: { lower: 14, upper: 14 } },
+            featherTimes: { lower: 2, upper: 8 },
+        }),
+        defaultEffectConfig: FuzzyBandConfig,
+    }),
+});
+
 const promiseArray = [];
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 
