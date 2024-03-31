@@ -146,7 +146,7 @@ export class LoopBuilder {
             for (let f = 0; f < this.config.numberOfFrame; f += this.config.frameInc) {
                 if (!await checkFileExists(`${this.context.workingDirectory + this.context.finalFileName}-frame-${f.toString()}.png`)) {
                     await this.#createSingleFrame(f, this.context);
-                    console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
+                    console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, this.config.numberOfFrame-f)}`);
                 }
             }
 
@@ -189,7 +189,7 @@ export class LoopBuilder {
             /// /////////////////////
             for (let f = 0; f < 1; f += this.config.frameInc) {
                 await this.#createSingleFrame(f, this.context);
-                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f + 1, this.config.frameInc, this.config.numberOfFrame)}`);
+                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(this.config.startTime, f)}`);
             }
 
             /// /////////////////////
