@@ -1,25 +1,25 @@
-import { promises as fs } from 'fs';
-import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import {promises as fs} from 'fs';
+import {LayerEffect} from '../../../core/layer/LayerEffect.js';
 import {
     getRandomFromArray, getRandomIntInclusive, randomId, randomNumber,
 } from '../../../core/math/random.js';
-import { findValue } from '../../../core/math/findValue.js';
-import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
-import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
-import { Settings } from '../../../core/Settings.js';
-import { ViewportConfig } from './ViewportConfig.js';
+import {findValue} from '../../../core/math/findValue.js';
+import {LayerFactory} from '../../../core/factory/layer/LayerFactory.js';
+import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
+import {Settings} from '../../../core/Settings.js';
+import {ViewportConfig} from './ViewportConfig.js';
 
 export class ViewportEffect extends LayerEffect {
     static _name_ = 'viewport';
 
     constructor({
-        name = ViewportEffect._name_,
-        requiresLayer = true,
-        config = new ViewportConfig({}),
-        additionalEffects = [],
-        ignoreAdditionalEffects = false,
-        settings = new Settings({}),
-    }) {
+                    name = ViewportEffect._name_,
+                    requiresLayer = true,
+                    config = new ViewportConfig({}),
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({}),
+                }) {
         super({
             name,
             requiresLayer,
@@ -31,16 +31,22 @@ export class ViewportEffect extends LayerEffect {
         this.#generate(settings);
     }
 
-    async #draw(context, filename) {
-        const thePolyGaston = findValue(context.data.radius, context.data.radius + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
-        await context.canvas.drawPolygon2d(thePolyGaston, context.data.center, 3, context.data.startAngle, context.data.thickness, context.data.innerColor, context.data.stroke + context.theAccentGaston, context.data.color);
+    async #draw(context) {
 
-        await context.canvas.toFile(filename);
+        const canvas = await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height);
+
+        const thePolyGaston = findValue(context.data.radius, context.data.radius + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
+        await canvas.drawPolygon2d(thePolyGaston, context.data.center, 3, context.data.startAngle, context.data.thickness, context.data.innerColor, context.data.stroke + context.theAccentGaston, context.data.color);
+
+        return canvas.convertToLayer();
     }
 
     async #compositeImage(context, layer) {
-        const tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-        const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
+
+        const underlayLayer = await this.#draw(context);
+
+        context.theAccentGaston = 0;
+        const tempLayer = await this.#draw(context);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -56,32 +62,16 @@ export class ViewportEffect extends LayerEffect {
         }
     }
 
-    async #processDrawFunction(context) {
-        await this.#draw(context, context.underlayName);
-
-        context.theAccentGaston = 0;
-        context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
-
-        await this.#draw(context, context.drawing);
-    }
-
     async #viewport(layer, currentFrame, numberOfFrames) {
         const context = {
             currentFrame,
             numberOfFrames,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            drawing: `${this.workingDirectory}viewport${randomId()}.png`,
-            underlayName: `${this.workingDirectory}viewport-underlay${randomId()}.png`,
-            canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         };
 
-        await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
-
-        await fs.unlink(context.drawing);
-        await fs.unlink(context.underlayName);
     }
 
     #generate(settings) {
@@ -115,7 +105,7 @@ export class ViewportEffect extends LayerEffect {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
-            center: { x: this.finalSize.width / 2, y: this.finalSize.height / 2 },
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
         };
     }
 
