@@ -1,14 +1,14 @@
-import {Settings} from "../Settings.js";
+import { Settings } from '../Settings.js';
 
 export class LayerEffect {
     constructor({
-                    name = 'base-effect',
-                    requiresLayer = false,
-                    config = {},
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = 'base-effect',
+        requiresLayer = false,
+        config = {},
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         this.name = name;
         this.requiresLayer = requiresLayer;
         this.config = config;
@@ -18,10 +18,9 @@ export class LayerEffect {
         this.workingDirectory = settings.workingDirectory;
         this.fileConfig = settings.fileConfig;
 
-        if(!ignoreAdditionalEffects) {
+        if (!ignoreAdditionalEffects) {
             this.additionalEffects = additionalEffects;
-        }
-        else{
+        } else {
             this.additionalEffects = [];
         }
 
@@ -30,7 +29,7 @@ export class LayerEffect {
 
     async invoke(layer, currentFrame, totalFrames) {
         for (let i = 0; i < this.additionalEffects.length; i++) {
-            //if any additional effects? call them as well.
+            // if any additional effects? call them as well.
             if (!this.ignoreAdditionalEffects) {
                 await this.additionalEffects[i].invoke(layer, currentFrame, totalFrames);
             }
@@ -38,10 +37,6 @@ export class LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}`
+        return `${this.name}`;
     }
 }
-
-
-
-

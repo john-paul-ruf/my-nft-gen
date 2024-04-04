@@ -1,13 +1,13 @@
-import {EffectConfig} from "../../../core/layer/EffectConfig.js";
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class RandomizeConfig extends EffectConfig {
     constructor(
         {
-            spin = {lower: -8, upper: 8},
-            red = {lower: -8, upper: 8},
-            blue = {lower: -8, upper: 8},
-            green = {lower: -8, upper: 8}
-        }
+            spin = { lower: -8, upper: 8 },
+            red = { lower: -8, upper: 8 },
+            blue = { lower: -8, upper: 8 },
+            green = { lower: -8, upper: 8 },
+        },
     ) {
         super();
         this.spin = spin;

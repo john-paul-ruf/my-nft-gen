@@ -1,43 +1,41 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import { promises as fs } from 'fs'
-import {findValue} from "../../../core/math/findValue.js";
-import {hexToRgba} from "../../../core/utils/hexToRgba.js";
-import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {Settings} from "../../../core/Settings.js";
-import {ScanLinesConfig} from "./ScanLinesConfig.js";
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive, randomId, randomNumber } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { hexToRgba } from '../../../core/utils/hexToRgba.js';
+import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
+import { Settings } from '../../../core/Settings.js';
+import { ScanLinesConfig } from './ScanLinesConfig.js';
 
 export class ScanLinesEffect extends LayerEffect {
-
     static _name_ = 'scan lines';
 
     constructor({
-                    name = ScanLinesEffect._name_,
-                    requiresLayer = true,
-                    config = new ScanLinesConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = ScanLinesEffect._name_,
+        requiresLayer = true,
+        config = new ScanLinesConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #drawLine(y, pixelLine, context) {
         for (let x = 0; x < context.data.width; x++) {
             const theTrailGaston = findValue(y - pixelLine[x].min, y - pixelLine[x].max, pixelLine[x].times, context.numberOfFrames, context.currentFrame);
             const theAlphaGaston = findValue(pixelLine[x].alphaRange.lower, pixelLine[x].alphaRange.upper, pixelLine[x].alphaTimes, context.numberOfFrames, context.currentFrame);
-            await context.canvas.drawGradientLine2d({x: x, y: y}, {
-                x: x, y: theTrailGaston
-            }, 1, hexToRgba(context.data.color, theAlphaGaston), hexToRgba(context.data.color, 0))
+            await context.canvas.drawGradientLine2d({ x, y }, {
+                x, y: theTrailGaston,
+            }, 1, hexToRgba(context.data.color, theAlphaGaston), hexToRgba(context.data.color, 0));
         }
     }
 
@@ -46,30 +44,28 @@ export class ScanLinesEffect extends LayerEffect {
         let y = context.data.lineInfo[i].lineStart + displacement;
 
         if (y > context.data.height) {
-            y = y % context.data.height
+            y %= context.data.height;
         }
         return y;
     }
 
     async #verticalScanLines(layer, currentFrame, numberOfFrames) {
-
         const context = {
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
-            drawing: this.workingDirectory + 'scan-lines' + randomId() + '.png',
+            currentFrame,
+            numberOfFrames,
+            drawing: `${this.workingDirectory}scan-lines${randomId()}.png`,
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
-        }
+        };
 
         for (let i = 0; i < this.data.lineInfo.length; i++) {
-            let y = this.#computeY(context, numberOfFrames, currentFrame, i, this.data.lineInfo[i].loopTimes);
-            await this.#drawLine(y, this.data.lineInfo[i].pixelLine, context)
+            const y = await this.#computeY(context, numberOfFrames, currentFrame, i, this.data.lineInfo[i].loopTimes);
+            await this.#drawLine(y, this.data.lineInfo[i].pixelLine, context);
         }
 
-        await context.canvas.toFile(context.drawing);
-        await layer.fromFile(context.drawing)
+        const newLayer = await context.canvas.convertToLayer();
 
-        await fs.unlink(context.drawing);
+        await layer.compositeLayerOver(newLayer);
     }
 
     #generate(settings) {
@@ -78,20 +74,18 @@ export class ScanLinesEffect extends LayerEffect {
             height: (this.finalSize.height * 1.5),
             width: (this.finalSize.width * 1.5),
             color: settings.getColorFromBucket(),
-        }
+        };
 
-        const getPixelTrailLength = () => {
-            return {
-                min: getRandomIntInclusive(this.config.minlength.lower, this.config.minlength.upper),
-                max: getRandomIntInclusive(this.config.maxlength.lower, this.config.maxlength.upper),
-                times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-                alphaRange: {
-                    lower: randomNumber(this.config.alphaRange.bottom.lower, this.config.alphaRange.bottom.upper),
-                    upper: randomNumber(this.config.alphaRange.top.lower, this.config.alphaRange.top.upper)
-                },
-                alphaTimes: getRandomIntInclusive(this.config.alphaTimes.lower, this.config.alphaTimes.upper)
-            }
-        }
+        const getPixelTrailLength = () => ({
+            min: getRandomIntInclusive(this.config.minlength.lower, this.config.minlength.upper),
+            max: getRandomIntInclusive(this.config.maxlength.lower, this.config.maxlength.upper),
+            times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
+            alphaRange: {
+                lower: randomNumber(this.config.alphaRange.bottom.lower, this.config.alphaRange.bottom.upper),
+                upper: randomNumber(this.config.alphaRange.top.lower, this.config.alphaRange.top.upper),
+            },
+            alphaTimes: getRandomIntInclusive(this.config.alphaTimes.lower, this.config.alphaTimes.upper),
+        });
 
         const fillLineDetail = (width) => {
             const pixelLine = [];
@@ -99,8 +93,7 @@ export class ScanLinesEffect extends LayerEffect {
                 pixelLine.push(getPixelTrailLength());
             }
             return pixelLine;
-        }
-
+        };
 
         const computeInitialLineInfo = (numberOfLines, height, width) => {
             const lineInfo = [];
@@ -114,8 +107,7 @@ export class ScanLinesEffect extends LayerEffect {
             }
 
             return lineInfo;
-        }
-
+        };
 
         data.lineInfo = computeInitialLineInfo(data.numberOfLines, data.height, data.width);
 
@@ -131,7 +123,3 @@ export class ScanLinesEffect extends LayerEffect {
         return `${this.name}: ${this.data.numberOfLines} lines`;
     }
 }
-
-
-
-

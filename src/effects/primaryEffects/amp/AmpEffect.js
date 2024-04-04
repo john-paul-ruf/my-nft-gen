@@ -1,40 +1,38 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import {findValue} from "../../../core/math/findValue.js";
-import { promises as fs } from 'fs'
-import {Settings} from "../../../core/Settings.js";
-import {AmpConfig} from "./AmpConfig.js";
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
+import { getRandomFromArray, getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { AmpConfig } from './AmpConfig.js';
 
 export class AmpEffect extends LayerEffect {
-
     static _name_ = 'amp';
 
     constructor({
-                    name = AmpEffect._name_,
-                    requiresLayer = true,
-                    config = new AmpConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = AmpEffect._name_,
+        requiresLayer = true,
+        config = new AmpConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #drawUnderlay(context, filename) {
         const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, 1, context.numberOfFrames, context.currentFrame);
-        for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
+        for (let i = 0; i < 360; i += context.data.sparsityFactor) {
             await context.canvas.drawRay2d(
                 context.data.center,
                 (i + theRayGaston) % 360,
@@ -43,8 +41,8 @@ export class AmpEffect extends LayerEffect {
                 context.data.stroke,
                 context.data.innerColor,
                 context.data.stroke + context.theAccentGaston,
-                context.data.outerColor
-            )
+                context.data.outerColor,
+            );
         }
 
         await context.canvas.toFile(filename);
@@ -53,7 +51,7 @@ export class AmpEffect extends LayerEffect {
     async #draw(context, filename) {
         const theRayGaston = findOneWayValue(0, context.data.sparsityFactor * context.data.speed, 1, context.numberOfFrames, context.currentFrame);
 
-        for (let i = 0; i < 360; i = i + context.data.sparsityFactor) {
+        for (let i = 0; i < 360; i += context.data.sparsityFactor) {
             await context.canvas.drawRay2d(
                 context.data.center,
                 (i + theRayGaston) % 360,
@@ -62,16 +60,16 @@ export class AmpEffect extends LayerEffect {
                 context.data.thickness,
                 context.data.innerColor,
                 context.data.thickness,
-                context.data.outerColor
-            )
+                context.data.outerColor,
+            );
         }
 
         await context.canvas.toFile(filename);
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
+        const tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -85,11 +83,9 @@ export class AmpEffect extends LayerEffect {
             await layer.compositeLayerOver(tempLayer);
             await layer.compositeLayerOver(underlayLayer);
         }
-
     }
 
     async #processDrawFunction(context) {
-
         await this.#drawUnderlay(context, context.underlayName);
 
         context.theAccentGaston = 0;
@@ -100,15 +96,15 @@ export class AmpEffect extends LayerEffect {
 
     async #amp(layer, currentFrame, numberOfFrames) {
         const context = {
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
-            drawing: this.workingDirectory + 'amp' + randomId() + '.png',
-            underlayName: this.workingDirectory + 'amp-underlay' + randomId() + '.png',
+            currentFrame,
+            numberOfFrames,
+            drawing: `${this.workingDirectory}amp${randomId()}.png`,
+            underlayName: `${this.workingDirectory}amp-underlay${randomId()}.png`,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
-        }
+        };
 
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
@@ -136,15 +132,15 @@ export class AmpEffect extends LayerEffect {
             center: this.config.center,
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
-                upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)
+                upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
             },
             blurRange: {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
-                upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper)
+                upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
             featherTimes: getRandomIntInclusive(this.config.featherTimes.lower, this.config.featherTimes.upper),
             speed: getRandomIntInclusive(this.config.speed.lower, this.config.speed.upper),
-        }
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -153,10 +149,6 @@ export class AmpEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: sparsity factor: ${this.data.sparsityFactor.toFixed(3)}`
+        return `${this.name}: sparsity factor: ${this.data.sparsityFactor.toFixed(3)}`;
     }
 }
-
-
-
-

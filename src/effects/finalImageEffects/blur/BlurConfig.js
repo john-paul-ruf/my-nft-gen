@@ -1,13 +1,13 @@
-import {EffectConfig} from "../../../core/layer/EffectConfig.js";
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class BlurConfig extends EffectConfig {
     constructor(
         {
-            lowerRange= {lower: 0, upper: 0},
-            upperRange= {lower: 4, upper: 8},
-            times= {lower: 2, upper: 6},
-            glitchChance= 100,
-        }
+            lowerRange = { lower: 0, upper: 0 },
+            upperRange = { lower: 4, upper: 8 },
+            times = { lower: 2, upper: 6 },
+            glitchChance = 100,
+        },
     ) {
         super();
         this.lowerRange = lowerRange;

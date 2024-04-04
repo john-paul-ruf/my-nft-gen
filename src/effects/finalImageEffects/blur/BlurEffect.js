@@ -1,32 +1,30 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomIntInclusive} from "../../../core/math/random.js";
-import {findValue} from "../../../core/math/findValue.js";
-import {Settings} from "../../../core/Settings.js";
-import {BlurConfig} from "./BlurConfig.js";
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { BlurConfig } from './BlurConfig.js';
 
 export class BlurEffect extends LayerEffect {
-
     static _name_ = 'blur';
 
     constructor({
-                    name = BlurEffect._name_,
-                    requiresLayer = true,
-                    config = new BlurConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = BlurEffect._name_,
+        requiresLayer = true,
+        config = new BlurConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #blur(layer, currentFrame, totalFrames) {
         const theGlitch = getRandomIntInclusive(0, 100);
@@ -39,13 +37,12 @@ export class BlurEffect extends LayerEffect {
     }
 
     #generate(settings) {
-        this.data =
-            {
-                glitchChance: this.config.glitchChance,
-                lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
-                upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),
-                times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-            }
+        this.data = {
+            glitchChance: this.config.glitchChance,
+            lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
+            upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),
+            times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -54,10 +51,6 @@ export class BlurEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.glitchChance} chance, ${this.data.times} times, ${this.data.lower} to ${this.data.upper}`
+        return `${this.name}: ${this.data.glitchChance} chance, ${this.data.times} times, ${this.data.lower} to ${this.data.upper}`;
     }
 }
-
-
-
-

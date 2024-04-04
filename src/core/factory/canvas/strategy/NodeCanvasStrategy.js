@@ -1,7 +1,9 @@
-import {createCanvas} from "canvas";
-import fs from 'fs'
-import {degreesToRadians, findPointByAngleAndCircle} from "../../../math/drawingMath.js";
-import {hexToRgba} from "../../../utils/hexToRgba.js";
+import { createCanvas } from 'canvas';
+import fs from 'fs';
+import { degreesToRadians, findPointByAngleAndCircle } from '../../../math/drawingMath.js';
+import { hexToRgba } from '../../../utils/hexToRgba.js';
+import { Layer } from '../../layer/Layer.js';
+import { LayerFactory } from '../../layer/LayerFactory.js';
 
 export class NodeCanvasStrategy {
     constructor() {
@@ -9,25 +11,32 @@ export class NodeCanvasStrategy {
     }
 
     async newCanvas(width, height) {
-        this.canvas = createCanvas(width, height)
+        this.canvas = createCanvas(width, height);
         this.context = this.canvas.getContext('2d');
         this.context.antialias = 'subpixel';
         this.context.quality = 'bilinear';
-        this.context.patternQuality = 'bilinear'
+        this.context.patternQuality = 'bilinear';
         this.context.imageSmoothingEnabled = true;
-        this.context.imageSmoothingQuality = 'high'
+        this.context.imageSmoothingQuality = 'high';
     }
 
     async toFile(filename) {
-
         return new Promise(async (resolve) => {
-            const out = fs.createWriteStream(filename)
+            const out = fs.createWriteStream(filename);
             const stream = this.canvas.createPNGStream({
                 compressionLevel: 0, filters: this.canvas.PNG_NO_FILTERS, palette: new Uint8ClampedArray(37 * 4),
             });
             stream.pipe(out);
             out.on('finish', () => resolve());
         });
+    }
+
+    o;
+
+    async convertToLayer() {
+        return await LayerFactory.getLayerFromBuffer(this.canvas.toBuffer('image/png', {
+            compressionLevel: 0, filters: this.canvas.PNG_NO_FILTERS, palette: new Uint8ClampedArray(37 * 4),
+        }));
     }
 
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
@@ -56,47 +65,45 @@ export class NodeCanvasStrategy {
     }
 
     async drawRay2d(pos, angle, radius, length, innerStroke, innerColor, outerStroke, outerColor) {
-
         const adjustment = outerStroke;
 
-        let start = findPointByAngleAndCircle(pos, angle, radius - adjustment)
+        let start = findPointByAngleAndCircle(pos, angle, radius - adjustment);
         let end = findPointByAngleAndCircle(pos, angle, radius + length - adjustment);
 
-        let strokeStart = findPointByAngleAndCircle(pos, angle, radius)
+        let strokeStart = findPointByAngleAndCircle(pos, angle, radius);
         let strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length);
 
         if (length < 0) {
             start = findPointByAngleAndCircle(pos, angle, radius + adjustment);
             end = findPointByAngleAndCircle(pos, angle, radius + length + adjustment);
 
-            strokeStart = findPointByAngleAndCircle(pos, angle, radius)
+            strokeStart = findPointByAngleAndCircle(pos, angle, radius);
             strokeEnd = findPointByAngleAndCircle(pos, angle, radius + length);
         }
 
         await this.drawLine2d(strokeStart, strokeEnd, innerStroke + outerStroke, outerColor, innerStroke + outerStroke, outerColor);
         await this.drawLine2d(start, end, innerStroke, innerColor, innerStroke, innerColor);
-
     }
 
     async drawRays2d(pos, radius, length, sparsityFactor, innerStroke, innerColor, outerStroke, outerColor) {
-        for (let i = 0; i < 360; i = i + sparsityFactor) {
-            await this.drawRay2d(pos, i, radius, length, innerStroke, innerColor, outerStroke, outerColor)
+        for (let i = 0; i < 360; i += sparsityFactor) {
+            await this.drawRay2d(pos, i, radius, length, innerStroke, innerColor, outerStroke, outerColor);
         }
     }
 
     async drawPolygon2d(radius, pos, numberOfSides, startAngle, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
-        let angle = (Math.PI * 2) / numberOfSides;
+        const angle = (Math.PI * 2) / numberOfSides;
 
-        //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
+        // this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
         this.context.beginPath();
 
         this.context.save();
         this.context.translate(pos.x, pos.y);
-        this.context.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
+        this.context.rotate(degreesToRadians(startAngle)); // degrees to radians is super important here
 
         this.context.moveTo(radius, 0);
 
-        for (let i = 0; i <= numberOfSides + 1; i++) { //sides plus one for proper end-caps on the polygons
+        for (let i = 0; i <= numberOfSides + 1; i++) { // sides plus one for proper end-caps on the polygons
             this.context.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
         }
 
@@ -107,17 +114,17 @@ export class NodeCanvasStrategy {
         this.context.strokeStyle = hexToRgba(outerColor, alpha);
         this.context.stroke();
 
-        //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
+        // this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
         if (innerStroke !== 0) {
             this.context.beginPath();
 
             this.context.save();
             this.context.translate(pos.x, pos.y);
-            this.context.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
+            this.context.rotate(degreesToRadians(startAngle)); // degrees to radians is super important here
 
             this.context.moveTo(radius, 0);
 
-            for (let i = 0; i <= numberOfSides + 1; i++) { //sides plus one for proper end-caps on the polygons
+            for (let i = 0; i <= numberOfSides + 1; i++) { // sides plus one for proper end-caps on the polygons
                 this.context.lineTo(radius * Math.cos(angle * i), radius * Math.sin(angle * i));
             }
 
@@ -149,15 +156,15 @@ export class NodeCanvasStrategy {
     }
 
     async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
-        let angle = (Math.PI * 2) / numberOfSides;
+        const angle = (Math.PI * 2) / numberOfSides;
 
-        //this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
+        // this guy is an unsung hero of canvas drawing: https://stackoverflow.com/a/17870579
         this.context.beginPath();
 
         this.context.save();
 
         this.context.translate(pos.x, pos.y);
-        this.context.rotate(degreesToRadians(startAngle)); //degrees to radians is super important here
+        this.context.rotate(degreesToRadians(startAngle)); // degrees to radians is super important here
 
         this.context.moveTo(radius, 0);
 
@@ -172,8 +179,7 @@ export class NodeCanvasStrategy {
     }
 
     async drawLine2d(start, end, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
-
-        this.context.lineJoin = "round";
+        this.context.lineJoin = 'round';
 
         this.context.beginPath();
 
@@ -201,7 +207,6 @@ export class NodeCanvasStrategy {
     }
 
     async drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
-
         this.context.beginPath();
 
         this.context.lineWidth = outerStroke + innerStroke;
@@ -210,7 +215,7 @@ export class NodeCanvasStrategy {
         this.context.moveTo(path[0].x, path[0].y);
 
         for (let index = 0; index < path.length; index++) {
-            this.context.lineTo(path[index].x, path[index].y)
+            this.context.lineTo(path[index].x, path[index].y);
         }
 
         this.context.stroke();
@@ -225,7 +230,7 @@ export class NodeCanvasStrategy {
             this.context.moveTo(path[0].x, path[0].y);
 
             for (let index = 0; index < path.length; index++) {
-                this.context.lineTo(path[index].x, path[index].y)
+                this.context.lineTo(path[index].x, path[index].y);
             }
 
             this.context.stroke();
@@ -234,7 +239,6 @@ export class NodeCanvasStrategy {
     }
 
     async drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
-
         this.context.beginPath();
 
         this.context.lineWidth = outerStroke + innerStroke;

@@ -1,7 +1,6 @@
-import {findOneWayValue} from "../src/core/math/findOneWayValue.js";
+import { findOneWayValue } from '../src/core/math/findOneWayValue.js';
 
 test('findOneWayValue: begin and end match', () => {
-
     const min = 0;
     const max = 18;
 
@@ -12,11 +11,9 @@ test('findOneWayValue: begin and end match', () => {
 
     expect(beginValue).toBe(min);
     expect(endValue).toBe(max);
-
 });
 
 test('findOneWayValue: begin and end match, inverted', () => {
-
     const min = 0;
     const max = 18;
 
@@ -29,9 +26,7 @@ test('findOneWayValue: begin and end match, inverted', () => {
     expect(endValue).toBe(min);
 });
 
-
 test('findOneWayValue: midpoint match', () => {
-
     const min = 0;
     const max = 20;
 
@@ -43,7 +38,6 @@ test('findOneWayValue: midpoint match', () => {
 });
 
 test('findOneWayValue: midpoint match, inverted', () => {
-
     const min = 0;
     const max = 20;
 
@@ -55,7 +49,6 @@ test('findOneWayValue: midpoint match, inverted', () => {
 });
 
 test('findOneWayValue: left quarter match', () => {
-
     const min = 0;
     const max = 20;
 
@@ -67,7 +60,6 @@ test('findOneWayValue: left quarter match', () => {
 });
 
 test('findOneWayValue: left quarter match, inverted', () => {
-
     const min = 0;
     const max = 20;
 
@@ -78,9 +70,7 @@ test('findOneWayValue: left quarter match, inverted', () => {
     expect(midPointValue).toBe(15);
 });
 
-
 test('findOneWayValue: right quarter match', () => {
-
     const min = 0;
     const max = 20;
 
@@ -92,7 +82,6 @@ test('findOneWayValue: right quarter match', () => {
 });
 
 test('findOneWayValue: right match, inverted', () => {
-
     const min = 0;
     const max = 20;
 

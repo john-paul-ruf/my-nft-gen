@@ -1,39 +1,37 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import { promises as fs } from 'fs'
-import Jimp from "jimp";
-import {findValue} from "../../../core/math/findValue.js";
-import {Settings} from "../../../core/Settings.js";
-import {PixelateConfig} from "./PixelateConfig.js";
+import { promises as fs } from 'fs';
+import Jimp from 'jimp';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { PixelateConfig } from './PixelateConfig.js';
 
 export class PixelateEffect extends LayerEffect {
-
     static _name_ = 'pixelate';
 
     constructor({
-                    name = PixelateEffect._name_,
-                    requiresLayer = true,
-                    config = new PixelateConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = PixelateEffect._name_,
+        requiresLayer = true,
+        config = new PixelateConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #pixelate(layer, currentFrame, totalFrames) {
         const theGlitch = getRandomIntInclusive(0, 100);
         if (theGlitch <= this.data.glitchChance) {
-            const filename = this.workingDirectory + 'pixelate' + randomId() + '.png';
+            const filename = `${this.workingDirectory}pixelate${randomId()}.png`;
 
             await layer.toFile(filename);
 
@@ -54,16 +52,15 @@ export class PixelateEffect extends LayerEffect {
     }
 
     #generate(settings) {
-        this.data =
-            {
-                glitchChance: this.config.glitchChance,
-                lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
-                upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),
-                times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-                getInfo: () => {
+        this.data = {
+            glitchChance: this.config.glitchChance,
+            lower: getRandomIntInclusive(this.config.lowerRange.lower, this.config.lowerRange.upper),
+            upper: getRandomIntInclusive(this.config.upperRange.lower, this.config.upperRange.upper),
+            times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
+            getInfo: () => {
 
-                }
-            }
+            },
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -72,10 +69,6 @@ export class PixelateEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.glitchChance} chance, ${this.data.times} times, ${this.data.lower} to ${this.data.upper}`
+        return `${this.name}: ${this.data.glitchChance} chance, ${this.data.times} times, ${this.data.lower} to ${this.data.upper}`;
     }
 }
-
-
-
-

@@ -1,36 +1,34 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomFromArray, getRandomIntExclusive, randomId} from "../../../core/math/random.js";
-import fs from 'fs'
-import {fileURLToPath} from "url";
-import path, {dirname} from "path";
-import {mapNumberToRange} from "../../../core/math/mapNumberToRange.js";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {Settings} from "../../../core/Settings.js";
-import {MappedFramesConfig} from "./MappedFramesConfig.js";
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+import { getRandomFromArray, getRandomIntExclusive, randomId } from '../../../core/math/random.js';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { mapNumberToRange } from '../../../core/math/mapNumberToRange.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { Settings } from '../../../core/Settings.js';
+import { MappedFramesConfig } from './MappedFramesConfig.js';
 
 export class MappedFramesEffect extends LayerEffect {
-
     static _name_ = 'mapped-frames';
 
     constructor({
-                    name = MappedFramesEffect._name_,
-                    requiresLayer = true,
-                    config = new MappedFramesConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = MappedFramesEffect._name_,
+        requiresLayer = true,
+        config = new MappedFramesConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #copyFile(filename, destinationFilename) {
         return new Promise((resolve) => {
@@ -43,7 +41,7 @@ export class MappedFramesEffect extends LayerEffect {
     async #getAllFilesInDirectory(dir) {
         const list = [];
 
-        fs.readdirSync(dir).forEach(file => {
+        fs.readdirSync(dir).forEach((file) => {
             if (!file.startsWith('.') && !fs.lstatSync(dir + file).isDirectory()) {
                 list.push(dir + file);
             }
@@ -53,7 +51,7 @@ export class MappedFramesEffect extends LayerEffect {
     }
 
     async #extractFrame(context) {
-        const frames = await this.#getAllFilesInDirectory(context.data.mappedFramesFolder)
+        const frames = await this.#getAllFilesInDirectory(context.data.mappedFramesFolder);
 
         const sequenceMax = Math.floor(context.numberOfFrames / context.data.loopTimes);
         const currentSequence = context.currentFrame % sequenceMax;
@@ -63,22 +61,21 @@ export class MappedFramesEffect extends LayerEffect {
     }
 
     async #mappedFrames(layer, currentFrame, numberOfFrames) {
-
         const context = {
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
+            currentFrame,
+            numberOfFrames,
             data: this.data,
-            filename: this.workingDirectory + 'mapped-frame' + randomId() + '.png',
+            filename: `${this.workingDirectory}mapped-frame${randomId()}.png`,
 
-        }
+        };
 
         await this.#extractFrame(context);
 
-        let tempLayer = await LayerFactory.getLayerFromFile(context.filename, this.fileConfig);
+        const tempLayer = await LayerFactory.getLayerFromFile(context.filename, this.fileConfig);
 
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
 
-        const finalSize = this.finalSize;
+        const { finalSize } = this;
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
         await layer.compositeLayerOver(tempLayer, false);
 
@@ -91,33 +88,31 @@ export class MappedFramesEffect extends LayerEffect {
             buffer: getRandomFromArray(this.config.buffer),
             loopTimes: this.config.loopTimes,
             randomize: this.config.randomize,
-        }
+        };
 
         const getMappedFramesFolder = () => {
             const fileURLToPath1 = fileURLToPath(import.meta.url);
             const directory = dirname(fileURLToPath1);
 
             const getFoldersInDirectory = (dir) => {
-
                 const directoryPath = path.join(directory, dir);
                 const list = [];
 
-                fs.readdirSync(directoryPath).forEach(file => {
+                fs.readdirSync(directoryPath).forEach((file) => {
                     if (!file.startsWith('.') && fs.lstatSync(directoryPath + file).isDirectory()) {
-                        list.push(file + '/');
+                        list.push(`${file}/`);
                     }
                 });
 
                 return list;
-            }
+            };
 
             const folders = getFoldersInDirectory(this.config.folderName);
 
             data.folderName = folders[getRandomIntExclusive(0, folders.length)];
 
             return path.join(directory, this.config.folderName + data.folderName);
-
-        }
+        };
 
         data.mappedFramesFolder = getMappedFramesFolder();
 
@@ -130,10 +125,6 @@ export class MappedFramesEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}, ${this.data.folderName}`
+        return `${this.name}, ${this.data.folderName}`;
     }
 }
-
-
-
-

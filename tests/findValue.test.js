@@ -1,7 +1,6 @@
-import {findValue} from "../src/core/math/findValue.js";
+import { findValue } from '../src/core/math/findValue.js';
 
 test('findValue: begin and end match', () => {
-
     const min = 0;
     const max = 18;
     const times = 1;
@@ -14,7 +13,6 @@ test('findValue: begin and end match', () => {
 });
 
 test('findValue: begin and end match, inverted', () => {
-
     const min = 0;
     const max = 18;
     const times = 1;
@@ -26,9 +24,7 @@ test('findValue: begin and end match, inverted', () => {
     expect(beginValue).toBe(endValue);
 });
 
-
 test('findValue: begin and end match, 2 amount of times', () => {
-
     const min = 0;
     const max = 18;
     const times = 2;
@@ -41,7 +37,6 @@ test('findValue: begin and end match, 2 amount of times', () => {
 });
 
 test('findValue: begin and end match, 2 amount of times, inverted', () => {
-
     const min = 0;
     const max = 18;
     const times = 2;
@@ -53,9 +48,7 @@ test('findValue: begin and end match, 2 amount of times, inverted', () => {
     expect(beginValue).toBe(endValue);
 });
 
-
 test('findValue: midpoint match', () => {
-
     const min = 0;
     const max = 20;
     const times = 1;
@@ -67,7 +60,6 @@ test('findValue: midpoint match', () => {
 });
 
 test('findValue: midpoint match, inverted', () => {
-
     const min = 0;
     const max = 20;
     const times = 1;
@@ -79,7 +71,6 @@ test('findValue: midpoint match, inverted', () => {
 });
 
 test('findValue: left quarter match', () => {
-
     const min = 0;
     const max = 20;
     const times = 1;
@@ -91,7 +82,6 @@ test('findValue: left quarter match', () => {
 });
 
 test('findValue: left quarter match, inverted', () => {
-
     const min = 0;
     const max = 20;
     const times = 1;
@@ -102,9 +92,7 @@ test('findValue: left quarter match, inverted', () => {
     expect(midPointValue).toBe(max / 2);
 });
 
-
 test('findValue: right quarter match', () => {
-
     const min = 0;
     const max = 20;
     const times = 1;
@@ -116,7 +104,6 @@ test('findValue: right quarter match', () => {
 });
 
 test('findValue: right match, inverted', () => {
-
     const min = 0;
     const max = 20;
     const times = 1;

@@ -1,47 +1,45 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import path from "path";
-import {fileURLToPath} from "url";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {Settings} from "../../../core/Settings.js";
-import {PorousConfig} from "./PorousConfig.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { Settings } from '../../../core/Settings.js';
+import { PorousConfig } from './PorousConfig.js';
 
 export class PorousEffect extends LayerEffect {
-
     static _name_ = 'porous.png';
 
     constructor({
-                    name = PorousEffect._name_,
-                    requiresLayer = true,
-                    config = new PorousConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = PorousEffect._name_,
+        requiresLayer = true,
+        config = new PorousConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
 
-
     async #porousOverlay(layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(this.data.filename, this.fileConfig);
-        const finalSize = this.finalSize;
+        const tempLayer = await LayerFactory.getLayerFromFile(this.data.filename, this.fileConfig);
+        const { finalSize } = this;
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
         await tempLayer.resize(finalSize.height, finalSize.width);
-        await layer.compositeLayerOver(tempLayer)
+        await layer.compositeLayerOver(tempLayer);
     }
 
     #generate(settings) {
         this.data = {
-            filename: path.join(fileURLToPath(import.meta.url).replace('PorousEffect.js', '') + 'porous.png'),
+            filename: path.join(`${fileURLToPath(import.meta.url).replace('PorousEffect.js', '')}porous.png`),
             layerOpacity: this.config.layerOpacity,
-        }
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -50,10 +48,6 @@ export class PorousEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}`
+        return `${this.name}`;
     }
 }
-
-
-
-

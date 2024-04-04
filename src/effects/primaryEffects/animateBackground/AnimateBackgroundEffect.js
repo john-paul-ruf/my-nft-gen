@@ -1,58 +1,56 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
+import { promises as fs } from 'fs';
+import Jimp from 'jimp';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import { promises as fs } from 'fs'
-import Jimp from "jimp";
-import {Settings} from "../../../core/Settings.js";
-import {AnimateBackgroundConfig} from "./AnimateBackgroundConfig.js";
+import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { Settings } from '../../../core/Settings.js';
+import { AnimateBackgroundConfig } from './AnimateBackgroundConfig.js';
 
 export class AnimateBackgroundEffect extends LayerEffect {
-
-    static _name_ = 'animated-background'
+    static _name_ = 'animated-background';
 
     constructor({
-                    name = AnimateBackgroundEffect._name_,
-                    requiresLayer = true,
-                    config = new AnimateBackgroundConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = AnimateBackgroundEffect._name_,
+        requiresLayer = true,
+        config = new AnimateBackgroundConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
 
-
     async #animateBackground(layer) {
-        const filename = this.workingDirectory + 'static' + randomId() + '.png';
+        const filename = `${this.workingDirectory}static${randomId()}.png`;
 
         const jimpImage = new Jimp(this.data.width, this.data.height);
 
         for (let x = 0; x < this.data.width; x++) {
             for (let y = 0; y < this.data.height; y++) {
-                const rando = getRandomIntInclusive(0, 20)
+                const rando = getRandomIntInclusive(0, 20);
                 if (rando < 15) {
-                    await jimpImage.setPixelColor(Jimp.cssColorToHex(this.data.color1), x, y)
+                    await jimpImage.setPixelColor(Jimp.cssColorToHex(this.data.color1), x, y);
                 } else if (rando < 19) {
-                    await jimpImage.setPixelColor(Jimp.cssColorToHex(this.data.color2), x, y)
+                    await jimpImage.setPixelColor(Jimp.cssColorToHex(this.data.color2), x, y);
                 } else {
-                    await jimpImage.setPixelColor(Jimp.cssColorToHex(this.data.color3), x, y)
+                    await jimpImage.setPixelColor(Jimp.cssColorToHex(this.data.color3), x, y);
                 }
             }
         }
 
-        await jimpImage.writeAsync(filename)
+        await jimpImage.writeAsync(filename);
 
         await layer.fromFile(filename);
 
-        await layer.blur(1)
+        await layer.blur(1);
 
         await fs.unlink(filename);
     }
@@ -74,10 +72,6 @@ export class AnimateBackgroundEffect extends LayerEffect {
     }
 
     getInfo() {
-        return 'animated-background'
+        return 'animated-background';
     }
 }
-
-
-
-

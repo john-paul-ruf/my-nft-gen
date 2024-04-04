@@ -1,10 +1,31 @@
-import {timeToString} from "./timeToString.js";
+import { timeToString } from './timeToString.js';
 
-export const timeLeft = (startTime, frame, frameInc, numberOfFrames) => {
-    let currentTime = new Date();
-    let rez = currentTime.getTime() - startTime.getTime();
-    let currentFrameCount = (frame / frameInc)
-    let timePerFrame = rez / currentFrameCount;
-    let timeLeft = (numberOfFrames - currentFrameCount) * timePerFrame;
-    return timeToString(timeLeft);
-}
+export const timeLeft = (startDate, remainingFrames) => {
+    // Convert startDate to a Date object
+    const startDateObj = new Date(startDate);
+
+    // Get current date
+    const currentDate = new Date();
+
+    // Calculate duration between startDate and currentDate
+    const durationMs = currentDate - startDateObj;
+
+    const totalDurationMs = durationMs * remainingFrames;
+
+    // Calculate projected end date
+    const projectedEndDateMs = startDateObj.getTime() + totalDurationMs;
+    const projectedEndDateObj = new Date(projectedEndDateMs);
+
+    // Format projected end date for console
+    const formattedProjectedEndDate = projectedEndDateObj.toLocaleString('en-US', { timeZone: 'UTC' });
+
+    // Format duration for console
+    const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
+    const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+    const durationSeconds = Math.floor((durationMs % (1000 * 60)) / 1000);
+
+    return `
+    Frame Duration ${durationHours}:${durationMinutes}:${durationSeconds}
+    Projected End Date: ${formattedProjectedEndDate}`;
+};
+

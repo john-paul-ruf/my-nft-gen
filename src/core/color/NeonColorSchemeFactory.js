@@ -1,4 +1,4 @@
-import {ColorScheme} from "./ColorScheme.js";
+import { ColorScheme } from './ColorScheme.js';
 
 export const NeonColorScheme = {
     neons: 'neons',
@@ -7,17 +7,14 @@ export const NeonColorScheme = {
     greenNeons: 'green-neons',
     primaryNeons: 'primary-neons',
     secondaryNeons: 'secondary-neons',
-}
+};
 
 export class NeonColorSchemeFactory {
-    constructor() {
-    }
-
     static getColorScheme = (neonColorScheme) => {
         switch (neonColorScheme) {
-            case NeonColorScheme.neons:
-                return new ColorScheme({
-                    colorBucket:
+        case NeonColorScheme.neons:
+            return new ColorScheme({
+                colorBucket:
                         [
                             '#FFFF00',
                             '#FF00FF',
@@ -26,61 +23,60 @@ export class NeonColorSchemeFactory {
                             '#00FF00',
                             '#0000FF',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.neons}\n`,
-                });
-            case NeonColorScheme.redNeons:
-                return new ColorScheme({
-                    colorBucket:
+                colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.neons}\n`,
+            });
+        case NeonColorScheme.redNeons:
+            return new ColorScheme({
+                colorBucket:
                         [
                             '#FFFF00',
                             '#FF00FF',
                             '#FF0000',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.redNeons}\n`,
-                });
-            case NeonColorScheme.blueNeons:
-                return new ColorScheme({
-                    colorBucket:
+                colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.redNeons}\n`,
+            });
+        case NeonColorScheme.blueNeons:
+            return new ColorScheme({
+                colorBucket:
                         [
                             '#FF00FF',
                             '#00FFFF',
                             '#0000FF',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.blueNeons}\n`,
-                });
-            case NeonColorScheme.greenNeons:
-                return new ColorScheme({
-                    colorBucket:
+                colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.blueNeons}\n`,
+            });
+        case NeonColorScheme.greenNeons:
+            return new ColorScheme({
+                colorBucket:
                         [
                             '#FFFF00',
                             '#00FFFF',
                             '#00FF00',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
-                });
-            case NeonColorScheme.primaryNeons:
-                return new ColorScheme({
-                    colorBucket:
+                colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.greenNeons}\n`,
+            });
+        case NeonColorScheme.primaryNeons:
+            return new ColorScheme({
+                colorBucket:
                         [
                             '#FF0000',
                             '#00FF00',
                             '#0000FF',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.primaryNeons}\n`,
-                });
-            case NeonColorScheme.secondaryNeons:
-                return new ColorScheme({
-                    colorBucket:
+                colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.primaryNeons}\n`,
+            });
+        case NeonColorScheme.secondaryNeons:
+            return new ColorScheme({
+                colorBucket:
                         [
                             '#FFFF00',
                             '#00FFFF',
                             '#FF00FF',
                         ],
-                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.secondaryNeons}\n`,
-                });
-            default:
-                throw 'Not a color scheme';
+                colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.secondaryNeons}\n`,
+            });
+        default:
+            throw new Error('Not a color scheme');
         }
-    }
-
+    };
 }

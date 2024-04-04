@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs'
-import {timeToString} from "../utils/timeToString.js";
+import { promises as fs } from 'fs';
+import { timeToString } from '../utils/timeToString.js';
 
 export const writeArtistCard = async (config, composeInfo) => {
     config.endTime = new Date();
@@ -8,5 +8,5 @@ export const writeArtistCard = async (config, composeInfo) => {
 
     console.log(await composeInfo.composeInfo());
 
-    fs.writeFile(config.fileOut + '.txt', await composeInfo.composeInfo(), 'utf-8');
-}
+    fs.writeFile(`${config.fileOut}.txt`, await composeInfo.composeInfo(), 'utf-8');
+};

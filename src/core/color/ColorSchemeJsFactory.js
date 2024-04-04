@@ -1,18 +1,15 @@
-import {ColorScheme as internalColorScheme} from "./ColorScheme.js";
-import ColorScheme from "color-scheme"
-import {getRandomIntExclusive, randomNumber} from "../math/random.js";
+import ColorScheme from 'color-scheme';
+import { ColorScheme as InternalColorScheme } from './ColorScheme.js';
+import { getRandomIntExclusive, randomNumber } from '../math/random.js';
 
 export class ColorSchemeJsFactory {
-    constructor() {
-    }
-
     static availableSchemes = {
         mono: 'mono',
         contrast: 'contrast',
         triade: 'triade',
         tetrade: 'tetrade',
         analogic: 'analogic',
-    }
+    };
 
     static availableVariations = {
         default: 'default',
@@ -21,15 +18,14 @@ export class ColorSchemeJsFactory {
         light: 'light',
         hard: 'hard',
         pale: 'pale',
-    }
+    };
 
     static getColorSchemeJsColorScheme({
-                                           scheme = this.availableSchemes.triade,
-                                           variation = this.availableVariations.hard,
-                                           hue = getRandomIntExclusive(0, 360),
-                                           distance = randomNumber(0, 1)
-                                       }) {
-
+        scheme = this.availableSchemes.triade,
+        variation = this.availableVariations.hard,
+        hue = getRandomIntExclusive(0, 360),
+        distance = randomNumber(0, 1),
+    }) {
         this.scheme = scheme;
         this.variations = variation;
         this.hue = hue;
@@ -45,13 +41,12 @@ export class ColorSchemeJsFactory {
             .colors();
 
         const schemeInfo = {
-            scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance
+            scheme: this.scheme, variations: this.variations, hue: this.hue, distance: this.distance,
         };
 
-        return new internalColorScheme({
+        return new InternalColorScheme({
             colorBucket: this.colorBucket,
-            colorSchemeInfo: `**Color Strategy**:\n* color-scheme\n* Hue: ${schemeInfo.hue}\n* Scheme: ${schemeInfo.scheme}\n* Variation: ${schemeInfo.variations}\n* Distance: ${schemeInfo.distance.toFixed(2)}\n`
+            colorSchemeInfo: `**Color Strategy**:\n* color-scheme\n* Hue: ${schemeInfo.hue}\n* Scheme: ${schemeInfo.scheme}\n* Variation: ${schemeInfo.variations}\n* Distance: ${schemeInfo.distance.toFixed(2)}\n`,
         });
     }
-
 }

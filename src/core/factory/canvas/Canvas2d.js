@@ -1,9 +1,9 @@
 export class Canvas2d {
     constructor(strategy) {
-        this.strategy = strategy
+        this.strategy = strategy;
     }
 
-    /***
+    /** *
      *
      * replaces current canvas with new canvas
      *
@@ -15,7 +15,7 @@ export class Canvas2d {
         await this.strategy.newCanvas(width, height);
     }
 
-    /***
+    /** *
      *
      * replaces current canvas with image from file
      *
@@ -24,6 +24,10 @@ export class Canvas2d {
      */
     async toFile(filename) {
         await this.strategy.toFile(filename);
+    }
+
+    async convertToLayer() {
+        return this.strategy.convertToLayer();
     }
 
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha) {
@@ -61,5 +65,4 @@ export class Canvas2d {
     async drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor) {
         await this.strategy.drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor);
     }
-
 }

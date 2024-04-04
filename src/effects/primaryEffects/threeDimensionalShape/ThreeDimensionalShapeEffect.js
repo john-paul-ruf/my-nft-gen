@@ -1,42 +1,40 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import { promises as fs } from 'fs'
-import * as THREE from "three";
-import {Canvas3d} from "../../../core/factory/canvas/Canvas3d.js";
-import {hexToRgba} from "../../../core/utils/hexToRgba.js";
-import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import {degreesToRadians} from "../../../core/math/drawingMath.js";
-import {Settings} from "../../../core/Settings.js";
-import {ThreeDimensionalShapeConfig} from "./ThreeDimensionalShapeConfig.js";
+import { promises as fs } from 'fs';
+import * as THREE from 'three';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { Canvas3d } from '../../../core/factory/canvas/Canvas3d.js';
+import { hexToRgba } from '../../../core/utils/hexToRgba.js';
+import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
+import { degreesToRadians } from '../../../core/math/drawingMath.js';
+import { Settings } from '../../../core/Settings.js';
+import { ThreeDimensionalShapeConfig } from './ThreeDimensionalShapeConfig.js';
 
 export class ThreeDimensionalShapeEffect extends LayerEffect {
-
     static _name_ = 'three-dimensional-shape';
 
     constructor({
-                    name = ThreeDimensionalShapeEffect._name_,
-                    requiresLayer = true,
-                    config = new ThreeDimensionalShapeConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = ThreeDimensionalShapeEffect._name_,
+        requiresLayer = true,
+        config = new ThreeDimensionalShapeConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #draw(context, filename) {
         const finalImageSize = this.finalSize;
 
-        const width = finalImageSize.width, height = finalImageSize.height;
+        const { width } = finalImageSize; const { height } = finalImageSize;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
@@ -44,9 +42,8 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
         const canvas = new Canvas3d(width, height);
 
         const renderer = new THREE.WebGLRenderer({
-            canvas, alpha: true
+            canvas, alpha: true,
         });
-
 
         const geometry = new THREE.PolyhedronGeometry(20, 20);
 
@@ -58,10 +55,10 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
             polygonOffsetUnits: 2,
             polygonOffsetFactor: 1,
             shininess: 50,
-            flatShading: false
+            flatShading: false,
         });
 
-        const wireframeMaterial = new THREE.MeshBasicMaterial({color: '#000000', wireframe: true, transparent: true});
+        const wireframeMaterial = new THREE.MeshBasicMaterial({ color: '#000000', wireframe: true, transparent: true });
 
         const mesh = new THREE.Mesh(geometry, material);
         const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
@@ -82,7 +79,6 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
         light3.position.set(0, -25, 20);
         scene.add(light3);
 
-
         camera.position.z = 100;
 
         const theXGaston = findOneWayValue(0, 360 * context.data.times, 1, context.numberOfFrames, context.currentFrame);
@@ -99,15 +95,14 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
     }
 
     async #threeDimensionalShape(layer, currentFrame, numberOfFrames) {
-
         const context = {
             data: this.data,
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
-            drawing: this.workingDirectory + 'three-dimensional-shape' + randomId() + '.png'
-        }
+            currentFrame,
+            numberOfFrames,
+            drawing: `${this.workingDirectory}three-dimensional-shape${randomId()}.png`,
+        };
 
-        await this.#draw(context, context.drawing)
+        await this.#draw(context, context.drawing);
 
         await layer.fromFile(context.drawing);
 
@@ -124,7 +119,7 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
             light1: settings.getLightFromBucket(),
             light2: settings.getLightFromBucket(),
             light3: settings.getLightFromBucket(),
-        }
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -133,10 +128,6 @@ export class ThreeDimensionalShapeEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.times} rotation speed`
+        return `${this.name}: ${this.data.times} rotation speed`;
     }
 }
-
-
-
-

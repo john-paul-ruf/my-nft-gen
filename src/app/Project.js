@@ -1,25 +1,24 @@
-import {Settings} from "../core/Settings.js";
-import {ColorScheme} from "../core/color/ColorScheme.js";
-import {LayerConfig} from "../core/layer/LayerConfig.js";
-import {LoopBuilder} from "../core/animation/LoopBuilder.js";
-import {randomId} from "../core/math/random.js";
-import {promises as fs} from 'fs'
+import { promises as fs } from 'fs';
+import { Settings } from '../core/Settings.js';
+import { ColorScheme } from '../core/color/ColorScheme.js';
+import { LayerConfig } from '../core/layer/LayerConfig.js';
+import { LoopBuilder } from '../core/animation/LoopBuilder.js';
+import { randomId } from '../core/math/random.js';
 
 export class Project {
-
     constructor({
-                    artist = 'unknown',
-                    projectName = 'new-project',
-                    colorScheme = new ColorScheme({}),
-                    neutrals = ['#FFFFFF'],
-                    backgrounds = ['#000000',],
-                    lights = ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
-                    numberOfFrame = 1800,
-                    longestSideInPixels = 1920,
-                    shortestSideInPixels = 1080,
-                    isHorizontal = false,
-                    projectDirectory = `src/projects/`,
-                }) {
+        artist = 'unknown',
+        projectName = 'new-project',
+        colorScheme = new ColorScheme({}),
+        neutrals = ['#FFFFFF'],
+        backgrounds = ['#000000'],
+        lights = ['#FFFF00', '#FF00FF', '#00FFFF', '#FF0000', '#00FF00', '#0000FF'],
+        numberOfFrame = 1800,
+        longestSideInPixels = 1920,
+        shortestSideInPixels = 1080,
+        isHorizontal = false,
+        projectDirectory = 'src/projects/',
+    }) {
         this.projectName = projectName;
         this.artist = artist;
         this.colorScheme = colorScheme;
@@ -27,8 +26,8 @@ export class Project {
         this.backgrounds = backgrounds;
         this.lights = lights;
         this.numberOfFrame = numberOfFrame;
-        this.longestSideInPixels = longestSideInPixels;
-        this.shortestSideInPixels = shortestSideInPixels;
+        this.internalLongestSideInPixels = longestSideInPixels;
+        this.internalShortestSideInPixels = shortestSideInPixels;
         this.isHorizontal = isHorizontal;
         this.projectDirectory = projectDirectory;
 
@@ -36,7 +35,15 @@ export class Project {
         this.selectedFinalEffectConfigs = [];
     }
 
-    addPrimaryEffect({layerConfig = new LayerConfig({})}) {
+    get shortestSideInPixels() {
+        return this.internalShortestSideInPixels;
+    }
+
+    get longestSideInPixels() {
+        return this.internalLongestSideInPixels;
+    }
+
+    addPrimaryEffect({ layerConfig = new LayerConfig({}) }) {
         this.selectedPrimaryEffectConfigs.push(layerConfig);
     }
 
@@ -44,7 +51,7 @@ export class Project {
         this.selectedPrimaryEffectConfigs.push(layerConfig);
     }
 
-    addFinalEffect({layerConfig = new LayerConfig({})}) {
+    addFinalEffect({ layerConfig = new LayerConfig({}) }) {
         this.selectedFinalEffectConfigs.push(layerConfig);
     }
 
@@ -53,11 +60,10 @@ export class Project {
     }
 
     async generateRandomLoop() {
-
         const finalFinalName = this.projectName + randomId();
         const workingDirectory = `${this.projectDirectory}/${finalFinalName}/`;
 
-        await fs.mkdir(workingDirectory, {recursive: true});
+        await fs.mkdir(workingDirectory, { recursive: true });
 
         const loopBuilder = new LoopBuilder(
             new Settings({
@@ -72,10 +78,11 @@ export class Project {
                 longestSideInPixels: this.longestSideInPixels,
                 shortestSideInPixels: this.shortestSideInPixels,
                 isHorizontal: this.isHorizontal,
-                workingDirectory: workingDirectory,
+                workingDirectory,
                 allPrimaryEffects: this.selectedPrimaryEffectConfigs,
-                allFinalImageEffects: this.selectedFinalEffectConfigs
-            }));
+                allFinalImageEffects: this.selectedFinalEffectConfigs,
+            }),
+        );
         return loopBuilder.constructLoop();
     }
 }

@@ -1,47 +1,45 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import {findValue} from "../../../core/math/findValue.js";
-import Jimp from "jimp";
-import { promises as fs } from 'fs'
-import {Settings} from "../../../core/Settings.js";
-import {SingleLayerGlitchDrumrollHorizontalWaveConfig} from "./SingleLayerGlitchDrumrollHorizontalWaveConfig.js";
+import Jimp from 'jimp';
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { SingleLayerGlitchDrumrollHorizontalWaveConfig } from './SingleLayerGlitchDrumrollHorizontalWaveConfig.js';
 
 export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
-
     static _name_ = 'single-layer-glitch-drumroll-horizontal-wave';
 
     constructor({
-                    name = SingleLayerGlitchDrumrollHorizontalWaveEffect._name_,
-                    requiresLayer = false,
-                    config = new SingleLayerGlitchDrumrollHorizontalWaveConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = SingleLayerGlitchDrumrollHorizontalWaveEffect._name_,
+        requiresLayer = false,
+        config = new SingleLayerGlitchDrumrollHorizontalWaveConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
 
-
     async #glitchDrumrollHorizontalWave(layer, currentFrame, totalFrames) {
-        /////////////////////
-        // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
-        /////////////////////
-        // borrowed from https://github.com/ninoseki/glitched-canvas & modified with cosine
+    /// //////////////////
+    // https://github.com/JKirchartz/Glitchy3bitdither/blob/master/source/glitches/drumrollHorizontalWave.js
+    /// //////////////////
+    // borrowed from https://github.com/ninoseki/glitched-canvas & modified with cosine
 
         const offsetGaston = Math.floor(findValue(0, this.data.glitchOffset, this.data.glitchOffsetTimes, totalFrames, currentFrame)) * 4;
 
         const finalImageSize = this.finalSize;
-        const filename = this.workingDirectory + 'glitch-drumroll' + randomId() + '.png';
+        const filename = `${this.workingDirectory}glitch-drumroll${randomId()}.png`;
 
-        await layer.toFile(filename)
+        await layer.toFile(filename);
 
         const jimpImage = await Jimp.read(filename);
 
@@ -61,7 +59,7 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
 
                     let x2 = x + roll;
                     if (x2 > finalImageSize.width - 1) x2 -= finalImageSize.width;
-                    let idx2 = (x2 + y * finalImageSize.width) * 4;
+                    const idx2 = (x2 + y * finalImageSize.width) * 4;
 
                     idx += offsetGaston;
 
@@ -80,20 +78,17 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
         await fs.unlink(filename);
     }
 
-
     #generate(settings) {
-
         const finalImageSize = this.finalSize;
 
         const getRoll = () => {
-
             const results = [];
 
             for (let x = 0; x < finalImageSize.width; x++) {
                 results.push(Math.random());
             }
             return results;
-        }
+        };
 
         this.data = {
             glitchChance: this.config.glitchChance,
@@ -101,7 +96,7 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
             glitchOffsetTimes: getRandomIntInclusive(this.config.glitchOffsetTimes.lower, this.config.glitchOffsetTimes.upper),
             cosineFactor: getRandomIntInclusive(this.config.cosineFactor.lower, this.config.cosineFactor.upper),
             roll: getRoll(),
-        }
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -109,10 +104,6 @@ export class SingleLayerGlitchDrumrollHorizontalWaveEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name} ${this.data.glitchChance} chance, ${this.data.glitchOffset} offset ${this.data.glitchOffsetTimes} times, cosine factor ${this.data.cosineFactor}`
+        return `${this.name} ${this.data.glitchChance} chance, ${this.data.glitchOffset} offset ${this.data.glitchOffsetTimes} times, cosine factor ${this.data.cosineFactor}`;
     }
 }
-
-
-
-

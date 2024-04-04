@@ -1,37 +1,35 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import * as THREE from "three";
-import {Canvas3d} from "../../../core/factory/canvas/Canvas3d.js";
-import {hexToRgba} from "../../../core/utils/hexToRgba.js";
-import {degreesToRadians} from "../../../core/math/drawingMath.js";
-import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import { promises as fs } from 'fs'
-import {Settings} from "../../../core/Settings.js";
-import {ThreeDimensionalRingsConfig} from "./ThreeDimensionalRingsConfig.js";
+import * as THREE from 'three';
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive, randomId, randomNumber } from '../../../core/math/random.js';
+import { Canvas3d } from '../../../core/factory/canvas/Canvas3d.js';
+import { hexToRgba } from '../../../core/utils/hexToRgba.js';
+import { degreesToRadians } from '../../../core/math/drawingMath.js';
+import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { ThreeDimensionalRingsConfig } from './ThreeDimensionalRingsConfig.js';
 
 export class ThreeDimensionalRingsEffect extends LayerEffect {
-
     static _name_ = 'three-dimensional-rings';
 
     constructor({
-                    name = ThreeDimensionalRingsEffect._name_,
-                    requiresLayer = true,
-                    config = new ThreeDimensionalRingsConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = ThreeDimensionalRingsEffect._name_,
+        requiresLayer = true,
+        config = new ThreeDimensionalRingsConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #draw(context, filename) {
         const finalImageSize = this.finalSize;
@@ -39,7 +37,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
         const center = new THREE.Object3D();
         center.position.set(0, 0, 0);
 
-        const width = finalImageSize.width, height = finalImageSize.height;
+        const { width } = finalImageSize; const { height } = finalImageSize;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 3000);
@@ -47,22 +45,21 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
         const canvas = new Canvas3d(width, height);
 
         const renderer = new THREE.WebGLRenderer({
-            canvas, alpha: true
+            canvas, alpha: true,
         });
 
         for (let i = 0; i < context.data.rings; i++) {
-
-            const innerRadius = context.data.radiusConstant + (context.data.ringGap * (i + 1))
+            const innerRadius = context.data.radiusConstant + (context.data.ringGap * (i + 1));
 
             const geometry = new THREE.CylinderGeometry(innerRadius, innerRadius, context.data.ringsInstances[i].height, 64, 1, true);
 
             const material = new THREE.MeshStandardMaterial({
                 color: hexToRgba(context.data.ringsInstances[i].color),
-                //emissive: hexToRgba(context.data.ringsInstances[i].emissive),
-                //specular: hexToRgba(context.data.ringsInstances[i].specular),
+                // emissive: hexToRgba(context.data.ringsInstances[i].emissive),
+                // specular: hexToRgba(context.data.ringsInstances[i].specular),
                 transparent: true,
                 opacity: context.data.ringsInstances[i].ringOpacity,
-                flatShading: false
+                flatShading: false,
             });
 
             const mesh = new THREE.Mesh(geometry, material);
@@ -79,7 +76,6 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
             } else {
                 mesh.rotation.z -= degreesToRadians(theRotateGaston);
             }
-
         }
 
         camera.position.z = 400;
@@ -100,23 +96,20 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
         light3.target = center;
         scene.add(light3);
 
-
         renderer.render(scene, camera);
 
         canvas.toFile(filename);
     }
 
-
     async #threeDimensionalRings(layer, currentFrame, numberOfFrames) {
-
         const context = {
             data: this.data,
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
-            drawing: this.workingDirectory + 'three-dimensional-rings' + randomId() + '.png'
-        }
+            currentFrame,
+            numberOfFrames,
+            drawing: `${this.workingDirectory}three-dimensional-rings${randomId()}.png`,
+        };
 
-        await this.#draw(context, context.drawing)
+        await this.#draw(context, context.drawing);
 
         await layer.fromFile(context.drawing);
 
@@ -132,7 +125,7 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
             light1: settings.getLightFromBucket(),
             light2: settings.getLightFromBucket(),
             light3: settings.getLightFromBucket(),
-        }
+        };
 
         const computeInitialInfo = (rings) => {
             const info = [];
@@ -143,13 +136,13 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
                     height: getRandomIntInclusive(this.config.height.lower, this.config.height.upper),
                     ringOpacity: randomNumber(this.config.ringOpacity.lower, this.config.ringOpacity.upper),
                     initialRotation: getRandomIntInclusive(0, 360),
-                    color: color,
+                    color,
                     emissive: color,
                     specular: color,
                 });
             }
             return info;
-        }
+        };
 
         data.ringsInstances = computeInitialInfo(data.rings);
 
@@ -162,10 +155,6 @@ export class ThreeDimensionalRingsEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.rings} rings`
+        return `${this.name}: ${this.data.rings} rings`;
     }
 }
-
-
-
-

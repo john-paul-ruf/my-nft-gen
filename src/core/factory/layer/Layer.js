@@ -1,9 +1,9 @@
 export class Layer {
     constructor(strategy) {
-        this.strategy = strategy
+        this.strategy = strategy;
     }
 
-    /***
+    /** *
      *
      * Replaces current layer with a new layer with background color
      *
@@ -16,7 +16,7 @@ export class Layer {
         await this.strategy.newLayer(height, width, backgroundColor);
     }
 
-    /***
+    /** *
      *
      * Replaces current layer with image from file
      *
@@ -24,10 +24,10 @@ export class Layer {
      * @returns {Promise<void>}
      */
     async fromFile(filename) {
-        await this.strategy.fromFile(filename)
+        await this.strategy.fromFile(filename);
     }
 
-    /***
+    /** *
      *
      * write contents of current layer to file
      *
@@ -35,10 +35,22 @@ export class Layer {
      * @returns {Promise<void>}
      */
     async toFile(filename) {
-        await this.strategy.toFile(filename)
+        await this.strategy.toFile(filename);
     }
 
-    /***
+    async fromBuffer(buffer) {
+        await this.strategy.fromBuffer(buffer);
+    }
+
+    async toBuffer() {
+        return await this.strategy.toBuffer();
+    }
+
+    async convertToLayer(buffer) {
+        return this.strategy.fromBuffer(buffer);
+    }
+
+    /** *
      *
      * replaces current layer with a composite of input layer over current layer
      *
@@ -47,10 +59,10 @@ export class Layer {
      */
 
     async compositeLayerOver(layer, withResize = true) {
-        await this.strategy.compositeLayerOver(layer, withResize)
+        await this.strategy.compositeLayerOver(layer, withResize);
     }
 
-    /***
+    /** *
      *
      * Blurs current layer
      *
@@ -58,10 +70,10 @@ export class Layer {
      * @returns {Promise<void>}
      */
     async blur(byPixels) {
-        await this.strategy.blur(byPixels)
+        await this.strategy.blur(byPixels);
     }
 
-    /***
+    /** *
      *
      * changes current the opacity of the current layer
      *
@@ -69,10 +81,10 @@ export class Layer {
      * @returns {Promise<void>}
      */
     async adjustLayerOpacity(opacity) {
-        await this.strategy.adjustLayerOpacity(opacity)
+        await this.strategy.adjustLayerOpacity(opacity);
     }
 
-    /***
+    /** *
      *
      * Rotates current layer
      *
@@ -83,8 +95,7 @@ export class Layer {
         await this.strategy.rotate(angle);
     }
 
-
-    /****
+    /** **
      *
      * Resizes current layer
      *
@@ -96,7 +107,7 @@ export class Layer {
         await this.strategy.resize(height, width);
     }
 
-    /****
+    /** **
      *
      * Crops current layer
      * @param left
@@ -109,7 +120,7 @@ export class Layer {
         await this.strategy.crop(left, top, width, height);
     }
 
-    /****
+    /** **
      *
      * Gets info about current layer
      *

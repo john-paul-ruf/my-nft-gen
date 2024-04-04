@@ -1,36 +1,36 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from "../../../core/math/random.js";
-import {findValue} from "../../../core/math/findValue.js";
-import {promises as fs} from 'fs'
-import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
-import {Settings} from "../../../core/Settings.js";
-import {EncircledSpiralConfig} from "./EncircledSpiralConfig.js";
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
+import {
+    getRandomFromArray, getRandomIntInclusive, randomId, randomNumber,
+} from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
+import { Settings } from '../../../core/Settings.js';
+import { EncircledSpiralConfig } from './EncircledSpiralConfig.js';
 
 export class EncircledSpiralEffect extends LayerEffect {
-
-    static _name_ = 'encircled-spiral-round-2'
+    static _name_ = 'encircled-spiral-round-2';
 
     constructor({
-                    name = EncircledSpiralEffect._name_,
-                    requiresLayer = true,
-                    config = new EncircledSpiralConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = EncircledSpiralEffect._name_,
+        requiresLayer = true,
+        config = new EncircledSpiralConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #computeAngle(angle, context, direction, ringIndex) {
         const spindleStartAngle = angle + context.data.ringArray[ringIndex].startAngle;
@@ -51,9 +51,8 @@ export class EncircledSpiralEffect extends LayerEffect {
         const pointOne = context.data.sequence[sequenceIndex] * context.data.ringArray[ringIndex].sequencePixelConstant;
         const pointTwo = context.data.sequence[sequenceIndex + 1] * context.data.ringArray[ringIndex].sequencePixelConstant;
 
-        const start = findPointByAngleAndCircle(context.data.center, angle, pointOne)
+        const start = findPointByAngleAndCircle(context.data.center, angle, pointOne);
         const end = findPointByAngleAndCircle(context.data.center, (angle + context.data.ringArray[ringIndex].sparsityFactor * flipTwist), pointTwo);
-
 
         await context.canvas.drawLine2d(start, end, thickness, color, 0, color);
     }
@@ -61,7 +60,7 @@ export class EncircledSpiralEffect extends LayerEffect {
     async #drawBottomLayer(context, ringIndex) {
         const theAccentGaston = findValue(context.data.ringArray[ringIndex].accentRange.lower, context.data.ringArray[ringIndex].accentRange.upper, context.data.ringArray[ringIndex].featherTimes, context.numberOfFrames, context.currentFrame);
         for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex < context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
-            for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
+            for (let i = 0; i < 360; i += context.data.ringArray[ringIndex].sparsityFactor) {
                 await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
                 await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].stroke + context.data.ringArray[ringIndex].thickness + theAccentGaston, context.data.ringArray[ringIndex].outerColor, ringIndex, sequenceIndex);
             }
@@ -70,7 +69,7 @@ export class EncircledSpiralEffect extends LayerEffect {
 
     async #drawTopLayer(context, ringIndex) {
         for (let sequenceIndex = context.data.ringArray[ringIndex].minSequenceIndex; sequenceIndex < context.data.ringArray[ringIndex].minSequenceIndex + context.data.ringArray[ringIndex].numberOfSequenceElements; sequenceIndex++) {
-            for (let i = 0; i < 360; i = i + context.data.ringArray[ringIndex].sparsityFactor) {
+            for (let i = 0; i < 360; i += context.data.ringArray[ringIndex].sparsityFactor) {
                 await this.#drawLine(i, context, 1, context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
                 await this.#drawLine(i, context, -1, context.data.ringArray[ringIndex].thickness, context.data.ringArray[ringIndex].innerColor, ringIndex, sequenceIndex);
             }
@@ -78,73 +77,59 @@ export class EncircledSpiralEffect extends LayerEffect {
     }
 
     async #draw(context, filename) {
-
         for (let i = 0; i < context.data.ringArray.length; i++) {
-
             if (!context.data.invertLayers) {
-                //bottom layer
+                // bottom layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawBottomLayer(context, i);
-                await context.canvas.toFile(filename)
-                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-                const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
+                const bottomLayer = await context.canvas.convertToLayer();
+                const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame));
                 await bottomLayer.blur(theBlurGaston);
                 await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
                 await context.layer.compositeLayerOver(bottomLayer);
 
-                //top Layer
+                // top Layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawTopLayer(context, i);
-                await context.canvas.toFile(filename)
-                const topLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+                const topLayer = await context.canvas.convertToLayer();
                 await topLayer.adjustLayerOpacity(context.data.layerOpacity);
                 await context.layer.compositeLayerOver(topLayer);
             } else {
-
-                //top Layer
+                // top Layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawTopLayer(context, i);
-                await context.canvas.toFile(filename)
-                const topLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+                const topLayer = await context.canvas.convertToLayer();
                 await topLayer.adjustLayerOpacity(context.data.layerOpacity);
                 await context.layer.compositeLayerOver(topLayer);
 
-                //bottom layer
+                // bottom layer
                 context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
                 await this.#drawBottomLayer(context, i);
-                await context.canvas.toFile(filename)
-                const bottomLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-                const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame))
+                const bottomLayer = await context.canvas.convertToLayer();
+                const theBlurGaston = Math.ceil(findValue(context.data.ringArray[i].blurRange.lower, context.data.ringArray[i].blurRange.upper, context.data.ringArray[i].featherTimes, context.numberOfFrames, context.currentFrame));
                 await bottomLayer.blur(theBlurGaston);
                 await bottomLayer.adjustLayerOpacity(context.data.underLayerOpacity);
                 await context.layer.compositeLayerOver(bottomLayer);
-
             }
         }
     }
-
 
     async #processDrawFunction(context) {
         await this.#draw(context, context.drawing);
     }
 
     async #encircledSpiral(layer, currentFrame, numberOfFrames) {
-
         const context = {
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
-            drawing: this.workingDirectory + 'encircled-spiral' + randomId() + '.png',
-            underlayName: this.workingDirectory + 'encircled-spiral-underlay' + randomId() + '.png',
+            currentFrame,
+            numberOfFrames,
+            drawing: `${this.workingDirectory}encircled-spiral${randomId()}.png`,
+            underlayName: `${this.workingDirectory}encircled-spiral-underlay${randomId()}.png`,
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
-            layer: layer,
-        }
-
+            layer,
+        };
         await this.#processDrawFunction(context);
-
-        await fs.unlink(context.drawing);
     }
-
 
     #generate(settings) {
         const data = {
@@ -156,15 +141,15 @@ export class EncircledSpiralEffect extends LayerEffect {
             height: this.finalSize.height,
             width: this.finalSize.width,
             center: this.config.center,
-        }
+        };
 
         const getRingArray = (num) => {
             const info = [];
 
             for (let i = 0; i < num; i++) {
                 info.push({
-                    //startAngle: getRandomIntInclusive(this.config.startAngle.lower, this.config.startAngle.upper),
-                    startAngle: i, //hard coded, for effect //sparsity factor divided by number of rings - even distribution.
+                    // startAngle: getRandomIntInclusive(this.config.startAngle.lower, this.config.startAngle.upper),
+                    startAngle: i, // hard coded, for effect //sparsity factor divided by number of rings - even distribution.
                     speed: getRandomIntInclusive(this.config.speed.lower, this.config.speed.upper),
                     stroke: this.config.stroke,
                     thickness: this.config.thickness,
@@ -177,18 +162,18 @@ export class EncircledSpiralEffect extends LayerEffect {
                     outerColor: this.config.outerColor?.getColor(settings) ?? settings.getColorFromBucket(),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
-                        upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)
+                        upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
                     },
                     blurRange: {
                         lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
-                        upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper)
+                        upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
                     },
                     featherTimes: getRandomIntInclusive(this.config.featherTimes.lower, this.config.featherTimes.upper),
                 });
             }
 
             return info;
-        }
+        };
 
         data.ringArray = getRingArray(data.numberOfRings);
 
@@ -201,10 +186,6 @@ export class EncircledSpiralEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.numberOfRings} rings`
+        return `${this.name}: ${this.data.numberOfRings} rings`;
     }
 }
-
-
-
-

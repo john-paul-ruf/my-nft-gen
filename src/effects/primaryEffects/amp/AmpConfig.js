@@ -1,4 +1,4 @@
-import {EffectConfig} from "../../../core/layer/EffectConfig.js";
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class AmpConfig extends EffectConfig {
     constructor(
@@ -6,19 +6,19 @@ export class AmpConfig extends EffectConfig {
             invertLayers = true,
             layerOpacity = 0.55,
             underLayerOpacity = 0.5,
-            sparsityFactor = [1, 2, 3,],
+            sparsityFactor = [1, 2, 3],
             stroke = 1,
             thickness = 1,
-            accentRange = {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-            blurRange = {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-            featherTimes = {lower: 2, upper: 4},
-            speed = {lower: 24, upper: 36},
+            accentRange = { bottom: { lower: 1, upper: 1 }, top: { lower: 3, upper: 6 } },
+            blurRange = { bottom: { lower: 1, upper: 1 }, top: { lower: 1, upper: 1 } },
+            featherTimes = { lower: 2, upper: 4 },
+            speed = { lower: 24, upper: 36 },
             length = 200,
             lineStart = 350,
-            center = {x: 1080 / 2, y: 1920 / 2},
+            center = { x: 1080 / 2, y: 1920 / 2 },
             innerColor = null,
             outerColor = null,
-        }
+        },
     ) {
         super();
         this.invertLayers = invertLayers;

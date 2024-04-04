@@ -1,41 +1,39 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import {findValue} from "../../../core/math/findValue.js";
-import { promises as fs } from 'fs'
-import {findPointByAngleAndCircle} from "../../../core/math/drawingMath.js";
-import {Settings} from "../../../core/Settings.js";
-import {EightConfig} from "./EightConfig.js";
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
+import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
+import { Settings } from '../../../core/Settings.js';
+import { EightConfig } from './EightConfig.js';
 
 export class EightEffect extends LayerEffect {
-
-    static _name_ = 'eight'
+    static _name_ = 'eight';
 
     constructor({
-                    name = EightEffect._name_,
-                    requiresLayer = true,
-                    config = new EightConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = EightEffect._name_,
+        requiresLayer = true,
+        config = new EightConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #drawRing(pos, radius, innerStroke, innerColor, outerStroke, outerColor, context) {
         const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-        await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.theAccentGaston, outerColor)
+        await context.canvas.drawRing2d(pos, theGaston, innerStroke, innerColor, outerStroke + context.theAccentGaston, outerColor);
     }
 
     async #drawRings(pos, color, radius, numberOfRings, context, weight) {
@@ -57,8 +55,8 @@ export class EightEffect extends LayerEffect {
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
+        const tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -67,11 +65,9 @@ export class EightEffect extends LayerEffect {
 
         await layer.compositeLayerOver(underlayLayer);
         await layer.compositeLayerOver(tempLayer);
-
     }
 
     async #processDrawFunction(context) {
-
         await this.#draw(context, context.underlayName);
 
         context.theAccentGaston = 0;
@@ -82,16 +78,16 @@ export class EightEffect extends LayerEffect {
 
     async #eight(layer, currentFrame, numberOfFrames) {
         const context = {
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
+            currentFrame,
+            numberOfFrames,
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             theAngleGaston: findOneWayValue(0, 45, 1, numberOfFrames, currentFrame),
-            drawing: this.workingDirectory + 'eight' + randomId() + '.png',
-            underlayName: this.workingDirectory + 'eight-underlay' + randomId() + '.png',
+            drawing: `${this.workingDirectory}eight${randomId()}.png`,
+            underlayName: `${this.workingDirectory}eight-underlay${randomId()}.png`,
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
-        }
+        };
 
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
@@ -115,17 +111,17 @@ export class EightEffect extends LayerEffect {
             ripple: getRandomIntInclusive(this.config.ripple.lower(this.finalSize), this.config.ripple.upper(this.finalSize)),
             smallerRingsGroupRadius: getRandomIntInclusive(this.config.smallerRingsGroupRadius.lower(this.finalSize), this.config.smallerRingsGroupRadius.upper(this.finalSize)),
             times: getRandomIntInclusive(this.config.times.lower, this.config.times.upper),
-            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
+            center: { x: this.finalSize.width / 2, y: this.finalSize.height / 2 },
             accentRange: {
                 lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
-                upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)
+                upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
             },
             blurRange: {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
-                upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper)
+                upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
             featherTimes: getRandomIntInclusive(this.config.featherTimes.lower, this.config.featherTimes.upper),
-        }
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
@@ -134,10 +130,6 @@ export class EightEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ripple: ${this.data.ripple.toFixed(3)}`
+        return `${this.name}: ripple: ${this.data.ripple.toFixed(3)}`;
     }
 }
-
-
-
-

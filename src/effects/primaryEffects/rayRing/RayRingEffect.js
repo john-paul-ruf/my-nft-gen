@@ -1,36 +1,34 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {getRandomFromArray, getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {Canvas2dFactory} from "../../../core/factory/canvas/Canvas2dFactory.js";
-import {findValue} from "../../../core/math/findValue.js";
-import { promises as fs } from 'fs'
-import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import {Settings} from "../../../core/Settings.js";
-import {RayRingConfig} from "./RayRingConfig.js";
+import { promises as fs } from 'fs';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomFromArray, getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { RayRingConfig } from './RayRingConfig.js';
 
 export class RayRingEffect extends LayerEffect {
-
     static _name_ = 'ray-rings';
 
     constructor({
-                    name = RayRingEffect._name_,
-                    requiresLayer = true,
-                    config = new RayRingConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = RayRingEffect._name_,
+        requiresLayer = true,
+        config = new RayRingConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
-
 
     async #drawRayRingInstance(withAccentGaston, i, context) {
         const theAccentGaston = withAccentGaston ? findValue(context.data.circles[i].accentRange.lower, context.data.circles[i].accentRange.upper, context.data.circles[i].featherTimes, context.numberOfFrames, context.currentFrame) : 0;
@@ -43,11 +41,11 @@ export class RayRingEffect extends LayerEffect {
             context.data.thickness,
             context.data.circles[i].color,
             (context.data.stroke + theAccentGaston),
-            context.data.circles[i].outerColor
-        )
+            context.data.circles[i].outerColor,
+        );
 
         let rayIndex = 0;
-        for (let a = 0; a < 360; a = a + context.data.circles[i].sparsityFactor) {
+        for (let a = 0; a < 360; a += context.data.circles[i].sparsityFactor) {
             const theLengthGaston = findValue(context.data.circles[i].rays[rayIndex].length.lower, context.data.circles[i].rays[rayIndex].length.upper, context.data.circles[i].rays[rayIndex].lengthTimes, context.numberOfFrames, context.currentFrame);
             const theFinalAngle = invertTheRayGaston === 0 ? (a + theRayGaston) % 360 : (a - theRayGaston) % 360;
 
@@ -59,7 +57,7 @@ export class RayRingEffect extends LayerEffect {
                 context.data.rayThickness,
                 context.data.circles[i].color,
                 (context.data.rayStroke + theAccentGaston),
-                context.data.circles[i].outerColor
+                context.data.circles[i].outerColor,
             );
 
             rayIndex++;
@@ -74,8 +72,8 @@ export class RayRingEffect extends LayerEffect {
     }
 
     async #compositeImage(context, layer) {
-        let tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-        let underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
+        const tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
+        const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -84,11 +82,9 @@ export class RayRingEffect extends LayerEffect {
 
         await layer.compositeLayerOver(underlayLayer);
         await layer.compositeLayerOver(tempLayer);
-
     }
 
     async #processDrawFunction(context) {
-
         await this.#draw(context, context.underlayName);
 
         context.useAccentGaston = false;
@@ -98,24 +94,22 @@ export class RayRingEffect extends LayerEffect {
     }
 
     async #rayRing(layer, currentFrame, numberOfFrames) {
-
         const context = {
-            currentFrame: currentFrame,
-            numberOfFrames: numberOfFrames,
+            currentFrame,
+            numberOfFrames,
             useAccentGaston: true,
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
-            drawing: this.workingDirectory + 'ray-ring' + randomId() + '.png',
-            underlayName: this.workingDirectory + 'ray-ring-underlay' + randomId() + '.png',
+            drawing: `${this.workingDirectory}ray-ring${randomId()}.png`,
+            underlayName: `${this.workingDirectory}ray-ring-underlay${randomId()}.png`,
             canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
-            data: this.data
-        }
+            data: this.data,
+        };
 
         await this.#processDrawFunction(context);
         await this.#compositeImage(context, layer);
 
         await fs.unlink(context.drawing);
         await fs.unlink(context.underlayName);
-
     }
 
     #generate(settings) {
@@ -131,29 +125,30 @@ export class RayRingEffect extends LayerEffect {
             rayThickness: this.config.rayThickness,
             innerColor: settings.getColorFromBucket(),
             scaleFactor: this.config.scaleFactor,
-            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
+            center: { x: this.finalSize.width / 2, y: this.finalSize.height / 2 },
             blurRange: {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
-                upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper)
+                upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
             getInfo: () => {
-            }
-        }
+            },
+        };
 
         const getRays = (sparsityFactor) => {
             const rays = [];
 
-            for (let i = 0; i < 360; i = i + sparsityFactor) {
+            for (let i = 0; i < 360; i += sparsityFactor) {
                 rays.push({
                     length: {
                         lower: getRandomIntInclusive(this.config.lengthRange.bottom.lower, this.config.lengthRange.bottom.upper),
-                        upper: getRandomIntInclusive(this.config.lengthRange.top.lower, this.config.lengthRange.top.upper)
-                    }, lengthTimes: getRandomIntInclusive(this.config.lengthTimes.lower, this.config.lengthTimes.upper)
+                        upper: getRandomIntInclusive(this.config.lengthRange.top.lower, this.config.lengthRange.top.upper),
+                    },
+                    lengthTimes: getRandomIntInclusive(this.config.lengthTimes.lower, this.config.lengthTimes.upper),
                 });
             }
 
             return rays;
-        }
+        };
 
         const computeInitialInfo = (num) => {
             const info = [];
@@ -165,7 +160,7 @@ export class RayRingEffect extends LayerEffect {
                     featherTimes: getRandomIntInclusive(this.config.featherTimes.lower, this.config.featherTimes.upper),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
-                        upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper)
+                        upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
                     },
                     sparsityFactor: getRandomFromArray(this.config.sparsityFactor) * (this.config.densityFactor / (i + 1)),
                     speed: getRandomIntInclusive(this.config.speed.lower, this.config.speed.upper),
@@ -177,7 +172,7 @@ export class RayRingEffect extends LayerEffect {
             }
 
             return info;
-        }
+        };
 
         data.circles = computeInitialInfo(data.numberOfCircles);
 
@@ -190,10 +185,6 @@ export class RayRingEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.numberOfCircles} ray rings`
+        return `${this.name}: ${this.data.numberOfCircles} ray rings`;
     }
 }
-
-
-
-

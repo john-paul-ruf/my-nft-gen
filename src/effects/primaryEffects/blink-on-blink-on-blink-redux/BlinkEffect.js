@@ -1,41 +1,39 @@
-import {LayerEffect} from "../../../core/layer/LayerEffect.js";
-import {findOneWayValue} from "../../../core/math/findOneWayValue.js";
-import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
-import {getRandomIntInclusive, randomId} from "../../../core/math/random.js";
-import {findValue} from "../../../core/math/findValue.js";
-import { promises as fs } from 'fs'
-import Jimp from "jimp";
-import path from "path";
-import {fileURLToPath} from "url";
-import {Settings} from "../../../core/Settings.js";
-import {BlinkConfig} from "./BlinkConfig.js";
+import { promises as fs } from 'fs';
+import Jimp from 'jimp';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
+import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
+import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
+import { findValue } from '../../../core/math/findValue.js';
+import { Settings } from '../../../core/Settings.js';
+import { BlinkConfig } from './BlinkConfig.js';
 
 export class BlinkOnEffect extends LayerEffect {
-
-    static _name_ = 'blink-on-blink-on-blink-redux'
+    static _name_ = 'blink-on-blink-on-blink-redux';
 
     constructor({
-                    name = BlinkOnEffect._name_,
-                    requiresLayer = true,
-                    config = new BlinkConfig({}),
-                    additionalEffects = [],
-                    ignoreAdditionalEffects = false,
-                    settings = new Settings({})
-                }) {
+        name = BlinkOnEffect._name_,
+        requiresLayer = true,
+        config = new BlinkConfig({}),
+        additionalEffects = [],
+        ignoreAdditionalEffects = false,
+        settings = new Settings({}),
+    }) {
         super({
-            name: name,
-            requiresLayer: requiresLayer,
-            config: config,
-            additionalEffects: additionalEffects,
-            ignoreAdditionalEffects: ignoreAdditionalEffects,
-            settings: settings
+            name,
+            requiresLayer,
+            config,
+            additionalEffects,
+            ignoreAdditionalEffects,
+            settings,
         });
-        this.#generate(settings)
+        this.#generate(settings);
     }
 
-
     async #randomize(layer, data, index) {
-        const filename = this.workingDirectory + 'randomize-blink' + randomId() + '.png';
+        const filename = `${this.workingDirectory}randomize-blink${randomId()}.png`;
 
         await layer.toFile(filename);
 
@@ -47,31 +45,31 @@ export class BlinkOnEffect extends LayerEffect {
 
         await layer.fromFile(filename);
 
-        await fs.unlink(filename)
+        await fs.unlink(filename);
     }
 
     async #glowAnimated(layer, data, currentFrame, totalFrames, index) {
-        const filename =this.workingDirectory + 'glow-blink' + randomId() + '.png';
+        const filename = `${this.workingDirectory}glow-blink${randomId()}.png`;
 
         await layer.toFile(filename);
 
         const jimpImage = await Jimp.read(filename);
 
-        const hue = findValue(data.blinkArray[index].glowLowerRange, data.blinkArray[index].glowUpperRange, data.blinkArray[index].glowTimes, totalFrames, currentFrame)
-        await jimpImage.color([{apply: 'hue', params: [hue]}]);
+        const hue = findValue(data.blinkArray[index].glowLowerRange, data.blinkArray[index].glowUpperRange, data.blinkArray[index].glowTimes, totalFrames, currentFrame);
+        await jimpImage.color([{ apply: 'hue', params: [hue] }]);
 
         await jimpImage.writeAsync(filename);
 
         await layer.fromFile(filename);
 
-        await fs.unlink(filename)
+        await fs.unlink(filename);
     }
 
     async #blinkinate(data, currentFrame, totalFrames, index) {
         const scale = 1.1;
         const finalImageSize = this.finalSize;
         const blink = data.blinkArray[index];
-        const fileName = this.workingDirectory + 'blink-in-action' + randomId() + '.png';
+        const fileName = `${this.workingDirectory}blink-in-action${randomId()}.png`;
         const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
         await tempLayer.resize(blink.diameter, blink.diameter);
 
@@ -104,30 +102,29 @@ export class BlinkOnEffect extends LayerEffect {
     }
 
     async #blinkOnOverlay(layer, currentFrame, totalFrames) {
-
         const filenames = [];
 
         for (let i = 0; i < this.data.blinkArray.length; i++) {
             filenames.push(await this.#blinkinate(this.data, currentFrame, totalFrames, i));
         }
 
-        for (let file of filenames) {
+        for (const file of filenames) {
             await layer.compositeLayerOver(await LayerFactory.getLayerFromFile(file, this.fileConfig));
         }
 
         await layer.adjustLayerOpacity(this.data.layerOpacity);
 
-        for (let file of filenames) {
-            await fs.unlink(file)
+        for (const file of filenames) {
+            await fs.unlink(file);
         }
     }
 
     #generate(settings) {
         const data = {
-            blinkFile: path.join(fileURLToPath(import.meta.url).replace('BlinkEffect.js', '') + 'blink.png'),
+            blinkFile: path.join(`${fileURLToPath(import.meta.url).replace('BlinkEffect.js', '')}blink.png`),
             layerOpacity: this.config.layerOpacity,
             numberOfBlinks: getRandomIntInclusive(this.config.numberOfBlinks.lower, this.config.numberOfBlinks.upper),
-        }
+        };
 
         const computeInitialInfo = (num) => {
             const info = [];
@@ -137,7 +134,7 @@ export class BlinkOnEffect extends LayerEffect {
                     red: getRandomIntInclusive(this.config.randomizeRed.lower, this.config.randomizeRed.upper),
                     green: getRandomIntInclusive(this.config.randomizeGreen.lower, this.config.randomizeGreen.upper),
                     blue: getRandomIntInclusive(this.config.randomizeBlue.lower, this.config.randomizeBlue.upper),
-                }
+                };
 
                 info.push({
                     initialRotation: getRandomIntInclusive(this.config.initialRotation.lower, this.config.initialRotation.upper),
@@ -150,25 +147,25 @@ export class BlinkOnEffect extends LayerEffect {
                     randomize: [
                         {
                             apply: 'hue',
-                            params: [props.hue]
+                            params: [props.hue],
                         },
                         {
                             apply: 'red',
-                            params: [props.red]
+                            params: [props.red],
                         },
                         {
                             apply: 'green',
-                            params: [props.green]
+                            params: [props.green],
                         },
                         {
                             apply: 'blue',
-                            params: [props.blue]
-                        }
-                    ]
+                            params: [props.blue],
+                        },
+                    ],
                 });
             }
             return info;
-        }
+        };
 
         data.blinkArray = computeInitialInfo(data.numberOfBlinks);
 
@@ -181,10 +178,6 @@ export class BlinkOnEffect extends LayerEffect {
     }
 
     getInfo() {
-        return `${this.name}: ${this.data.numberOfBlinks} blinks`
+        return `${this.name}: ${this.data.numberOfBlinks} blinks`;
     }
 }
-
-
-
-

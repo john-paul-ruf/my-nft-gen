@@ -1,18 +1,18 @@
-/////////////
-//Lifted from https://raw.githubusercontent.com/akira-cn/node-canvas-webgl/master/lib/canvas.js
-//https://github.com/akira-cn/node-canvas-webgl
+/// //////////
+// Lifted from https://raw.githubusercontent.com/akira-cn/node-canvas-webgl/master/lib/canvas.js
+// https://github.com/akira-cn/node-canvas-webgl
 //
 // Modified as needed
-/////////////
-import {Canvas, Image} from "canvas";
+/// //////////
+import { Canvas, Image } from 'canvas';
 import EventEmitter from 'events';
 import createGLContext from 'gl';
-import { promises as fs } from 'fs'
+import { promises as fs } from 'fs';
 
 const _ctx = Symbol('ctx');
 
 function putImageData(gl, canvas) {
-    const {width, height} = canvas;
+    const { width, height } = canvas;
     const ctx = canvas[_ctx];
 
     const data = ctx.getImageData(0, 0, width, height);
@@ -89,16 +89,15 @@ export class Canvas3d extends Canvas {
         if (this.__gl__) return this.__gl__;
         this.__contextType__ = type;
         if (type === 'webgl' || type === 'webgl2') {
-            const {width, height} = this;
+            const { width, height } = this;
             this[_ctx] = super.getContext('2d', options);
             const ctx = createGLContext(width, height, options);
 
-
             ctx.antialias = 'subpixel';
             ctx.quality = 'bilinear';
-            ctx.patternQuality = 'bilinear'
+            ctx.patternQuality = 'bilinear';
             ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high'
+            ctx.imageSmoothingQuality = 'high';
 
             const _getUniformLocation = ctx.getUniformLocation;
 

@@ -1,14 +1,13 @@
-import {EffectConfig} from "../../../core/layer/EffectConfig.js";
-import {loop} from "three/nodes";
+import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
 export class MappedFramesConfig extends EffectConfig {
     constructor(
         {
-            folderName= '/mappedFrames/',
-            layerOpacity= [0.95],
-            buffer= [555],
+            folderName = '/mappedFrames/',
+            layerOpacity = [0.95],
+            buffer = [555],
             loopTimes = 1,
-        }
+        },
     ) {
         super();
         this.folderName = folderName;
