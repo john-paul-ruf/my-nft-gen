@@ -15,6 +15,8 @@ import { EncircledSpiralConfig } from './effects/primaryEffects/encircledSpiral/
 import { Range } from './core/layer/configType/Range.js';
 import { ViewportEffect } from './effects/primaryEffects/viewport/ViewportEffect.js';
 import { ViewportConfig } from './effects/primaryEffects/viewport/ViewportConfig.js';
+import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEffect.js";
+import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -25,36 +27,42 @@ const myTestProject = new Project({
     numberOfFrame: 1800,
 });
 
-const viewportCount = getRandomFromArray([8]);
+await myTestProject.addPrimaryEffect({
+    layerConfig: new LayerConfig({
+        effect: LayeredHexEffect,
+        percentChance: 100,
+        currentEffectConfig: new LayeredHexConfig({
+            invertLayers: true,
 
-for (let i = 0; i < viewportCount; i++) {
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: ViewportEffect,
-            percentChance: 100,
-            currentEffectConfig: new ViewportConfig({
-                invertLayers: true,
-                layerOpacity: 0.7,
-                underLayerOpacity: 0.5,
-                stroke: 1,
-                thickness: 1,
-                ampStroke: 0,
-                ampThickness: 0,
-                radius: [350, 450, 500, 650, 700],
-                startAngle: [270],
-                ampLength: [50, 75, 100],
-                ampRadius: [50, 75, 100],
-                sparsityFactor: [3, 4, 5, 6],
-                amplitude: { lower: 50, upper: 250 },
-                times: { lower: 1, upper: 4 },
-                accentRange: { bottom: { lower: 4, upper: 4 }, top: { lower: 8, upper: 8 } },
-                blurRange: { bottom: { lower: 3, upper: 3 }, top: { lower: 6, upper: 6 } },
-                featherTimes: { lower: 2, upper: 8 },
-            }),
-            defaultEffectConfig: EncircledSpiralConfig,
+            thickness: 0.1,
+            stroke: 0.1,
+
+            layerOpacityRange: { bottom: { lower: 0.7, upper: 0.7 }, top: { lower: 0.7, upper: 0.7 } },
+            layerOpacityTimes: { lower: 2, upper: 4 },
+
+            indexOpacityRange: { bottom: { lower: 0.4, upper: 0.5 }, top: { lower: 0.6, upper: 0.7 } },
+            indexOpacityTimes: { lower: 2, upper: 6 },
+
+            radius: { lower: 5, upper: 20 },
+            offsetRadius: { lower: 15, upper: 25 },
+
+            numberOfIndex: { lower: 15, upper: 20 },
+            startIndex: { lower: 2, upper: 2 },
+
+            startAngle: 15,
+
+            movementGaston: { lower: 2, upper: 8 },
+
+            initialNumberOfPoints: 8,
+            scaleByFactor: 1.1,
+
+            accentRange: { bottom: { lower: 4, upper: 4 }, top: { lower: 8, upper: 8 } },
+            blurRange: { bottom: { lower: 3, upper: 3 }, top: { lower: 6, upper: 6 } },
+            featherTimes: { lower: 2, upper: 8 },
         }),
-    });
-}
+        defaultEffectConfig: EncircledSpiralConfig,
+    }),
+});
 
 let redEyeCount = getRandomFromArray([8]);
 
@@ -146,18 +154,8 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-await myTestProject.addPrimaryEffect({
-    layerConfig: new LayerConfig({
-        effect: MappedFramesEffect,
-        percentChance: 100,
-        currentEffectConfig: new MappedFramesConfig({
-            folderName: '/mappedFrames/',
-            layerOpacity: [0.85],
-            buffer: [50],
-            loopTimes: 15,
-        }),
-    }),
-});
+
+
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({

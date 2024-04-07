@@ -65,12 +65,7 @@ export class LayeredHexEffect extends LayerEffect {
     async #drawLayer(context, arrayIndex, useAccentGaston) {
         const tempFileName = `${this.workingDirectory}layered-hex-element${randomId()}.png`;
         const { element, tempCanvas } = await this.#drawHexElement(arrayIndex, context, useAccentGaston);
-        await tempCanvas.toFile(tempFileName);
-        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
-        const theBlurGaston = Math.ceil(findValue(element.blurRange.lower, element.blurRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame));
-        await tempLayer.blur(theBlurGaston);
-        await fs.unlink(tempFileName);
-        return tempLayer;
+        return await tempCanvas.convertToLayer();
     }
 
     async #createLayers(context) {
