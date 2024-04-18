@@ -201,10 +201,8 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-
-
 const promiseArray = [];
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons);
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.clashNeons);
 
 promiseArray.push(myTestProject.generateRandomLoop());
 

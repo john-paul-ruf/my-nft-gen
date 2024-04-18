@@ -3,8 +3,8 @@ import fs from 'fs';
 import { Settings } from './core/Settings.js';
 import { LoopBuilder } from './core/animation/LoopBuilder.js';
 
-// src/red-eye/red-eye-zefx84u/red-eye-zefx84u-settings.json
-// src/red-eye/red-eye-0uz6f75/red-eye-0uz6f75-settings.json
+// src/red-eye/red-eye-q5j8exf/red-eye-q5j8exf-settings.json
+
 const mainMenu = () => {
     const InitialActions = {
         Resume: 'Resume a build',
