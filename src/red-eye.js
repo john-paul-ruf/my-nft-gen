@@ -213,4 +213,7 @@ promiseArray.push(myTestProject.generateRandomLoop());
 myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.primaryNeons);
+promiseArray.push(myTestProject.generateRandomLoop());
+
 await Promise.all(promiseArray);
