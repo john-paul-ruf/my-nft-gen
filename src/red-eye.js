@@ -1,22 +1,15 @@
-import { Project } from './app/Project.js';
-import { LayerConfig } from './core/layer/LayerConfig.js';
-import { NeonColorScheme, NeonColorSchemeFactory } from './core/color/NeonColorSchemeFactory.js';
-import { ColorPicker } from './core/layer/configType/ColorPicker.js';
-import { RedEyeEffect } from './effects/primaryEffects/red-eye/RedEyeEffect.js';
-import { Point2D } from './core/layer/configType/Point2D.js';
-import { RedEyeConfig } from './effects/primaryEffects/red-eye/RedEyeConfig.js';
-import { MappedFramesEffect } from './effects/primaryEffects/mappedFrames/MappedFramesEffect.js';
-import { MappedFramesConfig } from './effects/primaryEffects/mappedFrames/MappedFramesConfig.js';
-import { FuzzyBandEffect } from './effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
-import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js';
-import { getRandomFromArray, getRandomIntInclusive } from './core/math/random.js';
-import { EncircledSpiralEffect } from './effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js';
-import { EncircledSpiralConfig } from './effects/primaryEffects/encircledSpiral/EncircledSpiralConfig.js';
-import { Range } from './core/layer/configType/Range.js';
-import { ViewportEffect } from './effects/primaryEffects/viewport/ViewportEffect.js';
-import { ViewportConfig } from './effects/primaryEffects/viewport/ViewportConfig.js';
-import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEffect.js";
-import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
+import {Project} from './app/Project.js';
+import {LayerConfig} from './core/layer/LayerConfig.js';
+import {NeonColorScheme, NeonColorSchemeFactory} from './core/color/NeonColorSchemeFactory.js';
+import {ColorPicker} from './core/layer/configType/ColorPicker.js';
+import {RedEyeEffect} from './effects/primaryEffects/red-eye/RedEyeEffect.js';
+import {Point2D} from './core/layer/configType/Point2D.js';
+import {RedEyeConfig} from './effects/primaryEffects/red-eye/RedEyeConfig.js';
+import {FuzzyBandEffect} from './effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
+import {FuzzyBandConfig} from './effects/primaryEffects/fuzzyBands/FuzzyBandConfig.js';
+import {getRandomFromArray, getRandomIntInclusive} from './core/math/random.js';
+import {FuzzyRipplesEffect} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js";
+import {FuzzyRipplesConfig} from "./effects/primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js";
 
 const myTestProject = new Project({
     artist: 'John Ruf',
@@ -32,7 +25,7 @@ await myTestProject.addPrimaryEffect({
         effect: FuzzyBandEffect,
         percentChance: 100,
         currentEffectConfig: new FuzzyBandConfig({
-            layerOpacity: 0.65,
+            layerOpacity: 0.4,
             underLayerOpacityRange: { bottom: { lower: 0.4, upper: 0.5 }, top: { lower: 0.6, upper: 0.7 } },
             underLayerOpacityTimes: { lower: 2, upper: 8 },
             color: new ColorPicker(),
@@ -55,23 +48,35 @@ await myTestProject.addPrimaryEffect({
 
 await myTestProject.addPrimaryEffect({
     layerConfig: new LayerConfig({
-        effect: ViewportEffect,
+        effect: FuzzyRipplesEffect,
         percentChance: 100,
-        currentEffectConfig: new ViewportConfig({
-            invertLayers: false,
-            layerOpacity: 1,
-            underLayerOpacity: 0.65,
-            stroke: 0,
-            thickness: 12,
-            ampStroke: 0,
-            ampThickness: 0,
-            radius: [350],
-            startAngle: [270],
-            ampLength: [50, 75, 100],
-            ampRadius: [50, 75, 100],
-            sparsityFactor: [3, 4, 5, 6],
-            amplitude: { lower: 0, upper: 0 },
-            times: { lower: 0, upper: 0 },
+        currentEffectConfig: new FuzzyRipplesConfig({
+            invertLayers: true,
+            layerOpacity: 0.7,
+            underLayerOpacity: 0.5,
+            stroke: 1,
+            thickness: 1,
+            center: new Point2D(1080 / 2, 1920 / 2),
+            speed: 1,
+            largeRadius: {
+                lower: (finalSize) => finalSize.longestSide * 0.25,
+                upper: (finalSize) => finalSize.longestSide * 0.25,
+            },
+            smallRadius: {
+                lower: (finalSize) => finalSize.longestSide * 0.10,
+                upper: (finalSize) => finalSize.longestSide * 0.10,
+            },
+            largeNumberOfRings: { lower: 16, upper: 16 },
+            smallNumberOfRings: { lower: 8, upper: 8 },
+            ripple: {
+                lower: (finalSize) => finalSize.shortestSide * 0.05,
+                upper: (finalSize) => finalSize.shortestSide * 0.05,
+            },
+            times: { lower: 2, upper: 4 },
+            smallerRingsGroupRadius: {
+                lower: (finalSize) => finalSize.shortestSide * 0.15,
+                upper: (finalSize) => finalSize.shortestSide * 0.15,
+            },
             accentRange: { bottom: { lower: 20, upper: 20 }, top: { lower: 30, upper: 30 } },
             blurRange: { bottom: { lower: 10, upper: 10 }, top: { lower: 20, upper: 20 } },
             featherTimes: { lower: 2, upper: 8 },
@@ -79,8 +84,7 @@ await myTestProject.addPrimaryEffect({
     }),
 });
 
-
-let redEyeCount = getRandomFromArray([6]);
+let redEyeCount = getRandomFromArray([4]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -111,7 +115,7 @@ for (let i = 0; i < redEyeCount; i++) {
 }
 
 
-redEyeCount = getRandomFromArray([8]);
+redEyeCount = getRandomFromArray([4]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -141,7 +145,7 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-redEyeCount = getRandomFromArray([10]);
+redEyeCount = getRandomFromArray([6]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -171,7 +175,7 @@ for (let i = 0; i < redEyeCount; i++) {
     });
 }
 
-redEyeCount = getRandomFromArray([12]);
+redEyeCount = getRandomFromArray([8]);
 
 for (let i = 0; i < redEyeCount; i++) {
     await myTestProject.addPrimaryEffect({
@@ -202,8 +206,11 @@ for (let i = 0; i < redEyeCount; i++) {
 }
 
 const promiseArray = [];
-myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.clashNeons);
 
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons);
+promiseArray.push(myTestProject.generateRandomLoop());
+
+myTestProject.colorScheme = NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons);
 promiseArray.push(myTestProject.generateRandomLoop());
 
 await Promise.all(promiseArray);
