@@ -10,6 +10,17 @@ import { FuzzyBandConfig } from './effects/primaryEffects/fuzzyBands/FuzzyBandCo
 import { getRandomFromArray, getRandomIntInclusive } from './core/math/random.js';
 import { FuzzyRipplesEffect } from './effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js';
 import { FuzzyRipplesConfig } from './effects/primaryEffects/fuzzyRipples/FuzzyRipplesConfig.js';
+import {ImageOverlayEffect} from "./effects/primaryEffects/imageOverlay/ImageOverlayEffect.js";
+import {ImageOverlayConfig} from "./effects/primaryEffects/imageOverlay/ImageOverlayConfig.js";
+import {LensFlareEffect} from "./effects/primaryEffects/lensFlare/LensFlareEffect.js";
+import {LensFlareConfig} from "./effects/primaryEffects/lensFlare/LensFlareConfig.js";
+import {DynamicRange} from "./core/layer/configType/DynamicRange.js";
+import {Range} from "./core/layer/configType/Range.js";
+import {PercentageRange} from "./core/layer/configType/PercentageRange.js";
+import {PercentageShortestSide} from "./core/layer/configType/PercentageShortestSide.js";
+import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
+import {ViewportEffect} from "./effects/primaryEffects/viewport/ViewportEffect.js";
+import {ViewportConfig} from "./effects/primaryEffects/viewport/ViewportConfig.js";
 
 const promiseArray = [];
 
@@ -150,7 +161,7 @@ const createRedEye = async (colorSheme) => {
         });
     }
 
-    redEyeCount = getRandomFromArray([6]);
+    redEyeCount = getRandomFromArray([4]);
 
     for (let i = 0; i < redEyeCount; i++) {
         await myTestProject.addPrimaryEffect({
@@ -180,7 +191,7 @@ const createRedEye = async (colorSheme) => {
         });
     }
 
-    redEyeCount = getRandomFromArray([8]);
+    redEyeCount = getRandomFromArray([4]);
 
     for (let i = 0; i < redEyeCount; i++) {
         await myTestProject.addPrimaryEffect({
@@ -210,11 +221,83 @@ const createRedEye = async (colorSheme) => {
         });
     }
 
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: LensFlareEffect,
+            percentChance: 100,
+            currentEffectConfig: new LensFlareConfig({
+                layerOpacityRange: new DynamicRange(new Range(0.7, 0.7), new Range(0.7, 0.7)),
+                layerOpacityTimes: new Range(2, 6),
+
+                elementOpacityRange: new DynamicRange(new Range(0.4, 0.5), new Range(0.5, 0.6)),
+                elementOpacityTimes: new Range(2, 6),
+
+                elementGastonRange: new DynamicRange(new Range(5, 10), new Range(15, 30)),
+                elementGastonTimes: new Range(2, 6),
+
+                numberOfFlareHex: new Range(0, 0),
+                flareHexSizeRange: new PercentageRange(new PercentageShortestSide(0.015), new PercentageShortestSide(0.025)),
+
+                angleRangeFlareHex: new DynamicRange(new Range(1, 2), new Range(4, 6)),
+                angleGastonTimes: new Range(1, 6),
+
+                numberOfFlareRings: new Range(15, 15),
+                flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.25), new PercentageLongestSide(0.75)),
+                flareRingStroke: new Range(1, 1),
+
+                numberOfFlareRays: new Range(50, 50),
+                flareRaysSizeRange: new PercentageRange(new PercentageLongestSide(0.5), new PercentageLongestSide(0.95)),
+                flareRaysStroke: new Range(1, 1),
+
+                blurRange: new DynamicRange(new Range(0, 0), new Range(0, 0)),
+                blurTimes: new Range(0, 0),
+
+                strategy: ['color-bucket'],
+            }),
+        }),
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: ViewportEffect,
+            percentChance: 100,
+            currentEffectConfig: new ViewportConfig({
+                invertLayers: false,
+                layerOpacity: 1,
+                underLayerOpacity: 0.5,
+                stroke: 5,
+                thickness: 10,
+                ampStroke: 0,
+                ampThickness: 1,
+                radius: [400],
+                startAngle: [270],
+                amplitude: { lower: 150, upper: 150 },
+                times: { lower: 3, upper: 3 },
+                accentRange: { bottom: { lower: 0, upper: 0 }, top: { lower: 20, upper: 30 } },
+                blurRange: { bottom: { lower: 2, upper: 3 }, top: { lower: 5, upper: 8 } },
+                featherTimes: { lower: 3, upper: 3 },
+            }),
+        }),
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: ImageOverlayEffect,
+            percentChance: 100,
+            currentEffectConfig: new ImageOverlayConfig({
+                folderName: '/image-store/generated/eyes/',
+                layerOpacity: [1],
+                buffer: [0],
+            }),
+        }),
+    });
+
+
+
+
     promiseArray.push(myTestProject.generateRandomLoop());
 };
 
-await createRedEye(NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons));
 await createRedEye(NeonColorSchemeFactory.getColorScheme(NeonColorScheme.neons));
-await createRedEye(NeonColorSchemeFactory.getColorScheme(NeonColorScheme.primaryNeons));
 
 await Promise.all(promiseArray);

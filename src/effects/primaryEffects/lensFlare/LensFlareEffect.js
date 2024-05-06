@@ -1,11 +1,9 @@
-import { promises as fs } from 'fs';
 import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 import {
     getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber,
 } from '../../../core/math/random.js';
 import { findValue } from '../../../core/math/findValue.js';
 import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
-import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
 import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
 import { Settings } from '../../../core/Settings.js';
 import { LensFlareConfig } from './LensFlareConfig.js';
@@ -34,8 +32,6 @@ export class LensFlareEffect extends LayerEffect {
 
     async #drawHexArray(context, array) {
         async function hex(i) {
-            const tempFileName = `${this.workingDirectory}lens-flare-ring${randomId()}.png`;
-
             const angleGaston = findValue(context.data.angleRangeFlareHex.lower, context.data.angleRangeFlareHex.upper, context.data.angleGastonTimes, context.numberOfFrames, context.currentFrame);
 
             const pos = findPointByAngleAndCircle(context.data.center, angleGaston, array[i].offset);
@@ -45,11 +41,7 @@ export class LensFlareEffect extends LayerEffect {
             await context.canvas.drawFilledPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, array[i].color, theOpacityGaston);
             await context.canvas.drawPolygon2d(array[i].size, pos, array[i].sides, array[i].angle, 1.5, array[i].strokeColor, 1.5, array[i].strokeColor, theOpacityGaston);
 
-            await context.canvas.toFile(tempFileName);
-            const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
-
-            await fs.unlink(tempFileName);
-            return tempLayer;
+            return context.canvas.convertToLayer();
         }
 
         const hexArray = [];
@@ -62,7 +54,6 @@ export class LensFlareEffect extends LayerEffect {
     }
 
     async #rings(i, array, context) {
-        const tempFileName = `${this.workingDirectory}lens-flare-ring${randomId()}.png`;
         const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame);
@@ -71,14 +62,10 @@ export class LensFlareEffect extends LayerEffect {
 
         await canvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
 
-        await canvas.toFile(tempFileName);
-
-        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
+        const tempLayer = await canvas.convertToLayer();
 
         await tempLayer.blur(theBlurGaston);
         await tempLayer.adjustLayerOpacity(theOpacityGaston);
-
-        await fs.unlink(tempFileName);
 
         return tempLayer;
     }
@@ -94,7 +81,6 @@ export class LensFlareEffect extends LayerEffect {
     }
 
     async #rays(i, array, context) {
-        const tempFileName = `${this.workingDirectory}lens-flare-ray${randomId()}.png`;
         const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         const theOpacityGaston = findValue(array[i].opacity.lower, array[i].opacity.upper, array[i].opacityTimes, context.numberOfFrames, context.currentFrame);
@@ -106,14 +92,11 @@ export class LensFlareEffect extends LayerEffect {
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
         await canvas.drawLine2d(start, end, array[i].stroke, array[i].color, array[i].stroke, array[i].color, theOpacityGaston);
-        await canvas.toFile(tempFileName);
 
-        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
+        const tempLayer = await canvas.convertToLayer();
 
         await tempLayer.blur(theBlurGaston);
         await tempLayer.adjustLayerOpacity(theOpacityGaston);
-
-        await fs.unlink(tempFileName);
 
         return tempLayer;
     }
