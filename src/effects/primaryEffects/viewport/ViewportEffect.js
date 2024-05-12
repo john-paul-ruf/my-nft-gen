@@ -31,22 +31,22 @@ export class ViewportEffect extends LayerEffect {
         this.#generate(settings);
     }
 
-    async #draw(context) {
+    async #draw(context, color) {
 
         const canvas = await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height);
 
         const thePolyGaston = findValue(context.data.radius, context.data.radius + context.data.amplitude, context.data.times, context.numberOfFrames, context.currentFrame);
-        await canvas.drawPolygon2d(thePolyGaston, context.data.center, 3, context.data.startAngle, context.data.thickness, context.data.innerColor, context.data.stroke + context.theAccentGaston, context.data.color);
+        await canvas.drawPolygon2d(thePolyGaston, context.data.center, 3, context.data.startAngle, context.data.thickness, color, context.data.stroke + context.theAccentGaston, color);
 
         return canvas.convertToLayer();
     }
 
     async #compositeImage(context, layer) {
 
-        const underlayLayer = await this.#draw(context);
+        const underlayLayer = await this.#draw(context, context.data.innerColor);
 
         context.theAccentGaston = 0;
-        const tempLayer = await this.#draw(context);
+        const tempLayer = await this.#draw(context, context.data.color);
 
         await underlayLayer.blur(context.theBlurGaston);
 
