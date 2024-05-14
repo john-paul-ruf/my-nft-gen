@@ -59,18 +59,12 @@ export class LayeredHexEffect extends LayerEffect {
                 await tempCanvas.drawPolygon2d(context.data.hexArray[arrayIndex].radius, pos, 6, context.data.startAngle, context.data.thickness, element.color, context.data.thickness + context.data.stroke, element.outline, theOpacityGaston);
             }
         }
-        return { element, tempCanvas };
+        return { tempCanvas };
     }
 
     async #drawLayer(context, arrayIndex, useAccentGaston) {
-        const tempFileName = `${this.workingDirectory}layered-hex-element${randomId()}.png`;
-        const { element, tempCanvas } = await this.#drawHexElement(arrayIndex, context, useAccentGaston);
-        await tempCanvas.toFile(tempFileName);
-        const tempLayer = await LayerFactory.getLayerFromFile(tempFileName, this.fileConfig);
-        const theBlurGaston = Math.ceil(findValue(element.blurRange.lower, element.blurRange.upper, element.featherTimes, context.numberOfFrames, context.currentFrame));
-        await tempLayer.blur(theBlurGaston);
-        await fs.unlink(tempFileName);
-        return tempLayer;
+        const { tempCanvas } = await this.#drawHexElement(arrayIndex, context, useAccentGaston);
+        return await tempCanvas.convertToLayer();
     }
 
     async #createLayers(context) {
@@ -117,8 +111,6 @@ export class LayeredHexEffect extends LayerEffect {
         const context = {
             currentFrame,
             numberOfFrames,
-            top: `${this.workingDirectory}layered-hex-top${randomId()}.png`,
-            bottom: `${this.workingDirectory}layered-hex-bottom${randomId()}.png`,
             data: this.data,
             layer,
         };

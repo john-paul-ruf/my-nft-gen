@@ -7,6 +7,7 @@ export const NeonColorScheme = {
     greenNeons: 'green-neons',
     primaryNeons: 'primary-neons',
     secondaryNeons: 'secondary-neons',
+    clashNeons: 'clash-neons',
 };
 
 export class NeonColorSchemeFactory {
@@ -75,6 +76,16 @@ export class NeonColorSchemeFactory {
                         ],
                 colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.secondaryNeons}\n`,
             });
+            case NeonColorScheme.clashNeons:
+                return new ColorScheme({
+                    colorBucket:
+                        [
+                            '#FF0000',
+                            '#00FF00',
+                            '#FFFF00',
+                        ],
+                    colorSchemeInfo: `**Color Strategy**: ${NeonColorScheme.clashNeons}\n`,
+                });
         default:
             throw new Error('Not a color scheme');
         }

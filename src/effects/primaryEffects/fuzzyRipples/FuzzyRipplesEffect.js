@@ -31,22 +31,25 @@ export class FuzzyRipplesEffect extends LayerEffect {
         this.#generate(settings);
     }
 
-    async #drawRing(pos, radius, weight, color, context) {
+    async #drawRing(canvas, pos, radius, weight, color, context) {
         const theGaston = findValue(radius, radius + context.data.ripple, context.data.times, context.numberOfFrames, context.currentFrame);
-        await context.canvas.drawRing2d(pos, theGaston, weight, color, 0, color);
+        await canvas.drawRing2d(pos, theGaston, weight, color, 0, color);
     }
 
-    async #drawRings(context, pos, radius, numberOfRings, color, weight) {
+    async #drawRings(canvas, context, pos, radius, numberOfRings, color, weight) {
         for (let i = 0; i < numberOfRings; i++) {
-            await this.#drawRing(pos, radius / numberOfRings * i, weight, color, context);
+            await this.#drawRing(canvas, pos, radius / numberOfRings * i, weight, color, context);
         }
     }
 
-    async #drawUnderlay(context, filename) {
-    // outer color
-        await this.#drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
+    async #drawUnderlay(context) {
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+        // outer color
+        await this.#drawRings(canvas, context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
         for (let i = 30; i <= 330; i += 60) {
             await this.#drawRings(
+                canvas,
                 context,
                 findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
                 context.data.smallRadius,
@@ -55,12 +58,13 @@ export class FuzzyRipplesEffect extends LayerEffect {
                 context.data.thickness + context.data.stroke + context.theAccentGaston,
             );
         }
-        await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor);
+        await canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor);
 
         // inner color
-        await this.#drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
+        await this.#drawRings(canvas, context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
         for (let i = 30; i <= 330; i += 60) {
             await this.#drawRings(
+                canvas,
                 context,
                 findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
                 context.data.smallRadius,
@@ -69,16 +73,19 @@ export class FuzzyRipplesEffect extends LayerEffect {
                 context.data.thickness,
             );
         }
-        await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor);
+        await canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor);
 
-        await context.canvas.toFile(filename);
+        return canvas.convertToLayer();
     }
 
-    async #draw(context, filename) {
-    // outer color
-        await this.#drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
+    async #draw(context) {
+        const canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
+
+        // outer color
+        await this.#drawRings(canvas, context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.outerColor, context.data.thickness + context.data.stroke);
         for (let i = 30; i <= 330; i += 60) {
             await this.#drawRings(
+                canvas,
                 context,
                 findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
                 context.data.smallRadius,
@@ -87,12 +94,13 @@ export class FuzzyRipplesEffect extends LayerEffect {
                 context.data.thickness + context.data.stroke + context.theAccentGaston,
             );
         }
-        await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor);
+        await canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.outerColor, context.data.stroke + context.theAccentGaston, context.data.outerColor);
 
         // inner color
-        await this.#drawRings(context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
+        await this.#drawRings(canvas, context, context.data.center, context.data.largeRadius, context.data.largeNumberOfRings, context.data.innerColor, context.data.thickness);
         for (let i = 30; i <= 330; i += 60) {
             await this.#drawRings(
+                canvas,
                 context,
                 findPointByAngleAndCircle(context.data.center, i + context.theAngleGaston, context.data.smallerRingsGroupRadius),
                 context.data.smallRadius,
@@ -101,21 +109,17 @@ export class FuzzyRipplesEffect extends LayerEffect {
                 context.data.thickness,
             );
         }
-        await context.canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor);
+        await canvas.drawPolygon2d(context.data.smallerRingsGroupRadius, context.data.center, 6, 30 + context.theAngleGaston, context.data.thickness, context.data.innerColor, 0, context.data.innerColor);
 
-        await context.canvas.toFile(filename);
+        return canvas.convertToLayer();
     }
 
     async #compositeImage(context, layer) {
-        await this.#drawUnderlay(context, context.underlayName);
+        const underlayLayer = await this.#drawUnderlay(context, context.underlayName);
 
         context.theAccentGaston = 0;
-        context.canvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-        await this.#draw(context, context.drawing);
-
-        const tempLayer = await LayerFactory.getLayerFromFile(context.drawing, this.fileConfig);
-        const underlayLayer = await LayerFactory.getLayerFromFile(context.underlayName, this.fileConfig);
+        const tempLayer = await this.#draw(context, context.drawing);
 
         await underlayLayer.blur(context.theBlurGaston);
 
@@ -138,16 +142,10 @@ export class FuzzyRipplesEffect extends LayerEffect {
             theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
             theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
             theAngleGaston: findOneWayValue(0, this.data.speed * 60, 1, numberOfFrames, currentFrame),
-            drawing: `${this.workingDirectory}fuzzy-ripples${randomId()}.png`,
-            underlayName: `${this.workingDirectory}fuzzy-ripples-underlay${randomId()}.png`,
-            canvas: await Canvas2dFactory.getNewCanvas(this.data.width, this.data.height),
             data: this.data,
         };
 
         await this.#compositeImage(context, layer);
-
-        await fs.unlink(context.drawing);
-        await fs.unlink(context.underlayName);
     }
 
     #generate(settings) {
