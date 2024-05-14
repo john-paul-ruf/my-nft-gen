@@ -32,9 +32,10 @@ Please direct questions, comments, and rants to [John Ruf](mailto:john.paul.ruf@
 
 Example Output
 
+https://github.com/john-paul-ruf/my-nft-gen/assets/52080647/087e6535-5f7f-4176-9f35-4ec2a183801e
 
 
-https://github.com/john-paul-ruf/my-nft-gen/assets/52080647/43de9803-f3ee-4fe3-a64a-f5f443baf1c4
+
 
 
 
