@@ -20,6 +20,7 @@ export class LensFlareConfig extends EffectConfig {
 
             numberOfFlareHex = new Range(0, 0),
             flareHexSizeRange = new PercentageRange(new PercentageShortestSide(0.015), new PercentageShortestSide(0.025)),
+            flareHexOffsetRange = new PercentageRange(-1 * new PercentageShortestSide(0.3), new PercentageShortestSide(0.3)),
 
             angleRangeFlareHex = new DynamicRange(new Range(1, 2), new Range(4, 6)),
             angleGastonTimes = new Range(1, 6),
@@ -73,6 +74,7 @@ export class LensFlareConfig extends EffectConfig {
         this.elementGastonTimes = elementGastonTimes;
         this.numberOfFlareHex = numberOfFlareHex;
         this.flareHexSizeRange = flareHexSizeRange;
+        this.flareHexOffsetRange = flareHexOffsetRange;
         this.angleRangeFlareHex = angleRangeFlareHex;
         this.angleGastonTimes = angleGastonTimes;
         this.numberOfFlareRings = numberOfFlareRings;

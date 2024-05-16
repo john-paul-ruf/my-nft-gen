@@ -1,24 +1,24 @@
-import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import {LayerEffect} from '../../../core/layer/LayerEffect.js';
 import {
     getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber,
 } from '../../../core/math/random.js';
-import { findValue } from '../../../core/math/findValue.js';
-import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
-import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
-import { Settings } from '../../../core/Settings.js';
-import { LensFlareConfig } from './LensFlareConfig.js';
+import {findValue} from '../../../core/math/findValue.js';
+import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
+import {findPointByAngleAndCircle} from '../../../core/math/drawingMath.js';
+import {Settings} from '../../../core/Settings.js';
+import {LensFlareConfig} from './LensFlareConfig.js';
 
 export class LensFlareEffect extends LayerEffect {
     static _name_ = 'upgraded-lens-flare';
 
     constructor({
-        name = LensFlareEffect._name_,
-        requiresLayer = true,
-        config = new LensFlareConfig({}),
-        additionalEffects = [],
-        ignoreAdditionalEffects = false,
-        settings = new Settings({}),
-    }) {
+                    name = LensFlareEffect._name_,
+                    requiresLayer = true,
+                    config = new LensFlareConfig({}),
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({}),
+                }) {
         super({
             name,
             requiresLayer,
@@ -191,7 +191,7 @@ export class LensFlareEffect extends LayerEffect {
                     strokeColor: this.config.getFlareColor(strategy, settings, this.config),
                     sides: getRandomIntInclusive(6, 6), // ended up with hex...
                     angle: getRandomIntInclusive(0, 360),
-                    offset: getRandomIntInclusive(this.finalSize.width * 0.15, this.finalSize.width * 0.15),
+                    offset: getRandomIntInclusive(this.config.flareHexOffsetRange.lower(this.finalSize), this.config.flareHexOffsetRange.upper(this.finalSize)),
                     opacity: {
                         lower: randomNumber(this.config.elementOpacityRange.bottom.lower, this.config.elementOpacityRange.bottom.upper),
                         upper: randomNumber(this.config.elementOpacityRange.top.lower, this.config.elementOpacityRange.top.upper),
