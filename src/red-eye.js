@@ -62,8 +62,6 @@ const createRedEye = async (colorSheme) => {
                 length: 100,
                 lineStart: 150,
                 center: {x: 1080 / 2, y: 1920 / 2},
-                innerColor: null,
-                outerColor: null,
             }),
             defaultEffectConfig: AmpConfig,
         }),
@@ -87,8 +85,29 @@ const createRedEye = async (colorSheme) => {
                 length: 200,
                 lineStart: 300,
                 center: {x: 1080 / 2, y: 1920 / 2},
-                innerColor: null,
-                outerColor: null,
+            }),
+            defaultEffectConfig: AmpConfig,
+        }),
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: AmpEffect,
+            percentChance: 100,
+            currentEffectConfig: new AmpConfig({
+                invertLayers: true,
+                layerOpacity: 0.4,
+                underLayerOpacity: 0.25,
+                sparsityFactor: [1],
+                stroke: 1,
+                thickness: 1,
+                accentRange: {bottom: {lower: 4, upper: 4}, top: {lower: 8, upper: 8}},
+                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 6, upper: 6}},
+                featherTimes: {lower: 3, upper: 3},
+                speed: {lower: 48, upper: 48},
+                length: 333,
+                lineStart: 700,
+                center: {x: 1080 / 2, y: 1920 / 2},
             }),
             defaultEffectConfig: AmpConfig,
         }),
@@ -107,7 +126,7 @@ const createRedEye = async (colorSheme) => {
                 alphaRange: {bottom: {lower: 0.5, upper: 0.5}, top: {lower: 0.6, upper: 0.6}},
                 alphaTimes: {lower: 3, upper: 3},
                 rotationTimes: {lower: 3, upper: 3},
-                numberOfScopesInALine: 80,
+                numberOfScopesInALine: 60,
             }),
         }),
     });
@@ -234,6 +253,30 @@ const createRedEye = async (colorSheme) => {
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
+            effect: ViewportEffect,
+            percentChance: 100,
+            currentEffectConfig: new ViewportConfig({
+                invertLayers: true,
+                layerOpacity: 0.7,
+                underLayerOpacity: 0.5,
+                color: new ColorPicker(ColorPicker.SelectionType.color, '#FF00FF'),
+                stroke: 4,
+                thickness: 15,
+                ampStroke: 0,
+                ampThickness: 1,
+                radius: [300],
+                startAngle: [270],
+                amplitude: {lower: 75, upper: 75},
+                times: {lower: 3, upper: 3},
+                accentRange: {bottom: {lower: 10, upper: 10}, top: {lower: 40, upper: 40}},
+                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 8, upper: 8}},
+                featherTimes: {lower: 3, upper: 3},
+            }),
+        }),
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
             effect: LensFlareEffect,
             percentChance: 100,
             currentEffectConfig: new LensFlareConfig({
@@ -247,7 +290,8 @@ const createRedEye = async (colorSheme) => {
                 elementGastonTimes: new Range(2, 6),
 
                 numberOfFlareHex: new Range(8, 8),
-                flareHexSizeRange: new PercentageRange(new PercentageShortestSide(0.015), new PercentageShortestSide(0.025)),
+                flareHexSizeRange: new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.05)),
+                flareHexOffsetRange: new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.25)),
 
                 angleRangeFlareHex: new DynamicRange(new Range(1, 1), new Range(4, 4)),
                 angleGastonTimes: new Range(1, 6),
@@ -270,37 +314,13 @@ const createRedEye = async (colorSheme) => {
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
-            effect: ViewportEffect,
-            percentChance: 100,
-            currentEffectConfig: new ViewportConfig({
-                invertLayers: true,
-                layerOpacity: 1,
-                underLayerOpacity: 0.5,
-                color: new ColorPicker(ColorPicker.SelectionType.color, '#FFFF00'),
-                stroke: 8,
-                thickness: 20,
-                ampStroke: 0,
-                ampThickness: 1,
-                radius: [300],
-                startAngle: [270],
-                amplitude: {lower: 75, upper: 75},
-                times: {lower: 3, upper: 3},
-                accentRange: {bottom: {lower: 10, upper: 10}, top: {lower: 40, upper: 40}},
-                blurRange: {bottom: {lower: 3, upper: 3}, top: {lower: 8, upper: 8}},
-                featherTimes: {lower: 3, upper: 3},
-            }),
-        }),
-    });
-
-    await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
             effect: MappedFramesEffect,
             percentChance: 100,
             currentEffectConfig: new MappedFramesConfig({
                 folderName: '/mappedFrames/',
                 layerOpacity: [0.9],
                 buffer: [555],
-                loopTimes: 15,
+                loopTimes: 30,
             }),
         }),
     });
@@ -308,6 +328,6 @@ const createRedEye = async (colorSheme) => {
     promiseArray.push(myTestProject.generateRandomLoop());
 };
 
-await createRedEye(NeonColorSchemeFactory.getColorScheme(NeonColorScheme.greenNeons));
+await createRedEye(NeonColorSchemeFactory.getColorScheme(NeonColorScheme.blueNeons));
 
 await Promise.all(promiseArray);
