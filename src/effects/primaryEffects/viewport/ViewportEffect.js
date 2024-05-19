@@ -43,10 +43,10 @@ export class ViewportEffect extends LayerEffect {
 
     async #compositeImage(context, layer) {
 
-        const underlayLayer = await this.#draw(context, context.data.innerColor);
+        const underlayLayer = await this.#draw(context, context.data.color);
 
         context.theAccentGaston = 0;
-        const tempLayer = await this.#draw(context, context.data.color);
+        const tempLayer = await this.#draw(context, context.data.innerColor);
 
         await underlayLayer.blur(context.theBlurGaston);
 
