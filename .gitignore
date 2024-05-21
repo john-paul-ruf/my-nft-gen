@@ -3,6 +3,4 @@
 /.idea/
 /coverage/
 /qodana.yaml
-/src/the-advance/
-/src/the-lantern/
-/src/red-eye/
+/src/test-run/
