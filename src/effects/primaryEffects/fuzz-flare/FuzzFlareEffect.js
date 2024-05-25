@@ -40,7 +40,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
         await topCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].innerColor, array[i].stroke, array[i].innerColor, theOpacityGaston);
-        await bottomCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].outerColor, array[i].stroke + theAccentGaston, array[i].outerColor, theOpacityGaston);
+        await bottomCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();
         const bottomLayer = await bottomCanvas.convertToLayer();
@@ -78,7 +78,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
         await topCanvas.drawLine2d(start, end, array[i].stroke, array[i].innerColor, array[i].stroke, array[i].innerColor, theOpacityGaston);
-        await bottomCanvas.drawLine2d(start, end, array[i].stroke, array[i].outerColor, array[i].stroke + theAccentGaston, array[i].outerColor, theOpacityGaston);
+        await bottomCanvas.drawLine2d(start, end, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();
         const bottomLayer = await bottomCanvas.convertToLayer();
@@ -145,6 +145,7 @@ export class FuzzFlareEffect extends LayerEffect {
                 info.push({
                     size: getRandomIntInclusive(this.config.flareRingsSizeRange.lower(this.finalSize), this.config.flareRingsSizeRange.upper(this.finalSize)),
                     stroke: getRandomIntInclusive(this.config.flareRingStroke.lower, this.config.flareRingStroke.upper),
+                    thickness: getRandomIntInclusive(this.config.flareRingThickness.lower, this.config.flareRingThickness.upper),
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
                     gastonRange: {
@@ -180,6 +181,7 @@ export class FuzzFlareEffect extends LayerEffect {
                 info.push({
                     size: getRandomIntInclusive(this.config.flareRaysSizeRange.lower(this.finalSize), this.config.flareRaysSizeRange.upper(this.finalSize)),
                     stroke: getRandomIntInclusive(this.config.flareRaysStroke.lower, this.config.flareRaysStroke.upper),
+                    thickness: getRandomIntInclusive(this.config.flareRayThickness.lower, this.config.flareRayThickness.upper),
                     angle: getRandomIntInclusive(0, 360),
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),

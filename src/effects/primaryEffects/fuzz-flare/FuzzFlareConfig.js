@@ -27,10 +27,12 @@ export class FuzzFlareConfig extends EffectConfig {
             numberOfFlareRings = new Range(10, 20),
             flareRingsSizeRange = new PercentageRange(new PercentageShortestSide(0.25), new PercentageLongestSide(0.75)),
             flareRingStroke = new Range(1, 1),
+            flareRingThickness= new Range(1, 1),
 
             numberOfFlareRays = new Range(20, 30),
             flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(1)),
             flareRaysStroke = new Range(1, 1),
+            flareRayThickness= new Range(1, 1),
             flareOffset = new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.15)),
 
             accentRange = { bottom: { lower: 6, upper: 12 }, top: { lower: 25, upper: 45 } },
@@ -51,10 +53,12 @@ export class FuzzFlareConfig extends EffectConfig {
         this.numberOfFlareRings = numberOfFlareRings;
         this.flareRingsSizeRange = flareRingsSizeRange;
         this.flareRingStroke = flareRingStroke;
+        this.flareRingThickness = flareRingThickness;
         this.flareOffset = flareOffset;
         this.numberOfFlareRays = numberOfFlareRays;
         this.flareRaysSizeRange = flareRaysSizeRange;
         this.flareRaysStroke = flareRaysStroke;
+        this.flareRayThickness = flareRayThickness;
         this.accentRange = accentRange;
         this.blurRange = blurRange;
         this.featherTimes = featherTimes;
