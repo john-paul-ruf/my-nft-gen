@@ -18,6 +18,8 @@ import {Point2D} from "./core/layer/configType/Point2D.js";
 import {ColorScheme} from "./core/color/ColorScheme.js";
 import {RandomizeEffect} from "./effects/secondaryEffects/randomize/RandomizeEffect.js";
 import {RandomizeConfig} from "./effects/secondaryEffects/randomize/RandomizeConfig.js";
+import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
+import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
 
 const promiseArray = [];
 
@@ -99,13 +101,12 @@ const createComposition = async (colorScheme) => {
             }),
             possibleSecondaryEffects: [
                 new LayerConfig({
-                    effect: RandomizeEffect,
+                    effect: GlowEffect,
                     percentChance: 100,
-                    currentEffectConfig: new RandomizeConfig({
-                        spin: { lower: -110, upper: -130 },
-                        red: { lower: 0, upper: 0 },
-                        blue: { lower: 0, upper: 0 },
-                        green: { lower: 0, upper: 0 },
+                    currentEffectConfig: new GlowConfig({
+                        lowerRange: { lower: -220, upper: -220 },
+                        upperRange: { lower: -240, upper: -240 },
+                        times: { lower: 2, upper: 6 }
                     }),
                 })
             ]
