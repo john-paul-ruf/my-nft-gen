@@ -63,7 +63,7 @@ export class SharpLayerStrategy {
         await pipeline(readableStream, writableStream);
     }
 
-    async compositeLayerOver(layer, withResize = true) {
+    async compositeLayerOver(layer) {
         const { finalImageSize } = this;
 
         const currentInfo = await this.getInfo();

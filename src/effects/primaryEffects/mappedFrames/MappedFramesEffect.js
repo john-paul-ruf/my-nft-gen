@@ -77,7 +77,7 @@ export class MappedFramesEffect extends LayerEffect {
 
         const { finalSize } = this;
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
-        await layer.compositeLayerOver(tempLayer, false);
+        await layer.compositeLayerOver(tempLayer);
 
         await fs.unlinkSync(context.filename);
     }

@@ -34,7 +34,7 @@ export class ImageOverlayEffect extends LayerEffect {
         const { finalSize } = this;
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
-        await layer.compositeLayerOver(tempLayer, false);
+        await layer.compositeLayerOver(tempLayer);
     }
 
     #generate(settings) {

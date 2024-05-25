@@ -12,6 +12,7 @@
     "red-eye": "node ./src/red-eye.js",
     "resume-folder": "node ./src/resume-folder.js",
     "make-me-a-pretty": "node ./src/the-advance.js",
+    "fuzz-flare": "node ./src/fuzz-flare.js",
     "lint": "npx eslint src/**/*.js",
     "lint:fix": "eslint --fix --ext .js,.jsx ."
   },
