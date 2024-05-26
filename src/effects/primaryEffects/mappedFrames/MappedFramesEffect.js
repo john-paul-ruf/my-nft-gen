@@ -107,7 +107,7 @@ export class MappedFramesEffect extends LayerEffect {
 
             data.folderName = folders[getRandomIntExclusive(0, folders.length)];
 
-            return path.join(directory, this.config.folderName + data.folderName);
+            return  this.config.folderName + data.folderName;
         };
 
         data.mappedFramesFolder = getMappedFramesFolder();

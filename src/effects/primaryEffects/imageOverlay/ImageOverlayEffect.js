@@ -60,7 +60,7 @@ export class ImageOverlayEffect extends LayerEffect {
 
             data.filename = images[getRandomIntExclusive(0, images.length)];
 
-            return path.join(directory, this.config.folderName + data.filename);
+            return this.config.folderName + data.filename;
         };
 
         data.imageOverlay = getBackdrop();
