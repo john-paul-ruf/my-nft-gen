@@ -5,7 +5,7 @@ import {findValue} from "../src/core/math/findValue.js";
 test('findValue: Three Steps - Step One', () => {
 
     const totalFrame = 1000;
-    const currentFrame = 250;
+    const currentFrame = 125;
 
     const stepOne = new MultiStepDefinition({
         percentage: 25,
@@ -43,13 +43,16 @@ test('findValue: Three Steps - Step One', () => {
             totalNumberOfFrames: totalFrame
         }));
 
+    const totalFramesMapped = (totalFrame * (stepOne.percentage * 0.01));
+
     expect(stepMidpoint).toBe(findValue(
         stepOne.min,
         stepOne.max,
         stepOne.times,
-        totalFrame * stepOne.percentage,
-        currentFrame * stepOne.percentage,
-        stepOne.invert));
+        totalFramesMapped,
+        totalFramesMapped / 2,
+        stepOne.invert,
+    ));
 });
 
 test('findValue: Three Steps - Step Two', () => {
