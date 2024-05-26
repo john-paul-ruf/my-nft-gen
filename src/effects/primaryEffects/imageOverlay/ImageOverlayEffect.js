@@ -44,11 +44,7 @@ export class ImageOverlayEffect extends LayerEffect {
         };
 
         const getBackdrop = () => {
-            const fileURLToPath1 = fileURLToPath(import.meta.url);
-            const directory = dirname(fileURLToPath1);
-
-            const getFilesInDirectory = (dir) => {
-                const directoryPath = path.join(directory, dir);
+            const getFilesInDirectory = (directoryPath) => {
                 const list = [];
 
                 fs.readdirSync(directoryPath).forEach((file) => {

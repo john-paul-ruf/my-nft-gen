@@ -91,11 +91,7 @@ export class MappedFramesEffect extends LayerEffect {
         };
 
         const getMappedFramesFolder = () => {
-            const fileURLToPath1 = fileURLToPath(import.meta.url);
-            const directory = dirname(fileURLToPath1);
-
-            const getFoldersInDirectory = (dir) => {
-                const directoryPath = path.join(directory, dir);
+            const getFoldersInDirectory = (directoryPath) => {
                 const list = [];
 
                 fs.readdirSync(directoryPath).forEach((file) => {
