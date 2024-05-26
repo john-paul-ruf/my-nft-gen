@@ -1,9 +1,10 @@
 import {findValue} from "./findValue.js";
+import {MultiStepDefinition} from "./MultiStepDefinition.js";
 
 export class FindMultiStepStepValue {
     static findValue({
                          stepArray = [
-                             new FindMultiStepStepValue()
+                             new MultiStepDefinition({}),
                          ],
                          currentFrame = 0,
                          totalNumberOfFrames = 100
