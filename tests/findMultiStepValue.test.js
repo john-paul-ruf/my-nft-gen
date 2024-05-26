@@ -83,7 +83,6 @@ test('findValue: Three Steps - Step Two', () => {
         invert: false
     })
 
-
     const stepMidpoint = Math.floor(FindMultiStepStepValue.findValue(
         {
             stepArray: [
@@ -95,12 +94,14 @@ test('findValue: Three Steps - Step Two', () => {
             totalNumberOfFrames: totalFrame
         }));
 
+    const totalFramesMapped = (totalFrame * (stepTwo.percentage * 0.01));
+
     expect(stepMidpoint).toBe(findValue(
-        stepOne.min,
-        stepOne.max,
-        stepOne.times,
-        totalFrame * stepOne.percentage,
-        currentFrame * stepOne.percentage,
+        stepTwo.min,
+        stepTwo.max,
+        stepTwo.times,
+        totalFramesMapped,
+        totalFramesMapped / 2,
         stepOne.invert));
 });
 
@@ -132,6 +133,7 @@ test('findValue: Three Steps - Step Three', () => {
         invert: false
     })
 
+    const totalFramesMapped = (totalFrame * (stepThree.percentage * 0.01));
 
     const stepMidpoint = Math.floor(FindMultiStepStepValue.findValue(
         {
@@ -145,11 +147,11 @@ test('findValue: Three Steps - Step Three', () => {
         }));
 
     expect(stepMidpoint).toBe(findValue(
-        stepOne.min,
-        stepOne.max,
-        stepOne.times,
-        totalFrame * stepOne.percentage,
-        currentFrame * stepOne.percentage,
+        stepThree.min,
+        stepThree.max,
+        stepThree.times,
+        totalFramesMapped,
+        totalFramesMapped / 2,
         stepOne.invert));
 });
 
