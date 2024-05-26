@@ -10,15 +10,15 @@ import {MultiStepDefinitionConfig} from "../../../core/math/MultiStepDefinitionC
 export class FuzzFlareConfig extends EffectConfig {
     constructor(
         {
-            invertLayers = true,
+            invertLayers = false,
 
-            outerColor = new ColorPicker(),
-            innerColor = new ColorPicker(),
+            outerColor = new ColorPicker(ColorPicker.SelectionType.colorBucket),
+            innerColor = new ColorPicker(ColorPicker.SelectionType.colorBucket),
 
-            layerOpacity = 1,
+            layerOpacity = 0.7,
 
-            underLayerOpacityRange = {bottom: {lower: 0.7, upper: 0.8}, top: {lower: 0.9, upper: 0.95}},
-            underLayerOpacityTimes = {lower: 2, upper: 6},
+            underLayerOpacityRange = {bottom: {lower: 0.35, upper: 0.4}, top: {lower: 0.5, upper: 0.55}},
+            underLayerOpacityTimes = {lower: 2, upper: 8},
 
             elementGastonMultiStep = [
                 new MultiStepDefinitionConfig({
@@ -43,20 +43,21 @@ export class FuzzFlareConfig extends EffectConfig {
                     invert: false
                 })
             ],
-            numberOfFlareRings = new Range(10, 20),
-            flareRingsSizeRange = new PercentageRange(new PercentageShortestSide(0.25), new PercentageLongestSide(0.75)),
+
+            numberOfFlareRings = new Range(25, 25),
+            flareRingsSizeRange = new PercentageRange(new PercentageShortestSide(0.05), new PercentageLongestSide(1)),
             flareRingStroke = new Range(1, 1),
-            flareRingThickness = new Range(1, 1),
+            flareRingThickness = new Range(1, 3),
 
-            numberOfFlareRays = new Range(20, 30),
-            flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.4), new PercentageLongestSide(1)),
+            numberOfFlareRays = new Range(50, 50),
+            flareRaysSizeRange = new PercentageRange(new PercentageLongestSide(0.7), new PercentageLongestSide(1)),
             flareRaysStroke = new Range(1, 1),
-            flareRayThickness = new Range(1, 1),
-            flareOffset = new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.15)),
+            flareRayThickness = new Range(1, 3),
+            flareOffset = new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.06)),
 
-            accentRange = {bottom: {lower: 6, upper: 12}, top: {lower: 25, upper: 45}},
-            blurRange = {bottom: {lower: 1, upper: 3}, top: {lower: 8, upper: 12}},
-            featherTimes = {lower: 2, upper: 6},
+            accentRange = {bottom: {lower: 2, upper: 6}, top: {lower: 8, upper: 14}},
+            blurRange = {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
+            featherTimes = {lower: 2, upper: 8},
         },
     ) {
         super();

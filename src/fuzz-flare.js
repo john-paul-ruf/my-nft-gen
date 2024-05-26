@@ -204,7 +204,7 @@ const createComposition = async (colorScheme) => {
                 underLayerOpacityRange: {bottom: {lower: 0.35, upper: 0.4}, top: {lower: 0.5, upper: 0.55}},
                 underLayerOpacityTimes: {lower: 2, upper: 8},
 
-                angleGastonTimes: [
+                elementGastonMultiStep: [
                     new MultiStepDefinitionConfig({
                         percentage: 25,
                         min: new Range(5, 10),
@@ -215,7 +215,7 @@ const createComposition = async (colorScheme) => {
                     new MultiStepDefinitionConfig({
                         percentage: 50,
                         min: new Range(2, 4),
-                        max: new Range(8, 12),
+                        max: new Range(6, 8),
                         times: new Range(1, 4),
                         invert: false
                     }),

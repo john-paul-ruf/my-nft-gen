@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Settings } from './core/Settings.js';
 import { LoopBuilder } from './core/animation/LoopBuilder.js';
 
-// src/fuzz-flare/fuzz-flare-0lbk5jn/fuzz-flare-0lbk5jn-settings.json
+// src/fuzz-flare/fuzz-flare-xzwj8a3/fuzz-flare-xzwj8a3-settings.json
 
 const mainMenu = () => {
     const InitialActions = {
