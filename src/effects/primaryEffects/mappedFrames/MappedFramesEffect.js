@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import { getRandomFromArray, getRandomIntExclusive, randomId } from '../../../core/math/random.js';
 import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 import { mapNumberToRange } from '../../../core/math/mapNumberToRange.js';

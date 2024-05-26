@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
 import { getRandomFromArray, getRandomIntExclusive } from '../../../core/math/random.js';
