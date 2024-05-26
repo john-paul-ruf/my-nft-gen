@@ -20,6 +20,8 @@ import {RandomizeEffect} from "./effects/secondaryEffects/randomize/RandomizeEff
 import {RandomizeConfig} from "./effects/secondaryEffects/randomize/RandomizeConfig.js";
 import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
 import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
+import {MultiStepDefinition} from "./core/math/MultiStepDefinition.js";
+import {MultiStepDefinitionConfig} from "./core/math/MultiStepDefinitionConfig.js";
 
 const promiseArray = [];
 
@@ -47,7 +49,7 @@ const createComposition = async (colorScheme) => {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [4, 5, 6],
+                sparsityFactor: [12, 15, 18],
                 innerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.20, myTestProject.shortestSideInPixels * 0.30),
                 outerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.70, myTestProject.shortestSideInPixels * 0.8),
                 possibleJumpRangeInPixels: {lower: 10, upper: 30},
@@ -73,7 +75,7 @@ const createComposition = async (colorScheme) => {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [4, 5, 6],
+                sparsityFactor: [12, 15, 18],
                 innerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.20, myTestProject.shortestSideInPixels * 0.30),
                 outerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.70, myTestProject.shortestSideInPixels * 0.8),
                 possibleJumpRangeInPixels: {lower: 10, upper: 30},
@@ -99,7 +101,7 @@ const createComposition = async (colorScheme) => {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [4, 5, 6],
+                sparsityFactor: [12, 15, 18],
                 innerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.20, myTestProject.shortestSideInPixels * 0.30),
                 outerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.70, myTestProject.shortestSideInPixels * 0.8),
                 possibleJumpRangeInPixels: {lower: 10, upper: 30},
@@ -125,7 +127,7 @@ const createComposition = async (colorScheme) => {
                 outerColor: new ColorPicker(ColorPicker.SelectionType.colorBucket),
                 stroke: 1,
                 thickness: 1,
-                sparsityFactor: [4, 5, 6],
+                sparsityFactor: [12, 15, 18],
                 innerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.20, myTestProject.shortestSideInPixels * 0.30),
                 outerRadius: getRandomIntInclusive(myTestProject.shortestSideInPixels * 0.70, myTestProject.shortestSideInPixels * 0.8),
                 possibleJumpRangeInPixels: {lower: 10, upper: 30},
@@ -202,17 +204,39 @@ const createComposition = async (colorScheme) => {
                 underLayerOpacityRange: {bottom: {lower: 0.35, upper: 0.4}, top: {lower: 0.5, upper: 0.55}},
                 underLayerOpacityTimes: {lower: 2, upper: 8},
 
-                angleGastonTimes: new Range(1, 4),
+                angleGastonTimes: [
+                    new MultiStepDefinitionConfig({
+                        percentage: 25,
+                        min: new Range(5, 10),
+                        max: new Range(15, 25),
+                        times: new Range(1, 2),
+                        invert: false
+                    }),
+                    new MultiStepDefinitionConfig({
+                        percentage: 50,
+                        min: new Range(2, 4),
+                        max: new Range(8, 12),
+                        times: new Range(1, 4),
+                        invert: false
+                    }),
+                    new MultiStepDefinitionConfig({
+                        percentage: 25,
+                        min: new Range(2, 10),
+                        max: new Range(15, 20),
+                        times: new Range(1, 3),
+                        invert: false
+                    })
+                ],
 
-                numberOfFlareRings: new Range(20, 20),
+                numberOfFlareRings: new Range(25, 25),
                 flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.05), new PercentageLongestSide(1)),
                 flareRingStroke: new Range(1, 1),
-                flareRingThickness: new Range(1, 2),
+                flareRingThickness: new Range(1, 3),
 
-                numberOfFlareRays: new Range(40, 40),
+                numberOfFlareRays: new Range(50, 50),
                 flareRaysSizeRange: new PercentageRange(new PercentageLongestSide(0.7), new PercentageLongestSide(1)),
                 flareRaysStroke: new Range(1, 1),
-                flareRayThickness: new Range(1, 2),
+                flareRayThickness: new Range(1, 3),
                 flareOffset: new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.06)),
 
                 accentRange: {bottom: {lower: 2, upper: 6}, top: {lower: 8, upper: 14}},

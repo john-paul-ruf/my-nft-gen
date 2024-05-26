@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Settings } from './core/Settings.js';
 import { LoopBuilder } from './core/animation/LoopBuilder.js';
 
-// src/red-eye/red-eye-q5j8exf/red-eye-q5j8exf-settings.json
+// src/fuzz-flare/fuzz-flare-0lbk5jn/fuzz-flare-0lbk5jn-settings.json
 
 const mainMenu = () => {
     const InitialActions = {

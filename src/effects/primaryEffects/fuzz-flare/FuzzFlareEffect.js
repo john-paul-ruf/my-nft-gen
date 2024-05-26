@@ -7,6 +7,8 @@ import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
 import {findPointByAngleAndCircle} from '../../../core/math/drawingMath.js';
 import {Settings} from '../../../core/Settings.js';
 import {FuzzFlareConfig} from './FuzzFlareConfig.js';
+import {MultiStepDefinition} from "../../../core/math/MultiStepDefinition.js";
+import {FindMultiStepStepValue} from "../../../core/math/FindMultiStepValue.js";
 
 export class FuzzFlareEffect extends LayerEffect {
     static _name_ = 'fuzz-flare';
@@ -35,7 +37,11 @@ export class FuzzFlareEffect extends LayerEffect {
         const bottomCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
-        const theRadiusGaston = findValue(array[i].size + array[i].gastonRange.lower, array[i].size + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert);
+        const theRadiusGaston = array[i].size + FindMultiStepStepValue.findValue({
+            stepArray: array[i].gastonRange,
+            totalNumberOfFrames: context.numberOfFrames,
+            currentFrame: context.currentFrame
+        });
         const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
@@ -71,7 +77,11 @@ export class FuzzFlareEffect extends LayerEffect {
 
         const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
         const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
-        const theAngleGaston = findValue(array[i].angle + array[i].gastonRange.lower, array[i].angle + array[i].gastonRange.upper, array[i].gastonTimes, context.numberOfFrames, context.currentFrame, array[i].gastonInvert);
+        const theAngleGaston = array[i].angle + FindMultiStepStepValue.findValue({
+            stepArray: array[i].gastonRange,
+            totalNumberOfFrames: context.numberOfFrames,
+            currentFrame: context.currentFrame
+        });
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
         const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
@@ -134,8 +144,6 @@ export class FuzzFlareEffect extends LayerEffect {
 
             numberOfFlareRings: getRandomIntInclusive(this.config.numberOfFlareRings.lower, this.config.numberOfFlareRings.upper),
             numberOfFlareRays: getRandomIntInclusive(this.config.numberOfFlareRays.lower, this.config.numberOfFlareRays.upper),
-
-            angleGastonTimes: getRandomIntInclusive(this.config.angleGastonTimes.lower, this.config.angleGastonTimes.upper),
         };
 
         const getFlareRingArray = (num) => {
@@ -148,12 +156,7 @@ export class FuzzFlareEffect extends LayerEffect {
                     thickness: getRandomIntInclusive(this.config.flareRingThickness.lower, this.config.flareRingThickness.upper),
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
-                    gastonRange: {
-                        lower: randomNumber(this.config.elementGastonRange.bottom.lower, this.config.elementGastonRange.bottom.upper),
-                        upper: randomNumber(this.config.elementGastonRange.top.lower, this.config.elementGastonRange.top.upper),
-                    },
-                    gastonTimes: getRandomIntInclusive(this.config.elementGastonTimes.lower, this.config.elementGastonTimes.upper),
-                    gastonInvert: getRandomIntInclusive(0, 1) > 0,
+                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, getRandomIntInclusive(0, 1) > 0,),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
@@ -174,6 +177,22 @@ export class FuzzFlareEffect extends LayerEffect {
             return info;
         };
 
+        function getMultiStepDefinition(elementGastonMultiStep, invert) {
+            const multiStep = [];
+
+            for (let index = 0; index < elementGastonMultiStep.length; index++) {
+                multiStep.push(new MultiStepDefinition({
+                    percentage: elementGastonMultiStep[index].percentage,
+                    min: getRandomIntInclusive(elementGastonMultiStep[index].min.lower, elementGastonMultiStep[index].min.upper),
+                    max: getRandomIntInclusive(elementGastonMultiStep[index].max.lower, elementGastonMultiStep[index].max.upper,),
+                    times: getRandomIntInclusive(elementGastonMultiStep[index].times.lower, elementGastonMultiStep[index].times.upper),
+                    invert: invert
+                }));
+            }
+
+            return multiStep;
+        }
+
         const getFlareRayArray = (num) => {
             const info = [];
 
@@ -186,12 +205,7 @@ export class FuzzFlareEffect extends LayerEffect {
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
                     offset: getRandomIntInclusive(this.config.flareOffset.lower(this.finalSize), this.config.flareOffset.upper(this.finalSize)),
-                    gastonRange: {
-                        lower: randomNumber(this.config.elementGastonRange.bottom.lower, this.config.elementGastonRange.bottom.upper),
-                        upper: randomNumber(this.config.elementGastonRange.top.lower, this.config.elementGastonRange.top.upper),
-                    },
-                    gastonTimes: getRandomIntInclusive(this.config.elementGastonTimes.lower, this.config.elementGastonTimes.upper),
-                    gastonInvert: getRandomIntInclusive(0, 1) > 0,
+                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, getRandomIntInclusive(0, 1) > 0,),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
