@@ -106,23 +106,29 @@ export class FabricCanvasStrategy {
             pointsArray.push({x: radius * Math.cos(angle * i), y: radius * Math.sin(angle * i)});
         }
 
-        this.canvas.add(new fabric.Polygon(pointsArray, {
+        const bottom = new fabric.Polygon(pointsArray, {
             stroke: hexToRgba(outerColor, alpha),
             strokeWidth: outerStroke,
             originX: 'center',
             originY: 'center',
             left: pos.x,
             top: pos.y,
-        }));
+            fill: '#00000000',
+        }).rotate(startAngle);
 
-        this.canvas.add(new fabric.Polygon(pointsArray, {
+        const top = new fabric.Polygon(pointsArray, {
             stroke: hexToRgba(innerColor, alpha),
             strokeWidth: innerStroke,
             originX: 'center',
             originY: 'center',
             left: pos.x,
             top: pos.y,
-        }));
+            fill: '#00000000',
+        }).rotate(startAngle);
+
+        this.canvas.add(bottom);
+
+        this.canvas.add(top);
     }
 
     async drawGradientLine2d(startPos, endPos, stroke, startColor, endColor) {
