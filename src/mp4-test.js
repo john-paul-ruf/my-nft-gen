@@ -9,6 +9,8 @@ import {FuzzFlareEffect} from "./effects/primaryEffects/fuzz-flare/FuzzFlareEffe
 import {FuzzFlareConfig} from "./effects/primaryEffects/fuzz-flare/FuzzFlareConfig.js";
 import {ColorScheme} from "./core/color/ColorScheme.js";
 import {MultiStepDefinitionConfig} from "./core/math/MultiStepDefinitionConfig.js";
+import {LayeredHexEffect} from "./effects/primaryEffects/layeredHex/LayeredHexEffect.js";
+import {LayeredHexConfig} from "./effects/primaryEffects/layeredHex/LayeredHexConfig.js";
 
 const promiseArray = [];
 
@@ -19,10 +21,46 @@ const createComposition = async (colorScheme) => {
         projectDirectory: 'output/test-run',
         neutrals: ['#FFFFFF'],
         backgrounds: ['#000000'],
-        numberOfFrame: 360,
+        numberOfFrame: 1800,
         colorScheme: colorScheme,
-        longestSideInPixels:640,
-        shortestSideInPixels:480
+        longestSideInPixels: 640,
+        shortestSideInPixels: 480
+    });
+
+    await myTestProject.addPrimaryEffect({
+        layerConfig: new LayerConfig({
+            effect: LayeredHexEffect,
+            percentChance: 100,
+            currentEffectConfig: new LayeredHexConfig({
+                invertLayers: true,
+
+                thickness: 1,
+                stroke: 1,
+
+                layerOpacityRange: {bottom: {lower: 0.5, upper: 0.5}, top: {lower: 0.5, upper: 0.5}},
+                layerOpacityTimes: {lower: 2, upper: 4},
+
+                indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
+                indexOpacityTimes: {lower: 2, upper: 4},
+
+                radius: {lower: 5, upper: 10},
+                offsetRadius: {lower: 15, upper: 20},
+
+                numberOfIndex: {lower: 20, upper: 30},
+                startIndex: {lower: 5, upper: 5},
+
+                startAngle: 15,
+
+                movementGaston: {lower: 1, upper: 6},
+
+                initialNumberOfPoints: 8,
+                scaleByFactor: 1.1,
+
+                accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
+                blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
+                featherTimes: {lower: 2, upper: 4},
+            }),
+        })
     });
 
     await myTestProject.addPrimaryEffect({

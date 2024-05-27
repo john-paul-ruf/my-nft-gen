@@ -39,8 +39,10 @@ export class FabricCanvasStrategy {
             fill: '',
             stroke: hexToRgba(outerColor, alpha),
             strokeWidth: outerStroke,
-            left: pos.x - (radius),
-            top: pos.y - (radius),
+            left: pos.x,
+            top: pos.y,
+            originX: 'center',
+            originY: 'center',
         }));
 
         this.canvas.add(new fabric.Circle({
@@ -48,8 +50,10 @@ export class FabricCanvasStrategy {
             fill: '',
             stroke: hexToRgba(innerColor, alpha),
             strokeWidth: innerStroke,
-            left: pos.x - (radius),
-            top: pos.y - (radius),
+            left: pos.x,
+            top: pos.y,
+            originX: 'center',
+            originY: 'center',
         }));
     }
 
@@ -107,8 +111,8 @@ export class FabricCanvasStrategy {
             strokeWidth: outerStroke,
             originX: 'center',
             originY: 'center',
-            left: pos.x - (radius),
-            top: pos.y - (radius),
+            left: pos.x,
+            top: pos.y,
         }));
 
         this.canvas.add(new fabric.Polygon(pointsArray, {
@@ -116,8 +120,8 @@ export class FabricCanvasStrategy {
             strokeWidth: innerStroke,
             originX: 'center',
             originY: 'center',
-            left: pos.x - (radius),
-            top: pos.y - (radius),
+            left: pos.x,
+            top: pos.y,
         }));
     }
 
@@ -153,8 +157,8 @@ export class FabricCanvasStrategy {
             fill: hexToRgba(fillColor, alpha),
             originX: 'center',
             originY: 'center',
-            left: pos.x - (radius),
-            top: pos.y - (radius),
+            left: pos.x,
+            top: pos.y,
         }));
     }
 
