@@ -21,13 +21,13 @@ const createComposition = async (colorScheme) => {
         projectDirectory: 'output/test-run',
         neutrals: ['#FFFFFF'],
         backgrounds: ['#000000'],
-        numberOfFrame: 1800,
+        numberOfFrame: 120*7,
         colorScheme: colorScheme,
         longestSideInPixels: 640,
         shortestSideInPixels: 480
     });
 
-    await myTestProject.addPrimaryEffect({
+    /*await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: LayeredHexEffect,
             percentChance: 100,
@@ -61,7 +61,7 @@ const createComposition = async (colorScheme) => {
                 featherTimes: {lower: 2, upper: 4},
             }),
         })
-    });
+    });*/
 
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
@@ -83,21 +83,21 @@ const createComposition = async (colorScheme) => {
                         percentage: 25,
                         min: new Range(5, 10),
                         max: new Range(15, 25),
-                        times: new Range(1, 2),
+                        times: new Range(2, 3),
                         invert: false
                     }),
                     new MultiStepDefinitionConfig({
                         percentage: 50,
                         min: new Range(2, 4),
                         max: new Range(6, 8),
-                        times: new Range(1, 4),
+                        times: new Range(1, 1),
                         invert: false
                     }),
                     new MultiStepDefinitionConfig({
                         percentage: 25,
                         min: new Range(2, 10),
                         max: new Range(15, 20),
-                        times: new Range(1, 3),
+                        times: new Range(2, 3),
                         invert: false
                     })
                 ],
