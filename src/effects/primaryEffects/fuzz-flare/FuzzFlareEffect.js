@@ -146,6 +146,23 @@ export class FuzzFlareEffect extends LayerEffect {
             numberOfFlareRays: getRandomIntInclusive(this.config.numberOfFlareRays.lower, this.config.numberOfFlareRays.upper),
         };
 
+        function getMultiStepDefinition(elementGastonMultiStep, invert) {
+            const multiStep = [];
+
+            for (let index = 0; index < elementGastonMultiStep.length; index++) {
+                multiStep.push(new MultiStepDefinition({
+                    minPercentage: elementGastonMultiStep[index].minPercentage,
+                    maxPercentage: elementGastonMultiStep[index].maxPercentage,
+                    min: getRandomIntInclusive(elementGastonMultiStep[index].min.lower, elementGastonMultiStep[index].min.upper),
+                    max: getRandomIntInclusive(elementGastonMultiStep[index].max.lower, elementGastonMultiStep[index].max.upper,),
+                    times: getRandomIntInclusive(elementGastonMultiStep[index].times.lower, elementGastonMultiStep[index].times.upper),
+                    invert: invert,
+                }));
+            }
+
+            return multiStep;
+        }
+
         const getFlareRingArray = (num) => {
             const info = [];
 
@@ -156,7 +173,7 @@ export class FuzzFlareEffect extends LayerEffect {
                     thickness: getRandomIntInclusive(this.config.flareRingThickness.lower, this.config.flareRingThickness.upper),
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
-                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, i % 2 > 0),
+                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, getRandomIntInclusive(0, 1) > 0),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
@@ -177,22 +194,6 @@ export class FuzzFlareEffect extends LayerEffect {
             return info;
         };
 
-        function getMultiStepDefinition(elementGastonMultiStep, invert) {
-            const multiStep = [];
-
-            for (let index = 0; index < elementGastonMultiStep.length; index++) {
-                multiStep.push(new MultiStepDefinition({
-                    percentage: elementGastonMultiStep[index].percentage,
-                    min: getRandomIntInclusive(elementGastonMultiStep[index].min.lower, elementGastonMultiStep[index].min.upper),
-                    max: getRandomIntInclusive(elementGastonMultiStep[index].max.lower, elementGastonMultiStep[index].max.upper,),
-                    times: getRandomIntInclusive(elementGastonMultiStep[index].times.lower, elementGastonMultiStep[index].times.upper),
-                    invert: invert
-                }));
-            }
-
-            return multiStep;
-        }
-
         const getFlareRayArray = (num) => {
             const info = [];
 
@@ -205,7 +206,7 @@ export class FuzzFlareEffect extends LayerEffect {
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
                     offset: getRandomIntInclusive(this.config.flareOffset.lower(this.finalSize), this.config.flareOffset.upper(this.finalSize)),
-                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, i % 2 > 0),
+                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, getRandomIntInclusive(0, 1) > 0),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),

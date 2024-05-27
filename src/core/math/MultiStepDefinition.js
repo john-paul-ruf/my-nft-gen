@@ -1,13 +1,15 @@
 export class MultiStepDefinition {
 
     constructor({
-                    percentage = 100,
+                    minPercentage = 0,
+                    maxPercentage = 100,
                     min = 0,
                     max = 25,
                     times = 1,
                     invert = false,
                 }) {
-        this.percentage = percentage;
+        this.minPercentage = minPercentage;
+        this.maxPercentage = maxPercentage;
         this.min = min;
         this.max = max;
         this.times = times;

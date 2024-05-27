@@ -8,29 +8,31 @@ test('findValue: Three Steps - Step One', () => {
     const currentFrame = 125;
 
     const stepOne = new MultiStepDefinition({
-        percentage: 25,
+        minPercentage: 0,
+        maxPercentage: 25,
         min: 0,
         max: 100,
         times: 2,
         invert: false
-    })
+    });
 
     const stepTwo = new MultiStepDefinition({
-        percentage: 50,
+        minPercentage: 25,
+        maxPercentage: 75,
         min: 0,
         max: 25,
         times: 4,
         invert: false
-    })
+    });
 
     const stepThree = new MultiStepDefinition({
-        percentage: 25,
+        minPercentage: 75,
+        maxPercentage: 100,
         min: 0,
         max: 50,
         times: 5,
         invert: false
-    })
-
+    });
 
     const stepMidpoint = Math.floor(FindMultiStepStepValue.findValue(
         {
@@ -43,14 +45,12 @@ test('findValue: Three Steps - Step One', () => {
             totalNumberOfFrames: totalFrame
         }));
 
-    const totalFramesMapped = (totalFrame * (stepOne.percentage * 0.01));
-
     expect(stepMidpoint).toBe(findValue(
         stepOne.min,
         stepOne.max,
         stepOne.times,
-        totalFramesMapped,
-        totalFramesMapped / 2,
+        250,
+        125,
         stepOne.invert,
     ));
 });
@@ -60,28 +60,31 @@ test('findValue: Three Steps - Step Two', () => {
     const currentFrame = 500;
 
     const stepOne = new MultiStepDefinition({
-        percentage: 25,
+        minPercentage: 0,
+        maxPercentage: 25,
         min: 0,
         max: 100,
         times: 2,
         invert: false
-    })
+    });
 
     const stepTwo = new MultiStepDefinition({
-        percentage: 50,
+        minPercentage: 25,
+        maxPercentage: 75,
         min: 0,
         max: 25,
         times: 4,
         invert: false
-    })
+    });
 
     const stepThree = new MultiStepDefinition({
-        percentage: 25,
+        minPercentage: 75,
+        maxPercentage: 100,
         min: 0,
         max: 50,
         times: 5,
         invert: false
-    })
+    });
 
     const stepMidpoint = Math.floor(FindMultiStepStepValue.findValue(
         {
@@ -94,15 +97,13 @@ test('findValue: Three Steps - Step Two', () => {
             totalNumberOfFrames: totalFrame
         }));
 
-    const totalFramesMapped = (totalFrame * (stepTwo.percentage * 0.01));
-
     expect(stepMidpoint).toBe(findValue(
         stepTwo.min,
         stepTwo.max,
         stepTwo.times,
-        totalFramesMapped,
-        totalFramesMapped / 2,
-        stepOne.invert));
+        500,
+        250,
+        stepTwo.invert));
 });
 
 test('findValue: Three Steps - Step Three', () => {
@@ -110,30 +111,31 @@ test('findValue: Three Steps - Step Three', () => {
     const currentFrame = 875;
 
     const stepOne = new MultiStepDefinition({
-        percentage: 25,
+        minPercentage: 0,
+        maxPercentage: 25,
         min: 0,
         max: 100,
         times: 2,
         invert: false
-    })
+    });
 
     const stepTwo = new MultiStepDefinition({
-        percentage: 50,
+        minPercentage: 25,
+        maxPercentage: 75,
         min: 0,
         max: 25,
         times: 4,
         invert: false
-    })
+    });
 
     const stepThree = new MultiStepDefinition({
-        percentage: 25,
+        minPercentage: 75,
+        maxPercentage: 100,
         min: 0,
         max: 50,
         times: 5,
         invert: false
-    })
-
-    const totalFramesMapped = (totalFrame * (stepThree.percentage * 0.01));
+    });
 
     const stepMidpoint = Math.floor(FindMultiStepStepValue.findValue(
         {
@@ -150,9 +152,9 @@ test('findValue: Three Steps - Step Three', () => {
         stepThree.min,
         stepThree.max,
         stepThree.times,
-        totalFramesMapped,
-        totalFramesMapped / 2,
-        stepOne.invert));
+        250,
+        125,
+        stepThree.invert));
 });
 
 
@@ -166,7 +168,8 @@ test('findValue: begin and end match', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -181,7 +184,8 @@ test('findValue: begin and end match', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -205,7 +209,8 @@ test('findValue: begin and end match, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -220,7 +225,8 @@ test('findValue: begin and end match, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -244,7 +250,8 @@ test('findValue: begin and end match, 2 amount of times', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -259,7 +266,8 @@ test('findValue: begin and end match, 2 amount of times', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -283,7 +291,8 @@ test('findValue: begin and end match, 2 amount of times, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -298,7 +307,8 @@ test('findValue: begin and end match, 2 amount of times, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -322,7 +332,8 @@ test('findValue: midpoint match', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -346,7 +357,8 @@ test('findValue: midpoint match, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -370,7 +382,8 @@ test('findValue: left quarter match', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -394,7 +407,8 @@ test('findValue: left quarter match, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -418,7 +432,8 @@ test('findValue: right quarter match', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,
@@ -442,7 +457,8 @@ test('findValue: right match, inverted', () => {
         {
             stepArray: [
                 new MultiStepDefinition({
-                    percentage: 100,
+                    minPercentage: 0,
+                    maxPercentage: 100,
                     min: min,
                     max: max,
                     times: times,

@@ -11,29 +11,26 @@ export class FindMultiStepStepValue {
                          totalNumberOfFrames = 100
                      }) {
 
-        let previousFrameBlocks = 0;
 
         for (let index = 0; index < stepArray.length; index++) {
-            const currentStepPercentage = (currentFrame / totalNumberOfFrames) * 100;
-            const previousPercentage = index > 0 ? stepArray[index - 1].percentage : 0;
-            const nextPercentage = index < stepArray.length - 1 ? stepArray[index + 1].percentage : 100;
-            const frameBlock = (totalNumberOfFrames * (stepArray[index].percentage * 0.01));
+            const currentStepPercentage = ((currentFrame / totalNumberOfFrames) * 100);
 
             if (
-                currentStepPercentage >= previousPercentage
-                && currentStepPercentage <= nextPercentage
+                currentStepPercentage >= stepArray[index].minPercentage
+                && currentStepPercentage <= stepArray[index].maxPercentage
             ) {
+
+                const stepFrames = (totalNumberOfFrames * ((stepArray[index].maxPercentage - stepArray[index].minPercentage) * 0.01));
+                const stepCurrentFrame = (totalNumberOfFrames * (1 - (currentStepPercentage * 0.01)));
 
                 return findValue(
                     stepArray[index].min,
                     stepArray[index].max,
                     stepArray[index].times,
-                    frameBlock,
-                    currentFrame - previousFrameBlocks,
+                    stepFrames,
+                    stepCurrentFrame,
                     stepArray[index].invert);
             }
-
-            previousFrameBlocks += frameBlock;
         }
     }
 }

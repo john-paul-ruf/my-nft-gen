@@ -21,7 +21,7 @@ const createComposition = async (colorScheme) => {
         projectDirectory: 'output/test-run',
         neutrals: ['#FFFFFF'],
         backgrounds: ['#000000'],
-        numberOfFrame: 120*7,
+        numberOfFrame: 120*4,
         colorScheme: colorScheme,
         longestSideInPixels: 640,
         shortestSideInPixels: 480
@@ -107,7 +107,7 @@ const createComposition = async (colorScheme) => {
                 flareRingStroke: new Range(1, 1),
                 flareRingThickness: new Range(1, 3),
 
-                numberOfFlareRays: new Range(10, 10),
+                numberOfFlareRays: new Range(20, 20),
                 flareRaysSizeRange: new PercentageRange(new PercentageLongestSide(0.7), new PercentageLongestSide(1)),
                 flareRaysStroke: new Range(1, 1),
                 flareRayThickness: new Range(1, 3),
