@@ -42,7 +42,7 @@ export class FuzzFlareEffect extends LayerEffect {
             totalNumberOfFrames: context.numberOfFrames,
             currentFrame: context.currentFrame
         });
-        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
         await topCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].innerColor, array[i].stroke, array[i].innerColor, theOpacityGaston);
@@ -76,7 +76,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const bottomCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
-        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].blurTimes, context.numberOfFrames, context.currentFrame));
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
         const theAngleGaston = array[i].angle + FindMultiStepStepValue.findValue({
             stepArray: array[i].gastonRange,
             totalNumberOfFrames: context.numberOfFrames,
