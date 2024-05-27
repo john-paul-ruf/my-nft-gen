@@ -1,9 +1,9 @@
-import { NodeCanvasStrategy } from './strategy/NodeCanvasStrategy.js';
+import { FabricCanvasStrategy } from './strategy/FabricCanvasStrategy.js';
 import { Canvas2d } from './Canvas2d.js';
 
 export class Canvas2dFactory {
     static getNewCanvas = async (width, height) => {
-        const canvas = new Canvas2d(new NodeCanvasStrategy());
+        const canvas = new Canvas2d(new FabricCanvasStrategy());
         await canvas.newCanvas(width, height);
         return canvas;
     };

@@ -7,20 +7,7 @@ import {PercentageShortestSide} from "./core/layer/configType/PercentageShortest
 import {PercentageLongestSide} from "./core/layer/configType/PercentageLongestSide.js";
 import {FuzzFlareEffect} from "./effects/primaryEffects/fuzz-flare/FuzzFlareEffect.js";
 import {FuzzFlareConfig} from "./effects/primaryEffects/fuzz-flare/FuzzFlareConfig.js";
-import {MappedFramesConfig} from "./effects/primaryEffects/mappedFrames/MappedFramesConfig.js";
-import {MappedFramesEffect} from "./effects/primaryEffects/mappedFrames/MappedFramesEffect.js";
-import {ViewportConfig} from "./effects/primaryEffects/viewport/ViewportConfig.js";
-import {ViewportEffect} from "./effects/primaryEffects/viewport/ViewportEffect.js";
-import {RedEyeConfig} from "./effects/primaryEffects/red-eye/RedEyeConfig.js";
-import {RedEyeEffect} from "./effects/primaryEffects/red-eye/RedEyeEffect.js";
-import {getRandomFromArray, getRandomIntInclusive} from "./core/math/random.js";
-import {Point2D} from "./core/layer/configType/Point2D.js";
 import {ColorScheme} from "./core/color/ColorScheme.js";
-import {RandomizeEffect} from "./effects/secondaryEffects/randomize/RandomizeEffect.js";
-import {RandomizeConfig} from "./effects/secondaryEffects/randomize/RandomizeConfig.js";
-import {GlowEffect} from "./effects/secondaryEffects/glow/GlowEffect.js";
-import {GlowConfig} from "./effects/secondaryEffects/glow/GlowConfig.js";
-import {MultiStepDefinition} from "./core/math/MultiStepDefinition.js";
 import {MultiStepDefinitionConfig} from "./core/math/MultiStepDefinitionConfig.js";
 
 const promiseArray = [];
@@ -32,7 +19,7 @@ const createComposition = async (colorScheme) => {
         projectDirectory: 'output/test-run',
         neutrals: ['#FFFFFF'],
         backgrounds: ['#000000'],
-        numberOfFrame: 300,
+        numberOfFrame: 360,
         colorScheme: colorScheme,
         longestSideInPixels:640,
         shortestSideInPixels:480

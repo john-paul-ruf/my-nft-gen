@@ -57,12 +57,4 @@ export class Canvas2d {
     async drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha) {
         await this.strategy.drawFilledPolygon2d(radius, pos, numberOfSides, startAngle, fillColor, alpha);
     }
-
-    async drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha) {
-        await this.strategy.drawPath2d(path, innerStroke, innerColor, outerStroke, outerColor, alpha);
-    }
-
-    async drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor) {
-        await this.strategy.drawQuadraticCurveTo2d(startPoint, controlPoint, endPoint, innerStroke, innerColor, outerStroke, outerColor);
-    }
 }

@@ -1,11 +1,10 @@
+import pathToFfmpeg from 'ffmpeg-ffprobe-static';
 import ffmpeg from 'fluent-ffmpeg';
-import ffmpeg_static from 'ffmpeg-static';
-import ffprobe_static from 'ffprobe-static';
 
 export const writeToMp4 = async (fileSelector, config) => {
     const writeMp4 = async () => new Promise((resolve, reject) => {
 
-        const pass1 = ffmpeg(fileSelector).setFfprobePath(ffprobe_static.path).setFfmpegPath(ffmpeg_static);
+        const pass1 = ffmpeg(fileSelector).setFfprobePath(pathToFfmpeg.ffprobePath).setFfmpegPath(pathToFfmpeg.ffmpegPath);
 
         pass1.outputFormat('mp4')
             .videoCodec('libx265')
