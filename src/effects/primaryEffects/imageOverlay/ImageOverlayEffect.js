@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
 import { getRandomFromArray, getRandomIntExclusive } from '../../../core/math/random.js';
@@ -34,7 +32,7 @@ export class ImageOverlayEffect extends LayerEffect {
         const { finalSize } = this;
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
-        await layer.compositeLayerOver(tempLayer, false);
+        await layer.compositeLayerOver(tempLayer);
     }
 
     #generate(settings) {
@@ -44,11 +42,7 @@ export class ImageOverlayEffect extends LayerEffect {
         };
 
         const getBackdrop = () => {
-            const fileURLToPath1 = fileURLToPath(import.meta.url);
-            const directory = dirname(fileURLToPath1);
-
-            const getFilesInDirectory = (dir) => {
-                const directoryPath = path.join(directory, dir);
+            const getFilesInDirectory = (directoryPath) => {
                 const list = [];
 
                 fs.readdirSync(directoryPath).forEach((file) => {
@@ -64,7 +58,7 @@ export class ImageOverlayEffect extends LayerEffect {
 
             data.filename = images[getRandomIntExclusive(0, images.length)];
 
-            return path.join(directory, this.config.folderName + data.filename);
+            return this.config.folderName + data.filename;
         };
 
         data.imageOverlay = getBackdrop();

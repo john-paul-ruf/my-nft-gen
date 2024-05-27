@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import { getRandomFromArray, getRandomIntExclusive, randomId } from '../../../core/math/random.js';
 import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 import { mapNumberToRange } from '../../../core/math/mapNumberToRange.js';
@@ -77,7 +75,7 @@ export class MappedFramesEffect extends LayerEffect {
 
         const { finalSize } = this;
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
-        await layer.compositeLayerOver(tempLayer, false);
+        await layer.compositeLayerOver(tempLayer);
 
         await fs.unlinkSync(context.filename);
     }
@@ -91,11 +89,7 @@ export class MappedFramesEffect extends LayerEffect {
         };
 
         const getMappedFramesFolder = () => {
-            const fileURLToPath1 = fileURLToPath(import.meta.url);
-            const directory = dirname(fileURLToPath1);
-
-            const getFoldersInDirectory = (dir) => {
-                const directoryPath = path.join(directory, dir);
+            const getFoldersInDirectory = (directoryPath) => {
                 const list = [];
 
                 fs.readdirSync(directoryPath).forEach((file) => {
@@ -111,7 +105,7 @@ export class MappedFramesEffect extends LayerEffect {
 
             data.folderName = folders[getRandomIntExclusive(0, folders.length)];
 
-            return path.join(directory, this.config.folderName + data.folderName);
+            return  this.config.folderName + data.folderName;
         };
 
         data.mappedFramesFolder = getMappedFramesFolder();

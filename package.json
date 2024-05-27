@@ -1,12 +1,18 @@
 {
   "type": "module",
   "name": "my-nft-gen",
-  "version": "1.5.1",
+  "version": "1.5.4",
   "description": "",
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "quick-test": "node ./quick-test.js",
+    "app": "qode --inspect ./src/app.js",
+    "the-advance": "node ./src/the-advance.js",
+    "the-lantern": "node ./src/the-lantern.js",
+    "red-eye": "node ./src/red-eye.js",
+    "resume-folder": "node ./src/resume-folder.js",
+    "make-me-a-pretty": "node ./src/the-advance.js",
+    "fuzz-flare": "node ./src/fuzz-flare.js",
     "lint": "npx eslint src/**/*.js",
     "lint:fix": "eslint --fix --ext .js,.jsx ."
   },
