@@ -26,10 +26,6 @@ import { WireframeSpiralConfig } from '../../effects/primaryEffects/wireframeSpi
 import { WireFrameSpiralEffect } from '../../effects/primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js';
 import { ViewportConfig } from '../../effects/primaryEffects/viewport/ViewportConfig.js';
 import { ViewportEffect } from '../../effects/primaryEffects/viewport/ViewportEffect.js';
-import { ThreeDimensionalShapeConfig } from '../../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeConfig.js';
-import { ThreeDimensionalShapeEffect } from '../../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js';
-import { ThreeDimensionalRingsConfig } from '../../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsConfig.js';
-import { ThreeDimensionalRingsEffect } from '../../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js';
 import { ScopesConfig } from '../../effects/primaryEffects/scopes/ScopesConfig.js';
 import { ScopesEffect } from '../../effects/primaryEffects/scopes/ScopesEffect.js';
 import { ScanLinesConfig } from '../../effects/primaryEffects/scanLines/ScanLinesConfig.js';

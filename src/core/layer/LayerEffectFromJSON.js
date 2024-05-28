@@ -25,12 +25,6 @@ import {RayRingEffect} from '../../effects/primaryEffects/rayRing/RayRingEffect.
 import {RayRingInvertedEffect} from '../../effects/primaryEffects/rayRingInverted/RayRingInvertedEffect.js';
 import {ScanLinesEffect} from '../../effects/primaryEffects/scanLines/ScanLinesEffect.js';
 import {ScopesEffect} from '../../effects/primaryEffects/scopes/ScopesEffect.js';
-import {
-    ThreeDimensionalRingsEffect
-} from '../../effects/primaryEffects/threeDimensionalRings/ThreeDimensionalRingsEffect.js';
-import {
-    ThreeDimensionalShapeEffect
-} from '../../effects/primaryEffects/threeDimensionalShape/ThreeDimensionalShapeEffect.js';
 import {ViewportEffect} from '../../effects/primaryEffects/viewport/ViewportEffect.js';
 import {WireFrameSpiralEffect} from '../../effects/primaryEffects/wireframeSpiral/WireFrameSpiralEffect.js';
 import {FadeEffect} from '../../effects/secondaryEffects/fade/FadeEffect.js';
@@ -125,12 +119,6 @@ export class LayerEffectFromJSON {
                 break;
             case ScopesEffect._name_:
                 layer = Object.assign(new ScopesEffect({}), json);
-                break;
-            case ThreeDimensionalRingsEffect._name_:
-                layer = Object.assign(new ThreeDimensionalRingsEffect({}), json);
-                break;
-            case ThreeDimensionalShapeEffect._name_:
-                layer = Object.assign(new ThreeDimensionalShapeEffect({}), json);
                 break;
             case ViewportEffect._name_:
                 layer = Object.assign(new ViewportEffect({}), json);
