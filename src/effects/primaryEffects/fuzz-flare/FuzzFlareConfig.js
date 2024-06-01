@@ -24,26 +24,20 @@ export class FuzzFlareConfig extends EffectConfig {
                 new MultiStepDefinitionConfig({
                     minPercentage: 0,
                     maxPercentage: 25,
-                    min: new Range(5, 10),
                     max: new Range(15, 25),
                     times: new Range(1, 2),
-                    invert: false,
                 }),
                 new MultiStepDefinitionConfig({
                     minPercentage: 25,
                     maxPercentage: 75,
-                    min: new Range(2, 4),
                     max: new Range(8, 12),
                     times: new Range(1, 4),
-                    invert: false,
                 }),
                 new MultiStepDefinitionConfig({
                     minPercentage: 75,
                     maxPercentage: 100,
-                    min: new Range(2, 10),
                     max: new Range(15, 20),
                     times: new Range(1, 3),
-                    invert: false,
                 }),
             ],
 

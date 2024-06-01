@@ -21,48 +21,12 @@ const createComposition = async (colorScheme) => {
         projectDirectory: 'output/test-run',
         neutrals: ['#FFFFFF'],
         backgrounds: ['#000000'],
-        numberOfFrame: 120*4,
+        numberOfFrame: 1800,
         colorScheme: colorScheme,
         longestSideInPixels: 640,
         shortestSideInPixels: 480
     });
-
-    /*await myTestProject.addPrimaryEffect({
-        layerConfig: new LayerConfig({
-            effect: LayeredHexEffect,
-            percentChance: 100,
-            currentEffectConfig: new LayeredHexConfig({
-                invertLayers: true,
-
-                thickness: 1,
-                stroke: 1,
-
-                layerOpacityRange: {bottom: {lower: 0.5, upper: 0.5}, top: {lower: 0.5, upper: 0.5}},
-                layerOpacityTimes: {lower: 2, upper: 4},
-
-                indexOpacityRange: {bottom: {lower: 0.3, upper: 0.5}, top: {lower: 0.6, upper: 0.7}},
-                indexOpacityTimes: {lower: 2, upper: 4},
-
-                radius: {lower: 5, upper: 10},
-                offsetRadius: {lower: 15, upper: 20},
-
-                numberOfIndex: {lower: 20, upper: 30},
-                startIndex: {lower: 5, upper: 5},
-
-                startAngle: 15,
-
-                movementGaston: {lower: 1, upper: 6},
-
-                initialNumberOfPoints: 8,
-                scaleByFactor: 1.1,
-
-                accentRange: {bottom: {lower: 1, upper: 1}, top: {lower: 3, upper: 6}},
-                blurRange: {bottom: {lower: 1, upper: 1}, top: {lower: 1, upper: 1}},
-                featherTimes: {lower: 2, upper: 4},
-            }),
-        })
-    });*/
-
+d
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: FuzzFlareEffect,
@@ -80,34 +44,31 @@ const createComposition = async (colorScheme) => {
 
                 elementGastonMultiStep: [
                     new MultiStepDefinitionConfig({
-                        percentage: 25,
-                        min: new Range(5, 10),
-                        max: new Range(15, 25),
-                        times: new Range(2, 3),
-                        invert: false
-                    }),
-                    new MultiStepDefinitionConfig({
-                        percentage: 50,
-                        min: new Range(2, 4),
-                        max: new Range(6, 8),
-                        times: new Range(1, 1),
-                        invert: false
-                    }),
-                    new MultiStepDefinitionConfig({
-                        percentage: 25,
-                        min: new Range(2, 10),
+                        minPercentage: 0,
+                        maxPercentage: 25,
                         max: new Range(15, 20),
-                        times: new Range(2, 3),
-                        invert: false
+                        times: new Range(3, 6),
+                    }),
+                    new MultiStepDefinitionConfig({
+                        minPercentage: 25,
+                        maxPercentage: 75,
+                        max: new Range(15, 20),
+                        times: new Range(1, 3),
+                    }),
+                    new MultiStepDefinitionConfig({
+                        minPercentage: 75,
+                        maxPercentage: 100,
+                        max: new Range(15, 20),
+                        times: new Range(3, 6),
                     })
                 ],
 
                 numberOfFlareRings: new Range(5, 5),
-                flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.05), new PercentageLongestSide(1)),
+                flareRingsSizeRange: new PercentageRange(new PercentageShortestSide(0.05), new PercentageLongestSide(0.8)),
                 flareRingStroke: new Range(1, 1),
                 flareRingThickness: new Range(1, 3),
 
-                numberOfFlareRays: new Range(20, 20),
+                numberOfFlareRays: new Range(10, 10),
                 flareRaysSizeRange: new PercentageRange(new PercentageLongestSide(0.7), new PercentageLongestSide(1)),
                 flareRaysStroke: new Range(1, 1),
                 flareRayThickness: new Range(1, 3),

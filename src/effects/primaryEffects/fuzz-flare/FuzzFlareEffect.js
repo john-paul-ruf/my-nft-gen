@@ -37,11 +37,13 @@ export class FuzzFlareEffect extends LayerEffect {
         const bottomCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
         const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
-        const theRadiusGaston = array[i].size + FindMultiStepStepValue.findValue({
-            stepArray: array[i].gastonRange,
-            totalNumberOfFrames: context.numberOfFrames,
-            currentFrame: context.currentFrame
-        });
+        const theRadiusGaston = array[i].size + (FindMultiStepStepValue.findValue({
+                    stepArray: array[i].gastonRange,
+                    totalNumberOfFrames: context.numberOfFrames,
+                    currentFrame: context.currentFrame
+                })
+                * (i % 2 > 0 ? 1 : -1));
+
         const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
@@ -77,11 +79,15 @@ export class FuzzFlareEffect extends LayerEffect {
 
         const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
         const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
-        const theAngleGaston = array[i].angle + FindMultiStepStepValue.findValue({
-            stepArray: array[i].gastonRange,
-            totalNumberOfFrames: context.numberOfFrames,
-            currentFrame: context.currentFrame
-        });
+
+        const theAngleGaston = array[i].angle + (FindMultiStepStepValue.findValue({
+                stepArray: array[i].gastonRange,
+                totalNumberOfFrames: context.numberOfFrames,
+                currentFrame: context.currentFrame
+            })
+            * (i % 2 > 0 ? 1 : -1));
+
+
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
         const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
@@ -146,23 +152,6 @@ export class FuzzFlareEffect extends LayerEffect {
             numberOfFlareRays: getRandomIntInclusive(this.config.numberOfFlareRays.lower, this.config.numberOfFlareRays.upper),
         };
 
-        function getMultiStepDefinition(elementGastonMultiStep, invert) {
-            const multiStep = [];
-
-            for (let index = 0; index < elementGastonMultiStep.length; index++) {
-                multiStep.push(new MultiStepDefinition({
-                    minPercentage: elementGastonMultiStep[index].minPercentage,
-                    maxPercentage: elementGastonMultiStep[index].maxPercentage,
-                    min: getRandomIntInclusive(elementGastonMultiStep[index].min.lower, elementGastonMultiStep[index].min.upper),
-                    max: getRandomIntInclusive(elementGastonMultiStep[index].max.lower, elementGastonMultiStep[index].max.upper,),
-                    times: getRandomIntInclusive(elementGastonMultiStep[index].times.lower, elementGastonMultiStep[index].times.upper),
-                    invert: invert,
-                }));
-            }
-
-            return multiStep;
-        }
-
         const getFlareRingArray = (num) => {
             const info = [];
 
@@ -173,7 +162,7 @@ export class FuzzFlareEffect extends LayerEffect {
                     thickness: getRandomIntInclusive(this.config.flareRingThickness.lower, this.config.flareRingThickness.upper),
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
-                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, getRandomIntInclusive(0, 1) > 0),
+                    gastonRange: FindMultiStepStepValue.convertFromConfigToDefinition(this.config.elementGastonMultiStep),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),
@@ -206,7 +195,7 @@ export class FuzzFlareEffect extends LayerEffect {
                     innerColor: this.config.innerColor.getColor(settings),
                     outerColor: this.config.outerColor.getColor(settings),
                     offset: getRandomIntInclusive(this.config.flareOffset.lower(this.finalSize), this.config.flareOffset.upper(this.finalSize)),
-                    gastonRange: getMultiStepDefinition(this.config.elementGastonMultiStep, getRandomIntInclusive(0, 1) > 0),
+                    gastonRange: FindMultiStepStepValue.convertFromConfigToDefinition(this.config.elementGastonMultiStep),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),

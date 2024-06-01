@@ -1,22 +1,23 @@
 import fs from 'fs';
-import { getRandomFromArray, getRandomIntExclusive, randomId } from '../../../core/math/random.js';
-import { LayerEffect } from '../../../core/layer/LayerEffect.js';
-import { mapNumberToRange } from '../../../core/math/mapNumberToRange.js';
-import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
-import { Settings } from '../../../core/Settings.js';
-import { MappedFramesConfig } from './MappedFramesConfig.js';
+import {getRandomFromArray, getRandomIntExclusive, randomId} from '../../../core/math/random.js';
+import {LayerEffect} from '../../../core/layer/LayerEffect.js';
+import {mapNumberToRange} from '../../../core/math/mapNumberToRange.js';
+import {LayerFactory} from '../../../core/factory/layer/LayerFactory.js';
+import {Settings} from '../../../core/Settings.js';
+import {MappedFramesConfig} from './MappedFramesConfig.js';
+import {FindMultiStepStepValue} from "../../../core/math/FindMultiStepValue.js";
 
 export class MappedFramesEffect extends LayerEffect {
     static _name_ = 'mapped-frames';
 
     constructor({
-        name = MappedFramesEffect._name_,
-        requiresLayer = true,
-        config = new MappedFramesConfig({}),
-        additionalEffects = [],
-        ignoreAdditionalEffects = false,
-        settings = new Settings({}),
-    }) {
+                    name = MappedFramesEffect._name_,
+                    requiresLayer = true,
+                    config = new MappedFramesConfig({}),
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({}),
+                }) {
         super({
             name,
             requiresLayer,
@@ -51,8 +52,15 @@ export class MappedFramesEffect extends LayerEffect {
     async #extractFrame(context) {
         const frames = await this.#getAllFilesInDirectory(context.data.mappedFramesFolder);
 
-        const sequenceMax = Math.floor(context.numberOfFrames / context.data.loopTimes);
-        const currentSequence = context.currentFrame % sequenceMax;
+        const multiStepInfo = FindMultiStepStepValue.getFindValueInfo({
+            stepArray: context.data.loopTimesMultiStep,
+            currentFrame: context.currentFrame,
+            totalNumberOfFrames: context.numberOfFrames
+        })
+
+
+        const sequenceMax = Math.floor(multiStepInfo.totalNumberOfFrames / multiStepInfo.times);
+        const currentSequence = multiStepInfo.currentFrame % sequenceMax;
         const frameIndex = Math.floor(mapNumberToRange(currentSequence, 0, sequenceMax, 0, frames.length - 1));
 
         return this.#copyFile(frames[frameIndex], context.filename);
@@ -73,7 +81,7 @@ export class MappedFramesEffect extends LayerEffect {
 
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
 
-        const { finalSize } = this;
+        const {finalSize} = this;
         await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer);
         await layer.compositeLayerOver(tempLayer);
 
@@ -84,7 +92,7 @@ export class MappedFramesEffect extends LayerEffect {
         const data = {
             layerOpacity: this.config.layerOpacity,
             buffer: getRandomFromArray(this.config.buffer),
-            loopTimes: this.config.loopTimes,
+            loopTimesMultiStep: FindMultiStepStepValue.convertFromConfigToDefinition(this.config.loopTimesMultiStep),
             randomize: this.config.randomize,
         };
 
@@ -92,11 +100,15 @@ export class MappedFramesEffect extends LayerEffect {
             const getFoldersInDirectory = (directoryPath) => {
                 const list = [];
 
-                fs.readdirSync(directoryPath).forEach((file) => {
-                    if (!file.startsWith('.') && fs.lstatSync(directoryPath + file).isDirectory()) {
-                        list.push(`${file}/`);
-                    }
-                });
+                try {
+                    fs.readdirSync(directoryPath).forEach((file) => {
+                        if (!file.startsWith('.') && fs.lstatSync(directoryPath + file).isDirectory()) {
+                            list.push(`${file}/`);
+                        }
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
 
                 return list;
             };
@@ -105,7 +117,7 @@ export class MappedFramesEffect extends LayerEffect {
 
             data.folderName = folders[getRandomIntExclusive(0, folders.length)];
 
-            return  this.config.folderName + data.folderName;
+            return this.config.folderName + data.folderName;
         };
 
         data.mappedFramesFolder = getMappedFramesFolder();
