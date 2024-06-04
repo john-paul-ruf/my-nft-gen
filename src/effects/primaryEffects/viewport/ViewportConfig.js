@@ -1,5 +1,6 @@
 import {EffectConfig} from '../../../core/layer/EffectConfig.js';
 import {ColorPicker} from "../../../core/layer/configType/ColorPicker.js";
+import {Point2D} from "../../../core/layer/configType/Point2D.js";
 
 export class ViewportConfig extends EffectConfig {
     constructor(
@@ -7,6 +8,7 @@ export class ViewportConfig extends EffectConfig {
             invertLayers = true,
             layerOpacity = 1,
             underLayerOpacity = 0.8,
+            center = new Point2D(1080 / 2, 1920 / 2),
             color = new ColorPicker(ColorPicker.SelectionType.colorBucket),
             innerColor = new ColorPicker(ColorPicker.SelectionType.neutralBucket),
             stroke = 2,
@@ -28,6 +30,7 @@ export class ViewportConfig extends EffectConfig {
         super();
         this.invertLayers = invertLayers;
         this.layerOpacity = layerOpacity;
+        this.center = center;
         this.color = color;
         this.innerColor = innerColor;
         this.underLayerOpacity = underLayerOpacity;

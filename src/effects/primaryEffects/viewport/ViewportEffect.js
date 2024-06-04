@@ -105,7 +105,7 @@ export class ViewportEffect extends LayerEffect {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
-            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
+            center: this.config.center,
         };
     }
 
