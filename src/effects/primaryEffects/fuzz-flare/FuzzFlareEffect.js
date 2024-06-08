@@ -47,7 +47,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
-        await topCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke, array[i].innerColor, array[i].stroke, array[i].innerColor, theOpacityGaston);
+        await topCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].thickness, array[i].innerColor, array[i].stroke, array[i].outerColor, theOpacityGaston);
         await bottomCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();
@@ -93,7 +93,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
-        await topCanvas.drawLine2d(start, end, array[i].stroke, array[i].innerColor, array[i].stroke, array[i].innerColor, theOpacityGaston);
+        await topCanvas.drawLine2d(start, end, array[i].thickness, array[i].innerColor, array[i].stroke, array[i].outerColor, theOpacityGaston);
         await bottomCanvas.drawLine2d(start, end, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();
