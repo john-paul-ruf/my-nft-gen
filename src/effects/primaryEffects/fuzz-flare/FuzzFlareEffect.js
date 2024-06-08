@@ -93,7 +93,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
-        await topCanvas.drawLine2d(start, end, array[i].thickness, array[i].innerColor, array[i].stroke, array[i].outerColor, theOpacityGaston);
+        await topCanvas.drawLine2d(start, end, array[i].thickness, array[i].innerColor, array[i].stroke, array[i].outerColor);
         await bottomCanvas.drawLine2d(start, end, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();

@@ -38,7 +38,7 @@ export class FabricCanvasStrategy {
             radius,
             fill: '',
             stroke: hexToRgba(outerColor, alpha),
-            strokeWidth: outerStroke,
+            strokeWidth: innerStroke + outerStroke,
             left: pos.x,
             top: pos.y,
             originX: 'center',
@@ -77,7 +77,7 @@ export class FabricCanvasStrategy {
 
         this.canvas.add(new fabric.Line([strokeStart.x, strokeStart.y, strokeEnd.x, strokeEnd.y], {
             stroke: outerColor,
-            strokeWidth: outerStroke,
+            strokeWidth: innerStroke + outerStroke,
             originX: 'center',
             originY: 'center',
         }));
@@ -108,7 +108,7 @@ export class FabricCanvasStrategy {
 
         const bottom = new fabric.Polygon(pointsArray, {
             stroke: hexToRgba(outerColor, alpha),
-            strokeWidth: outerStroke,
+            strokeWidth: innerStroke + outerStroke,
             originX: 'center',
             originY: 'center',
             left: pos.x,
@@ -171,7 +171,7 @@ export class FabricCanvasStrategy {
     async drawLine2d(start, end, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {
         this.canvas.add(new fabric.Line([start.x, start.y, end.x, end.y], {
             stroke: hexToRgba(outerColor, alpha),
-            strokeWidth: outerStroke,
+            strokeWidth: innerStroke + outerStroke,
             originX: 'center',
             originY: 'center',
         }));
