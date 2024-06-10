@@ -116,7 +116,7 @@ export class LoopBuilder {
         await fs.promises.writeFile(`${this.settings.config.fileOut}-settings.json`, JSON.stringify(this.settings));
     }
 
-    async constructLoop() {
+    async constructLoop(keepFrames = false) {
         const checkFileExists = async (filepath) => new Promise((resolve, reject) => {
             fs.access(filepath, fs.constants.F_OK, (error) => {
                 resolve(!error);
@@ -158,9 +158,11 @@ export class LoopBuilder {
             await writeToMp4(`${this.context.workingDirectory + this.config.finalFileName}-frame-%d.png`, this.config);
             await writeScreenCap(this.context.frameFilenames[0], this.config);
 
-            for (let f = 0; f < this.context.frameFilenames.length; f++) {
-                // delete files
-                await fs.promises.unlink(this.context.frameFilenames[f]);
+            if(!keepFrames) {
+                for (let f = 0; f < this.context.frameFilenames.length; f++) {
+                    // delete files
+                    await fs.promises.unlink(this.context.frameFilenames[f]);
+                }
             }
 
             resolve();

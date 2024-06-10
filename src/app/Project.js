@@ -59,7 +59,7 @@ export class Project {
         this.selectedFinalEffectConfigs.push(layerConfig);
     }
 
-    async generateRandomLoop() {
+    async generateRandomLoop(keepFrames = false) {
         const finalFinalName = this.projectName + randomId();
         const workingDirectory = `${this.projectDirectory}/${finalFinalName}/`;
 
@@ -83,6 +83,6 @@ export class Project {
                 allFinalImageEffects: this.selectedFinalEffectConfigs,
             }),
         );
-        return loopBuilder.constructLoop();
+        return loopBuilder.constructLoop(keepFrames);
     }
 }
