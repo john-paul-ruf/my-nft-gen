@@ -1,13 +1,10 @@
 import {LayerEffect} from '../../../core/layer/LayerEffect.js';
-import {
-    getRandomIntExclusive, getRandomIntInclusive, randomId, randomNumber,
-} from '../../../core/math/random.js';
+import {getRandomIntInclusive, randomNumber,} from '../../../core/math/random.js';
 import {findValue} from '../../../core/math/findValue.js';
 import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
 import {findPointByAngleAndCircle} from '../../../core/math/drawingMath.js';
 import {Settings} from '../../../core/Settings.js';
 import {FuzzFlareConfig} from './FuzzFlareConfig.js';
-import {MultiStepDefinition} from "../../../core/math/MultiStepDefinition.js";
 import {FindMultiStepStepValue} from "../../../core/math/FindMultiStepValue.js";
 
 export class FuzzFlareEffect extends LayerEffect {
@@ -48,7 +45,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
 
         await topCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].thickness, array[i].innerColor, array[i].stroke, array[i].outerColor);
-        await bottomCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
+        await bottomCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].thickness, array[i].innerColor, array[i].stroke + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();
         const bottomLayer = await bottomCanvas.convertToLayer();
@@ -94,7 +91,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
 
         await topCanvas.drawLine2d(start, end, array[i].thickness, array[i].innerColor, array[i].stroke, array[i].outerColor);
-        await bottomCanvas.drawLine2d(start, end, array[i].stroke + array[i].thickness, array[i].outerColor, array[i].stroke + array[i].thickness + theAccentGaston, array[i].outerColor, theOpacityGaston);
+        await bottomCanvas.drawLine2d(start, end, array[i].stroke, array[i].innerColor, array[i].stroke + theAccentGaston, array[i].outerColor, theOpacityGaston);
 
         const topLayer = await topCanvas.convertToLayer();
         const bottomLayer = await bottomCanvas.convertToLayer();
