@@ -73,7 +73,7 @@ export class BlinkOnEffect extends LayerEffect {
         const blinkLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
 
         const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise);
-        await blinkLayer.rotate(data.blinkArray[index].initialRotation);
+        await blinkLayer.rotate(blink.initialRotation);
         await blinkLayer.rotate(rotateGaston);
 
         await blinkLayer.resize(blink.diameter, blink.diameter);
