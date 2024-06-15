@@ -69,7 +69,7 @@ export class SharpLayerStrategy {
         const currentInfo = await this.getInfo();
         const layerInfo = await layer.getInfo();
 
-        if (withoutResize) {
+        if (!withoutResize) {
             if (currentInfo.height > finalImageSize.height
                 || currentInfo.width > finalImageSize.width) {
                 await this.resize(finalImageSize.height, finalImageSize.width);

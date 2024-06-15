@@ -70,18 +70,48 @@ export class BlinkOnEffect extends LayerEffect {
 
         const blink = data.blinkArray[index];
         const fileName = `${this.workingDirectory}blink-in-action${randomId()}.png`;
-        const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
-        await tempLayer.resize(blink.diameter, blink.diameter);
+        const blinkLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
 
         const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise);
+        await blinkLayer.rotate(data.blinkArray[index].initialRotation);
+        await blinkLayer.rotate(rotateGaston);
 
-        await tempLayer.rotate(data.blinkArray[index].initialRotation);
-        await tempLayer.rotate(rotateGaston);
+        await blinkLayer.resize(blink.diameter, blink.diameter);
+
+        await blinkLayer.toFile(fileName);
+        await blinkLayer.fromFile(fileName);
+
+        if (blink.diameter > this.finalSize.width && blink.diameter > this.finalSize.height) {
+            await blinkLayer.crop(Math.floor((blink.diameter - this.finalSize.width) / 2), Math.floor((blink.diameter - this.finalSize.height) / 2), this.finalSize.width, this.finalSize.height);
+        } else if (blink.diameter > this.finalSize.width) {
+            if (blink.diameter < this.finalSize.height) {
+                await blinkLayer.crop(Math.floor((blink.diameter - this.finalSize.width) / 2), 0, this.finalSize.width, blink.diameter);
+            } else {
+                await blinkLayer.crop(Math.floor((blink.diameter - this.finalSize.width) / 2), 0, this.finalSize.width, this.finalSize.height);
+            }
+        } else if (blink.diameter > this.finalSize.height) {
+            if (blink.diameter < this.finalSize.width) {
+                await blinkLayer.crop(Math.floor((blink.diameter - this.finalSize.width) / 2), 0, blink.diameter, this.finalSize.height);
+            } else {
+                await blinkLayer.crop(0, Math.floor((blink.diameter - this.finalSize.height) / 2), this.finalSize.width, this.finalSize.height);
+            }
+        }
+
+        const tempLayer = await LayerFactory.getNewLayer(
+            this.finalSize.height,
+            this.finalSize.width,
+            '#00000000',
+            {
+                finalImageSize: this.finalSize,
+                workingDirectory: null,
+                layerStrategy: 'sharp',
+            }
+        );
+
+        await tempLayer.compositeLayerOver(blinkLayer);
 
         await this.#randomize(tempLayer, data, index);
         await this.#glowAnimated(tempLayer, data, currentFrame, totalFrames, index);
-
-        await tempLayer.resize(this.finalSize.height, this.finalSize.width);
 
         await tempLayer.toFile(fileName);
 
