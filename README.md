@@ -86,9 +86,7 @@ Creates an animated blur for the composite image. Can be glitched to appear on a
  - glitchChance - the percent chance this effect could apply to a given frame
 
 #### Glitch Drumroll Horizontal Wave Effect
-Creates an animated glitch for the composite image
-Can be glitched to appear on a percentage of the frames generated
-Instantiated through the project via the LayerConfig
+Creates an animated glitch for the composite image. Can be glitched to appear on a percentage of the frames generated. Instantiated through the project via the LayerConfig
 ##### Config Values
  - glitchChance - the percent chance this effect could apply to a given frame
  - glitchOffset - the amount of 'slice' visible
@@ -96,24 +94,18 @@ Instantiated through the project via the LayerConfig
  - cosineFactor - changes the 'slice'
 
 #### Glitch Fractal Effect
-Creates a static glitch for the composite image
-Can be glitched to appear on a percentage of the frames generated
-
+Creates a static glitch for the composite image. Can be glitched to appear on a percentage of the frames generated.
 ##### Config Values
  - theRandom - the fractal amount
  - glitchChance - the percent chance this effect could apply to a given frame
 
 #### Glitch Inverse Effect
-Inverts all colors for the composite image
-Can be glitched to appear on a percentage of the frames generated
-
-#####
+Inverts all colors for the composite image. Can be glitched to appear on a percentage of the frames generated.
+##### Config Values
  - glitchChance - the percent chance this effect could apply to a given frame
 
 #### Pixelate Effect
-Creates an animated glitch for the composite image
-Can be glitched to appear on a percentage of the frames generated
-
+Creates an animated glitch for the composite image. Can be glitched to appear on a percentage of the frames generated.
 ##### Config Values
  - lowerRange - a lower and upper value for where the amount of pixelate starts
  - upperRange - a lower and upper value for where the amount of pixelate ends 
