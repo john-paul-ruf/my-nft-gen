@@ -1,23 +1,23 @@
 import sharp from 'sharp';
-import { Readable } from 'stream';
-import { pipeline } from 'node:stream/promises';
-import { promises as fs, createWriteStream } from 'fs';
-import { promisify } from 'util';
-import { mapNumberToRange } from '../../../math/mapNumberToRange.js';
-import { randomId } from '../../../math/random.js';
-import { Layer } from '../Layer.js';
-import { LayerFactory } from '../LayerFactory.js';
+import {Readable} from 'stream';
+import {pipeline} from 'node:stream/promises';
+import {promises as fs, createWriteStream} from 'fs';
+import {promisify} from 'util';
+import {mapNumberToRange} from '../../../math/mapNumberToRange.js';
+import {randomId} from '../../../math/random.js';
+import {Layer} from '../Layer.js';
+import {LayerFactory} from '../LayerFactory.js';
 
 export class SharpLayerStrategy {
     constructor({
-        finalImageSize = {
-            width: 0,
-            height: 0,
-            longestSide: 0,
-            shortestSide: 0,
-        },
-        workingDirectory = null,
-    }) {
+                    finalImageSize = {
+                        width: 0,
+                        height: 0,
+                        longestSide: 0,
+                        shortestSide: 0,
+                    },
+                    workingDirectory = null,
+                }) {
         this.internalRepresentation = null;
         this.fileBuffer = null;
         this.finalImageSize = finalImageSize;
@@ -49,13 +49,13 @@ export class SharpLayerStrategy {
     async toBuffer() {
         return await this.internalRepresentation.png({
             compressionLevel: 0, force: true,
-        }).toBuffer({ resolveWithObject: false });
+        }).toBuffer({resolveWithObject: false});
     }
 
     async toFile(filename) {
         const buffer = await this.internalRepresentation.png({
             compressionLevel: 0, force: true,
-        }).toBuffer({ resolveWithObject: false });
+        }).toBuffer({resolveWithObject: false});
 
         const readableStream = Readable.from(buffer);
         const writableStream = createWriteStream(filename);
@@ -63,20 +63,22 @@ export class SharpLayerStrategy {
         await pipeline(readableStream, writableStream);
     }
 
-    async compositeLayerOver(layer) {
-        const { finalImageSize } = this;
+    async compositeLayerOver(layer, withoutResize = false) {
+        const {finalImageSize} = this;
 
         const currentInfo = await this.getInfo();
         const layerInfo = await layer.getInfo();
 
-        if (currentInfo.height > finalImageSize.height
-            || currentInfo.width > finalImageSize.width) {
-            await this.resize(finalImageSize.height, finalImageSize.width);
-        }
+        if (withoutResize) {
+            if (currentInfo.height > finalImageSize.height
+                || currentInfo.width > finalImageSize.width) {
+                await this.resize(finalImageSize.height, finalImageSize.width);
+            }
 
-        if (layerInfo.height > finalImageSize.height
-            || layerInfo.width > finalImageSize.width) {
-            await layer.resize(finalImageSize.height, finalImageSize.width);
+            if (layerInfo.height > finalImageSize.height
+                || layerInfo.width > finalImageSize.width) {
+                await layer.resize(finalImageSize.height, finalImageSize.width);
+            }
         }
 
         const inputBuffer = await layer.toBuffer();
@@ -85,7 +87,7 @@ export class SharpLayerStrategy {
             compressionLevel: 0, force: true,
         }).composite([{
             input: inputBuffer,
-        }]).png({ compressionLevel: 0, force: true })
+        }]).png({compressionLevel: 0, force: true})
             .toBuffer());
     }
 
@@ -104,7 +106,7 @@ export class SharpLayerStrategy {
         }]).png({
             compressionLevel: 0, force: true,
         })
-            .toBuffer({ resolveWithObject: false });
+            .toBuffer({resolveWithObject: false});
 
         await this.fromBuffer(buffer);
     }
@@ -116,7 +118,8 @@ export class SharpLayerStrategy {
     }
 
     async rotate(angle) {
-        await this.internalRepresentation.rotate(angle);
+        await this.fromBuffer(await this.internalRepresentation.rotate(angle, { background: { r: 0, g: 0, b: 0, alpha: 0 } }).png({compressionLevel: 0, force: true})
+            .toBuffer());
     }
 
     async resize(height, width) {
@@ -128,15 +131,16 @@ export class SharpLayerStrategy {
     }
 
     async crop(left, top, width, height) {
-        await this.internalRepresentation.extract({
+        await this.fromBuffer(await this.internalRepresentation.extract({
             left, top, width, height,
-        }).resize(width, height);
+        }).png({compressionLevel: 0, force: true})
+            .toBuffer());
     }
 
     async getInfo() {
-        const { info } = await this.internalRepresentation.png({
+        const {info} = await this.internalRepresentation.png({
             compressionLevel: 0, force: true,
-        }).toBuffer({ resolveWithObject: true });
+        }).toBuffer({resolveWithObject: true});
 
         return info;
     }

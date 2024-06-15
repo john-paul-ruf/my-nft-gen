@@ -58,8 +58,8 @@ export class Layer {
      * @returns {Promise<void>}
      */
 
-    async compositeLayerOver(layer, withResize = true) {
-        await this.strategy.compositeLayerOver(layer, withResize);
+    async compositeLayerOver(layer, withoutResize = false) {
+        await this.strategy.compositeLayerOver(layer, withoutResize);
     }
 
     /** *

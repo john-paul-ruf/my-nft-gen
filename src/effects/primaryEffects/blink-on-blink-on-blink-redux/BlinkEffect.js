@@ -1,26 +1,26 @@
-import { promises as fs } from 'fs';
+import {promises as fs} from 'fs';
 import Jimp from 'jimp';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { LayerEffect } from '../../../core/layer/LayerEffect.js';
-import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
-import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
-import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
-import { findValue } from '../../../core/math/findValue.js';
-import { Settings } from '../../../core/Settings.js';
+import {fileURLToPath} from 'url';
+import {LayerEffect} from '../../../core/layer/LayerEffect.js';
+import {findOneWayValue} from '../../../core/math/findOneWayValue.js';
+import {LayerFactory} from '../../../core/factory/layer/LayerFactory.js';
+import {getRandomIntInclusive, randomId} from '../../../core/math/random.js';
+import {findValue} from '../../../core/math/findValue.js';
+import {Settings} from '../../../core/Settings.js';
 import {BlinkOnConfig} from './BlinkConfig.js';
 
 export class BlinkOnEffect extends LayerEffect {
     static _name_ = 'blink-on-blink-on-blink-redux';
 
     constructor({
-        name = BlinkOnEffect._name_,
-        requiresLayer = true,
-        config = new BlinkOnConfig({}),
-        additionalEffects = [],
-        ignoreAdditionalEffects = false,
-        settings = new Settings({}),
-    }) {
+                    name = BlinkOnEffect._name_,
+                    requiresLayer = true,
+                    config = new BlinkOnConfig({}),
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({}),
+                }) {
         super({
             name,
             requiresLayer,
@@ -56,7 +56,7 @@ export class BlinkOnEffect extends LayerEffect {
         const jimpImage = await Jimp.read(filename);
 
         const hue = findValue(data.blinkArray[index].glowLowerRange, data.blinkArray[index].glowUpperRange, data.blinkArray[index].glowTimes, totalFrames, currentFrame);
-        await jimpImage.color([{ apply: 'hue', params: [hue] }]);
+        await jimpImage.color([{apply: 'hue', params: [hue]}]);
 
         await jimpImage.writeAsync(filename);
 
@@ -66,35 +66,24 @@ export class BlinkOnEffect extends LayerEffect {
     }
 
     async #blinkinate(data, currentFrame, totalFrames, index) {
-        const scale = 1.1;
-        const finalImageSize = this.finalSize;
+
+
         const blink = data.blinkArray[index];
         const fileName = `${this.workingDirectory}blink-in-action${randomId()}.png`;
         const tempLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
         await tempLayer.resize(blink.diameter, blink.diameter);
 
-        const fullSizedLayer = await LayerFactory.getNewLayer(finalImageSize.longestSide * scale, finalImageSize.longestSide * scale, '#00000000', this.fileConfig);
-        await fullSizedLayer.compositeLayerOver(tempLayer, false);
+        const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise);
 
-        await fullSizedLayer.toFile(fileName);
+        await tempLayer.rotate(data.blinkArray[index].initialRotation);
+        await tempLayer.rotate(rotateGaston);
 
-        const jimpImage = await Jimp.read(fileName);
+        await this.#randomize(tempLayer, data, index);
+        await this.#glowAnimated(tempLayer, data, currentFrame, totalFrames, index);
 
-        const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise === 1);
+        await tempLayer.resize(this.finalSize.height, this.finalSize.width);
 
-        await jimpImage.rotate(data.blinkArray[index].initialRotation, false);
-        await jimpImage.rotate(rotateGaston, false);
-
-        await jimpImage.writeAsync(fileName);
-
-        await fullSizedLayer.fromFile(fileName);
-
-        await this.#randomize(fullSizedLayer, data, index);
-        await this.#glowAnimated(fullSizedLayer, data, currentFrame, totalFrames, index);
-
-        await fullSizedLayer.resize(finalImageSize.height, finalImageSize.width);
-
-        await fullSizedLayer.toFile(fileName);
+        await tempLayer.toFile(fileName);
 
         return fileName;
     }
