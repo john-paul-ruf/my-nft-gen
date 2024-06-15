@@ -6,6 +6,14 @@ import { Settings } from '../../../core/Settings.js';
 import { LayerEffect } from '../../../core/layer/LayerEffect.js';
 import { GlitchFractalConfig } from './GlitchFractalConfig.js';
 
+/** *
+ *
+ * Glitch Fractal Effect
+ * Creates a static glitch for the composite image
+ * Can be glitched to appear on a percentage of the frames generated
+ * Instantiated through the project via the LayerConfig
+ *
+ */
 export class GlitchFractalEffect extends LayerEffect {
     static _name_ = 'glitch-fractal';
 

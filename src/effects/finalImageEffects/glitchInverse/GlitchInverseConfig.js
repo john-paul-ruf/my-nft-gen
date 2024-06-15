@@ -1,5 +1,13 @@
 import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
+/** *
+ *
+ * Config for Glitch Inverse Effect
+ * Inverts all colors for the composite image
+ * Can be glitched to appear on a percentage of the frames generated
+ *
+ * @glitchChance - the percent chance this effect could apply to a given frame
+ */
 export class GlitchInverseConfig extends EffectConfig {
     constructor(
         {

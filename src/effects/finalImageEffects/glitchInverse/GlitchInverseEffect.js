@@ -5,6 +5,14 @@ import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
 import { Settings } from '../../../core/Settings.js';
 import { GlitchInverseConfig } from './GlitchInverseConfig.js';
 
+/** *
+ *
+ * Glitch Inverse Effect
+ * Inverts all colors for the composite image
+ * Can be glitched to appear on a percentage of the frames generated
+ * Instantiated through the project via the LayerConfig
+ *
+ */
 export class GlitchInverseEffect extends LayerEffect {
     static _name_ = 'glitch-inverse';
 

@@ -6,6 +6,14 @@ import { findValue } from '../../../core/math/findValue.js';
 import { Settings } from '../../../core/Settings.js';
 import { GlitchDrumrollHorizontalWaveConfig } from './GlitchDrumrollHorizontalWaveConfig.js';
 
+/** *
+ *
+ * Glitch Drumroll Horizontal Wave Effect
+ * Creates an animated glitch for the composite image
+ * Can be glitched to appear on a percentage of the frames generated
+ * Instantiated through the project via the LayerConfig
+ *
+ */
 export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
     static _name_ = 'glitch-drumroll-horizontal-wave';
 

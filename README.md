@@ -73,3 +73,56 @@ Once you have added the effects to the program, it is time to generate the loop.
 ```
 exampleProject.generateRandomLoop(false) //set to true to keep the frames generated to created the video from being deleted
 ```
+
+## Effects List
+### Final Effects
+Final effects are applied to the composite image and not a single layer effect
+#### Blur Effect
+Creates an animated blur for the composite image. Can be glitched to appear on a percentage of the frames generated. Instantiated through the project via the LayerConfig.
+##### Config Values
+ - lowerRange - a lower and upper value for where the amount of blur starts
+ - upperRange - a lower and upper value for where the amount of blur ends
+ - times - the number of times to blur from lower to upper during the total frame count
+ - glitchChance - the percent chance this effect could apply to a given frame
+
+#### Glitch Drumroll Horizontal Wave Effect
+Creates an animated glitch for the composite image
+Can be glitched to appear on a percentage of the frames generated
+Instantiated through the project via the LayerConfig
+##### Config Values
+ - glitchChance - the percent chance this effect could apply to a given frame
+ - glitchOffset - the amount of 'slice' visible
+ - glitchOffsetTimes - the number of times to glitch during the total frame count
+ - cosineFactor - changes the 'slice'
+
+#### Glitch Fractal Effect
+Creates a static glitch for the composite image
+Can be glitched to appear on a percentage of the frames generated
+
+##### Config Values
+ - theRandom - the fractal amount
+ - glitchChance - the percent chance this effect could apply to a given frame
+
+#### Glitch Inverse Effect
+Inverts all colors for the composite image
+Can be glitched to appear on a percentage of the frames generated
+
+#####
+ - glitchChance - the percent chance this effect could apply to a given frame
+
+#### Pixelate Effect
+Creates an animated glitch for the composite image
+Can be glitched to appear on a percentage of the frames generated
+
+##### Config Values
+ - lowerRange - a lower and upper value for where the amount of pixelate starts
+ - upperRange - a lower and upper value for where the amount of pixelate ends 
+ - times - the number of times to pixelate from lower to upper during the total frame count
+ - glitchChance - the percent chance this effect could apply to a given frame
+
+
+
+
+
+
+

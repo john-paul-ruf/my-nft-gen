@@ -6,6 +6,15 @@ import { findValue } from '../../../core/math/findValue.js';
 import { Settings } from '../../../core/Settings.js';
 import { PixelateConfig } from './PixelateConfig.js';
 
+/** *
+ *
+ * Pixelate Effect
+ * Creates an animated glitch for the composite image
+ * Can be glitched to appear on a percentage of the frames generated
+ * Instantiated through the project via the LayerConfig
+ *
+ */
+
 export class PixelateEffect extends LayerEffect {
     static _name_ = 'pixelate';
 

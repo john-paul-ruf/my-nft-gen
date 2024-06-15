@@ -4,6 +4,17 @@ import { findValue } from '../../../core/math/findValue.js';
 import { Settings } from '../../../core/Settings.js';
 import { BlurConfig } from './BlurConfig.js';
 
+
+
+/**
+ *
+ * Blur Effect
+ * Creates an animated blur for the composite image
+ * Can be glitched to appear on a percentage of the frames generated
+ * Instantiated through the project via the LayerConfig
+ *
+ */
+
 export class BlurEffect extends LayerEffect {
     static _name_ = 'blur';
 
