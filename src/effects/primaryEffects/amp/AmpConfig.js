@@ -1,5 +1,28 @@
 import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
+/** *
+ *
+ * Config for Amp Effect
+ * Creates a wheel of 'rays' based on the sparsity factor that spins based on the speed
+ *
+ * @invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
+ * @layerOpacity - the opacity of the top, non-fuzzy, layer
+ * @underLayerOpacity - the opacity of the bottom, fuzzy, layer
+ * @sparsityFactor - Array: Randomly picks from the array to draw a 'ray' every X angle
+ * @stroke - the weight of the outer ray
+ * @thickness - the weight of the inner ray
+ * @accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ * @blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ * @featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
+ * @speed - Range: spin this amount of angle
+ * @length - Length of the line to draw
+ * @lineStart - From the center, where to start the line
+ * @center - Where the center of the amp is in the overall composition
+ * @innerColor - ColorPicker: the color for the thickness
+ * @outerColor - ColorPicker: the color for the stroke and accent
+ *
+ */
+
 export class AmpConfig extends EffectConfig {
     constructor(
         {

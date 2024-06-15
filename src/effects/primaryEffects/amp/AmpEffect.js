@@ -1,12 +1,17 @@
-import {promises as fs} from 'fs';
 import {LayerEffect} from '../../../core/layer/LayerEffect.js';
 import {findOneWayValue} from '../../../core/math/findOneWayValue.js';
-import {LayerFactory} from '../../../core/factory/layer/LayerFactory.js';
 import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
 import {getRandomFromArray, getRandomIntInclusive, randomId} from '../../../core/math/random.js';
 import {findValue} from '../../../core/math/findValue.js';
 import {Settings} from '../../../core/Settings.js';
 import {AmpConfig} from './AmpConfig.js';
+
+/** *
+ *
+ * Amp Effect
+ * Creates a wheel of 'rays' based on the sparsity factor that spins based on the speed
+ *
+ */
 
 export class AmpEffect extends LayerEffect {
     static _name_ = 'amp';

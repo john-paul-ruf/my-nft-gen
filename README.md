@@ -112,6 +112,27 @@ Creates an animated glitch for the composite image. Can be glitched to appear on
  - times - the number of times to pixelate from lower to upper during the total frame count
  - glitchChance - the percent chance this effect could apply to a given frame
 
+### Primary Effects
+Primary effects are single layer effects. Primary effects are composited into the final image based on the order that they are added to the primary effect array of the project class.
+
+#### Amp Effect
+Creates a wheel of 'rays' based on the sparsity factor that spins based on the speed.
+##### Config Values
+ - invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
+ - layerOpacity - the opacity of the top, non-fuzzy, layer
+ - underLayerOpacity - the opacity of the bottom, fuzzy, layer
+ - sparsityFactor - Array: Randomly picks from the array to draw a 'ray' every X angle
+ - stroke - the weight of the outer ray
+ - thickness - the weight of the inner ray
+ - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
+ - speed - Range: spin this amount of angle
+ - length - Length of the line to draw
+ - lineStart - From the center, where to start the line
+ - center - Where the center of the amp is in the overall composition
+ - innerColor - ColorPicker: the color for the thickness
+ - outerColor - ColorPicker: the color for the stroke and accent
 
 
 
