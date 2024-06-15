@@ -1,13 +1,12 @@
 import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
-export class BlinkConfig extends EffectConfig {
+export class BlinkOnConfig extends EffectConfig {
     constructor(
         {
             layerOpacity = 0.75,
             numberOfBlinks = { lower: 1, upper: 2 },
             initialRotation = { lower: 0, upper: 360 },
             rotationSpeedRange = { lower: 1, upper: 2 },
-            counterClockwise = { lower: 0, upper: 1 },
             diameterRange = {
                 lower: (finalSize) => finalSize.shortestSide * 0.25,
                 upper: (finalSize) => finalSize.longestSide * 0.8,
@@ -26,7 +25,6 @@ export class BlinkConfig extends EffectConfig {
         this.numberOfBlinks = numberOfBlinks;
         this.initialRotation = initialRotation;
         this.rotationSpeedRange = rotationSpeedRange;
-        this.counterClockwise = counterClockwise;
         this.diameterRange = diameterRange;
         this.glowLowerRange = glowLowerRange;
         this.glowUpperRange = glowUpperRange;

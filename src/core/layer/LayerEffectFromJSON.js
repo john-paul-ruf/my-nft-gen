@@ -6,7 +6,6 @@ import {GlitchFractalEffect} from '../../effects/finalImageEffects/glitchFractal
 import {GlitchInverseEffect} from '../../effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js';
 import {PixelateEffect} from '../../effects/finalImageEffects/pixelate/PixelateEffect.js';
 import {AmpEffect} from '../../effects/primaryEffects/amp/AmpEffect.js';
-import {AnimateBackgroundEffect} from '../../effects/primaryEffects/animateBackground/AnimateBackgroundEffect.js';
 import {BlinkOnEffect} from '../../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkEffect.js';
 import {EightEffect} from '../../effects/primaryEffects/eight/EightEffect.js';
 import {EncircledSpiralEffect} from '../../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js';
@@ -62,9 +61,6 @@ export class LayerEffectFromJSON {
             // primary effects
             case AmpEffect._name_:
                 layer = Object.assign(new AmpEffect({}), json);
-                break;
-            case AnimateBackgroundEffect._name_:
-                layer = Object.assign(new AnimateBackgroundEffect({}), json);
                 break;
             case BlinkOnEffect._name_:
                 layer = Object.assign(new BlinkOnEffect({}), json);

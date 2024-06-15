@@ -8,7 +8,7 @@ import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
 import { getRandomIntInclusive, randomId } from '../../../core/math/random.js';
 import { findValue } from '../../../core/math/findValue.js';
 import { Settings } from '../../../core/Settings.js';
-import { BlinkConfig } from './BlinkConfig.js';
+import {BlinkOnConfig} from './BlinkConfig.js';
 
 export class BlinkOnEffect extends LayerEffect {
     static _name_ = 'blink-on-blink-on-blink-redux';
@@ -16,7 +16,7 @@ export class BlinkOnEffect extends LayerEffect {
     constructor({
         name = BlinkOnEffect._name_,
         requiresLayer = true,
-        config = new BlinkConfig({}),
+        config = new BlinkOnConfig({}),
         additionalEffects = [],
         ignoreAdditionalEffects = false,
         settings = new Settings({}),
@@ -92,9 +92,7 @@ export class BlinkOnEffect extends LayerEffect {
         await this.#randomize(fullSizedLayer, data, index);
         await this.#glowAnimated(fullSizedLayer, data, currentFrame, totalFrames, index);
 
-        const top = Math.ceil(((finalImageSize.longestSide * scale) - finalImageSize.height) / 2);
-        const left = Math.ceil(((finalImageSize.longestSide * scale) - finalImageSize.width) / 2);
-        await fullSizedLayer.crop(left, top, finalImageSize.width, finalImageSize.height);
+        await fullSizedLayer.resize(finalImageSize.height, finalImageSize.width);
 
         await fullSizedLayer.toFile(fileName);
 
@@ -109,10 +107,10 @@ export class BlinkOnEffect extends LayerEffect {
         }
 
         for (const file of filenames) {
-            await layer.compositeLayerOver(await LayerFactory.getLayerFromFile(file, this.fileConfig));
+            const tempLayer = await LayerFactory.getLayerFromFile(file, this.fileConfig)
+            await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
+            await layer.compositeLayerOver(tempLayer);
         }
-
-        await layer.adjustLayerOpacity(this.data.layerOpacity);
 
         for (const file of filenames) {
             await fs.unlink(file);
@@ -139,7 +137,7 @@ export class BlinkOnEffect extends LayerEffect {
                 info.push({
                     initialRotation: getRandomIntInclusive(this.config.initialRotation.lower, this.config.initialRotation.upper),
                     rotationSpeedRange: getRandomIntInclusive(this.config.rotationSpeedRange.lower, this.config.rotationSpeedRange.upper),
-                    counterClockwise: getRandomIntInclusive(this.config.counterClockwise.lower, this.config.counterClockwise.upper),
+                    counterClockwise: i % 2 > 0,
                     diameter: getRandomIntInclusive(this.config.diameterRange.lower(this.finalSize), this.config.diameterRange.upper(this.finalSize)),
                     glowLowerRange: getRandomIntInclusive(this.config.glowLowerRange.lower, this.config.glowLowerRange.upper),
                     glowUpperRange: getRandomIntInclusive(this.config.glowUpperRange.lower, this.config.glowUpperRange.upper),
