@@ -78,9 +78,6 @@ export class BlinkOnEffect extends LayerEffect {
 
         await blinkLayer.resize(blink.diameter, blink.diameter);
 
-        await blinkLayer.toFile(fileName);
-        await blinkLayer.fromFile(fileName);
-
         if (blink.diameter > this.finalSize.width && blink.diameter > this.finalSize.height) {
             await blinkLayer.crop(Math.floor((blink.diameter - this.finalSize.width) / 2), Math.floor((blink.diameter - this.finalSize.height) / 2), this.finalSize.width, this.finalSize.height);
         } else if (blink.diameter > this.finalSize.width) {
@@ -108,7 +105,7 @@ export class BlinkOnEffect extends LayerEffect {
             }
         );
 
-        await tempLayer.compositeLayerOver(blinkLayer);
+        await tempLayer.compositeLayerOver(blinkLayer, true);
 
         await this.#randomize(tempLayer, data, index);
         await this.#glowAnimated(tempLayer, data, currentFrame, totalFrames, index);
