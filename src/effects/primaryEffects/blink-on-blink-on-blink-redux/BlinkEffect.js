@@ -73,7 +73,7 @@ export class BlinkOnEffect extends LayerEffect {
 
         const jimpImage = await Jimp.read(data.blinkFile);
 
-        const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise === 1);
+        const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise);
 
         await jimpImage.rotate(blink.initialRotation + rotateGaston, false);
 
