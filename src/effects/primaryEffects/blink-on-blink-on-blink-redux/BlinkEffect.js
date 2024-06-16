@@ -73,9 +73,7 @@ export class BlinkOnEffect extends LayerEffect {
         const blinkLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
 
         const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise);
-        await blinkLayer.rotate(blink.initialRotation);
-        await blinkLayer.rotate(rotateGaston);
-
+        await blinkLayer.rotate(blink.initialRotation + rotateGaston);
         await blinkLayer.resize(blink.diameter, blink.diameter, 'contain');
 
         if (blink.diameter > this.finalSize.width && blink.diameter > this.finalSize.height) {
@@ -98,14 +96,10 @@ export class BlinkOnEffect extends LayerEffect {
             this.finalSize.height,
             this.finalSize.width,
             '#00000000',
-            {
-                finalImageSize: this.finalSize,
-                workingDirectory: null,
-                layerStrategy: 'sharp',
-            }
+            this.fileConfig
         );
 
-        await tempLayer.compositeLayerOver(blinkLayer, true);
+        await tempLayer.compositeLayerOver(blinkLayer, false);
 
         await this.#randomize(tempLayer, data, index);
         await this.#glowAnimated(tempLayer, data, currentFrame, totalFrames, index);
