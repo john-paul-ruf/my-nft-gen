@@ -31,7 +31,7 @@ export class PorousEffect extends LayerEffect {
         const tempLayer = await LayerFactory.getLayerFromFile(this.data.filename, this.fileConfig);
         const { finalSize } = this;
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
-        await tempLayer.resize(finalSize.height, finalSize.width);
+        await tempLayer.resize(finalSize.height, finalSize.width, 'fill');
         await layer.compositeLayerOver(tempLayer);
     }
 

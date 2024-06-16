@@ -76,7 +76,7 @@ export class BlinkOnEffect extends LayerEffect {
         await blinkLayer.rotate(blink.initialRotation);
         await blinkLayer.rotate(rotateGaston);
 
-        await blinkLayer.resize(blink.diameter, blink.diameter);
+        await blinkLayer.resize(blink.diameter, blink.diameter, 'inside');
 
         if (blink.diameter > this.finalSize.width && blink.diameter > this.finalSize.height) {
             await blinkLayer.crop(Math.floor((blink.diameter - this.finalSize.width) / 2), Math.floor((blink.diameter - this.finalSize.height) / 2), this.finalSize.width, this.finalSize.height);
@@ -142,7 +142,7 @@ export class BlinkOnEffect extends LayerEffect {
 
         const computeInitialInfo = (num) => {
             const info = [];
-            for (let i = 0; i <= num; i++) {
+            for (let i = 0; i < num; i++) {
                 const props = {
                     hue: getRandomIntInclusive(this.config.randomizeSpin.lower, this.config.randomizeSpin.upper),
                     red: getRandomIntInclusive(this.config.randomizeRed.lower, this.config.randomizeRed.upper),

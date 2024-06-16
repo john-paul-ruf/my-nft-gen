@@ -72,12 +72,12 @@ export class SharpLayerStrategy {
         if (!withoutResize) {
             if (currentInfo.height > finalImageSize.height
                 || currentInfo.width > finalImageSize.width) {
-                await this.resize(finalImageSize.height, finalImageSize.width);
+                await this.resize(finalImageSize.height, finalImageSize.width, 'inside');
             }
 
             if (layerInfo.height > finalImageSize.height
                 || layerInfo.width > finalImageSize.width) {
-                await layer.resize(finalImageSize.height, finalImageSize.width);
+                await layer.resize(finalImageSize.height, finalImageSize.width, 'inside');
             }
         }
 
@@ -122,10 +122,10 @@ export class SharpLayerStrategy {
             .toBuffer());
     }
 
-    async resize(height, width) {
+    async resize(height, width, fitType) {
         await this.internalRepresentation.resize(width, height, {
             kernel: sharp.kernel.nearest,
-            fit: 'cover',
+            fit: fitType,
             position: 'center',
         });
     }

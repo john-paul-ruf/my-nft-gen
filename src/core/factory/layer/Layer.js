@@ -103,8 +103,8 @@ export class Layer {
      * @param width
      * @returns {Promise<void>}
      */
-    async resize(height, width) {
-        await this.strategy.resize(height, width);
+    async resize(height, width, fitType) {
+        await this.strategy.resize(height, width, fitType);
     }
 
     /** **
