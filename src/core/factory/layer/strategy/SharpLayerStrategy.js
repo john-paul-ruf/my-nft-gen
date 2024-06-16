@@ -72,12 +72,12 @@ export class SharpLayerStrategy {
         if (!withoutResize) {
             if (currentInfo.height > finalImageSize.height
                 || currentInfo.width > finalImageSize.width) {
-                await this.resize(finalImageSize.height, finalImageSize.width, 'inside');
+                await this.resize(finalImageSize.height, finalImageSize.width, 'contain');
             }
 
             if (layerInfo.height > finalImageSize.height
                 || layerInfo.width > finalImageSize.width) {
-                await layer.resize(finalImageSize.height, finalImageSize.width, 'inside');
+                await layer.resize(finalImageSize.height, finalImageSize.width, 'contain');
             }
         }
 

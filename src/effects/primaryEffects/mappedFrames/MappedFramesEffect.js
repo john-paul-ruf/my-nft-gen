@@ -82,7 +82,7 @@ export class MappedFramesEffect extends LayerEffect {
         await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
 
         const {finalSize} = this;
-        await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer, 'fill');
+        await tempLayer.resize(finalSize.height - this.data.buffer, finalSize.width - this.data.buffer, 'contain');
         await layer.compositeLayerOver(tempLayer);
 
         await fs.unlinkSync(context.filename);
