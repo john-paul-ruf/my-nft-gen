@@ -70,10 +70,16 @@ export class BlinkOnEffect extends LayerEffect {
 
         const blink = data.blinkArray[index];
         const fileName = `${this.workingDirectory}blink-in-action${randomId()}.png`;
-        const blinkLayer = await LayerFactory.getLayerFromFile(data.blinkFile, this.fileConfig);
 
-        const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise);
-        await blinkLayer.rotate(blink.initialRotation + rotateGaston);
+        const jimpImage = await Jimp.read(data.blinkFile);
+
+        const rotateGaston = findOneWayValue(0, 360 * blink.rotationSpeedRange, 1, totalFrames, currentFrame, blink.counterClockwise === 1);
+
+        await jimpImage.rotate(blink.initialRotation + rotateGaston, false);
+
+        await jimpImage.writeAsync(fileName);
+        const blinkLayer = await LayerFactory.getLayerFromFile(fileName, this.fileConfig);
+
         await blinkLayer.resize(blink.diameter, blink.diameter, 'contain');
 
         if (blink.diameter > this.finalSize.width && blink.diameter > this.finalSize.height) {
@@ -99,7 +105,7 @@ export class BlinkOnEffect extends LayerEffect {
             this.fileConfig
         );
 
-        await tempLayer.compositeLayerOver(blinkLayer, false);
+        await tempLayer.compositeLayerOver(blinkLayer, true);
 
         await this.#randomize(tempLayer, data, index);
         await this.#glowAnimated(tempLayer, data, currentFrame, totalFrames, index);

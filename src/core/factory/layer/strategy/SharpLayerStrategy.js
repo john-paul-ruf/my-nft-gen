@@ -118,10 +118,13 @@ export class SharpLayerStrategy {
     }
 
     async rotate(angle) {
+        const info = await this.getInfo();
         await this.fromBuffer(await this.internalRepresentation.rotate(angle,
             {
-                background: { r: 0, g: 0, b: 0, alpha: 0 }
-            }).png({compressionLevel: 0, force: true})
+                background: {r: 0, g: 0, b: 0, alpha: 0}
+            })
+            .resize(info.width, info.height, {fit: 'contain', background: {r: 0, g: 0, b: 0, alpha: 0}})
+            .png({compressionLevel: 0, force: true})
             .toBuffer());
     }
 
@@ -130,7 +133,7 @@ export class SharpLayerStrategy {
             kernel: sharp.kernel.nearest,
             fit: fitType,
             position: 'center',
-            background: { r: 0, g: 0, b: 0, alpha: 0 }
+            background: {r: 0, g: 0, b: 0, alpha: 0}
         }).png({compressionLevel: 0, force: true})
             .toBuffer());
     }
