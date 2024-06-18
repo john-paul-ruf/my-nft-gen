@@ -135,7 +135,7 @@ Creates a wheel of 'rays' based on the sparsity factor that spins based on the s
  - outerColor - ColorPicker: the color for the stroke and accent
 
 #### BlinkOn Effect
-Creates a wheel of 'rays' based on the sparsity factor that spins based on the speed.
+Creates layers of blink.png. Each blink can have the colors randomized and a glow effect applied
 ##### Config Values
  - layerOpacity - The opacity of each blink
  - numberOfBlinks - Range: the number of blinks to layer
