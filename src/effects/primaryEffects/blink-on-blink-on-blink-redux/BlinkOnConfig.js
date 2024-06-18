@@ -1,5 +1,24 @@
 import { EffectConfig } from '../../../core/layer/EffectConfig.js';
 
+/** *
+ *
+ * Config for BlinkOn Effect. Creates layers of blink.png. Each blink can have the colors randomized and a glow effect applied
+ *
+ * @layerOpacity - The opacity of each blink
+ * @numberOfBlinks - Range: the number of blinks to layer
+ * @initialRotation - Range: rotate the blink x angle
+ * @rotationSpeedRange - Range: how many times to rotate the blink over the number of frames
+ * @diameterRange - PercentageRange: the diameter range for each blink
+ * @glowLowerRange - Range: lower glow range
+ * @glowUpperRange - Range: upper glow range
+ * @glowTimes - Range: number of times to glow over the number of frames
+ * @randomizeSpin - Range: hue spin
+ * @randomizeRed - Range: increase or decrease the red
+ * @randomizeBlue - Range: increase or decrease the blue
+ * @randomizeGreen - Range: increase or decrease the green
+ *
+ */
+
 export class BlinkOnConfig extends EffectConfig {
     constructor(
         {

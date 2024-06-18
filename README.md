@@ -134,6 +134,20 @@ Creates a wheel of 'rays' based on the sparsity factor that spins based on the s
  - innerColor - ColorPicker: the color for the thickness
  - outerColor - ColorPicker: the color for the stroke and accent
 
+#### BlinkOn Effect
+Creates a wheel of 'rays' based on the sparsity factor that spins based on the speed.
+##### Config Values
+ - layerOpacity - The opacity of each blink
+ - numberOfBlinks - Range: the number of blinks to layer
+ - initialRotation - Range: rotate the blink x angle
+ - rotationSpeedRange - Range: how many times to rotate the blink over the number of frames
+ - diameterRange - PercentageRange: the diameter range for each blink
+ - glowLowerRange - Range: lower glow range
+ - glowUpperRange - Range: upper glow range
+ - glowTimes - Range: number of times to glow over the number of frames
+ - randomizeSpin - Range: hue spin
+ - randomizeRed - Range: increase or decrease the red
+ - randomizeBlue - Range: increase or decrease the blue @randomizeGreen - Range: increase or decrease the green
 
 
 

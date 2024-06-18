@@ -8,7 +8,15 @@ import {LayerFactory} from '../../../core/factory/layer/LayerFactory.js';
 import {getRandomIntInclusive, randomId} from '../../../core/math/random.js';
 import {findValue} from '../../../core/math/findValue.js';
 import {Settings} from '../../../core/Settings.js';
-import {BlinkOnConfig} from './BlinkConfig.js';
+import {BlinkOnConfig} from './BlinkOnConfig.js';
+
+/** *
+ *
+ * BlinkOn Effect
+ * Creates layers of blink.png.  Each blink can have the colors randomized and a glow effect applied
+ *
+ */
+
 
 export class BlinkOnEffect extends LayerEffect {
     static _name_ = 'blink-on-blink-on-blink-redux';
@@ -110,32 +118,27 @@ export class BlinkOnEffect extends LayerEffect {
         await this.#randomize(tempLayer, data, index);
         await this.#glowAnimated(tempLayer, data, currentFrame, totalFrames, index);
 
-        await tempLayer.toFile(fileName);
+        await fs.unlink(fileName);
 
-        return fileName;
+        return tempLayer;
     }
 
     async #blinkOnOverlay(layer, currentFrame, totalFrames) {
-        const filenames = [];
+        const layers = [];
 
         for (let i = 0; i < this.data.blinkArray.length; i++) {
-            filenames.push(await this.#blinkinate(this.data, currentFrame, totalFrames, i));
+            layers.push(await this.#blinkinate(this.data, currentFrame, totalFrames, i));
         }
 
-        for (const file of filenames) {
-            const tempLayer = await LayerFactory.getLayerFromFile(file, this.fileConfig)
+        for (const tempLayer of layers) {
             await tempLayer.adjustLayerOpacity(this.data.layerOpacity);
             await layer.compositeLayerOver(tempLayer);
-        }
-
-        for (const file of filenames) {
-            await fs.unlink(file);
         }
     }
 
     #generate(settings) {
         const data = {
-            blinkFile: path.join(`${fileURLToPath(import.meta.url).replace('BlinkEffect.js', '')}blink.png`),
+            blinkFile: path.join(`${fileURLToPath(import.meta.url).replace('BlinkOnEffect.js', '')}blink.png`),
             layerOpacity: this.config.layerOpacity,
             numberOfBlinks: getRandomIntInclusive(this.config.numberOfBlinks.lower, this.config.numberOfBlinks.upper),
         };
