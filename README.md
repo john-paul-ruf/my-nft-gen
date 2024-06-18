@@ -147,7 +147,8 @@ Creates layers of blink.png. Each blink can have the colors randomized and a glo
  - glowTimes - Range: number of times to glow over the number of frames
  - randomizeSpin - Range: hue spin
  - randomizeRed - Range: increase or decrease the red
- - randomizeBlue - Range: increase or decrease the blue @randomizeGreen - Range: increase or decrease the green
+ - randomizeBlue - Range: increase or decrease the blue 
+ - @randomizeGreen - Range: increase or decrease the green
 
 
 
