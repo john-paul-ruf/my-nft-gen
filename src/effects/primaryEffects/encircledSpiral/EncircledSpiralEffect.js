@@ -10,6 +10,13 @@ import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
 import { Settings } from '../../../core/Settings.js';
 import { EncircledSpiralConfig } from './EncircledSpiralConfig.js';
 
+/** *
+ *
+ * Encircled Spiral Effect
+ * Creates N spirals based on the sequence and number of rings
+ *
+ */
+
 export class EncircledSpiralEffect extends LayerEffect {
     static _name_ = 'encircled-spiral-round-2';
 

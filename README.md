@@ -150,6 +150,27 @@ Creates layers of blink.png. Each blink can have the colors randomized and a glo
  - randomizeBlue - Range: increase or decrease the blue 
  - randomizeGreen - Range: increase or decrease the green
 
+#### Encircled Spiral Effect
+Creates N spirals based on the sequence and number of rings
+##### Config Values
+ - invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
+ - layerOpacity - the opacity of the top, non-fuzzy, layer
+ - underLayerOpacity - the opacity of the bottom, fuzzy, layer
+ - numberOfRings - Range: Number of rings to generate
+ - stroke - the weight of the outer ring
+ - thickness - the weight of the inner ring
+ - sparsityFactor - Array: spokes generated on angle
+ - sequencePixelConstant - PercentageRange: the pixel translation of the individual sequence.  1 sequence equals sequencePixelConstant
+ - sequence - Array: the sequence to follow when generating the spiral
+ - minSequenceIndex - Array: where to start drawing the sequence
+ - numberOfSequenceElements: Array: how many sequence elements to draw past the minSequenceIndex
+ - speed: Range: the number of times to rotate between sparsity factors
+ - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
+ - center - Where the center is in the overall composition
+ - innerColor - ColorPicker: the color for the thickness
+ - outerColor - ColorPicker: the color for the stroke and accent
 
 
 
