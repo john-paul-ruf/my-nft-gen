@@ -3,12 +3,9 @@
   "name": "my-nft-gen",
   "version": "1.6.1",
   "description": "",
-  "main": "src/index.js",
-  "scripts": {
+    "scripts": {
     "test": "jest",
-    "quick-test": "node src/mp4-test.js",
-    "lint": "npx eslint src/**/*.js",
-    "lint:fix": "eslint --fix --ext .js,.jsx ."
+    "quick-test": "node src/mp4-test.js"
   },
   "jest": {
     "collectCoverage": true,
