@@ -10,6 +10,12 @@ import { FuzzyBandConfig } from './FuzzyBandConfig.js';
 export class FuzzyBandEffect extends LayerEffect {
     static _name_ = 'fuzz-bands-mark-two';
 
+/** *
+ *
+ * Creates a set of rings with fuzz
+ *
+ */
+
     constructor({
         name = FuzzyBandEffect._name_,
         requiresLayer = true,
@@ -122,7 +128,7 @@ export class FuzzyBandEffect extends LayerEffect {
             width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            center: { x: this.finalSize.width / 2, y: this.finalSize.height / 2 },
+            center: this.config.center,
         };
 
         const computeInitialInfo = (num) => {

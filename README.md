@@ -192,9 +192,28 @@ Creates a lens flare with the ability to add fuzz
  - flareRaysSizeRange = PercentageRange: how long the rays should be,
  - flareRaysStroke = Range: the stroke to apply to the rays,
  - flareRayThickness = Range: the thickness of the rays,
- - flareOffset = new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.06)),
+ - flareOffset = PercentageRange: the radius from the center to start drawing the rays,
  - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
  - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
 
+#### Fuzzy Band Effect
+Creates a set of rings with fuzz
+
+##### Config Values
+ - outerColor - ColorPicker: the color for the stroke and accent
+ - innerColor - ColorPicker: the color for the thickness
+ - invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
+ - layerOpacity - the opacity of the top, non-fuzzy, layer
+ - center - Point2D: Where the center is in the overall composition
+ - underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
+ - underLayerOpacityTimes - the number of times to move through the underlay opacity range over the number of frames
+ - circles = Range: the number of circles to draw,
+ - stroke = the stroke to apply to the rings ,
+ - thickness = the thickness of the rays,
+ - radius = PercentageRange: the range to draw the circles in
+ - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
+*
 

@@ -29,7 +29,7 @@ import {Point2D} from "../../../core/layer/configType/Point2D.js";
  * @flareRaysSizeRange = PercentageRange: how long the rays should be,
  * @flareRaysStroke = Range: the stroke to apply to the rays,
  * @flareRayThickness = Range: the thickness of the rays,
- * @flareOffset = new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.06)),
+ * @flareOffset = PercentageRange: the radius from the center to start drawing the rays,
  * @accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  * @blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
  * @featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
