@@ -208,9 +208,9 @@ Creates a set of rings with fuzz
  - center - Point2D: Where the center is in the overall composition
  - underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
  - underLayerOpacityTimes - the number of times to move through the underlay opacity range over the number of frames
- - circles = Range: the number of circles to draw,
- - stroke = the stroke to apply to the rings ,
- - thickness = the thickness of the rays,
+ - circles = Range: the number of circles to draw
+ - stroke = the stroke to apply to the bands
+ - thickness = the thickness of the bands
  - radius = PercentageRange: the range to draw the circles in
  - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
@@ -222,9 +222,9 @@ Creates a set of six outer rings, connected by a hexagon, with a larger set of r
 ##### Config Values
  - invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
  - layerOpacity - the opacity of the top, non-fuzzy, layer
- - underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
- - stroke = the stroke to apply to the rings ,
- - thickness = the thickness of the rays,
+ - underLayerOpacity - the opacity of the bottom, fuzzy, layer
+ - stroke = the stroke to apply to the drawing
+ - thickness = the thickness of the drawing
  - center - Point2D: Where the center is in the overall composition
  - innerColor - ColorPicker: the color for the thickness
  - outerColor - ColorPicker: the color for the stroke and accent
@@ -239,4 +239,20 @@ Creates a set of six outer rings, connected by a hexagon, with a larger set of r
  - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
  - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
 
+#### Gates Effect
+Creates number of polygons with fuzz
+
+##### Config Values
+ - layerOpacity - the opacity of the top, non-fuzzy, layer
+ - underLayerOpacity - the opacity of the bottom, fuzzy, layer
+ - center - Point2D: Where the center is in the overall composition
+ - gates - Range: number of polygons to draw
+ - numberOfSides  - Range: the type of polygon to draw
+ - innerColor - ColorPicker: the color for the thickness
+ - outerColor - ColorPicker: the color for the stroke and accent
+ - thickness = the thickness of the polygon
+ - stroke = the stroke to apply to the polygon
+ - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
 

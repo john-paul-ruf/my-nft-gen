@@ -8,6 +8,12 @@ import { findValue } from '../../../core/math/findValue.js';
 import { Settings } from '../../../core/Settings.js';
 import { GatesConfig } from './GatesConfig.js';
 
+/** *
+ *
+ * Creates number of polygons with fuzz
+ *
+ */
+
 export class GatesEffect extends LayerEffect {
     static _name_ = 'gates';
 
@@ -107,7 +113,7 @@ export class GatesEffect extends LayerEffect {
             width: this.finalSize.width,
             thickness: this.config.thickness,
             stroke: this.config.stroke,
-            center: { x: this.finalSize.width / 2, y: this.finalSize.height / 2 },
+            center: this.config.center,
             blurRange: {
                 lower: getRandomIntInclusive(this.config.blurRange.bottom.lower, this.config.blurRange.bottom.upper),
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
@@ -119,8 +125,8 @@ export class GatesEffect extends LayerEffect {
             for (let i = 0; i <= num; i++) {
                 info.push({
                     radius: getRandomIntExclusive(this.finalSize.shortestSide * 0.05, this.finalSize.shortestSide * 0.48),
-                    color: settings.getColorFromBucket(),
-                    innerColor: settings.getNeutralFromBucket(),
+                    innerColor: this.config.innerColor.getColor(settings),
+                    color: this.config.outerColor.getColor(settings),
                     accentRange: {
                         lower: getRandomIntInclusive(this.config.accentRange.bottom.lower, this.config.accentRange.bottom.upper),
                         upper: getRandomIntInclusive(this.config.accentRange.top.lower, this.config.accentRange.top.upper),

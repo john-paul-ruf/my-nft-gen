@@ -9,9 +9,9 @@ import { ColorPicker } from '../../../core/layer/configType/ColorPicker.js';
  *
  * @invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
  * @layerOpacity - the opacity of the top, non-fuzzy, layer
- * @underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
- * @stroke = the stroke to apply to the rings ,
- * @thickness = the thickness of the rays,
+ * @underLayerOpacity - the opacity of the bottom, fuzzy, layer
+ * @stroke = the stroke to apply to the drawing
+ * @thickness = the thickness of the drawing
  * @center - Point2D: Where the center is in the overall composition
  * @innerColor - ColorPicker: the color for the thickness
  * @outerColor - ColorPicker: the color for the stroke and accent

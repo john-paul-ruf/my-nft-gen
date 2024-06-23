@@ -14,9 +14,9 @@ import {Point2D} from "../../../core/layer/configType/Point2D.js";
  * @center - Point2D: Where the center is in the overall composition
  * @underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
  * @underLayerOpacityTimes - the number of times to move through the underlay opacity range over the number of frames
- * @circles = Range: the number of circles to draw,
- * @stroke = the stroke to apply to the rings ,
- * @thickness = the thickness of the rays,
+ * @circles = Range: the number of circles to draw
+ * @stroke = the stroke to apply to the bands
+ * @thickness = the thickness of the Bands
  * @radius = PercentageRange: the range to draw the circles in
  * @accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  * @blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
