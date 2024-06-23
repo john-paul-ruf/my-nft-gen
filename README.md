@@ -168,10 +168,33 @@ Creates N spirals based on the sequence and number of rings
  - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
  - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
- - center - Where the center is in the overall composition
+ - center - Point2D: Where the center is in the overall composition
  - innerColor - ColorPicker: the color for the thickness
  - outerColor - ColorPicker: the color for the stroke and accent
 
+#### Fuzz Flare Effect
+Creates a lens flare with the ability to add fuzz
 
+##### Config Values
+ - invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
+ - innerColor - ColorPicker: the color for the thickness
+ - outerColor - ColorPicker: the color for the stroke and accent
+ - layerOpacity - the opacity of the top, non-fuzzy, layer
+ - center - Point2D: Where the center is in the overall composition
+ - underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
+ - underLayerOpacityTimes - the number of times to move through the underlay opacity range over the number of frames
+ - elementGastonMultiStep Array of MultiStepDefinitionConfig - experimental
+ - numberOfFlareRings = Range: number of rings to draw,
+ - flareRingsSizeRange = PercentageRange: the range to draw the rings within,
+ - flareRingStroke = Range: the stroke to apply to the rings,
+ - flareRingThickness = Range: the thickness of the rings,
+ - numberOfFlareRays = Range: the number of rays to draw
+ - flareRaysSizeRange = PercentageRange: how long the rays should be,
+ - flareRaysStroke = Range: the stroke to apply to the rays,
+ - flareRayThickness = Range: the thickness of the rays,
+ - flareOffset = new PercentageRange(new PercentageShortestSide(0.01), new PercentageShortestSide(0.06)),
+ - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
 
 

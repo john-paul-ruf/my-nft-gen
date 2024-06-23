@@ -22,7 +22,7 @@ import { ColorPicker } from '../../../core/layer/configType/ColorPicker.js';
  * @accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  * @blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
  * @featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
- * @center - Where the center is in the overall composition
+ * @center - Point2D: Where the center is in the overall composition
  * @innerColor - ColorPicker: the color for the thickness
  * @outerColor - ColorPicker: the color for the stroke and accent
  *

@@ -7,6 +7,12 @@ import {Settings} from '../../../core/Settings.js';
 import {FuzzFlareConfig} from './FuzzFlareConfig.js';
 import {FindMultiStepStepValue} from "../../../core/math/FindMultiStepValue.js";
 
+/** *
+ *
+ * Creates a lens flare with the ability to add fuzz
+ *
+ */
+
 export class FuzzFlareEffect extends LayerEffect {
     static _name_ = 'fuzz-flare';
 
@@ -137,10 +143,7 @@ export class FuzzFlareEffect extends LayerEffect {
         const data = {
             height: this.finalSize.height,
             width: this.finalSize.width,
-            center: {
-                x: this.finalSize.width / 2,
-                y: this.finalSize.height / 2,
-            },
+            center: this.config.center,
 
             invertLayers: this.config.invertLayers,
             layerOpacity: this.config.layerOpacity,
