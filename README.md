@@ -215,5 +215,28 @@ Creates a set of rings with fuzz
  - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
  - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
  - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
-*
+
+#### Fuzzy Ripples Effect
+Creates a set of six outer rings, connected by a hexagon, with a larger set of rings generated from the center, with fuzz
+
+##### Config Values
+ - invertLayers - False: fuzzy layer composites on the bottom, True: fuzzy layer composites over the top
+ - layerOpacity - the opacity of the top, non-fuzzy, layer
+ - underLayerOpacityRange - the opacity of the bottom, fuzzy, layer
+ - stroke = the stroke to apply to the rings ,
+ - thickness = the thickness of the rays,
+ - center - Point2D: Where the center is in the overall composition
+ - innerColor - ColorPicker: the color for the thickness
+ - outerColor - ColorPicker: the color for the stroke and accent
+ - largeRadius = PercentageRange: the radius of the center circles,
+ - smallRadius = PercentageRange: the radius of the six outer circles
+ - largeNumberOfRings = Range: number of large rings,
+ - smallNumberOfRings = Range: number of smaller rings in each set,
+ - ripple = PercentageRange: amount to expand and then contract,
+ - times = Range: number of times to ripple,
+ - smallerRingsGroupRadius = PercentageRange: the radius of the outer six circles and the outer point of the hexagon,
+ - accentRange - Dynamic Range: the weight to oscillate the fuzzy layer over the total frames by the number of feather times
+ - blurRange - Dynamic Range: the amount of blur to apply to the fuzzy layer over the total frames by the number of feather times
+ - featherTimes - Range: the number of times to apply the accent range and blur range over the total number of frames
+
 

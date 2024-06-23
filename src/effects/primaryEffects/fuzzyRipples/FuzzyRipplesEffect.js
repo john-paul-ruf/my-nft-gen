@@ -9,6 +9,12 @@ import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
 import { Settings } from '../../../core/Settings.js';
 import { FuzzyRipplesConfig } from './FuzzyRipplesConfig.js';
 
+/** *
+ *
+ * Creates a set of six outer rings, connected by a hexagon, with a larger set of rings generated from the center, with fuzz
+ *
+ */
+
 export class FuzzyRipplesEffect extends LayerEffect {
     static _name_ = 'fuzzy-ripples';
 
