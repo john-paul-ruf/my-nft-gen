@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fabric.js Curved Spokes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <style>
+        body { margin: 0; background: black; }
+        canvas { display: block; margin: 0 auto; background: black; }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="1200" height="1200"></canvas>
+
+<script>
+    class CurvedSpokeAnimator {
+        constructor(options) {
+            this.numLoops = options.numLoops || 1;
+            this.innerRadius = options.innerRadius || 50;
+            this.cx = options.cx || 600;
+            this.cy = options.cy || 600;
+            this.numSpokes = options.numSpokes || 3;
+            this.totalRadius = options.totalRadius || 500;
+            this.minStep = options.minStep || 5;
+            this.maxStep = options.maxStep || 15;
+            this.lineLength = options.lineLength || 1000;
+            this.sparsityFactor = options.sparsityFactor || 15;
+            this.arcSteps = options.arcSteps || 30;
+            this.paths = [];
+            this._precomputePaths();
+        }
+
+        _randomStep() {
+            return this.minStep + Math.random() * (this.maxStep - this.minStep);
+        }
+
+        _polarToXY(r, angle) {
+            return {
+                x: this.cx + r * Math.cos(angle),
+                y: this.cy + r * Math.sin(angle)
+            };
+        }
+
+        _distance(p1, p2) {
+            return Math.hypot(p2.x - p1.x, p2.y - p1.y);
+        }
+
+        _randomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r},${g},${b})`;
+        }
+
+        _precomputePaths() {
+            for (let i = 0; i < this.numSpokes; i++) {
+                const baseAngle = (2 * Math.PI / this.numSpokes) * i;
+                let radius = this.innerRadius;
+                let angle = baseAngle;
+                const points = [this._polarToXY(radius, angle)];
+
+                while (radius < this.totalRadius) {
+                    radius += this._randomStep();
+                    points.push(this._polarToXY(radius, angle));
+
+                    const circumference = 2 * Math.PI * radius;
+                    const arcLen = (circumference / this.sparsityFactor) * (0.5 + Math.random() * 0.4);
+                    const arcAngle = arcLen / radius;
+                    const direction = Math.random() < 0.5 ? -1 : 1;
+                    const newAngle = angle + arcAngle * direction;
+
+                    for (let j = 1; j <= this.arcSteps; j++) {
+                        const t = j / this.arcSteps;
+                        const a = angle + t * (newAngle - angle);
+                        points.push(this._polarToXY(radius, a));
+                    }
+
+                    angle = newAngle;
+                    radius += this._randomStep();
+                    points.push(this._polarToXY(radius, angle));
+                }
+
+                let totalLength = 0;
+                for (let j = 1; j < points.length; j++) {
+                    totalLength += this._distance(points[j - 1], points[j]);
+                }
+
+                this.paths.push({
+                    points,
+                    length: totalLength,
+                    color: this._randomColor()
+                });
+            }
+        }
+
+        getPathSegment(points, length, frame, totalFrames) {
+            const progress = (frame / totalFrames) * this.numLoops;
+            const startLen = (progress * length) % length;
+            const endLen = (startLen + this.lineLength) % length;
+
+            const draw = (sLen, eLen) => {
+                let pathLength = 0;
+                let d = "";
+                let started = false;
+
+                for (let i = 1; i < points.length; i++) {
+                    const p0 = points[i - 1];
+                    const p1 = points[i];
+                    const segLen = this._distance(p0, p1);
+                    const segStart = pathLength;
+                    const segEnd = pathLength + segLen;
+
+                    if (segEnd < sLen || segStart > eLen) {
+                        pathLength += segLen;
+                        continue;
+                    }
+
+                    const drawFrom = Math.max(sLen, segStart);
+                    const drawTo = Math.min(eLen, segEnd);
+                    const fromT = (drawFrom - segStart) / segLen;
+                    const toT = (drawTo - segStart) / segLen;
+
+                    const fromX = p0.x + (p1.x - p0.x) * fromT;
+                    const fromY = p0.y + (p1.y - p0.y) * fromT;
+                    const toX = p0.x + (p1.x - p0.x) * toT;
+                    const toY = p0.y + (p1.y - p0.y) * toT;
+
+                    if (!started) {
+                        d += `M ${fromX} ${fromY} `;
+                        started = true;
+                    }
+                    d += `L ${toX} ${toY} `;
+                    pathLength += segLen;
+                }
+
+                return d;
+            };
+
+            if (startLen < endLen) {
+                return draw(startLen, endLen);
+            } else {
+                return draw(startLen, length) + draw(0, endLen);
+            }
+        }
+
+        renderToFabric(fabricCanvas, frame, totalFrames) {
+            for (const { points, length, color } of this.paths) {
+                const d = this.getPathSegment(points, length, frame, totalFrames);
+                if (!d.trim()) continue;
+                const path = new fabric.Path(d, {
+                    stroke: color,
+                    strokeWidth: 2,
+                    fill: null,
+                    selectable: false,
+                    evented: false
+                });
+                fabricCanvas.add(path);
+            }
+        }
+    }
+
+    const fabricCanvas = new fabric.StaticCanvas('myCanvas', { backgroundColor: 'black' });
+
+    const animator1 = new CurvedSpokeAnimator({
+        numLoops: 1,
+        cx: 600,
+        cy: 600,
+        numSpokes: 50,
+        innerRadius: 50,
+        totalRadius: 500,
+        minStep: 5,
+        maxStep: 50,
+        lineLength: 250,
+        arcSteps: 3,
+        sparsityFactor: 20,
+    });
+
+    const animator2 = new CurvedSpokeAnimator({
+        numLoops: 1,
+        cx: 600,
+        cy: 600,
+        numSpokes: 100,
+        innerRadius: 50,
+        totalRadius: 300,
+        minStep: 5,
+        maxStep: 10,
+        lineLength: 50,
+        arcSteps: 3,
+        sparsityFactor: 8,
+    });
+
+    let frame = 0;
+    const totalFrames = 1800;
+
+    function animate() {
+        fabricCanvas.clear();
+        fabricCanvas.setBackgroundColor('black', fabricCanvas.renderAll.bind(fabricCanvas));
+        animator2.renderToFabric(fabricCanvas, frame, totalFrames);
+        animator1.renderToFabric(fabricCanvas, frame, totalFrames);
+        frame = (frame + 1) % totalFrames;
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+</body>
+</html>

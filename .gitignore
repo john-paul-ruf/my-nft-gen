@@ -1,0 +1,14 @@
+/scratch.js
+/node_modules/
+/src/img/
+/.idea/
+/coverage/
+/qodana.yaml
+/src/the-advance/
+/src/the-lantern/
+/src/red-eye/
+/src/fuzz-flare/
+/src/test-run/
+/src/scratch/
+/src/output/
+/output/
