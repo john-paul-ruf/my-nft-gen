@@ -37,6 +37,7 @@ export class LayerEffect {
             //console.time(`[Worker Log]: Secondary Effect ${i}`);
             try {
                 // Optional: timeout guard
+                //todo: this is wrong, should process in order
                 await Promise.race([
                     effects[i].invoke(layer, currentFrame, totalFrames),
                 ]);
