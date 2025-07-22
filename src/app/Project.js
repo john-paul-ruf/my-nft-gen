@@ -6,6 +6,8 @@ import {LoopBuilder} from '../core/animation/LoopBuilder.js';
 import {randomId} from '../core/math/random.js';
 import {execFile} from 'child_process';
 import {RequestNewWorkerThread} from "../core/worker-threads/RequestNewWorkerThread.js";
+import {StandardEffects} from "../plugin-repo/StandardEffects.js";
+import {EffectRegistry} from "../plugin-repo/EffectRegistry.js";
 
 export class Project {
     constructor({
@@ -73,6 +75,10 @@ export class Project {
 
     removeFinalEffect(layerConfig) {
         this.selectedFinalEffectConfigs.push(layerConfig);
+    }
+
+    registerCustomEffect(name, effectClass) {
+
     }
 
     async generateRandomLoop(keepFrames = false) {

@@ -1,7 +1,8 @@
 import {getRandomIntExclusive, randomId} from './math/random.js';
 import {ColorScheme} from './color/ColorScheme.js';
-import {LayerEffectFromJSON} from './layer/LayerEffectFromJSON.js';
 import {LayerConfig} from './layer/LayerConfig.js';
+import {EffectHydrator} from "./layer/EffectHydrator.js";
+import {StandardEffects} from "../plugin-repo/StandardEffects.js";
 
 export class Settings {
     static from(json) {
@@ -10,11 +11,11 @@ export class Settings {
         settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme);
 
         for (let i = 0; i < settings.effects.length; i++) {
-            settings.effects[i] = LayerEffectFromJSON.from(settings.effects[i]);
+            settings.effects[i] = EffectHydrator.hydrate(settings.effects[i]);
         }
 
         for (let i = 0; i < settings.finalImageEffects.length; i++) {
-            settings.finalImageEffects[i] = LayerEffectFromJSON.from(settings.finalImageEffects[i]);
+            settings.finalImageEffects[i] = EffectHydrator.hydrate(settings.finalImageEffects[i]);
         }
 
         return settings;
@@ -42,6 +43,11 @@ export class Settings {
                     maxConcurrentFrameBuilderThreads = 5,
                     frameStart = 0,
                 }) {
+
+
+
+        StandardEffects.registerAll();
+
         this.frameStart = frameStart;
 
         this.colorScheme = colorScheme;
