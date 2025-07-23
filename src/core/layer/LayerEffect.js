@@ -1,14 +1,14 @@
-import { Settings } from '../Settings.js';
+import {Settings} from '../Settings.js';
 
 export class LayerEffect {
     constructor({
-        name = 'base-effect',
-        requiresLayer = false,
-        config = {},
-        additionalEffects = [],
-        ignoreAdditionalEffects = false,
-        settings = new Settings({}),
-    }) {
+                    name = 'base-effect',
+                    requiresLayer = false,
+                    config = {},
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({}),
+                }) {
         this.name = name;
         this.requiresLayer = requiresLayer;
         this.config = config;
@@ -30,25 +30,14 @@ export class LayerEffect {
     async invoke(layer, currentFrame, totalFrames) {
         if (this.ignoreAdditionalEffects) return;
 
-        const effects = this.additionalEffects;
-        const total = effects.length;
-
-        for (let i = 0; i < total; i++) {
-            //console.time(`[Worker Log]: Secondary Effect ${i}`);
-            try {
-                // Optional: timeout guard
-                //todo: this is wrong, should process in order
-                await Promise.race([
-                    effects[i].invoke(layer, currentFrame, totalFrames),
-                ]);
-            } catch (err) {
-                console.error(`[Worker Log]: Secondary Effect ${i} failed:`, err);
+        try {
+            for (const effect of this.additionalEffects) {
+                await effect.invoke(layer, currentFrame, totalFrames);
             }
-            //console.timeEnd(`[Worker Log]: Secondary Effect ${i}`);
-
-            // Yield after every single effect to avoid total blockage
-            await new Promise(res => setTimeout(res,0));
+        } catch (err) {
+            console.error(`[Worker Log]: Secondary Effect ${i} failed:`, err);
         }
+
     }
 
     getInfo() {
