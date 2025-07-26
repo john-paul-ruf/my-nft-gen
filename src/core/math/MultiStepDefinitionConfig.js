@@ -1,4 +1,4 @@
-import {FindValueAlgorithm} from "./findValue.js";
+import {FindValueAlgorithm, getRandomFindValueAlgorithm} from "./findValue.js";
 
 export class MultiStepDefinitionConfig {
 
@@ -7,7 +7,7 @@ export class MultiStepDefinitionConfig {
                     maxPercentage = 100,
                     max = new Range(20,30),
                     times  = new Range(1,3),
-                    type =  FindValueAlgorithm.COSINE_BELL,
+                    type =  (getRandomFindValueAlgorithm()),
                 }) {
         this.minPercentage = minPercentage;
         this.maxPercentage = maxPercentage;

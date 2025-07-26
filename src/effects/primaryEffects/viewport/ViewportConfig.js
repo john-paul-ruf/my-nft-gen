@@ -1,7 +1,7 @@
 import {EffectConfig} from '../../../core/layer/EffectConfig.js';
 import {ColorPicker} from "../../../core/layer/configType/ColorPicker.js";
 import {Point2D} from "../../../core/layer/configType/Point2D.js";
-import {FindValueAlgorithm} from "../../../core/math/findValue.js";
+import {FindValueAlgorithm, getAllFindValueAlgorithms} from "../../../core/math/findValue.js";
 
 export class ViewportConfig extends EffectConfig {
     constructor(
@@ -26,8 +26,8 @@ export class ViewportConfig extends EffectConfig {
             accentRange = {bottom: {lower: 0, upper: 0}, top: {lower: 20, upper: 30}},
             blurRange = {bottom: {lower: 2, upper: 3}, top: {lower: 5, upper: 8}},
             featherTimes = {lower: 2, upper: 4},
-            accentFindValueAlgorithm = [FindValueAlgorithm.TRIANGLE, FindValueAlgorithm.SMOOTHSTEP, FindValueAlgorithm.COSINE_BELL],
-            blurFindValueAlgorithm = [FindValueAlgorithm.TRIANGLE, FindValueAlgorithm.SMOOTHSTEP, FindValueAlgorithm.COSINE_BELL],
+            accentFindValueAlgorithm = getAllFindValueAlgorithms(),
+            blurFindValueAlgorithm = getAllFindValueAlgorithms(),
         },
     ) {
         super();

@@ -6,7 +6,11 @@ import { getRandomIntExclusive } from "./random.js";
 export const FindValueAlgorithm = {
     TRIANGLE: 'triangle',
     COSINE_BELL: 'cosineBell',
-    SMOOTHSTEP: 'smoothstepLoopSafe',
+    SMOOTHSTEP_LOOPSAFE: 'smoothstepLoopSafe',
+    PARABOLIC_BELL: 'parabolicBell',
+    ABS_SINE: 'absSine',
+    TRIANGLE_ABS: 'triangleAbs',
+    EASE_IN_OUT_CUBIC: 'easeInOutCubic'
 };
 
 /**
@@ -18,8 +22,13 @@ export const getRandomFindValueAlgorithm = () => {
     return algos[getRandomIntExclusive(0, algos.length)];
 };
 
+export const getAllFindValueAlgorithms = () => {
+    return Object.values(FindValueAlgorithm);
+};
+
 /**
  * Calculate a looping value between min and max based on the selected algorithm.
+ * Handles edge case where max === min (flat line).
  * @param {number} min - Minimum value
  * @param {number} max - Maximum value
  * @param {number} times - Number of oscillation cycles over totalFrame
@@ -38,10 +47,14 @@ export const findValue = (
     algorithm = FindValueAlgorithm.COSINE_BELL,
     precision = 10000
 ) => {
+    if (max === min || totalFrame === 0 || times === 0) return min;
+
     const range = max - min;
     const tRaw = (currentFrame / totalFrame) * times;
     const t = Math.round(tRaw * precision) / precision;
     const segment = totalFrame / times;
+
+    let value = 0;
 
     switch (algorithm) {
         case FindValueAlgorithm.TRIANGLE: {
@@ -55,17 +68,47 @@ export const findValue = (
 
         case FindValueAlgorithm.COSINE_BELL: {
             const phase = t * Math.PI * 2;
-            const value = (1 - Math.cos(phase)) / 2;
-            return min + value * range;
+            value = (1 - Math.cos(phase)) / 2;
+            break;
         }
 
-        case FindValueAlgorithm.SMOOTHSTEP: {
+        case FindValueAlgorithm.SMOOTHSTEP_LOOPSAFE: {
             const phase = (t % 1) * Math.PI;
-            const value = Math.pow(Math.sin(phase), 2); // sin² waveform
-            return min + value * range;
+            value = Math.pow(Math.sin(phase), 2);
+            break;
+        }
+
+        case FindValueAlgorithm.PARABOLIC_BELL: {
+            const tt = t % 1;
+            value = 4 * tt * (1 - tt);
+            break;
+        }
+
+        case FindValueAlgorithm.ABS_SINE: {
+            const phase = (t % 1) * Math.PI;
+            value = Math.abs(Math.sin(phase));
+            break;
+        }
+
+        case FindValueAlgorithm.TRIANGLE_ABS: {
+            const tt = t % 1;
+            value = 1 - Math.abs(2 * tt - 1);
+            break;
+        }
+
+        case FindValueAlgorithm.EASE_IN_OUT_CUBIC: {
+            const tt = t % 1;
+            const easing = tt < 0.5
+                ? 4 * Math.pow(tt, 3)
+                : 1 - Math.pow(-2 * tt + 2, 3) / 2;
+            value = easing * (1 - easing) * 4; // loop-safe cubic bell
+            break;
         }
 
         default:
-            return min;
+            value = 0;
+            break;
     }
+
+    return min + value * range;
 };

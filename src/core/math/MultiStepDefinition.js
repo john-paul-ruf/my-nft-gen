@@ -7,7 +7,7 @@ export class MultiStepDefinition {
                     maxPercentage = 100,
                     max = 25,
                     times = 1,
-                    type = FindValueAlgorithm.COSINE_BELL,
+                    type = (getRandomFindValueAlgorithm()),
                 }) {
         this.minPercentage = minPercentage;
         this.maxPercentage = maxPercentage;

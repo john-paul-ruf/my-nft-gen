@@ -7,7 +7,7 @@ import {ColorPicker} from '../../../core/layer/configType/ColorPicker.js';
 import {DynamicRange} from "../../../core/layer/configType/DynamicRange.js";
 import {MultiStepDefinitionConfig} from "../../../core/math/MultiStepDefinitionConfig.js";
 import {Point2D} from "../../../core/layer/configType/Point2D.js";
-import {FindValueAlgorithm} from "../../../core/math/findValue.js";
+import {FindValueAlgorithm, getAllFindValueAlgorithms} from "../../../core/math/findValue.js";
 
 /** *
  *
@@ -88,9 +88,9 @@ export class FuzzFlareConfig extends EffectConfig {
             blurRange = {bottom: {lower: 4, upper: 6}, top: {lower: 8, upper: 12}},
             featherTimes = {lower: 2, upper: 8},
 
-            accentFindValueAlgorithm = [FindValueAlgorithm.TRIANGLE, FindValueAlgorithm.SMOOTHSTEP, FindValueAlgorithm.COSINE_BELL],
-            blurFindValueAlgorithm = [FindValueAlgorithm.TRIANGLE, FindValueAlgorithm.SMOOTHSTEP, FindValueAlgorithm.COSINE_BELL],
-            opacityFindValueAlgorithm = [FindValueAlgorithm.TRIANGLE, FindValueAlgorithm.SMOOTHSTEP, FindValueAlgorithm.COSINE_BELL],
+            accentFindValueAlgorithm = getAllFindValueAlgorithms(),
+            blurFindValueAlgorithm = getAllFindValueAlgorithms(),
+            opacityFindValueAlgorithm = getAllFindValueAlgorithms(),
         },
     ) {
         super();
