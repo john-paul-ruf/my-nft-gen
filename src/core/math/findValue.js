@@ -52,7 +52,7 @@ export const findValue = (
     times,
     totalFrame,
     currentFrame,
-    algorithm = FindValueAlgorithm.COSINE_BELL,
+    algorithm = FindValueAlgorithm.JOURNEY_SIN,
     precision = 10000
 ) => {
     if (max === min || totalFrame === 0 || times === 0) return min;
