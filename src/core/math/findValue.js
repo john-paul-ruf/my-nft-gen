@@ -10,8 +10,16 @@ export const FindValueAlgorithm = {
     PARABOLIC_BELL: 'parabolicBell',
     ABS_SINE: 'absSine',
     TRIANGLE_ABS: 'triangleAbs',
-    EASE_IN_OUT_CUBIC: 'easeInOutCubic'
+    EASE_IN_OUT_CUBIC: 'easeInOutCubic',
+
+    // New "journey-style" algorithms
+    JOURNEY_SIN: 'journeySin',
+    JOURNEY_SIN_SQUARED: 'journeySinSquared',
+    JOURNEY_EXP_ENVELOPE: 'journeyExpEnvelope',
+    JOURNEY_STEEP_BELL: 'journeySteepBell',
+    JOURNEY_FLAT_TOP: 'journeyFlatTop',
 };
+
 
 /**
  * Get a random loop-safe algorithm from the list.
@@ -102,6 +110,46 @@ export const findValue = (
                 ? 4 * Math.pow(tt, 3)
                 : 1 - Math.pow(-2 * tt + 2, 3) / 2;
             value = easing * (1 - easing) * 4; // loop-safe cubic bell
+            break;
+        }
+
+        case FindValueAlgorithm.JOURNEY_SIN: {
+            const normalizedT = currentFrame / (totalFrame - 1);
+            const envelope = Math.sin(Math.PI * normalizedT);
+            const modulation = Math.sin(2 * Math.PI * times * normalizedT);
+            value = Math.abs(envelope * modulation);
+            break;
+        }
+
+        case FindValueAlgorithm.JOURNEY_SIN_SQUARED: {
+            const normalizedT = currentFrame / (totalFrame - 1);
+            const envelope = Math.pow(Math.sin(Math.PI * normalizedT), 2);
+            const modulation = Math.sin(2 * Math.PI * times * normalizedT);
+            value = Math.abs(envelope * modulation);
+            break;
+        }
+
+        case FindValueAlgorithm.JOURNEY_EXP_ENVELOPE: {
+            const normalizedT = currentFrame / (totalFrame - 1);
+            const envelope = Math.pow(Math.sin(Math.PI * normalizedT), 0.5);
+            const modulation = Math.sin(2 * Math.PI * times * normalizedT);
+            value = Math.abs(envelope * modulation);
+            break;
+        }
+
+        case FindValueAlgorithm.JOURNEY_STEEP_BELL: {
+            const normalizedT = currentFrame / (totalFrame - 1);
+            const envelope = Math.pow(Math.sin(Math.PI * normalizedT), 3);
+            const modulation = Math.sin(2 * Math.PI * times * normalizedT);
+            value = Math.abs(envelope * modulation);
+            break;
+        }
+
+        case FindValueAlgorithm.JOURNEY_FLAT_TOP: {
+            const normalizedT = currentFrame / (totalFrame - 1);
+            const envelope = 1 - Math.pow(Math.cos(Math.PI * normalizedT), 6);
+            const modulation = Math.sin(2 * Math.PI * times * normalizedT);
+            value = Math.abs(envelope * modulation);
             break;
         }
 
