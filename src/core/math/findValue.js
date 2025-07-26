@@ -1,38 +1,71 @@
+import { getRandomIntExclusive } from "./random.js";
+
 /**
+ * Loop-safe algorithms for oscillating values between min and max.
+ */
+export const FindValueAlgorithm = {
+    TRIANGLE: 'triangle',
+    COSINE_BELL: 'cosineBell',
+    SMOOTHSTEP: 'smoothstepLoopSafe',
+};
 
- The Gaston of functions.  This runs almost everything.
+/**
+ * Get a random loop-safe algorithm from the list.
+ * @returns {string}
+ */
+export const getRandomFindValueAlgorithm = () => {
+    const algos = Object.values(FindValueAlgorithm);
+    return algos[getRandomIntExclusive(0, algos.length)];
+};
 
- Given a range, and the number of times the sequence is to repeat
- return the current value for the given frame in a total number of
- frames.
+/**
+ * Calculate a looping value between min and max based on the selected algorithm.
+ * @param {number} min - Minimum value
+ * @param {number} max - Maximum value
+ * @param {number} times - Number of oscillation cycles over totalFrame
+ * @param {number} totalFrame - Total frames in the loop
+ * @param {number} currentFrame - Current frame
+ * @param {string} algorithm - Algorithm from FindValueAlgorithm
+ * @param {number} [precision=10000] - Optional precision to reduce float drift
+ * @returns {number}
+ */
+export const findValue = (
+    min,
+    max,
+    times,
+    totalFrame,
+    currentFrame,
+    algorithm = FindValueAlgorithm.COSINE_BELL,
+    precision = 10000
+) => {
+    const range = max - min;
+    const tRaw = (currentFrame / totalFrame) * times;
+    const t = Math.round(tRaw * precision) / precision;
+    const segment = totalFrame / times;
 
- * */
-export const findValue = (min, max, times, totalFrame, currentFrame, invert = false) => {
-    const range = max - min; // the range
-    const segment = totalFrame / times; // Segment is the number of frames if we only did the effect once
-    const halfSegment = segment / 2; // number of frame to go up and back with in a given time
-    // the magic: frame segment is the current frame number if we only did this one time. Modulus operator
-    const frameSegment = currentFrame % segment;
-    const step = range / halfSegment; // How much to increment in a single frame
-
-    if (!invert) { // the classic gaston
-        if (frameSegment <= halfSegment) { // if we haven't reached the midway point
-            // bottom of range plus how much to increment per frame times the current frame for the segment
-            return min + (step * frameSegment);
+    switch (algorithm) {
+        case FindValueAlgorithm.TRIANGLE: {
+            const localFrame = currentFrame % segment;
+            const half = segment / 2;
+            const step = range / half;
+            return localFrame <= half
+                ? min + step * localFrame
+                : max - step * (localFrame - half);
         }
 
-        // we are past the halfway point
-        // max of the range minus how much to increment per frame times the current frame in reverse
-        return max - (step * (frameSegment - halfSegment));
-    }
+        case FindValueAlgorithm.COSINE_BELL: {
+            const phase = t * Math.PI * 2;
+            const value = (1 - Math.cos(phase)) / 2;
+            return min + value * range;
+        }
 
-    // THE INVERTED GASTON
-    if (frameSegment <= halfSegment) { // if we haven't reached the midway point
-    // Top of range MINUS how much to increment per frame times the current frame for the segment
-        return max - (step * frameSegment);
-    }
+        case FindValueAlgorithm.SMOOTHSTEP: {
+            const phase = (t % 1) * Math.PI;
+            const value = Math.pow(Math.sin(phase), 2); // sin² waveform
+            return min + value * range;
+        }
 
-    // we are past the halfway point
-    // bottom of the range PLUS how much to increment per frame times the current frame in reverse
-    return min + (step * (frameSegment - halfSegment));
+        default:
+            return min;
+    }
 };
