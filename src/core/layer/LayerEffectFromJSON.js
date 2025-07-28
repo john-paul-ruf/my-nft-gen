@@ -49,6 +49,8 @@ import {
     StaticImageKeyFrameEffect
 } from "../../effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js";
 import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
+import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
+import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
 
 export class LayerEffectFromJSON {
     static from(json) {
@@ -159,6 +161,12 @@ export class LayerEffectFromJSON {
                 break;
             case StaticImageKeyFrameEffect._name_:
                 layer = Object.assign(new StaticImageKeyFrameEffect({}), json);
+                break;
+            case BloomFilmGrainEffect._name_:
+                layer = Object.assign(new BloomFilmGrainEffect({}), json);
+                break;
+            case EdgeGlowEffect._name_:
+                layer = Object.assign(new EdgeGlowEffect({}), json);
                 break;
             default:
                 throw new Error('Not a valid effect name');
