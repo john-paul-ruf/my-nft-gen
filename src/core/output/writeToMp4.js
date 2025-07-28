@@ -8,13 +8,13 @@ export const writeToMp4 = async (fileSelector, config) => {
 
         pass1.outputFormat('mp4')
             .videoCodec('libx265')
-            .withFpsInput(20)
+            .withFpsInput(30)
             .outputOptions([
                 '-threads 4',
                 '-tag:v hvc1', // compatibility
                 '-preset veryslow', // take time to compress
                 '-pix_fmt yuv420p', // quicktime apple compatibility
-                '-crf 28', // compression
+                '-crf 20', // compression
                 '-tune zerolatency',
                 '-movflags +faststart',
                 '-an', // no audio
