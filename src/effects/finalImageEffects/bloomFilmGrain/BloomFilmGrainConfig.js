@@ -15,13 +15,13 @@ import {getAllFindValueAlgorithms} from "../../../core/math/findValue.js";
 export class BloomFilmGrainConfig extends EffectConfig {
     constructor(
         {
-            brightnessRange  = {bottom: {lower: 0.8, upper: 0.8}, top: {lower: 1, upper: 1}},
+            brightnessRange = {bottom: {lower: 1.5, upper: 1.5}, top: {lower: 2, upper: 2}},
             brightnessTimes = {lower: 2, upper: 8},
-            blurRange  = {bottom: {lower: 0.8, upper: 0.8}, top: {lower: 1, upper: 1}},
+            blurRange = {bottom: {lower: 12, upper: 12}, top: {lower: 15, upper: 15}},
             blurTimes = {lower: 2, upper: 8},
-            grainRange  = {bottom: {lower: 0.8, upper: 0.8}, top: {lower: 1, upper: 1}},
+            grainRange = {bottom: {lower: 0.2, upper: 0.4}, top: {lower: 0.5, upper: 0.8}},
             grainTimes = {lower: 2, upper: 8},
-            grainIntensityRange  = {bottom: {lower: 0.08, upper: 0.08}, top: {lower: 0.1, upper: 0.1}},
+            grainIntensityRange = {bottom: {lower: 0.08, upper: 0.08}, top: {lower: 0.1, upper: 0.1}},
             grainIntensityTimes = {lower: 2, upper: 8},
             brightnessFindValueAlgorithm = getAllFindValueAlgorithms(),
             blurFindValueAlgorithm = getAllFindValueAlgorithms(),
