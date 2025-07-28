@@ -8,7 +8,7 @@ export const writeToMp4 = async (fileSelector, config) => {
 
         pass1.outputFormat('mp4')
             .videoCodec('libx265')
-            .withFpsInput(30)
+            .withFpsInput(20)
             .outputOptions([
                 '-threads 4',
                 '-tag:v hvc1', // compatibility
