@@ -48,6 +48,7 @@ import {CurvedRedEyeEffect} from "../../effects/primaryEffects/curved-red-eye/Cu
 import {
     StaticImageKeyFrameEffect
 } from "../../effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js";
+import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
 
 export class LayerEffectFromJSON {
     static from(json) {
@@ -202,6 +203,9 @@ export class LayerEffectFromJSON {
                     break;
                 case BlurKeyFrameEffect._name_:
                     layer.additionalEffects[i] = Object.assign(new BlurKeyFrameEffect({}), layer.additionalEffects[i]);
+                    break;
+                case SetOpacityKeyFrameEffect._name_:
+                    layer.additionalEffects[i] = Object.assign(new SetOpacityKeyFrameEffect({}), layer.additionalEffects[i]);
                     break;
                 default:
                     throw new Error('Not a valid effect name');
