@@ -5,6 +5,7 @@ import {CRTShadowConfig} from './CRTShadowConfig.js';
 import sharp from "sharp";
 import {promises as fs} from "fs";
 import {findValue} from "../../../core/math/findValue.js";
+import {LayerFactory} from "../../../core/factory/layer/LayerFactory.js";
 
 /** *
  *
@@ -34,16 +35,23 @@ export class CRTShadowEffect extends LayerEffect {
             ignoreAdditionalEffects,
             settings,
         });
+
+        this.finalSize = settings.finalSize;
         this.#generate(settings);
     }
 
-    async #effect(layer, currentFrame, numberOfFrames) {
+    async #effect(currentFrame, numberOfFrames) {
 
-        const filename = `${this.workingDirectory}crt-shadow${randomId()}.png`;
         const filenameOut = `${this.workingDirectory}crt-shadow-out${randomId()}.png`;
-        await layer.toFile(filename);
 
-        const image = sharp(filename);
+        const image = sharp({
+            create: {
+                width: this.finalSize.width,
+                height: this.finalSize.height,
+                channels: 4,
+                background: '#00000000',
+            },
+        });
 
         const shadowGaston = findValue(this.data.shadowOpacityRange.lower, this.data.shadowOpacityRange.upper, this.data.opacityTimes, numberOfFrames, currentFrame);
         const linesGaston = findValue(this.data.linesOpacityRange.lower, this.data.linesOpacityRange.upper, this.data.opacityTimes, numberOfFrames, currentFrame);
@@ -74,69 +82,67 @@ export class CRTShadowEffect extends LayerEffect {
 
 
         const gradientSVG = `
-             <svg  width="${this.data.width}" height="${this.data.height}" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Background -->
-                  <rect width="100%" height="100%" fill="white" />
-                  
-                  <!-- CRT Shadow Effect -->
-                  <defs>
-                    <!-- Horizontal shadow gradient at the top -->
-                    <linearGradient id="crt-shadow-top" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston});" />
-                      <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0);" />
-                    </linearGradient>
-                    
-                    <!-- Horizontal shadow gradient at the bottom -->
-                    <linearGradient id="crt-shadow-bottom" x1="0" y1="1" x2="0" y2="0">
-                      <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue},${shadowGaston});" />
-                      <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0);" />
-                    </linearGradient>
-                    
-                    <!-- Vertical shadow gradient at the left -->
-                    <linearGradient id="crt-shadow-left" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston});" />
-                      <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0);" />
-                    </linearGradient>
-                    
-                    <!-- Vertical shadow gradient at the right -->
-                    <linearGradient id="crt-shadow-right" x1="1" y1="0" x2="0" y2="0">
-                      <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston});" />
-                      <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0);" />
-                    </linearGradient>
-                    
-                    <!-- Scanlines -->
-                    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
-                      <rect width="100%" height="${this.data.lineHeight}" fill="rgba( ${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston} )" />
-                    </pattern>
-                    
-                    ${scanLinesGradients}
-                    
-                  </defs>
-                
-                  <!-- Apply the CRT Shadows -->
-                  <rect width="100%" height="50%" fill="url(#crt-shadow-top)" />
-                  <rect y="50%" width="100%" height="50%" fill="url(#crt-shadow-bottom)" />
-                  <rect width="50%" height="100%" fill="url(#crt-shadow-left)" />
-                  <rect x="50%" width="50%" height="100%" fill="url(#crt-shadow-right)" />
-                  
-                  <!-- Apply the Scanlines -->
-                  ${scanLinesRect}
-                </svg>
-            `;
+     <svg  width="${this.data.width}" height="${this.data.height}" xmlns="http://www.w3.org/2000/svg">
+          <!-- CRT Shadow Effect -->
+          <defs>
+            <!-- Horizontal shadow gradient at the top -->
+            <linearGradient id="crt-shadow-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston});" />
+              <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0);" />
+            </linearGradient>
+            
+            <!-- Horizontal shadow gradient at the bottom -->
+            <linearGradient id="crt-shadow-bottom" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue},${shadowGaston});" />
+              <stop offset="5%" style="stop-color: rgba(0, 0, 0, 0);" />
+            </linearGradient>
+            
+            <!-- Vertical shadow gradient at the left -->
+            <linearGradient id="crt-shadow-left" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston});" />
+              <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0);" />
+            </linearGradient>
+            
+            <!-- Vertical shadow gradient at the right -->
+            <linearGradient id="crt-shadow-right" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0%" style="stop-color: rgba(${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston});" />
+              <stop offset="10%" style="stop-color: rgba(0, 0, 0, 0);" />
+            </linearGradient>
+            
+            <!-- Scanlines -->
+            <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+              <rect width="100%" height="${this.data.lineHeight}" fill="rgba( ${this.data.lineRed},  ${this.data.lineGreen},  ${this.data.lineBlue}, ${shadowGaston} )" />
+            </pattern>
+            
+            ${scanLinesGradients}
+            
+          </defs>
+        
+          <!-- Apply the CRT Shadows -->
+          <rect width="100%" height="50%" fill="url(#crt-shadow-top)" />
+          <rect y="50%" width="100%" height="50%" fill="url(#crt-shadow-bottom)" />
+          <rect width="50%" height="100%" fill="url(#crt-shadow-left)" />
+          <rect x="50%" width="50%" height="100%" fill="url(#crt-shadow-right)" />
+          
+          <!-- Apply the Scanlines -->
+          ${scanLinesRect}
+        </svg>
+    `;
+
 
         await image
             .resize({width: Math.floor(this.data.width), height: Math.floor(this.data.height)})
             .composite([{
                 input: Buffer.from(gradientSVG),
-                blend: 'multiply'
             }])
 
         await image.toFile(filenameOut);
 
-        await layer.fromFile(filenameOut);
+        const layer = await LayerFactory.getLayerFromFile(filenameOut)
 
-        await fs.unlink(filename);
         await fs.unlink(filenameOut);
+
+        return layer;
     }
 
 
@@ -167,8 +173,9 @@ export class CRTShadowEffect extends LayerEffect {
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {
-        await this.#effect(layer, currentFrame, numberOfFrames);
-        await super.invoke(layer, currentFrame, numberOfFrames);
+        const crtShadow = await this.#effect(currentFrame, numberOfFrames);
+        await super.invoke(crtShadow, currentFrame, numberOfFrames);
+        await layer.compositeLayerOver(crtShadow);
     }
 
     getInfo() {

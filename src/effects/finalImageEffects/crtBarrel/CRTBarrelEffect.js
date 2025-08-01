@@ -4,6 +4,7 @@ import {Settings} from '../../../core/Settings.js';
 import sharp from "sharp";
 import {promises as fs} from "fs";
 import {CRTBarrelConfig} from "./CRTBarrelConfig.js";
+import {globalBufferPool} from '../../../core/pool/BufferPool.js';
 
 /** *
  *
@@ -43,7 +44,7 @@ export class CRTBarrelEffect extends LayerEffect {
         const {data, info} = await image.raw().toBuffer({resolveWithObject: true});
         const {width, height, channels} = info;
 
-        const warpedBuffer = Buffer.alloc(data.length);
+        const warpedBuffer = globalBufferPool.getBuffer(width, height, channels);
 
         const centerX = width / 2;
         const centerY = height / 2;
@@ -110,6 +111,9 @@ export class CRTBarrelEffect extends LayerEffect {
                 channels: 4
             }
         }).toFile(filenameOut);
+        
+        // Return buffer to pool
+        globalBufferPool.returnBuffer(warpedBuffer, width, height, channels);
     }
 
 

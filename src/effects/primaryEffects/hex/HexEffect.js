@@ -1,8 +1,8 @@
-import { promises as fs } from 'fs';
-import { LayerEffect } from '../../../core/layer/LayerEffect.js';
-import { findOneWayValue } from '../../../core/math/findOneWayValue.js';
-import { LayerFactory } from '../../../core/factory/layer/LayerFactory.js';
-import { Canvas2dFactory } from '../../../core/factory/canvas/Canvas2dFactory.js';
+import {promises as fs} from 'fs';
+import {LayerEffect} from '../../../core/layer/LayerEffect.js';
+import {findOneWayValue} from '../../../core/math/findOneWayValue.js';
+import {LayerFactory} from '../../../core/factory/layer/LayerFactory.js';
+import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
 import {
     getRandomFromArray,
     getRandomIntExclusive,
@@ -10,22 +10,22 @@ import {
     randomId,
     randomNumber,
 } from '../../../core/math/random.js';
-import { findValue } from '../../../core/math/findValue.js';
-import { findPointByAngleAndCircle } from '../../../core/math/drawingMath.js';
-import { Settings } from '../../../core/Settings.js';
-import { HexConfig } from './HexConfig.js';
+import {findValue} from '../../../core/math/findValue.js';
+import {findPointByAngleAndCircle} from '../../../core/math/drawingMath.js';
+import {Settings} from '../../../core/Settings.js';
+import {HexConfig} from './HexConfig.js';
 
 export class HexEffect extends LayerEffect {
     static _name_ = 'hex';
 
     constructor({
-        name = HexEffect._name_,
-        requiresLayer = true,
-        config = new HexConfig({}),
-        additionalEffects = [],
-        ignoreAdditionalEffects = false,
-        settings = new Settings({}),
-    }) {
+                    name = HexEffect._name_,
+                    requiresLayer = true,
+                    config = new HexConfig({}),
+                    additionalEffects = [],
+                    ignoreAdditionalEffects = false,
+                    settings = new Settings({}),
+                }) {
         super({
             name,
             requiresLayer,
@@ -53,15 +53,15 @@ export class HexEffect extends LayerEffect {
         const pos = findPointByAngleAndCircle(context.data.center, theAngleGaston, gapRadius);
 
         switch (context.data.strategy) {
-        case 'rotate':
-            await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
-            break;
-        case 'angle':
-            await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
-            break;
-        case 'static':
-            await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
-            break;
+            case 'rotate':
+                await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
+                break;
+            case 'angle':
+                await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
+                break;
+            case 'static':
+                await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.innerColor, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
+                break;
         }
     }
 
@@ -81,15 +81,15 @@ export class HexEffect extends LayerEffect {
         const pos = findPointByAngleAndCircle(context.data.center, theAngleGaston, gapRadius);
 
         switch (context.data.strategy) {
-        case 'rotate':
-            await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
-            break;
-        case 'angle':
-            await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
-            break;
-        case 'static':
-            await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
-            break;
+            case 'rotate':
+                await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
+                break;
+            case 'angle':
+                await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
+                break;
+            case 'static':
+                await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.color, (context.data.stroke + context.accentBoost) * scaleBy, context.data.color);
+                break;
         }
     }
 
@@ -109,15 +109,15 @@ export class HexEffect extends LayerEffect {
         const pos = findPointByAngleAndCircle(context.data.center, theAngleGaston, gapRadius);
 
         switch (context.data.strategy) {
-        case 'rotate':
-            await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor);
-            break;
-        case 'angle':
-            await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor);
-            break;
-        case 'static':
-            await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor);
-            break;
+            case 'rotate':
+                await context.canvas.drawPolygon2d(radius, pos, 6, theRotateGaston, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor);
+                break;
+            case 'angle':
+                await context.canvas.drawPolygon2d(radius, pos, 6, theAngleGaston, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor);
+                break;
+            case 'static':
+                await context.canvas.drawPolygon2d(radius, pos, 6, 30, context.data.thickness * scaleBy, context.data.innerColor, 0, context.data.innerColor);
+                break;
         }
     }
 
@@ -125,26 +125,26 @@ export class HexEffect extends LayerEffect {
         context.accentBoost = context.theAccentGaston;
 
         switch (context.data.overlayStrategy) {
-        case 'overlay':
-            for (let i = 0; i < context.data.numberOfHex; i++) {
-                for (let a = 0; a < 360; a += context.data.sparsityFactor) {
-                    await this.#drawHexLine(a, i, context);
+            case 'overlay':
+                for (let i = 0; i < context.data.numberOfHex; i++) {
+                    for (let a = 0; a < 360; a += context.data.sparsityFactor) {
+                        await this.#drawHexLine(a, i, context);
+                    }
                 }
-            }
-            break;
-        case 'flat':
-            for (let i = 0; i < context.data.numberOfHex; i++) {
-                for (let a = 0; a < 360; a += context.data.sparsityFactor) {
-                    await this.#drawHexLineOuter(a, i, context);
+                break;
+            case 'flat':
+                for (let i = 0; i < context.data.numberOfHex; i++) {
+                    for (let a = 0; a < 360; a += context.data.sparsityFactor) {
+                        await this.#drawHexLineOuter(a, i, context);
+                    }
                 }
-            }
 
-            for (let i = 0; i < context.data.numberOfHex; i++) {
-                for (let a = 0; a < 360; a += context.data.sparsityFactor) {
-                    await this.#drawHexLineInner(a, i, context);
+                for (let i = 0; i < context.data.numberOfHex; i++) {
+                    for (let a = 0; a < 360; a += context.data.sparsityFactor) {
+                        await this.#drawHexLineInner(a, i, context);
+                    }
                 }
-            }
-            break;
+                break;
         }
         await context.canvas.toFile(filename);
     }
@@ -201,8 +201,8 @@ export class HexEffect extends LayerEffect {
             width: this.finalSize.width,
             stroke: this.config.stroke,
             thickness: this.config.thickness,
-            innerColor: settings.getNeutralFromBucket(),
-            color: settings.getColorFromBucket(),
+            innerColor: this.config.innerColor.getColor(settings),
+            color: this.config.outerColor.getColor(settings),
             scaleFactor: this.config.scaleFactor,
             sparsityFactor: getRandomFromArray(this.config.sparsityFactor),
             gapFactor: getRandomIntInclusive(this.config.gapFactor.lower, this.config.gapFactor.upper),
@@ -216,7 +216,7 @@ export class HexEffect extends LayerEffect {
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
             featherTimes: getRandomIntInclusive(this.config.featherTimes.lower, this.config.featherTimes.upper),
-            center: { x: this.finalSize.width / 2, y: this.finalSize.height / 2 },
+            center: {x: this.finalSize.width / 2, y: this.finalSize.height / 2},
         };
     }
 

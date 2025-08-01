@@ -35,7 +35,7 @@ export class LayerEffect {
                 await effect.invoke(layer, currentFrame, totalFrames);
             }
         } catch (err) {
-            console.error(`[Worker Log]: Secondary Effect ${i} failed:`, err);
+            console.error(`[Worker Log]: Secondary Effect failed:`, err);
         }
 
     }

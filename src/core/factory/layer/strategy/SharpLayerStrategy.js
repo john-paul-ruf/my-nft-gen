@@ -4,6 +4,7 @@ import {pipeline} from 'node:stream/promises';
 import {promises as fs, createWriteStream} from 'fs';
 import {mapNumberToRange} from '../../../math/mapNumberToRange.js';
 import {randomId} from '../../../math/random.js';
+import {globalBufferPool} from '../../../pool/BufferPool.js';
 
 export class SharpLayerStrategy {
     constructor({
@@ -112,10 +113,13 @@ export class SharpLayerStrategy {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
 
         const info = await this.getInfo();
+        const alphaBuffer = globalBufferPool.getBuffer(info.width, info.height, 4);
+        alphaBuffer.fill(newOpacity);
+        
         let buffer = await sharp(await this.toBuffer()).png({
             compressionLevel: 1, force: true,
         }).composite([{
-            input: Buffer.alloc(info.width * info.height * 4, newOpacity),
+            input: alphaBuffer,
             raw: {
                 width: info.width, height: info.height, channels: 4,
             },
@@ -127,6 +131,7 @@ export class SharpLayerStrategy {
 
         await this.fromBuffer(buffer);
 
+        globalBufferPool.returnBuffer(alphaBuffer, info.width, info.height, 4);
         buffer = null;
     }
 

@@ -21,7 +21,7 @@ export class CreateFrame {
         const effects = this.settings.effects;
         const layers = this.context.layers;
         const total = layers.length;
-        const maxConcurrency = 4;
+        const maxConcurrency = 3;
         let currentIndex = 0;
         let active = 0;
 

@@ -4,14 +4,12 @@ import {hexToRgba} from '../../../utils/hexToRgba.js';
 import {LayerFactory} from '../../layer/LayerFactory.js';
 import {fabric} from 'fabric';
 import {stream2buffer} from "../../../utils/stream2buffer.js";
+import {globalCanvasPool} from '../../../pool/CanvasPool.js';
 
 export class FabricCanvasStrategy {
     async newCanvas(width, height) {
-        this.canvas = new fabric.StaticCanvas(null, {
-            backgroundColor: '#00000000',
-            width,
-            height,
-        });
+        this.canvas = globalCanvasPool.getCanvas(width, height);
+        this._shouldReturnToPool = true;
     }
 
 
@@ -30,7 +28,21 @@ export class FabricCanvasStrategy {
     async convertToLayer() {
         this.canvas.renderAll();
         const buffer = await stream2buffer(this.canvas.createPNGStream());
-        return LayerFactory.getLayerFromBuffer(buffer);
+        const layer = await LayerFactory.getLayerFromBuffer(buffer);
+        
+        if (this._shouldReturnToPool) {
+            globalCanvasPool.returnCanvas(this.canvas);
+            this._shouldReturnToPool = false;
+        }
+        
+        return layer;
+    }
+
+    dispose() {
+        if (this._shouldReturnToPool && this.canvas) {
+            globalCanvasPool.returnCanvas(this.canvas);
+            this._shouldReturnToPool = false;
+        }
     }
 
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha = 1) {

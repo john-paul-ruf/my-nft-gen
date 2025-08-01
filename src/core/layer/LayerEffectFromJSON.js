@@ -48,6 +48,9 @@ import {CurvedRedEyeEffect} from "../../effects/primaryEffects/curved-red-eye/Cu
 import {
     StaticImageKeyFrameEffect
 } from "../../effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js";
+import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
+import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
+import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
 
 export class LayerEffectFromJSON {
     static from(json) {
@@ -159,6 +162,9 @@ export class LayerEffectFromJSON {
             case StaticImageKeyFrameEffect._name_:
                 layer = Object.assign(new StaticImageKeyFrameEffect({}), json);
                 break;
+            case BloomFilmGrainEffect._name_:
+                layer = Object.assign(new BloomFilmGrainEffect({}), json);
+                break;
             default:
                 throw new Error('Not a valid effect name');
         }
@@ -202,6 +208,12 @@ export class LayerEffectFromJSON {
                     break;
                 case BlurKeyFrameEffect._name_:
                     layer.additionalEffects[i] = Object.assign(new BlurKeyFrameEffect({}), layer.additionalEffects[i]);
+                    break;
+                case SetOpacityKeyFrameEffect._name_:
+                    layer.additionalEffects[i] = Object.assign(new SetOpacityKeyFrameEffect({}), layer.additionalEffects[i]);
+                    break;
+                case EdgeGlowEffect._name_:
+                    layer.additionalEffects[i] = Object.assign(new EdgeGlowEffect({}), layer.additionalEffects[i]);
                     break;
                 default:
                     throw new Error('Not a valid effect name');

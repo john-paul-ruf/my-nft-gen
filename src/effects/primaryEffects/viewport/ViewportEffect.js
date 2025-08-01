@@ -66,8 +66,8 @@ export class ViewportEffect extends LayerEffect {
         const context = {
             currentFrame,
             numberOfFrames,
-            theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame),
-            theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame)),
+            theAccentGaston: findValue(this.data.accentRange.lower, this.data.accentRange.upper, this.data.featherTimes, numberOfFrames, currentFrame, this.data.accentFindValueAlgorithm),
+            theBlurGaston: Math.ceil(findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.featherTimes, numberOfFrames, currentFrame, this.data.blurFindValueAlgorithm)),
             data: this.data,
         };
 
@@ -106,6 +106,8 @@ export class ViewportEffect extends LayerEffect {
                 upper: getRandomIntInclusive(this.config.blurRange.top.lower, this.config.blurRange.top.upper),
             },
             center: this.config.center,
+            blurFindValueAlgorithm: getRandomFromArray(this.config.blurFindValueAlgorithm),
+            accentFindValueAlgorithm: getRandomFromArray(this.config.accentFindValueAlgorithm),
         };
     }
 

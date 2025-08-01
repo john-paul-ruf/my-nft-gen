@@ -1,5 +1,5 @@
 import {LayerEffect} from '../../../core/layer/LayerEffect.js';
-import {getRandomIntInclusive, randomNumber,} from '../../../core/math/random.js';
+import {getRandomFromArray, getRandomIntInclusive, randomNumber,} from '../../../core/math/random.js';
 import {findValue} from '../../../core/math/findValue.js';
 import {Canvas2dFactory} from '../../../core/factory/canvas/Canvas2dFactory.js';
 import {findPointByAngleAndCircle} from '../../../core/math/drawingMath.js';
@@ -39,16 +39,16 @@ export class FuzzFlareEffect extends LayerEffect {
         const topCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
         const bottomCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-        const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
+        const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame, array[i].opacityFindValueAlgorithm);
         const theRadiusGaston = array[i].size + (FindMultiStepStepValue.findValue({
                     stepArray: array[i].gastonRange,
                     totalNumberOfFrames: context.numberOfFrames,
-                    currentFrame: context.currentFrame
+                    currentFrame: context.currentFrame,
                 })
                 * (array[i].invert ? 1 : -1));
 
-        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
-        const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame, array[i].blurFindValueAlgorithm));
+        const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame, array[i].accentFindValueAlgorithm);
 
         await topCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].thickness, array[i].innerColor, 0, array[i].innerColor);
         await bottomCanvas.drawRing2d(context.data.center, theRadiusGaston, array[i].thickness, array[i].outerColor, array[i].stroke + theAccentGaston, array[i].outerColor, theOpacityGaston);
@@ -80,8 +80,8 @@ export class FuzzFlareEffect extends LayerEffect {
         const topCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
         const bottomCanvas = await Canvas2dFactory.getNewCanvas(context.data.width, context.data.height);
 
-        const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame);
-        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame));
+        const theOpacityGaston = findValue(array[i].underLayerOpacityRange.lower, array[i].underLayerOpacityRange.upper, array[i].underLayerOpacityTimes, context.numberOfFrames, context.currentFrame, array[i].opacityFindValueAlgorithm);
+        const theBlurGaston = Math.ceil(findValue(array[i].blurRange.lower, array[i].blurRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame, array[i].blurFindValueAlgorithm));
 
         const theAngleGaston = array[i].angle + (FindMultiStepStepValue.findValue({
                 stepArray: array[i].gastonRange,
@@ -91,7 +91,7 @@ export class FuzzFlareEffect extends LayerEffect {
             * (array[i].invert ? 1 : -1));
 
 
-        const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame);
+        const theAccentGaston = findValue(array[i].accentRange.lower, array[i].accentRange.upper, array[i].featherTimes, context.numberOfFrames, context.currentFrame, array[i].accentFindValueAlgorithm);
 
         const start = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].offset);
         const end = findPointByAngleAndCircle(context.data.center, theAngleGaston, array[i].size);
@@ -178,6 +178,9 @@ export class FuzzFlareEffect extends LayerEffect {
                         upper: randomNumber(this.config.underLayerOpacityRange.top.lower, this.config.underLayerOpacityRange.top.upper),
                     },
                     underLayerOpacityTimes: getRandomIntInclusive(this.config.underLayerOpacityTimes.lower, this.config.underLayerOpacityTimes.upper),
+                    accentFindValueAlgorithm: getRandomFromArray(this.config.accentFindValueAlgorithm),
+                    blurFindValueAlgorithm: getRandomFromArray(this.config.blurFindValueAlgorithm),
+                    opacityFindValueAlgorithm: getRandomFromArray(this.config.opacityFindValueAlgorithm),
                 });
             }
 
@@ -212,6 +215,9 @@ export class FuzzFlareEffect extends LayerEffect {
                         upper: randomNumber(this.config.underLayerOpacityRange.top.lower, this.config.underLayerOpacityRange.top.upper),
                     },
                     underLayerOpacityTimes: getRandomIntInclusive(this.config.underLayerOpacityTimes.lower, this.config.underLayerOpacityTimes.upper),
+                    accentFindValueAlgorithm: getRandomFromArray(this.config.accentFindValueAlgorithm),
+                    blurFindValueAlgorithm: getRandomFromArray(this.config.blurFindValueAlgorithm),
+                    opacityFindValueAlgorithm: getRandomFromArray(this.config.opacityFindValueAlgorithm),
                 });
             }
 
