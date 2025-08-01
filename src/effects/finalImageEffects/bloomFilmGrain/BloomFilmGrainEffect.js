@@ -41,10 +41,10 @@ export class BloomFilmGrainEffect extends LayerEffect {
             grainIntensity: findValue(this.data.grainIntensityRange.lower, this.data.grainIntensityRange.upper, this.data.grainIntensityTimes, totalFrames, currentFrame, this.data.grainIntensityFindValueAlgorithm),
         }
 
-        layer.toFile(layerOut);
+        await layer.toFile(layerOut);
 
         const original = sharp(layerOut);
-        const glowLayer = sharp(layerOut)
+        const glowLayer = original.clone()
             .blur(options.blur) // simulate glow by blurring
             .modulate({brightness: options.brightness}) // intensify glow
 

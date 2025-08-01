@@ -4,13 +4,13 @@ import { getRandomIntExclusive } from "./random.js";
  * Loop-safe algorithms for oscillating values between min and max.
  */
 export const FindValueAlgorithm = {
-    TRIANGLE: 'triangle',
+    /*TRIANGLE: 'triangle',
     COSINE_BELL: 'cosineBell',
     SMOOTHSTEP_LOOPSAFE: 'smoothstepLoopSafe',
     PARABOLIC_BELL: 'parabolicBell',
     ABS_SINE: 'absSine',
     TRIANGLE_ABS: 'triangleAbs',
-    EASE_IN_OUT_CUBIC: 'easeInOutCubic',
+    EASE_IN_OUT_CUBIC: 'easeInOutCubic',*/
 
     // New "journey-style" algorithms
     JOURNEY_SIN: 'journeySin',

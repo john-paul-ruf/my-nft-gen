@@ -165,9 +165,6 @@ export class LayerEffectFromJSON {
             case BloomFilmGrainEffect._name_:
                 layer = Object.assign(new BloomFilmGrainEffect({}), json);
                 break;
-            case EdgeGlowEffect._name_:
-                layer = Object.assign(new EdgeGlowEffect({}), json);
-                break;
             default:
                 throw new Error('Not a valid effect name');
         }
@@ -214,6 +211,9 @@ export class LayerEffectFromJSON {
                     break;
                 case SetOpacityKeyFrameEffect._name_:
                     layer.additionalEffects[i] = Object.assign(new SetOpacityKeyFrameEffect({}), layer.additionalEffects[i]);
+                    break;
+                case EdgeGlowEffect._name_:
+                    layer.additionalEffects[i] = Object.assign(new EdgeGlowEffect({}), layer.additionalEffects[i]);
                     break;
                 default:
                     throw new Error('Not a valid effect name');

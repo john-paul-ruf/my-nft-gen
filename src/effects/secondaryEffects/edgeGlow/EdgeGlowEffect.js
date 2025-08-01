@@ -5,6 +5,7 @@ import {getRandomFromArray, getRandomIntInclusive, randomId, randomNumber} from 
 import {findValue} from '../../../core/math/findValue.js';
 import {Settings} from '../../../core/Settings.js';
 import {EdgeGlowConfig} from './EdgeGlowConfig.js';
+import sharp from "sharp";
 
 export class EdgeGlowEffect extends LayerEffect {
     static _name_ = 'edge-glow';
@@ -53,8 +54,8 @@ export class EdgeGlowEffect extends LayerEffect {
         const layerOut = `${this.workingDirectory}edge-glow${randomId()}.png`;
 
         const options = {
-            brightness: findValue(this.data.brightnessRange.lower, this.data.brightnessRange.upper, this.data.brightnessTimes, totalFrames, currentFrame, this.data.brightnessFindValueAlgorithm),
-            blur: findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.blurTimes, totalFrames, currentFrame, this.data.blurFindValueAlgorithm),
+            brightness: findValue(this.data.brightnessRange.lower, this.data.brightnessRange.upper, this.data.brightnessTimes, numberOfFrames, currentFrame, this.data.brightnessFindValueAlgorithm),
+            blur: findValue(this.data.blurRange.lower, this.data.blurRange.upper, this.data.blurTimes, numberOfFrames, currentFrame, this.data.blurFindValueAlgorithm),
         }
 
         /**
@@ -143,8 +144,7 @@ export class EdgeGlowEffect extends LayerEffect {
 
         const hueGlow = interpolateHueRGB(this.data.glowBottom, this.data.glowTop, interp);
 
-        layer.toFile(layerOut);
-
+        await layer.toFile(layerOut);
 
         const jimpImage = await Jimp.read(layerOut);
         jimpImage
@@ -171,6 +171,8 @@ export class EdgeGlowEffect extends LayerEffect {
             .toBuffer();
 
         layer.fromBuffer(final);
+
+        await fs.unlink(layerOut);
     }
 
     getInfo() {
