@@ -30,6 +30,12 @@ export class Canvas2d {
         return this.strategy.convertToLayer();
     }
 
+    dispose() {
+        if (this.strategy.dispose) {
+            this.strategy.dispose();
+        }
+    }
+
     async drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha) {
         await this.strategy.drawRing2d(pos, radius, innerStroke, innerColor, outerStroke, outerColor, alpha);
     }

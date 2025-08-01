@@ -6,6 +6,8 @@ import { writeToMp4 } from '../output/writeToMp4.js';
 import { writeScreenCap } from '../output/writeScreenCap.js';
 import { LayerFactory } from '../factory/layer/LayerFactory.js';
 import {RequestNewFrameBuilderThread} from "../worker-threads/RequestNewFrameBuilderThread.js";
+import {globalBufferPool} from '../pool/BufferPool.js';
+import {globalCanvasPool} from '../pool/CanvasPool.js';
 
 export class LoopBuilder {
     constructor(settings) {
@@ -86,6 +88,11 @@ export class LoopBuilder {
             await Promise.all(callQueue);
             console.log("All frames processed.");
 
+            // Log pool statistics
+            console.log('Pool Stats:', {
+                bufferPool: globalBufferPool.getStats(),
+                canvasPool: globalCanvasPool.getStats(),
+            });
 
             /// /////////////////////
             // WRITE TO FILE

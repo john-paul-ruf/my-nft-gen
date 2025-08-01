@@ -54,7 +54,7 @@ export class BloomFilmGrainEffect extends LayerEffect {
 
         // Create a noise buffer
         const createGrain = (width, height, intensity = 0.08) => {
-            const canvas = createCanvas(width, height);  //new canvas instead
+            const canvas = createCanvas(width, height);
             const ctx = canvas.getContext('2d');
             const imageData = ctx.createImageData(width, height);
 

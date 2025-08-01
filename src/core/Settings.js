@@ -2,6 +2,8 @@ import {getRandomIntExclusive, randomId} from './math/random.js';
 import {ColorScheme} from './color/ColorScheme.js';
 import {LayerEffectFromJSON} from './layer/LayerEffectFromJSON.js';
 import {LayerConfig} from './layer/LayerConfig.js';
+import {globalBufferPool} from './pool/BufferPool.js';
+import {globalCanvasPool} from './pool/CanvasPool.js';
 
 export class Settings {
     static from(json) {
@@ -168,5 +170,17 @@ export class Settings {
 
     async getColorSchemeInfo() {
         return this.colorScheme.getColorSchemeInfo();
+    }
+
+    getPoolStats() {
+        return {
+            bufferPool: globalBufferPool.getStats(),
+            canvasPool: globalCanvasPool.getStats(),
+        };
+    }
+
+    clearPools() {
+        globalBufferPool.clear();
+        globalCanvasPool.clear();
     }
 }

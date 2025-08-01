@@ -1,19 +1,10 @@
-import {LayerEffect} from '../../../core/layer/LayerEffect.js';
-import {getRandomIntInclusive, randomId, randomNumber} from '../../../core/math/random.js';
-import {Settings} from '../../../core/Settings.js';
-import {CRTScanLinesConfig} from './CRTScanLinesConfig.js';
+import { LayerEffect } from '../../../core/layer/LayerEffect.js';
+import { getRandomIntInclusive, randomId, randomNumber } from '../../../core/math/random.js';
+import { Settings } from '../../../core/Settings.js';
+import { CRTScanLinesConfig } from './CRTScanLinesConfig.js';
 import sharp from "sharp";
-import {promises as fs} from "fs";
-import {findValue} from "../../../core/math/findValue.js";
-
-/** *
- *
- * Pixelate Effect
- * Creates an animated glitch for the composite image
- * Can be glitched to appear on a percentage of the frames generated
- * Instantiated through the project via the LayerConfig
- *
- */
+import { promises as fs } from "fs";
+import { findValue } from "../../../core/math/findValue.js";
 
 export class CRTScanLinesEffect extends LayerEffect {
     static _name_ = 'crt-scan-lines';
@@ -26,123 +17,101 @@ export class CRTScanLinesEffect extends LayerEffect {
                     ignoreAdditionalEffects = false,
                     settings = new Settings({}),
                 }) {
-        super({
-            name,
-            requiresLayer,
-            config,
-            additionalEffects,
-            ignoreAdditionalEffects,
-            settings,
-        });
+        super({ name, requiresLayer, config, additionalEffects, ignoreAdditionalEffects, settings });
         this.#generate(settings);
     }
 
     async #applyScanline(imageData, context, startY, i) {
-
-        // Create a high-precision buffer for intermediate calculations
         const highPrecisionData = new Float32Array(imageData.length);
         for (let j = 0; j < imageData.length; j++) {
-            highPrecisionData[j] = imageData[j]; // Copy original data into Float32Array
+            highPrecisionData[j] = imageData[j];
         }
 
-        const {width, height, lineInfo} = context.data;
-        const {thicknessRange, thicknessTimes, lineBlurRange, lineBlurTimes, brightnessRange, brightnessTimes, colorTintRange, colorTintTimes, opacityRange, opacityTimes} = lineInfo[i];
+        const { width, height, lineInfo } = context.data;
+        const {
+            thicknessRange, thicknessTimes,
+            lineBlurRange, lineBlurTimes,
+            brightnessRange, brightnessTimes,
+            colorTintRange, colorTintTimes,
+            opacityRange, opacityTimes
+        } = lineInfo[i];
 
-        const opacityGaston = findValue(opacityRange.lower, opacityRange.upper, opacityTimes, context.numberOfFrames, context.currentFrame);
-        const thicknessGaston = findValue(thicknessRange.lower, thicknessRange.upper, thicknessTimes, context.numberOfFrames, context.currentFrame);
-        const lineBlurGaston = findValue(lineBlurRange.lower, lineBlurRange.upper, lineBlurTimes, context.numberOfFrames, context.currentFrame);
-        const brightnessGaston = findValue(brightnessRange.lower, brightnessRange.upper, brightnessTimes, context.numberOfFrames, context.currentFrame);
+        const opacity = findValue(opacityRange.lower, opacityRange.upper, opacityTimes, context.numberOfFrames, context.currentFrame);
+        const thickness = findValue(thicknessRange.lower, thicknessRange.upper, thicknessTimes, context.numberOfFrames, context.currentFrame);
+        const lineBlur = findValue(lineBlurRange.lower, lineBlurRange.upper, lineBlurTimes, context.numberOfFrames, context.currentFrame);
+        const brightness = findValue(brightnessRange.lower, brightnessRange.upper, brightnessTimes, context.numberOfFrames, context.currentFrame);
 
         const colorTint = {
             r: findValue(colorTintRange.redRange.lower, colorTintRange.redRange.upper, colorTintTimes, context.numberOfFrames, context.currentFrame),
             g: findValue(colorTintRange.greenRange.lower, colorTintRange.greenRange.upper, colorTintTimes, context.numberOfFrames, context.currentFrame),
             b: findValue(colorTintRange.blueRange.lower, colorTintRange.blueRange.upper, colorTintTimes, context.numberOfFrames, context.currentFrame),
-        }
+        };
 
-
-        for (let y = startY; y < startY + thicknessGaston && y < height; y++) {
-            const distanceFromCenter = Math.abs(y - startY - thicknessGaston / 2);
-            const blendFactor = Math.pow(Math.max(0, 1 - distanceFromCenter / lineBlurGaston), 2); // Exponential blend
-            const brightnessAdjustment = brightnessGaston * blendFactor;
-
-            const alpha = Math.min(Math.max(opacityGaston ?? 1, 0), 1); // Clamp opacity between 0 and 1
+        for (let y = startY; y < startY + thickness && y < height; y++) {
+            const distanceFromCenter = Math.abs(y - startY - thickness / 2);
+            const blendFactor = Math.pow(Math.max(0, 1 - distanceFromCenter / lineBlur), 2);
+            const brightnessAdjustment = brightness * blendFactor;
+            const alpha = Math.min(Math.max(opacity ?? 1, 0), 1);
 
             for (let x = 0; x < width; x++) {
-                const index = (y * width + x) * 4; // RGBA index
+                const index = (y * width + x) * 4;
+                const [r, g, b] = [highPrecisionData[index], highPrecisionData[index + 1], highPrecisionData[index + 2]];
 
-                // Original RGB values from the high-precision buffer
-                const originalRed = highPrecisionData[index];
-                const originalGreen = highPrecisionData[index + 1];
-                const originalBlue = highPrecisionData[index + 2];
-
-                // Adjusted RGB values
-                const newRed = Math.min(
-                    255,
-                    originalRed + brightnessAdjustment * colorTint.r
-                );
-                const newGreen = Math.min(
-                    255,
-                    originalGreen + brightnessAdjustment * colorTint.g
-                );
-                const newBlue = Math.min(
-                    255,
-                    originalBlue + brightnessAdjustment * colorTint.b
-                );
-
-                // Blend with alpha
-                highPrecisionData[index] =
-                    originalRed * (1 - alpha) + newRed * alpha; // Red
-                highPrecisionData[index + 1] =
-                    originalGreen * (1 - alpha) + newGreen * alpha; // Green
-                highPrecisionData[index + 2] =
-                    originalBlue * (1 - alpha) + newBlue * alpha; // Blue
+                highPrecisionData[index]     = r * (1 - alpha) + Math.min(255, r + brightnessAdjustment * colorTint.r) * alpha;
+                highPrecisionData[index + 1] = g * (1 - alpha) + Math.min(255, g + brightnessAdjustment * colorTint.g) * alpha;
+                highPrecisionData[index + 2] = b * (1 - alpha) + Math.min(255, b + brightnessAdjustment * colorTint.b) * alpha;
             }
         }
 
-        // Convert back to Uint8Array for the final result
         const resultData = new Uint8Array(imageData.length);
         for (let j = 0; j < imageData.length; j++) {
-            resultData[j] = Math.round(highPrecisionData[j]); // Round and store in Uint8Array
+            resultData[j] = Math.round(highPrecisionData[j]);
         }
 
         return resultData;
     }
 
-
     async #computeY(context, numberOfFrames, currentFrame, i) {
-        const displacement = (context.data.height / numberOfFrames) * ((currentFrame + 1) * context.data.lineInfo[i].loopTimes);
-        let y = Math.round(context.data.lineInfo[i].lineStart + displacement);
+        const { height, lineInfo } = context.data;
+        const { loopTimes, lineStart, direction } = lineInfo[i];
 
-        if (y > context.data.height) {
-            y %= context.data.height;
+        const progress = (currentFrame + 1) * loopTimes / numberOfFrames;
+        const displacement = progress * height;
+
+        let y;
+        if (direction === 'down') {
+            y = lineStart + displacement;
+        } else {
+            y = lineStart - displacement;
         }
+
+        if (y < 0) y = (height + (y % height)) % height;
+        if (y > height) y %= height;
+
         return Math.round(y);
     }
 
     async #crtScanLines(layer, currentFrame, numberOfFrames) {
-
         const context = {
             data: this.data,
             numberOfFrames,
             currentFrame
-        }
+        };
 
         const filename = `${this.workingDirectory}crt-scan-lines${randomId()}.png`;
         const filenameOut = `${this.workingDirectory}crt-scan-lines-out${randomId()}.png`;
         await layer.toFile(filename);
 
         const image = sharp(filename);
-        const {data} = await image.raw().toBuffer({resolveWithObject: true});
+        const { data } = await image.raw().toBuffer({ resolveWithObject: true });
 
         let modifiedData = Buffer.from(data);
 
-        // Apply scanline effects
         for (let i = 0; i < this.data.lineInfo.length; i++) {
             const y = await this.#computeY(context, numberOfFrames, currentFrame, i);
             modifiedData = await this.#applyScanline(modifiedData, context, y, i);
         }
 
-        // Save the modified image with scanlines
         await sharp(modifiedData, {
             raw: {
                 width: context.data.width,
@@ -151,46 +120,49 @@ export class CRTScanLinesEffect extends LayerEffect {
             }
         }).toFile(filenameOut);
 
-
         await layer.fromFile(filenameOut);
 
         await fs.unlink(filename);
         await fs.unlink(filenameOut);
     }
 
-
     #generate(settings) {
+        const height = this.finalSize?.height || settings?.height || 1080;
+        const width = this.finalSize?.width || settings?.width || 1920;
 
-        const data = {
-            numberOfLines: getRandomIntInclusive(this.config.lines.lower, this.config.lines.upper),
-            height: this.finalSize.height,
-            width: this.finalSize.width,
-        };
+        const numberOfLines = getRandomIntInclusive(this.config.lines.lower, this.config.lines.upper);
 
-        const computeInitialLineInfo = (numberOfLines, height) => {
+        const computeInitialLineInfo = () => {
             const lineInfo = [];
 
-            for (let i = 0; i <= numberOfLines; i++) {
+            for (let i = 0; i < numberOfLines; i++) {
+                const pick = () => Math.random() < 0.5 ? 'down' : 'up';
+
                 lineInfo.push({
                     lineStart: getRandomIntInclusive(0, height),
                     loopTimes: getRandomIntInclusive(this.config.loopTimes.lower, this.config.loopTimes.upper),
+                    direction: this.config.direction, // 👈 NEW: up/down direction
+
                     thicknessRange: {
                         lower: randomNumber(this.config.thicknessRange.bottom.lower, this.config.thicknessRange.bottom.upper),
                         upper: randomNumber(this.config.thicknessRange.top.lower, this.config.thicknessRange.top.upper),
                     },
                     thicknessTimes: getRandomIntInclusive(this.config.thicknessTimes.lower, this.config.thicknessTimes.upper),
+
                     brightnessRange: {
                         lower: randomNumber(this.config.brightnessRange.bottom.lower, this.config.brightnessRange.bottom.upper),
                         upper: randomNumber(this.config.brightnessRange.top.lower, this.config.brightnessRange.top.upper),
                     },
                     brightnessTimes: getRandomIntInclusive(this.config.brightnessTimes.lower, this.config.brightnessTimes.upper),
+
                     lineBlurRange: {
                         lower: randomNumber(this.config.lineBlurRange.bottom.lower, this.config.lineBlurRange.bottom.upper),
                         upper: randomNumber(this.config.lineBlurRange.top.lower, this.config.lineBlurRange.top.upper),
                     },
                     lineBlurTimes: getRandomIntInclusive(this.config.lineBlurTimes.lower, this.config.lineBlurTimes.upper),
+
                     colorTintRange: {
-                        redRange:{
+                        redRange: {
                             lower: randomNumber(this.config.colorTintRange.redRange.bottom.lower, this.config.colorTintRange.redRange.bottom.upper),
                             upper: randomNumber(this.config.colorTintRange.redRange.top.lower, this.config.colorTintRange.redRange.top.upper),
                         },
@@ -204,6 +176,7 @@ export class CRTScanLinesEffect extends LayerEffect {
                         },
                     },
                     colorTintTimes: getRandomIntInclusive(this.config.colorTintTimes.lower, this.config.colorTintTimes.upper),
+
                     opacityRange: {
                         lower: randomNumber(this.config.opacityRange.bottom.lower, this.config.opacityRange.bottom.upper),
                         upper: randomNumber(this.config.opacityRange.top.lower, this.config.opacityRange.top.upper),
@@ -215,9 +188,12 @@ export class CRTScanLinesEffect extends LayerEffect {
             return lineInfo;
         };
 
-        data.lineInfo = computeInitialLineInfo(data.numberOfLines, data.height, data.width);
-
-        this.data = data;
+        this.data = {
+            numberOfLines,
+            height,
+            width,
+            lineInfo: computeInitialLineInfo()
+        };
     }
 
     async invoke(layer, currentFrame, numberOfFrames) {

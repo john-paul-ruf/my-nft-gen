@@ -5,6 +5,7 @@ import {CRTDegaussConfig} from './CRTDegaussConfig.js';
 import sharp from "sharp";
 import {promises as fs} from "fs";
 import {findValue} from "../../../core/math/findValue.js";
+import {globalBufferPool} from '../../../core/pool/BufferPool.js';
 
 /** *
  *
@@ -47,7 +48,7 @@ export class CRTDegaussEffect extends LayerEffect {
         let {data, info} = await image.raw().toBuffer({resolveWithObject: true});
 
         // Create an empty buffer for the output image
-        let outputBuffer = Buffer.alloc(data.length);
+        let outputBuffer = globalBufferPool.getBuffer(info.width, info.height, info.channels);
 
         let currentLine = 0;
 
@@ -94,6 +95,9 @@ export class CRTDegaussEffect extends LayerEffect {
                 channels: 4
             }
         }).png().toBuffer();
+
+        // Return buffer to pool
+        globalBufferPool.returnBuffer(outputBuffer, this.data.width, this.data.height, 4);
 
         const wobbled = sharp(buffer);
 

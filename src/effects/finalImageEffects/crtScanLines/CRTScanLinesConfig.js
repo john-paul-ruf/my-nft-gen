@@ -19,6 +19,7 @@ export class CRTScanLinesConfig extends EffectConfig {
             colorTintTimes = {lower: 2, upper: 8},
             opacityRange = {bottom: {lower: 0.35, upper: 0.4}, top: {lower: 0.5, upper: 0.55}},
             opacityTimes = {lower: 2, upper: 8},
+            direction= 'down', //'up','down;
         },
     ) {
         super();
@@ -34,5 +35,6 @@ export class CRTScanLinesConfig extends EffectConfig {
         this.colorTintTimes = colorTintTimes;
         this.opacityRange = opacityRange;
         this.opacityTimes = opacityTimes;
+        this.direction = direction;
     }
 }
