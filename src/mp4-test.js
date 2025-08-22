@@ -26,7 +26,7 @@ const createComposition = async (colorScheme) => {
         longestSideInPixels: 640,
         shortestSideInPixels: 480
     });
-d
+
     await myTestProject.addPrimaryEffect({
         layerConfig: new LayerConfig({
             effect: FuzzFlareEffect,

@@ -71,4 +71,8 @@ export class Canvas2d {
     async drawPath(segment, innerStroke, innerColor, outerStroke, outerColor){
         await this.strategy.drawPath(segment, innerStroke, innerColor, outerStroke, outerColor);
     }
+
+    async drawGradientRect(x, y, width, height, colorStops) {
+        await this.strategy.drawGradientRect(x, y, width, height, colorStops);
+    }
 }
