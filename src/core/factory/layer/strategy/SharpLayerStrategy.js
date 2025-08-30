@@ -19,7 +19,21 @@ export class SharpLayerStrategy {
         this.internalRepresentation = null;
         this.finalImageSize = finalImageSize;
         this.workingDirectory = workingDirectory;
+        
+        sharp.simd(true);
+        sharp.concurrency(0);
     }
+    
+    getPngSettings(hasTransparency = true, isLineart = false) {
+        return {
+            compressionLevel: 1,
+            quality: 100,
+            palette: isLineart,
+            colors: hasTransparency ? 256 : undefined,
+            force: true
+        };
+    }
+    
 
     async newLayer(height, width, backgroundColor) {
         this.internalRepresentation = sharp({
@@ -27,11 +41,6 @@ export class SharpLayerStrategy {
                 width, height, channels: 4, background: backgroundColor,
             },
         });
-
-        const filename = `${this.workingDirectory}blank-layer${randomId()}.png`;
-        await this.toFile(filename);
-        await this.fromFile(filename);
-        await fs.unlink(filename);
     }
 
     async fromFile(filename) {
@@ -45,129 +54,81 @@ export class SharpLayerStrategy {
     }
 
     async toBuffer() {
-        return await this.internalRepresentation.png({
-            compressionLevel: 1, force: true,
-        }).toBuffer({resolveWithObject: false});
+        return await this.internalRepresentation
+            .png(this.getPngSettings())
+            .toBuffer({resolveWithObject: false});
     }
 
     async toFile(filename) {
-        let buffer = await this.internalRepresentation.png({
-            compressionLevel: 1, force: true,
-        }).toBuffer({resolveWithObject: false});
-
-        const readableStream = Readable.from(buffer);
-        const writableStream = createWriteStream(filename);
-
-        await pipeline(readableStream, writableStream);
-        buffer = null;
+        return this.internalRepresentation
+            .png(this.getPngSettings())
+            .toFile(filename);
     }
 
     async compositeLayerOver(layer, withoutResize = false) {
-        const {finalImageSize} = this;
-
-        const currentInfo = await this.getInfo();
-        const layerInfo = await layer.getInfo();
-
-        if (!withoutResize) {
-            if (currentInfo.height > finalImageSize.height
-                || currentInfo.width > finalImageSize.width) {
-                await this.resize(finalImageSize.height, finalImageSize.width, 'contain');
-            }
-
-            if (layerInfo.height > finalImageSize.height
-                || layerInfo.width > finalImageSize.width) {
-                await layer.resize(finalImageSize.height, finalImageSize.width, 'contain');
-            }
-        }
-
         let inputBuffer = await layer.toBuffer();
-
-        await this.fromBuffer(await sharp(await this.toBuffer()).png({
-            compressionLevel: 1, force: true,
-        }).composite([{
-            input: inputBuffer,
-        }]).png({compressionLevel: 1, force: true})
-            .toBuffer());
-
+        this.internalRepresentation = this.internalRepresentation.composite([{input: inputBuffer}]);
         inputBuffer = null;
     }
 
     async compositeLayerOverAtPoint(layer, top, left) {
-        const {finalImageSize} = this;
-
         let inputBuffer = await layer.toBuffer();
-
-        await this.fromBuffer(await sharp(await this.toBuffer()).png({
-            compressionLevel: 1, force: true,
-        }).composite([{
+        this.internalRepresentation = this.internalRepresentation.composite([{
             input: inputBuffer,
-            top:  Math.floor(top),
+            top: Math.floor(top),
             left: Math.floor(left),
-        }]).png({compressionLevel: 1, force: true})
-            .toBuffer());
-
+        }]);
         inputBuffer = null;
     }
 
     async adjustLayerOpacity(opacity) {
         const newOpacity = mapNumberToRange(opacity, 0, 1, 0, 255);
-
         const info = await this.getInfo();
         const alphaBuffer = globalBufferPool.getBuffer(info.width, info.height, 4);
         alphaBuffer.fill(newOpacity);
         
-        let buffer = await sharp(await this.toBuffer()).png({
-            compressionLevel: 1, force: true,
-        }).composite([{
+        this.internalRepresentation = this.internalRepresentation.composite([{
             input: alphaBuffer,
             raw: {
                 width: info.width, height: info.height, channels: 4,
             },
             blend: 'dest-in',
-        }]).png({
-            compressionLevel: 1, force: true,
-        })
-            .toBuffer({resolveWithObject: false});
-
-        await this.fromBuffer(buffer);
-
+        }]);
+        
         globalBufferPool.returnBuffer(alphaBuffer, info.width, info.height, 4);
-        buffer = null;
     }
 
     async blur(byPixels) {
         if (byPixels > 0) {
-            await this.internalRepresentation.blur(byPixels);
+            this.internalRepresentation = this.internalRepresentation.blur(byPixels);
         }
     }
 
     async rotate(angle) {
         const info = await this.getInfo();
-        await this.fromBuffer(await this.internalRepresentation.rotate(angle,
-            {
+        this.internalRepresentation = this.internalRepresentation
+            .rotate(angle, {background: {r: 0, g: 0, b: 0, alpha: 0}})
+            .resize(info.width, info.height, {
+                kernel: sharp.kernel.nearest,
+                fit: 'contain',
                 background: {r: 0, g: 0, b: 0, alpha: 0}
-            })
-            .resize(info.width, info.height, {fit: 'contain', background: {r: 0, g: 0, b: 0, alpha: 0}})
-            .png({compressionLevel: 1, force: true})
-            .toBuffer());
+            });
     }
 
     async resize(height, width, fitType) {
-        await this.fromBuffer(await this.internalRepresentation.resize(width, height, {
+        this.internalRepresentation = this.internalRepresentation.resize(width, height, {
             kernel: sharp.kernel.nearest,
             fit: fitType,
             position: 'center',
             background: {r: 0, g: 0, b: 0, alpha: 0}
-        }).png({compressionLevel: 1, force: true})
-            .toBuffer());
+        });
     }
 
     async crop(left, top, width, height) {
         try {
-            await this.fromBuffer(await this.internalRepresentation.extract({
+            this.internalRepresentation = this.internalRepresentation.extract({
                 left, top, width, height,
-            }).png({compressionLevel: 1, force: true})
-                .toBuffer());
+            });
         } catch (e) {
             console.log(e);
         }
@@ -175,11 +136,10 @@ export class SharpLayerStrategy {
 
     async extend(top, bottom, left, right) {
         try {
-            await this.fromBuffer(await this.internalRepresentation.extend({
+            this.internalRepresentation = this.internalRepresentation.extend({
                 top, bottom, left, right,
                 background: {r: 0, g: 0, b: 0, alpha: 0}
-            }).png({compressionLevel: 1, force: true})
-                .toBuffer());
+            });
         } catch (e) {
             console.log(e);
         }
@@ -187,7 +147,7 @@ export class SharpLayerStrategy {
 
     async getInfo() {
         let result = await this.internalRepresentation.png({
-            compressionLevel: 1, force: true,
+            compressionLevel: 1, quality: 100, force: true,
         }).toBuffer({resolveWithObject: true});
 
         result.data = null;
