@@ -7,7 +7,6 @@ import { writeScreenCap } from '../output/writeScreenCap.js';
 import { LayerFactory } from '../factory/layer/LayerFactory.js';
 import {RequestNewFrameBuilderThread} from "../worker-threads/RequestNewFrameBuilderThread.js";
 import {globalBufferPool} from '../pool/BufferPool.js';
-import {globalCanvasPool} from '../pool/CanvasPool.js';
 
 export class LoopBuilder {
     constructor(settings) {

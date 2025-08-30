@@ -4,8 +4,8 @@ import {findValue} from '../../../core/math/findValue.js';
 import {Settings} from '../../../core/Settings.js';
 import {BloomFilmGrainConfig} from './BloomFilmGrainConfig.js';
 import sharp from "sharp";
-import {createCanvas} from "canvas";
 import {promises as fs} from "fs";
+import {globalBufferPool} from '../../../core/pool/BufferPool.js';
 
 export class BloomFilmGrainEffect extends LayerEffect {
     static _name_ = 'bloom-film-grain';
@@ -52,31 +52,39 @@ export class BloomFilmGrainEffect extends LayerEffect {
             .composite([{input: await glowLayer.toBuffer(), blend: 'screen'}])
             .toFile(bloomOut);
 
-        // Create a noise buffer
-        const createGrain = (width, height, intensity = 0.08) => {
-            const canvas = createCanvas(width, height);
-            const ctx = canvas.getContext('2d');
-            const imageData = ctx.createImageData(width, height);
-
-            for (let i = 0; i < imageData.data.length; i += 4) {
-                const value = Math.floor(255 * (options.grain * intensity));
-                imageData.data[i] = value;
-                imageData.data[i + 1] = value;
-                imageData.data[i + 2] = value;
-                imageData.data[i + 3] = 255;
+        // Create grain buffer using Sharp instead of Canvas
+        const createGrainBuffer = (width, height, intensity = 0.08) => {
+            const grainBuffer = globalBufferPool.getBuffer(width, height, 4);
+            
+            for (let i = 0; i < grainBuffer.length; i += 4) {
+                const noise = (Math.random() - 0.5) * 2; // -1 to 1
+                const value = Math.floor(128 + noise * 127 * options.grain * intensity);
+                const clampedValue = Math.max(0, Math.min(255, value));
+                
+                grainBuffer[i] = clampedValue;     // R
+                grainBuffer[i + 1] = clampedValue; // G  
+                grainBuffer[i + 2] = clampedValue; // B
+                grainBuffer[i + 3] = 255;          // A
             }
-
-            ctx.putImageData(imageData, 0, 0);
-            return canvas.toBuffer('image/png');
+            
+            return grainBuffer;
         };
 
-        const grainBuffer = createGrain(this.finalSize.width, this.finalSize.height, options.grainIntensity); // Match your image size
+        const grainBuffer = createGrainBuffer(this.finalSize.width, this.finalSize.height, options.grainIntensity);
 
         await sharp(bloomOut)
-            .composite([{input: grainBuffer, blend: 'overlay', opacity: 0.12}])
+            .composite([{
+                input: grainBuffer, 
+                raw: { width: this.finalSize.width, height: this.finalSize.height, channels: 4 },
+                blend: 'overlay', 
+                opacity: 0.12
+            }])
             .toFile(finalOut);
 
         layer.fromFile(finalOut);
+
+        // Return buffer to pool
+        globalBufferPool.returnBuffer(grainBuffer, this.finalSize.width, this.finalSize.height, 4);
 
         await fs.unlink(layerOut);
         await fs.unlink(bloomOut);

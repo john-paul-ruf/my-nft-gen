@@ -1,14 +1,10 @@
 import { Canvas2d } from './Canvas2d.js';
-import {FabricCanvasStrategy} from "./strategy/FabricCanvasStrategy.js";
 import {SvgCanvasStrategy} from "./strategy/SvgCanvasStrategy.js";
 
 export class Canvas2dFactory {
     static getNewCanvas = async (width, height, strategy = 'svg') => {
         let canvasStrategy;
         switch (strategy) {
-            case 'fabric':
-                canvasStrategy = new FabricCanvasStrategy();
-                break;
             case 'svg':
             default:
                 canvasStrategy = new SvgCanvasStrategy();

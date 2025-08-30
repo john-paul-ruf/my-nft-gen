@@ -52,6 +52,7 @@ import { RollingGradientEffect } from "../../effects/primaryEffects/rollingGradi
 import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
 import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
 import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
+import {ClaudeCRTBarrelRollEffect} from "../../effects/finalImageEffects/claudeCRTBarrelRoll/ClaudeCRTBarrelRollEffect.js";
 
 export class LayerEffectFromJSON {
     static from(json) {
@@ -168,6 +169,9 @@ export class LayerEffectFromJSON {
                 break;
             case RollingGradientEffect._name_:
                 layer = Object.assign(new RollingGradientEffect({}), json);
+                break;
+            case ClaudeCRTBarrelRollEffect._name_:
+                layer = Object.assign(new ClaudeCRTBarrelRollEffect({}), json);
                 break;
             default:
                 throw new Error('Not a valid effect name');
