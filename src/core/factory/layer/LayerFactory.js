@@ -1,4 +1,5 @@
 import { SharpLayerStrategy } from './strategy/SharpLayerStrategy.js';
+import { ByteArrayLayerStrategy } from './strategy/ByteArrayLayerStrategy.js';
 import { Layer } from './Layer.js';
 
 export class LayerFactory {
@@ -25,6 +26,10 @@ export class LayerFactory {
             const sharpLayer = new Layer(new SharpLayerStrategy(config));
             await sharpLayer.newLayer(height, width, backgroundColor);
             return sharpLayer;
+        case 'bytearray':
+            const byteArrayLayer = new Layer(new ByteArrayLayerStrategy(config));
+            await byteArrayLayer.newLayer(height, width, backgroundColor);
+            return byteArrayLayer;
         default:
             throw 'Not a valid layer strategy';
         }
@@ -45,6 +50,10 @@ export class LayerFactory {
             const sharpLayer = new Layer(new SharpLayerStrategy(config));
             await sharpLayer.fromFile(filename);
             return sharpLayer;
+        case 'bytearray':
+            const byteArrayLayer = new Layer(new ByteArrayLayerStrategy(config));
+            await byteArrayLayer.fromFile(filename);
+            return byteArrayLayer;
         default:
             throw 'Not a valid layer strategy';
         }
@@ -65,6 +74,10 @@ export class LayerFactory {
             const sharpLayer = new Layer(new SharpLayerStrategy(config));
             await sharpLayer.fromBuffer(buffer);
             return sharpLayer;
+        case 'bytearray':
+            const byteArrayLayer = new Layer(new ByteArrayLayerStrategy(config));
+            await byteArrayLayer.fromBuffer(buffer);
+            return byteArrayLayer;
         default:
             throw 'Not a valid layer strategy';
         }

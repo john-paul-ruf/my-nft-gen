@@ -219,6 +219,26 @@ export class FabricCanvasStrategy {
 
     }
 
+    async drawGradientRect(x, y, width, height, colorStops) {
+        const gradient = new fabric.Gradient({
+            type: 'linear',
+            gradientUnits: 'pixels',
+            coords: {x1: 0, y1: 0, x2: 0, y2: height}, // Top to bottom
+            colorStops: colorStops
+        });
+
+        const rect = new fabric.Rect({
+            left: x,
+            top: y,
+            width: width,
+            height: height,
+            fill: gradient,
+            selectable: false
+        });
+
+        this.canvas.add(rect);
+    }
+
     async drawPath(segment, innerStroke, innerColor, outerStroke, outerColor){
 
         const outer = new fabric.Path(segment, {

@@ -48,6 +48,7 @@ import {CurvedRedEyeEffect} from "../../effects/primaryEffects/curved-red-eye/Cu
 import {
     StaticImageKeyFrameEffect
 } from "../../effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js";
+import { RollingGradientEffect } from "../../effects/primaryEffects/rollingGradient/RollingGradientEffect.js";
 import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
 import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
 import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
@@ -164,6 +165,9 @@ export class LayerEffectFromJSON {
                 break;
             case BloomFilmGrainEffect._name_:
                 layer = Object.assign(new BloomFilmGrainEffect({}), json);
+                break;
+            case RollingGradientEffect._name_:
+                layer = Object.assign(new RollingGradientEffect({}), json);
                 break;
             default:
                 throw new Error('Not a valid effect name');
