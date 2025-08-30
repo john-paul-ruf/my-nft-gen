@@ -1,5 +1,4 @@
 import { SharpLayerStrategy } from './strategy/SharpLayerStrategy.js';
-import { ByteArrayLayerStrategy } from './strategy/ByteArrayLayerStrategy.js';
 import { Layer } from './Layer.js';
 
 export class LayerFactory {
@@ -21,15 +20,11 @@ export class LayerFactory {
             layerStrategy: 'sharp',
         },
     ) => {
-        switch (config.layerStrategy) {
+        switch (config.layerStrategy || 'sharp') {
         case 'sharp':
             const sharpLayer = new Layer(new SharpLayerStrategy(config));
             await sharpLayer.newLayer(height, width, backgroundColor);
             return sharpLayer;
-        case 'bytearray':
-            const byteArrayLayer = new Layer(new ByteArrayLayerStrategy(config));
-            await byteArrayLayer.newLayer(height, width, backgroundColor);
-            return byteArrayLayer;
         default:
             throw 'Not a valid layer strategy';
         }
