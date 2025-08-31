@@ -90,7 +90,6 @@ export class LoopBuilder {
             // Log pool statistics
             console.log('Pool Stats:', {
                 bufferPool: globalBufferPool.getStats(),
-                canvasPool: globalCanvasPool.getStats(),
             });
 
             /// /////////////////////
