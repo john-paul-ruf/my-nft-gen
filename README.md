@@ -35,9 +35,13 @@ Explore the code and examples to learn more.
 
 Effects are too numerous to fit comfortably here. See the companion repository [nft-scratch](https://github.com/john-paul-ruf/nft-scratch) for examples of usage.
 
-* **Final Effects**: e.g. `BlurEffect`, `GlitchDrumrollHorizontalWave`, `PixelateEffect`
+* **Final Effects**: e.g. `BlurEffect`, `GlitchDrumrollHorizontalWave`, `PixelateEffect`, `AnimatedCrossProcessEffect`
 * **Primary Effects**: e.g. `AmpEffect`, `BlinkOnEffect`, `EncircledSpiral`, `FuzzFlareEffect`, `FuzzyBandEffect`, `GatesEffect`
 * Most effects support animated transitions, color pickers, ranges, feathering, glitching, and compositing
+
+### AnimatedCrossProcessEffect
+
+Simulates film cross-processing by remapping each color channel with a nonlinear curve. The hue shifts between the values in `hueShiftRange` over time using `cycleSpeed` and the `findValue` helper, while `contrast` adjusts overall intensity.
 
 ---
 
