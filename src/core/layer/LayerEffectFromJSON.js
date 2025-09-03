@@ -3,6 +3,7 @@ import { SingleLayerGlitchDrumrollHorizontalWaveEffect } from '../../effects/sec
 import { GlitchFractalEffect } from '../../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js';
 import { GlitchInverseEffect } from '../../effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js';
 import { PixelateEffect } from '../../effects/finalImageEffects/pixelate/PixelateEffect.js';
+import { AnimatedCrossProcessEffect } from '../../effects/finalImageEffects/animatedCrossProcess/AnimatedCrossProcessEffect.js';
 import { AmpEffect } from '../../effects/primaryEffects/amp/AmpEffect.js';
 import { BlinkOnEffect } from '../../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkOnEffect.js';
 import { EncircledSpiralEffect } from '../../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js';
@@ -73,6 +74,9 @@ export class LayerEffectFromJSON {
                 break;
             case PixelateEffect._name_:
                 layer = Object.assign(new PixelateEffect({}), json);
+                break;
+            case AnimatedCrossProcessEffect._name_:
+                layer = Object.assign(new AnimatedCrossProcessEffect({}), json);
                 break;
             case ModulateEffect._name_:
                 layer = Object.assign(new ModulateEffect({}), json);
