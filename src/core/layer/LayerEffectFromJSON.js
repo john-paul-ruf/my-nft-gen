@@ -49,6 +49,7 @@ import {
     StaticImageKeyFrameEffect
 } from "../../effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js";
 import { RollingGradientEffect } from "../../effects/primaryEffects/rollingGradient/RollingGradientEffect.js";
+import { PerlinNoiseEffect } from "../../effects/primaryEffects/perlinNoise/PerlinNoiseEffect.js";
 import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
 import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
 import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
@@ -169,6 +170,9 @@ export class LayerEffectFromJSON {
                 break;
             case RollingGradientEffect._name_:
                 layer = Object.assign(new RollingGradientEffect({}), json);
+                break;
+            case PerlinNoiseEffect._name_:
+                layer = Object.assign(new PerlinNoiseEffect({}), json);
                 break;
             case ClaudeCRTBarrelRollEffect._name_:
                 layer = Object.assign(new ClaudeCRTBarrelRollEffect({}), json);
