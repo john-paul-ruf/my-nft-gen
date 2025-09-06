@@ -53,8 +53,10 @@ import { RollingGradientEffect } from "../../effects/primaryEffects/rollingGradi
 import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js";
 import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
 import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
-import {ClaudeCRTBarrelRollEffect} from "../../effects/finalImageEffects/claudeCRTBarrelRoll/ClaudeCRTBarrelRollEffect.js";
-
+import {VintageFadeEffect} from '../../effects/finalImageEffects/vintageFade/VintageFadeEffect.js';
+import {
+    ClaudeCRTBarrelRollEffect
+} from "../../effects/finalImageEffects/claudeCRTBarrelRoll/ClaudeCRTBarrelRollEffect.js";
 export class LayerEffectFromJSON {
     static from(json) {
         let layer = new LayerEffect({});
@@ -170,6 +172,9 @@ export class LayerEffectFromJSON {
                 break;
             case BloomFilmGrainEffect._name_:
                 layer = Object.assign(new BloomFilmGrainEffect({}), json);
+                break;
+            case VintageFadeEffect._name_:
+                layer = Object.assign(new VintageFadeEffect({}), json);
                 break;
             case RollingGradientEffect._name_:
                 layer = Object.assign(new RollingGradientEffect({}), json);
