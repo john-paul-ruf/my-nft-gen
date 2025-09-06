@@ -41,6 +41,7 @@ import { BlurKeyFrameEffect } from '../../effects/keyFrameEffects/blur/BlurKeyFr
 import { StaticPathEffect } from '../../effects/primaryEffects/static-path/StaticPathEffect.js';
 import { StaticPathConfig } from '../../effects/primaryEffects/static-path/StaticPathConfig.js';
 import { ModulateEffect } from '../../effects/finalImageEffects/modulate/ModulateEffect.js';
+import { ColorPulseEffect } from '../../effects/finalImageEffects/colorPulse/ColorPulseEffect.js';
 import {ArcPath} from "../position/ArcPath.js";
 import {Position} from "../position/Position.js";
 import {CurvedRedEyeConfig} from "../../effects/primaryEffects/curved-red-eye/CurvedRedEyeConfig.js";
@@ -75,6 +76,9 @@ export class LayerEffectFromJSON {
                 break;
             case ModulateEffect._name_:
                 layer = Object.assign(new ModulateEffect({}), json);
+                break;
+            case ColorPulseEffect._name_:
+                layer = Object.assign(new ColorPulseEffect({}), json);
                 break;
             case AmpEffect._name_:
                 layer = Object.assign(new AmpEffect({}), json);

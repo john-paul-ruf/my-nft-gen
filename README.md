@@ -1,4 +1,4 @@
-, # my-nft-gen
+# my-nft-gen
 
 🎞️ Searching for the perfect loop?
 
@@ -35,7 +35,7 @@ Explore the code and examples to learn more.
 
 Effects are too numerous to fit comfortably here. See the companion repository [nft-scratch](https://github.com/john-paul-ruf/nft-scratch) for examples of usage.
 
-* **Final Effects**: e.g. `BlurEffect`, `GlitchDrumrollHorizontalWave`, `PixelateEffect`, `VintageFadeEffect`
+* **Final Effects**: e.g. `BlurEffect`, `ColorPulseEffect`, `GlitchDrumrollHorizontalWave`, `PixelateEffect`
 * **Primary Effects**: e.g. `AmpEffect`, `BlinkOnEffect`, `EncircledSpiral`, `FuzzFlareEffect`, `FuzzyBandEffect`, `GatesEffect`
 * Most effects support animated transitions, color pickers, ranges, feathering, glitching, and compositing
 
