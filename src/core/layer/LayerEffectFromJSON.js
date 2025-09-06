@@ -54,6 +54,9 @@ import {SetOpacityKeyFrameEffect} from "../../effects/keyFrameEffects/setOpacity
 import {BloomFilmGrainEffect} from "../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js";
 import {EdgeGlowEffect} from "../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js";
 import {VintageFadeEffect} from '../../effects/finalImageEffects/vintageFade/VintageFadeEffect.js';
+import {
+    ClaudeCRTBarrelRollEffect
+} from "../../effects/finalImageEffects/claudeCRTBarrelRoll/ClaudeCRTBarrelRollEffect.js";
 export class LayerEffectFromJSON {
     static from(json) {
         let layer = new LayerEffect({});
