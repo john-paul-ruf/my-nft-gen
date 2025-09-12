@@ -1,3 +1,8 @@
+import { EffectRegistry } from '../registry/EffectRegistry.js';
+import { PositionRegistry } from '../registry/PositionRegistry.js';
+import { LayerEffect } from './LayerEffect.js';
+
+// Legacy imports for fallback - can be removed once registry is fully adopted
 import { BlurEffect } from '../../effects/finalImageEffects/blur/BlurEffect.js';
 import { SingleLayerGlitchDrumrollHorizontalWaveEffect } from '../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js';
 import { GlitchFractalEffect } from '../../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js';
@@ -27,7 +32,6 @@ import { GlowEffect } from '../../effects/secondaryEffects/glow/GlowEffect.js';
 import { RandomizeEffect } from '../../effects/secondaryEffects/randomize/RandomizeEffect.js';
 import { SingleLayerBlurEffect } from '../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js';
 import { SingleLayerGlitchFractalEffect } from '../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js';
-import { LayerEffect } from './LayerEffect.js';
 import { RedEyeEffect } from '../../effects/primaryEffects/red-eye/RedEyeEffect.js';
 import { FuzzFlareEffect } from '../../effects/primaryEffects/fuzz-flare/FuzzFlareEffect.js';
 import { CRTScanLinesEffect } from '../../effects/finalImageEffects/crtScanLines/CRTScanLinesEffect.js';
@@ -61,7 +65,13 @@ export class LayerEffectFromJSON {
     static from(json) {
         let layer = new LayerEffect({});
 
-        switch (json.name) {
+        // Try registry first
+        const EffectClass = EffectRegistry.getGlobal(json.name);
+        if (EffectClass) {
+            layer = Object.assign(new EffectClass({}), json);
+        } else {
+            // Fallback to legacy switch statement
+            switch (json.name) {
             case BlurEffect._name_:
                 layer = Object.assign(new BlurEffect({}), json);
                 break;
@@ -183,7 +193,8 @@ export class LayerEffectFromJSON {
                 layer = Object.assign(new ClaudeCRTBarrelRollEffect({}), json);
                 break;
             default:
-                throw new Error('Not a valid effect name');
+                throw new Error(`Effect '${json.name}' not found in registry or built-in effects`);
+        }
         }
 
         layer.data = json.data;
@@ -191,8 +202,14 @@ export class LayerEffectFromJSON {
         // Hydrate additionalEffects
         for (let i = 0; i < layer.additionalEffects.length; i++) {
             const { data } = layer.additionalEffects[i];
-
-            switch (layer.additionalEffects[i].name) {
+            
+            // Try registry first for additionalEffects
+            const AdditionalEffectClass = EffectRegistry.getGlobal(layer.additionalEffects[i].name);
+            if (AdditionalEffectClass) {
+                layer.additionalEffects[i] = Object.assign(new AdditionalEffectClass({}), layer.additionalEffects[i]);
+            } else {
+                // Fallback to legacy switch statement
+                switch (layer.additionalEffects[i].name) {
                 case FadeEffect._name_:
                     layer.additionalEffects[i] = Object.assign(new FadeEffect({}), layer.additionalEffects[i]);
                     break;
@@ -233,7 +250,8 @@ export class LayerEffectFromJSON {
                     layer.additionalEffects[i] = Object.assign(new EdgeGlowEffect({}), layer.additionalEffects[i]);
                     break;
                 default:
-                    throw new Error('Not a valid effect name');
+                    throw new Error(`Additional effect '${layer.additionalEffects[i].name}' not found in registry or built-in effects`);
+            }
             }
 
             layer.additionalEffects[i].data = data;
@@ -241,15 +259,22 @@ export class LayerEffectFromJSON {
 
         // Hydrate layer.data.center if present
         if (layer.data?.center?.name) {
-            switch (layer.data.center.name) {
-                case ArcPath._name_:
-                    layer.data.center = Object.assign(new ArcPath({}), layer.data.center);
-                    break;
-                case Position._name_:
-                    layer.data.center = Object.assign(new Position({}), layer.data.center);
-                    break;
-                default:
-                    throw new Error(`Unknown center type: ${layer.data.center.name}`);
+            // Try registry first for positions
+            const PositionClass = PositionRegistry.getGlobal(layer.data.center.name);
+            if (PositionClass) {
+                layer.data.center = Object.assign(new PositionClass({}), layer.data.center);
+            } else {
+                // Fallback to legacy switch statement
+                switch (layer.data.center.name) {
+                    case ArcPath._name_:
+                        layer.data.center = Object.assign(new ArcPath({}), layer.data.center);
+                        break;
+                    case Position._name_:
+                        layer.data.center = Object.assign(new Position({}), layer.data.center);
+                        break;
+                    default:
+                        throw new Error(`Position type '${layer.data.center.name}' not found in registry or built-in positions`);
+                }
             }
         }
 
