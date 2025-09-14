@@ -1,10 +1,12 @@
 import {LayerFactory} from "../factory/layer/LayerFactory.js";
+import {WorkerEventEmitter} from "../events/WorkerEventEmitter.js";
 
 export class CreateFrame {
-    constructor(settings) {
+    constructor(settings, eventEmitter = null) {
         this.settings = settings;
         this.finalFileName = settings.config.finalFileName;
         this.config = settings.config;
+        this.eventEmitter = eventEmitter;
 
         this.context = {
             numberOfFrame: this.config.numberOfFrame,
@@ -25,7 +27,10 @@ export class CreateFrame {
         let currentIndex = 0;
         let active = 0;
 
-        console.log(`[Worker Log]: Starting frame ${frameNumber} with ${total} layers`);
+        // Emit structured event instead of console.log
+        if (this.eventEmitter) {
+            this.eventEmitter.emitFrameStarted(frameNumber, this.config.numberOfFrame);
+        }
 
         const formatDuration = (ms) => {
             const minutes = Math.floor(ms / 60000);
@@ -44,7 +49,10 @@ export class CreateFrame {
                     const idx = currentIndex++;
                     active++;
 
-                    console.log(`[Worker Log]: Invoking effect ${effects[idx].name} on layer ${idx}`);
+                    // Emit structured event for effect start
+                    if (this.eventEmitter) {
+                        this.eventEmitter.emitEffectStarted(effects[idx].name, frameNumber);
+                    }
                     const start = performance.now();
 
                     effects[idx].invoke(
@@ -53,10 +61,16 @@ export class CreateFrame {
                         this.context.numberOfFrame
                     ).then(() => {
                         const duration = performance.now() - start;
-                        console.log(`[Worker Log]: ✔️ Effect ${effects[idx].name} completed in ${formatDuration(duration)}`);
+                        // Emit structured event for effect completion
+                        if (this.eventEmitter) {
+                            this.eventEmitter.emitEffectCompleted(effects[idx].name, frameNumber, duration);
+                        }
                     }).catch(err => {
                         const duration = performance.now() - start;
-                        console.error(`[Worker Log]: ❌ Effect ${effects[idx].name} error after ${formatDuration(duration)}:`, err);
+                        // Emit structured event for effect failure
+                        if (this.eventEmitter) {
+                            this.eventEmitter.emitEffectFailed(effects[idx].name, frameNumber, err);
+                        }
                     }).finally(() => {
                         active--;
                         launchNext();

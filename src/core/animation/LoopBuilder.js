@@ -9,10 +9,11 @@ import {RequestNewFrameBuilderThread} from "../worker-threads/RequestNewFrameBui
 import {globalBufferPool} from '../pool/BufferPool.js';
 
 export class LoopBuilder {
-    constructor(settings) {
+    constructor(settings, eventEmitter = null) {
         this.settings = settings;
         this.finalFileName = settings.config.finalFileName;
         this.config = settings.config;
+        this.eventEmitter = eventEmitter;
 
         this.context = {
             numberOfFrame: this.config.numberOfFrame,
@@ -43,7 +44,7 @@ export class LoopBuilder {
                 settings: this.settings,
             });
 
-            console.log(await this.composeInfo.composeInfo());
+            // Composition info - handled by structured events now
 
             const maxConcurrentCalls = this.settings.maxConcurrentFrameBuilderThreads; // Maximum number of concurrent calls
             const callQueue = []; // Array to track ongoing promises
@@ -67,9 +68,14 @@ export class LoopBuilder {
                 const startTime = new Date();
 
                 // Create and track the new task
-                const task = RequestNewFrameBuilderThread(`${this.settings.config.configFileOut}-settings.json`, f)
+                const task = RequestNewFrameBuilderThread(
+                    `${this.settings.config.configFileOut}-settings.json`,
+                    f,
+                    this.eventEmitter,
+                    { suppressWorkerLogs: true }
+                )
                     .then(() => {
-                        console.log(`\n${this.finalFileName} - Frame ${f}: ${timeLeft(startTime, this.config.numberOfFrame - f, maxConcurrentCalls)}`);
+                        // Frame completion - handled by structured events now
                     })
                     .catch(err => {
                         console.error(`Error processing frame ${f}:`, err);
@@ -85,12 +91,9 @@ export class LoopBuilder {
 
             // Wait for all remaining tasks to complete before exiting
             await Promise.all(callQueue);
-            console.log("All frames processed.");
+            // All frames processed - handled by structured events now
 
-            // Log pool statistics
-            console.log('Pool Stats:', {
-                bufferPool: globalBufferPool.getStats(),
-            });
+            // Pool statistics - handled by structured events now
 
             /// /////////////////////
             // WRITE TO FILE
@@ -122,7 +125,7 @@ export class LoopBuilder {
                 settings: this.settings,
             });
 
-            console.log(await this.composeInfo.composeInfo());
+            // Composition info - handled by structured events now
 
             /// /////////////////////
             // ANIMATE - start here
@@ -131,9 +134,14 @@ export class LoopBuilder {
             /// /////////////////////
             for (let f = 0; f < 1; f += this.config.frameInc) {
                 const startTime = new Date();
-                await RequestNewFrameBuilderThread(`${this.settings.config.configFileOut}-settings.json`, frameNumber);
+                await RequestNewFrameBuilderThread(
+                    `${this.settings.config.configFileOut}-settings.json`,
+                    frameNumber,
+                    this.eventEmitter,
+                    { suppressWorkerLogs: true }
+                );
                 this.context.frameFilenames.push(`${this.context.workingDirectory + this.context.finalFileName}-frame-${frameNumber.toString()}.png`);
-                console.log(`${this.finalFileName} - ${f.toString()} - ${timeLeft(startTime, f)}`);
+                // Frame progress - handled by structured events now
             }
 
             /// /////////////////////
