@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 // Resolve the path to the worker script dynamically
 const workerScript = path.resolve(__dirname, 'GenerateLoopWorkerThread.js');
 
-export const RequestNewWorkerThread = (filename, eventEmitter = null, options = {}) => {
+export const RequestNewWorkerThread = (filename, eventBusOrEmitter = null, options = {}) => {
     return new Promise((resolve, reject) => {
         // Define the command and arguments
         const command = 'node';
@@ -40,15 +40,25 @@ export const RequestNewWorkerThread = (filename, eventEmitter = null, options = 
                     try {
                         // Try to parse as structured event
                         const event = JSON.parse(line);
-                        if (event.type === 'WORKER_EVENT' && eventEmitter) {
-                            // Re-emit the worker event through the project's event emitter
-                            eventEmitter.emit(event.eventName, {
-                                ...event.data,
-                                workerId: event.workerId,
-                                category: event.category,
-                                timestamp: event.timestamp,
-                                elapsedMs: event.elapsedMs
-                            });
+                        if (event.type === 'WORKER_EVENT' && eventBusOrEmitter) {
+                            // Check if it's a UnifiedEventBus or regular EventEmitter
+                            if (eventBusOrEmitter.emitWorkerEvent) {
+                                // It's a UnifiedEventBus - use the specialized method
+                                eventBusOrEmitter.emitWorkerEvent(event.eventName, {
+                                    ...event.data,
+                                    workerId: event.workerId,
+                                    elapsedMs: event.elapsedMs
+                                });
+                            } else {
+                                // It's a regular EventEmitter - use standard emit
+                                eventBusOrEmitter.emit(event.eventName, {
+                                    ...event.data,
+                                    workerId: event.workerId,
+                                    category: event.category,
+                                    timestamp: event.timestamp,
+                                    elapsedMs: event.elapsedMs
+                                });
+                            }
                         } else if (!options.suppressWorkerLogs) {
                             // Regular log message - only show if not suppressed
                             console.log(`[Worker Log]: ${line}`);

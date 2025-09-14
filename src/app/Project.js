@@ -1,5 +1,4 @@
 import {promises as fs} from 'fs';
-import {EventEmitter} from 'events';
 import {Settings} from '../core/Settings.js';
 import {ColorScheme} from '../core/color/ColorScheme.js';
 import {LayerConfig} from '../core/layer/LayerConfig.js';
@@ -8,6 +7,7 @@ import {randomId} from '../core/math/random.js';
 import {execFile} from 'child_process';
 import {RequestNewWorkerThread} from "../core/worker-threads/RequestNewWorkerThread.js";
 import { WorkerEvents, WorkerEventCategories } from '../core/events/WorkerEventCategories.js';
+import { UnifiedEventBus } from '../core/events/UnifiedEventBus.js';
 
 export const ProjectEvents = {
     // Project lifecycle events
@@ -34,7 +34,7 @@ export const ProjectEvents = {
 // Export categories for easy access
 export { WorkerEventCategories };
 
-export class Project extends EventEmitter {
+export class Project {
     constructor({
                     artist = 'unknown',
                     projectName = 'new-project',
@@ -51,7 +51,39 @@ export class Project extends EventEmitter {
                     renderJumpFrames = 1,
                     frameStart = 0,
                 }) {
-        super();
+        // Initialize UnifiedEventBus for this project
+        this.eventBus = new UnifiedEventBus({
+            enableDebug: false,
+            enableMetrics: true,
+            enableEventHistory: true
+        });
+
+        // Initialize event listeners storage for backward compatibility
+        this._eventListeners = new Map();
+
+        // Connect the event bus to also trigger listeners on this Project instance
+        // This ensures backward compatibility with existing SelectiveEventSubscriber code
+        const originalBusEmit = this.eventBus.emit;
+        this.eventBus.emit = (eventName, ...args) => {
+            // Call the original bus emit first
+            const result = originalBusEmit.apply(this.eventBus, [eventName, ...args]);
+
+            // Also trigger listeners registered directly on this Project instance
+            // This allows SelectiveEventSubscriber to work with the old project.on() approach
+            if (this._eventListeners.has(eventName)) {
+                const listeners = this._eventListeners.get(eventName);
+                listeners.forEach(listener => {
+                    try {
+                        listener(...args);
+                    } catch (error) {
+                        console.error(`Error in event listener for ${eventName}:`, error);
+                    }
+                });
+            }
+
+            return result;
+        };
+
         this.projectName = projectName;
         this.artist = artist;
         this.colorScheme = colorScheme;
@@ -70,6 +102,57 @@ export class Project extends EventEmitter {
         this.selectedPrimaryEffectConfigs = [];
         this.selectedFinalEffectConfigs = [];
         this._suppressWorkerLogs = false;
+    }
+
+    // EventEmitter compatibility methods
+    emit(eventName, data) {
+        return this.eventBus.emit(eventName, data);
+    }
+
+    on(eventName, listener) {
+        // Store listeners for backward compatibility with SelectiveEventSubscriber
+        if (!this._eventListeners.has(eventName)) {
+            this._eventListeners.set(eventName, []);
+        }
+        this._eventListeners.get(eventName).push(listener);
+
+        // Also register with the event bus
+        return this.eventBus.on(eventName, listener);
+    }
+
+    off(eventName, listener) {
+        // Remove from compatibility listeners
+        if (this._eventListeners.has(eventName)) {
+            const listeners = this._eventListeners.get(eventName);
+            const index = listeners.indexOf(listener);
+            if (index > -1) {
+                listeners.splice(index, 1);
+            }
+        }
+
+        // Also remove from event bus
+        return this.eventBus.off(eventName, listener);
+    }
+
+    once(eventName, listener) {
+        const onceWrapper = (...args) => {
+            listener(...args);
+            this.off(eventName, onceWrapper);
+        };
+        return this.on(eventName, onceWrapper);
+    }
+
+    // UnifiedEventBus specific methods
+    getEventBus() {
+        return this.eventBus;
+    }
+
+    getEventMetrics() {
+        return this.eventBus.getMetrics();
+    }
+
+    getEventHistory() {
+        return this.eventBus.getHistory();
     }
 
     get shortestSideInPixels() {
@@ -234,7 +317,7 @@ export class Project extends EventEmitter {
             this.emit(ProjectEvents.CONFIG_SAVED, { configPath, settings });
 
             this.emit(ProjectEvents.WORKER_THREAD_STARTING, { configPath });
-            await RequestNewWorkerThread(configPath, this, { suppressWorkerLogs: this._suppressWorkerLogs || false });
+            await RequestNewWorkerThread(configPath, this.eventBus, { suppressWorkerLogs: this._suppressWorkerLogs || false });
             this.emit(ProjectEvents.GENERATION_COMPLETED, {
                 projectName: this.projectName,
                 finalFileName: finalFinalName,
