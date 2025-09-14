@@ -2,63 +2,63 @@ import { EffectRegistry } from './EffectRegistry.js';
 import { EffectCategories } from './EffectCategories.js';
 
 // Primary Effects
-import { AmpEffect } from '../../effects/primaryEffects/amp/AmpEffect.js';
-import { BlinkOnEffect } from '../../effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkOnEffect.js';
-import { CurvedRedEyeEffect } from '../../effects/primaryEffects/curved-red-eye/CurvedRedEyeEffect.js';
-import { EncircledSpiralEffect } from '../../effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js';
-import { FuzzFlareEffect } from '../../effects/primaryEffects/fuzz-flare/FuzzFlareEffect.js';
-import { FuzzyBandEffect } from '../../effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
-import { FuzzyRipplesEffect } from '../../effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js';
-import { GatesEffect } from '../../effects/primaryEffects/gates/GatesEffect.js';
-import { HexEffect } from '../../effects/primaryEffects/hex/HexEffect.js';
-import { ImageOverlayEffect } from '../../effects/primaryEffects/imageOverlay/ImageOverlayEffect.js';
-import { LayeredHexEffect } from '../../effects/primaryEffects/layeredHex/LayeredHexEffect.js';
-import { LayeredRingEffect } from '../../effects/primaryEffects/layeredRing/LayeredRingEffect.js';
-import { LensFlareEffect } from '../../effects/primaryEffects/lensFlare/LensFlareEffect.js';
-import { MappedFramesEffect } from '../../effects/primaryEffects/mappedFrames/MappedFramesEffect.js';
-import { NthRingsEffect } from '../../effects/primaryEffects/nthRings/NthRingsEffect.js';
-import { PorousEffect } from '../../effects/primaryEffects/porous/PorousEffect.js';
-import { RayRingEffect } from '../../effects/primaryEffects/rayRing/RayRingEffect.js';
-import { RayRingInvertedEffect } from '../../effects/primaryEffects/rayRingInverted/RayRingInvertedEffect.js';
-import { RedEyeEffect } from '../../effects/primaryEffects/red-eye/RedEyeEffect.js';
-import { RollingGradientEffect } from '../../effects/primaryEffects/rollingGradient/RollingGradientEffect.js';
-import { ScanLinesEffect } from '../../effects/primaryEffects/scanLines/ScanLinesEffect.js';
-import { ScopesEffect } from '../../effects/primaryEffects/scopes/ScopesEffect.js';
-import { StaticPathEffect } from '../../effects/primaryEffects/static-path/StaticPathEffect.js';
-import { ViewportEffect } from '../../effects/primaryEffects/viewport/ViewportEffect.js';
+import { AmpEffect } from 'my-nft-effects-core/effects/primaryEffects/amp/AmpEffect.js';
+import { BlinkOnEffect } from 'my-nft-effects-core/effects/primaryEffects/blink-on-blink-on-blink-redux/BlinkOnEffect.js';
+import { CurvedRedEyeEffect } from 'my-nft-effects-core/effects/primaryEffects/curved-red-eye/CurvedRedEyeEffect.js';
+import { EncircledSpiralEffect } from 'my-nft-effects-core/effects/primaryEffects/encircledSpiral/EncircledSpiralEffect.js';
+import { FuzzFlareEffect } from 'my-nft-effects-core/effects/primaryEffects/fuzz-flare/FuzzFlareEffect.js';
+import { FuzzyBandEffect } from 'my-nft-effects-core/effects/primaryEffects/fuzzyBands/FuzzyBandEffect.js';
+import { FuzzyRipplesEffect } from 'my-nft-effects-core/effects/primaryEffects/fuzzyRipples/FuzzyRipplesEffect.js';
+import { GatesEffect } from 'my-nft-effects-core/effects/primaryEffects/gates/GatesEffect.js';
+import { HexEffect } from 'my-nft-effects-core/effects/primaryEffects/hex/HexEffect.js';
+import { ImageOverlayEffect } from 'my-nft-effects-core/effects/primaryEffects/imageOverlay/ImageOverlayEffect.js';
+import { LayeredHexEffect } from 'my-nft-effects-core/effects/primaryEffects/layeredHex/LayeredHexEffect.js';
+import { LayeredRingEffect } from 'my-nft-effects-core/effects/primaryEffects/layeredRing/LayeredRingEffect.js';
+import { LensFlareEffect } from 'my-nft-effects-core/effects/primaryEffects/lensFlare/LensFlareEffect.js';
+import { MappedFramesEffect } from 'my-nft-effects-core/effects/primaryEffects/mappedFrames/MappedFramesEffect.js';
+import { NthRingsEffect } from 'my-nft-effects-core/effects/primaryEffects/nthRings/NthRingsEffect.js';
+import { PorousEffect } from 'my-nft-effects-core/effects/primaryEffects/porous/PorousEffect.js';
+import { RayRingEffect } from 'my-nft-effects-core/effects/primaryEffects/rayRing/RayRingEffect.js';
+import { RayRingInvertedEffect } from 'my-nft-effects-core/effects/primaryEffects/rayRingInverted/RayRingInvertedEffect.js';
+import { RedEyeEffect } from 'my-nft-effects-core/effects/primaryEffects/red-eye/RedEyeEffect.js';
+import { RollingGradientEffect } from 'my-nft-effects-core/effects/primaryEffects/rollingGradient/RollingGradientEffect.js';
+import { ScanLinesEffect } from 'my-nft-effects-core/effects/primaryEffects/scanLines/ScanLinesEffect.js';
+import { ScopesEffect } from 'my-nft-effects-core/effects/primaryEffects/scopes/ScopesEffect.js';
+import { StaticPathEffect } from 'my-nft-effects-core/effects/primaryEffects/static-path/StaticPathEffect.js';
+import { ViewportEffect } from 'my-nft-effects-core/effects/primaryEffects/viewport/ViewportEffect.js';
 
 // Secondary Effects
-import { EdgeGlowEffect } from '../../effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js';
-import { FadeEffect } from '../../effects/secondaryEffects/fade/FadeEffect.js';
-import { GlowEffect } from '../../effects/secondaryEffects/glow/GlowEffect.js';
-import { RandomizeEffect } from '../../effects/secondaryEffects/randomize/RandomizeEffect.js';
-import { SingleLayerBlurEffect } from '../../effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js';
-import { SingleLayerGlitchDrumrollHorizontalWaveEffect } from '../../effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js';
-import { SingleLayerGlitchFractalEffect } from '../../effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js';
+import { EdgeGlowEffect } from 'my-nft-effects-core/effects/secondaryEffects/edgeGlow/EdgeGlowEffect.js';
+import { FadeEffect } from 'my-nft-effects-core/effects/secondaryEffects/fade/FadeEffect.js';
+import { GlowEffect } from 'my-nft-effects-core/effects/secondaryEffects/glow/GlowEffect.js';
+import { RandomizeEffect } from 'my-nft-effects-core/effects/secondaryEffects/randomize/RandomizeEffect.js';
+import { SingleLayerBlurEffect } from 'my-nft-effects-core/effects/secondaryEffects/single-layer-blur/SingleLayerBlurEffect.js';
+import { SingleLayerGlitchDrumrollHorizontalWaveEffect } from 'my-nft-effects-core/effects/secondaryEffects/single-layer-glitch-drumroll-horizontal-wave/SingleLayerGlitchDrumrollHorizontalWaveEffect.js';
+import { SingleLayerGlitchFractalEffect } from 'my-nft-effects-core/effects/secondaryEffects/single-layer-glitch-fractal/SingleLayerGlitchFractalEffect.js';
 
 // Final Image Effects
-import { BloomFilmGrainEffect } from '../../effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js';
-import { BlurEffect } from '../../effects/finalImageEffects/blur/BlurEffect.js';
-import { ClaudeCRTBarrelRollEffect } from '../../effects/finalImageEffects/claudeCRTBarrelRoll/ClaudeCRTBarrelRollEffect.js';
-import { ColorPulseEffect } from '../../effects/finalImageEffects/colorPulse/ColorPulseEffect.js';
-import { CRTBarrelEffect } from '../../effects/finalImageEffects/crtBarrel/CRTBarrelEffect.js';
-import { CRTScanLinesEffect } from '../../effects/finalImageEffects/crtScanLines/CRTScanLinesEffect.js';
-import { CRTShadowEffect } from '../../effects/finalImageEffects/crtShadow/CRTShadowEffect.js';
-import { GlitchDrumrollHorizontalWaveEffect } from '../../effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js';
-import { GlitchFractalEffect } from '../../effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js';
-import { GlitchInverseEffect } from '../../effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js';
-import { ModulateEffect } from '../../effects/finalImageEffects/modulate/ModulateEffect.js';
-import { PixelateEffect } from '../../effects/finalImageEffects/pixelate/PixelateEffect.js';
-import { VintageFadeEffect } from '../../effects/finalImageEffects/vintageFade/VintageFadeEffect.js';
+import { BloomFilmGrainEffect } from 'my-nft-effects-core/effects/finalImageEffects/bloomFilmGrain/BloomFilmGrainEffect.js';
+import { BlurEffect } from 'my-nft-effects-core/effects/finalImageEffects/blur/BlurEffect.js';
+import { ClaudeCRTBarrelRollEffect } from 'my-nft-effects-core/effects/finalImageEffects/claudeCRTBarrelRoll/ClaudeCRTBarrelRollEffect.js';
+import { ColorPulseEffect } from 'my-nft-effects-core/effects/finalImageEffects/colorPulse/ColorPulseEffect.js';
+import { CRTBarrelEffect } from 'my-nft-effects-core/effects/finalImageEffects/crtBarrel/CRTBarrelEffect.js';
+import { CRTScanLinesEffect } from 'my-nft-effects-core/effects/finalImageEffects/crtScanLines/CRTScanLinesEffect.js';
+import { CRTShadowEffect } from 'my-nft-effects-core/effects/finalImageEffects/crtShadow/CRTShadowEffect.js';
+import { GlitchDrumrollHorizontalWaveEffect } from 'my-nft-effects-core/effects/finalImageEffects/glitchDrumrollHorizontalWave/GlitchDrumrollHorizontalWaveEffect.js';
+import { GlitchFractalEffect } from 'my-nft-effects-core/effects/finalImageEffects/glitchFractal/GlitchFractalEffect.js';
+import { GlitchInverseEffect } from 'my-nft-effects-core/effects/finalImageEffects/glitchInverse/GlitchInverseEffect.js';
+import { ModulateEffect } from 'my-nft-effects-core/effects/finalImageEffects/modulate/ModulateEffect.js';
+import { PixelateEffect } from 'my-nft-effects-core/effects/finalImageEffects/pixelate/PixelateEffect.js';
+import { VintageFadeEffect } from 'my-nft-effects-core/effects/finalImageEffects/vintageFade/VintageFadeEffect.js';
 
 // Key Frame Effects
-import { BlurKeyFrameEffect } from '../../effects/keyFrameEffects/blur/BlurKeyFrameEffect.js';
-import { CRTDegaussEffect } from '../../effects/keyFrameEffects/crtDegaussEvent/CRTDegaussEffect.js';
-import { FadeKeyFrameEffect } from '../../effects/keyFrameEffects/fade/FadeKeyFrameEffect.js';
-import { GlowKeyFrameEffect } from '../../effects/keyFrameEffects/glow/GlowKeyFrameEffect.js';
-import { PixelateKeyFrameEffect } from '../../effects/keyFrameEffects/pixelate/PixelateKeyFrameEffect.js';
-import { SetOpacityKeyFrameEffect } from '../../effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js';
-import { StaticImageKeyFrameEffect } from '../../effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js';
+import { BlurKeyFrameEffect } from 'my-nft-effects-core/effects/keyFrameEffects/blur/BlurKeyFrameEffect.js';
+import { CRTDegaussEffect } from 'my-nft-effects-core/effects/keyFrameEffects/crtDegaussEvent/CRTDegaussEffect.js';
+import { FadeKeyFrameEffect } from 'my-nft-effects-core/effects/keyFrameEffects/fade/FadeKeyFrameEffect.js';
+import { GlowKeyFrameEffect } from 'my-nft-effects-core/effects/keyFrameEffects/glow/GlowKeyFrameEffect.js';
+import { PixelateKeyFrameEffect } from 'my-nft-effects-core/effects/keyFrameEffects/pixelate/PixelateKeyFrameEffect.js';
+import { SetOpacityKeyFrameEffect } from 'my-nft-effects-core/effects/keyFrameEffects/setOpacity/SetOpacityKeyFrameEffect.js';
+import { StaticImageKeyFrameEffect } from 'my-nft-effects-core/effects/keyFrameEffects/staticImageKeyFrame/StaticImageKeyFrameEffect.js';
 
 export function registerCoreEffects() {
     // Primary Effects
