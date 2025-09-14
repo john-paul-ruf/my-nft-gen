@@ -3,6 +3,11 @@
   "name": "my-nft-gen",
   "version": "1.6.1",
   "description": "",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./src/*": "./src/*"
+  },
   "scripts": {
     "test": "jest",
     "quick-test": "node src/mp4-test.js"
