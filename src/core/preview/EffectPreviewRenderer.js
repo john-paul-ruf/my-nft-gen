@@ -158,7 +158,7 @@ export class EffectPreviewRenderer {
                 }
             };
 
-            await effect.apply(layer, context);
+            await effect.invoke(layer, frameNumber, totalFrames);
 
             previewEventBus.emit(this.PreviewEvents.EFFECT_APPLIED, {
                 previewId,
@@ -175,7 +175,7 @@ export class EffectPreviewRenderer {
             });
 
             // Get PNG buffer from layer
-            const buffer = await layer.getPngBufferWithAlpha();
+            const buffer = await layer.toBuffer();
 
             previewEventBus.emit(this.PreviewEvents.BUFFER_GENERATED, {
                 previewId,
@@ -183,8 +183,7 @@ export class EffectPreviewRenderer {
                 format: 'PNG with alpha'
             });
 
-            // Clean up
-            await layer.destroy();
+            // Clean up - no destroy method needed
 
             previewEventBus.emit(this.PreviewEvents.PREVIEW_COMPLETED, {
                 previewId,
@@ -203,16 +202,7 @@ export class EffectPreviewRenderer {
                 timestamp: new Date().toISOString()
             });
 
-            // Clean up on error
-            try {
-                await layer?.destroy();
-            } catch (cleanupError) {
-                previewEventBus.emit(this.PreviewEvents.PREVIEW_ERROR, {
-                    previewId,
-                    error: `Cleanup error: ${cleanupError.message}`,
-                    type: 'cleanup'
-                });
-            }
+            // Clean up on error - no destroy method needed
 
             throw error;
         }
