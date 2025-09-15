@@ -10,6 +10,12 @@ const __dirname = path.dirname(__filename);
 const workerScript = path.resolve(__dirname, 'GenerateAnimateFrameWorkerThread.js');
 
 export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter = null, options = {}) => {
+    // Default to quiet mode to prevent stdout buffer overflow
+    const defaultOptions = {
+        suppressWorkerLogs: true,
+        suppressWorkerErrors: false,
+        ...options
+    };
     return new Promise((resolve, reject) => {
         // Define the command and arguments
         const command = 'node';
@@ -19,8 +25,15 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
             frameNumber
         ];
 
-        // Execute the file
-        const child = execFile(command, args, {maxBuffer: 1024 * 1024 * 30}, (error, stdout, stderr) => {
+        // Execute the file with larger buffer and environment variables to control logging
+        const child = execFile(command, args, {
+            maxBuffer: 1024 * 1024 * 200,
+            env: {
+                ...process.env,
+                NFT_SUPPRESS_PER_FRAME_EVENTS: process.env.NFT_SUPPRESS_PER_FRAME_EVENTS || 'true',
+                NFT_VERBOSE_EVENTS: process.env.NFT_VERBOSE_EVENTS || 'false'
+            }
+        }, (error, stdout, stderr) => {
             if (error) {
                 reject(new Error(`[Error]: ${error.message}`));
                 return;
@@ -50,13 +63,13 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
                                 timestamp: event.timestamp,
                                 elapsedMs: event.elapsedMs
                             });
-                        } else if (!options.suppressWorkerLogs) {
+                        } else if (!defaultOptions.suppressWorkerLogs) {
                             // Regular log message - only show if not suppressed
                             console.log(`[Worker Log]: ${line}`);
                         }
                     } catch (e) {
                         // Not JSON, treat as regular log - only show if not suppressed
-                        if (!options.suppressWorkerLogs) {
+                        if (!defaultOptions.suppressWorkerLogs) {
                             console.log(`[Worker Log]: ${line}`);
                         }
                     }
@@ -66,7 +79,7 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
 
         // Listen to stderr for real-time errors
         child.stderr.on('data', (data) => {
-            if (!options.suppressWorkerErrors) {
+            if (!defaultOptions.suppressWorkerErrors) {
                 console.error(`[Worker Error]: ${data.toString().trim()}`);
             }
         });

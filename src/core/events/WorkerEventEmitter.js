@@ -7,6 +7,8 @@ export class WorkerEventEmitter {
     constructor(workerId = 'worker') {
         this.workerId = workerId;
         this.startTime = Date.now();
+        this.verbose = process.env.NFT_VERBOSE_EVENTS !== 'false';
+        this.suppressPerFrameEvents = process.env.NFT_SUPPRESS_PER_FRAME_EVENTS === 'true';
     }
 
     /**
@@ -14,8 +16,33 @@ export class WorkerEventEmitter {
      * @param {string} eventName - The event name from WorkerEvents
      * @param {Object} data - Event data
      * @param {number} timestamp - Optional timestamp (defaults to current time)
+     * @param {boolean} force - Force emit even if verbosity is disabled
      */
-    emit(eventName, data = {}, timestamp = Date.now()) {
+    emit(eventName, data = {}, timestamp = Date.now(), force = false) {
+        // Skip verbose events if verbosity is disabled (unless forced)
+        if (!this.verbose && !force) {
+            const category = getEventCategory(eventName);
+            // Only emit critical events when verbosity is off
+            if (category !== WorkerEventCategories.ERROR &&
+                category !== WorkerEventCategories.LIFECYCLE &&
+                eventName !== WorkerEvents.FRAME_COMPLETED) {
+                return;
+            }
+        }
+
+        // Skip per-frame events if suppression is enabled
+        if (this.suppressPerFrameEvents && !force) {
+            const skipEvents = [
+                WorkerEvents.EFFECT_STARTED,
+                WorkerEvents.EFFECT_COMPLETED,
+                WorkerEvents.FRAME_STARTED,
+                WorkerEvents.MEMORY_USAGE
+            ];
+            if (skipEvents.includes(eventName)) {
+                return;
+            }
+        }
+
         const category = getEventCategory(eventName);
 
         const structuredEvent = {

@@ -33,23 +33,23 @@ export class EffectDiscovery {
                     basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/primaryEffects'),
                     modulePrefix: 'my-nft-effects-core/src/effects/primaryEffects'
                 },
-                // my-nft-gen secondary effects
+                // my-nft-effects-core secondary effects
                 {
                     category: 'secondary',
-                    basePath: path.resolve(__dirname, '../../effects/secondaryEffects'),
-                    modulePrefix: 'my-nft-gen/src/effects/secondaryEffects'
+                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/secondaryEffects'),
+                    modulePrefix: 'my-nft-effects-core/src/effects/secondaryEffects'
                 },
-                // my-nft-gen key frame effects
+                // my-nft-effects-core key frame effects
                 {
                     category: 'keyFrame',
-                    basePath: path.resolve(__dirname, '../../effects/keyFrameEffects'),
-                    modulePrefix: 'my-nft-gen/src/effects/keyFrameEffects'
+                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/keyFrameEffects'),
+                    modulePrefix: 'my-nft-effects-core/src/effects/keyFrameEffects'
                 },
-                // my-nft-gen final image effects
+                // my-nft-effects-core final image effects
                 {
                     category: 'final',
-                    basePath: path.resolve(__dirname, '../../effects/finalImageEffects'),
-                    modulePrefix: 'my-nft-gen/src/effects/finalImageEffects'
+                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/finalImageEffects'),
+                    modulePrefix: 'my-nft-effects-core/src/effects/finalImageEffects'
                 }
             ];
 
