@@ -1,0 +1,177 @@
+import { EffectRegistry } from './EffectRegistry.js';
+import { ConfigRegistry } from './ConfigRegistry.js';
+import { register as registerFromEffectsCore } from 'my-nft-effects-core';
+
+export async function registerCoreEffects() {
+    try {
+        // Create adapter for the registry interface that my-nft-effects-core expects
+        const registryAdapter = {
+            register: (effectClass, category) => {
+                return EffectRegistry.registerGlobal(effectClass, category);
+            }
+        };
+
+        // Use the built-in registration function from my-nft-effects-core
+        await registerFromEffectsCore(registryAdapter, null);
+        console.log('✓ Effects from my-nft-effects-core registered successfully');
+
+        // Now register configs after effects are loaded
+        await registerConfigsFromEffectsCore();
+    } catch (error) {
+        console.warn('⚠ Failed to register effects from my-nft-effects-core:', error.message);
+        console.warn('  This may be due to missing dependencies or incomplete package structure.');
+    }
+}
+
+export function registerEffectConfig(effectName, configClass, metadata = {}) {
+    try {
+        ConfigRegistry.registerGlobal(effectName, configClass, metadata);
+        console.log(`  ✓ Config registered for effect: ${effectName}`);
+    } catch (error) {
+        console.warn(`  ⚠ Failed to register config for effect ${effectName}:`, error.message);
+    }
+}
+
+function getConfigNameFromEffectName(effectName, className) {
+    // Use the class name pattern: FuzzFlareEffect → FuzzFlareConfig
+    if (className && className.endsWith('Effect')) {
+        return className.replace('Effect', 'Config');
+    }
+
+    // Fallback: convert effect name to PascalCase + Config
+    const pascalCase = effectName
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('');
+    return pascalCase + 'Config';
+}
+
+export async function registerConfigsFromEffectsCore() {
+    try {
+        // Get all registered effects
+        const registeredEffects = EffectRegistry.getAllGlobal();
+        let configsRegistered = 0;
+
+        for (const { name: effectName, effectClass, category } of registeredEffects) {
+            try {
+                const ConfigClass = await importConfigForEffect(effectName, effectClass, category);
+                if (ConfigClass) {
+                    ConfigRegistry.registerGlobal(effectName, ConfigClass, {
+                        effectCategory: category,
+                        description: `Config for ${effectName}`,
+                        autoRegistered: true
+                    });
+                    configsRegistered++;
+                }
+            } catch (configError) {
+                // Silent - not all effects have configs
+            }
+        }
+
+        console.log(`✓ Registered ${configsRegistered} configs from effects-core`);
+    } catch (error) {
+        console.warn('⚠ Failed to register configs from my-nft-effects-core:', error.message);
+    }
+}
+
+async function importConfigForEffect(effectName, effectClass, category) {
+    const configName = getConfigNameFromEffectName(effectName, effectClass.name);
+    const possiblePaths = getConfigPaths(effectName, category, configName, effectClass.name);
+
+    for (const path of possiblePaths) {
+        try {
+            const module = await import(path);
+            const ConfigClass = module[configName];
+            if (ConfigClass && typeof ConfigClass === 'function') {
+                console.log(`  ✓ Found config for ${effectName} at ${path}`);
+                return ConfigClass;
+            }
+        } catch (error) {
+            // Silently try next path
+        }
+    }
+
+    // Log missing config for debugging
+    console.log(`  ⚠ No config found for ${effectName} (tried ${possiblePaths.length} paths)`);
+    return null;
+}
+
+function getConfigPaths(effectName, category, configName, effectClassName) {
+    const categoryMap = {
+        'primary': 'primaryEffects',
+        'secondary': 'secondaryEffects',
+        'keyframe': 'keyFrameEffects',
+        'final': 'finalImageEffects'
+    };
+
+    const categoryPath = categoryMap[category] || 'primaryEffects';
+
+    // Create multiple possible directory names based on effect name and class name
+    const possibleDirectories = new Set();
+
+    // 1. Original effect name
+    possibleDirectories.add(effectName);
+
+    // 2. Effect name without dashes
+    possibleDirectories.add(effectName.replace(/-/g, ''));
+
+    // 3. camelCase version of effect name
+    const camelCase = effectName.split('-').map((word, index) =>
+        index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+    ).join('');
+    possibleDirectories.add(camelCase);
+
+    // 4. PascalCase version of effect name
+    const pascalCase = effectName.split('-').map(word =>
+        word.charAt(0).toUpperCase() + word.slice(1)
+    ).join('');
+    possibleDirectories.add(pascalCase);
+
+    // 5. If we have class name, derive directory from it
+    if (effectClassName && effectClassName.endsWith('Effect')) {
+        const dirFromClass = effectClassName.replace('Effect', '');
+        possibleDirectories.add(dirFromClass);
+        possibleDirectories.add(dirFromClass.toLowerCase());
+        // Convert PascalCase to camelCase
+        const camelFromClass = dirFromClass.charAt(0).toLowerCase() + dirFromClass.slice(1);
+        possibleDirectories.add(camelFromClass);
+    }
+
+    // 6. Special mappings for known mismatches
+    const specialMappings = {
+        'fuzz-bands-mark-two': ['fuzzyBands'],
+        'colorPulse': ['colorPulse'],
+        'blur': ['blur'],
+        'blur-event': ['blur'],
+        'pixelate': ['pixelate'],
+        'pixelate-event': ['pixelate'],
+        'modulate': ['modulate'],
+        'vintage-fade': ['vintageFade'],
+        'glitch-fractal': ['glitchFractal'],
+        'glitch-inverse': ['glitchInverse'],
+        'glitch-drumroll-horizontal-wave': ['glitchDrumrollHorizontalWave'],
+        'single-layer-glitch-fractal': ['singleLayerGlitchFractal'],
+        'bloom-film-grain': ['bloomFilmGrain'],
+        'crt-barrel': ['crtBarrel'],
+        'crt-scan-lines': ['crtScanLines'],
+        'crt-shadow': ['crtShadow'],
+        'claude-crt-barrel-roll': ['claudeCrtBarrelRoll'],
+        'crt-degauss-event': ['crtDegauss'],
+        'fade-event': ['fade'],
+        'glow-event': ['glow'],
+        'set-opacity-event': ['setOpacity'],
+        'static-image': ['staticImageKeyFrame']
+    };
+
+    if (specialMappings[effectName]) {
+        specialMappings[effectName].forEach(dir => possibleDirectories.add(dir));
+    }
+
+    // Generate all possible paths
+    const paths = [];
+    for (const dir of possibleDirectories) {
+        paths.push(`my-nft-effects-core/src/effects/${categoryPath}/${dir}/${configName}.js`);
+    }
+
+    return paths;
+}

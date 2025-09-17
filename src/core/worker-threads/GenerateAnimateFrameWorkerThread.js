@@ -10,7 +10,7 @@ const GenerateAnimateFrameWorkerThread = async () => {
         const filename = process.argv[2];
         const frameNumber = parseInt(process.argv[3]);
 
-        const settings = Settings.from(JSON.parse(fs.readFileSync(filename)));
+        const settings = await Settings.from(JSON.parse(fs.readFileSync(filename)));
 
         eventEmitter.emitWorkerStarted({
             frameStart: frameNumber,

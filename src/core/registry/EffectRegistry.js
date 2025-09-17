@@ -1,4 +1,5 @@
 import { EffectCategories, isValidCategory } from './EffectCategories.js';
+import { ConfigRegistry } from './ConfigRegistry.js';
 
 export class EffectRegistry {
     static globalRegistry = new EffectRegistry();
@@ -37,6 +38,14 @@ export class EffectRegistry {
             tags: metadata.tags || [],
             ...metadata
         });
+
+        // If the effect has a config class, register it in the ConfigRegistry
+        if (effectClass.configClass) {
+            ConfigRegistry.registerGlobal(name, effectClass.configClass, {
+                effectCategory: category,
+                ...metadata
+            });
+        }
 
         return this;
     }
@@ -82,6 +91,10 @@ export class EffectRegistry {
         this.effects.delete(name);
         this.categories.delete(name);
         this.metadata.delete(name);
+
+        // Also unregister from ConfigRegistry
+        ConfigRegistry.globalRegistry.unregister(name);
+
         return wasRegistered;
     }
 
@@ -89,6 +102,9 @@ export class EffectRegistry {
         this.effects.clear();
         this.categories.clear();
         this.metadata.clear();
+
+        // Also clear the ConfigRegistry
+        ConfigRegistry.clearGlobal();
     }
 
     size() {

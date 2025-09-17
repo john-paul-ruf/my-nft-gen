@@ -6,6 +6,7 @@ import {LoopBuilder} from '../core/animation/LoopBuilder.js';
 import {randomId} from '../core/math/random.js';
 import {execFile} from 'child_process';
 import {RequestNewWorkerThread} from "../core/worker-threads/RequestNewWorkerThread.js";
+import {RequestNewFrameBuilderThread} from "../core/worker-threads/RequestNewFrameBuilderThread.js";
 import { WorkerEvents, WorkerEventCategories } from '../core/events/WorkerEventCategories.js';
 import { UnifiedEventBus } from '../core/events/UnifiedEventBus.js';
 
@@ -24,6 +25,8 @@ export const ProjectEvents = {
     CONFIG_SAVED: 'configSaved',
     WORKER_THREAD_STARTING: 'workerThreadStarting',
     GENERATION_COMPLETED: 'generationCompleted',
+    FRAME_GENERATION_STARTED: 'frameGenerationStarted',
+    FRAME_GENERATION_COMPLETED: 'frameGenerationCompleted',
     WARNING: 'warning',
     ERROR: 'error',
 
@@ -301,6 +304,9 @@ export class Project {
                 frameStart: this.frameStart,
             });
 
+            // Generate effects asynchronously with the new registration system
+            await settings.generateEffects();
+
             settings.backgroundColor = settings.getBackgroundFromBucket();
             this.emit(ProjectEvents.SETTINGS_CREATED, {
                 settings: settings, // Pass the full settings object
@@ -328,6 +334,160 @@ export class Project {
             this.emit(ProjectEvents.ERROR, {
                 type: 'generateRandomLoop',
                 error,
+                projectName: this.projectName,
+                timestamp: new Date().toISOString()
+            });
+            throw error;
+        }
+    }
+
+    /**
+     * Generate a single frame at a specific position in the animation loop
+     * @param {number} frameNumber - The frame number to generate (0 to numberOfFrame-1)
+     * @param {number} totalFrames - Total number of frames in the animation (defaults to this.numberOfFrame)
+     * @param {boolean} returnAsBuffer - If true, returns the image as a buffer and cleans up files (default: true)
+     * @param {string} outputDirectory - Directory to save the frame (optional, will create temp directory if not provided)
+     * @returns {Promise<Buffer|string>} - Image buffer if returnAsBuffer=true, otherwise path to the generated frame file
+     */
+    async generateSingleFrame(frameNumber, totalFrames = null, returnAsBuffer = true, outputDirectory = null) {
+        try {
+            // Validate frame number
+            const actualTotalFrames = totalFrames || this.numberOfFrame;
+            if (frameNumber < 0 || frameNumber >= actualTotalFrames) {
+                throw new Error(`Frame number ${frameNumber} is out of range (0 to ${actualTotalFrames - 1})`);
+            }
+
+            this.emit(ProjectEvents.FRAME_GENERATION_STARTED, {
+                frameNumber,
+                totalFrames: actualTotalFrames,
+                projectName: this.projectName,
+                timestamp: new Date().toISOString()
+            });
+
+            // Create temporary directory for frame generation if not provided
+            const tempDir = outputDirectory || `${this.projectDirectory}/temp-frame-${randomId()}/`;
+            const finalFinalName = this.projectName + '-frame-' + frameNumber;
+            const workingDirectory = `${tempDir}${finalFinalName}/`;
+
+            this.emit(ProjectEvents.DIRECTORY_CREATING, { workingDirectory });
+            await fs.mkdir(workingDirectory + 'settings/', { recursive: true });
+            this.emit(ProjectEvents.DIRECTORY_CREATED, { workingDirectory });
+
+            // Create settings for single frame generation
+            this.emit(ProjectEvents.SETTINGS_CREATING, { finalFileName: finalFinalName });
+            const settings = new Settings({
+                colorScheme: this.colorScheme,
+                neutrals: this.neutrals,
+                backgrounds: this.backgrounds,
+                lights: this.lights,
+                _INVOKER_: this.artist,
+                runName: this.projectName,
+                finalFileName: finalFinalName,
+                numberOfFrame: actualTotalFrames, // Use the total frames for proper animation calculation
+                longestSideInPixels: this.longestSideInPixels,
+                shortestSideInPixels: this.shortestSideInPixels,
+                isHorizontal: this.isHorizontal,
+                workingDirectory,
+                allPrimaryEffects: this.selectedPrimaryEffectConfigs,
+                allFinalImageEffects: this.selectedFinalEffectConfigs,
+                maxConcurrentFrameBuilderThreads: 1, // Single frame, no concurrency needed
+                frameInc: 1,
+                frameStart: frameNumber, // Start at the specific frame
+            });
+
+            // Generate effects with proper config reconstruction
+            await settings.generateEffects();
+
+            settings.backgroundColor = settings.getBackgroundFromBucket();
+            this.emit(ProjectEvents.SETTINGS_CREATED, {
+                settings: settings,
+                projectInfo: {
+                    finalFileName: finalFinalName,
+                    numberOfFrame: actualTotalFrames,
+                    frameNumber,
+                    backgroundColor: settings.backgroundColor
+                }
+            });
+
+            const configPath = `${settings.config.configFileOut}-settings.json`;
+            this.emit(ProjectEvents.CONFIG_SAVING, { configPath });
+            await fs.writeFile(configPath, JSON.stringify(settings));
+            this.emit(ProjectEvents.CONFIG_SAVED, { configPath, settings });
+
+            // Generate the specific frame
+            this.emit(ProjectEvents.WORKER_THREAD_STARTING, {
+                configPath,
+                frameNumber,
+                message: `Generating frame ${frameNumber} of ${actualTotalFrames}`
+            });
+
+            const result = await RequestNewFrameBuilderThread(
+                configPath,
+                frameNumber,
+                this.eventBus,
+                { suppressWorkerLogs: this._suppressWorkerLogs || false }
+            );
+
+            // Determine the generated frame path (matches CreateFrame.js pattern)
+            const frameFilename = `${settings.workingDirectory}${settings.config.finalFileName}-frame-${frameNumber}.png`;
+
+            let returnValue;
+
+            if (returnAsBuffer) {
+                // Read the file as a buffer
+                const imageBuffer = await fs.readFile(frameFilename);
+
+                // Clean up temporary files and directory
+                try {
+                    await fs.unlink(frameFilename); // Remove the PNG file
+                    await fs.unlink(configPath); // Remove the config file
+
+                    // Remove the settings directory
+                    const settingsDir = `${workingDirectory}settings/`;
+                    await fs.rmdir(settingsDir, { recursive: true });
+
+                    // Remove the working directory if it's empty
+                    await fs.rmdir(workingDirectory, { recursive: true });
+
+                    // Remove temp directory if we created it
+                    if (!outputDirectory) {
+                        const tempDir = workingDirectory.split('/').slice(0, -2).join('/') + '/';
+                        await fs.rmdir(tempDir, { recursive: true });
+                    }
+                } catch (cleanupError) {
+                    // Emit warning but don't fail the operation
+                    this.emit(ProjectEvents.WARNING, {
+                        type: 'generateSingleFrame_cleanup',
+                        message: 'Failed to clean up temporary files',
+                        error: cleanupError,
+                        frameNumber,
+                        workingDirectory
+                    });
+                }
+
+                returnValue = imageBuffer;
+            } else {
+                returnValue = frameFilename;
+            }
+
+            this.emit(ProjectEvents.FRAME_GENERATION_COMPLETED, {
+                frameNumber,
+                totalFrames: actualTotalFrames,
+                projectName: this.projectName,
+                frameFilename,
+                workingDirectory,
+                configPath,
+                returnedAsBuffer: returnAsBuffer,
+                timestamp: new Date().toISOString()
+            });
+
+            return returnValue;
+        } catch (error) {
+            this.emit(ProjectEvents.ERROR, {
+                type: 'generateSingleFrame',
+                error,
+                frameNumber,
+                totalFrames: totalFrames || this.numberOfFrame,
                 projectName: this.projectName,
                 timestamp: new Date().toISOString()
             });

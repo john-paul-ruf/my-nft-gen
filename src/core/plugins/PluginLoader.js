@@ -1,10 +1,31 @@
 import { EffectRegistry } from '../registry/EffectRegistry.js';
 import { PositionRegistry } from '../registry/PositionRegistry.js';
+import { EnhancedEffectsRegistration } from '../registry/EnhancedEffectsRegistration.js';
 
 export class PluginLoader {
+    static #effectsLoaded = false;
+    static #loadingPromise = null;
+
     static async loadCoreEffects() {
-        const { registerCoreEffects } = await import('../registry/CoreEffectsRegistration.js');
-        registerCoreEffects();
+        // Use the new enhanced registration system
+        return await EnhancedEffectsRegistration.registerEffectsFromPackage('my-nft-effects-core');
+    }
+
+    static async ensureEffectsLoaded() {
+        if (this.#effectsLoaded) {
+            return;
+        }
+
+        if (this.#loadingPromise) {
+            return this.#loadingPromise;
+        }
+
+        this.#loadingPromise = this.loadCoreEffects().then(() => {
+            this.#effectsLoaded = true;
+            console.log('✓ Core effects loaded successfully');
+        });
+
+        return this.#loadingPromise;
     }
 
     static async loadCorePositions() {

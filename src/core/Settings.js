@@ -3,19 +3,21 @@ import {ColorScheme} from './color/ColorScheme.js';
 import {LayerEffectFromJSON} from './layer/LayerEffectFromJSON.js';
 import {LayerConfig} from './layer/LayerConfig.js';
 import {globalBufferPool} from './pool/BufferPool.js';
+import {ConfigReconstructor} from './ConfigReconstructor.js';
 
 export class Settings {
-    static from(json) {
+
+    static async from(json) {
         const settings = Object.assign(new Settings({}), json);
 
         settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme);
 
         for (let i = 0; i < settings.effects.length; i++) {
-            settings.effects[i] = LayerEffectFromJSON.from(settings.effects[i]);
+            settings.effects[i] = await LayerEffectFromJSON.from(settings.effects[i]);
         }
 
         for (let i = 0; i < settings.finalImageEffects.length; i++) {
-            settings.finalImageEffects[i] = LayerEffectFromJSON.from(settings.finalImageEffects[i]);
+            settings.finalImageEffects[i] = await LayerEffectFromJSON.from(settings.finalImageEffects[i]);
         }
 
         return settings;
@@ -91,25 +93,40 @@ export class Settings {
         // This determines the final image contents
         // The effect array is super important
         // Understanding effects is key to running this program.
-        this.effects = this.#generatePrimaryEffects();
-        this.finalImageEffects = this.#generateFinalImageEffects();
+        // Note: Effects generation is now async and handled in generateEffects()
+        this.effects = [];
+        this.finalImageEffects = [];
     }
 
-    #generatePrimaryEffects() {
+    /**
+     * Generate effects asynchronously with config reconstruction
+     */
+    async generateEffects() {
+        this.effects = await this.#generatePrimaryEffects();
+        this.finalImageEffects = await this.#generateFinalImageEffects();
+    }
+
+    async #generatePrimaryEffects() {
         const effectList = [];
 
         // For each effect in the possible effects list.
-        this.allPrimaryEffects.forEach((obj) => {
+        for (const obj of this.allPrimaryEffects) {
             const chance = getRandomIntExclusive(0, 100); // roll the dice
             if (obj.percentChance > chance) { // if the roll was below the chance of hit
+                // Reconstruct proper config instance from plain object
+                const reconstructedConfig = await ConfigReconstructor.reconstruct(
+                    obj.Effect._name_,
+                    obj.currentEffectConfig
+                );
+
                 effectList.push(new obj.Effect({
-                    config: obj.currentEffectConfig,
+                    config: reconstructedConfig,
                     additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
                     ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this,
                 }));
             }
-        });
+        }
 
         return effectList;
     }
@@ -132,21 +149,27 @@ export class Settings {
         return effectList;
     }
 
-    #generateFinalImageEffects() {
+    async #generateFinalImageEffects() {
         const effectList = [];
 
         // For each effect in the possible effects list.
-        this.allFinalImageEffects.forEach((obj) => {
+        for (const obj of this.allFinalImageEffects) {
             const chance = getRandomIntExclusive(0, 100); // roll the dice
             if (obj.percentChance > chance) { // if the roll was below the chance of hit
+                // Reconstruct proper config instance from plain object
+                const reconstructedConfig = await ConfigReconstructor.reconstruct(
+                    obj.Effect._name_,
+                    obj.currentEffectConfig
+                );
+
                 effectList.push(new obj.Effect({
-                    config: obj.currentEffectConfig,
+                    config: reconstructedConfig,
                     additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
                     ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this,
                 }));
             }
-        });
+        }
 
         return effectList;
     }

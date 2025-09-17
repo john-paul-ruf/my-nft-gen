@@ -165,7 +165,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.JOURNEY_SIN: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
             value = Math.abs(envelope * modulation);
@@ -173,7 +173,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.JOURNEY_SIN_SQUARED: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.pow(Math.sin(Math.PI * normalizedT), 2);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
             value = Math.abs(envelope * modulation);
@@ -181,7 +181,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.JOURNEY_EXP_ENVELOPE: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.pow(Math.sin(Math.PI * normalizedT), 0.5);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
             value = Math.abs(envelope * modulation);
@@ -189,7 +189,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.JOURNEY_STEEP_BELL: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.pow(Math.sin(Math.PI * normalizedT), 3);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
             value = Math.abs(envelope * modulation);
@@ -197,7 +197,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.JOURNEY_FLAT_TOP: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = 1 - Math.pow(Math.cos(Math.PI * normalizedT), 6);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
             value = Math.abs(envelope * modulation);
@@ -205,7 +205,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.INVERTED_BELL: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const inverted = envelope * (1 - Math.abs(Math.sin(Math.PI * normalizedT)));
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -214,7 +214,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.DOUBLE_PEAK: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const doublePeak = Math.sin(2 * Math.PI * normalizedT);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -223,7 +223,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.EXPONENTIAL_DECAY: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const decay = Math.exp(-5 * normalizedT) + Math.exp(-5 * (1 - normalizedT));
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -232,7 +232,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.ELASTIC_BOUNCE: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const elastic = Math.exp(-3 * Math.abs(normalizedT - 0.5)) * Math.cos(20 * Math.PI * normalizedT + phaseOffset * 2 * Math.PI);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -241,7 +241,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.BREATHING: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const breathing = Math.pow(Math.sin(Math.PI * normalizedT), 4);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -250,7 +250,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.PULSE_WAVE: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const pulseT = (normalizedT + phaseOffset) % 1;
             const pulse = pulseT < 0.3 || pulseT > 0.7 ? 1 : 0.3;
@@ -260,7 +260,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.RIPPLE: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const ripple = Math.exp(-10 * Math.pow(normalizedT - 0.5, 2)) * Math.cos(15 * Math.PI * normalizedT + phaseOffset * 2 * Math.PI);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -269,7 +269,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.HEARTBEAT: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const offsetT = (normalizedT + phaseOffset) % 1;
             const beat1 = Math.exp(-50 * Math.pow(offsetT - 0.3, 2));
@@ -281,7 +281,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.WAVE_CRASH: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const offsetT = (normalizedT + phaseOffset) % 1;
             const buildup = Math.pow(offsetT, 3);
@@ -292,7 +292,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.VOLCANIC: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const offsetT = (normalizedT + phaseOffset) % 1;
             const pressure = Math.pow(offsetT, 2) * (1 - offsetT);
@@ -304,7 +304,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.SPIRAL_OUT: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const spiral = normalizedT * Math.cos(8 * Math.PI * normalizedT + phaseOffset * 2 * Math.PI);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -313,7 +313,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.SPIRAL_IN: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const spiral = (1 - normalizedT) * Math.cos(8 * Math.PI * normalizedT + phaseOffset * 2 * Math.PI);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -322,7 +322,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.MOUNTAIN_RANGE: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const offsetT = (normalizedT + phaseOffset) % 1;
             const peak1 = Math.exp(-20 * Math.pow(offsetT - 0.2, 2));
@@ -335,7 +335,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.OCEAN_TIDE: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const tide = Math.sin(Math.PI * normalizedT) * Math.sin(3 * Math.PI * normalizedT + phaseOffset * 2 * Math.PI);
             const modulation = Math.sin(2 * Math.PI * times * normalizedT + phaseOffset * 2 * Math.PI);
@@ -344,7 +344,7 @@ export const findValue = (
         }
 
         case FindValueAlgorithm.BUTTERFLY: {
-            const normalizedT = currentFrame / (totalFrame - 1);
+            const normalizedT = (currentFrame % totalFrame) / totalFrame;
             const envelope = Math.sin(Math.PI * normalizedT);
             const offsetT = (normalizedT + phaseOffset) % 1;
             const wing1 = Math.exp(-10 * Math.pow(offsetT - 0.25, 2));

@@ -1,4 +1,4 @@
-import {FindValueAlgorithm} from "./findValue.js";
+import {FindValueAlgorithm, getRandomFindValueAlgorithm} from "./findValue.js";
 
 export class MultiStepDefinition {
 

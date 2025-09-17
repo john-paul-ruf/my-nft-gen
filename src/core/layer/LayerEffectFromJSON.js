@@ -1,24 +1,27 @@
 import { EffectRegistry } from '../registry/EffectRegistry.js';
 import { PositionRegistry } from '../registry/PositionRegistry.js';
+import { PluginLoader } from '../plugins/PluginLoader.js';
 import { LayerEffect } from './LayerEffect.js';
 
-// Import effects from my-nft-effects-core package
+// Import effects from my-nft-effects-core package (fallback only)
 import * as EffectsCore from 'my-nft-effects-core';
 import {ArcPath} from "../position/ArcPath.js";
 import {Position} from "../position/Position.js";
 
 
 export class LayerEffectFromJSON {
-    static from(json) {
+    static async from(json) {
+        // Ensure effects are loaded before trying to use them
+        await PluginLoader.ensureEffectsLoaded();
+
         let layer = new LayerEffect({});
 
-        // Try registry first
+        // Try registry first (should now be populated)
         const EffectClass = EffectRegistry.getGlobal(json.name);
         if (EffectClass) {
             layer = Object.assign(new EffectClass({}), json);
         } else {
-            // Try to find effect in EffectsCore namespace as fallback
-            const effectClassName = json.name.replace(/([A-Z])/g, '$1').trim(); // Convert to class name if needed
+            // Fallback to direct import (for backward compatibility)
             let FoundEffectClass = null;
 
             // Look for the effect in EffectsCore exports
@@ -31,6 +34,7 @@ export class LayerEffectFromJSON {
 
             if (FoundEffectClass) {
                 layer = Object.assign(new FoundEffectClass({}), json);
+                console.warn(`Effect '${json.name}' found via fallback - consider updating the registration system`);
             } else {
                 throw new Error(`Effect '${json.name}' not found in registry or effects core package`);
             }
@@ -41,16 +45,15 @@ export class LayerEffectFromJSON {
         // Hydrate additionalEffects
         for (let i = 0; i < layer.additionalEffects.length; i++) {
             const { data } = layer.additionalEffects[i];
-            
+
             // Try registry first for additionalEffects
             const AdditionalEffectClass = EffectRegistry.getGlobal(layer.additionalEffects[i].name);
             if (AdditionalEffectClass) {
                 layer.additionalEffects[i] = Object.assign(new AdditionalEffectClass({}), layer.additionalEffects[i]);
             } else {
-                // Try to find effect in EffectsCore namespace as fallback
+                // Fallback to direct import
                 let FoundAdditionalEffectClass = null;
 
-                // Look for the additional effect in EffectsCore exports
                 for (const [key, value] of Object.entries(EffectsCore)) {
                     if (value && typeof value === 'function' && value._name_ === layer.additionalEffects[i].name) {
                         FoundAdditionalEffectClass = value;
@@ -60,6 +63,7 @@ export class LayerEffectFromJSON {
 
                 if (FoundAdditionalEffectClass) {
                     layer.additionalEffects[i] = Object.assign(new FoundAdditionalEffectClass({}), layer.additionalEffects[i]);
+                    console.warn(`Additional effect '${layer.additionalEffects[i].name}' found via fallback`);
                 } else {
                     throw new Error(`Additional effect '${layer.additionalEffects[i].name}' not found in registry or effects core package`);
                 }

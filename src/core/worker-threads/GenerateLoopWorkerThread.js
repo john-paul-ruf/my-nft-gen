@@ -8,7 +8,7 @@ const mainMenu = async () => {
 
     try {
         const filename = process.argv[2];
-        const settings = Settings.from(JSON.parse(fs.readFileSync(filename)));
+        const settings = await Settings.from(JSON.parse(fs.readFileSync(filename)));
 
         eventEmitter.emitWorkerStarted({
             frameStart: settings.frameStart,

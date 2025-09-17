@@ -1,4 +1,5 @@
 import {FindValueAlgorithm, getRandomFindValueAlgorithm} from "./findValue.js";
+import {Range} from "../layer/configType/Range.js";
 
 export class MultiStepDefinitionConfig {
 

@@ -1,0 +1,19 @@
+import { ConfigRegistry } from './ConfigRegistry.js';
+
+export async function registerCoreConfigs() {
+    try {
+        console.log('✓ Config registry initialized');
+        console.log('  Configs will be registered when effects are loaded');
+    } catch (error) {
+        console.warn('⚠ Failed to initialize config registry:', error.message);
+    }
+}
+
+export function registerEffectConfig(effectName, configClass, metadata = {}) {
+    try {
+        ConfigRegistry.registerGlobal(effectName, configClass, metadata);
+        console.log(`  ✓ Config registered for effect: ${effectName}`);
+    } catch (error) {
+        console.warn(`  ⚠ Failed to register config for effect ${effectName}:`, error.message);
+    }
+}

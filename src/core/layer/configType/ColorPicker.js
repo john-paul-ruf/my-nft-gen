@@ -1,4 +1,6 @@
 export class ColorPicker {
+    static _name_ = 'ColorPicker';
+
     static SelectionType = {
         color: 'color',
         colorBucket: 'color-bucket',
