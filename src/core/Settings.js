@@ -121,7 +121,7 @@ export class Settings {
 
                 effectList.push(new obj.Effect({
                     config: reconstructedConfig,
-                    additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
+                    additionalEffects: await this.#applySecondaryEffects(obj.possibleSecondaryEffects),
                     ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this,
                 }));
@@ -131,21 +131,27 @@ export class Settings {
         return effectList;
     }
 
-    #applySecondaryEffects(possibleEffects) {
+    async #applySecondaryEffects(possibleEffects) {
         const effectList = [];
 
         // For each effect in the possible effects list.
-        possibleEffects.forEach((obj) => {
+        for (const obj of possibleEffects) {
             const chance = getRandomIntExclusive(0, 100); // roll the dice
             if (obj.percentChance > chance) { // if the roll was below the chance of hit
+                // Reconstruct proper config instance from plain object
+                const reconstructedConfig = await ConfigReconstructor.reconstruct(
+                    obj.Effect._name_,
+                    obj.currentEffectConfig
+                );
+
                 effectList.push(new obj.Effect({
-                    config: obj.currentEffectConfig,
+                    config: reconstructedConfig,
                     additionalEffects: [],
                     ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this,
                 }));
             }
-        });
+        }
         return effectList;
     }
 
@@ -164,7 +170,7 @@ export class Settings {
 
                 effectList.push(new obj.Effect({
                     config: reconstructedConfig,
-                    additionalEffects: this.#applySecondaryEffects(obj.possibleSecondaryEffects),
+                    additionalEffects: await this.#applySecondaryEffects(obj.possibleSecondaryEffects),
                     ignoreAdditionalEffects: obj.ignoreSecondaryEffects,
                     settings: this,
                 }));
