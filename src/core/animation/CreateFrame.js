@@ -122,7 +122,24 @@ export class CreateFrame {
             // apply final image effects one at a time
             /// /////////////////////
             for (let e = 0; e < this.settings.finalImageEffects.length; e++) {
-                await this.settings.finalImageEffects[e].invoke(background, frameNumber, this.context.numberOfFrame);
+                if (this.eventEmitter) {
+                    this.eventEmitter.emitEffectStarted(this.settings.finalImageEffects[e].name, frameNumber);
+                }
+                const start = performance.now();
+
+                try {
+                    await this.settings.finalImageEffects[e].invoke(background, frameNumber, this.context.numberOfFrame);
+                    const duration = performance.now() - start;
+                    if (this.eventEmitter) {
+                        this.eventEmitter.emitEffectCompleted(this.settings.finalImageEffects[e].name, frameNumber, duration);
+                    }
+                } catch (err) {
+                    const duration = performance.now() - start;
+                    if (this.eventEmitter) {
+                        this.eventEmitter.emitEffectFailed(this.settings.finalImageEffects[e].name, frameNumber, err);
+                    }
+                    throw err;
+                }
             }
 
             /// ///////////////////
