@@ -1,10 +1,20 @@
 import pathToFfmpeg from 'ffmpeg-ffprobe-static';
 import ffmpeg from 'fluent-ffmpeg';
+import { WorkerEvents } from '../events/WorkerEventCategories.js';
 
-export const writeToMp4 = async (fileSelector, config) => {
+export const writeToMp4 = async (fileSelector, config, eventEmitter = null) => {
     const writeMp4 = async () => new Promise((resolve, reject) => {
 
         const pass1 = ffmpeg(fileSelector).setFfprobePath(pathToFfmpeg.ffprobePath).setFfmpegPath(pathToFfmpeg.ffmpegPath);
+
+        // Emit render started event
+        if (eventEmitter) {
+            eventEmitter.emit(WorkerEvents.MP4_RENDER_STARTED, {
+                fileSelector,
+                outputFile: `${config.fileOut}.mp4`,
+                timestamp: Date.now()
+            });
+        }
 
         pass1.outputFormat('mp4')
             .videoCodec('libx265')
@@ -20,15 +30,42 @@ export const writeToMp4 = async (fileSelector, config) => {
                 '-an', // no audio
             ])
             .on('end', () => {
-                resolve();
+                // Emit render completed event
+                if (eventEmitter) {
+                    eventEmitter.emit(WorkerEvents.MP4_RENDER_COMPLETED, {
+                        outputFile: `${config.fileOut}.mp4`,
+                        timestamp: Date.now()
+                    });
+                }
                 console.log('mp4 Finished');
+                resolve();
             })
             .on('progress', (progress) => {
                 console.log(`${config.finalFileName} - rendering mp4 - ${progress.frames}`);
+                // Emit render progress event
+                if (eventEmitter) {
+                    eventEmitter.emit(WorkerEvents.MP4_RENDER_PROGRESS, {
+                        frames: progress.frames,
+                        currentFps: progress.currentFps,
+                        currentKbps: progress.currentKbps,
+                        targetSize: progress.targetSize,
+                        timemark: progress.timemark,
+                        percent: progress.percent,
+                        timestamp: Date.now()
+                    });
+                }
             })
             .on('error', (e) => {
-                reject(new Error('Error rendering'));
+                // Emit render failed event
+                if (eventEmitter) {
+                    eventEmitter.emit(WorkerEvents.MP4_RENDER_FAILED, {
+                        error: e.message,
+                        outputFile: `${config.fileOut}.mp4`,
+                        timestamp: Date.now()
+                    });
+                }
                 console.log(e);
+                reject(new Error('Error rendering'));
             })
             .mergeToFile(`${config.fileOut}.mp4`);
     });

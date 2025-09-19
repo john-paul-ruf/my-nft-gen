@@ -8,7 +8,7 @@ export class WorkerEventEmitter {
         this.workerId = workerId;
         this.startTime = Date.now();
         this.verbose = process.env.NFT_VERBOSE_EVENTS !== 'false';
-        this.suppressPerFrameEvents = process.env.NFT_SUPPRESS_PER_FRAME_EVENTS === 'true';
+        this.suppressPerFrameEvents = process.env.NFT_SUPPRESS_PER_FRAME_EVENTS === 'false';
     }
 
     /**

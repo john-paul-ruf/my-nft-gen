@@ -72,7 +72,7 @@ export class LoopBuilder {
                     `${this.settings.config.configFileOut}-settings.json`,
                     f,
                     this.eventEmitter,
-                    { suppressWorkerLogs: true }
+                    { suppressWorkerLogs: false }
                 )
                     .then(() => {
                         // Frame completion - handled by structured events now
@@ -99,7 +99,7 @@ export class LoopBuilder {
             // WRITE TO FILE
             /// /////////////////////
             await writeArtistCard(this.config, this.composeInfo);
-            await writeToMp4(`${this.context.workingDirectory + this.config.finalFileName}-frame-%d.png`, this.config);
+            await writeToMp4(`${this.context.workingDirectory + this.config.finalFileName}-frame-%d.png`, this.config, this.eventEmitter);
             await writeScreenCap(this.context.frameFilenames[0], this.config);
 
             if(!keepFrames) {
@@ -138,7 +138,7 @@ export class LoopBuilder {
                     `${this.settings.config.configFileOut}-settings.json`,
                     frameNumber,
                     this.eventEmitter,
-                    { suppressWorkerLogs: true }
+                    { suppressWorkerLogs: false }
                 );
                 this.context.frameFilenames.push(`${this.context.workingDirectory + this.context.finalFileName}-frame-${frameNumber.toString()}.png`);
                 // Frame progress - handled by structured events now

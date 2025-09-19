@@ -10,9 +10,9 @@ const __dirname = path.dirname(__filename);
 const workerScript = path.resolve(__dirname, 'GenerateAnimateFrameWorkerThread.js');
 
 export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter = null, options = {}) => {
-    // Default to quiet mode to prevent stdout buffer overflow
+    // Default to show logs for debugging
     const defaultOptions = {
-        suppressWorkerLogs: true,
+        suppressWorkerLogs: false,
         suppressWorkerErrors: false,
         ...options
     };

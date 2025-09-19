@@ -14,7 +14,9 @@ export const WorkerEventCategories = {
     // Worker lifecycle events
     LIFECYCLE: 'lifecycle',
     // Progress and status updates
-    PROGRESS: 'progress'
+    PROGRESS: 'progress',
+    // Video rendering events
+    VIDEO: 'video'
 };
 
 export const WorkerEvents = {
@@ -59,7 +61,13 @@ export const WorkerEvents = {
 
     // Progress events
     BATCH_PROGRESS: 'batchProgress',
-    OVERALL_PROGRESS: 'overallProgress'
+    OVERALL_PROGRESS: 'overallProgress',
+
+    // Video rendering events
+    MP4_RENDER_STARTED: 'mp4RenderStarted',
+    MP4_RENDER_PROGRESS: 'mp4RenderProgress',
+    MP4_RENDER_COMPLETED: 'mp4RenderCompleted',
+    MP4_RENDER_FAILED: 'mp4RenderFailed'
 };
 
 // Map events to their categories
@@ -97,7 +105,12 @@ export const EventCategoryMap = {
     [WorkerEvents.WORKER_TERMINATED]: WorkerEventCategories.LIFECYCLE,
 
     [WorkerEvents.BATCH_PROGRESS]: WorkerEventCategories.PROGRESS,
-    [WorkerEvents.OVERALL_PROGRESS]: WorkerEventCategories.PROGRESS
+    [WorkerEvents.OVERALL_PROGRESS]: WorkerEventCategories.PROGRESS,
+
+    [WorkerEvents.MP4_RENDER_STARTED]: WorkerEventCategories.VIDEO,
+    [WorkerEvents.MP4_RENDER_PROGRESS]: WorkerEventCategories.VIDEO,
+    [WorkerEvents.MP4_RENDER_COMPLETED]: WorkerEventCategories.VIDEO,
+    [WorkerEvents.MP4_RENDER_FAILED]: WorkerEventCategories.VIDEO
 };
 
 /**
