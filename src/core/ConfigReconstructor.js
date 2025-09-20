@@ -144,8 +144,8 @@ export class ConfigReconstructor {
                         const { Range } = await import('./layer/configType/Range.js');
                         processed[key] = new Range(value._lower, value._upper);
                     }
-                    // Check if this is a serialized PercentageRange
-                    else if (value.__className === 'PercentageRange') {
+                    // Check if this is a serialized PercentageRange (with or without __className)
+                    else if (value.__className === 'PercentageRange' || this.looksLikePercentageRange(value)) {
                         console.log(`🔧 Reconstructing PercentageRange for ${key}`);
                         const { PercentageRange } = await import('./layer/configType/PercentageRange.js');
                         const { PercentageShortestSide } = await import('./layer/configType/PercentageShortestSide.js');
@@ -155,23 +155,31 @@ export class ConfigReconstructor {
                         // The serialized data might have nested objects with percent values
                         let lowerPercent = 0;
                         let upperPercent = 1;
+                        let lowerSide = 'shortest';
+                        let upperSide = 'longest';
 
                         // Check if lower/upper are already percentage objects with percent property
                         if (value.lower && typeof value.lower === 'object' && value.lower.percent !== undefined) {
                             lowerPercent = value.lower.percent;
+                            lowerSide = value.lower.side || 'shortest';
                         } else if (typeof value.lower === 'number') {
                             lowerPercent = value.lower;
                         }
 
                         if (value.upper && typeof value.upper === 'object' && value.upper.percent !== undefined) {
                             upperPercent = value.upper.percent;
+                            upperSide = value.upper.side || 'longest';
                         } else if (typeof value.upper === 'number') {
                             upperPercent = value.upper;
                         }
 
+                        // Create proper PercentageShortestSide or PercentageLongestSide based on 'side' property
+                        const lowerSideClass = lowerSide === 'shortest' ? PercentageShortestSide : PercentageLongestSide;
+                        const upperSideClass = upperSide === 'shortest' ? PercentageShortestSide : PercentageLongestSide;
+
                         processed[key] = new PercentageRange(
-                            new PercentageShortestSide(lowerPercent),
-                            new PercentageLongestSide(upperPercent)
+                            new lowerSideClass(lowerPercent),
+                            new upperSideClass(upperPercent)
                         );
                     }
                     // Check if this is a serialized DynamicRange
@@ -207,5 +215,32 @@ export class ConfigReconstructor {
         await this.ensureInitialized();
         const plugin = PluginRegistry.get(effectName);
         return !!(plugin && plugin.configClass);
+    }
+
+    /**
+     * Detect if an object looks like a PercentageRange based on structure
+     * @param {Object} obj - Object to check
+     * @returns {boolean} True if it looks like a PercentageRange
+     */
+    static looksLikePercentageRange(obj) {
+        if (!obj || typeof obj !== 'object') {
+            return false;
+        }
+
+        // Check if it has lower and upper properties with percent and side structure
+        if (obj.hasOwnProperty('lower') && obj.hasOwnProperty('upper')) {
+            const lower = obj.lower;
+            const upper = obj.upper;
+
+            // Check if lower and upper have percent/side structure (PercentageRange)
+            if (lower && typeof lower === 'object' &&
+                lower.hasOwnProperty('percent') && lower.hasOwnProperty('side') &&
+                upper && typeof upper === 'object' &&
+                upper.hasOwnProperty('percent') && upper.hasOwnProperty('side')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
