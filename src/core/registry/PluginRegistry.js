@@ -19,7 +19,7 @@ export class PluginRegistry {
         const plugin = this.validatePlugin(pluginDefinition);
 
         if (this.plugins.has(plugin.name)) {
-            console.warn(`Plugin '${plugin.name}' is already registered, overwriting`);
+            // Plugin overwrite warning - could emit warning event if eventEmitter available
         }
 
         this.plugins.set(plugin.name, {
@@ -31,7 +31,7 @@ export class PluginRegistry {
 
         this.metadata.set(plugin.name, plugin.metadata);
 
-        console.log(`  ✓ Registered plugin: ${plugin.name} (${plugin.category})`);
+        // Plugin registered - could emit registration event if eventEmitter available
         return this;
     }
 
@@ -65,12 +65,12 @@ export class PluginRegistry {
      */
     async loadFromPackage(packageName, options = {}) {
         if (this.loadedPackages.has(packageName)) {
-            console.log(`Package '${packageName}' already loaded, skipping`);
+            // Package already loaded - could emit info event if eventEmitter available
             return;
         }
 
         try {
-            console.log(`Loading plugins from package: ${packageName}`);
+            // Loading package - could emit loading event if eventEmitter available
 
             // Import the package's registration function
             const packageModule = await import(packageName);
@@ -106,10 +106,10 @@ export class PluginRegistry {
             this.loadedPackages.add(packageName);
 
             const pluginCount = this.plugins.size;
-            console.log(`✓ Successfully loaded ${pluginCount} plugins from ${packageName}`);
+            // Successfully loaded plugins - could emit success event if eventEmitter available
 
         } catch (error) {
-            console.error(`Failed to load package '${packageName}':`, error.message);
+            // Failed to load package - could emit error event if eventEmitter available
             throw error;
         }
     }
@@ -123,7 +123,7 @@ export class PluginRegistry {
             naming = 'convention' // or 'manifest'
         } = options;
 
-        console.log(`Discovering plugins from: ${basePath}`);
+        // Discovering plugins - could emit discovery event if eventEmitter available
         let discovered = 0;
 
         for (const categoryDir of categories) {
@@ -145,15 +145,15 @@ export class PluginRegistry {
 
                         discovered++;
                     } catch (error) {
-                        console.warn(`  ⚠ Failed to load plugin from ${dirName}:`, error.message);
+                        // Failed to load plugin - could emit warning event if eventEmitter available
                     }
                 }
             } catch (error) {
-                console.warn(`  ⚠ Failed to scan category ${categoryDir}:`, error.message);
+                // Failed to scan category - could emit warning event if eventEmitter available
             }
         }
 
-        console.log(`✓ Discovered ${discovered} plugins from directory`);
+        // Discovery completed - could emit completion event if eventEmitter available
     }
 
     /**

@@ -18,8 +18,11 @@ export const RequestNewWorkerThread = (filename, eventBusOrEmitter = null, optio
             filename,
         ];
 
-        // Execute the file
-        const child = execFile(command, args, {maxBuffer: 1024 * 1024 * 30}, (error, stdout, stderr) => {
+        // Execute the file with IPC for better communication
+        const child = execFile(command, args, {
+            maxBuffer: 1024 * 1024 * 200, // Increase buffer as backup
+            stdio: ['pipe', 'pipe', 'pipe', 'ipc'] // Enable IPC
+        }, (error, stdout, stderr) => {
             if (error) {
                 reject(new Error(`[Error]: ${error.message}`));
                 return;
@@ -30,48 +33,31 @@ export const RequestNewWorkerThread = (filename, eventBusOrEmitter = null, optio
             resolve(stdout.trim());
         });
 
-        // Listen to stdout for real-time logs
-        child.stdout.on('data', (data) => {
-            const output = data.toString().trim();
-            const lines = output.split('\n');
-
-            lines.forEach(line => {
-                if (line.trim()) {
-                    try {
-                        // Try to parse as structured event
-                        const event = JSON.parse(line);
-                        if (event.type === 'WORKER_EVENT' && eventBusOrEmitter) {
-                            // Check if it's a UnifiedEventBus or regular EventEmitter
-                            if (eventBusOrEmitter.emitWorkerEvent) {
-                                // It's a UnifiedEventBus - use the specialized method
-                                eventBusOrEmitter.emitWorkerEvent(event.eventName, {
-                                    ...event.data,
-                                    workerId: event.workerId,
-                                    elapsedMs: event.elapsedMs
-                                });
-                            } else {
-                                // It's a regular EventEmitter - use standard emit
-                                eventBusOrEmitter.emit(event.eventName, {
-                                    ...event.data,
-                                    workerId: event.workerId,
-                                    category: event.category,
-                                    timestamp: event.timestamp,
-                                    elapsedMs: event.elapsedMs
-                                });
-                            }
-                        } else if (!options.suppressWorkerLogs) {
-                            // Regular log message - only show if not suppressed
-                            console.log(`[Worker Log]: ${line}`);
-                        }
-                    } catch (e) {
-                        // Not JSON, treat as regular log - only show if not suppressed
-                        if (!options.suppressWorkerLogs) {
-                            console.log(`[Worker Log]: ${line}`);
-                        }
-                    }
+        // Listen to IPC messages for structured events (primary communication)
+        child.on('message', (event) => {
+            if (event.type === 'WORKER_EVENT' && eventBusOrEmitter) {
+                // Check if it's a UnifiedEventBus or regular EventEmitter
+                if (eventBusOrEmitter.emitWorkerEvent) {
+                    // It's a UnifiedEventBus - use the specialized method
+                    eventBusOrEmitter.emitWorkerEvent(event.eventName, {
+                        ...event.data,
+                        workerId: event.workerId,
+                        elapsedMs: event.elapsedMs
+                    });
+                } else {
+                    // It's a regular EventEmitter - use standard emit
+                    eventBusOrEmitter.emit(event.eventName, {
+                        ...event.data,
+                        workerId: event.workerId,
+                        category: event.category,
+                        timestamp: event.timestamp,
+                        elapsedMs: event.elapsedMs
+                    });
                 }
-            });
+            }
         });
+
+        // No stdout parsing - all communication via IPC
 
         // Listen to stderr for real-time errors
         child.stderr.on('data', (data) => {

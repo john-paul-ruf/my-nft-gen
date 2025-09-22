@@ -169,7 +169,13 @@ export class SharpLayerStrategy {
             }).png({compressionLevel: 1, force: true})
                 .toBuffer());
         } catch (e) {
-            console.log(e);
+            // Emit error event if eventEmitter is available
+            if (this.eventEmitter) {
+                this.eventEmitter.emitWorkerError(e, {
+                    operation: 'crop',
+                    context: 'SharpLayerStrategy'
+                });
+            }
         }
     }
 
@@ -181,7 +187,13 @@ export class SharpLayerStrategy {
             }).png({compressionLevel: 1, force: true})
                 .toBuffer());
         } catch (e) {
-            console.log(e);
+            // Emit error event if eventEmitter is available
+            if (this.eventEmitter) {
+                this.eventEmitter.emitWorkerError(e, {
+                    operation: 'extend',
+                    context: 'SharpLayerStrategy'
+                });
+            }
         }
     }
 

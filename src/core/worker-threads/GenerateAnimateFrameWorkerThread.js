@@ -45,7 +45,7 @@ const GenerateAnimateFrameWorkerThread = async () => {
             frameNumber: process.argv[3],
             filename: process.argv[2]
         });
-        console.error(`[Worker Fatal Error]: ${err.stack || err}`);
+        // Error already emitted by eventEmitter.emitFatalError above
         // Exit with failure
         process.exit(1);
     }

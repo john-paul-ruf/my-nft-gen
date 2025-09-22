@@ -28,6 +28,7 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
         // Execute the file with larger buffer and environment variables to control logging
         const child = execFile(command, args, {
             maxBuffer: 1024 * 1024 * 200,
+            stdio: ['pipe', 'pipe', 'pipe', 'ipc'], // Enable IPC
             env: {
                 ...process.env,
                 NFT_SUPPRESS_PER_FRAME_EVENTS: process.env.NFT_SUPPRESS_PER_FRAME_EVENTS || 'true',
@@ -44,38 +45,21 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
             resolve(stdout.trim());
         });
 
-        // Listen to stdout for real-time logs
-        child.stdout.on('data', (data) => {
-            const output = data.toString().trim();
-            const lines = output.split('\n');
-
-            lines.forEach(line => {
-                if (line.trim()) {
-                    try {
-                        // Try to parse as structured event
-                        const event = JSON.parse(line);
-                        if (event.type === 'WORKER_EVENT' && eventEmitter) {
-                            // Re-emit the worker event through the project's event emitter
-                            eventEmitter.emit(event.eventName, {
-                                ...event.data,
-                                workerId: event.workerId,
-                                category: event.category,
-                                timestamp: event.timestamp,
-                                elapsedMs: event.elapsedMs
-                            });
-                        } else if (!defaultOptions.suppressWorkerLogs) {
-                            // Regular log message - only show if not suppressed
-                            console.log(`[Worker Log]: ${line}`);
-                        }
-                    } catch (e) {
-                        // Not JSON, treat as regular log - only show if not suppressed
-                        if (!defaultOptions.suppressWorkerLogs) {
-                            console.log(`[Worker Log]: ${line}`);
-                        }
-                    }
-                }
-            });
+        // Listen to IPC messages for structured events (primary communication)
+        child.on('message', (event) => {
+            if (event.type === 'WORKER_EVENT' && eventEmitter) {
+                // Re-emit the worker event through the project's event emitter
+                eventEmitter.emit(event.eventName, {
+                    ...event.data,
+                    workerId: event.workerId,
+                    category: event.category,
+                    timestamp: event.timestamp,
+                    elapsedMs: event.elapsedMs
+                });
+            }
         });
+
+        // No stdout parsing - all communication via IPC
 
         // Listen to stderr for real-time errors
         child.stderr.on('data', (data) => {

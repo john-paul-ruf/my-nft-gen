@@ -16,7 +16,11 @@ export const WorkerEventCategories = {
     // Progress and status updates
     PROGRESS: 'progress',
     // Video rendering events
-    VIDEO: 'video'
+    VIDEO: 'video',
+    // Debug and logging events
+    DEBUG: 'debug',
+    // System and registry events
+    SYSTEM: 'system'
 };
 
 export const WorkerEvents = {
@@ -67,7 +71,18 @@ export const WorkerEvents = {
     MP4_RENDER_STARTED: 'mp4RenderStarted',
     MP4_RENDER_PROGRESS: 'mp4RenderProgress',
     MP4_RENDER_COMPLETED: 'mp4RenderCompleted',
-    MP4_RENDER_FAILED: 'mp4RenderFailed'
+    MP4_RENDER_FAILED: 'mp4RenderFailed',
+
+    // Debug and logging events
+    DEBUG_LOG: 'debugLog',
+    INFO_LOG: 'infoLog',
+
+    // System and registry events
+    REGISTRY_PLUGIN_REGISTERED: 'registryPluginRegistered',
+    REGISTRY_PLUGIN_LOADED: 'registryPluginLoaded',
+    REGISTRY_CONFIG_LINKED: 'registryConfigLinked',
+    CONFIG_RECONSTRUCTED: 'configReconstructed',
+    CONFIG_RECONSTRUCTION_FAILED: 'configReconstructionFailed'
 };
 
 // Map events to their categories
@@ -110,7 +125,16 @@ export const EventCategoryMap = {
     [WorkerEvents.MP4_RENDER_STARTED]: WorkerEventCategories.VIDEO,
     [WorkerEvents.MP4_RENDER_PROGRESS]: WorkerEventCategories.VIDEO,
     [WorkerEvents.MP4_RENDER_COMPLETED]: WorkerEventCategories.VIDEO,
-    [WorkerEvents.MP4_RENDER_FAILED]: WorkerEventCategories.VIDEO
+    [WorkerEvents.MP4_RENDER_FAILED]: WorkerEventCategories.VIDEO,
+
+    [WorkerEvents.DEBUG_LOG]: WorkerEventCategories.DEBUG,
+    [WorkerEvents.INFO_LOG]: WorkerEventCategories.DEBUG,
+
+    [WorkerEvents.REGISTRY_PLUGIN_REGISTERED]: WorkerEventCategories.SYSTEM,
+    [WorkerEvents.REGISTRY_PLUGIN_LOADED]: WorkerEventCategories.SYSTEM,
+    [WorkerEvents.REGISTRY_CONFIG_LINKED]: WorkerEventCategories.SYSTEM,
+    [WorkerEvents.CONFIG_RECONSTRUCTED]: WorkerEventCategories.SYSTEM,
+    [WorkerEvents.CONFIG_RECONSTRUCTION_FAILED]: WorkerEventCategories.SYSTEM
 };
 
 /**

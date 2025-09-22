@@ -29,8 +29,14 @@ export class WorkerEventEmitter {
             data
         };
 
-        // Output as JSON to stdout - parent process will parse this
-        console.log(JSON.stringify(structuredEvent));
+        // Use IPC if available, otherwise fallback to stdout
+        if (process.send) {
+            // Send via IPC (much more efficient than stdout)
+            process.send(structuredEvent);
+        } else {
+            // Fallback to stdout for non-IPC environments
+            console.log(JSON.stringify(structuredEvent));
+        }
     }
 
     /**
@@ -193,9 +199,72 @@ export class WorkerEventEmitter {
     }
 
     /**
+     * Emit debug and info events instead of logging to console
+     */
+    emitDebugLog(message, context = {}) {
+        this.emit(WorkerEvents.DEBUG_LOG, {
+            message,
+            level: 'debug',
+            ...context
+        });
+    }
+
+    emitInfoLog(message, context = {}) {
+        this.emit(WorkerEvents.INFO_LOG, {
+            message,
+            level: 'info',
+            ...context
+        });
+    }
+
+    /**
+     * Emit registry events
+     */
+    emitRegistryPluginRegistered(pluginName, category) {
+        this.emit(WorkerEvents.REGISTRY_PLUGIN_REGISTERED, {
+            pluginName,
+            category
+        });
+    }
+
+    emitRegistryPluginLoaded(packageName, pluginCount) {
+        this.emit(WorkerEvents.REGISTRY_PLUGIN_LOADED, {
+            packageName,
+            pluginCount
+        });
+    }
+
+    emitRegistryConfigLinked(effectName, configClassName) {
+        this.emit(WorkerEvents.REGISTRY_CONFIG_LINKED, {
+            effectName,
+            configClassName
+        });
+    }
+
+    emitConfigReconstructed(effectName, configClassName) {
+        this.emit(WorkerEvents.CONFIG_RECONSTRUCTED, {
+            effectName,
+            configClassName
+        });
+    }
+
+    emitConfigReconstructionFailed(effectName, error) {
+        this.emit(WorkerEvents.CONFIG_RECONSTRUCTION_FAILED, {
+            effectName,
+            error: error.message,
+            stack: error.stack
+        });
+    }
+
+    /**
      * Log a regular message (not an event) - these won't be parsed as structured events
+     * @deprecated Use emitDebugLog or emitInfoLog instead
      */
     log(message, level = 'info') {
-        console.log(`[${level.toUpperCase()}] ${message}`);
+        if (level === 'debug') {
+            this.emitDebugLog(message);
+        } else {
+            this.emitInfoLog(message);
+        }
     }
 }

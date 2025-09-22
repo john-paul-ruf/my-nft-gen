@@ -34,7 +34,6 @@ const mainMenu = async () => {
         eventEmitter.emitFatalError(err, {
             filename: process.argv[2]
         });
-        console.error(`[LoopBuilder Error]: ${err.stack || err}`);
         process.exit(1); // Failure
     }
 };
