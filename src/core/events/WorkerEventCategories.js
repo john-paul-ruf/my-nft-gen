@@ -58,6 +58,11 @@ export const WorkerEvents = {
     WORKER_STARTED: 'workerStarted',
     WORKER_COMPLETED: 'workerCompleted',
     WORKER_TERMINATED: 'workerTerminated',
+    
+    // Process control events
+    WORKER_KILL_REQUESTED: 'workerKillRequested',
+    WORKER_KILLED: 'workerKilled',
+    WORKER_KILL_FAILED: 'workerKillFailed',
 
     // Progress events
     BATCH_PROGRESS: 'batchProgress',
@@ -103,6 +108,9 @@ export const EventCategoryMap = {
     [WorkerEvents.WORKER_STARTED]: WorkerEventCategories.LIFECYCLE,
     [WorkerEvents.WORKER_COMPLETED]: WorkerEventCategories.LIFECYCLE,
     [WorkerEvents.WORKER_TERMINATED]: WorkerEventCategories.LIFECYCLE,
+    [WorkerEvents.WORKER_KILL_REQUESTED]: WorkerEventCategories.LIFECYCLE,
+    [WorkerEvents.WORKER_KILLED]: WorkerEventCategories.LIFECYCLE,
+    [WorkerEvents.WORKER_KILL_FAILED]: WorkerEventCategories.LIFECYCLE,
 
     [WorkerEvents.BATCH_PROGRESS]: WorkerEventCategories.PROGRESS,
     [WorkerEvents.OVERALL_PROGRESS]: WorkerEventCategories.PROGRESS,

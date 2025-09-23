@@ -1,6 +1,7 @@
 import {execFile} from 'child_process';
 import path from 'path';
 import {fileURLToPath} from 'url'; // Import fileURLToPath from the 'url' module
+import { globalEventBus } from '../events/GlobalEventBus.js';
 
 // Define __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,18 @@ export const RequestNewWorkerThread = (filename, eventBusOrEmitter = null, optio
                 console.error(`[Stderr]: ${stderr}`);
             }
             resolve(stdout.trim());
+        });
+
+        // Generate unique worker ID and register with global event bus
+        const workerId = `worker-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        globalEventBus.registerWorker(workerId, child);
+
+        // Emit worker started event
+        globalEventBus.emit('workerStarted', {
+            workerId,
+            filename,
+            timestamp: Date.now(),
+            pid: child.pid
         });
 
         // Listen to stdout for real-time logs
@@ -78,6 +91,26 @@ export const RequestNewWorkerThread = (filename, eventBusOrEmitter = null, optio
             if (!options.suppressWorkerErrors) {
                 console.error(`[Worker Error]: ${data.toString().trim()}`);
             }
+        });
+
+        // Handle worker process termination
+        child.on('exit', (code, signal) => {
+            globalEventBus.emit('workerTerminated', {
+                workerId,
+                filename,
+                exitCode: code,
+                signal,
+                timestamp: Date.now()
+            });
+        });
+
+        child.on('error', (error) => {
+            globalEventBus.emit('workerError', {
+                workerId,
+                filename,
+                error: error.message,
+                timestamp: Date.now()
+            });
         });
     });
 };

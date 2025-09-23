@@ -1,6 +1,7 @@
 import { execFile } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url'; // Import fileURLToPath from the 'url' module
+import { globalEventBus } from '../events/GlobalEventBus.js';
 
 // Define __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -42,6 +43,20 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
                 console.error(`[Stderr]: ${stderr}`);
             }
             resolve(stdout.trim());
+        });
+
+        // Generate unique worker ID and register with global event bus
+        const workerId = `frame-builder-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        globalEventBus.registerWorker(workerId, child);
+
+        // Emit worker started event
+        globalEventBus.emit('workerStarted', {
+            workerId,
+            filename,
+            frameNumber,
+            type: 'frame-builder',
+            timestamp: Date.now(),
+            pid: child.pid
         });
 
         // Listen to stdout for real-time logs

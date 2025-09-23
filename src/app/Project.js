@@ -8,7 +8,7 @@ import {execFile} from 'child_process';
 import {RequestNewWorkerThread} from "../core/worker-threads/RequestNewWorkerThread.js";
 import {RequestNewFrameBuilderThread} from "../core/worker-threads/RequestNewFrameBuilderThread.js";
 import { WorkerEvents, WorkerEventCategories } from '../core/events/WorkerEventCategories.js';
-import { UnifiedEventBus } from '../core/events/UnifiedEventBus.js';
+import { globalEventBus, createProjectEventBus } from '../core/events/GlobalEventBus.js';
 
 export const ProjectEvents = {
     // Project lifecycle events
@@ -54,12 +54,17 @@ export class Project {
                     renderJumpFrames = 1,
                     frameStart = 0,
                 }) {
-        // Initialize UnifiedEventBus for this project
-        this.eventBus = new UnifiedEventBus({
+        // Create project-specific event bus connected to global bus
+        const projectId = `${projectName}-${Date.now()}`;
+        this.projectId = projectId;
+        this.eventBus = createProjectEventBus(projectId, {
             enableDebug: false,
             enableMetrics: true,
             enableEventHistory: true
         });
+
+        // Register this project with the global event bus
+        globalEventBus.registerProject(projectId, this);
 
         // Initialize event listeners storage for backward compatibility
         this._eventListeners = new Map();
@@ -143,6 +148,19 @@ export class Project {
             this.off(eventName, onceWrapper);
         };
         return this.on(eventName, onceWrapper);
+    }
+
+    // Global event bus methods
+    getGlobalEventBus() {
+        return globalEventBus;
+    }
+
+    emitGlobal(eventName, data) {
+        return this.eventBus.emitGlobal(eventName, data);
+    }
+
+    subscribeToGlobal(eventName, handler) {
+        return this.eventBus.subscribeToGlobal(eventName, handler);
     }
 
     // UnifiedEventBus specific methods
