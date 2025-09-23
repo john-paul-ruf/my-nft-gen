@@ -71,7 +71,7 @@ export class ConfigLinker {
      * Link effects with config classes by importing them dynamically
      */
     static async linkEffectsWithConfigs() {
-        console.log('=== Linking Effects with Config Classes ===');
+        // Linking Effects with Config Classes
 
         const allPlugins = PluginRegistry.getAllPlugins();
         let linkedCount = 0;
@@ -93,7 +93,7 @@ export class ConfigLinker {
                         if (registryEntry) {
                             registryEntry.configClass = configClass;
                             linkedCount++;
-                            console.log(`  ✓ Linked ${effectName} → ${configClassName}`);
+                            // Linked ${effectName} -> ${configClassName}
                         }
                     } else {
                         console.warn(`  ⚠ Could not import ${configClassName} for ${effectName}`);
@@ -109,9 +109,9 @@ export class ConfigLinker {
             }
         }
 
-        console.log(`✓ Successfully linked ${linkedCount} effects with config classes`);
+        // Successfully linked ${linkedCount} effects with config classes
         if (errorCount > 0) {
-            console.log(`⚠ Failed to link ${errorCount} effects`);
+            // Failed to link ${errorCount} effects
         }
 
         return { linked: linkedCount, errors: errorCount, total: allPlugins.length };
@@ -126,7 +126,7 @@ export class ConfigLinker {
 
         for (const path of configPaths) {
             try {
-                console.log(`    Trying: ${path}`);
+                // Trying: ${path}
                 const module = await import(path);
                 const configClass = module[configClassName] || module.default;
                 if (configClass) {

@@ -31,7 +31,7 @@ export class PluginRegistry {
 
         this.metadata.set(plugin.name, plugin.metadata);
 
-        console.log(`  ✓ Registered plugin: ${plugin.name} (${plugin.category})`);
+        // Registered plugin: ${plugin.name} (${plugin.category})
         return this;
     }
 
@@ -65,12 +65,12 @@ export class PluginRegistry {
      */
     async loadFromPackage(packageName, options = {}) {
         if (this.loadedPackages.has(packageName)) {
-            console.log(`Package '${packageName}' already loaded, skipping`);
+            // Package already loaded, skipping
             return;
         }
 
         try {
-            console.log(`Loading plugins from package: ${packageName}`);
+            // Loading plugins from package: ${packageName}
 
             // Import the package's registration function
             const packageModule = await import(packageName);
@@ -106,7 +106,7 @@ export class PluginRegistry {
             this.loadedPackages.add(packageName);
 
             const pluginCount = this.plugins.size;
-            console.log(`✓ Successfully loaded ${pluginCount} plugins from ${packageName}`);
+            // Successfully loaded ${pluginCount} plugins from ${packageName}
 
         } catch (error) {
             console.error(`Failed to load package '${packageName}':`, error.message);
@@ -123,7 +123,7 @@ export class PluginRegistry {
             naming = 'convention' // or 'manifest'
         } = options;
 
-        console.log(`Discovering plugins from: ${basePath}`);
+        // Discovering plugins from: ${basePath}
         let discovered = 0;
 
         for (const categoryDir of categories) {
@@ -153,7 +153,7 @@ export class PluginRegistry {
             }
         }
 
-        console.log(`✓ Discovered ${discovered} plugins from directory`);
+        // Discovered ${discovered} plugins from directory
     }
 
     /**

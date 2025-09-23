@@ -22,7 +22,7 @@ export class PluginLoader {
 
         this.#loadingPromise = this.loadCoreEffects().then(() => {
             this.#effectsLoaded = true;
-            console.log('✓ Core effects loaded successfully');
+            // Core effects loaded successfully
         });
 
         return this.#loadingPromise;

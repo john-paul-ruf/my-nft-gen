@@ -1,7 +1,7 @@
 import { Project } from './app/Project.js';
 
 async function testConfigReconstruction() {
-    console.log('🧪 Testing config reconstruction with simple project...');
+    // Testing config reconstruction with simple project...
 
     try {
         // Create a simple project with one effect that previously caused issues
@@ -30,7 +30,7 @@ async function testConfigReconstruction() {
             FuzzFlareEffect = EffectRegistry.getGlobal('fuzz-flare');
         }
         if (!FuzzFlareEffect) {
-            console.log('Available effects:', Object.keys(EffectRegistry.getAllPlugins()));
+            // Available effects: Object.keys(EffectRegistry.getAllPlugins())
             throw new Error('FuzzFlareEffect not found in registry');
         }
 
@@ -57,7 +57,7 @@ async function testConfigReconstruction() {
             })
         });
 
-        console.log('✅ Project created successfully with effect');
+        // Project created successfully with effect
 
         // Create Settings instance to test effect generation with reconstruction
         const { Settings } = await import('./core/Settings.js');
@@ -77,51 +77,51 @@ async function testConfigReconstruction() {
         // Try to generate effects - this is where reconstruction happens
         await settings.generateEffects();
 
-        console.log('✅ Effects generated successfully');
-        console.log(`📊 Generated ${settings.effects.length} primary effects`);
+        // Effects generated successfully
+        // Generated ${settings.effects.length} primary effects
 
         // Check that the first effect has proper config with methods
         if (settings.effects.length > 0) {
             const effect = settings.effects[0];
             const config = effect.config;
 
-            console.log('🔍 Checking config reconstruction:');
+            // Checking config reconstruction:
 
             // Check if PercentageRange object has methods
             if (config.flareRingsSizeRange && typeof config.flareRingsSizeRange.lower === 'function') {
-                console.log('✅ PercentageRange object properly reconstructed - has .lower() method');
+                // PercentageRange object properly reconstructed - has .lower() method
                 try {
                     // PercentageRange functions need finalSize parameter
                     const finalSize = { shortestSide: 100, longestSide: 200 };
                     const lowerValue = config.flareRingsSizeRange.lower(finalSize);
                     const upperValue = config.flareRingsSizeRange.upper(finalSize);
-                    console.log(`   PercentageRange values: ${lowerValue} to ${upperValue}`);
+                    // PercentageRange values: ${lowerValue} to ${upperValue}
                 } catch (e) {
-                    console.log(`   PercentageRange methods exist but failed: ${e.message}`);
+                    // PercentageRange methods exist but failed: ${e.message}
                 }
             } else {
-                console.log('❌ PercentageRange object NOT properly reconstructed');
-                console.log('   Type:', typeof config.flareRingsSizeRange);
-                console.log('   Lower type:', typeof config.flareRingsSizeRange?.lower);
+                // PercentageRange object NOT properly reconstructed
+                // Type: typeof config.flareRingsSizeRange
+                // Lower type: typeof config.flareRingsSizeRange?.lower
             }
 
             // Check if ColorPicker object has methods
             if (config.innerColor && typeof config.innerColor.getColor === 'function') {
-                console.log('✅ ColorPicker object properly reconstructed - has .getColor() method');
+                // ColorPicker object properly reconstructed - has .getColor() method
                 try {
                     const color = config.innerColor.getColor(settings);
-                    console.log(`   Color value: ${color}`);
+                    // Color value: ${color}
                 } catch (e) {
-                    console.log(`   getColor() method exists but failed: ${e.message}`);
+                    // getColor() method exists but failed: ${e.message}
                 }
             } else {
-                console.log('❌ ColorPicker object NOT properly reconstructed');
-                console.log('   Type:', typeof config.innerColor);
-                console.log('   getColor type:', typeof config.innerColor?.getColor);
+                // ColorPicker object NOT properly reconstructed
+                // Type: typeof config.innerColor
+                // getColor type: typeof config.innerColor?.getColor
             }
         }
 
-        console.log('\n🎯 Config reconstruction test completed successfully!');
+        // Config reconstruction test completed successfully!
         return true;
 
     } catch (error) {
@@ -135,10 +135,10 @@ async function testConfigReconstruction() {
 testConfigReconstruction()
     .then(success => {
         if (success) {
-            console.log('\n🎉 All tests passed! Config reconstruction is working.');
+            // All tests passed! Config reconstruction is working.
             process.exit(0);
         } else {
-            console.log('\n💥 Tests failed! Config reconstruction needs more work.');
+            // Tests failed! Config reconstruction needs more work.
             process.exit(1);
         }
     })

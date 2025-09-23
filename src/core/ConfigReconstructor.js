@@ -16,19 +16,19 @@ export class ConfigReconstructor {
         if (!this.initialized) {
             try {
                 const stats = PluginRegistry.getStats();
-                console.log('🔧 ConfigReconstructor.ensureInitialized called, current stats:', stats);
+                // ConfigReconstructor.ensureInitialized called
                 if (stats.total === 0) {
-                    console.log('🔧 Initializing config reconstruction system...');
+                    // Initializing config reconstruction system...
                     await EnhancedEffectsRegistration.registerEffectsFromPackage();
                     await ConfigLinker.linkEffectsWithConfigs();
-                    console.log('✅ Config reconstruction system initialized');
+                    // Config reconstruction system initialized
                 } else {
-                    console.log('✅ Registry already initialized with', stats.total, 'effects');
+                    // Registry already initialized with effects
                     // Check if configs are linked, if not, link them
                     if (stats.withConfigs === 0) {
-                        console.log('🔧 Linking configs to existing effects...');
+                        // Linking configs to existing effects...
                         await ConfigLinker.linkEffectsWithConfigs();
-                        console.log('✅ Config linking completed');
+                        // Config linking completed
                     }
                 }
                 this.initialized = true;
@@ -45,7 +45,7 @@ export class ConfigReconstructor {
      * @returns {Object} Proper config instance with methods
      */
     static async reconstruct(effectName, plainConfig) {
-        console.log(`🔄 ConfigReconstructor.reconstruct called for effect: ${effectName}`);
+        // ConfigReconstructor.reconstruct called for effect: ${effectName}
         await this.ensureInitialized();
 
         try {
@@ -57,7 +57,7 @@ export class ConfigReconstructor {
                 return plainConfig;
             }
 
-            console.log(`🔧 Reconstructing config for ${effectName} using ${plugin.configClass.name}`);
+            // Reconstructing config for ${effectName} using ${plugin.configClass.name}
 
             // Pre-process plainConfig to reconstruct serialized objects before passing to constructor
             const preprocessedConfig = await this.preprocessConfig(plainConfig);
@@ -73,11 +73,11 @@ export class ConfigReconstructor {
                     console.error(`innerColor getColor type:`, typeof reconstructedConfig.innerColor.getColor);
                     console.error(`innerColor:`, reconstructedConfig.innerColor);
                 } else {
-                    console.log(`✅ innerColor properly reconstructed for ${effectName}`);
+                    // innerColor properly reconstructed for ${effectName}
                 }
             }
 
-            console.log(`✅ Config reconstruction completed for ${effectName}`);
+            // Config reconstruction completed for ${effectName}
             return reconstructedConfig;
 
         } catch (error) {
@@ -87,7 +87,7 @@ export class ConfigReconstructor {
             // Try to return at least the preprocessed config, even if the full reconstruction failed
             try {
                 const preprocessedConfig = await this.preprocessConfig(plainConfig);
-                console.log(`⚠️ Returning preprocessed config as fallback for ${effectName}`);
+                // Returning preprocessed config as fallback for ${effectName}
                 return preprocessedConfig;
             } catch (preprocessError) {
                 console.error(`❌ Preprocessing also failed:`, preprocessError.message);
@@ -134,19 +134,19 @@ export class ConfigReconstructor {
                 try {
                     // Check if this is a serialized ColorPicker
                     if (value.__className === 'ColorPicker') {
-                        console.log(`🔧 Reconstructing ColorPicker for ${key}`);
+                        // Reconstructing ColorPicker for ${key}
                         const { ColorPicker } = await import('./layer/configType/ColorPicker.js');
                         processed[key] = new ColorPicker(value.selectionType, value.colorValue);
                     }
                     // Check if this is a serialized Range
                     else if (value.__className === 'Range' && value.hasOwnProperty('_lower') && value.hasOwnProperty('_upper')) {
-                        console.log(`🔧 Reconstructing Range for ${key}`);
+                        // Reconstructing Range for ${key}
                         const { Range } = await import('./layer/configType/Range.js');
                         processed[key] = new Range(value._lower, value._upper);
                     }
                     // Check if this is a serialized PercentageRange (with or without __className)
                     else if (value.__className === 'PercentageRange' || this.looksLikePercentageRange(value)) {
-                        console.log(`🔧 Reconstructing PercentageRange for ${key}`);
+                        // Reconstructing PercentageRange for ${key}
                         const { PercentageRange } = await import('./layer/configType/PercentageRange.js');
                         const { PercentageShortestSide } = await import('./layer/configType/PercentageShortestSide.js');
                         const { PercentageLongestSide } = await import('./layer/configType/PercentageLongestSide.js');
@@ -184,7 +184,7 @@ export class ConfigReconstructor {
                     }
                     // Check if this is a serialized DynamicRange
                     else if (value.__className === 'DynamicRange') {
-                        console.log(`🔧 Reconstructing DynamicRange for ${key}`);
+                        // Reconstructing DynamicRange for ${key}
                         const { DynamicRange } = await import('./layer/configType/DynamicRange.js');
                         // DynamicRange contains nested Range objects (bottom and top, not min/max)
                         const processedBottom = await this.preprocessConfig(value.bottom);

@@ -8,7 +8,7 @@ import { ConfigRegistry } from './ConfigRegistry.js';
 export class EnhancedEffectsRegistration {
     static async registerEffectsFromPackage(packageName = 'my-nft-effects-core') {
         try {
-            console.log('=== Enhanced Effects Registration ===');
+            // Enhanced Effects Registration
 
             // Clear existing registrations
             PluginRegistry.clear();
@@ -21,10 +21,10 @@ export class EnhancedEffectsRegistration {
 
             // Print statistics
             const stats = PluginRegistry.getStats();
-            console.log('✓ Registration complete!');
-            console.log(`  Total plugins: ${stats.total}`);
-            console.log(`  With configs: ${stats.withConfigs}`);
-            console.log(`  By category:`, stats.byCategory);
+            // Registration complete!
+            // Total plugins: ${stats.total}
+            // With configs: ${stats.withConfigs}
+            // By category: stats.byCategory
 
             return stats;
 

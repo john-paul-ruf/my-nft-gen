@@ -6,7 +6,7 @@ export const writeArtistCard = async (config, composeInfo) => {
     const rez = config.endTime.getTime() - config.startTime.getTime();
     config.processingTime = timeToString(rez);
 
-    console.log(await composeInfo.composeInfo());
+    // Write artist card info
 
     fs.writeFile(`${config.fileOut}.txt`, await composeInfo.composeInfo(), 'utf-8');
 };

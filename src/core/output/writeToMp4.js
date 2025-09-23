@@ -37,11 +37,11 @@ export const writeToMp4 = async (fileSelector, config, eventEmitter = null) => {
                         timestamp: Date.now()
                     });
                 }
-                console.log('mp4 Finished');
+                // mp4 Finished
                 resolve();
             })
             .on('progress', (progress) => {
-                console.log(`${config.finalFileName} - rendering mp4 - ${progress.frames}`);
+                // ${config.finalFileName} - rendering mp4 - ${progress.frames}
                 // Emit render progress event
                 if (eventEmitter) {
                     eventEmitter.emit(WorkerEvents.MP4_RENDER_PROGRESS, {
@@ -64,7 +64,7 @@ export const writeToMp4 = async (fileSelector, config, eventEmitter = null) => {
                         timestamp: Date.now()
                     });
                 }
-                console.log(e);
+                // Error during MP4 render
                 reject(new Error('Error rendering'));
             })
             .mergeToFile(`${config.fileOut}.mp4`);

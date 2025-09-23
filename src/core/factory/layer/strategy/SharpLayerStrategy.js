@@ -169,7 +169,7 @@ export class SharpLayerStrategy {
             }).png({compressionLevel: 1, force: true})
                 .toBuffer());
         } catch (e) {
-            console.log(e);
+            // Error in crop operation
         }
     }
 
@@ -181,7 +181,7 @@ export class SharpLayerStrategy {
             }).png({compressionLevel: 1, force: true})
                 .toBuffer());
         } catch (e) {
-            console.log(e);
+            // Error in extend operation
         }
     }
 
