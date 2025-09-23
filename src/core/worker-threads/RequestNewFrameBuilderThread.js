@@ -15,9 +15,15 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
     const defaultOptions = {
         suppressWorkerLogs: false,
         suppressWorkerErrors: false,
+        returnProcess: false, // New option to return process handle
         ...options
     };
-    return new Promise((resolve, reject) => {
+    
+    // Declare variables that will be used to store process info
+    let childProcess = null;
+    let workerId = null;
+    
+    const promise = new Promise((resolve, reject) => {
         // Define the command and arguments
         const command = 'node';
         const args = [
@@ -35,6 +41,14 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
                 NFT_VERBOSE_EVENTS: process.env.NFT_VERBOSE_EVENTS || 'false'
             }
         }, (error, stdout, stderr) => {
+            // Clean up from global event bus when process completes
+            globalEventBus.emit('workerCompleted', {
+                workerId,
+                frameNumber,
+                timestamp: Date.now(),
+                success: !error
+            });
+
             if (error) {
                 reject(new Error(`[Error]: ${error.message}`));
                 return;
@@ -46,7 +60,8 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
         });
 
         // Generate unique worker ID and register with global event bus
-        const workerId = `frame-builder-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        workerId = `frame-builder-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        childProcess = child;
         globalEventBus.registerWorker(workerId, child);
 
         // Emit worker started event
@@ -57,6 +72,17 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
             type: 'frame-builder',
             timestamp: Date.now(),
             pid: child.pid
+        });
+
+        // Handle process termination
+        child.on('exit', (code, signal) => {
+            globalEventBus.emit('workerTerminated', {
+                workerId,
+                frameNumber,
+                code,
+                signal,
+                timestamp: Date.now()
+            });
         });
 
         // Listen to stdout for real-time logs
@@ -99,4 +125,10 @@ export const RequestNewFrameBuilderThread = (filename, frameNumber, eventEmitter
             }
         });
     });
+
+    // Add the child process and worker ID to the promise after it's created
+    promise.childProcess = childProcess;
+    promise.workerId = workerId;
+
+    return promise;
 };
