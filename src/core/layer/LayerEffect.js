@@ -35,16 +35,7 @@ export class LayerEffect {
                 await effect.invoke(layer, currentFrame, totalFrames);
             }
         } catch (err) {
-            // Emit error through eventBus if available, otherwise use eventEmitter
-            if (this.eventBus && this.eventBus.emitWorkerEvent) {
-                this.eventBus.emitWorkerEvent('EFFECT_FAILED', {
-                    effectName: 'secondary_effect',
-                    error: err.message,
-                    stack: err.stack
-                });
-            } else if (this.eventEmitter) {
-                this.eventEmitter.emitEffectFailed('secondary_effect', 0, err);
-            }
+            console.error(`[Worker Log]: Secondary Effect failed:`, err);
         }
 
     }

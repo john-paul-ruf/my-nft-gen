@@ -22,7 +22,7 @@ export class PluginLoader {
 
         this.#loadingPromise = this.loadCoreEffects().then(() => {
             this.#effectsLoaded = true;
-            // Core effects loaded - could emit success event if eventEmitter available
+            console.log('✓ Core effects loaded successfully');
         });
 
         return this.#loadingPromise;
@@ -41,7 +41,7 @@ export class PluginLoader {
             }
             return true;
         } catch (error) {
-            // Failed to load plugin - could emit error event if eventEmitter available
+            console.error(`Failed to load plugin at ${pluginPath}:`, error.message);
             return false;
         }
     }

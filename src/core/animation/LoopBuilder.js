@@ -78,10 +78,7 @@ export class LoopBuilder {
                         // Frame completion - handled by structured events now
                     })
                     .catch(err => {
-                        this.eventEmitter.emitWorkerError(err, {
-                            frameNumber: f,
-                            context: 'frame_processing'
-                        });
+                        console.error(`Error processing frame ${f}:`, err);
                     })
                     .finally(() => {
                         // Remove the completed task from the queue

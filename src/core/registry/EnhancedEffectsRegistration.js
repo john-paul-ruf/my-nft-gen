@@ -8,7 +8,7 @@ import { ConfigRegistry } from './ConfigRegistry.js';
 export class EnhancedEffectsRegistration {
     static async registerEffectsFromPackage(packageName = 'my-nft-effects-core') {
         try {
-            // Registration started - could emit event if eventEmitter available
+            console.log('=== Enhanced Effects Registration ===');
 
             // Clear existing registrations
             PluginRegistry.clear();
@@ -19,13 +19,17 @@ export class EnhancedEffectsRegistration {
             // Migrate to legacy registries for backward compatibility
             await this.migrateToLegacyRegistries();
 
-            // Statistics available but not logged to console
+            // Print statistics
             const stats = PluginRegistry.getStats();
+            console.log('✓ Registration complete!');
+            console.log(`  Total plugins: ${stats.total}`);
+            console.log(`  With configs: ${stats.withConfigs}`);
+            console.log(`  By category:`, stats.byCategory);
 
             return stats;
 
         } catch (error) {
-            // Error occurred - could emit error event if eventEmitter available
+            console.error('Failed to register effects:', error.message);
             throw error;
         }
     }
@@ -36,7 +40,7 @@ export class EnhancedEffectsRegistration {
     static async migrateToLegacyRegistries() {
         const plugins = PluginRegistry.getAllPlugins();
 
-        // Migration started - could emit event if eventEmitter available
+        console.log('Migrating to legacy registries...');
 
         for (const plugin of plugins) {
             try {
@@ -52,11 +56,11 @@ export class EnhancedEffectsRegistration {
                 }
 
             } catch (error) {
-                // Migration error - could emit warning event if eventEmitter available
+                console.warn(`  ⚠ Failed to migrate plugin ${plugin.name}:`, error.message);
             }
         }
 
-        // Migration completed - could emit completion event if eventEmitter available
+        console.log(`✓ Migrated ${plugins.length} plugins to legacy registries`);
     }
 
     /**
