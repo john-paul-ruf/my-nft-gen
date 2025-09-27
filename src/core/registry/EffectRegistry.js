@@ -1,10 +1,17 @@
 import { EffectCategories, isValidCategory } from './EffectCategories.js';
 import { ConfigRegistry } from './ConfigRegistry.js';
+import { PluginRegistry } from './PluginRegistry.js';
 
+/**
+ * EffectRegistry - Now a facade/adapter for PluginRegistry
+ * Maintains backward compatibility while using PluginRegistry as the single source of truth
+ */
 export class EffectRegistry {
     static globalRegistry = new EffectRegistry();
-    
+
     constructor() {
+        // No longer store data here - delegate to PluginRegistry
+        // Keep these for potential instance-based registries (non-global)
         this.effects = new Map();
         this.categories = new Map();
         this.metadata = new Map();
@@ -112,26 +119,59 @@ export class EffectRegistry {
     }
 
     static registerGlobal(effectClass, category, metadata = {}) {
-        return this.globalRegistry.register(effectClass, category, metadata);
+        // Delegate to PluginRegistry as single source of truth
+        const pluginDefinition = {
+            name: effectClass._name_,
+            category,
+            effectClass,
+            configClass: effectClass._configClass_ || effectClass.configClass || null,
+            metadata: {
+                description: metadata.description || effectClass._description_ || '',
+                version: metadata.version || effectClass._version_ || '1.0.0',
+                author: metadata.author || effectClass._author_ || 'unknown',
+                tags: metadata.tags || effectClass._tags_ || [],
+                ...metadata,
+                ...(effectClass._metadata_ || {})
+            }
+        };
+
+        return PluginRegistry.globalRegistry.register(pluginDefinition);
     }
 
     static getGlobal(name) {
-        return this.globalRegistry.get(name);
+        // Delegate to PluginRegistry
+        const plugin = PluginRegistry.globalRegistry.get(name);
+        return plugin ? plugin.effectClass : undefined;
     }
 
     static hasGlobal(name) {
-        return this.globalRegistry.has(name);
+        // Delegate to PluginRegistry
+        return PluginRegistry.globalRegistry.has(name);
     }
 
     static getAllGlobal() {
-        return this.globalRegistry.getAllEffects();
+        // Delegate to PluginRegistry
+        return PluginRegistry.globalRegistry.getAllPlugins().map(plugin => ({
+            name: plugin.name,
+            effectClass: plugin.effectClass,
+            category: plugin.category,
+            metadata: plugin.metadata
+        }));
     }
 
     static getByCategoryGlobal(category) {
-        return this.globalRegistry.getByCategory(category);
+        // Delegate to PluginRegistry and return in old format for compatibility
+        const plugins = PluginRegistry.globalRegistry.getByCategory(category);
+        // Convert to object format expected by old code
+        const result = {};
+        plugins.forEach(plugin => {
+            result[plugin.name] = plugin.effectClass;
+        });
+        return result;
     }
 
     static clearGlobal() {
-        this.globalRegistry.clear();
+        // Delegate to PluginRegistry
+        PluginRegistry.globalRegistry.clear();
     }
 }

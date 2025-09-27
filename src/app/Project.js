@@ -53,6 +53,7 @@ export class Project {
                     maxConcurrentFrameBuilderThreads = 5,
                     renderJumpFrames = 1,
                     frameStart = 0,
+                    pluginPaths = [], // Add support for plugin paths
                 }) {
         // Create project-specific event bus connected to global bus
         const projectId = `${projectName}-${Date.now()}`;
@@ -106,6 +107,7 @@ export class Project {
         this.maxConcurrentFrameBuilderThreads = maxConcurrentFrameBuilderThreads;
         this.renderJumpFrames = renderJumpFrames;
         this.frameStart = frameStart;
+        this.pluginPaths = pluginPaths; // Store plugin paths
 
         this.selectedPrimaryEffectConfigs = [];
         this.selectedFinalEffectConfigs = [];
@@ -308,6 +310,7 @@ export class Project {
                 backgrounds: this.backgrounds,
                 lights: this.lights,
                 _INVOKER_: this.artist,
+                pluginPaths: this.pluginPaths,
                 runName: this.projectName,
                 finalFileName: finalFinalName,
                 numberOfFrame: this.numberOfFrame,
@@ -399,6 +402,7 @@ export class Project {
                 backgrounds: this.backgrounds,
                 lights: this.lights,
                 _INVOKER_: this.artist,
+                pluginPaths: this.pluginPaths,
                 runName: this.projectName,
                 finalFileName: finalFinalName,
                 numberOfFrame: actualTotalFrames, // Use the total frames for proper animation calculation

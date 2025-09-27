@@ -8,6 +8,18 @@ import {ConfigReconstructor} from './ConfigReconstructor.js';
 export class Settings {
 
     static async from(json) {
+        // Use the centralized PluginManager to load plugins
+        if (json.pluginPaths && json.pluginPaths.length > 0) {
+            const { PluginManager } = await import('./plugins/PluginManager.js');
+            const manager = PluginManager.getInstance();
+            const results = await manager.loadFromSettings(json);
+
+            if (results.failed > 0) {
+                console.warn(`⚠️ ${results.failed} plugins failed to load`);
+                // Continue - don't fail the entire settings load if some plugins fail
+            }
+        }
+
         const settings = Object.assign(new Settings({}), json);
 
         settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme);
@@ -44,8 +56,10 @@ export class Settings {
                     configFileOut = workingDirectory + `settings/` + finalFileName,
                     maxConcurrentFrameBuilderThreads = 5,
                     frameStart = 0,
+                    pluginPaths = [], // Add support for plugin paths
                 }) {
         this.frameStart = frameStart;
+        this.pluginPaths = pluginPaths; // Store plugin paths
 
         this.colorScheme = colorScheme;
         this.maxConcurrentFrameBuilderThreads = maxConcurrentFrameBuilderThreads;
