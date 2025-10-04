@@ -368,9 +368,10 @@ export class Project {
      * @param {number} totalFrames - Total number of frames in the animation (defaults to this.numberOfFrame)
      * @param {boolean} returnAsBuffer - If true, returns the image as a buffer and cleans up files (default: true)
      * @param {string} outputDirectory - Directory to save the frame (optional, will create temp directory if not provided)
-     * @returns {Promise<Buffer|string>} - Image buffer if returnAsBuffer=true, otherwise path to the generated frame file
+     * @param {string} settingsFile - Optional settings file path for pinned rendering (if provided, uses existing settings instead of generating new ones)
+     * @returns {Promise<Buffer|string|Object>} - Image buffer if returnAsBuffer=true, otherwise path to the generated frame file. When settingsFile is null, returns object with {buffer, settingsFile}
      */
-    async generateSingleFrame(frameNumber, totalFrames = null, returnAsBuffer = true, outputDirectory = null) {
+    async generateSingleFrame(frameNumber, totalFrames = null, returnAsBuffer = true, outputDirectory = null, settingsFile = null) {
         try {
             // Validate frame number
             const actualTotalFrames = totalFrames || this.numberOfFrame;
@@ -382,59 +383,91 @@ export class Project {
                 frameNumber,
                 totalFrames: actualTotalFrames,
                 projectName: this.projectName,
+                isPinned: !!settingsFile,
                 timestamp: new Date().toISOString()
             });
 
-            // Create temporary directory for frame generation if not provided
-            const tempDir = outputDirectory || `${this.projectDirectory}/temp-frame-${randomId()}/`;
-            const finalFinalName = this.projectName + '-frame-' + frameNumber;
-            const workingDirectory = `${tempDir}${finalFinalName}/`;
+            let configPath;
+            let settings;
+            let workingDirectory;
+            let finalFinalName;
 
-            this.emit(ProjectEvents.DIRECTORY_CREATING, { workingDirectory });
-            await fs.mkdir(workingDirectory + 'settings/', { recursive: true });
-            this.emit(ProjectEvents.DIRECTORY_CREATED, { workingDirectory });
+            // PIN MODE: Use existing settings file
+            if (settingsFile) {
+                console.log('📌 Using pinned settings file:', settingsFile);
+                
+                // Load existing settings from file
+                const settingsData = await fs.readFile(settingsFile, 'utf8');
+                settings = JSON.parse(settingsData);
+                
+                // Extract paths from loaded settings
+                configPath = settingsFile;
+                workingDirectory = settings.config?.workingDirectory || settings.workingDirectory;
+                finalFinalName = settings.config?.finalFileName || settings.finalFileName;
+                
+                this.emit(ProjectEvents.SETTINGS_CREATED, {
+                    settings: settings,
+                    projectInfo: {
+                        finalFileName: finalFinalName,
+                        numberOfFrame: actualTotalFrames,
+                        frameNumber,
+                        isPinned: true
+                    }
+                });
+            } 
+            // NORMAL MODE: Generate new settings
+            else {
+                // Create temporary directory for frame generation if not provided
+                const tempDir = outputDirectory || `${this.projectDirectory}/temp-frame-${randomId()}/`;
+                finalFinalName = this.projectName + '-frame-' + frameNumber;
+                workingDirectory = `${tempDir}${finalFinalName}/`;
 
-            // Create settings for single frame generation
-            this.emit(ProjectEvents.SETTINGS_CREATING, { finalFileName: finalFinalName });
-            const settings = new Settings({
-                colorScheme: this.colorScheme,
-                neutrals: this.neutrals,
-                backgrounds: this.backgrounds,
-                lights: this.lights,
-                _INVOKER_: this.artist,
-                pluginPaths: this.pluginPaths,
-                runName: this.projectName,
-                finalFileName: finalFinalName,
-                numberOfFrame: actualTotalFrames, // Use the total frames for proper animation calculation
-                longestSideInPixels: this.longestSideInPixels,
-                shortestSideInPixels: this.shortestSideInPixels,
-                isHorizontal: this.isHorizontal,
-                workingDirectory,
-                allPrimaryEffects: this.selectedPrimaryEffectConfigs,
-                allFinalImageEffects: this.selectedFinalEffectConfigs,
-                maxConcurrentFrameBuilderThreads: 1, // Single frame, no concurrency needed
-                frameInc: 1,
-                frameStart: frameNumber, // Start at the specific frame
-            });
+                this.emit(ProjectEvents.DIRECTORY_CREATING, { workingDirectory });
+                await fs.mkdir(workingDirectory + 'settings/', { recursive: true });
+                this.emit(ProjectEvents.DIRECTORY_CREATED, { workingDirectory });
 
-            // Generate effects with proper config reconstruction
-            await settings.generateEffects();
-
-            settings.backgroundColor = settings.getBackgroundFromBucket();
-            this.emit(ProjectEvents.SETTINGS_CREATED, {
-                settings: settings,
-                projectInfo: {
+                // Create settings for single frame generation
+                this.emit(ProjectEvents.SETTINGS_CREATING, { finalFileName: finalFinalName });
+                settings = new Settings({
+                    colorScheme: this.colorScheme,
+                    neutrals: this.neutrals,
+                    backgrounds: this.backgrounds,
+                    lights: this.lights,
+                    _INVOKER_: this.artist,
+                    pluginPaths: this.pluginPaths,
+                    runName: this.projectName,
                     finalFileName: finalFinalName,
-                    numberOfFrame: actualTotalFrames,
-                    frameNumber,
-                    backgroundColor: settings.backgroundColor
-                }
-            });
+                    numberOfFrame: actualTotalFrames, // Use the total frames for proper animation calculation
+                    longestSideInPixels: this.longestSideInPixels,
+                    shortestSideInPixels: this.shortestSideInPixels,
+                    isHorizontal: this.isHorizontal,
+                    workingDirectory,
+                    allPrimaryEffects: this.selectedPrimaryEffectConfigs,
+                    allFinalImageEffects: this.selectedFinalEffectConfigs,
+                    maxConcurrentFrameBuilderThreads: 1, // Single frame, no concurrency needed
+                    frameInc: 1,
+                    frameStart: frameNumber, // Start at the specific frame
+                });
 
-            const configPath = `${settings.config.configFileOut}-settings.json`;
-            this.emit(ProjectEvents.CONFIG_SAVING, { configPath });
-            await fs.writeFile(configPath, JSON.stringify(settings));
-            this.emit(ProjectEvents.CONFIG_SAVED, { configPath, settings });
+                // Generate effects with proper config reconstruction
+                await settings.generateEffects();
+
+                settings.backgroundColor = settings.getBackgroundFromBucket();
+                this.emit(ProjectEvents.SETTINGS_CREATED, {
+                    settings: settings,
+                    projectInfo: {
+                        finalFileName: finalFinalName,
+                        numberOfFrame: actualTotalFrames,
+                        frameNumber,
+                        backgroundColor: settings.backgroundColor
+                    }
+                });
+
+                configPath = `${settings.config.configFileOut}-settings.json`;
+                this.emit(ProjectEvents.CONFIG_SAVING, { configPath });
+                await fs.writeFile(configPath, JSON.stringify(settings));
+                this.emit(ProjectEvents.CONFIG_SAVED, { configPath, settings });
+            }
 
             // Generate the specific frame
             this.emit(ProjectEvents.WORKER_THREAD_STARTING, {
@@ -459,35 +492,53 @@ export class Project {
                 // Read the file as a buffer
                 const imageBuffer = await fs.readFile(frameFilename);
 
-                // Clean up temporary files and directory
-                try {
-                    await fs.unlink(frameFilename); // Remove the PNG file
-                    await fs.unlink(configPath); // Remove the config file
+                // Clean up temporary files and directory (but NOT in pin mode - keep settings file)
+                if (!settingsFile) {
+                    try {
+                        await fs.unlink(frameFilename); // Remove the PNG file
+                        await fs.unlink(configPath); // Remove the config file
 
-                    // Remove the settings directory
-                    const settingsDir = `${workingDirectory}settings/`;
-                    await fs.rmdir(settingsDir, { recursive: true });
+                        // Remove the settings directory
+                        const settingsDir = `${workingDirectory}settings/`;
+                        await fs.rmdir(settingsDir, { recursive: true });
 
-                    // Remove the working directory if it's empty
-                    await fs.rmdir(workingDirectory, { recursive: true });
+                        // Remove the working directory if it's empty
+                        await fs.rmdir(workingDirectory, { recursive: true });
 
-                    // Remove temp directory if we created it
-                    if (!outputDirectory) {
-                        const tempDir = workingDirectory.split('/').slice(0, -2).join('/') + '/';
-                        await fs.rmdir(tempDir, { recursive: true });
+                        // Remove temp directory if we created it
+                        if (!outputDirectory) {
+                            const tempDir = workingDirectory.split('/').slice(0, -2).join('/') + '/';
+                            await fs.rmdir(tempDir, { recursive: true });
+                        }
+                    } catch (cleanupError) {
+                        // Emit warning but don't fail the operation
+                        this.emit(ProjectEvents.WARNING, {
+                            type: 'generateSingleFrame_cleanup',
+                            message: 'Failed to clean up temporary files',
+                            error: cleanupError,
+                            frameNumber,
+                            workingDirectory
+                        });
                     }
-                } catch (cleanupError) {
-                    // Emit warning but don't fail the operation
-                    this.emit(ProjectEvents.WARNING, {
-                        type: 'generateSingleFrame_cleanup',
-                        message: 'Failed to clean up temporary files',
-                        error: cleanupError,
-                        frameNumber,
-                        workingDirectory
-                    });
+                } else {
+                    // In pin mode, only clean up the generated frame, keep settings file
+                    try {
+                        await fs.unlink(frameFilename); // Remove the PNG file
+                    } catch (cleanupError) {
+                        this.emit(ProjectEvents.WARNING, {
+                            type: 'generateSingleFrame_cleanup',
+                            message: 'Failed to clean up frame file in pin mode',
+                            error: cleanupError,
+                            frameNumber
+                        });
+                    }
                 }
 
-                returnValue = imageBuffer;
+                // Return object with buffer and settings file path (for pin mode capture)
+                returnValue = {
+                    buffer: imageBuffer,
+                    settingsFile: configPath
+                };
             } else {
                 returnValue = frameFilename;
             }
@@ -499,7 +550,9 @@ export class Project {
                 frameFilename,
                 workingDirectory,
                 configPath,
+                settingsFile: configPath,
                 returnedAsBuffer: returnAsBuffer,
+                isPinned: !!settingsFile,
                 timestamp: new Date().toISOString()
             });
 

@@ -132,8 +132,14 @@ export class ConfigReconstructor {
         for (const [key, value] of Object.entries(processed)) {
             if (value && typeof value === 'object') {
                 try {
+                    // Check if this is a serialized Position
+                    if (value.name === 'position' && value.hasOwnProperty('x') && value.hasOwnProperty('y')) {
+                        // Reconstructing Position for ${key}
+                        const { Position } = await import('./position/Position.js');
+                        processed[key] = new Position({ x: value.x, y: value.y });
+                    }
                     // Check if this is a serialized ColorPicker
-                    if (value.__className === 'ColorPicker') {
+                    else if (value.__className === 'ColorPicker') {
                         // Reconstructing ColorPicker for ${key}
                         const { ColorPicker } = await import('./layer/configType/ColorPicker.js');
                         processed[key] = new ColorPicker(value.selectionType, value.colorValue);
