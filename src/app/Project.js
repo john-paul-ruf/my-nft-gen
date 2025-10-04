@@ -288,6 +288,70 @@ export class Project {
         this._suppressWorkerLogs = suppress;
     }
 
+    /**
+     * Generate a settings object without running any generation
+     * @param {Object} options - Optional configuration overrides
+     * @param {string} options.finalFileName - Custom final file name (defaults to projectName + randomId)
+     * @param {string} options.workingDirectory - Custom working directory (defaults to projectDirectory/finalFileName/)
+     * @param {number} options.numberOfFrame - Override number of frames
+     * @param {number} options.frameStart - Override frame start position
+     * @param {number} options.frameInc - Override frame increment
+     * @returns {Promise<Settings>} - The generated settings object
+     */
+    async generateSettingsFile(options = {}) {
+        try {
+            const finalFinalName = options.finalFileName || (this.projectName + randomId());
+            const workingDirectory = options.workingDirectory || `${this.projectDirectory}/${finalFinalName}/`;
+
+            this.emit(ProjectEvents.SETTINGS_CREATING, { finalFileName: finalFinalName });
+            
+            const settings = new Settings({
+                colorScheme: this.colorScheme,
+                neutrals: this.neutrals,
+                backgrounds: this.backgrounds,
+                lights: this.lights,
+                _INVOKER_: this.artist,
+                pluginPaths: this.pluginPaths,
+                runName: this.projectName,
+                finalFileName: finalFinalName,
+                numberOfFrame: options.numberOfFrame ?? this.numberOfFrame,
+                longestSideInPixels: this.longestSideInPixels,
+                shortestSideInPixels: this.shortestSideInPixels,
+                isHorizontal: this.isHorizontal,
+                workingDirectory,
+                allPrimaryEffects: this.selectedPrimaryEffectConfigs,
+                allFinalImageEffects: this.selectedFinalEffectConfigs,
+                maxConcurrentFrameBuilderThreads: this.maxConcurrentFrameBuilderThreads,
+                frameInc: options.frameInc ?? this.renderJumpFrames,
+                frameStart: options.frameStart ?? this.frameStart,
+            });
+
+            // Generate effects asynchronously with the new registration system
+            await settings.generateEffects();
+
+            settings.backgroundColor = settings.getBackgroundFromBucket();
+            
+            this.emit(ProjectEvents.SETTINGS_CREATED, {
+                settings: settings,
+                projectInfo: {
+                    finalFileName: finalFinalName,
+                    numberOfFrame: settings.config.numberOfFrame,
+                    backgroundColor: settings.backgroundColor
+                }
+            });
+
+            return settings;
+        } catch (error) {
+            this.emit(ProjectEvents.ERROR, {
+                type: 'generateSettingsFile',
+                error,
+                projectName: this.projectName,
+                timestamp: new Date().toISOString()
+            });
+            throw error;
+        }
+    }
+
     async generateRandomLoop(keepFrames = false) {
         try {
             this.emit(ProjectEvents.GENERATION_STARTED, {
