@@ -52,8 +52,6 @@ export class ConfigReconstructor {
             // Get the plugin with linked config class
             const plugin = PluginRegistry.get(effectName);
             if (!plugin || !plugin.configClass) {
-                console.warn(`⚠ No config class found for effect: ${effectName}, using plain config`);
-                console.warn(`Available plugins:`, PluginRegistry.getAllPlugins().map(p => p.name).slice(0, 10));
                 return plainConfig;
             }
 
@@ -64,18 +62,6 @@ export class ConfigReconstructor {
 
             // Create new config instance - this should properly reconstruct Range, ColorPicker, etc.
             const reconstructedConfig = new plugin.configClass(preprocessedConfig);
-
-            // Verify the reconstruction worked
-            if (reconstructedConfig.innerColor) {
-                if (typeof reconstructedConfig.innerColor.getColor !== 'function') {
-                    console.error(`❌ innerColor reconstruction failed for ${effectName}`);
-                    console.error(`innerColor type:`, typeof reconstructedConfig.innerColor);
-                    console.error(`innerColor getColor type:`, typeof reconstructedConfig.innerColor.getColor);
-                    console.error(`innerColor:`, reconstructedConfig.innerColor);
-                } else {
-                    // innerColor properly reconstructed for ${effectName}
-                }
-            }
 
             // Config reconstruction completed for ${effectName}
             return reconstructedConfig;
