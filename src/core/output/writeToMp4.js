@@ -1,11 +1,29 @@
-import pathToFfmpeg from 'ffmpeg-ffprobe-static';
 import ffmpeg from 'fluent-ffmpeg';
 import { WorkerEvents } from '../events/WorkerEventCategories.js';
+import { FFmpegConfig } from '../config/FFmpegConfig.js';
 
-export const writeToMp4 = async (fileSelector, config, eventEmitter = null) => {
+/**
+ * Write frames to MP4 video file
+ * 
+ * @param {string} fileSelector - Pattern for input frame files (e.g., "frame-%d.png")
+ * @param {Object} config - Configuration object with fileOut property
+ * @param {Object} eventEmitter - Optional event emitter for progress tracking
+ * @param {FFmpegConfig} ffmpegConfig - FFmpeg configuration (paths to binaries)
+ * @returns {Promise<void>}
+ * 
+ * Follows Dependency Inversion Principle:
+ * - Depends on FFmpegConfig abstraction, not concrete ffmpeg-ffprobe-static
+ * - Allows injection of custom ffmpeg paths for testing and flexibility
+ */
+export const writeToMp4 = async (fileSelector, config, eventEmitter = null, ffmpegConfig = null) => {
+    // If no config provided, use default (ffmpeg-ffprobe-static)
+    const ffmpegPaths = ffmpegConfig || await FFmpegConfig.createDefault();
+    
     const writeMp4 = async () => new Promise((resolve, reject) => {
 
-        const pass1 = ffmpeg(fileSelector).setFfprobePath(pathToFfmpeg.ffprobePath).setFfmpegPath(pathToFfmpeg.ffmpegPath);
+        const pass1 = ffmpeg(fileSelector)
+            .setFfprobePath(ffmpegPaths.getFfprobePath())
+            .setFfmpegPath(ffmpegPaths.getFfmpegPath());
 
         // Emit render started event
         if (eventEmitter) {

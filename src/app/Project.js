@@ -54,6 +54,7 @@ export class Project {
                     renderJumpFrames = 1,
                     frameStart = 0,
                     pluginPaths = [], // Add support for plugin paths
+                    ffmpegConfig = null, // FFmpeg configuration (optional)
                 }) {
         // Create project-specific event bus connected to global bus
         const projectId = `${projectName}-${Date.now()}`;
@@ -108,6 +109,7 @@ export class Project {
         this.renderJumpFrames = renderJumpFrames;
         this.frameStart = frameStart;
         this.pluginPaths = pluginPaths; // Store plugin paths
+        this.ffmpegConfig = ffmpegConfig; // Store FFmpeg configuration
 
         this.selectedPrimaryEffectConfigs = [];
         this.selectedFinalEffectConfigs = [];
@@ -312,6 +314,7 @@ export class Project {
                 lights: this.lights,
                 _INVOKER_: this.artist,
                 pluginPaths: this.pluginPaths,
+                ffmpegConfig: this.ffmpegConfig, // Pass FFmpeg configuration
                 runName: this.projectName,
                 finalFileName: finalFinalName,
                 numberOfFrame: options.numberOfFrame ?? this.numberOfFrame,

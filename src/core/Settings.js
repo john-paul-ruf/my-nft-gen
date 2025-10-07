@@ -4,6 +4,7 @@ import {LayerEffectFromJSON} from './layer/LayerEffectFromJSON.js';
 import {LayerConfig} from './layer/LayerConfig.js';
 import {globalBufferPool} from './pool/BufferPool.js';
 import {ConfigReconstructor} from './ConfigReconstructor.js';
+import {FFmpegConfig} from './config/FFmpegConfig.js';
 
 export class Settings {
 
@@ -23,6 +24,11 @@ export class Settings {
         const settings = Object.assign(new Settings({}), json);
 
         settings.colorScheme = Object.assign(new ColorScheme({}), settings.colorScheme);
+
+        // Reconstruct FFmpegConfig if present
+        if (json.ffmpegConfig) {
+            settings.ffmpegConfig = FFmpegConfig.fromJSON(json.ffmpegConfig);
+        }
 
         for (let i = 0; i < settings.effects.length; i++) {
             settings.effects[i] = await LayerEffectFromJSON.from(settings.effects[i]);
@@ -57,9 +63,11 @@ export class Settings {
                     maxConcurrentFrameBuilderThreads = 5,
                     frameStart = 0,
                     pluginPaths = [], // Add support for plugin paths
+                    ffmpegConfig = null, // FFmpeg configuration (optional, defaults to ffmpeg-ffprobe-static)
                 }) {
         this.frameStart = frameStart;
         this.pluginPaths = pluginPaths; // Store plugin paths
+        this.ffmpegConfig = ffmpegConfig; // Store FFmpeg configuration
 
         this.colorScheme = colorScheme;
         this.maxConcurrentFrameBuilderThreads = maxConcurrentFrameBuilderThreads;

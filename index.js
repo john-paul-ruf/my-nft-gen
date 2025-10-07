@@ -2,6 +2,10 @@
 export { LayerEffect } from './src/core/layer/LayerEffect.js';
 export { EffectConfig } from './src/core/layer/EffectConfig.js';
 export { Settings } from './src/core/Settings.js';
+export { Project, ProjectEvents } from './src/app/Project.js';
+
+// Configuration classes
+export { FFmpegConfig } from './src/core/config/FFmpegConfig.js';
 
 // Factory classes
 export { Canvas2dFactory } from './src/core/factory/canvas/Canvas2dFactory.js';

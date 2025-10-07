@@ -10,7 +10,7 @@ import {globalBufferPool} from '../pool/BufferPool.js';
 
 export class LoopBuilder {
     constructor(settings, eventEmitter = null) {
-        this.settings = settings;
+        this.settings = settings; // Store full settings to access ffmpegConfig
         this.finalFileName = settings.config.finalFileName;
         this.config = settings.config;
         this.eventEmitter = eventEmitter;
@@ -191,7 +191,13 @@ export class LoopBuilder {
                     return;
                 }
                 
-                await writeToMp4(`${this.context.workingDirectory + this.config.finalFileName}-frame-%d.png`, this.config, this.eventEmitter);
+                // Pass FFmpeg configuration from settings (if available)
+                await writeToMp4(
+                    `${this.context.workingDirectory + this.config.finalFileName}-frame-%d.png`, 
+                    this.config, 
+                    this.eventEmitter,
+                    this.settings.ffmpegConfig
+                );
                 
                 if (this.shouldTerminate) {
                     this._handleTermination(resolve, 'terminated_after_mp4');
