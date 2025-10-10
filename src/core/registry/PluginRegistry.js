@@ -80,6 +80,9 @@ export class PluginRegistry {
                 throw new Error(`Package '${packageName}' does not export a 'register' function`);
             }
 
+            // Determine default author based on package name
+            const defaultAuthor = packageName === 'my-nft-effects-core' ? 'nft-core-effects' : 'unknown';
+
             // Create a registry adapter that captures registrations
             const registryAdapter = {
                 register: (effectClass, category) => {
@@ -92,7 +95,7 @@ export class PluginRegistry {
                         metadata: {
                             description: effectClass._description_ || '',
                             version: effectClass._version_ || '1.0.0',
-                            author: effectClass._author_ || 'unknown',
+                            author: effectClass._author_ || defaultAuthor,
                             tags: effectClass._tags_ || [],
                             ...(effectClass._metadata_ || {})
                         }

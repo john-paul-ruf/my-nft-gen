@@ -354,6 +354,122 @@ describe('PluginRegistry', () => {
 
             mockLoadFromPackage.mockRestore();
         });
+
+        test('should set author to "nft-core-effects" for my-nft-effects-core package', async () => {
+            // Create an effect without _author_ property
+            class CoreEffect {
+                static _name_ = 'core-effect';
+                constructor(options = {}) {
+                    this.name = options.name || CoreEffect._name_;
+                }
+                async invoke() {
+                    return Promise.resolve();
+                }
+            }
+
+            const mockPackage = {
+                register: jest.fn((registry) => {
+                    registry.register(CoreEffect, 'primary');
+                })
+            };
+
+            const mockLoadFromPackage = jest.spyOn(registry, 'loadFromPackage');
+            mockLoadFromPackage.mockImplementation(async (packageName) => {
+                if (registry.loadedPackages.has(packageName)) {
+                    return;
+                }
+
+                const defaultAuthor = packageName === 'my-nft-effects-core' ? 'nft-core-effects' : 'unknown';
+
+                const registryAdapter = {
+                    register: (effectClass, category) => {
+                        const plugin = {
+                            name: effectClass._name_,
+                            category,
+                            effectClass,
+                            configClass: effectClass._configClass_ || null,
+                            metadata: {
+                                description: effectClass._description_ || '',
+                                version: effectClass._version_ || '1.0.0',
+                                author: effectClass._author_ || defaultAuthor,
+                                tags: effectClass._tags_ || [],
+                                ...(effectClass._metadata_ || {})
+                            }
+                        };
+                        registry.register(plugin);
+                    }
+                };
+
+                await mockPackage.register(registryAdapter, null);
+                registry.loadedPackages.add(packageName);
+            });
+
+            await registry.loadFromPackage('my-nft-effects-core');
+
+            const plugin = registry.get('core-effect');
+            expect(plugin).toBeDefined();
+            expect(plugin.metadata.author).toBe('nft-core-effects');
+
+            mockLoadFromPackage.mockRestore();
+        });
+
+        test('should set author to "unknown" for non-core packages without _author_', async () => {
+            // Create an effect without _author_ property
+            class ThirdPartyEffect {
+                static _name_ = 'third-party-effect';
+                constructor(options = {}) {
+                    this.name = options.name || ThirdPartyEffect._name_;
+                }
+                async invoke() {
+                    return Promise.resolve();
+                }
+            }
+
+            const mockPackage = {
+                register: jest.fn((registry) => {
+                    registry.register(ThirdPartyEffect, 'primary');
+                })
+            };
+
+            const mockLoadFromPackage = jest.spyOn(registry, 'loadFromPackage');
+            mockLoadFromPackage.mockImplementation(async (packageName) => {
+                if (registry.loadedPackages.has(packageName)) {
+                    return;
+                }
+
+                const defaultAuthor = packageName === 'my-nft-effects-core' ? 'nft-core-effects' : 'unknown';
+
+                const registryAdapter = {
+                    register: (effectClass, category) => {
+                        const plugin = {
+                            name: effectClass._name_,
+                            category,
+                            effectClass,
+                            configClass: effectClass._configClass_ || null,
+                            metadata: {
+                                description: effectClass._description_ || '',
+                                version: effectClass._version_ || '1.0.0',
+                                author: effectClass._author_ || defaultAuthor,
+                                tags: effectClass._tags_ || [],
+                                ...(effectClass._metadata_ || {})
+                            }
+                        };
+                        registry.register(plugin);
+                    }
+                };
+
+                await mockPackage.register(registryAdapter, null);
+                registry.loadedPackages.add(packageName);
+            });
+
+            await registry.loadFromPackage('some-third-party-package');
+
+            const plugin = registry.get('third-party-effect');
+            expect(plugin).toBeDefined();
+            expect(plugin.metadata.author).toBe('unknown');
+
+            mockLoadFromPackage.mockRestore();
+        });
     });
 
     describe('Overwriting', () => {
