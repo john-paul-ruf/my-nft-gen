@@ -278,4 +278,86 @@ ${this.elements.join('\n')}
         this.elements.push(`<rect x="${x}" y="${y}" width="${width}" height="${height}" 
             fill="url(#${gradientId})"/>`);
     }
+
+    /**
+     * Draw text with Unicode support
+     * @param {string} text - The text to draw (supports Unicode characters)
+     * @param {number} x - X coordinate
+     * @param {number} y - Y coordinate
+     * @param {Object} options - Text styling options
+     * @param {string} options.fontFamily - Font family (default: 'Arial, sans-serif')
+     * @param {number} options.fontSize - Font size in pixels (default: 16)
+     * @param {string} options.fontWeight - Font weight (default: 'normal')
+     * @param {string} options.fontStyle - Font style (default: 'normal')
+     * @param {string} options.color - Text color (default: '#000000')
+     * @param {number} options.alpha - Text opacity 0-1 (default: 1)
+     * @param {string} options.textAnchor - Text alignment: 'start', 'middle', 'end' (default: 'start')
+     * @param {string} options.dominantBaseline - Vertical alignment: 'auto', 'middle', 'hanging', 'alphabetic' (default: 'alphabetic')
+     * @param {number} options.letterSpacing - Letter spacing in pixels (default: 0)
+     * @param {string} options.textDecoration - Text decoration: 'none', 'underline', 'line-through' (default: 'none')
+     * @param {number} options.strokeWidth - Outline width (default: 0)
+     * @param {string} options.strokeColor - Outline color (default: '#000000')
+     * @param {number} options.rotation - Rotation angle in degrees (default: 0)
+     */
+    async drawText(text, x, y, options = {}) {
+        const {
+            fontFamily = 'Arial, sans-serif',
+            fontSize = 16,
+            fontWeight = 'normal',
+            fontStyle = 'normal',
+            color = '#000000',
+            alpha = 1,
+            textAnchor = 'start',
+            dominantBaseline = 'alphabetic',
+            letterSpacing = 0,
+            textDecoration = 'none',
+            strokeWidth = 0,
+            strokeColor = '#000000',
+            rotation = 0
+        } = options;
+
+        // Escape special XML characters in text
+        const escapedText = text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&apos;');
+
+        // Build style string
+        const styles = [
+            `font-family: ${fontFamily}`,
+            `font-size: ${fontSize}px`,
+            `font-weight: ${fontWeight}`,
+            `font-style: ${fontStyle}`,
+            `fill: ${this._colorToSvg(color, alpha)}`,
+            `text-anchor: ${textAnchor}`,
+            `dominant-baseline: ${dominantBaseline}`
+        ];
+
+        if (letterSpacing !== 0) {
+            styles.push(`letter-spacing: ${letterSpacing}px`);
+        }
+
+        if (textDecoration !== 'none') {
+            styles.push(`text-decoration: ${textDecoration}`);
+        }
+
+        // Build stroke attributes
+        let strokeAttrs = '';
+        if (strokeWidth > 0) {
+            strokeAttrs = `stroke="${this._colorToSvg(strokeColor)}" stroke-width="${strokeWidth}"`;
+        }
+
+        // Build transform attribute
+        let transformAttr = '';
+        if (rotation !== 0) {
+            transformAttr = `transform="rotate(${rotation} ${x} ${y})"`;
+        }
+
+        // Add text element
+        this.elements.push(
+            `<text x="${x}" y="${y}" style="${styles.join('; ')}" ${strokeAttrs} ${transformAttr}>${escapedText}</text>`
+        );
+    }
 }

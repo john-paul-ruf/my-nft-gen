@@ -75,4 +75,8 @@ export class Canvas2d {
     async drawGradientRect(x, y, width, height, colorStops) {
         await this.strategy.drawGradientRect(x, y, width, height, colorStops);
     }
+
+    async drawText(text, x, y, options = {}) {
+        await this.strategy.drawText(text, x, y, options);
+    }
 }
