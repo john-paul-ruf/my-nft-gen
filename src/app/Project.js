@@ -378,6 +378,7 @@ export class Project {
                 lights: this.lights,
                 _INVOKER_: this.artist,
                 pluginPaths: this.pluginPaths,
+                ffmpegConfig: this.ffmpegConfig, // Pass FFmpeg configuration
                 runName: this.projectName,
                 finalFileName: finalFinalName,
                 numberOfFrame: this.numberOfFrame,
@@ -502,6 +503,7 @@ export class Project {
                     lights: this.lights,
                     _INVOKER_: this.artist,
                     pluginPaths: this.pluginPaths,
+                    ffmpegConfig: this.ffmpegConfig, // Pass FFmpeg configuration
                     runName: this.projectName,
                     finalFileName: finalFinalName,
                     numberOfFrame: actualTotalFrames, // Use the total frames for proper animation calculation
