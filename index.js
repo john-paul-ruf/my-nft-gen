@@ -7,6 +7,11 @@ export { Project, ProjectEvents } from './src/app/Project.js';
 // Configuration classes
 export { FFmpegConfig } from './src/core/config/FFmpegConfig.js';
 
+// Registry classes
+export { PresetRegistry } from './src/core/registry/PresetRegistry.js';
+export { EffectRegistry } from './src/core/registry/EffectRegistry.js';
+export { ConfigRegistry } from './src/core/registry/ConfigRegistry.js';
+
 // Factory classes
 export { Canvas2dFactory } from './src/core/factory/canvas/Canvas2dFactory.js';
 export { LayerFactory } from './src/core/factory/layer/LayerFactory.js';

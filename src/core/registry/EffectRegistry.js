@@ -1,6 +1,7 @@
 import { EffectCategories, isValidCategory } from './EffectCategories.js';
 import { ConfigRegistry } from './ConfigRegistry.js';
 import { PluginRegistry } from './PluginRegistry.js';
+import { PresetRegistry } from './PresetRegistry.js';
 
 /**
  * EffectRegistry - Now a facade/adapter for PluginRegistry
@@ -54,6 +55,14 @@ export class EffectRegistry {
             });
         }
 
+        // If the effect has presets, register them in the PresetRegistry
+        if (effectClass.presets) {
+            PresetRegistry.registerGlobal(name, effectClass.presets, {
+                effectCategory: category,
+                ...metadata
+            });
+        }
+
         return this;
     }
 
@@ -102,6 +111,9 @@ export class EffectRegistry {
         // Also unregister from ConfigRegistry
         ConfigRegistry.globalRegistry.unregister(name);
 
+        // Also unregister from PresetRegistry
+        PresetRegistry.globalRegistry.unregister(name);
+
         return wasRegistered;
     }
 
@@ -112,6 +124,9 @@ export class EffectRegistry {
 
         // Also clear the ConfigRegistry
         ConfigRegistry.clearGlobal();
+
+        // Also clear the PresetRegistry
+        PresetRegistry.clearGlobal();
     }
 
     size() {
@@ -135,7 +150,15 @@ export class EffectRegistry {
             }
         };
 
-        return PluginRegistry.globalRegistry.register(pluginDefinition);
+        const result = PluginRegistry.globalRegistry.register(pluginDefinition);
+
+        // If the effect has presets, register them in the PresetRegistry
+        const presets = effectClass._presets_ || effectClass.presets;
+        if (presets) {
+            PresetRegistry.registerGlobal(effectClass._name_, presets, pluginDefinition.metadata);
+        }
+
+        return result;
     }
 
     static getGlobal(name) {
