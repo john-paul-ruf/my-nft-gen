@@ -1,0 +1,29 @@
+# Development
+.github/
+.claude/
+.zencoder/
+.run/
+.gitignore
+*.md
+
+# Testing
+tests/
+coverage/
+jest.config.js
+babel.config.cjs
+
+# Examples
+examples/
+
+# Node
+node_modules/
+npm-debug.log
+.npmrc
+
+# Misc
+.DS_Store
+improved-plugin-system.js
+demo-enhanced-registration.js
+AGENTS.md
+CLAUDE.md
+test.html
