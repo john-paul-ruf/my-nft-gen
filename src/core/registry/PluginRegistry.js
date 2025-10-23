@@ -81,7 +81,7 @@ export class PluginRegistry {
             }
 
             // Determine default author based on package name
-            const defaultAuthor = packageName === 'my-nft-effects-core' ? 'nft-core-effects' : 'unknown';
+            const defaultAuthor = packageName === 'effects' || packageName.includes('effects') ? 'nft-core-effects' : 'unknown';
 
             // Create a registry adapter that captures registrations
             const registryAdapter = {

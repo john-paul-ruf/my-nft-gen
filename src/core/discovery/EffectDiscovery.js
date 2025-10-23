@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 export class EffectDiscovery {
 
     /**
-     * Discover all available effects from the my-nft-gen and my-nft-effects-core repositories
+     * Discover all available effects from the bundled effects system
      * @returns {Promise<Object>} Object with effect categories and their available effects
      */
     static async discoverAvailableEffects() {
@@ -27,29 +27,29 @@ export class EffectDiscovery {
 
             // Paths to scan for effects
             const effectPaths = [
-                // my-nft-effects-core primary effects
+                // Bundled primary effects
                 {
                     category: 'primary',
-                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/primaryEffects'),
-                    modulePrefix: 'my-nft-effects-core/src/effects/primaryEffects'
+                    basePath: path.resolve(__dirname, '../../effects/primaryEffects'),
+                    modulePrefix: '../effects/primaryEffects'
                 },
-                // my-nft-effects-core secondary effects
+                // Bundled secondary effects
                 {
                     category: 'secondary',
-                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/secondaryEffects'),
-                    modulePrefix: 'my-nft-effects-core/src/effects/secondaryEffects'
+                    basePath: path.resolve(__dirname, '../../effects/secondaryEffects'),
+                    modulePrefix: '../effects/secondaryEffects'
                 },
-                // my-nft-effects-core key frame effects
+                // Bundled key frame effects
                 {
                     category: 'keyFrame',
-                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/keyFrameEffects'),
-                    modulePrefix: 'my-nft-effects-core/src/effects/keyFrameEffects'
+                    basePath: path.resolve(__dirname, '../../effects/keyFrameEffects'),
+                    modulePrefix: '../effects/keyFrameEffects'
                 },
-                // my-nft-effects-core final image effects
+                // Bundled final image effects
                 {
                     category: 'final',
-                    basePath: path.resolve(__dirname, '../../../../my-nft-effects-core/src/effects/finalImageEffects'),
-                    modulePrefix: 'my-nft-effects-core/src/effects/finalImageEffects'
+                    basePath: path.resolve(__dirname, '../../effects/finalImageEffects'),
+                    modulePrefix: '../effects/finalImageEffects'
                 }
             ];
 

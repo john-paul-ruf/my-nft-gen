@@ -355,7 +355,7 @@ describe('PluginRegistry', () => {
             mockLoadFromPackage.mockRestore();
         });
 
-        test('should set author to "nft-core-effects" for my-nft-effects-core package', async () => {
+        test('should set author to "nft-core-effects" for effects package', async () => {
             // Create an effect without _author_ property
             class CoreEffect {
                 static _name_ = 'core-effect';
@@ -379,7 +379,7 @@ describe('PluginRegistry', () => {
                     return;
                 }
 
-                const defaultAuthor = packageName === 'my-nft-effects-core' ? 'nft-core-effects' : 'unknown';
+                const defaultAuthor = packageName === 'effects' || packageName.includes('effects') ? 'nft-core-effects' : 'unknown';
 
                 const registryAdapter = {
                     register: (effectClass, category) => {
@@ -404,7 +404,7 @@ describe('PluginRegistry', () => {
                 registry.loadedPackages.add(packageName);
             });
 
-            await registry.loadFromPackage('my-nft-effects-core');
+            await registry.loadFromPackage('effects');
 
             const plugin = registry.get('core-effect');
             expect(plugin).toBeDefined();
@@ -437,7 +437,7 @@ describe('PluginRegistry', () => {
                     return;
                 }
 
-                const defaultAuthor = packageName === 'my-nft-effects-core' ? 'nft-core-effects' : 'unknown';
+                const defaultAuthor = packageName === 'effects' || packageName.includes('effects') ? 'nft-core-effects' : 'unknown';
 
                 const registryAdapter = {
                     register: (effectClass, category) => {

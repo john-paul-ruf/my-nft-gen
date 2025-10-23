@@ -6,7 +6,7 @@ import { ConfigRegistry } from './ConfigRegistry.js';
  * Enhanced effects registration using the new plugin system
  */
 export class EnhancedEffectsRegistration {
-    static async registerEffectsFromPackage(packageName = 'my-nft-effects-core') {
+    static async registerEffectsFromPackage(packageName = 'effects') {
         try {
             // Enhanced Effects Registration
 

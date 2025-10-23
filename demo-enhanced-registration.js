@@ -6,8 +6,8 @@ async function demonstrateEnhancedRegistration() {
 
     try {
         // Register effects using the new system
-        console.log('1. Loading effects from my-nft-effects-core...');
-        const stats = await EnhancedEffectsRegistration.registerEffectsFromPackage('my-nft-effects-core');
+        console.log('1. Loading bundled effects...');
+        const stats = await EnhancedEffectsRegistration.registerEffectsFromPackage('effects');
 
         console.log('\n2. Registration Statistics:');
         console.log(`   Total plugins: ${stats.total}`);

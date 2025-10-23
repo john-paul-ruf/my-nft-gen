@@ -54,7 +54,7 @@ export class PluginRegistry {
     static plugins = new Map();
 
     // Scan and auto-discover plugins
-    static async discoverPlugins(basePath = 'my-nft-effects-core/src/effects') {
+    static async discoverPlugins(basePath = './src/effects') {
         const categories = ['primaryEffects', 'secondaryEffects', 'finalImageEffects', 'keyFrameEffects'];
 
         for (const category of categories) {
@@ -187,7 +187,7 @@ export class EffectFactory {
     static effects = new Map();
     static configs = new Map();
 
-    static async loadEffectsFromPackage(packageName = 'my-nft-effects-core') {
+    static async loadEffectsFromPackage(packageName = 'effects') {
         try {
             // Import the package's main registration function
             const { register, getAllEffects } = await import(`${packageName}`);

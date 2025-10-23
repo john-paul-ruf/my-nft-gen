@@ -8,8 +8,8 @@ export class PluginLoader {
     static #pluginPaths = null;
 
     static async loadCoreEffects() {
-        // Use the new enhanced registration system
-        return await EnhancedEffectsRegistration.registerEffectsFromPackage('my-nft-effects-core');
+        // Use the new enhanced registration system with bundled effects
+        return await EnhancedEffectsRegistration.registerEffectsFromPackage('effects');
     }
 
     static setPluginPaths(paths) {

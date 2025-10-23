@@ -16,7 +16,7 @@ Yes. However, **if you generate gross revenue of any kind**, you owe a **1% cut*
 
 ## 🏗️ Architecture
 
-**Plugin-Based Effects System**: Core effects have been extracted into `my-nft-effects-core` for modular development
+**Plugin-Based Effects System**: 51 built-in effects bundled with full modular plugin architecture
 
 **Worker Thread Parallelization**: Frame generation uses Node.js worker threads for optimal performance
 
@@ -76,7 +76,6 @@ All effects support:
 ## 📦 Related Projects
 
 - **[nft-scratch](https://github.com/john-paul-ruf/nft-scratch)** - Real-world composition scripts and examples
-- **my-nft-effects-core** - Extracted effects library with plugin architecture
 
 ## 🐛 Issues & Support
 

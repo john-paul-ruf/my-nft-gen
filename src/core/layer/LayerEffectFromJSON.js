@@ -22,8 +22,8 @@ export class LayerEffectFromJSON {
             // Dynamically import to avoid circular dependency
             let FoundEffectClass = null;
             try {
-                // Import effects from my-nft-effects-core package dynamically
-                const EffectsCore = await import('my-nft-effects-core');
+                // Import effects from bundled effects module dynamically
+                const EffectsCore = await import('../effects/index.js');
                 
                 // Look for the effect in EffectsCore exports
                 for (const [key, value] of Object.entries(EffectsCore)) {
@@ -33,7 +33,7 @@ export class LayerEffectFromJSON {
                     }
                 }
             } catch (importError) {
-                console.warn(`Failed to import my-nft-effects-core for fallback: ${importError.message}`);
+                console.warn(`Failed to import effects for fallback: ${importError.message}`);
             }
 
             if (FoundEffectClass) {
@@ -58,7 +58,7 @@ export class LayerEffectFromJSON {
                 // Fallback to direct import
                 let FoundAdditionalEffectClass = null;
                 try {
-                    const EffectsCore = await import('my-nft-effects-core');
+                    const EffectsCore = await import('../effects/index.js');
                     
                     for (const [key, value] of Object.entries(EffectsCore)) {
                         if (value && typeof value === 'function' && value._name_ === layer.additionalEffects[i].name) {
@@ -67,7 +67,7 @@ export class LayerEffectFromJSON {
                         }
                     }
                 } catch (importError) {
-                    console.warn(`Failed to import my-nft-effects-core for additional effect fallback: ${importError.message}`);
+                    console.warn(`Failed to import effects for additional effect fallback: ${importError.message}`);
                 }
 
                 if (FoundAdditionalEffectClass) {
