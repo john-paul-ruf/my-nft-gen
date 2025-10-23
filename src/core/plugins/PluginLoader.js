@@ -9,7 +9,7 @@ export class PluginLoader {
 
     static async loadCoreEffects() {
         // Use the new enhanced registration system with bundled effects
-        return await EnhancedEffectsRegistration.registerEffectsFromPackage('effects');
+        return await EnhancedEffectsRegistration.registerEffectsFromPackage('../../effects/index.js');
     }
 
     static setPluginPaths(paths) {
