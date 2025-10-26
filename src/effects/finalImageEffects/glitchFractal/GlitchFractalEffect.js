@@ -17,6 +17,7 @@ import { Range } from 'my-nft-gen/src/core/layer/configType/Range.js';
  */
 export class GlitchFractalEffect extends LayerEffect {
     static _name_ = 'glitch-fractal';
+    static configClass = GlitchFractalConfig;
 
     static presets = [
         {

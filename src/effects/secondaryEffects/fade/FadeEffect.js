@@ -7,6 +7,7 @@ import { Range } from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class FadeEffect extends LayerEffect {
     static _name_ = 'fade';
+    static configClass = FadeConfig;
 
     static presets = [
         {

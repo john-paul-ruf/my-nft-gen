@@ -11,6 +11,7 @@ import { findValue } from 'my-nft-gen/src/core/math/findValue.js';
 
 export class CRTScanLinesEffect extends LayerEffect {
     static _name_ = 'crt-scan-lines';
+    static configClass = CRTScanLinesConfig;
 
     static presets = [
         {

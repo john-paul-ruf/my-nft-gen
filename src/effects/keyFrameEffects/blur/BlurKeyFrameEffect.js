@@ -19,6 +19,7 @@ import {Range} from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class BlurKeyFrameEffect extends LayerEffect {
     static _name_ = 'blur-event';
+    static configClass = BlurKeyFrameConfig;
 
     static presets = [
         {

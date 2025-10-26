@@ -7,6 +7,7 @@ import {ImageOverlayConfig} from './ImageOverlayConfig.js';
 
 export class ImageOverlayEffect extends LayerEffect {
     static _name_ = 'image-overlay';
+    static configClass = ImageOverlayConfig;
 
     static presets = [
         {

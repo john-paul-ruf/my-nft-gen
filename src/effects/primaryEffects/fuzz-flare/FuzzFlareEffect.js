@@ -24,6 +24,7 @@ import {getAllFindValueAlgorithms} from 'my-nft-gen/src/core/math/findValue.js';
 
 export class FuzzFlareEffect extends LayerEffect {
     static _name_ = 'fuzz-flare';
+    static configClass = FuzzFlareConfig;
 
     static presets = [
         {

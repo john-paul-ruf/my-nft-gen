@@ -15,6 +15,7 @@ import { GlitchInverseConfig } from './GlitchInverseConfig.js';
  */
 export class GlitchInverseEffect extends LayerEffect {
     static _name_ = 'glitch-inverse';
+    static configClass = GlitchInverseConfig;
 
     static presets = [
         {

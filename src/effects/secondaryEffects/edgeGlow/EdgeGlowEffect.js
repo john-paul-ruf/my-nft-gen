@@ -11,6 +11,7 @@ import sharp from "sharp";
 
 export class EdgeGlowEffect extends LayerEffect {
     static _name_ = 'edge-glow';
+    static configClass = EdgeGlowConfig;
 
     static presets = [
         {

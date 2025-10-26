@@ -12,6 +12,7 @@ import {Position} from 'my-nft-gen/src/core/position/Position.js';
 
 export class MappedFramesEffect extends LayerEffect {
     static _name_ = 'mapped-frames';
+    static configClass = MappedFramesConfig;
 
     static presets = [
         {

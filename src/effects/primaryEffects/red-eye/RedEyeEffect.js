@@ -15,6 +15,7 @@ import { ColorPicker } from 'my-nft-gen/src/core/layer/configType/ColorPicker.js
 
 export class RedEyeEffect extends LayerEffect {
     static _name_ = 'red-eye';
+    static configClass = RedEyeConfig;
 
     static presets = [
         {

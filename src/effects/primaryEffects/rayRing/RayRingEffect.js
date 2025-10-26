@@ -11,6 +11,7 @@ import { Position } from 'my-nft-gen/src/core/position/Position.js';
 
 export class RayRingEffect extends LayerEffect {
     static _name_ = 'ray-rings';
+    static configClass = RayRingConfig;
 
     static presets = [
         {

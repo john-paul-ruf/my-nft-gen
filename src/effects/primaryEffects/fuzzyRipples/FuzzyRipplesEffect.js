@@ -24,6 +24,7 @@ import {PercentageLongestSide} from 'my-nft-gen/src/core/layer/configType/Percen
 
 export class FuzzyRipplesEffect extends LayerEffect {
     static _name_ = 'fuzzy-ripples';
+    static configClass = FuzzyRipplesConfig;
 
     static presets = [
         {

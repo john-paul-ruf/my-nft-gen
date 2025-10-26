@@ -19,6 +19,7 @@ import {LayerFactory} from 'my-nft-gen/src/core/factory/layer/LayerFactory.js';
 
 export class CRTShadowEffect extends LayerEffect {
     static _name_ = 'crt-shadow';
+    static configClass = CRTShadowConfig;
 
     static presets = [
         {

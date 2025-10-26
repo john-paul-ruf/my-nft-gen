@@ -17,6 +17,7 @@ import {Point2D} from 'my-nft-gen/src/core/layer/configType/Point2D.js';
 
 export class CurvedRedEyeEffect extends LayerEffect {
     static _name_ = 'curved-red-eye';
+    static configClass = CurvedRedEyeConfig;
 
     static presets = [
         {

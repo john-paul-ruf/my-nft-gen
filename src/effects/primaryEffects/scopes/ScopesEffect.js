@@ -15,6 +15,7 @@ import { Position } from 'my-nft-gen/src/core/position/Position.js';
 
 export class ScopesEffect extends LayerEffect {
     static _name_ = 'scopes';
+    static configClass = ScopesConfig;
 
     static presets = [
         {

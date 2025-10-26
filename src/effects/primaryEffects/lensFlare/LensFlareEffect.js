@@ -16,6 +16,7 @@ import {PercentageLongestSide} from 'my-nft-gen/src/core/layer/configType/Percen
 
 export class LensFlareEffect extends LayerEffect {
     static _name_ = 'upgraded-lens-flare';
+    static configClass = LensFlareConfig;
 
     static presets = [
         {

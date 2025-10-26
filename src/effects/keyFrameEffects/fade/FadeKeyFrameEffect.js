@@ -19,6 +19,7 @@ import {Range} from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class FadeKeyFrameEffect extends LayerEffect {
     static _name_ = 'fade-event';
+    static configClass = FadeKeyFrameConfig;
 
     static presets = [
         {

@@ -11,6 +11,7 @@ import { DynamicRange } from 'my-nft-gen/src/core/layer/configType/DynamicRange.
 
 export class ScanLinesEffect extends LayerEffect {
     static _name_ = 'scan lines';
+    static configClass = ScanLinesConfig;
 
     static presets = [
         {

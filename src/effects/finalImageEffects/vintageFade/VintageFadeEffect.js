@@ -10,6 +10,7 @@ import {globalBufferPool} from 'my-nft-gen/src/core/pool/BufferPool.js';
 
 export class VintageFadeEffect extends LayerEffect {
     static _name_ = 'vintage-fade';
+    static configClass = VintageFadeConfig;
 
     static presets = [
         {

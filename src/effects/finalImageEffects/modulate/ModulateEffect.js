@@ -18,6 +18,7 @@ import {DynamicRange} from 'my-nft-gen/src/core/layer/configType/DynamicRange.js
 
 export class ModulateEffect extends LayerEffect {
     static _name_ = 'modulate';
+    static configClass = ModulateConfig;
 
     static presets = [
         {

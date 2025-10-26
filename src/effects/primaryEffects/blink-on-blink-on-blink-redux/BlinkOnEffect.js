@@ -25,6 +25,7 @@ import {Position} from 'my-nft-gen/src/core/position/Position.js';
 
 export class BlinkOnEffect extends LayerEffect {
     static _name_ = 'blink-on-blink-on-blink-redux';
+    static configClass = BlinkOnConfig;
 
     static presets = [
         {

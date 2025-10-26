@@ -18,6 +18,7 @@ import { Range } from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class PixelateEffect extends LayerEffect {
     static _name_ = 'pixelate';
+    static configClass = PixelateConfig;
 
     static presets = [
         {

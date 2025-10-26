@@ -16,6 +16,7 @@ import { PercentageLongestSide } from 'my-nft-gen/src/core/layer/configType/Perc
 
 export class FuzzyBandEffect extends LayerEffect {
     static _name_ = 'fuzz-bands-mark-two';
+    static configClass = FuzzyBandConfig;
 
     static presets = [
         {

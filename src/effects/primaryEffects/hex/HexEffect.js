@@ -21,6 +21,7 @@ import {Position} from 'my-nft-gen/src/core/position/Position.js';
 
 export class HexEffect extends LayerEffect {
     static _name_ = 'hex';
+    static configClass = HexConfig;
 
     static presets = [
         {

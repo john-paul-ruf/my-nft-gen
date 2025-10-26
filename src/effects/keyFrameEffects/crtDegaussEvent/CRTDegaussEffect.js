@@ -19,6 +19,7 @@ import {Range} from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class CRTDegaussEffect extends LayerEffect {
     static _name_ = 'crt-degauss-event';
+    static configClass = CRTDegaussConfig;
 
     static presets = [
         {

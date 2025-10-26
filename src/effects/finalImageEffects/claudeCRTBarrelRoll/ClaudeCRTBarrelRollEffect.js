@@ -10,6 +10,7 @@ import {globalBufferPool} from 'my-nft-gen/src/core/pool/BufferPool.js';
 
 export class ClaudeCRTBarrelRollEffect extends LayerEffect {
     static _name_ = 'claude-crt-barrel-roll';
+    static configClass = ClaudeCRTBarrelRollConfig;
 
     static presets = [
         {

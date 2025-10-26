@@ -16,6 +16,7 @@ import {globalBufferPool} from 'my-nft-gen/src/core/pool/BufferPool.js';
 
 export class CRTBarrelEffect extends LayerEffect {
     static _name_ = 'crt-barrel';
+    static configClass = CRTBarrelConfig;
 
     static presets = [
         {

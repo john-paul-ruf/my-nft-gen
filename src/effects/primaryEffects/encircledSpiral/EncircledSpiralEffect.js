@@ -25,6 +25,7 @@ import { PercentageShortestSide } from 'my-nft-gen/src/core/layer/configType/Per
 
 export class EncircledSpiralEffect extends LayerEffect {
     static _name_ = 'encircled-spiral-round-2';
+    static configClass = EncircledSpiralConfig;
 
     static presets = [
         {

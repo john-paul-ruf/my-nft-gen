@@ -12,6 +12,7 @@ import {getRandomIntInclusive} from 'my-nft-gen/src/core/math/random.js';
  */
 export class ColorPulseEffect extends LayerEffect {
     static _name_ = 'colorPulse';
+    static configClass = ColorPulseConfig;
 
     static presets = [
         {

@@ -14,6 +14,7 @@ import {ColorPicker} from 'my-nft-gen/src/core/layer/configType/ColorPicker.js';
 
 export class StaticPathEffect extends LayerEffect {
     static _name_ = 'static-path';
+    static configClass = StaticPathConfig;
 
     static presets = [
         {

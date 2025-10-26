@@ -14,6 +14,7 @@ import { Position } from 'my-nft-gen/src/core/position/Position.js';
 
 export class LayeredRingEffect extends LayerEffect {
     static _name_ = 'layered-rings';
+    static configClass = LayeredRingConfig;
 
     static presets = [
         {

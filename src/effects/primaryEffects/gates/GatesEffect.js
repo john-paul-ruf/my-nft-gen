@@ -20,6 +20,7 @@ import { Position } from 'my-nft-gen/src/core/position/Position.js';
 
 export class GatesEffect extends LayerEffect {
     static _name_ = 'gates';
+    static configClass = GatesConfig;
 
     static presets = [
         {

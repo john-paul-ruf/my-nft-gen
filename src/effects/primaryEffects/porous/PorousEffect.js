@@ -7,6 +7,7 @@ import { PorousConfig } from './PorousConfig.js';
 
 export class PorousEffect extends LayerEffect {
     static _name_ = 'porous.png';
+    static configClass = PorousConfig;
 
     static presets = [
         {

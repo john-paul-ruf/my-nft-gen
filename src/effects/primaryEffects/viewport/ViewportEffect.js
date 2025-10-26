@@ -14,6 +14,7 @@ import {getAllFindValueAlgorithms} from 'my-nft-gen/src/core/math/findValue.js';
 
 export class ViewportEffect extends LayerEffect {
     static _name_ = 'viewport';
+    static configClass = ViewportConfig;
 
     static presets = [
         {

@@ -12,6 +12,7 @@ import {getAllFindValueAlgorithms} from "my-nft-gen/src/core/math/findValue.js";
 
 export class BloomFilmGrainEffect extends LayerEffect {
     static _name_ = 'bloom-film-grain';
+    static configClass = BloomFilmGrainConfig;
 
     static presets = [
         {

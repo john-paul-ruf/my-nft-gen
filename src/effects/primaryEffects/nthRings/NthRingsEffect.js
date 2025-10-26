@@ -17,6 +17,7 @@ import { PercentageShortestSide } from 'my-nft-gen/src/core/layer/configType/Per
 
 export class NthRingsEffect extends LayerEffect {
     static _name_ = 'nth-rings';
+    static configClass = NthRingsConfig;
 
     static presets = [
         {

@@ -8,6 +8,7 @@ import { Range } from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class RandomizeEffect extends LayerEffect {
     static _name_ = 'randomize';
+    static configClass = RandomizeConfig;
 
     static presets = [
         {

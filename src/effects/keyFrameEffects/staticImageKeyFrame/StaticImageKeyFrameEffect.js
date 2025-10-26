@@ -20,6 +20,7 @@ import {Position} from 'my-nft-gen/src/core/position/Position.js';
 
 export class StaticImageKeyFrameEffect extends LayerEffect {
     static _name_ = 'static-image';
+    static configClass = StaticImageKeyFrameConfig;
 
     static presets = [
         {

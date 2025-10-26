@@ -18,6 +18,7 @@ import {Range} from 'my-nft-gen/src/core/layer/configType/Range.js';
 
 export class GlowKeyFrameEffect extends LayerEffect {
     static _name_ = 'glow-event';
+    static configClass = GlowKeyFrameConfig;
 
     static presets = [
         {

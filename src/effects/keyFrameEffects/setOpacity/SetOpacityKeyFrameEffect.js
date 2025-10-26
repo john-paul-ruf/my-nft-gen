@@ -18,6 +18,7 @@ import {FadeConfig} from "../../secondaryEffects/fade/FadeConfig.js";
 
 export class SetOpacityKeyFrameEffect extends LayerEffect {
     static _name_ = 'set-opacity-event';
+    static configClass = SetOpacityKeyFrameConfig;
 
     static presets = [
         {

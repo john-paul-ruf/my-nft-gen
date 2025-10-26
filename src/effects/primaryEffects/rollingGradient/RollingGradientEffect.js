@@ -19,6 +19,7 @@ import {Range} from 'my-nft-gen/src/core/layer/configType/Range.js';
  */
 export class RollingGradientEffect extends LayerEffect {
     static _name_ = 'rolling-gradient';
+    static configClass = RollingGradientConfig;
 
     static presets = [
         {

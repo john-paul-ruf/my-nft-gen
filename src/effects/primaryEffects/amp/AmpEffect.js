@@ -19,6 +19,7 @@ import {ColorPicker} from 'my-nft-gen/src/core/layer/configType/ColorPicker.js';
 
 export class AmpEffect extends LayerEffect {
     static _name_ = 'amp';
+    static configClass = AmpConfig;
 
     static presets = [
         {

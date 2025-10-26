@@ -17,6 +17,7 @@ import { Range } from 'my-nft-gen/src/core/layer/configType/Range.js';
  */
 export class GlitchDrumrollHorizontalWaveEffect extends LayerEffect {
     static _name_ = 'glitch-drumroll-horizontal-wave';
+    static configClass = GlitchDrumrollHorizontalWaveConfig;
 
     static presets = [
         {
