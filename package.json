@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "my-nft-gen",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "A fully programmable, high-performance generative loop engine for creating mesmerizing, seamless visual animations.",
   "main": "index.js",
   "exports": {
