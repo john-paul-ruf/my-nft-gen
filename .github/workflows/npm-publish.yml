@@ -55,5 +55,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Debug auth
+        run: |
+          npm --version
+          cat ~/.npmrc
+          npm whoami || echo "Not authenticated"
+
       - name: Publish to npm
         run: npm publish --provenance --access public
