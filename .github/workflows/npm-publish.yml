@@ -57,12 +57,10 @@ jobs:
 
       - name: Debug auth
         run: |
-          npm --version
-          cat ~/.npmrc || echo "No ~/.npmrc"
-          cat .npmrc || echo "No ./.npmrc"
-          cat $GITHUB_WORKSPACE/.npmrc || echo "No workspace .npmrc"
-          npm config list
+          if [ -z "$NODE_AUTH_TOKEN" ]; then echo "TOKEN IS EMPTY"; else echo "Token present, starts with: ${NODE_AUTH_TOKEN:0:4}"; fi
           npm whoami || echo "Not authenticated"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm
         run: npm publish --provenance --access public
