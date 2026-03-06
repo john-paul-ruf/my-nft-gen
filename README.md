@@ -76,6 +76,7 @@ All effects support:
 ## 📦 Related Projects
 
 - **[nft-scratch](https://github.com/john-paul-ruf/nft-scratch)** - Real-world composition scripts and examples
+- **[nft-studio](https://github.com/john-paul-ruf/nft-studio)** - Desktop GUI for visual effect editing, project management, and batch rendering
 
 ## 🐛 Issues & Support
 
