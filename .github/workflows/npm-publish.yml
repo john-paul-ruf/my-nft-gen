@@ -58,7 +58,10 @@ jobs:
       - name: Debug auth
         run: |
           npm --version
-          cat ~/.npmrc
+          cat ~/.npmrc || echo "No ~/.npmrc"
+          cat .npmrc || echo "No ./.npmrc"
+          cat $GITHUB_WORKSPACE/.npmrc || echo "No workspace .npmrc"
+          npm config list
           npm whoami || echo "Not authenticated"
 
       - name: Publish to npm
